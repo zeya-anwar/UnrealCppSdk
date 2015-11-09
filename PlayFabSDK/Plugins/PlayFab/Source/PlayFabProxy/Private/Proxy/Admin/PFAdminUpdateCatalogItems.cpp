@@ -15,9 +15,9 @@ UPFAdminUpdateCatalogItems* UPFAdminUpdateCatalogItems::UpdateCatalogItems(UObje
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.CatalogVersion = InCatalogVersion;
 	for (const FBPAdminCatalogItem& elem : InCatalog)
-	{
-		Proxy->Request.Catalog.Add(elem.Data);
-	}
+    {
+        Proxy->Request.Catalog.Add(elem.Data);
+    }
 
 	
 

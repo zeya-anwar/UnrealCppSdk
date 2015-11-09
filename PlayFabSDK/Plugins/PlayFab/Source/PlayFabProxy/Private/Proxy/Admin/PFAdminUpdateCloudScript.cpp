@@ -15,9 +15,9 @@ UPFAdminUpdateCloudScript* UPFAdminUpdateCloudScript::UpdateCloudScript(UObject*
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.Version = InVersion;
 	for (const FBPAdminCloudScriptFile& elem : InFiles)
-	{
-		Proxy->Request.Files.Add(elem.Data);
-	}
+    {
+        Proxy->Request.Files.Add(elem.Data);
+    }
 
 	
 

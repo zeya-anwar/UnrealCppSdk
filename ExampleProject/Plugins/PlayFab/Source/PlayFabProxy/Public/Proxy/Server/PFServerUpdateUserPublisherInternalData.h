@@ -21,7 +21,7 @@ public:
 	
 	// Updates the publisher-specific custom data for the user which cannot be accessed by the client
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Player Data Management")
-	static UPFServerUpdateUserPublisherInternalData* UpdateUserPublisherInternalData(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InPlayFabId, const FString& InData, const TArray<FString>& InKeysToRemove);
+	static UPFServerUpdateUserPublisherInternalData* UpdateUserPublisherInternalData(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InPlayFabId, const FString& InData);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

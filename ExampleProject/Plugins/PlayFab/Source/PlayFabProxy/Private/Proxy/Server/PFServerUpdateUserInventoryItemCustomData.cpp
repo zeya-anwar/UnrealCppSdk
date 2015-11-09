@@ -9,7 +9,7 @@ UPFServerUpdateUserInventoryItemCustomData::UPFServerUpdateUserInventoryItemCust
 {
 }
 
-UPFServerUpdateUserInventoryItemCustomData* UPFServerUpdateUserInventoryItemCustomData::UpdateUserInventoryItemCustomData(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InCharacterId, const FString& InPlayFabId, const FString& InItemInstanceId, const FString& InData, const TArray<FString>& InKeysToRemove)
+UPFServerUpdateUserInventoryItemCustomData* UPFServerUpdateUserInventoryItemCustomData::UpdateUserInventoryItemCustomData(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InCharacterId, const FString& InPlayFabId, const FString& InItemInstanceId, const FString& InData)
 {
 	UPFServerUpdateUserInventoryItemCustomData* Proxy = NewObject<UPFServerUpdateUserInventoryItemCustomData>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
@@ -17,7 +17,6 @@ UPFServerUpdateUserInventoryItemCustomData* UPFServerUpdateUserInventoryItemCust
 	Proxy->Request.PlayFabId = InPlayFabId;
 	Proxy->Request.ItemInstanceId = InItemInstanceId;
 	
-	Proxy->Request.KeysToRemove = InKeysToRemove;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

@@ -9,13 +9,12 @@ UPFClientUpdateSharedGroupData::UPFClientUpdateSharedGroupData(const FObjectInit
 {
 }
 
-UPFClientUpdateSharedGroupData* UPFClientUpdateSharedGroupData::UpdateSharedGroupData(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InSharedGroupId, const FString& InData, const TArray<FString>& InKeysToRemove)
+UPFClientUpdateSharedGroupData* UPFClientUpdateSharedGroupData::UpdateSharedGroupData(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InSharedGroupId, const FString& InData)
 {
 	UPFClientUpdateSharedGroupData* Proxy = NewObject<UPFClientUpdateSharedGroupData>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.SharedGroupId = InSharedGroupId;
 	
-	Proxy->Request.KeysToRemove = InKeysToRemove;
 	
 	
 

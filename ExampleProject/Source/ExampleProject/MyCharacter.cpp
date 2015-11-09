@@ -41,32 +41,128 @@ void AMyCharacter::SetupPlayerInputComponent(class UInputComponent* InputCompone
 
 
 
-
-
-
-
-
-
 /**
-* Start flailing randomly and see if a unit test emerges
+* PlayFab Latent commands
 */
 
-//DEFINE_LATENT_AUTOMATION_COMMAND(PlayFabApiTests);
-//
-//bool PlayFabApiTests::Update()
-//{
-//    return GUnitTestManager == NULL || !GUnitTestManager->IsRunningUnitTests();
-//}
+class PlayFabApiTest_RegisterPlayFabUser;
+class PlayFabApiTest_LoginWithEmail;
 
-#define ADD_TEST(Name) \
-	TestFunctions.Add(&FPlayFabApiTests::Name); TestFunctionNames.Add(TEXT(#Name));
 
-class FPlayFabApiTests : public FAutomationTestBase
+
+class PlayFabApiTest_LoginWithEmail : public IAutomationLatentCommand
 {
 public:
-    typedef bool (FPlayFabApiTests::*TestFunc)();
+    PlayFabApiTest_LoginWithEmail(bool successMandatory, const FString& username, const FString& email, const FString& password)
+    {
+        this->successMandatory = successMandatory;
+        this->username = username;
+        this->email = email;
+        this->password = password;
+    }
 
-    FPlayFabApiTests(const FString& InName)
+    bool Update()
+    {
+        // Initialize, setup the call, and wait for the result
+        if (!clientAPI.IsValid())
+        {
+            clientAPI = IPlayFabModuleInterface::Get().GetClientAPI();
+
+            PlayFab::ClientModels::FLoginWithEmailAddressRequest request;
+            request.Email = email;
+            request.Password = password;
+
+            clientAPI->LoginWithEmailAddress(request
+                , PlayFab::UPlayFabClientAPI::FLoginWithEmailAddressDelegate::CreateRaw(this, &PlayFabApiTest_LoginWithEmail::OnSuccess)
+                , PlayFab::FPlayFabErrorDelegate::CreateRaw(this, &PlayFabApiTest_LoginWithEmail::OnError)
+                );
+        }
+
+        // Return when the api call is resolved
+        return clientAPI->GetPendingCalls() == 0;
+    }
+private:
+    void OnSuccess(const PlayFab::ClientModels::FLoginResult& Result)
+    {
+        UE_LOG(LogTemp, Log, TEXT("LoginWithEmailAddress Success"));
+    }
+
+    void OnError(const PlayFab::FPlayFabError& Error)
+    {
+        if (successMandatory)
+        {
+            UE_LOG(LogTemp, Error, TEXT("LoginWithEmailAddress Failed"));
+        }
+        else
+        {
+            // ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_RegisterPlayFabUser(username, email, password));
+        }
+    }
+
+    FString username;
+    FString email;
+    FString password;
+    bool successMandatory = false;
+    PlayFabClientPtr clientAPI = nullptr;
+};
+
+class PlayFabApiTest_RegisterPlayFabUser : public IAutomationLatentCommand
+{
+public:
+    PlayFabApiTest_RegisterPlayFabUser(const FString& username, const FString& email, const FString& password)
+    {
+        this->username = username;
+        this->email = email;
+        this->password = password;
+    }
+
+    bool Update()
+    {
+        // Initialize, setup the call, and wait for the result
+        if (!clientAPI.IsValid())
+        {
+            clientAPI = IPlayFabModuleInterface::Get().GetClientAPI();
+
+            PlayFab::ClientModels::FRegisterPlayFabUserRequest request;
+            request.Email = email;
+            request.Password = password;
+            request.Username = username;
+
+            clientAPI->RegisterPlayFabUser(request
+                , PlayFab::UPlayFabClientAPI::FRegisterPlayFabUserDelegate::CreateRaw(this, &PlayFabApiTest_RegisterPlayFabUser::OnSuccess)
+                , PlayFab::FPlayFabErrorDelegate::CreateRaw(this, &PlayFabApiTest_RegisterPlayFabUser::OnError)
+                );
+        }
+
+        // Return when the api call is resolved
+        return clientAPI->GetPendingCalls() == 0;
+    }
+private:
+    void OnSuccess(const PlayFab::ClientModels::FRegisterPlayFabUserResult& Result)
+    {
+        UE_LOG(LogTemp, Log, TEXT("RegisterPlayFabUser Success"));
+        ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_LoginWithEmail(true, username, email, password));
+    }
+
+    void OnError(const PlayFab::FPlayFabError& Error)
+    {
+        UE_LOG(LogTemp, Error, TEXT("RegisterPlayFabUser Failed"));
+    }
+
+    FString username;
+    FString email;
+    FString password;
+    PlayFabClientPtr clientAPI = nullptr;
+};
+
+
+#define ADD_TEST(Name) TestFunctions.Add(&PlayFabApiTestSuite::Name); TestFunctionNames.Add(TEXT(#Name));
+class PlayFabApiTestSuite : public FAutomationTestBase
+{
+    typedef bool (PlayFabApiTestSuite::*TestFunc)();
+
+public:
+    PlayFabApiTestSuite(const FString& InName)
         : FAutomationTestBase(InName, false)
     {
         ADD_TEST(Test_LoginOrRegister);
@@ -91,60 +187,35 @@ protected:
     {
         clientAPI = IPlayFabModuleInterface::Get().GetClientAPI();
         TestTrue(TEXT("The ClientAPI reports itself as invalid."), clientAPI.IsValid());
-        if (!clientAPI.IsValid())
-            return false;
-
-        // find the matching test
-        TestFunc TestFunction = nullptr;
-        for (int32 i = 0; i < TestFunctionNames.Num(); ++i)
+        if (clientAPI.IsValid())
         {
-            if (TestFunctionNames[i] == Parameters)
+            // find the matching test
+            TestFunc TestFunction = nullptr;
+            for (int32 i = 0; i < TestFunctionNames.Num(); ++i)
             {
-                TestFunction = TestFunctions[i];
-                break;
+                if (TestFunctionNames[i] == Parameters)
+                {
+                    TestFunction = TestFunctions[i];
+                    return (this->*TestFunction)();
+                }
             }
         }
-        if (TestFunction == nullptr)
-            return false;
-
-        return (this->*TestFunction)();
+        return false;
     }
 
     bool Test_LoginOrRegister()
     {
-        PlayFab::ClientModels::FLoginWithEmailAddressRequest request;
-        request.Email = TEXT("paul@playfab.com");
-        request.Password = TEXT("testPassword");
-
-        clientAPI->LoginWithEmailAddress(request
-            , PlayFab::UPlayFabClientAPI::FLoginWithEmailAddressDelegate::CreateRaw(this, &FPlayFabApiTests::OnLoginSucess)
-            , PlayFab::FPlayFabErrorDelegate::CreateRaw(this, &FPlayFabApiTests::OnLoginError)
-        );
+        ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_LoginWithEmail(false, TEXT("paul"), TEXT("paul@playfab.com"), TEXT("testPassword")));
 
         return true;
     };
 
-    void OnLoginSucess(const PlayFab::ClientModels::FLoginResult& Result)
-    {
-        // These don't currently affect the actual result, as I have to get the result back to Test_LoginOrRegister
-        TestTrue(TEXT("Testing if you can fail from within a callback."), true);
-    }
-
-    void OnLoginError(const PlayFab::FPlayFabError& Error)
-    {
-        // These don't currently affect the actual result, as I have to get the result back to Test_LoginOrRegister
-        TestTrue(TEXT("Callback failed."), false);
-    }
-
     PlayFabClientPtr clientAPI;
-
     TArray<TestFunc> TestFunctions;
     TArray<FString> TestFunctionNames;
 };
 
 namespace
 {
-    FPlayFabApiTests FPlayFabApiTestsAutomationTestInstance(TEXT("FPlayFabApiTests"));
+    PlayFabApiTestSuite FPlayFabApiTestsAutomationTestInstance(TEXT("FPlayFabApiTests"));
 }
-
-//IMPLEMENT_COMPLEX_AUTOMATION_TEST(PlayFabApiTests, "PlayFabApiTests", EAutomationTestFlags::ATF_Game)

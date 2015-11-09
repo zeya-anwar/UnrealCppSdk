@@ -17,40 +17,40 @@ class UPFMatchmakerProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeBreakFunc))
 	static void BreakBPMatchmakerAuthUserRequest(
 		const FBPMatchmakerAuthUserRequest& In
-		,FString& OutAuthorizationTicket
+        ,FString& OutAuthorizationTicket
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeBreakFunc))
 	static void BreakBPMatchmakerAuthUserResponse(
 		const FBPMatchmakerAuthUserResponse& In
-		,bool& OutAuthorized
-		,FString& OutPlayFabId
+        ,bool& OutAuthorized
+        ,FString& OutPlayFabId
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeBreakFunc))
 	static void BreakBPMatchmakerItemInstance(
 		const FBPMatchmakerItemInstance& In
-		,FString& OutItemId
-		,FString& OutItemInstanceId
-		,FString& OutItemClass
-		,FDateTime& OutPurchaseDate
-		,FDateTime& OutExpiration
-		,int32& OutRemainingUses
-		,int32& OutUsesIncrementedBy
-		,FString& OutAnnotation
-		,FString& OutCatalogVersion
-		,FString& OutBundleParent
-		,FString& OutDisplayName
-		,FString& OutUnitCurrency
-		,int32& OutUnitPrice
-		,TArray<FString>& OutBundleContents
+        ,FString& OutItemId
+        ,FString& OutItemInstanceId
+        ,FString& OutItemClass
+        ,FDateTime& OutPurchaseDate
+        ,FDateTime& OutExpiration
+        ,int32& OutRemainingUses
+        ,int32& OutUsesIncrementedBy
+        ,FString& OutAnnotation
+        ,FString& OutCatalogVersion
+        ,FString& OutBundleParent
+        ,FString& OutDisplayName
+        ,FString& OutUnitCurrency
+        ,int32& OutUnitPrice
+        ,TArray<FString>& OutBundleContents
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeBreakFunc))
 	static void BreakBPMatchmakerPlayerJoinedRequest(
 		const FBPMatchmakerPlayerJoinedRequest& In
-		,FString& OutLobbyId
-		,FString& OutPlayFabId
+        ,FString& OutLobbyId
+        ,FString& OutPlayFabId
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeBreakFunc))
@@ -61,8 +61,8 @@ class UPFMatchmakerProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeBreakFunc))
 	static void BreakBPMatchmakerPlayerLeftRequest(
 		const FBPMatchmakerPlayerLeftRequest& In
-		,FString& OutLobbyId
-		,FString& OutPlayFabId
+        ,FString& OutLobbyId
+        ,FString& OutPlayFabId
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeBreakFunc))
@@ -78,44 +78,44 @@ class UPFMatchmakerProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeBreakFunc))
 	static void BreakBPMatchmakerStartGameRequest(
 		const FBPMatchmakerStartGameRequest& In
-		,FString& OutBuild
-		,FString& OutGameMode
-		,FString& OutCustomCommandLineData
-		,FString& OutExternalMatchmakerEventEndpoint
+        ,FString& OutBuild
+        ,FString& OutGameMode
+        ,FString& OutCustomCommandLineData
+        ,FString& OutExternalMatchmakerEventEndpoint
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeBreakFunc))
 	static void BreakBPMatchmakerStartGameResponse(
 		const FBPMatchmakerStartGameResponse& In
-		,FString& OutGameID
-		,FString& OutServerHostname
-		,int32& OutServerPort
+        ,FString& OutGameID
+        ,FString& OutServerHostname
+        ,int32& OutServerPort
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeBreakFunc))
 	static void BreakBPMatchmakerUserInfoRequest(
 		const FBPMatchmakerUserInfoRequest& In
-		,FString& OutPlayFabId
-		,int32& OutMinCatalogVersion
+        ,FString& OutPlayFabId
+        ,int32& OutMinCatalogVersion
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeBreakFunc))
 	static void BreakBPMatchmakerUserInfoResponse(
 		const FBPMatchmakerUserInfoResponse& In
-		,FString& OutPlayFabId
-		,FString& OutUsername
-		,FString& OutTitleDisplayName
-		,TArray<FBPMatchmakerItemInstance>& OutInventory
-		,bool& OutIsDeveloper
-		,FString& OutSteamId
+        ,FString& OutPlayFabId
+        ,FString& OutUsername
+        ,FString& OutTitleDisplayName
+        ,TArray<FBPMatchmakerItemInstance>& OutInventory
+        ,bool& OutIsDeveloper
+        ,FString& OutSteamId
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeBreakFunc))
 	static void BreakBPMatchmakerVirtualCurrencyRechargeTime(
 		const FBPMatchmakerVirtualCurrencyRechargeTime& In
-		,int32& OutSecondsToRecharge
-		,FDateTime& OutRechargeTime
-		,int32& OutRechargeMax
+        ,int32& OutSecondsToRecharge
+        ,FDateTime& OutRechargeTime
+        ,int32& OutRechargeMax
 	);
 	
 

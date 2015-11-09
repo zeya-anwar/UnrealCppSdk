@@ -51,7 +51,6 @@ namespace PlayFab
 		DECLARE_DELEGATE_OneParam(FMoveItemToCharacterFromCharacterDelegate, const ServerModels::FMoveItemToCharacterFromCharacterResult&);
 		DECLARE_DELEGATE_OneParam(FMoveItemToCharacterFromUserDelegate, const ServerModels::FMoveItemToCharacterFromUserResult&);
 		DECLARE_DELEGATE_OneParam(FMoveItemToUserFromCharacterDelegate, const ServerModels::FMoveItemToUserFromCharacterResult&);
-		DECLARE_DELEGATE_OneParam(FRedeemCouponDelegate, const ServerModels::FRedeemCouponResult&);
 		DECLARE_DELEGATE_OneParam(FReportPlayerDelegate, const ServerModels::FReportPlayerServerResult&);
 		DECLARE_DELEGATE_OneParam(FSubtractCharacterVirtualCurrencyDelegate, const ServerModels::FModifyCharacterVirtualCurrencyResult&);
 		DECLARE_DELEGATE_OneParam(FSubtractUserVirtualCurrencyDelegate, const ServerModels::FModifyUserVirtualCurrencyResult&);
@@ -94,7 +93,7 @@ namespace PlayFab
 		
 		/**
 		 * Validated a client's session ticket, and if successful, returns details for that user
-		 * Note that data returned may be Personally Identifying Information (PII), such as email address, and so care should be taken in how this data is stored and managed. Since this call will always return the relevant information for users who have accessed the title, the recommendation is to not store this data locally.
+         * Note that data returned may be Personally Identifying Information (PII), such as email address, and so care should be taken in how this data is stored and managed. Since this call will always return the relevant information for users who have accessed the title, the recommendation is to not store this data locally.
 		 */
 		bool AuthenticateSessionTicket(ServerModels::FAuthenticateSessionTicketRequest& request, const FAuthenticateSessionTicketDelegate& SuccessDelegate = FAuthenticateSessionTicketDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -107,7 +106,7 @@ namespace PlayFab
 			
 		/**
 		 * Retrieves the relevant details for a specified user
-		 * This API allows for access to details regarding a user in the PlayFab service, usually for purposes of customer support. Note that data returned may be Personally Identifying Information (PII), such as email address, and so care should be taken in how this data is stored and managed. Since this call will always return the relevant information for users who have accessed the title, the recommendation is to not store this data locally.
+         * This API allows for access to details regarding a user in the PlayFab service, usually for purposes of customer support. Note that data returned may be Personally Identifying Information (PII), such as email address, and so care should be taken in how this data is stored and managed. Since this call will always return the relevant information for users who have accessed the title, the recommendation is to not store this data locally.
 		 */
 		bool GetUserAccountInfo(ServerModels::FGetUserAccountInfoRequest& request, const FGetUserAccountInfoDelegate& SuccessDelegate = FGetUserAccountInfoDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -132,42 +131,42 @@ namespace PlayFab
 			
 		/**
 		 * Retrieves the title-specific custom data for the user which is readable and writable by the client
-		 * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
+         * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
 		 */
 		bool GetUserData(ServerModels::FGetUserDataRequest& request, const FGetUserDataDelegate& SuccessDelegate = FGetUserDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Retrieves the title-specific custom data for the user which cannot be accessed by the client
-		 * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
+         * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
 		 */
 		bool GetUserInternalData(ServerModels::FGetUserDataRequest& request, const FGetUserInternalDataDelegate& SuccessDelegate = FGetUserInternalDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Retrieves the publisher-specific custom data for the user which is readable and writable by the client
-		 * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
+         * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
 		 */
 		bool GetUserPublisherData(ServerModels::FGetUserDataRequest& request, const FGetUserPublisherDataDelegate& SuccessDelegate = FGetUserPublisherDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Retrieves the publisher-specific custom data for the user which cannot be accessed by the client
-		 * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
+         * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
 		 */
 		bool GetUserPublisherInternalData(ServerModels::FGetUserDataRequest& request, const FGetUserPublisherInternalDataDelegate& SuccessDelegate = FGetUserPublisherInternalDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Retrieves the publisher-specific custom data for the user which can only be read by the client
-		 * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
+         * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
 		 */
 		bool GetUserPublisherReadOnlyData(ServerModels::FGetUserDataRequest& request, const FGetUserPublisherReadOnlyDataDelegate& SuccessDelegate = FGetUserPublisherReadOnlyDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Retrieves the title-specific custom data for the user which can only be read by the client
-		 * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
+         * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
 		 */
 		bool GetUserReadOnlyData(ServerModels::FGetUserDataRequest& request, const FGetUserReadOnlyDataDelegate& SuccessDelegate = FGetUserReadOnlyDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -180,49 +179,49 @@ namespace PlayFab
 			
 		/**
 		 * Updates the title-specific custom data for the user which is readable and writable by the client
-		 * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, while keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
+         * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, while keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
 		 */
 		bool UpdateUserData(ServerModels::FUpdateUserDataRequest& request, const FUpdateUserDataDelegate& SuccessDelegate = FUpdateUserDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Updates the title-specific custom data for the user which cannot be accessed by the client
-		 * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
+         * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
 		 */
 		bool UpdateUserInternalData(ServerModels::FUpdateUserInternalDataRequest& request, const FUpdateUserInternalDataDelegate& SuccessDelegate = FUpdateUserInternalDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Updates the publisher-specific custom data for the user which is readable and writable by the client
-		 * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, while keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
+         * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, while keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
 		 */
 		bool UpdateUserPublisherData(ServerModels::FUpdateUserDataRequest& request, const FUpdateUserPublisherDataDelegate& SuccessDelegate = FUpdateUserPublisherDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Updates the publisher-specific custom data for the user which cannot be accessed by the client
-		 * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
+         * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
 		 */
 		bool UpdateUserPublisherInternalData(ServerModels::FUpdateUserInternalDataRequest& request, const FUpdateUserPublisherInternalDataDelegate& SuccessDelegate = FUpdateUserPublisherInternalDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Updates the publisher-specific custom data for the user which can only be read by the client
-		 * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
+         * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
 		 */
 		bool UpdateUserPublisherReadOnlyData(ServerModels::FUpdateUserDataRequest& request, const FUpdateUserPublisherReadOnlyDataDelegate& SuccessDelegate = FUpdateUserPublisherReadOnlyDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Updates the title-specific custom data for the user which can only be read by the client
-		 * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
+         * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
 		 */
 		bool UpdateUserReadOnlyData(ServerModels::FUpdateUserDataRequest& request, const FUpdateUserReadOnlyDataDelegate& SuccessDelegate = FUpdateUserReadOnlyDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Updates the values of the specified title-specific statistics for the user
-		 * This operation is additive. Statistics not currently defined will be added, while those already defined will be updated with the given values. All other user statistics will remain unchanged.
+         * This operation is additive. Statistics not currently defined will be added, while those already defined will be updated with the given values. All other user statistics will remain unchanged.
 		 */
 		bool UpdateUserStatistics(ServerModels::FUpdateUserStatisticsRequest& request, const FUpdateUserStatisticsDelegate& SuccessDelegate = FUpdateUserStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -235,14 +234,14 @@ namespace PlayFab
 			
 		/**
 		 * Retrieves the key-value store of custom title settings
-		 * This API is designed to return title specific values which can be read, but not written to, by the client. For example, a developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new build. Note that there may up to a minute delay in between updating title data and this API call returning the newest value.
+         * This API is designed to return title specific values which can be read, but not written to, by the client. For example, a developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new build.
 		 */
 		bool GetTitleData(ServerModels::FGetTitleDataRequest& request, const FGetTitleDataDelegate& SuccessDelegate = FGetTitleDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Retrieves the key-value store of custom internal title settings
-		 * This API is designed to return title specific values which are accessible only to the server. This can be used to tweak settings on game servers and Cloud Scripts without needed to update and re-deploy them. Note that there may up to a minute delay in between updating title data and this API call returning the newest value.
+         * This API is designed to return title specific values which are accessible only to the server. This can be used to tweak settings on game servers and Cloud Scripts without needed to update and re-deploy them.
 		 */
 		bool GetTitleInternalData(ServerModels::FGetTitleDataRequest& request, const FGetTitleInternalDataDelegate& SuccessDelegate = FGetTitleInternalDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -255,14 +254,14 @@ namespace PlayFab
 			
 		/**
 		 * Updates the key-value store of custom title settings
-		 * This API is designed to store title specific values which can be read, but not written to, by the client. For example, a developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new build. This operation is additive. If a Key does not exist in the current dataset, it will be added with the specified Value. If it already exists, the Value for that key will be overwritten with the new Value.
+         * This API is designed to store title specific values which can be read, but not written to, by the client. For example, a developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new build. This operation is additive. If a Key does not exist in the current dataset, it will be added with the specified Value. If it already exists, the Value for that key will be overwritten with the new Value.
 		 */
 		bool SetTitleData(ServerModels::FSetTitleDataRequest& request, const FSetTitleDataDelegate& SuccessDelegate = FSetTitleDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Updates the key-value store of custom title settings
-		 * This API is designed to store title specific values which are accessible only to the server. This can be used to tweak settings on game servers and Cloud Scripts without needed to update and re-deploy them. This operation is additive. If a Key does not exist in the current dataset, it will be added with the specified Value. If it already exists, the Value for that key will be overwritten with the new Value.
+         * This API is designed to store title specific values which are accessible only to the server. This can be used to tweak settings on game servers and Cloud Scripts without needed to update and re-deploy them. This operation is additive. If a Key does not exist in the current dataset, it will be added with the specified Value. If it already exists, the Value for that key will be overwritten with the new Value.
 		 */
 		bool SetTitleInternalData(ServerModels::FSetTitleDataRequest& request, const FSetTitleInternalDataDelegate& SuccessDelegate = FSetTitleInternalDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -281,72 +280,65 @@ namespace PlayFab
 			
 		/**
 		 * Retrieves the specified character's current inventory of virtual goods
-		 * All items currently in the character inventory will be returned, irrespective of how they were acquired (via purchasing, grants, coupons, etc.). Items that are expired, fully consumed, or are no longer valid are not considered to be in the user's current inventory, and so will not be not included. Also returns their virtual currency balances.
+         * All items currently in the character inventory will be returned, irrespective of how they were acquired (via purchasing, grants, coupons, etc.). Items that are expired, fully consumed, or are no longer valid are not considered to be in the user's current inventory, and so will not be not included. Also returns their virtual currency balances.
 		 */
 		bool GetCharacterInventory(ServerModels::FGetCharacterInventoryRequest& request, const FGetCharacterInventoryDelegate& SuccessDelegate = FGetCharacterInventoryDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Retrieves the specified user's current inventory of virtual goods
-		 * All items currently in the user inventory will be returned, irrespective of how they were acquired (via purchasing, grants, coupons, etc.). Items that are expired, fully consumed, or are no longer valid are not considered to be in the user's current inventory, and so will not be not included.
+         * All items currently in the user inventory will be returned, irrespective of how they were acquired (via purchasing, grants, coupons, etc.). Items that are expired, fully consumed, or are no longer valid are not considered to be in the user's current inventory, and so will not be not included.
 		 */
 		bool GetUserInventory(ServerModels::FGetUserInventoryRequest& request, const FGetUserInventoryDelegate& SuccessDelegate = FGetUserInventoryDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Adds the specified items to the specified character's inventory
-		 * This function directly adds inventory items to the character's inventories. As  a result of this operations, the user will not be charged any transaction fee, regardless of the inventory item  catalog definition.
+         * This function directly adds inventory items to the character's inventories. As  a result of this operations, the user will not be charged any transaction fee, regardless of the inventory item  catalog definition.
 		 */
 		bool GrantItemsToCharacter(ServerModels::FGrantItemsToCharacterRequest& request, const FGrantItemsToCharacterDelegate& SuccessDelegate = FGrantItemsToCharacterDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Adds the specified items to the specified user's inventory
-		 * This function directly adds inventory items to the user's inventories. As a result of this operations, the user will not be charged any transaction fee, regardless of the inventory item catalog definition.
+         * This function directly adds inventory items to the user's inventories. As a result of this operations, the user will not be charged any transaction fee, regardless of the inventory item catalog definition.
 		 */
 		bool GrantItemsToUser(ServerModels::FGrantItemsToUserRequest& request, const FGrantItemsToUserDelegate& SuccessDelegate = FGrantItemsToUserDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Adds the specified items to the specified user inventories
-		 * This function directly adds inventory items to user inventories. As a result of this operations, the user will not be charged any transaction fee, regardless of the inventory item catalog definition.
+         * This function directly adds inventory items to user inventories. As a result of this operations, the user will not be charged any transaction fee, regardless of the inventory item catalog definition.
 		 */
 		bool GrantItemsToUsers(ServerModels::FGrantItemsToUsersRequest& request, const FGrantItemsToUsersDelegate& SuccessDelegate = FGrantItemsToUsersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Modifies the number of remaining uses of a player's inventory item
-		 * This function can both add and remove uses of an inventory item. If the number of uses drops below zero, the item will be removed from active inventory.
+         * This function can both add and remove uses of an inventory item. If the number of uses drops below zero, the item will be removed from active inventory.
 		 */
 		bool ModifyItemUses(ServerModels::FModifyItemUsesRequest& request, const FModifyItemUsesDelegate& SuccessDelegate = FModifyItemUsesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Moves an item from a character's inventory into another of the users's character's inventory.
-		 * Transfers an item from a character to another character that is owned by the same user. This will remove the item from the character's inventory (until and unless it is moved back), and will enable the other character to make use of the item instead.
+         * Transfers an item from a character to another character that is owned by the same user. This will remove the item from the character's inventory (until and unless it is moved back), and will enable the other character to make use of the item instead.
 		 */
 		bool MoveItemToCharacterFromCharacter(ServerModels::FMoveItemToCharacterFromCharacterRequest& request, const FMoveItemToCharacterFromCharacterDelegate& SuccessDelegate = FMoveItemToCharacterFromCharacterDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Moves an item from a user's inventory into their character's inventory.
-		 * Transfers an item from a user to a character she owns. This will remove the item from the user's inventory (until and unless it is moved back), and will enable the character to make use of the item instead.
+         * Transfers an item from a user to a character she owns. This will remove the item from the user's inventory (until and unless it is moved back), and will enable the character to make use of the item instead.
 		 */
 		bool MoveItemToCharacterFromUser(ServerModels::FMoveItemToCharacterFromUserRequest& request, const FMoveItemToCharacterFromUserDelegate& SuccessDelegate = FMoveItemToCharacterFromUserDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Moves an item from a character's inventory into the owning user's inventory.
-		 * Transfers an item from a character to the owning user. This will remove the item from the character's inventory (until and unless it is moved back), and will enable the user to make use of the item instead.
+         * Transfers an item from a character to the owning user. This will remove the item from the character's inventory (until and unless it is moved back), and will enable the user to make use of the item instead.
 		 */
 		bool MoveItemToUserFromCharacter(ServerModels::FMoveItemToUserFromCharacterRequest& request, const FMoveItemToUserFromCharacterDelegate& SuccessDelegate = FMoveItemToUserFromCharacterDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-
-			
-		/**
-		 * Adds the virtual goods associated with the coupon to the user's inventory. Coupons can be generated  via the Promotions->Coupons tab in the PlayFab Game Manager. See this post for more information on coupons:  https://playfab.com/blog/2015/06/18/using-stores-and-coupons-game-manager
-		 * Coupon codes can be created for any item, or set of items, in the catalog for the title. This operation causes the coupon to be consumed, and the specific items to be awarded to the user. Attempting to re-use an already consumed code, or a code which has not yet been created in the service, will result in an error.
-		 */
-		bool RedeemCoupon(ServerModels::FRedeemCouponRequest& request, const FRedeemCouponDelegate& SuccessDelegate = FRedeemCouponDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
@@ -369,7 +361,7 @@ namespace PlayFab
 			
 		/**
 		 * Updates the key-value pair data tagged to the specified item, which is read-only from the client.
-		 * This function performs an additive update of the arbitrary JSON object containing the custom data for the item instance which belongs to the specified user. In updating the custom data object, keys which already exist in the object will have their values overwritten, while  keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
+         * This function performs an additive update of the arbitrary JSON object containing the custom data for the item instance which belongs to the specified user. In updating the custom data object, keys which already exist in the object will have their values overwritten, while  keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
 		 */
 		bool UpdateUserInventoryItemCustomData(ServerModels::FUpdateUserInventoryItemDataRequest& request, const FUpdateUserInventoryItemCustomDataDelegate& SuccessDelegate = FUpdateUserInventoryItemCustomDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -382,7 +374,7 @@ namespace PlayFab
 			
 		/**
 		 * Validates a Game Server session ticket and returns details about the user
-		 * This function is used by a Game Server Instance to validate with the PlayFab service that a user has been registered as connected to the server. The Ticket is provided to the client either as a result of a call to StartGame or Matchmake, each of which return a Ticket specific to the Game Server Instance. This function will fail in any case where the Ticket presented is not valid for the specific Game Server Instance making the call. Note that data returned may be Personally Identifying Information (PII), such as email address, and so care should be taken in how this data is stored and managed. Since this call will always return the relevant information for users who have accessed the title, the recommendation is to not store this data locally.
+         * This function is used by a Game Server Instance to validate with the PlayFab service that a user has been registered as connected to the server. The Ticket is provided to the client either as a result of a call to StartGame or Matchmake, each of which return a Ticket specific to the Game Server Instance. This function will fail in any case where the Ticket presented is not valid for the specific Game Server Instance making the call. Note that data returned may be Personally Identifying Information (PII), such as email address, and so care should be taken in how this data is stored and managed. Since this call will always return the relevant information for users who have accessed the title, the recommendation is to not store this data locally.
 		 */
 		bool RedeemMatchmakerTicket(ServerModels::FRedeemMatchmakerTicketRequest& request, const FRedeemMatchmakerTicketDelegate& SuccessDelegate = FRedeemMatchmakerTicketDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -395,7 +387,7 @@ namespace PlayFab
 			
 		/**
 		 * Logs a custom analytics event
-		 * This API is designed to track analytics events. Events logged using this API will be stored in the title's Redshift database. Each unique eventName will create a distinct table within the database. Within that table, a column will be created for every unique key. Using a first-person shooter as an example, the title may need to track headshots as a distinct event. The sample request below demonstrates an example of this. In addition to the values sent, timestamps and User IDs are automatically added as 'ts' and 'user_id' to each table. The 'Headshot' table in this example would then have the schema: 'user_id'|'ts'|'victim'|'gun'|'x_coord'|'y_coord'|'z_coord'|'damage|aim_assist' and the row corresponding to this event would look like: 'EF987654ABAB012'|'2014-1-1 12:12:12'|'B76543AEAE65'|'big_bad_sniper'|10|20|1|1000|1.The PlayFab service automatically creates events for all login and purchase operations. This API is intended for game specific events only. Please note that event logging is not enabled for titles by default. If you need event logging enabled, please contact us at devrel@playfab.com for more information.
+         * This API is designed to track analytics events. Events logged using this API will be stored in the title's Redshift database. Each unique eventName will create a distinct table within the database. Within that table, a column will be created for every unique key. Using a first-person shooter as an example, the title may need to track headshots as a distinct event. The sample request below demonstrates an example of this. In addition to the values sent, timestamps and User IDs are automatically added as 'ts' and 'user_id' to each table. The 'Headshot' table in this example would then have the schema: 'user_id'|'ts'|'victim'|'gun'|'x_coord'|'y_coord'|'z_coord'|'damage|aim_assist' and the row corresponding to this event would look like: 'EF987654ABAB012'|'2014-1-1 12:12:12'|'B76543AEAE65'|'big_bad_sniper'|10|20|1|1000|1.The PlayFab service automatically creates events for all login and purchase operations. This API is intended for game specific events only. Please note that event logging is not enabled for titles by default. If you need event logging enabled, please contact us at devrel@playfab.com for more information.
 		 */
 		bool LogEvent(ServerModels::FLogEventRequest& request, const FLogEventDelegate& SuccessDelegate = FLogEventDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -408,7 +400,7 @@ namespace PlayFab
 			
 		/**
 		 * Requests the creation of a shared group object, containing key/value pairs which may be updated by all members of the group. When created by a server, the group will initially have no members.
-		 * If SharedGroupId is specified, the service will attempt to create a group with that identifier, and will return an error if it is already in use. If no SharedGroupId is specified, a random identifier will be assigned.
+         * If SharedGroupId is specified, the service will attempt to create a group with that identifier, and will return an error if it is already in use. If no SharedGroupId is specified, a random identifier will be assigned.
 		 */
 		bool CreateSharedGroup(ServerModels::FCreateSharedGroupRequest& request, const FCreateSharedGroupDelegate& SuccessDelegate = FCreateSharedGroupDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -421,7 +413,7 @@ namespace PlayFab
 			
 		/**
 		 * Retrieves the key-value store of custom publisher settings
-		 * This API is designed to return publisher-specific values which can be read, but not written to, by the client. This data is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a publisher can use this API.  For more information email devrel@playfab.com. Note that there may up to a minute delay in between updating title data and this API call returning the newest value.
+         * This API is designed to return publisher-specific values which can be read, but not written to, by the client. This data is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a publisher can use this API. For more information email devrel@playfab.com
 		 */
 		bool GetPublisherData(ServerModels::FGetPublisherDataRequest& request, const FGetPublisherDataDelegate& SuccessDelegate = FGetPublisherDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -440,14 +432,14 @@ namespace PlayFab
 			
 		/**
 		 * Updates the key-value store of custom publisher settings
-		 * This API is designed to store publisher-specific values which can be read, but not written to, by the client. This data is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a publisher can use this API. This operation is additive.  If a Key does not exist in the current dataset, it will be added with the specified Value. If it already exists, the Value for that key will be overwritten with the new Value. For more information email devrel@playfab.com
+         * This API is designed to store publisher-specific values which can be read, but not written to, by the client. This data is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a publisher can use this API. This operation is additive.  If a Key does not exist in the current dataset, it will be added with the specified Value. If it already exists, the Value for that key will be overwritten with the new Value. For more information email devrel@playfab.com
 		 */
 		bool SetPublisherData(ServerModels::FSetPublisherDataRequest& request, const FSetPublisherDataDelegate& SuccessDelegate = FSetPublisherDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Adds, updates, and removes data keys for a shared group object. If the permission is set to Public, all fields updated or added in this call will be readable by users not in the group. By default, data permissions are set to Private. Regardless of the permission setting, only members of the group (and the server) can update the data.
-		 * Note that in the case of multiple calls to write to the same shared group data keys, the last write received by the PlayFab service will determine the value available to subsequent read operations. For scenarios requiring coordination of data updates, it is recommended that titles make use of user data with read permission set to public, or a combination of user data and shared group data.
+         * Note that in the case of multiple calls to write to the same shared group data keys, the last write received by the PlayFab service will determine the value available to subsequent read operations. For scenarios requiring coordination of data updates, it is recommended that titles make use of user data with read permission set to public, or a combination of user data and shared group data.
 		 */
 		bool UpdateSharedGroupData(ServerModels::FUpdateSharedGroupDataRequest& request, const FUpdateSharedGroupDataDelegate& SuccessDelegate = FUpdateSharedGroupDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -460,14 +452,14 @@ namespace PlayFab
 			
 		/**
 		 * Deletes the specific character ID from the specified user.
-		 * This function will delete the specified character from the list allowed by the user, and  will also delete any inventory or VC currently held by that character. It will NOT delete any statistics  associated for this character, in order to preserve leaderboard integrity.
+         * This function will delete the specified character from the list allowed by the user, and  will also delete any inventory or VC currently held by that character. It will NOT delete any statistics  associated for this character, in order to preserve leaderboard integrity.
 		 */
 		bool DeleteCharacterFromUser(ServerModels::FDeleteCharacterFromUserRequest& request, const FDeleteCharacterFromUserDelegate& SuccessDelegate = FDeleteCharacterFromUserDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Lists all of the characters that belong to a specific user.
-		 * Returns a list of every character that currently belongs to a user.
+         * Returns a list of every character that currently belongs to a user.
 		 */
 		bool GetAllUsersCharacters(ServerModels::FListUsersCharactersRequest& request, const FGetAllUsersCharactersDelegate& SuccessDelegate = FGetAllUsersCharactersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -480,7 +472,7 @@ namespace PlayFab
 			
 		/**
 		 * Retrieves the details of all title-specific statistics for the specific character
-		 * Character statistics are similar to user statistics in that they are numeric values which  may only be updated by a server operation, in order to minimize the opportunity for unauthorized changes. In addition to  being available for use by the title, the statistics are used for all leaderboard operations in PlayFab.
+         * Character statistics are similar to user statistics in that they are numeric values which  may only be updated by a server operation, in order to minimize the opportunity for unauthorized changes. In addition to  being available for use by the title, the statistics are used for all leaderboard operations in PlayFab.
 		 */
 		bool GetCharacterStatistics(ServerModels::FGetCharacterStatisticsRequest& request, const FGetCharacterStatisticsDelegate& SuccessDelegate = FGetCharacterStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -499,56 +491,56 @@ namespace PlayFab
 			
 		/**
 		 * Grants the specified character type to the user.
-		 * Grants a character to the user of the type and name specified in the request.
+         * Grants a character to the user of the type and name specified in the request.
 		 */
 		bool GrantCharacterToUser(ServerModels::FGrantCharacterToUserRequest& request, const FGrantCharacterToUserDelegate& SuccessDelegate = FGrantCharacterToUserDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Updates the values of the specified title-specific statistics for the specific character
-		 * Character statistics are similar to user statistics in that they are numeric values which  may only be updated by a server operation, in order to minimize the opportunity for unauthorized changes. In addition to  being available for use by the title, the statistics are used for all leaderboard operations in PlayFab.
+         * Character statistics are similar to user statistics in that they are numeric values which  may only be updated by a server operation, in order to minimize the opportunity for unauthorized changes. In addition to  being available for use by the title, the statistics are used for all leaderboard operations in PlayFab.
 		 */
 		bool UpdateCharacterStatistics(ServerModels::FUpdateCharacterStatisticsRequest& request, const FUpdateCharacterStatisticsDelegate& SuccessDelegate = FUpdateCharacterStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Retrieves the title-specific custom data for the user which is readable and writable by the client
-		 * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
+         * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
 		 */
 		bool GetCharacterData(ServerModels::FGetCharacterDataRequest& request, const FGetCharacterDataDelegate& SuccessDelegate = FGetCharacterDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Retrieves the title-specific custom data for the user's character which cannot be accessed by the client
-		 * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
+         * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
 		 */
 		bool GetCharacterInternalData(ServerModels::FGetCharacterDataRequest& request, const FGetCharacterInternalDataDelegate& SuccessDelegate = FGetCharacterInternalDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Retrieves the title-specific custom data for the user's character which can only be read by the client
-		 * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom data will be returned.
+         * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom data will be returned.
 		 */
 		bool GetCharacterReadOnlyData(ServerModels::FGetCharacterDataRequest& request, const FGetCharacterReadOnlyDataDelegate& SuccessDelegate = FGetCharacterReadOnlyDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Updates the title-specific custom data for the user's chjaracter which is readable and writable by the client
-		 * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, while keys with null values will be removed. No other key-value pairs will be changed apart  from those specified in the call.
+         * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, while keys with null values will be removed. No other key-value pairs will be changed apart  from those specified in the call.
 		 */
 		bool UpdateCharacterData(ServerModels::FUpdateCharacterDataRequest& request, const FUpdateCharacterDataDelegate& SuccessDelegate = FUpdateCharacterDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Updates the title-specific custom data for the user's character which cannot  be accessed by the client
-		 * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, keys with null values will be removed.  No other key-value pairs will be changed apart from those specified in the call.
+         * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, keys with null values will be removed.  No other key-value pairs will be changed apart from those specified in the call.
 		 */
 		bool UpdateCharacterInternalData(ServerModels::FUpdateCharacterDataRequest& request, const FUpdateCharacterInternalDataDelegate& SuccessDelegate = FUpdateCharacterInternalDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Updates the title-specific custom data for the user's character which can only be read by the client
-		 * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
+         * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
 		 */
 		bool UpdateCharacterReadOnlyData(ServerModels::FUpdateCharacterDataRequest& request, const FUpdateCharacterReadOnlyDataDelegate& SuccessDelegate = FUpdateCharacterReadOnlyDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -594,7 +586,6 @@ namespace PlayFab
 		void OnMoveItemToCharacterFromCharacterResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FMoveItemToCharacterFromCharacterDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnMoveItemToCharacterFromUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FMoveItemToCharacterFromUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnMoveItemToUserFromCharacterResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FMoveItemToUserFromCharacterDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-		void OnRedeemCouponResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRedeemCouponDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnReportPlayerResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FReportPlayerDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnSubtractCharacterVirtualCurrencyResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSubtractCharacterVirtualCurrencyDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnSubtractUserVirtualCurrencyResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSubtractUserVirtualCurrencyDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

@@ -186,8 +186,7 @@ namespace PlayFab
 		PlayFabErrorTradeAcceptedCatalogItemIsNotTradable = 1182,
 		PlayFabErrorUsersAlreadyFriends = 1183,
 		PlayFabErrorLinkedIdentifierAlreadyClaimed = 1184,
-		PlayFabErrorCustomIdNotLinked = 1185,
-		PlayFabErrorDeleteKeyConflict = 1186
+		PlayFabErrorCustomIdNotLinked = 1185
     };
 
     struct FPlayFabError

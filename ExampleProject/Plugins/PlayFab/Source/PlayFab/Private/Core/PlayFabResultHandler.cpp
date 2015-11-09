@@ -5,11 +5,20 @@
 
 using namespace PlayFab;
 
-TSharedRef<IHttpRequest> PlayFabRequestHandler::SendRequest(const FString& callPath, const FString& callBody, const FString& authKey, const FString& authValue)
+int PlayFabRequestHandler::pendingCalls = 0;
+
+int PlayFabRequestHandler::GetPendingCalls()
 {
+    return PlayFabRequestHandler::pendingCalls;
+}
+
+TSharedRef<IHttpRequest> PlayFabRequestHandler::SendRequest(const FString& url, const FString& callBody, const FString& authKey, const FString& authValue)
+{
+    PlayFabRequestHandler::pendingCalls += 1;
+
     TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
     HttpRequest->SetVerb(TEXT("POST"));
-    HttpRequest->SetURL(PlayFabSettings::getURL(callPath));
+    HttpRequest->SetURL(url);
     HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
     HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFab::PlayFabVersionString);
 
@@ -22,7 +31,9 @@ TSharedRef<IHttpRequest> PlayFabRequestHandler::SendRequest(const FString& callP
 
 bool PlayFabRequestHandler::DecodeRequest(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, PlayFab::FPlayFabBaseModel& OutResult, PlayFab::FPlayFabError& OutError)
 {
-	FString ResponseStr, ErrorStr;
+    PlayFabRequestHandler::pendingCalls -= 1;
+
+    FString ResponseStr, ErrorStr;
 	if (bSucceeded && HttpResponse.IsValid())
 	{
 		if (EHttpResponseCodes::IsOk(HttpResponse->GetResponseCode()))
@@ -72,7 +83,6 @@ bool PlayFabRequestHandler::DecodeRequest(FHttpRequestPtr HttpRequest, FHttpResp
 	return false;
 }
 
-
 bool PlayFabRequestHandler::DecodeError(TSharedPtr<FJsonObject> JsonObject, PlayFab::FPlayFabError& OutError)
 {
 	// check if returned json indicates an error
@@ -96,4 +106,3 @@ bool PlayFabRequestHandler::DecodeError(TSharedPtr<FJsonObject> JsonObject, Play
 
 	return false;
 }
-

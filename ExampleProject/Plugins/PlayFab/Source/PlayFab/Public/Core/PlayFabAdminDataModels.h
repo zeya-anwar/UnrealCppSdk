@@ -4008,8 +4008,6 @@ namespace AdminModels
 		FString PlayFabId;
 		// [optional] Data to be written to the user's custom data. Note that keys are trimmed of whitespace, are limited to 1024 characters, and may not begin with a '!' character.
 		TMap<FString, FString> Data;
-		// [optional] Optional list of Data-keys to remove from UserData
-		TArray<FString> KeysToRemove;
 		// [optional] Permission to be applied to all user data keys written in this request. Defaults to "private" if not set.
 		Boxed<UserDataPermission> Permission;
 	
@@ -4017,7 +4015,6 @@ namespace AdminModels
 			FPlayFabBaseModel(),
 			PlayFabId(),
 			Data(),
-			KeysToRemove(),
 			Permission()
 			{}
 		
@@ -4025,7 +4022,6 @@ namespace AdminModels
 			FPlayFabBaseModel(),
 			PlayFabId(src.PlayFabId),
 			Data(src.Data),
-			KeysToRemove(src.KeysToRemove),
 			Permission(src.Permission)
 			{}
 			
@@ -4074,21 +4070,17 @@ namespace AdminModels
 		FString PlayFabId;
 		// [optional] Data to be written to the user's custom data.
 		TMap<FString, FString> Data;
-		// [optional] Optional list of Data-keys to remove from UserData
-		TArray<FString> KeysToRemove;
 	
         FUpdateUserInternalDataRequest() :
 			FPlayFabBaseModel(),
 			PlayFabId(),
-			Data(),
-			KeysToRemove()
+			Data()
 			{}
 		
 		FUpdateUserInternalDataRequest(const FUpdateUserInternalDataRequest& src) :
 			FPlayFabBaseModel(),
 			PlayFabId(src.PlayFabId),
-			Data(src.Data),
-			KeysToRemove(src.KeysToRemove)
+			Data(src.Data)
 			{}
 			
 		FUpdateUserInternalDataRequest(const TSharedPtr<FJsonObject>& obj) : FUpdateUserInternalDataRequest()

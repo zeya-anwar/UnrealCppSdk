@@ -16,9 +16,9 @@ UPFClientStartPurchase* UPFClientStartPurchase::StartPurchase(UObject* WorldCont
 	Proxy->Request.CatalogVersion = InCatalogVersion;
 	Proxy->Request.StoreId = InStoreId;
 	for (const FBPClientItemPuchaseRequest& elem : InItems)
-	{
-		Proxy->Request.Items.Add(elem.Data);
-	}
+    {
+        Proxy->Request.Items.Add(elem.Data);
+    }
 
 	
 

@@ -21,7 +21,7 @@ public:
 	
 	// Updates the title-specific custom data for the user's character which cannot  be accessed by the client
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Character Data")
-	static UPFServerUpdateCharacterInternalData* UpdateCharacterInternalData(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InPlayFabId, const FString& InCharacterId, const FString& InData, const TArray<FString>& InKeysToRemove);
+	static UPFServerUpdateCharacterInternalData* UpdateCharacterInternalData(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InPlayFabId, const FString& InCharacterId, const FString& InData);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

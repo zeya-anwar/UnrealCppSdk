@@ -14,9 +14,9 @@ UPFServerAwardSteamAchievement* UPFServerAwardSteamAchievement::AwardSteamAchiev
 	UPFServerAwardSteamAchievement* Proxy = NewObject<UPFServerAwardSteamAchievement>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	for (const FBPServerAwardSteamAchievementItem& elem : InAchievements)
-	{
-		Proxy->Request.Achievements.Add(elem.Data);
-	}
+    {
+        Proxy->Request.Achievements.Add(elem.Data);
+    }
 
 	
 

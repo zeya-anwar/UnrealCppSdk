@@ -10,7 +10,7 @@ using namespace PlayFab::MatchmakerModels;
 
 UPlayFabMatchmakerAPI::UPlayFabMatchmakerAPI()
 {
-   
+
 }
 
 UPlayFabMatchmakerAPI::~UPlayFabMatchmakerAPI()
@@ -26,14 +26,9 @@ bool UPlayFabMatchmakerAPI::AuthUser(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Matchmaker/AuthUser")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabMatchmakerAPI::OnAuthUserResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Matchmaker/AuthUser")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabMatchmakerAPI::OnAuthUserResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -41,17 +36,16 @@ void UPlayFabMatchmakerAPI::OnAuthUserResult(FHttpRequestPtr HttpRequest, FHttpR
 {
     MatchmakerModels::FAuthUserResponse outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabMatchmakerAPI::PlayerJoined(
     MatchmakerModels::FPlayerJoinedRequest& request,
@@ -59,14 +53,9 @@ bool UPlayFabMatchmakerAPI::PlayerJoined(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Matchmaker/PlayerJoined")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabMatchmakerAPI::OnPlayerJoinedResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Matchmaker/PlayerJoined")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabMatchmakerAPI::OnPlayerJoinedResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -74,17 +63,16 @@ void UPlayFabMatchmakerAPI::OnPlayerJoinedResult(FHttpRequestPtr HttpRequest, FH
 {
     MatchmakerModels::FPlayerJoinedResponse outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabMatchmakerAPI::PlayerLeft(
     MatchmakerModels::FPlayerLeftRequest& request,
@@ -92,14 +80,9 @@ bool UPlayFabMatchmakerAPI::PlayerLeft(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Matchmaker/PlayerLeft")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabMatchmakerAPI::OnPlayerLeftResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Matchmaker/PlayerLeft")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabMatchmakerAPI::OnPlayerLeftResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -107,17 +90,16 @@ void UPlayFabMatchmakerAPI::OnPlayerLeftResult(FHttpRequestPtr HttpRequest, FHtt
 {
     MatchmakerModels::FPlayerLeftResponse outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabMatchmakerAPI::StartGame(
     MatchmakerModels::FStartGameRequest& request,
@@ -125,14 +107,9 @@ bool UPlayFabMatchmakerAPI::StartGame(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Matchmaker/StartGame")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabMatchmakerAPI::OnStartGameResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Matchmaker/StartGame")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabMatchmakerAPI::OnStartGameResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -140,17 +117,16 @@ void UPlayFabMatchmakerAPI::OnStartGameResult(FHttpRequestPtr HttpRequest, FHttp
 {
     MatchmakerModels::FStartGameResponse outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabMatchmakerAPI::UserInfo(
     MatchmakerModels::FUserInfoRequest& request,
@@ -158,14 +134,9 @@ bool UPlayFabMatchmakerAPI::UserInfo(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Matchmaker/UserInfo")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabMatchmakerAPI::OnUserInfoResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Matchmaker/UserInfo")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabMatchmakerAPI::OnUserInfoResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -173,17 +144,14 @@ void UPlayFabMatchmakerAPI::OnUserInfoResult(FHttpRequestPtr HttpRequest, FHttpR
 {
     MatchmakerModels::FUserInfoResponse outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
-
-
 

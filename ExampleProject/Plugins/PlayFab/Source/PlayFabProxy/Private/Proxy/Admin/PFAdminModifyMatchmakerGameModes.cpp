@@ -15,9 +15,9 @@ UPFAdminModifyMatchmakerGameModes* UPFAdminModifyMatchmakerGameModes::ModifyMatc
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.BuildVersion = InBuildVersion;
 	for (const FBPAdminGameModeInfo& elem : InGameModes)
-	{
-		Proxy->Request.GameModes.Add(elem.Data);
-	}
+    {
+        Proxy->Request.GameModes.Add(elem.Data);
+    }
 
 	
 

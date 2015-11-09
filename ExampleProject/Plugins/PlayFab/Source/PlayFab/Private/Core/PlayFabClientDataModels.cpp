@@ -23,15 +23,15 @@ void PlayFab::ClientModels::FAcceptTradeRequest::writeJSON(JsonWriter& writer) c
     writer->WriteIdentifierPrefix(TEXT("TradeId")); writer->WriteValue(TradeId);
 	
     if(AcceptedInventoryInstanceIds.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("AcceptedInventoryInstanceIds"));
-	
-		for (const FString& item : AcceptedInventoryInstanceIds)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("AcceptedInventoryInstanceIds"));
+    
+        for (const FString& item : AcceptedInventoryInstanceIds)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -42,18 +42,18 @@ bool PlayFab::ClientModels::FAcceptTradeRequest::readFromValue(const TSharedPtr<
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> OfferingPlayerIdValue = obj->TryGetField(TEXT("OfferingPlayerId"));
-	if (OfferingPlayerIdValue.IsValid()&& !OfferingPlayerIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(OfferingPlayerIdValue->TryGetString(TmpValue)) {OfferingPlayerId = TmpValue; }
-	}
+    if (OfferingPlayerIdValue.IsValid()&& !OfferingPlayerIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(OfferingPlayerIdValue->TryGetString(TmpValue)) {OfferingPlayerId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> TradeIdValue = obj->TryGetField(TEXT("TradeId"));
-	if (TradeIdValue.IsValid()&& !TradeIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(TradeIdValue->TryGetString(TmpValue)) {TradeId = TmpValue; }
-	}
+    if (TradeIdValue.IsValid()&& !TradeIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TradeIdValue->TryGetString(TmpValue)) {TradeId = TmpValue; }
+    }
     
     obj->TryGetStringArrayField(TEXT("AcceptedInventoryInstanceIds"),AcceptedInventoryInstanceIds);
     
@@ -121,61 +121,61 @@ void PlayFab::ClientModels::FTradeInfo::writeJSON(JsonWriter& writer) const
     if(OfferingPlayerId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("OfferingPlayerId")); writer->WriteValue(OfferingPlayerId); }
 	
     if(OfferedInventoryInstanceIds.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("OfferedInventoryInstanceIds"));
-	
-		for (const FString& item : OfferedInventoryInstanceIds)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("OfferedInventoryInstanceIds"));
+    
+        for (const FString& item : OfferedInventoryInstanceIds)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(OfferedCatalogItemIds.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("OfferedCatalogItemIds"));
-	
-		for (const FString& item : OfferedCatalogItemIds)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("OfferedCatalogItemIds"));
+    
+        for (const FString& item : OfferedCatalogItemIds)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(RequestedCatalogItemIds.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("RequestedCatalogItemIds"));
-	
-		for (const FString& item : RequestedCatalogItemIds)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("RequestedCatalogItemIds"));
+    
+        for (const FString& item : RequestedCatalogItemIds)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(AllowedPlayerIds.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("AllowedPlayerIds"));
-	
-		for (const FString& item : AllowedPlayerIds)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("AllowedPlayerIds"));
+    
+        for (const FString& item : AllowedPlayerIds)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(AcceptedPlayerId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("AcceptedPlayerId")); writer->WriteValue(AcceptedPlayerId); }
 	
     if(AcceptedInventoryInstanceIds.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("AcceptedInventoryInstanceIds"));
-	
-		for (const FString& item : AcceptedInventoryInstanceIds)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("AcceptedInventoryInstanceIds"));
+    
+        for (const FString& item : AcceptedInventoryInstanceIds)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(OpenedAt.notNull()) { writer->WriteIdentifierPrefix(TEXT("OpenedAt")); writeDatetime(OpenedAt, writer); }
 	
@@ -196,18 +196,18 @@ bool PlayFab::ClientModels::FTradeInfo::readFromValue(const TSharedPtr<FJsonObje
     Status = readTradeStatusFromValue(obj->TryGetField(TEXT("Status")));
     
     const TSharedPtr<FJsonValue> TradeIdValue = obj->TryGetField(TEXT("TradeId"));
-	if (TradeIdValue.IsValid()&& !TradeIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(TradeIdValue->TryGetString(TmpValue)) {TradeId = TmpValue; }
-	}
+    if (TradeIdValue.IsValid()&& !TradeIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TradeIdValue->TryGetString(TmpValue)) {TradeId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> OfferingPlayerIdValue = obj->TryGetField(TEXT("OfferingPlayerId"));
-	if (OfferingPlayerIdValue.IsValid()&& !OfferingPlayerIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(OfferingPlayerIdValue->TryGetString(TmpValue)) {OfferingPlayerId = TmpValue; }
-	}
+    if (OfferingPlayerIdValue.IsValid()&& !OfferingPlayerIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(OfferingPlayerIdValue->TryGetString(TmpValue)) {OfferingPlayerId = TmpValue; }
+    }
     
     obj->TryGetStringArrayField(TEXT("OfferedInventoryInstanceIds"),OfferedInventoryInstanceIds);
     
@@ -218,37 +218,37 @@ bool PlayFab::ClientModels::FTradeInfo::readFromValue(const TSharedPtr<FJsonObje
     obj->TryGetStringArrayField(TEXT("AllowedPlayerIds"),AllowedPlayerIds);
     
     const TSharedPtr<FJsonValue> AcceptedPlayerIdValue = obj->TryGetField(TEXT("AcceptedPlayerId"));
-	if (AcceptedPlayerIdValue.IsValid()&& !AcceptedPlayerIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(AcceptedPlayerIdValue->TryGetString(TmpValue)) {AcceptedPlayerId = TmpValue; }
-	}
+    if (AcceptedPlayerIdValue.IsValid()&& !AcceptedPlayerIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(AcceptedPlayerIdValue->TryGetString(TmpValue)) {AcceptedPlayerId = TmpValue; }
+    }
     
     obj->TryGetStringArrayField(TEXT("AcceptedInventoryInstanceIds"),AcceptedInventoryInstanceIds);
     
     const TSharedPtr<FJsonValue> OpenedAtValue = obj->TryGetField(TEXT("OpenedAt"));
-	if(OpenedAtValue.IsValid())
-	{
-		OpenedAt = readDatetime(OpenedAtValue);
-	}
+    if(OpenedAtValue.IsValid())
+    {
+        OpenedAt = readDatetime(OpenedAtValue);
+    }
     
     const TSharedPtr<FJsonValue> FilledAtValue = obj->TryGetField(TEXT("FilledAt"));
-	if(FilledAtValue.IsValid())
-	{
-		FilledAt = readDatetime(FilledAtValue);
-	}
+    if(FilledAtValue.IsValid())
+    {
+        FilledAt = readDatetime(FilledAtValue);
+    }
     
     const TSharedPtr<FJsonValue> CancelledAtValue = obj->TryGetField(TEXT("CancelledAt"));
-	if(CancelledAtValue.IsValid())
-	{
-		CancelledAt = readDatetime(CancelledAtValue);
-	}
+    if(CancelledAtValue.IsValid())
+    {
+        CancelledAt = readDatetime(CancelledAtValue);
+    }
     
     const TSharedPtr<FJsonValue> InvalidatedAtValue = obj->TryGetField(TEXT("InvalidatedAt"));
-	if(InvalidatedAtValue.IsValid())
-	{
-		InvalidatedAt = readDatetime(InvalidatedAtValue);
-	}
+    if(InvalidatedAtValue.IsValid())
+    {
+        InvalidatedAt = readDatetime(InvalidatedAtValue);
+    }
     
     
     return HasSucceeded;
@@ -276,10 +276,10 @@ bool PlayFab::ClientModels::FAcceptTradeResponse::readFromValue(const TSharedPtr
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> TradeValue = obj->TryGetField(TEXT("Trade"));
-	if (TradeValue.IsValid()&& !TradeValue->IsNull())
-	{
-		Trade = MakeShareable(new FTradeInfo(TradeValue->AsObject()));
-	}
+    if (TradeValue.IsValid()&& !TradeValue->IsNull())
+    {
+        Trade = MakeShareable(new FTradeInfo(TradeValue->AsObject()));
+    }
     
     
     return HasSucceeded;
@@ -312,32 +312,32 @@ bool PlayFab::ClientModels::FAddFriendRequest::readFromValue(const TSharedPtr<FJ
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> FriendPlayFabIdValue = obj->TryGetField(TEXT("FriendPlayFabId"));
-	if (FriendPlayFabIdValue.IsValid()&& !FriendPlayFabIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(FriendPlayFabIdValue->TryGetString(TmpValue)) {FriendPlayFabId = TmpValue; }
-	}
+    if (FriendPlayFabIdValue.IsValid()&& !FriendPlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(FriendPlayFabIdValue->TryGetString(TmpValue)) {FriendPlayFabId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> FriendUsernameValue = obj->TryGetField(TEXT("FriendUsername"));
-	if (FriendUsernameValue.IsValid()&& !FriendUsernameValue->IsNull())
-	{
-		FString TmpValue;
-		if(FriendUsernameValue->TryGetString(TmpValue)) {FriendUsername = TmpValue; }
-	}
+    if (FriendUsernameValue.IsValid()&& !FriendUsernameValue->IsNull())
+    {
+        FString TmpValue;
+        if(FriendUsernameValue->TryGetString(TmpValue)) {FriendUsername = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> FriendEmailValue = obj->TryGetField(TEXT("FriendEmail"));
-	if (FriendEmailValue.IsValid()&& !FriendEmailValue->IsNull())
-	{
-		FString TmpValue;
-		if(FriendEmailValue->TryGetString(TmpValue)) {FriendEmail = TmpValue; }
-	}
+    if (FriendEmailValue.IsValid()&& !FriendEmailValue->IsNull())
+    {
+        FString TmpValue;
+        if(FriendEmailValue->TryGetString(TmpValue)) {FriendEmail = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> FriendTitleDisplayNameValue = obj->TryGetField(TEXT("FriendTitleDisplayName"));
-	if (FriendTitleDisplayNameValue.IsValid()&& !FriendTitleDisplayNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(FriendTitleDisplayNameValue->TryGetString(TmpValue)) {FriendTitleDisplayName = TmpValue; }
-	}
+    if (FriendTitleDisplayNameValue.IsValid()&& !FriendTitleDisplayNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(FriendTitleDisplayNameValue->TryGetString(TmpValue)) {FriendTitleDisplayName = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -364,11 +364,11 @@ bool PlayFab::ClientModels::FAddFriendResult::readFromValue(const TSharedPtr<FJs
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> CreatedValue = obj->TryGetField(TEXT("Created"));
-	if (CreatedValue.IsValid()&& !CreatedValue->IsNull())
-	{
-		bool TmpValue;
-		if(CreatedValue->TryGetBool(TmpValue)) {Created = TmpValue; }
-	}
+    if (CreatedValue.IsValid()&& !CreatedValue->IsNull())
+    {
+        bool TmpValue;
+        if(CreatedValue->TryGetBool(TmpValue)) {Created = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -387,14 +387,14 @@ void PlayFab::ClientModels::FAddSharedGroupMembersRequest::writeJSON(JsonWriter&
     writer->WriteIdentifierPrefix(TEXT("SharedGroupId")); writer->WriteValue(SharedGroupId);
 	
     
-		writer->WriteArrayStart(TEXT("PlayFabIds"));
-	
-		for (const FString& item : PlayFabIds)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	
+        writer->WriteArrayStart(TEXT("PlayFabIds"));
+    
+        for (const FString& item : PlayFabIds)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+    
 	
     
     writer->WriteObjectEnd();
@@ -405,11 +405,11 @@ bool PlayFab::ClientModels::FAddSharedGroupMembersRequest::readFromValue(const T
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> SharedGroupIdValue = obj->TryGetField(TEXT("SharedGroupId"));
-	if (SharedGroupIdValue.IsValid()&& !SharedGroupIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(SharedGroupIdValue->TryGetString(TmpValue)) {SharedGroupId = TmpValue; }
-	}
+    if (SharedGroupIdValue.IsValid()&& !SharedGroupIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(SharedGroupIdValue->TryGetString(TmpValue)) {SharedGroupId = TmpValue; }
+    }
     
     HasSucceeded &= obj->TryGetStringArrayField(TEXT("PlayFabIds"),PlayFabIds);
     
@@ -464,25 +464,25 @@ bool PlayFab::ClientModels::FAddUsernamePasswordRequest::readFromValue(const TSh
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> UsernameValue = obj->TryGetField(TEXT("Username"));
-	if (UsernameValue.IsValid()&& !UsernameValue->IsNull())
-	{
-		FString TmpValue;
-		if(UsernameValue->TryGetString(TmpValue)) {Username = TmpValue; }
-	}
+    if (UsernameValue.IsValid()&& !UsernameValue->IsNull())
+    {
+        FString TmpValue;
+        if(UsernameValue->TryGetString(TmpValue)) {Username = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> EmailValue = obj->TryGetField(TEXT("Email"));
-	if (EmailValue.IsValid()&& !EmailValue->IsNull())
-	{
-		FString TmpValue;
-		if(EmailValue->TryGetString(TmpValue)) {Email = TmpValue; }
-	}
+    if (EmailValue.IsValid()&& !EmailValue->IsNull())
+    {
+        FString TmpValue;
+        if(EmailValue->TryGetString(TmpValue)) {Email = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PasswordValue = obj->TryGetField(TEXT("Password"));
-	if (PasswordValue.IsValid()&& !PasswordValue->IsNull())
-	{
-		FString TmpValue;
-		if(PasswordValue->TryGetString(TmpValue)) {Password = TmpValue; }
-	}
+    if (PasswordValue.IsValid()&& !PasswordValue->IsNull())
+    {
+        FString TmpValue;
+        if(PasswordValue->TryGetString(TmpValue)) {Password = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -509,11 +509,11 @@ bool PlayFab::ClientModels::FAddUsernamePasswordResult::readFromValue(const TSha
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> UsernameValue = obj->TryGetField(TEXT("Username"));
-	if (UsernameValue.IsValid()&& !UsernameValue->IsNull())
-	{
-		FString TmpValue;
-		if(UsernameValue->TryGetString(TmpValue)) {Username = TmpValue; }
-	}
+    if (UsernameValue.IsValid()&& !UsernameValue->IsNull())
+    {
+        FString TmpValue;
+        if(UsernameValue->TryGetString(TmpValue)) {Username = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -542,18 +542,18 @@ bool PlayFab::ClientModels::FAddUserVirtualCurrencyRequest::readFromValue(const 
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> VirtualCurrencyValue = obj->TryGetField(TEXT("VirtualCurrency"));
-	if (VirtualCurrencyValue.IsValid()&& !VirtualCurrencyValue->IsNull())
-	{
-		FString TmpValue;
-		if(VirtualCurrencyValue->TryGetString(TmpValue)) {VirtualCurrency = TmpValue; }
-	}
+    if (VirtualCurrencyValue.IsValid()&& !VirtualCurrencyValue->IsNull())
+    {
+        FString TmpValue;
+        if(VirtualCurrencyValue->TryGetString(TmpValue)) {VirtualCurrency = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> AmountValue = obj->TryGetField(TEXT("Amount"));
-	if (AmountValue.IsValid()&& !AmountValue->IsNull())
-	{
-		int32 TmpValue;
-		if(AmountValue->TryGetNumber(TmpValue)) {Amount = TmpValue; }
-	}
+    if (AmountValue.IsValid()&& !AmountValue->IsNull())
+    {
+        int32 TmpValue;
+        if(AmountValue->TryGetNumber(TmpValue)) {Amount = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -584,25 +584,25 @@ bool PlayFab::ClientModels::FAndroidDevicePushNotificationRegistrationRequest::r
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> DeviceTokenValue = obj->TryGetField(TEXT("DeviceToken"));
-	if (DeviceTokenValue.IsValid()&& !DeviceTokenValue->IsNull())
-	{
-		FString TmpValue;
-		if(DeviceTokenValue->TryGetString(TmpValue)) {DeviceToken = TmpValue; }
-	}
+    if (DeviceTokenValue.IsValid()&& !DeviceTokenValue->IsNull())
+    {
+        FString TmpValue;
+        if(DeviceTokenValue->TryGetString(TmpValue)) {DeviceToken = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> SendPushNotificationConfirmationValue = obj->TryGetField(TEXT("SendPushNotificationConfirmation"));
-	if (SendPushNotificationConfirmationValue.IsValid()&& !SendPushNotificationConfirmationValue->IsNull())
-	{
-		bool TmpValue;
-		if(SendPushNotificationConfirmationValue->TryGetBool(TmpValue)) {SendPushNotificationConfirmation = TmpValue; }
-	}
+    if (SendPushNotificationConfirmationValue.IsValid()&& !SendPushNotificationConfirmationValue->IsNull())
+    {
+        bool TmpValue;
+        if(SendPushNotificationConfirmationValue->TryGetBool(TmpValue)) {SendPushNotificationConfirmation = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ConfirmationMessegeValue = obj->TryGetField(TEXT("ConfirmationMessege"));
-	if (ConfirmationMessegeValue.IsValid()&& !ConfirmationMessegeValue->IsNull())
-	{
-		FString TmpValue;
-		if(ConfirmationMessegeValue->TryGetString(TmpValue)) {ConfirmationMessege = TmpValue; }
-	}
+    if (ConfirmationMessegeValue.IsValid()&& !ConfirmationMessegeValue->IsNull())
+    {
+        FString TmpValue;
+        if(ConfirmationMessegeValue->TryGetString(TmpValue)) {ConfirmationMessege = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -651,11 +651,11 @@ bool PlayFab::ClientModels::FCancelTradeRequest::readFromValue(const TSharedPtr<
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> TradeIdValue = obj->TryGetField(TEXT("TradeId"));
-	if (TradeIdValue.IsValid()&& !TradeIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(TradeIdValue->TryGetString(TmpValue)) {TradeId = TmpValue; }
-	}
+    if (TradeIdValue.IsValid()&& !TradeIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TradeIdValue->TryGetString(TmpValue)) {TradeId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -683,10 +683,10 @@ bool PlayFab::ClientModels::FCancelTradeResponse::readFromValue(const TSharedPtr
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> TradeValue = obj->TryGetField(TEXT("Trade"));
-	if (TradeValue.IsValid()&& !TradeValue->IsNull())
-	{
-		Trade = MakeShareable(new FTradeInfo(TradeValue->AsObject()));
-	}
+    if (TradeValue.IsValid()&& !TradeValue->IsNull())
+    {
+        Trade = MakeShareable(new FTradeInfo(TradeValue->AsObject()));
+    }
     
     
     return HasSucceeded;
@@ -713,37 +713,37 @@ void PlayFab::ClientModels::FCartItem::writeJSON(JsonWriter& writer) const
     if(Description.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Description")); writer->WriteValue(Description); }
 	
     if(VirtualCurrencyPrices.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("VirtualCurrencyPrices"));
-		for (TMap<FString, uint32>::TConstIterator It(VirtualCurrencyPrices); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			writer->WriteValue(static_cast<int64>((*It).Value));
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("VirtualCurrencyPrices"));
+        for (TMap<FString, uint32>::TConstIterator It(VirtualCurrencyPrices); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue(static_cast<int64>((*It).Value));
+        }
+        writer->WriteObjectEnd();
+     }
 	
     if(RealCurrencyPrices.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("RealCurrencyPrices"));
-		for (TMap<FString, uint32>::TConstIterator It(RealCurrencyPrices); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			writer->WriteValue(static_cast<int64>((*It).Value));
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("RealCurrencyPrices"));
+        for (TMap<FString, uint32>::TConstIterator It(RealCurrencyPrices); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue(static_cast<int64>((*It).Value));
+        }
+        writer->WriteObjectEnd();
+     }
 	
     if(VCAmount.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("VCAmount"));
-		for (TMap<FString, uint32>::TConstIterator It(VCAmount); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			writer->WriteValue(static_cast<int64>((*It).Value));
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("VCAmount"));
+        for (TMap<FString, uint32>::TConstIterator It(VCAmount); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue(static_cast<int64>((*It).Value));
+        }
+        writer->WriteObjectEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -754,69 +754,69 @@ bool PlayFab::ClientModels::FCartItem::readFromValue(const TSharedPtr<FJsonObjec
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> ItemIdValue = obj->TryGetField(TEXT("ItemId"));
-	if (ItemIdValue.IsValid()&& !ItemIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(ItemIdValue->TryGetString(TmpValue)) {ItemId = TmpValue; }
-	}
+    if (ItemIdValue.IsValid()&& !ItemIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ItemIdValue->TryGetString(TmpValue)) {ItemId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ItemClassValue = obj->TryGetField(TEXT("ItemClass"));
-	if (ItemClassValue.IsValid()&& !ItemClassValue->IsNull())
-	{
-		FString TmpValue;
-		if(ItemClassValue->TryGetString(TmpValue)) {ItemClass = TmpValue; }
-	}
+    if (ItemClassValue.IsValid()&& !ItemClassValue->IsNull())
+    {
+        FString TmpValue;
+        if(ItemClassValue->TryGetString(TmpValue)) {ItemClass = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ItemInstanceIdValue = obj->TryGetField(TEXT("ItemInstanceId"));
-	if (ItemInstanceIdValue.IsValid()&& !ItemInstanceIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(ItemInstanceIdValue->TryGetString(TmpValue)) {ItemInstanceId = TmpValue; }
-	}
+    if (ItemInstanceIdValue.IsValid()&& !ItemInstanceIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ItemInstanceIdValue->TryGetString(TmpValue)) {ItemInstanceId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> DisplayNameValue = obj->TryGetField(TEXT("DisplayName"));
-	if (DisplayNameValue.IsValid()&& !DisplayNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(DisplayNameValue->TryGetString(TmpValue)) {DisplayName = TmpValue; }
-	}
+    if (DisplayNameValue.IsValid()&& !DisplayNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(DisplayNameValue->TryGetString(TmpValue)) {DisplayName = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> DescriptionValue = obj->TryGetField(TEXT("Description"));
-	if (DescriptionValue.IsValid()&& !DescriptionValue->IsNull())
-	{
-		FString TmpValue;
-		if(DescriptionValue->TryGetString(TmpValue)) {Description = TmpValue; }
-	}
+    if (DescriptionValue.IsValid()&& !DescriptionValue->IsNull())
+    {
+        FString TmpValue;
+        if(DescriptionValue->TryGetString(TmpValue)) {Description = TmpValue; }
+    }
     
     const TSharedPtr<FJsonObject>* VirtualCurrencyPricesObject;
-	if (obj->TryGetObjectField(TEXT("VirtualCurrencyPrices"), VirtualCurrencyPricesObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyPricesObject)->Values); It; ++It)
-		{
-			uint32 TmpValue; It.Value()->TryGetNumber(TmpValue);
-			VirtualCurrencyPrices.Add(It.Key(), TmpValue);
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("VirtualCurrencyPrices"), VirtualCurrencyPricesObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyPricesObject)->Values); It; ++It)
+        {
+            uint32 TmpValue; It.Value()->TryGetNumber(TmpValue);
+            VirtualCurrencyPrices.Add(It.Key(), TmpValue);
+        }
+    }
     
     const TSharedPtr<FJsonObject>* RealCurrencyPricesObject;
-	if (obj->TryGetObjectField(TEXT("RealCurrencyPrices"), RealCurrencyPricesObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*RealCurrencyPricesObject)->Values); It; ++It)
-		{
-			uint32 TmpValue; It.Value()->TryGetNumber(TmpValue);
-			RealCurrencyPrices.Add(It.Key(), TmpValue);
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("RealCurrencyPrices"), RealCurrencyPricesObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*RealCurrencyPricesObject)->Values); It; ++It)
+        {
+            uint32 TmpValue; It.Value()->TryGetNumber(TmpValue);
+            RealCurrencyPrices.Add(It.Key(), TmpValue);
+        }
+    }
     
     const TSharedPtr<FJsonObject>* VCAmountObject;
-	if (obj->TryGetObjectField(TEXT("VCAmount"), VCAmountObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VCAmountObject)->Values); It; ++It)
-		{
-			uint32 TmpValue; It.Value()->TryGetNumber(TmpValue);
-			VCAmount.Add(It.Key(), TmpValue);
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("VCAmount"), VCAmountObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VCAmountObject)->Values); It; ++It)
+        {
+            uint32 TmpValue; It.Value()->TryGetNumber(TmpValue);
+            VCAmount.Add(It.Key(), TmpValue);
+        }
+    }
     
     
     return HasSucceeded;
@@ -847,25 +847,25 @@ bool PlayFab::ClientModels::FCatalogItemConsumableInfo::readFromValue(const TSha
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> UsageCountValue = obj->TryGetField(TEXT("UsageCount"));
-	if (UsageCountValue.IsValid()&& !UsageCountValue->IsNull())
-	{
-		uint32 TmpValue;
-		if(UsageCountValue->TryGetNumber(TmpValue)) {UsageCount = TmpValue; }
-	}
+    if (UsageCountValue.IsValid()&& !UsageCountValue->IsNull())
+    {
+        uint32 TmpValue;
+        if(UsageCountValue->TryGetNumber(TmpValue)) {UsageCount = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> UsagePeriodValue = obj->TryGetField(TEXT("UsagePeriod"));
-	if (UsagePeriodValue.IsValid()&& !UsagePeriodValue->IsNull())
-	{
-		uint32 TmpValue;
-		if(UsagePeriodValue->TryGetNumber(TmpValue)) {UsagePeriod = TmpValue; }
-	}
+    if (UsagePeriodValue.IsValid()&& !UsagePeriodValue->IsNull())
+    {
+        uint32 TmpValue;
+        if(UsagePeriodValue->TryGetNumber(TmpValue)) {UsagePeriod = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> UsagePeriodGroupValue = obj->TryGetField(TEXT("UsagePeriodGroup"));
-	if (UsagePeriodGroupValue.IsValid()&& !UsagePeriodGroupValue->IsNull())
-	{
-		FString TmpValue;
-		if(UsagePeriodGroupValue->TryGetString(TmpValue)) {UsagePeriodGroup = TmpValue; }
-	}
+    if (UsagePeriodGroupValue.IsValid()&& !UsagePeriodGroupValue->IsNull())
+    {
+        FString TmpValue;
+        if(UsagePeriodGroupValue->TryGetString(TmpValue)) {UsagePeriodGroup = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -884,37 +884,37 @@ void PlayFab::ClientModels::FCatalogItemContainerInfo::writeJSON(JsonWriter& wri
     if(KeyItemId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("KeyItemId")); writer->WriteValue(KeyItemId); }
 	
     if(ItemContents.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("ItemContents"));
-	
-		for (const FString& item : ItemContents)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("ItemContents"));
+    
+        for (const FString& item : ItemContents)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(ResultTableContents.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("ResultTableContents"));
-	
-		for (const FString& item : ResultTableContents)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("ResultTableContents"));
+    
+        for (const FString& item : ResultTableContents)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(VirtualCurrencyContents.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("VirtualCurrencyContents"));
-		for (TMap<FString, uint32>::TConstIterator It(VirtualCurrencyContents); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			writer->WriteValue(static_cast<int64>((*It).Value));
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("VirtualCurrencyContents"));
+        for (TMap<FString, uint32>::TConstIterator It(VirtualCurrencyContents); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue(static_cast<int64>((*It).Value));
+        }
+        writer->WriteObjectEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -925,25 +925,25 @@ bool PlayFab::ClientModels::FCatalogItemContainerInfo::readFromValue(const TShar
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> KeyItemIdValue = obj->TryGetField(TEXT("KeyItemId"));
-	if (KeyItemIdValue.IsValid()&& !KeyItemIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(KeyItemIdValue->TryGetString(TmpValue)) {KeyItemId = TmpValue; }
-	}
+    if (KeyItemIdValue.IsValid()&& !KeyItemIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(KeyItemIdValue->TryGetString(TmpValue)) {KeyItemId = TmpValue; }
+    }
     
     obj->TryGetStringArrayField(TEXT("ItemContents"),ItemContents);
     
     obj->TryGetStringArrayField(TEXT("ResultTableContents"),ResultTableContents);
     
     const TSharedPtr<FJsonObject>* VirtualCurrencyContentsObject;
-	if (obj->TryGetObjectField(TEXT("VirtualCurrencyContents"), VirtualCurrencyContentsObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyContentsObject)->Values); It; ++It)
-		{
-			uint32 TmpValue; It.Value()->TryGetNumber(TmpValue);
-			VirtualCurrencyContents.Add(It.Key(), TmpValue);
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("VirtualCurrencyContents"), VirtualCurrencyContentsObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyContentsObject)->Values); It; ++It)
+        {
+            uint32 TmpValue; It.Value()->TryGetNumber(TmpValue);
+            VirtualCurrencyContents.Add(It.Key(), TmpValue);
+        }
+    }
     
     
     return HasSucceeded;
@@ -960,37 +960,37 @@ void PlayFab::ClientModels::FCatalogItemBundleInfo::writeJSON(JsonWriter& writer
     writer->WriteObjectStart();
     
     if(BundledItems.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("BundledItems"));
-	
-		for (const FString& item : BundledItems)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("BundledItems"));
+    
+        for (const FString& item : BundledItems)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(BundledResultTables.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("BundledResultTables"));
-	
-		for (const FString& item : BundledResultTables)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("BundledResultTables"));
+    
+        for (const FString& item : BundledResultTables)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(BundledVirtualCurrencies.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("BundledVirtualCurrencies"));
-		for (TMap<FString, uint32>::TConstIterator It(BundledVirtualCurrencies); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			writer->WriteValue(static_cast<int64>((*It).Value));
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("BundledVirtualCurrencies"));
+        for (TMap<FString, uint32>::TConstIterator It(BundledVirtualCurrencies); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue(static_cast<int64>((*It).Value));
+        }
+        writer->WriteObjectEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -1005,14 +1005,14 @@ bool PlayFab::ClientModels::FCatalogItemBundleInfo::readFromValue(const TSharedP
     obj->TryGetStringArrayField(TEXT("BundledResultTables"),BundledResultTables);
     
     const TSharedPtr<FJsonObject>* BundledVirtualCurrenciesObject;
-	if (obj->TryGetObjectField(TEXT("BundledVirtualCurrencies"), BundledVirtualCurrenciesObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*BundledVirtualCurrenciesObject)->Values); It; ++It)
-		{
-			uint32 TmpValue; It.Value()->TryGetNumber(TmpValue);
-			BundledVirtualCurrencies.Add(It.Key(), TmpValue);
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("BundledVirtualCurrencies"), BundledVirtualCurrenciesObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*BundledVirtualCurrenciesObject)->Values); It; ++It)
+        {
+            uint32 TmpValue; It.Value()->TryGetNumber(TmpValue);
+            BundledVirtualCurrencies.Add(It.Key(), TmpValue);
+        }
+    }
     
     
     return HasSucceeded;
@@ -1042,37 +1042,37 @@ void PlayFab::ClientModels::FCatalogItem::writeJSON(JsonWriter& writer) const
     if(Description.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Description")); writer->WriteValue(Description); }
 	
     if(VirtualCurrencyPrices.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("VirtualCurrencyPrices"));
-		for (TMap<FString, uint32>::TConstIterator It(VirtualCurrencyPrices); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			writer->WriteValue(static_cast<int64>((*It).Value));
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("VirtualCurrencyPrices"));
+        for (TMap<FString, uint32>::TConstIterator It(VirtualCurrencyPrices); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue(static_cast<int64>((*It).Value));
+        }
+        writer->WriteObjectEnd();
+     }
 	
     if(RealCurrencyPrices.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("RealCurrencyPrices"));
-		for (TMap<FString, uint32>::TConstIterator It(RealCurrencyPrices); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			writer->WriteValue(static_cast<int64>((*It).Value));
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("RealCurrencyPrices"));
+        for (TMap<FString, uint32>::TConstIterator It(RealCurrencyPrices); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue(static_cast<int64>((*It).Value));
+        }
+        writer->WriteObjectEnd();
+     }
 	
     if(Tags.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Tags"));
-	
-		for (const FString& item : Tags)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Tags"));
+    
+        for (const FString& item : Tags)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(CustomData.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CustomData")); writer->WriteValue(CustomData); }
 	
@@ -1099,114 +1099,114 @@ bool PlayFab::ClientModels::FCatalogItem::readFromValue(const TSharedPtr<FJsonOb
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> ItemIdValue = obj->TryGetField(TEXT("ItemId"));
-	if (ItemIdValue.IsValid()&& !ItemIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(ItemIdValue->TryGetString(TmpValue)) {ItemId = TmpValue; }
-	}
+    if (ItemIdValue.IsValid()&& !ItemIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ItemIdValue->TryGetString(TmpValue)) {ItemId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ItemClassValue = obj->TryGetField(TEXT("ItemClass"));
-	if (ItemClassValue.IsValid()&& !ItemClassValue->IsNull())
-	{
-		FString TmpValue;
-		if(ItemClassValue->TryGetString(TmpValue)) {ItemClass = TmpValue; }
-	}
+    if (ItemClassValue.IsValid()&& !ItemClassValue->IsNull())
+    {
+        FString TmpValue;
+        if(ItemClassValue->TryGetString(TmpValue)) {ItemClass = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CatalogVersionValue = obj->TryGetField(TEXT("CatalogVersion"));
-	if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
-	{
-		FString TmpValue;
-		if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
-	}
+    if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> DisplayNameValue = obj->TryGetField(TEXT("DisplayName"));
-	if (DisplayNameValue.IsValid()&& !DisplayNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(DisplayNameValue->TryGetString(TmpValue)) {DisplayName = TmpValue; }
-	}
+    if (DisplayNameValue.IsValid()&& !DisplayNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(DisplayNameValue->TryGetString(TmpValue)) {DisplayName = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> DescriptionValue = obj->TryGetField(TEXT("Description"));
-	if (DescriptionValue.IsValid()&& !DescriptionValue->IsNull())
-	{
-		FString TmpValue;
-		if(DescriptionValue->TryGetString(TmpValue)) {Description = TmpValue; }
-	}
+    if (DescriptionValue.IsValid()&& !DescriptionValue->IsNull())
+    {
+        FString TmpValue;
+        if(DescriptionValue->TryGetString(TmpValue)) {Description = TmpValue; }
+    }
     
     const TSharedPtr<FJsonObject>* VirtualCurrencyPricesObject;
-	if (obj->TryGetObjectField(TEXT("VirtualCurrencyPrices"), VirtualCurrencyPricesObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyPricesObject)->Values); It; ++It)
-		{
-			uint32 TmpValue; It.Value()->TryGetNumber(TmpValue);
-			VirtualCurrencyPrices.Add(It.Key(), TmpValue);
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("VirtualCurrencyPrices"), VirtualCurrencyPricesObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyPricesObject)->Values); It; ++It)
+        {
+            uint32 TmpValue; It.Value()->TryGetNumber(TmpValue);
+            VirtualCurrencyPrices.Add(It.Key(), TmpValue);
+        }
+    }
     
     const TSharedPtr<FJsonObject>* RealCurrencyPricesObject;
-	if (obj->TryGetObjectField(TEXT("RealCurrencyPrices"), RealCurrencyPricesObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*RealCurrencyPricesObject)->Values); It; ++It)
-		{
-			uint32 TmpValue; It.Value()->TryGetNumber(TmpValue);
-			RealCurrencyPrices.Add(It.Key(), TmpValue);
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("RealCurrencyPrices"), RealCurrencyPricesObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*RealCurrencyPricesObject)->Values); It; ++It)
+        {
+            uint32 TmpValue; It.Value()->TryGetNumber(TmpValue);
+            RealCurrencyPrices.Add(It.Key(), TmpValue);
+        }
+    }
     
     obj->TryGetStringArrayField(TEXT("Tags"),Tags);
     
     const TSharedPtr<FJsonValue> CustomDataValue = obj->TryGetField(TEXT("CustomData"));
-	if (CustomDataValue.IsValid()&& !CustomDataValue->IsNull())
-	{
-		FString TmpValue;
-		if(CustomDataValue->TryGetString(TmpValue)) {CustomData = TmpValue; }
-	}
+    if (CustomDataValue.IsValid()&& !CustomDataValue->IsNull())
+    {
+        FString TmpValue;
+        if(CustomDataValue->TryGetString(TmpValue)) {CustomData = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ConsumableValue = obj->TryGetField(TEXT("Consumable"));
-	if (ConsumableValue.IsValid()&& !ConsumableValue->IsNull())
-	{
-		Consumable = MakeShareable(new FCatalogItemConsumableInfo(ConsumableValue->AsObject()));
-	}
+    if (ConsumableValue.IsValid()&& !ConsumableValue->IsNull())
+    {
+        Consumable = MakeShareable(new FCatalogItemConsumableInfo(ConsumableValue->AsObject()));
+    }
     
     const TSharedPtr<FJsonValue> ContainerValue = obj->TryGetField(TEXT("Container"));
-	if (ContainerValue.IsValid()&& !ContainerValue->IsNull())
-	{
-		Container = MakeShareable(new FCatalogItemContainerInfo(ContainerValue->AsObject()));
-	}
+    if (ContainerValue.IsValid()&& !ContainerValue->IsNull())
+    {
+        Container = MakeShareable(new FCatalogItemContainerInfo(ContainerValue->AsObject()));
+    }
     
     const TSharedPtr<FJsonValue> BundleValue = obj->TryGetField(TEXT("Bundle"));
-	if (BundleValue.IsValid()&& !BundleValue->IsNull())
-	{
-		Bundle = MakeShareable(new FCatalogItemBundleInfo(BundleValue->AsObject()));
-	}
+    if (BundleValue.IsValid()&& !BundleValue->IsNull())
+    {
+        Bundle = MakeShareable(new FCatalogItemBundleInfo(BundleValue->AsObject()));
+    }
     
     const TSharedPtr<FJsonValue> CanBecomeCharacterValue = obj->TryGetField(TEXT("CanBecomeCharacter"));
-	if (CanBecomeCharacterValue.IsValid()&& !CanBecomeCharacterValue->IsNull())
-	{
-		bool TmpValue;
-		if(CanBecomeCharacterValue->TryGetBool(TmpValue)) {CanBecomeCharacter = TmpValue; }
-	}
+    if (CanBecomeCharacterValue.IsValid()&& !CanBecomeCharacterValue->IsNull())
+    {
+        bool TmpValue;
+        if(CanBecomeCharacterValue->TryGetBool(TmpValue)) {CanBecomeCharacter = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> IsStackableValue = obj->TryGetField(TEXT("IsStackable"));
-	if (IsStackableValue.IsValid()&& !IsStackableValue->IsNull())
-	{
-		bool TmpValue;
-		if(IsStackableValue->TryGetBool(TmpValue)) {IsStackable = TmpValue; }
-	}
+    if (IsStackableValue.IsValid()&& !IsStackableValue->IsNull())
+    {
+        bool TmpValue;
+        if(IsStackableValue->TryGetBool(TmpValue)) {IsStackable = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> IsTradableValue = obj->TryGetField(TEXT("IsTradable"));
-	if (IsTradableValue.IsValid()&& !IsTradableValue->IsNull())
-	{
-		bool TmpValue;
-		if(IsTradableValue->TryGetBool(TmpValue)) {IsTradable = TmpValue; }
-	}
+    if (IsTradableValue.IsValid()&& !IsTradableValue->IsNull())
+    {
+        bool TmpValue;
+        if(IsTradableValue->TryGetBool(TmpValue)) {IsTradable = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ItemImageUrlValue = obj->TryGetField(TEXT("ItemImageUrl"));
-	if (ItemImageUrlValue.IsValid()&& !ItemImageUrlValue->IsNull())
-	{
-		FString TmpValue;
-		if(ItemImageUrlValue->TryGetString(TmpValue)) {ItemImageUrl = TmpValue; }
-	}
+    if (ItemImageUrlValue.IsValid()&& !ItemImageUrlValue->IsNull())
+    {
+        FString TmpValue;
+        if(ItemImageUrlValue->TryGetString(TmpValue)) {ItemImageUrl = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -1245,53 +1245,53 @@ bool PlayFab::ClientModels::FCharacterLeaderboardEntry::readFromValue(const TSha
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
-	if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
-	}
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
-	if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
-	}
+    if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CharacterNameValue = obj->TryGetField(TEXT("CharacterName"));
-	if (CharacterNameValue.IsValid()&& !CharacterNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(CharacterNameValue->TryGetString(TmpValue)) {CharacterName = TmpValue; }
-	}
+    if (CharacterNameValue.IsValid()&& !CharacterNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterNameValue->TryGetString(TmpValue)) {CharacterName = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> DisplayNameValue = obj->TryGetField(TEXT("DisplayName"));
-	if (DisplayNameValue.IsValid()&& !DisplayNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(DisplayNameValue->TryGetString(TmpValue)) {DisplayName = TmpValue; }
-	}
+    if (DisplayNameValue.IsValid()&& !DisplayNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(DisplayNameValue->TryGetString(TmpValue)) {DisplayName = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CharacterTypeValue = obj->TryGetField(TEXT("CharacterType"));
-	if (CharacterTypeValue.IsValid()&& !CharacterTypeValue->IsNull())
-	{
-		FString TmpValue;
-		if(CharacterTypeValue->TryGetString(TmpValue)) {CharacterType = TmpValue; }
-	}
+    if (CharacterTypeValue.IsValid()&& !CharacterTypeValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterTypeValue->TryGetString(TmpValue)) {CharacterType = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> StatValueValue = obj->TryGetField(TEXT("StatValue"));
-	if (StatValueValue.IsValid()&& !StatValueValue->IsNull())
-	{
-		int32 TmpValue;
-		if(StatValueValue->TryGetNumber(TmpValue)) {StatValue = TmpValue; }
-	}
+    if (StatValueValue.IsValid()&& !StatValueValue->IsNull())
+    {
+        int32 TmpValue;
+        if(StatValueValue->TryGetNumber(TmpValue)) {StatValue = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PositionValue = obj->TryGetField(TEXT("Position"));
-	if (PositionValue.IsValid()&& !PositionValue->IsNull())
-	{
-		int32 TmpValue;
-		if(PositionValue->TryGetNumber(TmpValue)) {Position = TmpValue; }
-	}
+    if (PositionValue.IsValid()&& !PositionValue->IsNull())
+    {
+        int32 TmpValue;
+        if(PositionValue->TryGetNumber(TmpValue)) {Position = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -1322,25 +1322,25 @@ bool PlayFab::ClientModels::FCharacterResult::readFromValue(const TSharedPtr<FJs
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
-	if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
-	}
+    if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CharacterNameValue = obj->TryGetField(TEXT("CharacterName"));
-	if (CharacterNameValue.IsValid()&& !CharacterNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(CharacterNameValue->TryGetString(TmpValue)) {CharacterName = TmpValue; }
-	}
+    if (CharacterNameValue.IsValid()&& !CharacterNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterNameValue->TryGetString(TmpValue)) {CharacterName = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CharacterTypeValue = obj->TryGetField(TEXT("CharacterType"));
-	if (CharacterTypeValue.IsValid()&& !CharacterTypeValue->IsNull())
-	{
-		FString TmpValue;
-		if(CharacterTypeValue->TryGetString(TmpValue)) {CharacterType = TmpValue; }
-	}
+    if (CharacterTypeValue.IsValid()&& !CharacterTypeValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterTypeValue->TryGetString(TmpValue)) {CharacterType = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -1367,11 +1367,11 @@ bool PlayFab::ClientModels::FConfirmPurchaseRequest::readFromValue(const TShared
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> OrderIdValue = obj->TryGetField(TEXT("OrderId"));
-	if (OrderIdValue.IsValid()&& !OrderIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(OrderIdValue->TryGetString(TmpValue)) {OrderId = TmpValue; }
-	}
+    if (OrderIdValue.IsValid()&& !OrderIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(OrderIdValue->TryGetString(TmpValue)) {OrderId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -1414,26 +1414,26 @@ void PlayFab::ClientModels::FItemInstance::writeJSON(JsonWriter& writer) const
     writer->WriteIdentifierPrefix(TEXT("UnitPrice")); writer->WriteValue(static_cast<int64>(UnitPrice));
 	
     if(BundleContents.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("BundleContents"));
-	
-		for (const FString& item : BundleContents)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("BundleContents"));
+    
+        for (const FString& item : BundleContents)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(CustomData.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("CustomData"));
-		for (TMap<FString, FString>::TConstIterator It(CustomData); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			writer->WriteValue((*It).Value);
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("CustomData"));
+        for (TMap<FString, FString>::TConstIterator It(CustomData); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue((*It).Value);
+        }
+        writer->WriteObjectEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -1444,105 +1444,105 @@ bool PlayFab::ClientModels::FItemInstance::readFromValue(const TSharedPtr<FJsonO
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> ItemIdValue = obj->TryGetField(TEXT("ItemId"));
-	if (ItemIdValue.IsValid()&& !ItemIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(ItemIdValue->TryGetString(TmpValue)) {ItemId = TmpValue; }
-	}
+    if (ItemIdValue.IsValid()&& !ItemIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ItemIdValue->TryGetString(TmpValue)) {ItemId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ItemInstanceIdValue = obj->TryGetField(TEXT("ItemInstanceId"));
-	if (ItemInstanceIdValue.IsValid()&& !ItemInstanceIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(ItemInstanceIdValue->TryGetString(TmpValue)) {ItemInstanceId = TmpValue; }
-	}
+    if (ItemInstanceIdValue.IsValid()&& !ItemInstanceIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ItemInstanceIdValue->TryGetString(TmpValue)) {ItemInstanceId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ItemClassValue = obj->TryGetField(TEXT("ItemClass"));
-	if (ItemClassValue.IsValid()&& !ItemClassValue->IsNull())
-	{
-		FString TmpValue;
-		if(ItemClassValue->TryGetString(TmpValue)) {ItemClass = TmpValue; }
-	}
+    if (ItemClassValue.IsValid()&& !ItemClassValue->IsNull())
+    {
+        FString TmpValue;
+        if(ItemClassValue->TryGetString(TmpValue)) {ItemClass = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PurchaseDateValue = obj->TryGetField(TEXT("PurchaseDate"));
-	if(PurchaseDateValue.IsValid())
-	{
-		PurchaseDate = readDatetime(PurchaseDateValue);
-	}
+    if(PurchaseDateValue.IsValid())
+    {
+        PurchaseDate = readDatetime(PurchaseDateValue);
+    }
     
     const TSharedPtr<FJsonValue> ExpirationValue = obj->TryGetField(TEXT("Expiration"));
-	if(ExpirationValue.IsValid())
-	{
-		Expiration = readDatetime(ExpirationValue);
-	}
+    if(ExpirationValue.IsValid())
+    {
+        Expiration = readDatetime(ExpirationValue);
+    }
     
     const TSharedPtr<FJsonValue> RemainingUsesValue = obj->TryGetField(TEXT("RemainingUses"));
-	if (RemainingUsesValue.IsValid()&& !RemainingUsesValue->IsNull())
-	{
-		int32 TmpValue;
-		if(RemainingUsesValue->TryGetNumber(TmpValue)) {RemainingUses = TmpValue; }
-	}
+    if (RemainingUsesValue.IsValid()&& !RemainingUsesValue->IsNull())
+    {
+        int32 TmpValue;
+        if(RemainingUsesValue->TryGetNumber(TmpValue)) {RemainingUses = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> UsesIncrementedByValue = obj->TryGetField(TEXT("UsesIncrementedBy"));
-	if (UsesIncrementedByValue.IsValid()&& !UsesIncrementedByValue->IsNull())
-	{
-		int32 TmpValue;
-		if(UsesIncrementedByValue->TryGetNumber(TmpValue)) {UsesIncrementedBy = TmpValue; }
-	}
+    if (UsesIncrementedByValue.IsValid()&& !UsesIncrementedByValue->IsNull())
+    {
+        int32 TmpValue;
+        if(UsesIncrementedByValue->TryGetNumber(TmpValue)) {UsesIncrementedBy = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> AnnotationValue = obj->TryGetField(TEXT("Annotation"));
-	if (AnnotationValue.IsValid()&& !AnnotationValue->IsNull())
-	{
-		FString TmpValue;
-		if(AnnotationValue->TryGetString(TmpValue)) {Annotation = TmpValue; }
-	}
+    if (AnnotationValue.IsValid()&& !AnnotationValue->IsNull())
+    {
+        FString TmpValue;
+        if(AnnotationValue->TryGetString(TmpValue)) {Annotation = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CatalogVersionValue = obj->TryGetField(TEXT("CatalogVersion"));
-	if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
-	{
-		FString TmpValue;
-		if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
-	}
+    if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> BundleParentValue = obj->TryGetField(TEXT("BundleParent"));
-	if (BundleParentValue.IsValid()&& !BundleParentValue->IsNull())
-	{
-		FString TmpValue;
-		if(BundleParentValue->TryGetString(TmpValue)) {BundleParent = TmpValue; }
-	}
+    if (BundleParentValue.IsValid()&& !BundleParentValue->IsNull())
+    {
+        FString TmpValue;
+        if(BundleParentValue->TryGetString(TmpValue)) {BundleParent = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> DisplayNameValue = obj->TryGetField(TEXT("DisplayName"));
-	if (DisplayNameValue.IsValid()&& !DisplayNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(DisplayNameValue->TryGetString(TmpValue)) {DisplayName = TmpValue; }
-	}
+    if (DisplayNameValue.IsValid()&& !DisplayNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(DisplayNameValue->TryGetString(TmpValue)) {DisplayName = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> UnitCurrencyValue = obj->TryGetField(TEXT("UnitCurrency"));
-	if (UnitCurrencyValue.IsValid()&& !UnitCurrencyValue->IsNull())
-	{
-		FString TmpValue;
-		if(UnitCurrencyValue->TryGetString(TmpValue)) {UnitCurrency = TmpValue; }
-	}
+    if (UnitCurrencyValue.IsValid()&& !UnitCurrencyValue->IsNull())
+    {
+        FString TmpValue;
+        if(UnitCurrencyValue->TryGetString(TmpValue)) {UnitCurrency = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> UnitPriceValue = obj->TryGetField(TEXT("UnitPrice"));
-	if (UnitPriceValue.IsValid()&& !UnitPriceValue->IsNull())
-	{
-		uint32 TmpValue;
-		if(UnitPriceValue->TryGetNumber(TmpValue)) {UnitPrice = TmpValue; }
-	}
+    if (UnitPriceValue.IsValid()&& !UnitPriceValue->IsNull())
+    {
+        uint32 TmpValue;
+        if(UnitPriceValue->TryGetNumber(TmpValue)) {UnitPrice = TmpValue; }
+    }
     
     obj->TryGetStringArrayField(TEXT("BundleContents"),BundleContents);
     
     const TSharedPtr<FJsonObject>* CustomDataObject;
-	if (obj->TryGetObjectField(TEXT("CustomData"), CustomDataObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*CustomDataObject)->Values); It; ++It)
-		{
-			
-			CustomData.Add(It.Key(), It.Value()->AsString());
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("CustomData"), CustomDataObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*CustomDataObject)->Values); It; ++It)
+        {
+            
+            CustomData.Add(It.Key(), It.Value()->AsString());
+        }
+    }
     
     
     return HasSucceeded;
@@ -1563,15 +1563,15 @@ void PlayFab::ClientModels::FConfirmPurchaseResult::writeJSON(JsonWriter& writer
     writer->WriteIdentifierPrefix(TEXT("PurchaseDate")); writeDatetime(PurchaseDate, writer);
 	
     if(Items.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Items"));
-	
-		for (const FItemInstance& item : Items)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Items"));
+    
+        for (const FItemInstance& item : Items)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -1582,27 +1582,27 @@ bool PlayFab::ClientModels::FConfirmPurchaseResult::readFromValue(const TSharedP
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> OrderIdValue = obj->TryGetField(TEXT("OrderId"));
-	if (OrderIdValue.IsValid()&& !OrderIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(OrderIdValue->TryGetString(TmpValue)) {OrderId = TmpValue; }
-	}
+    if (OrderIdValue.IsValid()&& !OrderIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(OrderIdValue->TryGetString(TmpValue)) {OrderId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PurchaseDateValue = obj->TryGetField(TEXT("PurchaseDate"));
-	if(PurchaseDateValue.IsValid())
-	{
-		PurchaseDate = readDatetime(PurchaseDateValue);
-	}
+    if(PurchaseDateValue.IsValid())
+    {
+        PurchaseDate = readDatetime(PurchaseDateValue);
+    }
     
     {
-		const TArray< TSharedPtr<FJsonValue> >&ItemsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Items"));
-		for (int32 Idx = 0; Idx < ItemsArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = ItemsArray[Idx];
-			
-			Items.Add(FItemInstance(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&ItemsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Items"));
+        for (int32 Idx = 0; Idx < ItemsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = ItemsArray[Idx];
+            
+            Items.Add(FItemInstance(CurrentItem->AsObject()));
+        }
+    }
 
     
     
@@ -1634,25 +1634,25 @@ bool PlayFab::ClientModels::FConsumeItemRequest::readFromValue(const TSharedPtr<
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> ItemInstanceIdValue = obj->TryGetField(TEXT("ItemInstanceId"));
-	if (ItemInstanceIdValue.IsValid()&& !ItemInstanceIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(ItemInstanceIdValue->TryGetString(TmpValue)) {ItemInstanceId = TmpValue; }
-	}
+    if (ItemInstanceIdValue.IsValid()&& !ItemInstanceIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ItemInstanceIdValue->TryGetString(TmpValue)) {ItemInstanceId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ConsumeCountValue = obj->TryGetField(TEXT("ConsumeCount"));
-	if (ConsumeCountValue.IsValid()&& !ConsumeCountValue->IsNull())
-	{
-		int32 TmpValue;
-		if(ConsumeCountValue->TryGetNumber(TmpValue)) {ConsumeCount = TmpValue; }
-	}
+    if (ConsumeCountValue.IsValid()&& !ConsumeCountValue->IsNull())
+    {
+        int32 TmpValue;
+        if(ConsumeCountValue->TryGetNumber(TmpValue)) {ConsumeCount = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
-	if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
-	}
+    if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -1681,18 +1681,18 @@ bool PlayFab::ClientModels::FConsumeItemResult::readFromValue(const TSharedPtr<F
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> ItemInstanceIdValue = obj->TryGetField(TEXT("ItemInstanceId"));
-	if (ItemInstanceIdValue.IsValid()&& !ItemInstanceIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(ItemInstanceIdValue->TryGetString(TmpValue)) {ItemInstanceId = TmpValue; }
-	}
+    if (ItemInstanceIdValue.IsValid()&& !ItemInstanceIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ItemInstanceIdValue->TryGetString(TmpValue)) {ItemInstanceId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> RemainingUsesValue = obj->TryGetField(TEXT("RemainingUses"));
-	if (RemainingUsesValue.IsValid()&& !RemainingUsesValue->IsNull())
-	{
-		int32 TmpValue;
-		if(RemainingUsesValue->TryGetNumber(TmpValue)) {RemainingUses = TmpValue; }
-	}
+    if (RemainingUsesValue.IsValid()&& !RemainingUsesValue->IsNull())
+    {
+        int32 TmpValue;
+        if(RemainingUsesValue->TryGetNumber(TmpValue)) {RemainingUses = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -1721,18 +1721,18 @@ bool PlayFab::ClientModels::FConsumePSNEntitlementsRequest::readFromValue(const 
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> CatalogVersionValue = obj->TryGetField(TEXT("CatalogVersion"));
-	if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
-	{
-		FString TmpValue;
-		if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
-	}
+    if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ServiceLabelValue = obj->TryGetField(TEXT("ServiceLabel"));
-	if (ServiceLabelValue.IsValid()&& !ServiceLabelValue->IsNull())
-	{
-		int32 TmpValue;
-		if(ServiceLabelValue->TryGetNumber(TmpValue)) {ServiceLabel = TmpValue; }
-	}
+    if (ServiceLabelValue.IsValid()&& !ServiceLabelValue->IsNull())
+    {
+        int32 TmpValue;
+        if(ServiceLabelValue->TryGetNumber(TmpValue)) {ServiceLabel = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -1749,15 +1749,15 @@ void PlayFab::ClientModels::FConsumePSNEntitlementsResult::writeJSON(JsonWriter&
     writer->WriteObjectStart();
     
     if(ItemsGranted.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("ItemsGranted"));
-	
-		for (const FItemInstance& item : ItemsGranted)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("ItemsGranted"));
+    
+        for (const FItemInstance& item : ItemsGranted)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -1768,14 +1768,14 @@ bool PlayFab::ClientModels::FConsumePSNEntitlementsResult::readFromValue(const T
 	bool HasSucceeded = true; 
 	
     {
-		const TArray< TSharedPtr<FJsonValue> >&ItemsGrantedArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("ItemsGranted"));
-		for (int32 Idx = 0; Idx < ItemsGrantedArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = ItemsGrantedArray[Idx];
-			
-			ItemsGranted.Add(FItemInstance(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&ItemsGrantedArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("ItemsGranted"));
+        for (int32 Idx = 0; Idx < ItemsGrantedArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = ItemsGrantedArray[Idx];
+            
+            ItemsGranted.Add(FItemInstance(CurrentItem->AsObject()));
+        }
+    }
 
     
     
@@ -1803,11 +1803,11 @@ bool PlayFab::ClientModels::FCreateSharedGroupRequest::readFromValue(const TShar
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> SharedGroupIdValue = obj->TryGetField(TEXT("SharedGroupId"));
-	if (SharedGroupIdValue.IsValid()&& !SharedGroupIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(SharedGroupIdValue->TryGetString(TmpValue)) {SharedGroupId = TmpValue; }
-	}
+    if (SharedGroupIdValue.IsValid()&& !SharedGroupIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(SharedGroupIdValue->TryGetString(TmpValue)) {SharedGroupId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -1834,11 +1834,11 @@ bool PlayFab::ClientModels::FCreateSharedGroupResult::readFromValue(const TShare
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> SharedGroupIdValue = obj->TryGetField(TEXT("SharedGroupId"));
-	if (SharedGroupIdValue.IsValid()&& !SharedGroupIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(SharedGroupIdValue->TryGetString(TmpValue)) {SharedGroupId = TmpValue; }
-	}
+    if (SharedGroupIdValue.IsValid()&& !SharedGroupIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(SharedGroupIdValue->TryGetString(TmpValue)) {SharedGroupId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -2269,25 +2269,25 @@ bool PlayFab::ClientModels::FCurrentGamesRequest::readFromValue(const TSharedPtr
     pfRegion = readRegionFromValue(obj->TryGetField(TEXT("Region")));
     
     const TSharedPtr<FJsonValue> BuildVersionValue = obj->TryGetField(TEXT("BuildVersion"));
-	if (BuildVersionValue.IsValid()&& !BuildVersionValue->IsNull())
-	{
-		FString TmpValue;
-		if(BuildVersionValue->TryGetString(TmpValue)) {BuildVersion = TmpValue; }
-	}
+    if (BuildVersionValue.IsValid()&& !BuildVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(BuildVersionValue->TryGetString(TmpValue)) {BuildVersion = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> GameModeValue = obj->TryGetField(TEXT("GameMode"));
-	if (GameModeValue.IsValid()&& !GameModeValue->IsNull())
-	{
-		FString TmpValue;
-		if(GameModeValue->TryGetString(TmpValue)) {GameMode = TmpValue; }
-	}
+    if (GameModeValue.IsValid()&& !GameModeValue->IsNull())
+    {
+        FString TmpValue;
+        if(GameModeValue->TryGetString(TmpValue)) {GameMode = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> StatisticNameValue = obj->TryGetField(TEXT("StatisticName"));
-	if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
-	}
+    if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -2316,15 +2316,15 @@ void PlayFab::ClientModels::FGameInfo::writeJSON(JsonWriter& writer) const
     if(MaxPlayers.notNull()) { writer->WriteIdentifierPrefix(TEXT("MaxPlayers")); writer->WriteValue(MaxPlayers); }
 	
     if(PlayerUserIds.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("PlayerUserIds"));
-	
-		for (const FString& item : PlayerUserIds)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("PlayerUserIds"));
+    
+        for (const FString& item : PlayerUserIds)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     writer->WriteIdentifierPrefix(TEXT("RunTime")); writer->WriteValue(static_cast<int64>(RunTime));
 	
@@ -2341,55 +2341,55 @@ bool PlayFab::ClientModels::FGameInfo::readFromValue(const TSharedPtr<FJsonObjec
     pfRegion = readRegionFromValue(obj->TryGetField(TEXT("Region")));
     
     const TSharedPtr<FJsonValue> LobbyIDValue = obj->TryGetField(TEXT("LobbyID"));
-	if (LobbyIDValue.IsValid()&& !LobbyIDValue->IsNull())
-	{
-		FString TmpValue;
-		if(LobbyIDValue->TryGetString(TmpValue)) {LobbyID = TmpValue; }
-	}
+    if (LobbyIDValue.IsValid()&& !LobbyIDValue->IsNull())
+    {
+        FString TmpValue;
+        if(LobbyIDValue->TryGetString(TmpValue)) {LobbyID = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> BuildVersionValue = obj->TryGetField(TEXT("BuildVersion"));
-	if (BuildVersionValue.IsValid()&& !BuildVersionValue->IsNull())
-	{
-		FString TmpValue;
-		if(BuildVersionValue->TryGetString(TmpValue)) {BuildVersion = TmpValue; }
-	}
+    if (BuildVersionValue.IsValid()&& !BuildVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(BuildVersionValue->TryGetString(TmpValue)) {BuildVersion = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> GameModeValue = obj->TryGetField(TEXT("GameMode"));
-	if (GameModeValue.IsValid()&& !GameModeValue->IsNull())
-	{
-		FString TmpValue;
-		if(GameModeValue->TryGetString(TmpValue)) {GameMode = TmpValue; }
-	}
+    if (GameModeValue.IsValid()&& !GameModeValue->IsNull())
+    {
+        FString TmpValue;
+        if(GameModeValue->TryGetString(TmpValue)) {GameMode = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> StatisticNameValue = obj->TryGetField(TEXT("StatisticName"));
-	if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
-	}
+    if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> MaxPlayersValue = obj->TryGetField(TEXT("MaxPlayers"));
-	if (MaxPlayersValue.IsValid()&& !MaxPlayersValue->IsNull())
-	{
-		int32 TmpValue;
-		if(MaxPlayersValue->TryGetNumber(TmpValue)) {MaxPlayers = TmpValue; }
-	}
+    if (MaxPlayersValue.IsValid()&& !MaxPlayersValue->IsNull())
+    {
+        int32 TmpValue;
+        if(MaxPlayersValue->TryGetNumber(TmpValue)) {MaxPlayers = TmpValue; }
+    }
     
     obj->TryGetStringArrayField(TEXT("PlayerUserIds"),PlayerUserIds);
     
     const TSharedPtr<FJsonValue> RunTimeValue = obj->TryGetField(TEXT("RunTime"));
-	if (RunTimeValue.IsValid()&& !RunTimeValue->IsNull())
-	{
-		uint32 TmpValue;
-		if(RunTimeValue->TryGetNumber(TmpValue)) {RunTime = TmpValue; }
-	}
+    if (RunTimeValue.IsValid()&& !RunTimeValue->IsNull())
+    {
+        uint32 TmpValue;
+        if(RunTimeValue->TryGetNumber(TmpValue)) {RunTime = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> GameServerStateValue = obj->TryGetField(TEXT("GameServerState"));
-	if (GameServerStateValue.IsValid()&& !GameServerStateValue->IsNull())
-	{
-		FString TmpValue;
-		if(GameServerStateValue->TryGetString(TmpValue)) {GameServerState = TmpValue; }
-	}
+    if (GameServerStateValue.IsValid()&& !GameServerStateValue->IsNull())
+    {
+        FString TmpValue;
+        if(GameServerStateValue->TryGetString(TmpValue)) {GameServerState = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -2406,15 +2406,15 @@ void PlayFab::ClientModels::FCurrentGamesResult::writeJSON(JsonWriter& writer) c
     writer->WriteObjectStart();
     
     if(Games.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Games"));
-	
-		for (const FGameInfo& item : Games)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Games"));
+    
+        for (const FGameInfo& item : Games)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     writer->WriteIdentifierPrefix(TEXT("PlayerCount")); writer->WriteValue(PlayerCount);
 	
@@ -2429,29 +2429,29 @@ bool PlayFab::ClientModels::FCurrentGamesResult::readFromValue(const TSharedPtr<
 	bool HasSucceeded = true; 
 	
     {
-		const TArray< TSharedPtr<FJsonValue> >&GamesArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Games"));
-		for (int32 Idx = 0; Idx < GamesArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = GamesArray[Idx];
-			
-			Games.Add(FGameInfo(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&GamesArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Games"));
+        for (int32 Idx = 0; Idx < GamesArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = GamesArray[Idx];
+            
+            Games.Add(FGameInfo(CurrentItem->AsObject()));
+        }
+    }
 
     
     const TSharedPtr<FJsonValue> PlayerCountValue = obj->TryGetField(TEXT("PlayerCount"));
-	if (PlayerCountValue.IsValid()&& !PlayerCountValue->IsNull())
-	{
-		int32 TmpValue;
-		if(PlayerCountValue->TryGetNumber(TmpValue)) {PlayerCount = TmpValue; }
-	}
+    if (PlayerCountValue.IsValid()&& !PlayerCountValue->IsNull())
+    {
+        int32 TmpValue;
+        if(PlayerCountValue->TryGetNumber(TmpValue)) {PlayerCount = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> GameCountValue = obj->TryGetField(TEXT("GameCount"));
-	if (GameCountValue.IsValid()&& !GameCountValue->IsNull())
-	{
-		int32 TmpValue;
-		if(GameCountValue->TryGetNumber(TmpValue)) {GameCount = TmpValue; }
-	}
+    if (GameCountValue.IsValid()&& !GameCountValue->IsNull())
+    {
+        int32 TmpValue;
+        if(GameCountValue->TryGetNumber(TmpValue)) {GameCount = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -2502,18 +2502,18 @@ bool PlayFab::ClientModels::FFacebookPlayFabIdPair::readFromValue(const TSharedP
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> FacebookIdValue = obj->TryGetField(TEXT("FacebookId"));
-	if (FacebookIdValue.IsValid()&& !FacebookIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(FacebookIdValue->TryGetString(TmpValue)) {FacebookId = TmpValue; }
-	}
+    if (FacebookIdValue.IsValid()&& !FacebookIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(FacebookIdValue->TryGetString(TmpValue)) {FacebookId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
-	if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
-	}
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -2542,18 +2542,18 @@ bool PlayFab::ClientModels::FUserFacebookInfo::readFromValue(const TSharedPtr<FJ
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> FacebookIdValue = obj->TryGetField(TEXT("FacebookId"));
-	if (FacebookIdValue.IsValid()&& !FacebookIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(FacebookIdValue->TryGetString(TmpValue)) {FacebookId = TmpValue; }
-	}
+    if (FacebookIdValue.IsValid()&& !FacebookIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(FacebookIdValue->TryGetString(TmpValue)) {FacebookId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> FullNameValue = obj->TryGetField(TEXT("FullName"));
-	if (FullNameValue.IsValid()&& !FullNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(FullNameValue->TryGetString(TmpValue)) {FullName = TmpValue; }
-	}
+    if (FullNameValue.IsValid()&& !FullNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(FullNameValue->TryGetString(TmpValue)) {FullName = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -2625,18 +2625,18 @@ bool PlayFab::ClientModels::FUserSteamInfo::readFromValue(const TSharedPtr<FJson
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> SteamIdValue = obj->TryGetField(TEXT("SteamId"));
-	if (SteamIdValue.IsValid()&& !SteamIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(SteamIdValue->TryGetString(TmpValue)) {SteamId = TmpValue; }
-	}
+    if (SteamIdValue.IsValid()&& !SteamIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(SteamIdValue->TryGetString(TmpValue)) {SteamId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> SteamCountryValue = obj->TryGetField(TEXT("SteamCountry"));
-	if (SteamCountryValue.IsValid()&& !SteamCountryValue->IsNull())
-	{
-		FString TmpValue;
-		if(SteamCountryValue->TryGetString(TmpValue)) {SteamCountry = TmpValue; }
-	}
+    if (SteamCountryValue.IsValid()&& !SteamCountryValue->IsNull())
+    {
+        FString TmpValue;
+        if(SteamCountryValue->TryGetString(TmpValue)) {SteamCountry = TmpValue; }
+    }
     
     SteamCurrency = readCurrencyFromValue(obj->TryGetField(TEXT("SteamCurrency")));
     
@@ -2667,11 +2667,11 @@ bool PlayFab::ClientModels::FUserGameCenterInfo::readFromValue(const TSharedPtr<
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> GameCenterIdValue = obj->TryGetField(TEXT("GameCenterId"));
-	if (GameCenterIdValue.IsValid()&& !GameCenterIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(GameCenterIdValue->TryGetString(TmpValue)) {GameCenterId = TmpValue; }
-	}
+    if (GameCenterIdValue.IsValid()&& !GameCenterIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(GameCenterIdValue->TryGetString(TmpValue)) {GameCenterId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -2697,15 +2697,15 @@ void PlayFab::ClientModels::FFriendInfo::writeJSON(JsonWriter& writer) const
     if(TitleDisplayName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("TitleDisplayName")); writer->WriteValue(TitleDisplayName); }
 	
     if(Tags.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Tags"));
-	
-		for (const FString& item : Tags)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Tags"));
+    
+        for (const FString& item : Tags)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(CurrentMatchmakerLobbyId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CurrentMatchmakerLobbyId")); writer->WriteValue(CurrentMatchmakerLobbyId); }
 	
@@ -2724,52 +2724,52 @@ bool PlayFab::ClientModels::FFriendInfo::readFromValue(const TSharedPtr<FJsonObj
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> FriendPlayFabIdValue = obj->TryGetField(TEXT("FriendPlayFabId"));
-	if (FriendPlayFabIdValue.IsValid()&& !FriendPlayFabIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(FriendPlayFabIdValue->TryGetString(TmpValue)) {FriendPlayFabId = TmpValue; }
-	}
+    if (FriendPlayFabIdValue.IsValid()&& !FriendPlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(FriendPlayFabIdValue->TryGetString(TmpValue)) {FriendPlayFabId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> UsernameValue = obj->TryGetField(TEXT("Username"));
-	if (UsernameValue.IsValid()&& !UsernameValue->IsNull())
-	{
-		FString TmpValue;
-		if(UsernameValue->TryGetString(TmpValue)) {Username = TmpValue; }
-	}
+    if (UsernameValue.IsValid()&& !UsernameValue->IsNull())
+    {
+        FString TmpValue;
+        if(UsernameValue->TryGetString(TmpValue)) {Username = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> TitleDisplayNameValue = obj->TryGetField(TEXT("TitleDisplayName"));
-	if (TitleDisplayNameValue.IsValid()&& !TitleDisplayNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(TitleDisplayNameValue->TryGetString(TmpValue)) {TitleDisplayName = TmpValue; }
-	}
+    if (TitleDisplayNameValue.IsValid()&& !TitleDisplayNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleDisplayNameValue->TryGetString(TmpValue)) {TitleDisplayName = TmpValue; }
+    }
     
     obj->TryGetStringArrayField(TEXT("Tags"),Tags);
     
     const TSharedPtr<FJsonValue> CurrentMatchmakerLobbyIdValue = obj->TryGetField(TEXT("CurrentMatchmakerLobbyId"));
-	if (CurrentMatchmakerLobbyIdValue.IsValid()&& !CurrentMatchmakerLobbyIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(CurrentMatchmakerLobbyIdValue->TryGetString(TmpValue)) {CurrentMatchmakerLobbyId = TmpValue; }
-	}
+    if (CurrentMatchmakerLobbyIdValue.IsValid()&& !CurrentMatchmakerLobbyIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CurrentMatchmakerLobbyIdValue->TryGetString(TmpValue)) {CurrentMatchmakerLobbyId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> FacebookInfoValue = obj->TryGetField(TEXT("FacebookInfo"));
-	if (FacebookInfoValue.IsValid()&& !FacebookInfoValue->IsNull())
-	{
-		FacebookInfo = MakeShareable(new FUserFacebookInfo(FacebookInfoValue->AsObject()));
-	}
+    if (FacebookInfoValue.IsValid()&& !FacebookInfoValue->IsNull())
+    {
+        FacebookInfo = MakeShareable(new FUserFacebookInfo(FacebookInfoValue->AsObject()));
+    }
     
     const TSharedPtr<FJsonValue> SteamInfoValue = obj->TryGetField(TEXT("SteamInfo"));
-	if (SteamInfoValue.IsValid()&& !SteamInfoValue->IsNull())
-	{
-		SteamInfo = MakeShareable(new FUserSteamInfo(SteamInfoValue->AsObject()));
-	}
+    if (SteamInfoValue.IsValid()&& !SteamInfoValue->IsNull())
+    {
+        SteamInfo = MakeShareable(new FUserSteamInfo(SteamInfoValue->AsObject()));
+    }
     
     const TSharedPtr<FJsonValue> GameCenterInfoValue = obj->TryGetField(TEXT("GameCenterInfo"));
-	if (GameCenterInfoValue.IsValid()&& !GameCenterInfoValue->IsNull())
-	{
-		GameCenterInfo = MakeShareable(new FUserGameCenterInfo(GameCenterInfoValue->AsObject()));
-	}
+    if (GameCenterInfoValue.IsValid()&& !GameCenterInfoValue->IsNull())
+    {
+        GameCenterInfo = MakeShareable(new FUserGameCenterInfo(GameCenterInfoValue->AsObject()));
+    }
     
     
     return HasSucceeded;
@@ -2798,18 +2798,18 @@ bool PlayFab::ClientModels::FGameCenterPlayFabIdPair::readFromValue(const TShare
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> GameCenterIdValue = obj->TryGetField(TEXT("GameCenterId"));
-	if (GameCenterIdValue.IsValid()&& !GameCenterIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(GameCenterIdValue->TryGetString(TmpValue)) {GameCenterId = TmpValue; }
-	}
+    if (GameCenterIdValue.IsValid()&& !GameCenterIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(GameCenterIdValue->TryGetString(TmpValue)) {GameCenterId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
-	if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
-	}
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -2838,18 +2838,18 @@ bool PlayFab::ClientModels::FGameServerRegionsRequest::readFromValue(const TShar
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> BuildVersionValue = obj->TryGetField(TEXT("BuildVersion"));
-	if (BuildVersionValue.IsValid()&& !BuildVersionValue->IsNull())
-	{
-		FString TmpValue;
-		if(BuildVersionValue->TryGetString(TmpValue)) {BuildVersion = TmpValue; }
-	}
+    if (BuildVersionValue.IsValid()&& !BuildVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(BuildVersionValue->TryGetString(TmpValue)) {BuildVersion = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-	if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-	}
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -2884,25 +2884,25 @@ bool PlayFab::ClientModels::FRegionInfo::readFromValue(const TSharedPtr<FJsonObj
     pfRegion = readRegionFromValue(obj->TryGetField(TEXT("Region")));
     
     const TSharedPtr<FJsonValue> NameValue = obj->TryGetField(TEXT("Name"));
-	if (NameValue.IsValid()&& !NameValue->IsNull())
-	{
-		FString TmpValue;
-		if(NameValue->TryGetString(TmpValue)) {Name = TmpValue; }
-	}
+    if (NameValue.IsValid()&& !NameValue->IsNull())
+    {
+        FString TmpValue;
+        if(NameValue->TryGetString(TmpValue)) {Name = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> AvailableValue = obj->TryGetField(TEXT("Available"));
-	if (AvailableValue.IsValid()&& !AvailableValue->IsNull())
-	{
-		bool TmpValue;
-		if(AvailableValue->TryGetBool(TmpValue)) {Available = TmpValue; }
-	}
+    if (AvailableValue.IsValid()&& !AvailableValue->IsNull())
+    {
+        bool TmpValue;
+        if(AvailableValue->TryGetBool(TmpValue)) {Available = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PingUrlValue = obj->TryGetField(TEXT("PingUrl"));
-	if (PingUrlValue.IsValid()&& !PingUrlValue->IsNull())
-	{
-		FString TmpValue;
-		if(PingUrlValue->TryGetString(TmpValue)) {PingUrl = TmpValue; }
-	}
+    if (PingUrlValue.IsValid()&& !PingUrlValue->IsNull())
+    {
+        FString TmpValue;
+        if(PingUrlValue->TryGetString(TmpValue)) {PingUrl = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -2919,15 +2919,15 @@ void PlayFab::ClientModels::FGameServerRegionsResult::writeJSON(JsonWriter& writ
     writer->WriteObjectStart();
     
     if(Regions.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Regions"));
-	
-		for (const FRegionInfo& item : Regions)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Regions"));
+    
+        for (const FRegionInfo& item : Regions)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -2938,14 +2938,14 @@ bool PlayFab::ClientModels::FGameServerRegionsResult::readFromValue(const TShare
 	bool HasSucceeded = true; 
 	
     {
-		const TArray< TSharedPtr<FJsonValue> >&RegionsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Regions"));
-		for (int32 Idx = 0; Idx < RegionsArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = RegionsArray[Idx];
-			
-			Regions.Add(FRegionInfo(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&RegionsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Regions"));
+        for (int32 Idx = 0; Idx < RegionsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = RegionsArray[Idx];
+            
+            Regions.Add(FRegionInfo(CurrentItem->AsObject()));
+        }
+    }
 
     
     
@@ -2979,32 +2979,32 @@ bool PlayFab::ClientModels::FGetAccountInfoRequest::readFromValue(const TSharedP
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
-	if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
-	}
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> UsernameValue = obj->TryGetField(TEXT("Username"));
-	if (UsernameValue.IsValid()&& !UsernameValue->IsNull())
-	{
-		FString TmpValue;
-		if(UsernameValue->TryGetString(TmpValue)) {Username = TmpValue; }
-	}
+    if (UsernameValue.IsValid()&& !UsernameValue->IsNull())
+    {
+        FString TmpValue;
+        if(UsernameValue->TryGetString(TmpValue)) {Username = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> EmailValue = obj->TryGetField(TEXT("Email"));
-	if (EmailValue.IsValid()&& !EmailValue->IsNull())
-	{
-		FString TmpValue;
-		if(EmailValue->TryGetString(TmpValue)) {Email = TmpValue; }
-	}
+    if (EmailValue.IsValid()&& !EmailValue->IsNull())
+    {
+        FString TmpValue;
+        if(EmailValue->TryGetString(TmpValue)) {Email = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> TitleDisplayNameValue = obj->TryGetField(TEXT("TitleDisplayName"));
-	if (TitleDisplayNameValue.IsValid()&& !TitleDisplayNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(TitleDisplayNameValue->TryGetString(TmpValue)) {TitleDisplayName = TmpValue; }
-	}
+    if (TitleDisplayNameValue.IsValid()&& !TitleDisplayNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleDisplayNameValue->TryGetString(TmpValue)) {TitleDisplayName = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -3098,38 +3098,38 @@ bool PlayFab::ClientModels::FUserTitleInfo::readFromValue(const TSharedPtr<FJson
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> DisplayNameValue = obj->TryGetField(TEXT("DisplayName"));
-	if (DisplayNameValue.IsValid()&& !DisplayNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(DisplayNameValue->TryGetString(TmpValue)) {DisplayName = TmpValue; }
-	}
+    if (DisplayNameValue.IsValid()&& !DisplayNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(DisplayNameValue->TryGetString(TmpValue)) {DisplayName = TmpValue; }
+    }
     
     Origination = readUserOriginationFromValue(obj->TryGetField(TEXT("Origination")));
     
     const TSharedPtr<FJsonValue> CreatedValue = obj->TryGetField(TEXT("Created"));
-	if(CreatedValue.IsValid())
-	{
-		Created = readDatetime(CreatedValue);
-	}
+    if(CreatedValue.IsValid())
+    {
+        Created = readDatetime(CreatedValue);
+    }
     
     const TSharedPtr<FJsonValue> LastLoginValue = obj->TryGetField(TEXT("LastLogin"));
-	if(LastLoginValue.IsValid())
-	{
-		LastLogin = readDatetime(LastLoginValue);
-	}
+    if(LastLoginValue.IsValid())
+    {
+        LastLogin = readDatetime(LastLoginValue);
+    }
     
     const TSharedPtr<FJsonValue> FirstLoginValue = obj->TryGetField(TEXT("FirstLogin"));
-	if(FirstLoginValue.IsValid())
-	{
-		FirstLogin = readDatetime(FirstLoginValue);
-	}
+    if(FirstLoginValue.IsValid())
+    {
+        FirstLogin = readDatetime(FirstLoginValue);
+    }
     
     const TSharedPtr<FJsonValue> isBannedValue = obj->TryGetField(TEXT("isBanned"));
-	if (isBannedValue.IsValid()&& !isBannedValue->IsNull())
-	{
-		bool TmpValue;
-		if(isBannedValue->TryGetBool(TmpValue)) {isBanned = TmpValue; }
-	}
+    if (isBannedValue.IsValid()&& !isBannedValue->IsNull())
+    {
+        bool TmpValue;
+        if(isBannedValue->TryGetBool(TmpValue)) {isBanned = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -3156,11 +3156,11 @@ bool PlayFab::ClientModels::FUserPrivateAccountInfo::readFromValue(const TShared
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> EmailValue = obj->TryGetField(TEXT("Email"));
-	if (EmailValue.IsValid()&& !EmailValue->IsNull())
-	{
-		FString TmpValue;
-		if(EmailValue->TryGetString(TmpValue)) {Email = TmpValue; }
-	}
+    if (EmailValue.IsValid()&& !EmailValue->IsNull())
+    {
+        FString TmpValue;
+        if(EmailValue->TryGetString(TmpValue)) {Email = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -3206,54 +3206,54 @@ bool PlayFab::ClientModels::FUserAccountInfo::readFromValue(const TSharedPtr<FJs
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
-	if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
-	}
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CreatedValue = obj->TryGetField(TEXT("Created"));
-	if(CreatedValue.IsValid())
-	{
-		Created = readDatetime(CreatedValue);
-	}
+    if(CreatedValue.IsValid())
+    {
+        Created = readDatetime(CreatedValue);
+    }
     
     const TSharedPtr<FJsonValue> UsernameValue = obj->TryGetField(TEXT("Username"));
-	if (UsernameValue.IsValid()&& !UsernameValue->IsNull())
-	{
-		FString TmpValue;
-		if(UsernameValue->TryGetString(TmpValue)) {Username = TmpValue; }
-	}
+    if (UsernameValue.IsValid()&& !UsernameValue->IsNull())
+    {
+        FString TmpValue;
+        if(UsernameValue->TryGetString(TmpValue)) {Username = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> TitleInfoValue = obj->TryGetField(TEXT("TitleInfo"));
-	if (TitleInfoValue.IsValid()&& !TitleInfoValue->IsNull())
-	{
-		TitleInfo = MakeShareable(new FUserTitleInfo(TitleInfoValue->AsObject()));
-	}
+    if (TitleInfoValue.IsValid()&& !TitleInfoValue->IsNull())
+    {
+        TitleInfo = MakeShareable(new FUserTitleInfo(TitleInfoValue->AsObject()));
+    }
     
     const TSharedPtr<FJsonValue> PrivateInfoValue = obj->TryGetField(TEXT("PrivateInfo"));
-	if (PrivateInfoValue.IsValid()&& !PrivateInfoValue->IsNull())
-	{
-		PrivateInfo = MakeShareable(new FUserPrivateAccountInfo(PrivateInfoValue->AsObject()));
-	}
+    if (PrivateInfoValue.IsValid()&& !PrivateInfoValue->IsNull())
+    {
+        PrivateInfo = MakeShareable(new FUserPrivateAccountInfo(PrivateInfoValue->AsObject()));
+    }
     
     const TSharedPtr<FJsonValue> FacebookInfoValue = obj->TryGetField(TEXT("FacebookInfo"));
-	if (FacebookInfoValue.IsValid()&& !FacebookInfoValue->IsNull())
-	{
-		FacebookInfo = MakeShareable(new FUserFacebookInfo(FacebookInfoValue->AsObject()));
-	}
+    if (FacebookInfoValue.IsValid()&& !FacebookInfoValue->IsNull())
+    {
+        FacebookInfo = MakeShareable(new FUserFacebookInfo(FacebookInfoValue->AsObject()));
+    }
     
     const TSharedPtr<FJsonValue> SteamInfoValue = obj->TryGetField(TEXT("SteamInfo"));
-	if (SteamInfoValue.IsValid()&& !SteamInfoValue->IsNull())
-	{
-		SteamInfo = MakeShareable(new FUserSteamInfo(SteamInfoValue->AsObject()));
-	}
+    if (SteamInfoValue.IsValid()&& !SteamInfoValue->IsNull())
+    {
+        SteamInfo = MakeShareable(new FUserSteamInfo(SteamInfoValue->AsObject()));
+    }
     
     const TSharedPtr<FJsonValue> GameCenterInfoValue = obj->TryGetField(TEXT("GameCenterInfo"));
-	if (GameCenterInfoValue.IsValid()&& !GameCenterInfoValue->IsNull())
-	{
-		GameCenterInfo = MakeShareable(new FUserGameCenterInfo(GameCenterInfoValue->AsObject()));
-	}
+    if (GameCenterInfoValue.IsValid()&& !GameCenterInfoValue->IsNull())
+    {
+        GameCenterInfo = MakeShareable(new FUserGameCenterInfo(GameCenterInfoValue->AsObject()));
+    }
     
     
     return HasSucceeded;
@@ -3281,10 +3281,10 @@ bool PlayFab::ClientModels::FGetAccountInfoResult::readFromValue(const TSharedPt
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> AccountInfoValue = obj->TryGetField(TEXT("AccountInfo"));
-	if (AccountInfoValue.IsValid()&& !AccountInfoValue->IsNull())
-	{
-		AccountInfo = MakeShareable(new FUserAccountInfo(AccountInfoValue->AsObject()));
-	}
+    if (AccountInfoValue.IsValid()&& !AccountInfoValue->IsNull())
+    {
+        AccountInfo = MakeShareable(new FUserAccountInfo(AccountInfoValue->AsObject()));
+    }
     
     
     return HasSucceeded;
@@ -3311,11 +3311,11 @@ bool PlayFab::ClientModels::FGetCatalogItemsRequest::readFromValue(const TShared
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> CatalogVersionValue = obj->TryGetField(TEXT("CatalogVersion"));
-	if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
-	{
-		FString TmpValue;
-		if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
-	}
+    if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -3332,15 +3332,15 @@ void PlayFab::ClientModels::FGetCatalogItemsResult::writeJSON(JsonWriter& writer
     writer->WriteObjectStart();
     
     if(Catalog.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Catalog"));
-	
-		for (const FCatalogItem& item : Catalog)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Catalog"));
+    
+        for (const FCatalogItem& item : Catalog)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -3351,14 +3351,14 @@ bool PlayFab::ClientModels::FGetCatalogItemsResult::readFromValue(const TSharedP
 	bool HasSucceeded = true; 
 	
     {
-		const TArray< TSharedPtr<FJsonValue> >&CatalogArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Catalog"));
-		for (int32 Idx = 0; Idx < CatalogArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = CatalogArray[Idx];
-			
-			Catalog.Add(FCatalogItem(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&CatalogArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Catalog"));
+        for (int32 Idx = 0; Idx < CatalogArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = CatalogArray[Idx];
+            
+            Catalog.Add(FCatalogItem(CurrentItem->AsObject()));
+        }
+    }
 
     
     
@@ -3380,15 +3380,15 @@ void PlayFab::ClientModels::FGetCharacterDataRequest::writeJSON(JsonWriter& writ
     writer->WriteIdentifierPrefix(TEXT("CharacterId")); writer->WriteValue(CharacterId);
 	
     if(Keys.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Keys"));
-	
-		for (const FString& item : Keys)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Keys"));
+    
+        for (const FString& item : Keys)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(IfChangedFromDataVersion.notNull()) { writer->WriteIdentifierPrefix(TEXT("IfChangedFromDataVersion")); writer->WriteValue(IfChangedFromDataVersion); }
 	
@@ -3401,27 +3401,27 @@ bool PlayFab::ClientModels::FGetCharacterDataRequest::readFromValue(const TShare
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
-	if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
-	}
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
-	if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
-	}
+    if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
+    }
     
     obj->TryGetStringArrayField(TEXT("Keys"),Keys);
     
     const TSharedPtr<FJsonValue> IfChangedFromDataVersionValue = obj->TryGetField(TEXT("IfChangedFromDataVersion"));
-	if (IfChangedFromDataVersionValue.IsValid()&& !IfChangedFromDataVersionValue->IsNull())
-	{
-		int32 TmpValue;
-		if(IfChangedFromDataVersionValue->TryGetNumber(TmpValue)) {IfChangedFromDataVersion = TmpValue; }
-	}
+    if (IfChangedFromDataVersionValue.IsValid()&& !IfChangedFromDataVersionValue->IsNull())
+    {
+        int32 TmpValue;
+        if(IfChangedFromDataVersionValue->TryGetNumber(TmpValue)) {IfChangedFromDataVersion = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -3485,17 +3485,17 @@ bool PlayFab::ClientModels::FUserDataRecord::readFromValue(const TSharedPtr<FJso
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> ValueValue = obj->TryGetField(TEXT("Value"));
-	if (ValueValue.IsValid()&& !ValueValue->IsNull())
-	{
-		FString TmpValue;
-		if(ValueValue->TryGetString(TmpValue)) {Value = TmpValue; }
-	}
+    if (ValueValue.IsValid()&& !ValueValue->IsNull())
+    {
+        FString TmpValue;
+        if(ValueValue->TryGetString(TmpValue)) {Value = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> LastUpdatedValue = obj->TryGetField(TEXT("LastUpdated"));
-	if(LastUpdatedValue.IsValid())
-	{
-		LastUpdated = readDatetime(LastUpdatedValue);
-	}
+    if(LastUpdatedValue.IsValid())
+    {
+        LastUpdated = readDatetime(LastUpdatedValue);
+    }
     
     Permission = readUserDataPermissionFromValue(obj->TryGetField(TEXT("Permission")));
     
@@ -3516,15 +3516,15 @@ void PlayFab::ClientModels::FGetCharacterDataResult::writeJSON(JsonWriter& write
     if(CharacterId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CharacterId")); writer->WriteValue(CharacterId); }
 	
     if(Data.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("Data"));
-		for (TMap<FString, FUserDataRecord>::TConstIterator It(Data); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			(*It).Value.writeJSON(writer);
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("Data"));
+        for (TMap<FString, FUserDataRecord>::TConstIterator It(Data); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            (*It).Value.writeJSON(writer);
+        }
+        writer->WriteObjectEnd();
+     }
 	
     writer->WriteIdentifierPrefix(TEXT("DataVersion")); writer->WriteValue(static_cast<int64>(DataVersion));
 	
@@ -3537,28 +3537,28 @@ bool PlayFab::ClientModels::FGetCharacterDataResult::readFromValue(const TShared
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
-	if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
-	}
+    if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonObject>* DataObject;
-	if (obj->TryGetObjectField(TEXT("Data"), DataObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*DataObject)->Values); It; ++It)
-		{
-			
-			Data.Add(It.Key(), FUserDataRecord(It.Value()->AsObject()));
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("Data"), DataObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*DataObject)->Values); It; ++It)
+        {
+            
+            Data.Add(It.Key(), FUserDataRecord(It.Value()->AsObject()));
+        }
+    }
     
     const TSharedPtr<FJsonValue> DataVersionValue = obj->TryGetField(TEXT("DataVersion"));
-	if (DataVersionValue.IsValid()&& !DataVersionValue->IsNull())
-	{
-		uint32 TmpValue;
-		if(DataVersionValue->TryGetNumber(TmpValue)) {DataVersion = TmpValue; }
-	}
+    if (DataVersionValue.IsValid()&& !DataVersionValue->IsNull())
+    {
+        uint32 TmpValue;
+        if(DataVersionValue->TryGetNumber(TmpValue)) {DataVersion = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -3589,25 +3589,25 @@ bool PlayFab::ClientModels::FGetCharacterInventoryRequest::readFromValue(const T
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
-	if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
-	}
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
-	if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
-	}
+    if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CatalogVersionValue = obj->TryGetField(TEXT("CatalogVersion"));
-	if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
-	{
-		FString TmpValue;
-		if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
-	}
+    if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -3638,24 +3638,24 @@ bool PlayFab::ClientModels::FVirtualCurrencyRechargeTime::readFromValue(const TS
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> SecondsToRechargeValue = obj->TryGetField(TEXT("SecondsToRecharge"));
-	if (SecondsToRechargeValue.IsValid()&& !SecondsToRechargeValue->IsNull())
-	{
-		int32 TmpValue;
-		if(SecondsToRechargeValue->TryGetNumber(TmpValue)) {SecondsToRecharge = TmpValue; }
-	}
+    if (SecondsToRechargeValue.IsValid()&& !SecondsToRechargeValue->IsNull())
+    {
+        int32 TmpValue;
+        if(SecondsToRechargeValue->TryGetNumber(TmpValue)) {SecondsToRecharge = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> RechargeTimeValue = obj->TryGetField(TEXT("RechargeTime"));
-	if(RechargeTimeValue.IsValid())
-	{
-		RechargeTime = readDatetime(RechargeTimeValue);
-	}
+    if(RechargeTimeValue.IsValid())
+    {
+        RechargeTime = readDatetime(RechargeTimeValue);
+    }
     
     const TSharedPtr<FJsonValue> RechargeMaxValue = obj->TryGetField(TEXT("RechargeMax"));
-	if (RechargeMaxValue.IsValid()&& !RechargeMaxValue->IsNull())
-	{
-		int32 TmpValue;
-		if(RechargeMaxValue->TryGetNumber(TmpValue)) {RechargeMax = TmpValue; }
-	}
+    if (RechargeMaxValue.IsValid()&& !RechargeMaxValue->IsNull())
+    {
+        int32 TmpValue;
+        if(RechargeMaxValue->TryGetNumber(TmpValue)) {RechargeMax = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -3676,37 +3676,37 @@ void PlayFab::ClientModels::FGetCharacterInventoryResult::writeJSON(JsonWriter& 
     if(CharacterId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CharacterId")); writer->WriteValue(CharacterId); }
 	
     if(Inventory.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Inventory"));
-	
-		for (const FItemInstance& item : Inventory)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Inventory"));
+    
+        for (const FItemInstance& item : Inventory)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(VirtualCurrency.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("VirtualCurrency"));
-		for (TMap<FString, int32>::TConstIterator It(VirtualCurrency); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			writer->WriteValue((*It).Value);
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("VirtualCurrency"));
+        for (TMap<FString, int32>::TConstIterator It(VirtualCurrency); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue((*It).Value);
+        }
+        writer->WriteObjectEnd();
+     }
 	
     if(VirtualCurrencyRechargeTimes.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("VirtualCurrencyRechargeTimes"));
-		for (TMap<FString, FVirtualCurrencyRechargeTime>::TConstIterator It(VirtualCurrencyRechargeTimes); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			(*It).Value.writeJSON(writer);
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("VirtualCurrencyRechargeTimes"));
+        for (TMap<FString, FVirtualCurrencyRechargeTime>::TConstIterator It(VirtualCurrencyRechargeTimes); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            (*It).Value.writeJSON(writer);
+        }
+        writer->WriteObjectEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -3717,49 +3717,49 @@ bool PlayFab::ClientModels::FGetCharacterInventoryResult::readFromValue(const TS
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
-	if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
-	}
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
-	if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
-	}
+    if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
+    }
     
     {
-		const TArray< TSharedPtr<FJsonValue> >&InventoryArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Inventory"));
-		for (int32 Idx = 0; Idx < InventoryArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = InventoryArray[Idx];
-			
-			Inventory.Add(FItemInstance(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&InventoryArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Inventory"));
+        for (int32 Idx = 0; Idx < InventoryArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = InventoryArray[Idx];
+            
+            Inventory.Add(FItemInstance(CurrentItem->AsObject()));
+        }
+    }
 
     
     const TSharedPtr<FJsonObject>* VirtualCurrencyObject;
-	if (obj->TryGetObjectField(TEXT("VirtualCurrency"), VirtualCurrencyObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyObject)->Values); It; ++It)
-		{
-			int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
-			VirtualCurrency.Add(It.Key(), TmpValue);
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("VirtualCurrency"), VirtualCurrencyObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyObject)->Values); It; ++It)
+        {
+            int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
+            VirtualCurrency.Add(It.Key(), TmpValue);
+        }
+    }
     
     const TSharedPtr<FJsonObject>* VirtualCurrencyRechargeTimesObject;
-	if (obj->TryGetObjectField(TEXT("VirtualCurrencyRechargeTimes"), VirtualCurrencyRechargeTimesObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyRechargeTimesObject)->Values); It; ++It)
-		{
-			
-			VirtualCurrencyRechargeTimes.Add(It.Key(), FVirtualCurrencyRechargeTime(It.Value()->AsObject()));
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("VirtualCurrencyRechargeTimes"), VirtualCurrencyRechargeTimesObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyRechargeTimesObject)->Values); It; ++It)
+        {
+            
+            VirtualCurrencyRechargeTimes.Add(It.Key(), FVirtualCurrencyRechargeTime(It.Value()->AsObject()));
+        }
+    }
     
     
     return HasSucceeded;
@@ -3792,32 +3792,32 @@ bool PlayFab::ClientModels::FGetCharacterLeaderboardRequest::readFromValue(const
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> CharacterTypeValue = obj->TryGetField(TEXT("CharacterType"));
-	if (CharacterTypeValue.IsValid()&& !CharacterTypeValue->IsNull())
-	{
-		FString TmpValue;
-		if(CharacterTypeValue->TryGetString(TmpValue)) {CharacterType = TmpValue; }
-	}
+    if (CharacterTypeValue.IsValid()&& !CharacterTypeValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterTypeValue->TryGetString(TmpValue)) {CharacterType = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> StatisticNameValue = obj->TryGetField(TEXT("StatisticName"));
-	if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
-	}
+    if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> StartPositionValue = obj->TryGetField(TEXT("StartPosition"));
-	if (StartPositionValue.IsValid()&& !StartPositionValue->IsNull())
-	{
-		int32 TmpValue;
-		if(StartPositionValue->TryGetNumber(TmpValue)) {StartPosition = TmpValue; }
-	}
+    if (StartPositionValue.IsValid()&& !StartPositionValue->IsNull())
+    {
+        int32 TmpValue;
+        if(StartPositionValue->TryGetNumber(TmpValue)) {StartPosition = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> MaxResultsCountValue = obj->TryGetField(TEXT("MaxResultsCount"));
-	if (MaxResultsCountValue.IsValid()&& !MaxResultsCountValue->IsNull())
-	{
-		int32 TmpValue;
-		if(MaxResultsCountValue->TryGetNumber(TmpValue)) {MaxResultsCount = TmpValue; }
-	}
+    if (MaxResultsCountValue.IsValid()&& !MaxResultsCountValue->IsNull())
+    {
+        int32 TmpValue;
+        if(MaxResultsCountValue->TryGetNumber(TmpValue)) {MaxResultsCount = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -3834,15 +3834,15 @@ void PlayFab::ClientModels::FGetCharacterLeaderboardResult::writeJSON(JsonWriter
     writer->WriteObjectStart();
     
     if(Leaderboard.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Leaderboard"));
-	
-		for (const FCharacterLeaderboardEntry& item : Leaderboard)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Leaderboard"));
+    
+        for (const FCharacterLeaderboardEntry& item : Leaderboard)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -3853,14 +3853,14 @@ bool PlayFab::ClientModels::FGetCharacterLeaderboardResult::readFromValue(const 
 	bool HasSucceeded = true; 
 	
     {
-		const TArray< TSharedPtr<FJsonValue> >&LeaderboardArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Leaderboard"));
-		for (int32 Idx = 0; Idx < LeaderboardArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = LeaderboardArray[Idx];
-			
-			Leaderboard.Add(FCharacterLeaderboardEntry(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&LeaderboardArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Leaderboard"));
+        for (int32 Idx = 0; Idx < LeaderboardArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = LeaderboardArray[Idx];
+            
+            Leaderboard.Add(FCharacterLeaderboardEntry(CurrentItem->AsObject()));
+        }
+    }
 
     
     
@@ -3890,18 +3890,18 @@ bool PlayFab::ClientModels::FGetCloudScriptUrlRequest::readFromValue(const TShar
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> VersionValue = obj->TryGetField(TEXT("Version"));
-	if (VersionValue.IsValid()&& !VersionValue->IsNull())
-	{
-		int32 TmpValue;
-		if(VersionValue->TryGetNumber(TmpValue)) {Version = TmpValue; }
-	}
+    if (VersionValue.IsValid()&& !VersionValue->IsNull())
+    {
+        int32 TmpValue;
+        if(VersionValue->TryGetNumber(TmpValue)) {Version = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> TestingValue = obj->TryGetField(TEXT("Testing"));
-	if (TestingValue.IsValid()&& !TestingValue->IsNull())
-	{
-		bool TmpValue;
-		if(TestingValue->TryGetBool(TmpValue)) {Testing = TmpValue; }
-	}
+    if (TestingValue.IsValid()&& !TestingValue->IsNull())
+    {
+        bool TmpValue;
+        if(TestingValue->TryGetBool(TmpValue)) {Testing = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -3928,11 +3928,11 @@ bool PlayFab::ClientModels::FGetCloudScriptUrlResult::readFromValue(const TShare
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> UrlValue = obj->TryGetField(TEXT("Url"));
-	if (UrlValue.IsValid()&& !UrlValue->IsNull())
-	{
-		FString TmpValue;
-		if(UrlValue->TryGetString(TmpValue)) {Url = TmpValue; }
-	}
+    if (UrlValue.IsValid()&& !UrlValue->IsNull())
+    {
+        FString TmpValue;
+        if(UrlValue->TryGetString(TmpValue)) {Url = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -3963,25 +3963,25 @@ bool PlayFab::ClientModels::FGetContentDownloadUrlRequest::readFromValue(const T
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> KeyValue = obj->TryGetField(TEXT("Key"));
-	if (KeyValue.IsValid()&& !KeyValue->IsNull())
-	{
-		FString TmpValue;
-		if(KeyValue->TryGetString(TmpValue)) {Key = TmpValue; }
-	}
+    if (KeyValue.IsValid()&& !KeyValue->IsNull())
+    {
+        FString TmpValue;
+        if(KeyValue->TryGetString(TmpValue)) {Key = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> HttpMethodValue = obj->TryGetField(TEXT("HttpMethod"));
-	if (HttpMethodValue.IsValid()&& !HttpMethodValue->IsNull())
-	{
-		FString TmpValue;
-		if(HttpMethodValue->TryGetString(TmpValue)) {HttpMethod = TmpValue; }
-	}
+    if (HttpMethodValue.IsValid()&& !HttpMethodValue->IsNull())
+    {
+        FString TmpValue;
+        if(HttpMethodValue->TryGetString(TmpValue)) {HttpMethod = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ThruCDNValue = obj->TryGetField(TEXT("ThruCDN"));
-	if (ThruCDNValue.IsValid()&& !ThruCDNValue->IsNull())
-	{
-		bool TmpValue;
-		if(ThruCDNValue->TryGetBool(TmpValue)) {ThruCDN = TmpValue; }
-	}
+    if (ThruCDNValue.IsValid()&& !ThruCDNValue->IsNull())
+    {
+        bool TmpValue;
+        if(ThruCDNValue->TryGetBool(TmpValue)) {ThruCDN = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -4008,11 +4008,11 @@ bool PlayFab::ClientModels::FGetContentDownloadUrlResult::readFromValue(const TS
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> URLValue = obj->TryGetField(TEXT("URL"));
-	if (URLValue.IsValid()&& !URLValue->IsNull())
-	{
-		FString TmpValue;
-		if(URLValue->TryGetString(TmpValue)) {URL = TmpValue; }
-	}
+    if (URLValue.IsValid()&& !URLValue->IsNull())
+    {
+        FString TmpValue;
+        if(URLValue->TryGetString(TmpValue)) {URL = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -4047,39 +4047,39 @@ bool PlayFab::ClientModels::FGetFriendLeaderboardRequest::readFromValue(const TS
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> StatisticNameValue = obj->TryGetField(TEXT("StatisticName"));
-	if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
-	}
+    if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> StartPositionValue = obj->TryGetField(TEXT("StartPosition"));
-	if (StartPositionValue.IsValid()&& !StartPositionValue->IsNull())
-	{
-		int32 TmpValue;
-		if(StartPositionValue->TryGetNumber(TmpValue)) {StartPosition = TmpValue; }
-	}
+    if (StartPositionValue.IsValid()&& !StartPositionValue->IsNull())
+    {
+        int32 TmpValue;
+        if(StartPositionValue->TryGetNumber(TmpValue)) {StartPosition = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> MaxResultsCountValue = obj->TryGetField(TEXT("MaxResultsCount"));
-	if (MaxResultsCountValue.IsValid()&& !MaxResultsCountValue->IsNull())
-	{
-		int32 TmpValue;
-		if(MaxResultsCountValue->TryGetNumber(TmpValue)) {MaxResultsCount = TmpValue; }
-	}
+    if (MaxResultsCountValue.IsValid()&& !MaxResultsCountValue->IsNull())
+    {
+        int32 TmpValue;
+        if(MaxResultsCountValue->TryGetNumber(TmpValue)) {MaxResultsCount = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> IncludeSteamFriendsValue = obj->TryGetField(TEXT("IncludeSteamFriends"));
-	if (IncludeSteamFriendsValue.IsValid()&& !IncludeSteamFriendsValue->IsNull())
-	{
-		bool TmpValue;
-		if(IncludeSteamFriendsValue->TryGetBool(TmpValue)) {IncludeSteamFriends = TmpValue; }
-	}
+    if (IncludeSteamFriendsValue.IsValid()&& !IncludeSteamFriendsValue->IsNull())
+    {
+        bool TmpValue;
+        if(IncludeSteamFriendsValue->TryGetBool(TmpValue)) {IncludeSteamFriends = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> IncludeFacebookFriendsValue = obj->TryGetField(TEXT("IncludeFacebookFriends"));
-	if (IncludeFacebookFriendsValue.IsValid()&& !IncludeFacebookFriendsValue->IsNull())
-	{
-		bool TmpValue;
-		if(IncludeFacebookFriendsValue->TryGetBool(TmpValue)) {IncludeFacebookFriends = TmpValue; }
-	}
+    if (IncludeFacebookFriendsValue.IsValid()&& !IncludeFacebookFriendsValue->IsNull())
+    {
+        bool TmpValue;
+        if(IncludeFacebookFriendsValue->TryGetBool(TmpValue)) {IncludeFacebookFriends = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -4108,18 +4108,18 @@ bool PlayFab::ClientModels::FGetFriendsListRequest::readFromValue(const TSharedP
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> IncludeSteamFriendsValue = obj->TryGetField(TEXT("IncludeSteamFriends"));
-	if (IncludeSteamFriendsValue.IsValid()&& !IncludeSteamFriendsValue->IsNull())
-	{
-		bool TmpValue;
-		if(IncludeSteamFriendsValue->TryGetBool(TmpValue)) {IncludeSteamFriends = TmpValue; }
-	}
+    if (IncludeSteamFriendsValue.IsValid()&& !IncludeSteamFriendsValue->IsNull())
+    {
+        bool TmpValue;
+        if(IncludeSteamFriendsValue->TryGetBool(TmpValue)) {IncludeSteamFriends = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> IncludeFacebookFriendsValue = obj->TryGetField(TEXT("IncludeFacebookFriends"));
-	if (IncludeFacebookFriendsValue.IsValid()&& !IncludeFacebookFriendsValue->IsNull())
-	{
-		bool TmpValue;
-		if(IncludeFacebookFriendsValue->TryGetBool(TmpValue)) {IncludeFacebookFriends = TmpValue; }
-	}
+    if (IncludeFacebookFriendsValue.IsValid()&& !IncludeFacebookFriendsValue->IsNull())
+    {
+        bool TmpValue;
+        if(IncludeFacebookFriendsValue->TryGetBool(TmpValue)) {IncludeFacebookFriends = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -4136,15 +4136,15 @@ void PlayFab::ClientModels::FGetFriendsListResult::writeJSON(JsonWriter& writer)
     writer->WriteObjectStart();
     
     if(Friends.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Friends"));
-	
-		for (const FFriendInfo& item : Friends)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Friends"));
+    
+        for (const FFriendInfo& item : Friends)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -4155,14 +4155,14 @@ bool PlayFab::ClientModels::FGetFriendsListResult::readFromValue(const TSharedPt
 	bool HasSucceeded = true; 
 	
     {
-		const TArray< TSharedPtr<FJsonValue> >&FriendsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Friends"));
-		for (int32 Idx = 0; Idx < FriendsArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = FriendsArray[Idx];
-			
-			Friends.Add(FFriendInfo(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&FriendsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Friends"));
+        for (int32 Idx = 0; Idx < FriendsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = FriendsArray[Idx];
+            
+            Friends.Add(FFriendInfo(CurrentItem->AsObject()));
+        }
+    }
 
     
     
@@ -4196,32 +4196,32 @@ bool PlayFab::ClientModels::FGetLeaderboardAroundCharacterRequest::readFromValue
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> StatisticNameValue = obj->TryGetField(TEXT("StatisticName"));
-	if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
-	}
+    if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
-	if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
-	}
+    if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CharacterTypeValue = obj->TryGetField(TEXT("CharacterType"));
-	if (CharacterTypeValue.IsValid()&& !CharacterTypeValue->IsNull())
-	{
-		FString TmpValue;
-		if(CharacterTypeValue->TryGetString(TmpValue)) {CharacterType = TmpValue; }
-	}
+    if (CharacterTypeValue.IsValid()&& !CharacterTypeValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterTypeValue->TryGetString(TmpValue)) {CharacterType = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> MaxResultsCountValue = obj->TryGetField(TEXT("MaxResultsCount"));
-	if (MaxResultsCountValue.IsValid()&& !MaxResultsCountValue->IsNull())
-	{
-		int32 TmpValue;
-		if(MaxResultsCountValue->TryGetNumber(TmpValue)) {MaxResultsCount = TmpValue; }
-	}
+    if (MaxResultsCountValue.IsValid()&& !MaxResultsCountValue->IsNull())
+    {
+        int32 TmpValue;
+        if(MaxResultsCountValue->TryGetNumber(TmpValue)) {MaxResultsCount = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -4238,15 +4238,15 @@ void PlayFab::ClientModels::FGetLeaderboardAroundCharacterResult::writeJSON(Json
     writer->WriteObjectStart();
     
     if(Leaderboard.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Leaderboard"));
-	
-		for (const FCharacterLeaderboardEntry& item : Leaderboard)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Leaderboard"));
+    
+        for (const FCharacterLeaderboardEntry& item : Leaderboard)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -4257,14 +4257,14 @@ bool PlayFab::ClientModels::FGetLeaderboardAroundCharacterResult::readFromValue(
 	bool HasSucceeded = true; 
 	
     {
-		const TArray< TSharedPtr<FJsonValue> >&LeaderboardArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Leaderboard"));
-		for (int32 Idx = 0; Idx < LeaderboardArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = LeaderboardArray[Idx];
-			
-			Leaderboard.Add(FCharacterLeaderboardEntry(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&LeaderboardArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Leaderboard"));
+        for (int32 Idx = 0; Idx < LeaderboardArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = LeaderboardArray[Idx];
+            
+            Leaderboard.Add(FCharacterLeaderboardEntry(CurrentItem->AsObject()));
+        }
+    }
 
     
     
@@ -4294,18 +4294,18 @@ bool PlayFab::ClientModels::FGetLeaderboardAroundCurrentUserRequest::readFromVal
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> StatisticNameValue = obj->TryGetField(TEXT("StatisticName"));
-	if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
-	}
+    if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> MaxResultsCountValue = obj->TryGetField(TEXT("MaxResultsCount"));
-	if (MaxResultsCountValue.IsValid()&& !MaxResultsCountValue->IsNull())
-	{
-		int32 TmpValue;
-		if(MaxResultsCountValue->TryGetNumber(TmpValue)) {MaxResultsCount = TmpValue; }
-	}
+    if (MaxResultsCountValue.IsValid()&& !MaxResultsCountValue->IsNull())
+    {
+        int32 TmpValue;
+        if(MaxResultsCountValue->TryGetNumber(TmpValue)) {MaxResultsCount = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -4338,32 +4338,32 @@ bool PlayFab::ClientModels::FPlayerLeaderboardEntry::readFromValue(const TShared
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
-	if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
-	}
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> DisplayNameValue = obj->TryGetField(TEXT("DisplayName"));
-	if (DisplayNameValue.IsValid()&& !DisplayNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(DisplayNameValue->TryGetString(TmpValue)) {DisplayName = TmpValue; }
-	}
+    if (DisplayNameValue.IsValid()&& !DisplayNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(DisplayNameValue->TryGetString(TmpValue)) {DisplayName = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> StatValueValue = obj->TryGetField(TEXT("StatValue"));
-	if (StatValueValue.IsValid()&& !StatValueValue->IsNull())
-	{
-		int32 TmpValue;
-		if(StatValueValue->TryGetNumber(TmpValue)) {StatValue = TmpValue; }
-	}
+    if (StatValueValue.IsValid()&& !StatValueValue->IsNull())
+    {
+        int32 TmpValue;
+        if(StatValueValue->TryGetNumber(TmpValue)) {StatValue = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PositionValue = obj->TryGetField(TEXT("Position"));
-	if (PositionValue.IsValid()&& !PositionValue->IsNull())
-	{
-		int32 TmpValue;
-		if(PositionValue->TryGetNumber(TmpValue)) {Position = TmpValue; }
-	}
+    if (PositionValue.IsValid()&& !PositionValue->IsNull())
+    {
+        int32 TmpValue;
+        if(PositionValue->TryGetNumber(TmpValue)) {Position = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -4380,15 +4380,15 @@ void PlayFab::ClientModels::FGetLeaderboardAroundCurrentUserResult::writeJSON(Js
     writer->WriteObjectStart();
     
     if(Leaderboard.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Leaderboard"));
-	
-		for (const FPlayerLeaderboardEntry& item : Leaderboard)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Leaderboard"));
+    
+        for (const FPlayerLeaderboardEntry& item : Leaderboard)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -4399,14 +4399,14 @@ bool PlayFab::ClientModels::FGetLeaderboardAroundCurrentUserResult::readFromValu
 	bool HasSucceeded = true; 
 	
     {
-		const TArray< TSharedPtr<FJsonValue> >&LeaderboardArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Leaderboard"));
-		for (int32 Idx = 0; Idx < LeaderboardArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = LeaderboardArray[Idx];
-			
-			Leaderboard.Add(FPlayerLeaderboardEntry(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&LeaderboardArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Leaderboard"));
+        for (int32 Idx = 0; Idx < LeaderboardArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = LeaderboardArray[Idx];
+            
+            Leaderboard.Add(FPlayerLeaderboardEntry(CurrentItem->AsObject()));
+        }
+    }
 
     
     
@@ -4436,18 +4436,18 @@ bool PlayFab::ClientModels::FGetLeaderboardForUsersCharactersRequest::readFromVa
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> StatisticNameValue = obj->TryGetField(TEXT("StatisticName"));
-	if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
-	}
+    if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> MaxResultsCountValue = obj->TryGetField(TEXT("MaxResultsCount"));
-	if (MaxResultsCountValue.IsValid()&& !MaxResultsCountValue->IsNull())
-	{
-		int32 TmpValue;
-		if(MaxResultsCountValue->TryGetNumber(TmpValue)) {MaxResultsCount = TmpValue; }
-	}
+    if (MaxResultsCountValue.IsValid()&& !MaxResultsCountValue->IsNull())
+    {
+        int32 TmpValue;
+        if(MaxResultsCountValue->TryGetNumber(TmpValue)) {MaxResultsCount = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -4464,15 +4464,15 @@ void PlayFab::ClientModels::FGetLeaderboardForUsersCharactersResult::writeJSON(J
     writer->WriteObjectStart();
     
     if(Leaderboard.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Leaderboard"));
-	
-		for (const FCharacterLeaderboardEntry& item : Leaderboard)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Leaderboard"));
+    
+        for (const FCharacterLeaderboardEntry& item : Leaderboard)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -4483,14 +4483,14 @@ bool PlayFab::ClientModels::FGetLeaderboardForUsersCharactersResult::readFromVal
 	bool HasSucceeded = true; 
 	
     {
-		const TArray< TSharedPtr<FJsonValue> >&LeaderboardArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Leaderboard"));
-		for (int32 Idx = 0; Idx < LeaderboardArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = LeaderboardArray[Idx];
-			
-			Leaderboard.Add(FCharacterLeaderboardEntry(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&LeaderboardArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Leaderboard"));
+        for (int32 Idx = 0; Idx < LeaderboardArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = LeaderboardArray[Idx];
+            
+            Leaderboard.Add(FCharacterLeaderboardEntry(CurrentItem->AsObject()));
+        }
+    }
 
     
     
@@ -4522,25 +4522,25 @@ bool PlayFab::ClientModels::FGetLeaderboardRequest::readFromValue(const TSharedP
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> StatisticNameValue = obj->TryGetField(TEXT("StatisticName"));
-	if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
-	}
+    if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> StartPositionValue = obj->TryGetField(TEXT("StartPosition"));
-	if (StartPositionValue.IsValid()&& !StartPositionValue->IsNull())
-	{
-		int32 TmpValue;
-		if(StartPositionValue->TryGetNumber(TmpValue)) {StartPosition = TmpValue; }
-	}
+    if (StartPositionValue.IsValid()&& !StartPositionValue->IsNull())
+    {
+        int32 TmpValue;
+        if(StartPositionValue->TryGetNumber(TmpValue)) {StartPosition = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> MaxResultsCountValue = obj->TryGetField(TEXT("MaxResultsCount"));
-	if (MaxResultsCountValue.IsValid()&& !MaxResultsCountValue->IsNull())
-	{
-		int32 TmpValue;
-		if(MaxResultsCountValue->TryGetNumber(TmpValue)) {MaxResultsCount = TmpValue; }
-	}
+    if (MaxResultsCountValue.IsValid()&& !MaxResultsCountValue->IsNull())
+    {
+        int32 TmpValue;
+        if(MaxResultsCountValue->TryGetNumber(TmpValue)) {MaxResultsCount = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -4557,15 +4557,15 @@ void PlayFab::ClientModels::FGetLeaderboardResult::writeJSON(JsonWriter& writer)
     writer->WriteObjectStart();
     
     if(Leaderboard.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Leaderboard"));
-	
-		for (const FPlayerLeaderboardEntry& item : Leaderboard)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Leaderboard"));
+    
+        for (const FPlayerLeaderboardEntry& item : Leaderboard)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -4576,14 +4576,14 @@ bool PlayFab::ClientModels::FGetLeaderboardResult::readFromValue(const TSharedPt
 	bool HasSucceeded = true; 
 	
     {
-		const TArray< TSharedPtr<FJsonValue> >&LeaderboardArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Leaderboard"));
-		for (int32 Idx = 0; Idx < LeaderboardArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = LeaderboardArray[Idx];
-			
-			Leaderboard.Add(FPlayerLeaderboardEntry(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&LeaderboardArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Leaderboard"));
+        for (int32 Idx = 0; Idx < LeaderboardArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = LeaderboardArray[Idx];
+            
+            Leaderboard.Add(FPlayerLeaderboardEntry(CurrentItem->AsObject()));
+        }
+    }
 
     
     
@@ -4611,11 +4611,11 @@ bool PlayFab::ClientModels::FGetPhotonAuthenticationTokenRequest::readFromValue(
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> PhotonApplicationIdValue = obj->TryGetField(TEXT("PhotonApplicationId"));
-	if (PhotonApplicationIdValue.IsValid()&& !PhotonApplicationIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(PhotonApplicationIdValue->TryGetString(TmpValue)) {PhotonApplicationId = TmpValue; }
-	}
+    if (PhotonApplicationIdValue.IsValid()&& !PhotonApplicationIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PhotonApplicationIdValue->TryGetString(TmpValue)) {PhotonApplicationId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -4642,11 +4642,11 @@ bool PlayFab::ClientModels::FGetPhotonAuthenticationTokenResult::readFromValue(c
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> PhotonCustomAuthenticationTokenValue = obj->TryGetField(TEXT("PhotonCustomAuthenticationToken"));
-	if (PhotonCustomAuthenticationTokenValue.IsValid()&& !PhotonCustomAuthenticationTokenValue->IsNull())
-	{
-		FString TmpValue;
-		if(PhotonCustomAuthenticationTokenValue->TryGetString(TmpValue)) {PhotonCustomAuthenticationToken = TmpValue; }
-	}
+    if (PhotonCustomAuthenticationTokenValue.IsValid()&& !PhotonCustomAuthenticationTokenValue->IsNull())
+    {
+        FString TmpValue;
+        if(PhotonCustomAuthenticationTokenValue->TryGetString(TmpValue)) {PhotonCustomAuthenticationToken = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -4689,26 +4689,26 @@ void PlayFab::ClientModels::FGetPlayerTradesResponse::writeJSON(JsonWriter& writ
     writer->WriteObjectStart();
     
     if(OpenedTrades.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("OpenedTrades"));
-	
-		for (const FTradeInfo& item : OpenedTrades)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("OpenedTrades"));
+    
+        for (const FTradeInfo& item : OpenedTrades)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(AcceptedTrades.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("AcceptedTrades"));
-	
-		for (const FTradeInfo& item : AcceptedTrades)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("AcceptedTrades"));
+    
+        for (const FTradeInfo& item : AcceptedTrades)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -4719,25 +4719,25 @@ bool PlayFab::ClientModels::FGetPlayerTradesResponse::readFromValue(const TShare
 	bool HasSucceeded = true; 
 	
     {
-		const TArray< TSharedPtr<FJsonValue> >&OpenedTradesArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("OpenedTrades"));
-		for (int32 Idx = 0; Idx < OpenedTradesArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = OpenedTradesArray[Idx];
-			
-			OpenedTrades.Add(FTradeInfo(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&OpenedTradesArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("OpenedTrades"));
+        for (int32 Idx = 0; Idx < OpenedTradesArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = OpenedTradesArray[Idx];
+            
+            OpenedTrades.Add(FTradeInfo(CurrentItem->AsObject()));
+        }
+    }
 
     
     {
-		const TArray< TSharedPtr<FJsonValue> >&AcceptedTradesArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("AcceptedTrades"));
-		for (int32 Idx = 0; Idx < AcceptedTradesArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = AcceptedTradesArray[Idx];
-			
-			AcceptedTrades.Add(FTradeInfo(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&AcceptedTradesArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("AcceptedTrades"));
+        for (int32 Idx = 0; Idx < AcceptedTradesArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = AcceptedTradesArray[Idx];
+            
+            AcceptedTrades.Add(FTradeInfo(CurrentItem->AsObject()));
+        }
+    }
 
     
     
@@ -4755,14 +4755,14 @@ void PlayFab::ClientModels::FGetPlayFabIDsFromFacebookIDsRequest::writeJSON(Json
     writer->WriteObjectStart();
     
     
-		writer->WriteArrayStart(TEXT("FacebookIDs"));
-	
-		for (const FString& item : FacebookIDs)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	
+        writer->WriteArrayStart(TEXT("FacebookIDs"));
+    
+        for (const FString& item : FacebookIDs)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+    
 	
     
     writer->WriteObjectEnd();
@@ -4789,15 +4789,15 @@ void PlayFab::ClientModels::FGetPlayFabIDsFromFacebookIDsResult::writeJSON(JsonW
     writer->WriteObjectStart();
     
     if(Data.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Data"));
-	
-		for (const FFacebookPlayFabIdPair& item : Data)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Data"));
+    
+        for (const FFacebookPlayFabIdPair& item : Data)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -4808,14 +4808,14 @@ bool PlayFab::ClientModels::FGetPlayFabIDsFromFacebookIDsResult::readFromValue(c
 	bool HasSucceeded = true; 
 	
     {
-		const TArray< TSharedPtr<FJsonValue> >&DataArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Data"));
-		for (int32 Idx = 0; Idx < DataArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = DataArray[Idx];
-			
-			Data.Add(FFacebookPlayFabIdPair(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&DataArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Data"));
+        for (int32 Idx = 0; Idx < DataArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = DataArray[Idx];
+            
+            Data.Add(FFacebookPlayFabIdPair(CurrentItem->AsObject()));
+        }
+    }
 
     
     
@@ -4833,14 +4833,14 @@ void PlayFab::ClientModels::FGetPlayFabIDsFromGameCenterIDsRequest::writeJSON(Js
     writer->WriteObjectStart();
     
     
-		writer->WriteArrayStart(TEXT("GameCenterIDs"));
-	
-		for (const FString& item : GameCenterIDs)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	
+        writer->WriteArrayStart(TEXT("GameCenterIDs"));
+    
+        for (const FString& item : GameCenterIDs)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+    
 	
     
     writer->WriteObjectEnd();
@@ -4867,15 +4867,15 @@ void PlayFab::ClientModels::FGetPlayFabIDsFromGameCenterIDsResult::writeJSON(Jso
     writer->WriteObjectStart();
     
     if(Data.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Data"));
-	
-		for (const FGameCenterPlayFabIdPair& item : Data)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Data"));
+    
+        for (const FGameCenterPlayFabIdPair& item : Data)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -4886,14 +4886,14 @@ bool PlayFab::ClientModels::FGetPlayFabIDsFromGameCenterIDsResult::readFromValue
 	bool HasSucceeded = true; 
 	
     {
-		const TArray< TSharedPtr<FJsonValue> >&DataArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Data"));
-		for (int32 Idx = 0; Idx < DataArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = DataArray[Idx];
-			
-			Data.Add(FGameCenterPlayFabIdPair(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&DataArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Data"));
+        for (int32 Idx = 0; Idx < DataArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = DataArray[Idx];
+            
+            Data.Add(FGameCenterPlayFabIdPair(CurrentItem->AsObject()));
+        }
+    }
 
     
     
@@ -4911,14 +4911,14 @@ void PlayFab::ClientModels::FGetPlayFabIDsFromGoogleIDsRequest::writeJSON(JsonWr
     writer->WriteObjectStart();
     
     
-		writer->WriteArrayStart(TEXT("GoogleIDs"));
-	
-		for (const FString& item : GoogleIDs)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	
+        writer->WriteArrayStart(TEXT("GoogleIDs"));
+    
+        for (const FString& item : GoogleIDs)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+    
 	
     
     writer->WriteObjectEnd();
@@ -4957,18 +4957,18 @@ bool PlayFab::ClientModels::FGooglePlayFabIdPair::readFromValue(const TSharedPtr
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> GoogleIdValue = obj->TryGetField(TEXT("GoogleId"));
-	if (GoogleIdValue.IsValid()&& !GoogleIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(GoogleIdValue->TryGetString(TmpValue)) {GoogleId = TmpValue; }
-	}
+    if (GoogleIdValue.IsValid()&& !GoogleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(GoogleIdValue->TryGetString(TmpValue)) {GoogleId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
-	if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
-	}
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -4985,15 +4985,15 @@ void PlayFab::ClientModels::FGetPlayFabIDsFromGoogleIDsResult::writeJSON(JsonWri
     writer->WriteObjectStart();
     
     if(Data.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Data"));
-	
-		for (const FGooglePlayFabIdPair& item : Data)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Data"));
+    
+        for (const FGooglePlayFabIdPair& item : Data)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -5004,14 +5004,14 @@ bool PlayFab::ClientModels::FGetPlayFabIDsFromGoogleIDsResult::readFromValue(con
 	bool HasSucceeded = true; 
 	
     {
-		const TArray< TSharedPtr<FJsonValue> >&DataArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Data"));
-		for (int32 Idx = 0; Idx < DataArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = DataArray[Idx];
-			
-			Data.Add(FGooglePlayFabIdPair(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&DataArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Data"));
+        for (int32 Idx = 0; Idx < DataArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = DataArray[Idx];
+            
+            Data.Add(FGooglePlayFabIdPair(CurrentItem->AsObject()));
+        }
+    }
 
     
     
@@ -5029,14 +5029,14 @@ void PlayFab::ClientModels::FGetPlayFabIDsFromPSNAccountIDsRequest::writeJSON(Js
     writer->WriteObjectStart();
     
     
-		writer->WriteArrayStart(TEXT("PSNAccountIDs"));
-	
-		for (const FString& item : PSNAccountIDs)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	
+        writer->WriteArrayStart(TEXT("PSNAccountIDs"));
+    
+        for (const FString& item : PSNAccountIDs)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+    
 	
     if(IssuerId.notNull()) { writer->WriteIdentifierPrefix(TEXT("IssuerId")); writer->WriteValue(IssuerId); }
 	
@@ -5051,11 +5051,11 @@ bool PlayFab::ClientModels::FGetPlayFabIDsFromPSNAccountIDsRequest::readFromValu
     HasSucceeded &= obj->TryGetStringArrayField(TEXT("PSNAccountIDs"),PSNAccountIDs);
     
     const TSharedPtr<FJsonValue> IssuerIdValue = obj->TryGetField(TEXT("IssuerId"));
-	if (IssuerIdValue.IsValid()&& !IssuerIdValue->IsNull())
-	{
-		int32 TmpValue;
-		if(IssuerIdValue->TryGetNumber(TmpValue)) {IssuerId = TmpValue; }
-	}
+    if (IssuerIdValue.IsValid()&& !IssuerIdValue->IsNull())
+    {
+        int32 TmpValue;
+        if(IssuerIdValue->TryGetNumber(TmpValue)) {IssuerId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -5084,18 +5084,18 @@ bool PlayFab::ClientModels::FPSNAccountPlayFabIdPair::readFromValue(const TShare
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> PSNAccountIdValue = obj->TryGetField(TEXT("PSNAccountId"));
-	if (PSNAccountIdValue.IsValid()&& !PSNAccountIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(PSNAccountIdValue->TryGetString(TmpValue)) {PSNAccountId = TmpValue; }
-	}
+    if (PSNAccountIdValue.IsValid()&& !PSNAccountIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PSNAccountIdValue->TryGetString(TmpValue)) {PSNAccountId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
-	if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
-	}
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -5112,15 +5112,15 @@ void PlayFab::ClientModels::FGetPlayFabIDsFromPSNAccountIDsResult::writeJSON(Jso
     writer->WriteObjectStart();
     
     if(Data.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Data"));
-	
-		for (const FPSNAccountPlayFabIdPair& item : Data)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Data"));
+    
+        for (const FPSNAccountPlayFabIdPair& item : Data)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -5131,14 +5131,14 @@ bool PlayFab::ClientModels::FGetPlayFabIDsFromPSNAccountIDsResult::readFromValue
 	bool HasSucceeded = true; 
 	
     {
-		const TArray< TSharedPtr<FJsonValue> >&DataArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Data"));
-		for (int32 Idx = 0; Idx < DataArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = DataArray[Idx];
-			
-			Data.Add(FPSNAccountPlayFabIdPair(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&DataArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Data"));
+        for (int32 Idx = 0; Idx < DataArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = DataArray[Idx];
+            
+            Data.Add(FPSNAccountPlayFabIdPair(CurrentItem->AsObject()));
+        }
+    }
 
     
     
@@ -5156,14 +5156,14 @@ void PlayFab::ClientModels::FGetPlayFabIDsFromSteamIDsRequest::writeJSON(JsonWri
     writer->WriteObjectStart();
     
     
-		writer->WriteArrayStart(TEXT("SteamIDs"));
-	
-		for (const uint64& item : SteamIDs)
-		{
-			writer->WriteValue(static_cast<int64>(item));
-		}
-		writer->WriteArrayEnd();
-	
+        writer->WriteArrayStart(TEXT("SteamIDs"));
+    
+        for (const uint64& item : SteamIDs)
+        {
+            writer->WriteValue(static_cast<int64>(item));
+        }
+        writer->WriteArrayEnd();
+    
 	
     
     writer->WriteObjectEnd();
@@ -5174,16 +5174,16 @@ bool PlayFab::ClientModels::FGetPlayFabIDsFromSteamIDsRequest::readFromValue(con
 	bool HasSucceeded = true; 
 	
     {
-		const TArray< TSharedPtr<FJsonValue> >&SteamIDsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("SteamIDs"));
-		for (int32 Idx = 0; Idx < SteamIDsArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = SteamIDsArray[Idx];
-			int64 TmpValue;
+        const TArray< TSharedPtr<FJsonValue> >&SteamIDsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("SteamIDs"));
+        for (int32 Idx = 0; Idx < SteamIDsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = SteamIDsArray[Idx];
+            int64 TmpValue;
 CurrentItem->TryGetNumber(TmpValue);
 
-			SteamIDs.Add(TmpValue);
-		}
-	}
+            SteamIDs.Add(TmpValue);
+        }
+    }
 
     
     
@@ -5213,18 +5213,18 @@ bool PlayFab::ClientModels::FSteamPlayFabIdPair::readFromValue(const TSharedPtr<
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> SteamIdValue = obj->TryGetField(TEXT("SteamId"));
-	if (SteamIdValue.IsValid()&& !SteamIdValue->IsNull())
-	{
-		int64 TmpValue;
-		if(SteamIdValue->TryGetNumber(TmpValue)) {SteamId = TmpValue; }
-	}
+    if (SteamIdValue.IsValid()&& !SteamIdValue->IsNull())
+    {
+        int64 TmpValue;
+        if(SteamIdValue->TryGetNumber(TmpValue)) {SteamId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
-	if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
-	}
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -5241,15 +5241,15 @@ void PlayFab::ClientModels::FGetPlayFabIDsFromSteamIDsResult::writeJSON(JsonWrit
     writer->WriteObjectStart();
     
     if(Data.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Data"));
-	
-		for (const FSteamPlayFabIdPair& item : Data)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Data"));
+    
+        for (const FSteamPlayFabIdPair& item : Data)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -5260,14 +5260,14 @@ bool PlayFab::ClientModels::FGetPlayFabIDsFromSteamIDsResult::readFromValue(cons
 	bool HasSucceeded = true; 
 	
     {
-		const TArray< TSharedPtr<FJsonValue> >&DataArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Data"));
-		for (int32 Idx = 0; Idx < DataArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = DataArray[Idx];
-			
-			Data.Add(FSteamPlayFabIdPair(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&DataArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Data"));
+        for (int32 Idx = 0; Idx < DataArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = DataArray[Idx];
+            
+            Data.Add(FSteamPlayFabIdPair(CurrentItem->AsObject()));
+        }
+    }
 
     
     
@@ -5285,14 +5285,14 @@ void PlayFab::ClientModels::FGetPublisherDataRequest::writeJSON(JsonWriter& writ
     writer->WriteObjectStart();
     
     
-		writer->WriteArrayStart(TEXT("Keys"));
-	
-		for (const FString& item : Keys)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	
+        writer->WriteArrayStart(TEXT("Keys"));
+    
+        for (const FString& item : Keys)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+    
 	
     
     writer->WriteObjectEnd();
@@ -5319,15 +5319,15 @@ void PlayFab::ClientModels::FGetPublisherDataResult::writeJSON(JsonWriter& write
     writer->WriteObjectStart();
     
     if(Data.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("Data"));
-		for (TMap<FString, FString>::TConstIterator It(Data); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			writer->WriteValue((*It).Value);
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("Data"));
+        for (TMap<FString, FString>::TConstIterator It(Data); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue((*It).Value);
+        }
+        writer->WriteObjectEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -5338,14 +5338,14 @@ bool PlayFab::ClientModels::FGetPublisherDataResult::readFromValue(const TShared
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonObject>* DataObject;
-	if (obj->TryGetObjectField(TEXT("Data"), DataObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*DataObject)->Values); It; ++It)
-		{
-			
-			Data.Add(It.Key(), It.Value()->AsString());
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("Data"), DataObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*DataObject)->Values); It; ++It)
+        {
+            
+            Data.Add(It.Key(), It.Value()->AsString());
+        }
+    }
     
     
     return HasSucceeded;
@@ -5372,11 +5372,11 @@ bool PlayFab::ClientModels::FGetPurchaseRequest::readFromValue(const TSharedPtr<
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> OrderIdValue = obj->TryGetField(TEXT("OrderId"));
-	if (OrderIdValue.IsValid()&& !OrderIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(OrderIdValue->TryGetString(TmpValue)) {OrderId = TmpValue; }
-	}
+    if (OrderIdValue.IsValid()&& !OrderIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(OrderIdValue->TryGetString(TmpValue)) {OrderId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -5403,15 +5403,15 @@ void PlayFab::ClientModels::FGetPurchaseResult::writeJSON(JsonWriter& writer) co
     writer->WriteIdentifierPrefix(TEXT("PurchaseDate")); writeDatetime(PurchaseDate, writer);
 	
     if(Items.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Items"));
-	
-		for (const FItemInstance& item : Items)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Items"));
+    
+        for (const FItemInstance& item : Items)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -5422,48 +5422,48 @@ bool PlayFab::ClientModels::FGetPurchaseResult::readFromValue(const TSharedPtr<F
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> OrderIdValue = obj->TryGetField(TEXT("OrderId"));
-	if (OrderIdValue.IsValid()&& !OrderIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(OrderIdValue->TryGetString(TmpValue)) {OrderId = TmpValue; }
-	}
+    if (OrderIdValue.IsValid()&& !OrderIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(OrderIdValue->TryGetString(TmpValue)) {OrderId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PaymentProviderValue = obj->TryGetField(TEXT("PaymentProvider"));
-	if (PaymentProviderValue.IsValid()&& !PaymentProviderValue->IsNull())
-	{
-		FString TmpValue;
-		if(PaymentProviderValue->TryGetString(TmpValue)) {PaymentProvider = TmpValue; }
-	}
+    if (PaymentProviderValue.IsValid()&& !PaymentProviderValue->IsNull())
+    {
+        FString TmpValue;
+        if(PaymentProviderValue->TryGetString(TmpValue)) {PaymentProvider = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> TransactionIdValue = obj->TryGetField(TEXT("TransactionId"));
-	if (TransactionIdValue.IsValid()&& !TransactionIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(TransactionIdValue->TryGetString(TmpValue)) {TransactionId = TmpValue; }
-	}
+    if (TransactionIdValue.IsValid()&& !TransactionIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TransactionIdValue->TryGetString(TmpValue)) {TransactionId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> TransactionStatusValue = obj->TryGetField(TEXT("TransactionStatus"));
-	if (TransactionStatusValue.IsValid()&& !TransactionStatusValue->IsNull())
-	{
-		FString TmpValue;
-		if(TransactionStatusValue->TryGetString(TmpValue)) {TransactionStatus = TmpValue; }
-	}
+    if (TransactionStatusValue.IsValid()&& !TransactionStatusValue->IsNull())
+    {
+        FString TmpValue;
+        if(TransactionStatusValue->TryGetString(TmpValue)) {TransactionStatus = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PurchaseDateValue = obj->TryGetField(TEXT("PurchaseDate"));
-	if(PurchaseDateValue.IsValid())
-	{
-		PurchaseDate = readDatetime(PurchaseDateValue);
-	}
+    if(PurchaseDateValue.IsValid())
+    {
+        PurchaseDate = readDatetime(PurchaseDateValue);
+    }
     
     {
-		const TArray< TSharedPtr<FJsonValue> >&ItemsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Items"));
-		for (int32 Idx = 0; Idx < ItemsArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = ItemsArray[Idx];
-			
-			Items.Add(FItemInstance(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&ItemsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Items"));
+        for (int32 Idx = 0; Idx < ItemsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = ItemsArray[Idx];
+            
+            Items.Add(FItemInstance(CurrentItem->AsObject()));
+        }
+    }
 
     
     
@@ -5483,15 +5483,15 @@ void PlayFab::ClientModels::FGetSharedGroupDataRequest::writeJSON(JsonWriter& wr
     writer->WriteIdentifierPrefix(TEXT("SharedGroupId")); writer->WriteValue(SharedGroupId);
 	
     if(Keys.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Keys"));
-	
-		for (const FString& item : Keys)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Keys"));
+    
+        for (const FString& item : Keys)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(GetMembers.notNull()) { writer->WriteIdentifierPrefix(TEXT("GetMembers")); writer->WriteValue(GetMembers); }
 	
@@ -5504,20 +5504,20 @@ bool PlayFab::ClientModels::FGetSharedGroupDataRequest::readFromValue(const TSha
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> SharedGroupIdValue = obj->TryGetField(TEXT("SharedGroupId"));
-	if (SharedGroupIdValue.IsValid()&& !SharedGroupIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(SharedGroupIdValue->TryGetString(TmpValue)) {SharedGroupId = TmpValue; }
-	}
+    if (SharedGroupIdValue.IsValid()&& !SharedGroupIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(SharedGroupIdValue->TryGetString(TmpValue)) {SharedGroupId = TmpValue; }
+    }
     
     obj->TryGetStringArrayField(TEXT("Keys"),Keys);
     
     const TSharedPtr<FJsonValue> GetMembersValue = obj->TryGetField(TEXT("GetMembers"));
-	if (GetMembersValue.IsValid()&& !GetMembersValue->IsNull())
-	{
-		bool TmpValue;
-		if(GetMembersValue->TryGetBool(TmpValue)) {GetMembers = TmpValue; }
-	}
+    if (GetMembersValue.IsValid()&& !GetMembersValue->IsNull())
+    {
+        bool TmpValue;
+        if(GetMembersValue->TryGetBool(TmpValue)) {GetMembers = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -5550,24 +5550,24 @@ bool PlayFab::ClientModels::FSharedGroupDataRecord::readFromValue(const TSharedP
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> ValueValue = obj->TryGetField(TEXT("Value"));
-	if (ValueValue.IsValid()&& !ValueValue->IsNull())
-	{
-		FString TmpValue;
-		if(ValueValue->TryGetString(TmpValue)) {Value = TmpValue; }
-	}
+    if (ValueValue.IsValid()&& !ValueValue->IsNull())
+    {
+        FString TmpValue;
+        if(ValueValue->TryGetString(TmpValue)) {Value = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> LastUpdatedByValue = obj->TryGetField(TEXT("LastUpdatedBy"));
-	if (LastUpdatedByValue.IsValid()&& !LastUpdatedByValue->IsNull())
-	{
-		FString TmpValue;
-		if(LastUpdatedByValue->TryGetString(TmpValue)) {LastUpdatedBy = TmpValue; }
-	}
+    if (LastUpdatedByValue.IsValid()&& !LastUpdatedByValue->IsNull())
+    {
+        FString TmpValue;
+        if(LastUpdatedByValue->TryGetString(TmpValue)) {LastUpdatedBy = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> LastUpdatedValue = obj->TryGetField(TEXT("LastUpdated"));
-	if(LastUpdatedValue.IsValid())
-	{
-		LastUpdated = readDatetime(LastUpdatedValue);
-	}
+    if(LastUpdatedValue.IsValid())
+    {
+        LastUpdated = readDatetime(LastUpdatedValue);
+    }
     
     Permission = readUserDataPermissionFromValue(obj->TryGetField(TEXT("Permission")));
     
@@ -5586,26 +5586,26 @@ void PlayFab::ClientModels::FGetSharedGroupDataResult::writeJSON(JsonWriter& wri
     writer->WriteObjectStart();
     
     if(Data.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("Data"));
-		for (TMap<FString, FSharedGroupDataRecord>::TConstIterator It(Data); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			(*It).Value.writeJSON(writer);
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("Data"));
+        for (TMap<FString, FSharedGroupDataRecord>::TConstIterator It(Data); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            (*It).Value.writeJSON(writer);
+        }
+        writer->WriteObjectEnd();
+     }
 	
     if(Members.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Members"));
-	
-		for (const FString& item : Members)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Members"));
+    
+        for (const FString& item : Members)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -5616,14 +5616,14 @@ bool PlayFab::ClientModels::FGetSharedGroupDataResult::readFromValue(const TShar
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonObject>* DataObject;
-	if (obj->TryGetObjectField(TEXT("Data"), DataObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*DataObject)->Values); It; ++It)
-		{
-			
-			Data.Add(It.Key(), FSharedGroupDataRecord(It.Value()->AsObject()));
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("Data"), DataObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*DataObject)->Values); It; ++It)
+        {
+            
+            Data.Add(It.Key(), FSharedGroupDataRecord(It.Value()->AsObject()));
+        }
+    }
     
     obj->TryGetStringArrayField(TEXT("Members"),Members);
     
@@ -5654,18 +5654,18 @@ bool PlayFab::ClientModels::FGetStoreItemsRequest::readFromValue(const TSharedPt
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> StoreIdValue = obj->TryGetField(TEXT("StoreId"));
-	if (StoreIdValue.IsValid()&& !StoreIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(StoreIdValue->TryGetString(TmpValue)) {StoreId = TmpValue; }
-	}
+    if (StoreIdValue.IsValid()&& !StoreIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(StoreIdValue->TryGetString(TmpValue)) {StoreId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CatalogVersionValue = obj->TryGetField(TEXT("CatalogVersion"));
-	if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
-	{
-		FString TmpValue;
-		if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
-	}
+    if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -5684,26 +5684,26 @@ void PlayFab::ClientModels::FStoreItem::writeJSON(JsonWriter& writer) const
     writer->WriteIdentifierPrefix(TEXT("ItemId")); writer->WriteValue(ItemId);
 	
     if(VirtualCurrencyPrices.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("VirtualCurrencyPrices"));
-		for (TMap<FString, uint32>::TConstIterator It(VirtualCurrencyPrices); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			writer->WriteValue(static_cast<int64>((*It).Value));
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("VirtualCurrencyPrices"));
+        for (TMap<FString, uint32>::TConstIterator It(VirtualCurrencyPrices); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue(static_cast<int64>((*It).Value));
+        }
+        writer->WriteObjectEnd();
+     }
 	
     if(RealCurrencyPrices.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("RealCurrencyPrices"));
-		for (TMap<FString, uint32>::TConstIterator It(RealCurrencyPrices); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			writer->WriteValue(static_cast<int64>((*It).Value));
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("RealCurrencyPrices"));
+        for (TMap<FString, uint32>::TConstIterator It(RealCurrencyPrices); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue(static_cast<int64>((*It).Value));
+        }
+        writer->WriteObjectEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -5714,31 +5714,31 @@ bool PlayFab::ClientModels::FStoreItem::readFromValue(const TSharedPtr<FJsonObje
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> ItemIdValue = obj->TryGetField(TEXT("ItemId"));
-	if (ItemIdValue.IsValid()&& !ItemIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(ItemIdValue->TryGetString(TmpValue)) {ItemId = TmpValue; }
-	}
+    if (ItemIdValue.IsValid()&& !ItemIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ItemIdValue->TryGetString(TmpValue)) {ItemId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonObject>* VirtualCurrencyPricesObject;
-	if (obj->TryGetObjectField(TEXT("VirtualCurrencyPrices"), VirtualCurrencyPricesObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyPricesObject)->Values); It; ++It)
-		{
-			uint32 TmpValue; It.Value()->TryGetNumber(TmpValue);
-			VirtualCurrencyPrices.Add(It.Key(), TmpValue);
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("VirtualCurrencyPrices"), VirtualCurrencyPricesObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyPricesObject)->Values); It; ++It)
+        {
+            uint32 TmpValue; It.Value()->TryGetNumber(TmpValue);
+            VirtualCurrencyPrices.Add(It.Key(), TmpValue);
+        }
+    }
     
     const TSharedPtr<FJsonObject>* RealCurrencyPricesObject;
-	if (obj->TryGetObjectField(TEXT("RealCurrencyPrices"), RealCurrencyPricesObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*RealCurrencyPricesObject)->Values); It; ++It)
-		{
-			uint32 TmpValue; It.Value()->TryGetNumber(TmpValue);
-			RealCurrencyPrices.Add(It.Key(), TmpValue);
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("RealCurrencyPrices"), RealCurrencyPricesObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*RealCurrencyPricesObject)->Values); It; ++It)
+        {
+            uint32 TmpValue; It.Value()->TryGetNumber(TmpValue);
+            RealCurrencyPrices.Add(It.Key(), TmpValue);
+        }
+    }
     
     
     return HasSucceeded;
@@ -5755,15 +5755,15 @@ void PlayFab::ClientModels::FGetStoreItemsResult::writeJSON(JsonWriter& writer) 
     writer->WriteObjectStart();
     
     if(Store.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Store"));
-	
-		for (const FStoreItem& item : Store)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Store"));
+    
+        for (const FStoreItem& item : Store)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -5774,14 +5774,14 @@ bool PlayFab::ClientModels::FGetStoreItemsResult::readFromValue(const TSharedPtr
 	bool HasSucceeded = true; 
 	
     {
-		const TArray< TSharedPtr<FJsonValue> >&StoreArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Store"));
-		for (int32 Idx = 0; Idx < StoreArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = StoreArray[Idx];
-			
-			Store.Add(FStoreItem(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&StoreArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Store"));
+        for (int32 Idx = 0; Idx < StoreArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = StoreArray[Idx];
+            
+            Store.Add(FStoreItem(CurrentItem->AsObject()));
+        }
+    }
 
     
     
@@ -5799,15 +5799,15 @@ void PlayFab::ClientModels::FGetTitleDataRequest::writeJSON(JsonWriter& writer) 
     writer->WriteObjectStart();
     
     if(Keys.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Keys"));
-	
-		for (const FString& item : Keys)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Keys"));
+    
+        for (const FString& item : Keys)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -5834,15 +5834,15 @@ void PlayFab::ClientModels::FGetTitleDataResult::writeJSON(JsonWriter& writer) c
     writer->WriteObjectStart();
     
     if(Data.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("Data"));
-		for (TMap<FString, FString>::TConstIterator It(Data); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			writer->WriteValue((*It).Value);
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("Data"));
+        for (TMap<FString, FString>::TConstIterator It(Data); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue((*It).Value);
+        }
+        writer->WriteObjectEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -5853,14 +5853,14 @@ bool PlayFab::ClientModels::FGetTitleDataResult::readFromValue(const TSharedPtr<
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonObject>* DataObject;
-	if (obj->TryGetObjectField(TEXT("Data"), DataObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*DataObject)->Values); It; ++It)
-		{
-			
-			Data.Add(It.Key(), It.Value()->AsString());
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("Data"), DataObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*DataObject)->Values); It; ++It)
+        {
+            
+            Data.Add(It.Key(), It.Value()->AsString());
+        }
+    }
     
     
     return HasSucceeded;
@@ -5887,11 +5887,11 @@ bool PlayFab::ClientModels::FGetTitleNewsRequest::readFromValue(const TSharedPtr
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> CountValue = obj->TryGetField(TEXT("Count"));
-	if (CountValue.IsValid()&& !CountValue->IsNull())
-	{
-		int32 TmpValue;
-		if(CountValue->TryGetNumber(TmpValue)) {Count = TmpValue; }
-	}
+    if (CountValue.IsValid()&& !CountValue->IsNull())
+    {
+        int32 TmpValue;
+        if(CountValue->TryGetNumber(TmpValue)) {Count = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -5924,31 +5924,31 @@ bool PlayFab::ClientModels::FTitleNewsItem::readFromValue(const TSharedPtr<FJson
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> TimestampValue = obj->TryGetField(TEXT("Timestamp"));
-	if(TimestampValue.IsValid())
-	{
-		Timestamp = readDatetime(TimestampValue);
-	}
+    if(TimestampValue.IsValid())
+    {
+        Timestamp = readDatetime(TimestampValue);
+    }
     
     const TSharedPtr<FJsonValue> NewsIdValue = obj->TryGetField(TEXT("NewsId"));
-	if (NewsIdValue.IsValid()&& !NewsIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(NewsIdValue->TryGetString(TmpValue)) {NewsId = TmpValue; }
-	}
+    if (NewsIdValue.IsValid()&& !NewsIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(NewsIdValue->TryGetString(TmpValue)) {NewsId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> TitleValue = obj->TryGetField(TEXT("Title"));
-	if (TitleValue.IsValid()&& !TitleValue->IsNull())
-	{
-		FString TmpValue;
-		if(TitleValue->TryGetString(TmpValue)) {Title = TmpValue; }
-	}
+    if (TitleValue.IsValid()&& !TitleValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleValue->TryGetString(TmpValue)) {Title = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> BodyValue = obj->TryGetField(TEXT("Body"));
-	if (BodyValue.IsValid()&& !BodyValue->IsNull())
-	{
-		FString TmpValue;
-		if(BodyValue->TryGetString(TmpValue)) {Body = TmpValue; }
-	}
+    if (BodyValue.IsValid()&& !BodyValue->IsNull())
+    {
+        FString TmpValue;
+        if(BodyValue->TryGetString(TmpValue)) {Body = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -5965,15 +5965,15 @@ void PlayFab::ClientModels::FGetTitleNewsResult::writeJSON(JsonWriter& writer) c
     writer->WriteObjectStart();
     
     if(News.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("News"));
-	
-		for (const FTitleNewsItem& item : News)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("News"));
+    
+        for (const FTitleNewsItem& item : News)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -5984,14 +5984,14 @@ bool PlayFab::ClientModels::FGetTitleNewsResult::readFromValue(const TSharedPtr<
 	bool HasSucceeded = true; 
 	
     {
-		const TArray< TSharedPtr<FJsonValue> >&NewsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("News"));
-		for (int32 Idx = 0; Idx < NewsArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = NewsArray[Idx];
-			
-			News.Add(FTitleNewsItem(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&NewsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("News"));
+        for (int32 Idx = 0; Idx < NewsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = NewsArray[Idx];
+            
+            News.Add(FTitleNewsItem(CurrentItem->AsObject()));
+        }
+    }
 
     
     
@@ -6021,18 +6021,18 @@ bool PlayFab::ClientModels::FGetTradeStatusRequest::readFromValue(const TSharedP
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> OfferingPlayerIdValue = obj->TryGetField(TEXT("OfferingPlayerId"));
-	if (OfferingPlayerIdValue.IsValid()&& !OfferingPlayerIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(OfferingPlayerIdValue->TryGetString(TmpValue)) {OfferingPlayerId = TmpValue; }
-	}
+    if (OfferingPlayerIdValue.IsValid()&& !OfferingPlayerIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(OfferingPlayerIdValue->TryGetString(TmpValue)) {OfferingPlayerId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> TradeIdValue = obj->TryGetField(TEXT("TradeId"));
-	if (TradeIdValue.IsValid()&& !TradeIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(TradeIdValue->TryGetString(TmpValue)) {TradeId = TmpValue; }
-	}
+    if (TradeIdValue.IsValid()&& !TradeIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TradeIdValue->TryGetString(TmpValue)) {TradeId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -6060,10 +6060,10 @@ bool PlayFab::ClientModels::FGetTradeStatusResponse::readFromValue(const TShared
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> TradeValue = obj->TryGetField(TEXT("Trade"));
-	if (TradeValue.IsValid()&& !TradeValue->IsNull())
-	{
-		Trade = MakeShareable(new FTradeInfo(TradeValue->AsObject()));
-	}
+    if (TradeValue.IsValid()&& !TradeValue->IsNull())
+    {
+        Trade = MakeShareable(new FTradeInfo(TradeValue->AsObject()));
+    }
     
     
     return HasSucceeded;
@@ -6096,28 +6096,28 @@ void PlayFab::ClientModels::FGetUserCombinedInfoRequest::writeJSON(JsonWriter& w
     if(GetUserData.notNull()) { writer->WriteIdentifierPrefix(TEXT("GetUserData")); writer->WriteValue(GetUserData); }
 	
     if(UserDataKeys.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("UserDataKeys"));
-	
-		for (const FString& item : UserDataKeys)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("UserDataKeys"));
+    
+        for (const FString& item : UserDataKeys)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(GetReadOnlyData.notNull()) { writer->WriteIdentifierPrefix(TEXT("GetReadOnlyData")); writer->WriteValue(GetReadOnlyData); }
 	
     if(ReadOnlyDataKeys.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("ReadOnlyDataKeys"));
-	
-		for (const FString& item : ReadOnlyDataKeys)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("ReadOnlyDataKeys"));
+    
+        for (const FString& item : ReadOnlyDataKeys)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -6128,69 +6128,69 @@ bool PlayFab::ClientModels::FGetUserCombinedInfoRequest::readFromValue(const TSh
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
-	if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
-	}
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> UsernameValue = obj->TryGetField(TEXT("Username"));
-	if (UsernameValue.IsValid()&& !UsernameValue->IsNull())
-	{
-		FString TmpValue;
-		if(UsernameValue->TryGetString(TmpValue)) {Username = TmpValue; }
-	}
+    if (UsernameValue.IsValid()&& !UsernameValue->IsNull())
+    {
+        FString TmpValue;
+        if(UsernameValue->TryGetString(TmpValue)) {Username = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> EmailValue = obj->TryGetField(TEXT("Email"));
-	if (EmailValue.IsValid()&& !EmailValue->IsNull())
-	{
-		FString TmpValue;
-		if(EmailValue->TryGetString(TmpValue)) {Email = TmpValue; }
-	}
+    if (EmailValue.IsValid()&& !EmailValue->IsNull())
+    {
+        FString TmpValue;
+        if(EmailValue->TryGetString(TmpValue)) {Email = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> TitleDisplayNameValue = obj->TryGetField(TEXT("TitleDisplayName"));
-	if (TitleDisplayNameValue.IsValid()&& !TitleDisplayNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(TitleDisplayNameValue->TryGetString(TmpValue)) {TitleDisplayName = TmpValue; }
-	}
+    if (TitleDisplayNameValue.IsValid()&& !TitleDisplayNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleDisplayNameValue->TryGetString(TmpValue)) {TitleDisplayName = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> GetAccountInfoValue = obj->TryGetField(TEXT("GetAccountInfo"));
-	if (GetAccountInfoValue.IsValid()&& !GetAccountInfoValue->IsNull())
-	{
-		bool TmpValue;
-		if(GetAccountInfoValue->TryGetBool(TmpValue)) {GetAccountInfo = TmpValue; }
-	}
+    if (GetAccountInfoValue.IsValid()&& !GetAccountInfoValue->IsNull())
+    {
+        bool TmpValue;
+        if(GetAccountInfoValue->TryGetBool(TmpValue)) {GetAccountInfo = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> GetInventoryValue = obj->TryGetField(TEXT("GetInventory"));
-	if (GetInventoryValue.IsValid()&& !GetInventoryValue->IsNull())
-	{
-		bool TmpValue;
-		if(GetInventoryValue->TryGetBool(TmpValue)) {GetInventory = TmpValue; }
-	}
+    if (GetInventoryValue.IsValid()&& !GetInventoryValue->IsNull())
+    {
+        bool TmpValue;
+        if(GetInventoryValue->TryGetBool(TmpValue)) {GetInventory = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> GetVirtualCurrencyValue = obj->TryGetField(TEXT("GetVirtualCurrency"));
-	if (GetVirtualCurrencyValue.IsValid()&& !GetVirtualCurrencyValue->IsNull())
-	{
-		bool TmpValue;
-		if(GetVirtualCurrencyValue->TryGetBool(TmpValue)) {GetVirtualCurrency = TmpValue; }
-	}
+    if (GetVirtualCurrencyValue.IsValid()&& !GetVirtualCurrencyValue->IsNull())
+    {
+        bool TmpValue;
+        if(GetVirtualCurrencyValue->TryGetBool(TmpValue)) {GetVirtualCurrency = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> GetUserDataValue = obj->TryGetField(TEXT("GetUserData"));
-	if (GetUserDataValue.IsValid()&& !GetUserDataValue->IsNull())
-	{
-		bool TmpValue;
-		if(GetUserDataValue->TryGetBool(TmpValue)) {GetUserData = TmpValue; }
-	}
+    if (GetUserDataValue.IsValid()&& !GetUserDataValue->IsNull())
+    {
+        bool TmpValue;
+        if(GetUserDataValue->TryGetBool(TmpValue)) {GetUserData = TmpValue; }
+    }
     
     obj->TryGetStringArrayField(TEXT("UserDataKeys"),UserDataKeys);
     
     const TSharedPtr<FJsonValue> GetReadOnlyDataValue = obj->TryGetField(TEXT("GetReadOnlyData"));
-	if (GetReadOnlyDataValue.IsValid()&& !GetReadOnlyDataValue->IsNull())
-	{
-		bool TmpValue;
-		if(GetReadOnlyDataValue->TryGetBool(TmpValue)) {GetReadOnlyData = TmpValue; }
-	}
+    if (GetReadOnlyDataValue.IsValid()&& !GetReadOnlyDataValue->IsNull())
+    {
+        bool TmpValue;
+        if(GetReadOnlyDataValue->TryGetBool(TmpValue)) {GetReadOnlyData = TmpValue; }
+    }
     
     obj->TryGetStringArrayField(TEXT("ReadOnlyDataKeys"),ReadOnlyDataKeys);
     
@@ -6214,61 +6214,61 @@ void PlayFab::ClientModels::FGetUserCombinedInfoResult::writeJSON(JsonWriter& wr
     if(AccountInfo.IsValid()) { writer->WriteIdentifierPrefix(TEXT("AccountInfo")); AccountInfo->writeJSON(writer); }
 	
     if(Inventory.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Inventory"));
-	
-		for (const FItemInstance& item : Inventory)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Inventory"));
+    
+        for (const FItemInstance& item : Inventory)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(VirtualCurrency.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("VirtualCurrency"));
-		for (TMap<FString, int32>::TConstIterator It(VirtualCurrency); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			writer->WriteValue((*It).Value);
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("VirtualCurrency"));
+        for (TMap<FString, int32>::TConstIterator It(VirtualCurrency); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue((*It).Value);
+        }
+        writer->WriteObjectEnd();
+     }
 	
     if(VirtualCurrencyRechargeTimes.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("VirtualCurrencyRechargeTimes"));
-		for (TMap<FString, FVirtualCurrencyRechargeTime>::TConstIterator It(VirtualCurrencyRechargeTimes); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			(*It).Value.writeJSON(writer);
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("VirtualCurrencyRechargeTimes"));
+        for (TMap<FString, FVirtualCurrencyRechargeTime>::TConstIterator It(VirtualCurrencyRechargeTimes); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            (*It).Value.writeJSON(writer);
+        }
+        writer->WriteObjectEnd();
+     }
 	
     if(Data.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("Data"));
-		for (TMap<FString, FUserDataRecord>::TConstIterator It(Data); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			(*It).Value.writeJSON(writer);
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("Data"));
+        for (TMap<FString, FUserDataRecord>::TConstIterator It(Data); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            (*It).Value.writeJSON(writer);
+        }
+        writer->WriteObjectEnd();
+     }
 	
     writer->WriteIdentifierPrefix(TEXT("DataVersion")); writer->WriteValue(static_cast<int64>(DataVersion));
 	
     if(ReadOnlyData.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("ReadOnlyData"));
-		for (TMap<FString, FUserDataRecord>::TConstIterator It(ReadOnlyData); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			(*It).Value.writeJSON(writer);
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("ReadOnlyData"));
+        for (TMap<FString, FUserDataRecord>::TConstIterator It(ReadOnlyData); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            (*It).Value.writeJSON(writer);
+        }
+        writer->WriteObjectEnd();
+     }
 	
     writer->WriteIdentifierPrefix(TEXT("ReadOnlyDataVersion")); writer->WriteValue(static_cast<int64>(ReadOnlyDataVersion));
 	
@@ -6281,82 +6281,82 @@ bool PlayFab::ClientModels::FGetUserCombinedInfoResult::readFromValue(const TSha
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
-	if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
-	}
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> AccountInfoValue = obj->TryGetField(TEXT("AccountInfo"));
-	if (AccountInfoValue.IsValid()&& !AccountInfoValue->IsNull())
-	{
-		AccountInfo = MakeShareable(new FUserAccountInfo(AccountInfoValue->AsObject()));
-	}
+    if (AccountInfoValue.IsValid()&& !AccountInfoValue->IsNull())
+    {
+        AccountInfo = MakeShareable(new FUserAccountInfo(AccountInfoValue->AsObject()));
+    }
     
     {
-		const TArray< TSharedPtr<FJsonValue> >&InventoryArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Inventory"));
-		for (int32 Idx = 0; Idx < InventoryArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = InventoryArray[Idx];
-			
-			Inventory.Add(FItemInstance(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&InventoryArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Inventory"));
+        for (int32 Idx = 0; Idx < InventoryArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = InventoryArray[Idx];
+            
+            Inventory.Add(FItemInstance(CurrentItem->AsObject()));
+        }
+    }
 
     
     const TSharedPtr<FJsonObject>* VirtualCurrencyObject;
-	if (obj->TryGetObjectField(TEXT("VirtualCurrency"), VirtualCurrencyObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyObject)->Values); It; ++It)
-		{
-			int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
-			VirtualCurrency.Add(It.Key(), TmpValue);
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("VirtualCurrency"), VirtualCurrencyObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyObject)->Values); It; ++It)
+        {
+            int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
+            VirtualCurrency.Add(It.Key(), TmpValue);
+        }
+    }
     
     const TSharedPtr<FJsonObject>* VirtualCurrencyRechargeTimesObject;
-	if (obj->TryGetObjectField(TEXT("VirtualCurrencyRechargeTimes"), VirtualCurrencyRechargeTimesObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyRechargeTimesObject)->Values); It; ++It)
-		{
-			
-			VirtualCurrencyRechargeTimes.Add(It.Key(), FVirtualCurrencyRechargeTime(It.Value()->AsObject()));
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("VirtualCurrencyRechargeTimes"), VirtualCurrencyRechargeTimesObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyRechargeTimesObject)->Values); It; ++It)
+        {
+            
+            VirtualCurrencyRechargeTimes.Add(It.Key(), FVirtualCurrencyRechargeTime(It.Value()->AsObject()));
+        }
+    }
     
     const TSharedPtr<FJsonObject>* DataObject;
-	if (obj->TryGetObjectField(TEXT("Data"), DataObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*DataObject)->Values); It; ++It)
-		{
-			
-			Data.Add(It.Key(), FUserDataRecord(It.Value()->AsObject()));
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("Data"), DataObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*DataObject)->Values); It; ++It)
+        {
+            
+            Data.Add(It.Key(), FUserDataRecord(It.Value()->AsObject()));
+        }
+    }
     
     const TSharedPtr<FJsonValue> DataVersionValue = obj->TryGetField(TEXT("DataVersion"));
-	if (DataVersionValue.IsValid()&& !DataVersionValue->IsNull())
-	{
-		uint32 TmpValue;
-		if(DataVersionValue->TryGetNumber(TmpValue)) {DataVersion = TmpValue; }
-	}
+    if (DataVersionValue.IsValid()&& !DataVersionValue->IsNull())
+    {
+        uint32 TmpValue;
+        if(DataVersionValue->TryGetNumber(TmpValue)) {DataVersion = TmpValue; }
+    }
     
     const TSharedPtr<FJsonObject>* ReadOnlyDataObject;
-	if (obj->TryGetObjectField(TEXT("ReadOnlyData"), ReadOnlyDataObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*ReadOnlyDataObject)->Values); It; ++It)
-		{
-			
-			ReadOnlyData.Add(It.Key(), FUserDataRecord(It.Value()->AsObject()));
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("ReadOnlyData"), ReadOnlyDataObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*ReadOnlyDataObject)->Values); It; ++It)
+        {
+            
+            ReadOnlyData.Add(It.Key(), FUserDataRecord(It.Value()->AsObject()));
+        }
+    }
     
     const TSharedPtr<FJsonValue> ReadOnlyDataVersionValue = obj->TryGetField(TEXT("ReadOnlyDataVersion"));
-	if (ReadOnlyDataVersionValue.IsValid()&& !ReadOnlyDataVersionValue->IsNull())
-	{
-		uint32 TmpValue;
-		if(ReadOnlyDataVersionValue->TryGetNumber(TmpValue)) {ReadOnlyDataVersion = TmpValue; }
-	}
+    if (ReadOnlyDataVersionValue.IsValid()&& !ReadOnlyDataVersionValue->IsNull())
+    {
+        uint32 TmpValue;
+        if(ReadOnlyDataVersionValue->TryGetNumber(TmpValue)) {ReadOnlyDataVersion = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -6373,15 +6373,15 @@ void PlayFab::ClientModels::FGetUserDataRequest::writeJSON(JsonWriter& writer) c
     writer->WriteObjectStart();
     
     if(Keys.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Keys"));
-	
-		for (const FString& item : Keys)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Keys"));
+    
+        for (const FString& item : Keys)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(PlayFabId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId); }
 	
@@ -6398,18 +6398,18 @@ bool PlayFab::ClientModels::FGetUserDataRequest::readFromValue(const TSharedPtr<
     obj->TryGetStringArrayField(TEXT("Keys"),Keys);
     
     const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
-	if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
-	}
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> IfChangedFromDataVersionValue = obj->TryGetField(TEXT("IfChangedFromDataVersion"));
-	if (IfChangedFromDataVersionValue.IsValid()&& !IfChangedFromDataVersionValue->IsNull())
-	{
-		int32 TmpValue;
-		if(IfChangedFromDataVersionValue->TryGetNumber(TmpValue)) {IfChangedFromDataVersion = TmpValue; }
-	}
+    if (IfChangedFromDataVersionValue.IsValid()&& !IfChangedFromDataVersionValue->IsNull())
+    {
+        int32 TmpValue;
+        if(IfChangedFromDataVersionValue->TryGetNumber(TmpValue)) {IfChangedFromDataVersion = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -6426,15 +6426,15 @@ void PlayFab::ClientModels::FGetUserDataResult::writeJSON(JsonWriter& writer) co
     writer->WriteObjectStart();
     
     if(Data.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("Data"));
-		for (TMap<FString, FUserDataRecord>::TConstIterator It(Data); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			(*It).Value.writeJSON(writer);
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("Data"));
+        for (TMap<FString, FUserDataRecord>::TConstIterator It(Data); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            (*It).Value.writeJSON(writer);
+        }
+        writer->WriteObjectEnd();
+     }
 	
     writer->WriteIdentifierPrefix(TEXT("DataVersion")); writer->WriteValue(static_cast<int64>(DataVersion));
 	
@@ -6447,21 +6447,21 @@ bool PlayFab::ClientModels::FGetUserDataResult::readFromValue(const TSharedPtr<F
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonObject>* DataObject;
-	if (obj->TryGetObjectField(TEXT("Data"), DataObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*DataObject)->Values); It; ++It)
-		{
-			
-			Data.Add(It.Key(), FUserDataRecord(It.Value()->AsObject()));
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("Data"), DataObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*DataObject)->Values); It; ++It)
+        {
+            
+            Data.Add(It.Key(), FUserDataRecord(It.Value()->AsObject()));
+        }
+    }
     
     const TSharedPtr<FJsonValue> DataVersionValue = obj->TryGetField(TEXT("DataVersion"));
-	if (DataVersionValue.IsValid()&& !DataVersionValue->IsNull())
-	{
-		uint32 TmpValue;
-		if(DataVersionValue->TryGetNumber(TmpValue)) {DataVersion = TmpValue; }
-	}
+    if (DataVersionValue.IsValid()&& !DataVersionValue->IsNull())
+    {
+        uint32 TmpValue;
+        if(DataVersionValue->TryGetNumber(TmpValue)) {DataVersion = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -6500,37 +6500,37 @@ void PlayFab::ClientModels::FGetUserInventoryResult::writeJSON(JsonWriter& write
     writer->WriteObjectStart();
     
     if(Inventory.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Inventory"));
-	
-		for (const FItemInstance& item : Inventory)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Inventory"));
+    
+        for (const FItemInstance& item : Inventory)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(VirtualCurrency.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("VirtualCurrency"));
-		for (TMap<FString, int32>::TConstIterator It(VirtualCurrency); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			writer->WriteValue((*It).Value);
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("VirtualCurrency"));
+        for (TMap<FString, int32>::TConstIterator It(VirtualCurrency); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue((*It).Value);
+        }
+        writer->WriteObjectEnd();
+     }
 	
     if(VirtualCurrencyRechargeTimes.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("VirtualCurrencyRechargeTimes"));
-		for (TMap<FString, FVirtualCurrencyRechargeTime>::TConstIterator It(VirtualCurrencyRechargeTimes); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			(*It).Value.writeJSON(writer);
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("VirtualCurrencyRechargeTimes"));
+        for (TMap<FString, FVirtualCurrencyRechargeTime>::TConstIterator It(VirtualCurrencyRechargeTimes); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            (*It).Value.writeJSON(writer);
+        }
+        writer->WriteObjectEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -6541,35 +6541,35 @@ bool PlayFab::ClientModels::FGetUserInventoryResult::readFromValue(const TShared
 	bool HasSucceeded = true; 
 	
     {
-		const TArray< TSharedPtr<FJsonValue> >&InventoryArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Inventory"));
-		for (int32 Idx = 0; Idx < InventoryArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = InventoryArray[Idx];
-			
-			Inventory.Add(FItemInstance(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&InventoryArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Inventory"));
+        for (int32 Idx = 0; Idx < InventoryArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = InventoryArray[Idx];
+            
+            Inventory.Add(FItemInstance(CurrentItem->AsObject()));
+        }
+    }
 
     
     const TSharedPtr<FJsonObject>* VirtualCurrencyObject;
-	if (obj->TryGetObjectField(TEXT("VirtualCurrency"), VirtualCurrencyObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyObject)->Values); It; ++It)
-		{
-			int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
-			VirtualCurrency.Add(It.Key(), TmpValue);
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("VirtualCurrency"), VirtualCurrencyObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyObject)->Values); It; ++It)
+        {
+            int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
+            VirtualCurrency.Add(It.Key(), TmpValue);
+        }
+    }
     
     const TSharedPtr<FJsonObject>* VirtualCurrencyRechargeTimesObject;
-	if (obj->TryGetObjectField(TEXT("VirtualCurrencyRechargeTimes"), VirtualCurrencyRechargeTimesObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyRechargeTimesObject)->Values); It; ++It)
-		{
-			
-			VirtualCurrencyRechargeTimes.Add(It.Key(), FVirtualCurrencyRechargeTime(It.Value()->AsObject()));
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("VirtualCurrencyRechargeTimes"), VirtualCurrencyRechargeTimesObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyRechargeTimesObject)->Values); It; ++It)
+        {
+            
+            VirtualCurrencyRechargeTimes.Add(It.Key(), FVirtualCurrencyRechargeTime(It.Value()->AsObject()));
+        }
+    }
     
     
     return HasSucceeded;
@@ -6608,15 +6608,15 @@ void PlayFab::ClientModels::FGetUserStatisticsResult::writeJSON(JsonWriter& writ
     writer->WriteObjectStart();
     
     if(UserStatistics.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("UserStatistics"));
-		for (TMap<FString, int32>::TConstIterator It(UserStatistics); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			writer->WriteValue((*It).Value);
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("UserStatistics"));
+        for (TMap<FString, int32>::TConstIterator It(UserStatistics); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue((*It).Value);
+        }
+        writer->WriteObjectEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -6627,14 +6627,14 @@ bool PlayFab::ClientModels::FGetUserStatisticsResult::readFromValue(const TShare
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonObject>* UserStatisticsObject;
-	if (obj->TryGetObjectField(TEXT("UserStatistics"), UserStatisticsObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*UserStatisticsObject)->Values); It; ++It)
-		{
-			int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
-			UserStatistics.Add(It.Key(), TmpValue);
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("UserStatistics"), UserStatisticsObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*UserStatisticsObject)->Values); It; ++It)
+        {
+            int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
+            UserStatistics.Add(It.Key(), TmpValue);
+        }
+    }
     
     
     return HasSucceeded;
@@ -6665,25 +6665,25 @@ bool PlayFab::ClientModels::FGrantCharacterToUserRequest::readFromValue(const TS
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> CatalogVersionValue = obj->TryGetField(TEXT("CatalogVersion"));
-	if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
-	{
-		FString TmpValue;
-		if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
-	}
+    if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ItemIdValue = obj->TryGetField(TEXT("ItemId"));
-	if (ItemIdValue.IsValid()&& !ItemIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(ItemIdValue->TryGetString(TmpValue)) {ItemId = TmpValue; }
-	}
+    if (ItemIdValue.IsValid()&& !ItemIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ItemIdValue->TryGetString(TmpValue)) {ItemId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CharacterNameValue = obj->TryGetField(TEXT("CharacterName"));
-	if (CharacterNameValue.IsValid()&& !CharacterNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(CharacterNameValue->TryGetString(TmpValue)) {CharacterName = TmpValue; }
-	}
+    if (CharacterNameValue.IsValid()&& !CharacterNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterNameValue->TryGetString(TmpValue)) {CharacterName = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -6714,25 +6714,25 @@ bool PlayFab::ClientModels::FGrantCharacterToUserResult::readFromValue(const TSh
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
-	if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
-	}
+    if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CharacterTypeValue = obj->TryGetField(TEXT("CharacterType"));
-	if (CharacterTypeValue.IsValid()&& !CharacterTypeValue->IsNull())
-	{
-		FString TmpValue;
-		if(CharacterTypeValue->TryGetString(TmpValue)) {CharacterType = TmpValue; }
-	}
+    if (CharacterTypeValue.IsValid()&& !CharacterTypeValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterTypeValue->TryGetString(TmpValue)) {CharacterType = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ResultValue = obj->TryGetField(TEXT("Result"));
-	if (ResultValue.IsValid()&& !ResultValue->IsNull())
-	{
-		bool TmpValue;
-		if(ResultValue->TryGetBool(TmpValue)) {Result = TmpValue; }
-	}
+    if (ResultValue.IsValid()&& !ResultValue->IsNull())
+    {
+        bool TmpValue;
+        if(ResultValue->TryGetBool(TmpValue)) {Result = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -6755,15 +6755,15 @@ void PlayFab::ClientModels::FItemPuchaseRequest::writeJSON(JsonWriter& writer) c
     if(Annotation.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Annotation")); writer->WriteValue(Annotation); }
 	
     if(UpgradeFromItems.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("UpgradeFromItems"));
-	
-		for (const FString& item : UpgradeFromItems)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("UpgradeFromItems"));
+    
+        for (const FString& item : UpgradeFromItems)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -6774,25 +6774,25 @@ bool PlayFab::ClientModels::FItemPuchaseRequest::readFromValue(const TSharedPtr<
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> ItemIdValue = obj->TryGetField(TEXT("ItemId"));
-	if (ItemIdValue.IsValid()&& !ItemIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(ItemIdValue->TryGetString(TmpValue)) {ItemId = TmpValue; }
-	}
+    if (ItemIdValue.IsValid()&& !ItemIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ItemIdValue->TryGetString(TmpValue)) {ItemId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> QuantityValue = obj->TryGetField(TEXT("Quantity"));
-	if (QuantityValue.IsValid()&& !QuantityValue->IsNull())
-	{
-		uint32 TmpValue;
-		if(QuantityValue->TryGetNumber(TmpValue)) {Quantity = TmpValue; }
-	}
+    if (QuantityValue.IsValid()&& !QuantityValue->IsNull())
+    {
+        uint32 TmpValue;
+        if(QuantityValue->TryGetNumber(TmpValue)) {Quantity = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> AnnotationValue = obj->TryGetField(TEXT("Annotation"));
-	if (AnnotationValue.IsValid()&& !AnnotationValue->IsNull())
-	{
-		FString TmpValue;
-		if(AnnotationValue->TryGetString(TmpValue)) {Annotation = TmpValue; }
-	}
+    if (AnnotationValue.IsValid()&& !AnnotationValue->IsNull())
+    {
+        FString TmpValue;
+        if(AnnotationValue->TryGetString(TmpValue)) {Annotation = TmpValue; }
+    }
     
     obj->TryGetStringArrayField(TEXT("UpgradeFromItems"),UpgradeFromItems);
     
@@ -6825,25 +6825,25 @@ bool PlayFab::ClientModels::FLinkAndroidDeviceIDRequest::readFromValue(const TSh
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> AndroidDeviceIdValue = obj->TryGetField(TEXT("AndroidDeviceId"));
-	if (AndroidDeviceIdValue.IsValid()&& !AndroidDeviceIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(AndroidDeviceIdValue->TryGetString(TmpValue)) {AndroidDeviceId = TmpValue; }
-	}
+    if (AndroidDeviceIdValue.IsValid()&& !AndroidDeviceIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(AndroidDeviceIdValue->TryGetString(TmpValue)) {AndroidDeviceId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> OSValue = obj->TryGetField(TEXT("OS"));
-	if (OSValue.IsValid()&& !OSValue->IsNull())
-	{
-		FString TmpValue;
-		if(OSValue->TryGetString(TmpValue)) {OS = TmpValue; }
-	}
+    if (OSValue.IsValid()&& !OSValue->IsNull())
+    {
+        FString TmpValue;
+        if(OSValue->TryGetString(TmpValue)) {OS = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> AndroidDeviceValue = obj->TryGetField(TEXT("AndroidDevice"));
-	if (AndroidDeviceValue.IsValid()&& !AndroidDeviceValue->IsNull())
-	{
-		FString TmpValue;
-		if(AndroidDeviceValue->TryGetString(TmpValue)) {AndroidDevice = TmpValue; }
-	}
+    if (AndroidDeviceValue.IsValid()&& !AndroidDeviceValue->IsNull())
+    {
+        FString TmpValue;
+        if(AndroidDeviceValue->TryGetString(TmpValue)) {AndroidDevice = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -6892,11 +6892,11 @@ bool PlayFab::ClientModels::FLinkCustomIDRequest::readFromValue(const TSharedPtr
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> CustomIdValue = obj->TryGetField(TEXT("CustomId"));
-	if (CustomIdValue.IsValid()&& !CustomIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(CustomIdValue->TryGetString(TmpValue)) {CustomId = TmpValue; }
-	}
+    if (CustomIdValue.IsValid()&& !CustomIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CustomIdValue->TryGetString(TmpValue)) {CustomId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -6947,18 +6947,18 @@ bool PlayFab::ClientModels::FLinkFacebookAccountRequest::readFromValue(const TSh
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> AccessTokenValue = obj->TryGetField(TEXT("AccessToken"));
-	if (AccessTokenValue.IsValid()&& !AccessTokenValue->IsNull())
-	{
-		FString TmpValue;
-		if(AccessTokenValue->TryGetString(TmpValue)) {AccessToken = TmpValue; }
-	}
+    if (AccessTokenValue.IsValid()&& !AccessTokenValue->IsNull())
+    {
+        FString TmpValue;
+        if(AccessTokenValue->TryGetString(TmpValue)) {AccessToken = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ForceLinkValue = obj->TryGetField(TEXT("ForceLink"));
-	if (ForceLinkValue.IsValid()&& !ForceLinkValue->IsNull())
-	{
-		bool TmpValue;
-		if(ForceLinkValue->TryGetBool(TmpValue)) {ForceLink = TmpValue; }
-	}
+    if (ForceLinkValue.IsValid()&& !ForceLinkValue->IsNull())
+    {
+        bool TmpValue;
+        if(ForceLinkValue->TryGetBool(TmpValue)) {ForceLink = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -7007,11 +7007,11 @@ bool PlayFab::ClientModels::FLinkGameCenterAccountRequest::readFromValue(const T
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> GameCenterIdValue = obj->TryGetField(TEXT("GameCenterId"));
-	if (GameCenterIdValue.IsValid()&& !GameCenterIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(GameCenterIdValue->TryGetString(TmpValue)) {GameCenterId = TmpValue; }
-	}
+    if (GameCenterIdValue.IsValid()&& !GameCenterIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(GameCenterIdValue->TryGetString(TmpValue)) {GameCenterId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -7060,11 +7060,11 @@ bool PlayFab::ClientModels::FLinkGoogleAccountRequest::readFromValue(const TShar
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> AccessTokenValue = obj->TryGetField(TEXT("AccessToken"));
-	if (AccessTokenValue.IsValid()&& !AccessTokenValue->IsNull())
-	{
-		FString TmpValue;
-		if(AccessTokenValue->TryGetString(TmpValue)) {AccessToken = TmpValue; }
-	}
+    if (AccessTokenValue.IsValid()&& !AccessTokenValue->IsNull())
+    {
+        FString TmpValue;
+        if(AccessTokenValue->TryGetString(TmpValue)) {AccessToken = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -7117,25 +7117,25 @@ bool PlayFab::ClientModels::FLinkIOSDeviceIDRequest::readFromValue(const TShared
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> DeviceIdValue = obj->TryGetField(TEXT("DeviceId"));
-	if (DeviceIdValue.IsValid()&& !DeviceIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(DeviceIdValue->TryGetString(TmpValue)) {DeviceId = TmpValue; }
-	}
+    if (DeviceIdValue.IsValid()&& !DeviceIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(DeviceIdValue->TryGetString(TmpValue)) {DeviceId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> OSValue = obj->TryGetField(TEXT("OS"));
-	if (OSValue.IsValid()&& !OSValue->IsNull())
-	{
-		FString TmpValue;
-		if(OSValue->TryGetString(TmpValue)) {OS = TmpValue; }
-	}
+    if (OSValue.IsValid()&& !OSValue->IsNull())
+    {
+        FString TmpValue;
+        if(OSValue->TryGetString(TmpValue)) {OS = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> DeviceModelValue = obj->TryGetField(TEXT("DeviceModel"));
-	if (DeviceModelValue.IsValid()&& !DeviceModelValue->IsNull())
-	{
-		FString TmpValue;
-		if(DeviceModelValue->TryGetString(TmpValue)) {DeviceModel = TmpValue; }
-	}
+    if (DeviceModelValue.IsValid()&& !DeviceModelValue->IsNull())
+    {
+        FString TmpValue;
+        if(DeviceModelValue->TryGetString(TmpValue)) {DeviceModel = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -7186,18 +7186,18 @@ bool PlayFab::ClientModels::FLinkKongregateAccountRequest::readFromValue(const T
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> KongregateIdValue = obj->TryGetField(TEXT("KongregateId"));
-	if (KongregateIdValue.IsValid()&& !KongregateIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(KongregateIdValue->TryGetString(TmpValue)) {KongregateId = TmpValue; }
-	}
+    if (KongregateIdValue.IsValid()&& !KongregateIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(KongregateIdValue->TryGetString(TmpValue)) {KongregateId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> AuthTicketValue = obj->TryGetField(TEXT("AuthTicket"));
-	if (AuthTicketValue.IsValid()&& !AuthTicketValue->IsNull())
-	{
-		FString TmpValue;
-		if(AuthTicketValue->TryGetString(TmpValue)) {AuthTicket = TmpValue; }
-	}
+    if (AuthTicketValue.IsValid()&& !AuthTicketValue->IsNull())
+    {
+        FString TmpValue;
+        if(AuthTicketValue->TryGetString(TmpValue)) {AuthTicket = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -7250,25 +7250,25 @@ bool PlayFab::ClientModels::FLinkPSNAccountRequest::readFromValue(const TSharedP
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> AuthCodeValue = obj->TryGetField(TEXT("AuthCode"));
-	if (AuthCodeValue.IsValid()&& !AuthCodeValue->IsNull())
-	{
-		FString TmpValue;
-		if(AuthCodeValue->TryGetString(TmpValue)) {AuthCode = TmpValue; }
-	}
+    if (AuthCodeValue.IsValid()&& !AuthCodeValue->IsNull())
+    {
+        FString TmpValue;
+        if(AuthCodeValue->TryGetString(TmpValue)) {AuthCode = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> RedirectUriValue = obj->TryGetField(TEXT("RedirectUri"));
-	if (RedirectUriValue.IsValid()&& !RedirectUriValue->IsNull())
-	{
-		FString TmpValue;
-		if(RedirectUriValue->TryGetString(TmpValue)) {RedirectUri = TmpValue; }
-	}
+    if (RedirectUriValue.IsValid()&& !RedirectUriValue->IsNull())
+    {
+        FString TmpValue;
+        if(RedirectUriValue->TryGetString(TmpValue)) {RedirectUri = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> IssuerIdValue = obj->TryGetField(TEXT("IssuerId"));
-	if (IssuerIdValue.IsValid()&& !IssuerIdValue->IsNull())
-	{
-		int32 TmpValue;
-		if(IssuerIdValue->TryGetNumber(TmpValue)) {IssuerId = TmpValue; }
-	}
+    if (IssuerIdValue.IsValid()&& !IssuerIdValue->IsNull())
+    {
+        int32 TmpValue;
+        if(IssuerIdValue->TryGetNumber(TmpValue)) {IssuerId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -7317,11 +7317,11 @@ bool PlayFab::ClientModels::FLinkSteamAccountRequest::readFromValue(const TShare
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> SteamTicketValue = obj->TryGetField(TEXT("SteamTicket"));
-	if (SteamTicketValue.IsValid()&& !SteamTicketValue->IsNull())
-	{
-		FString TmpValue;
-		if(SteamTicketValue->TryGetString(TmpValue)) {SteamTicket = TmpValue; }
-	}
+    if (SteamTicketValue.IsValid()&& !SteamTicketValue->IsNull())
+    {
+        FString TmpValue;
+        if(SteamTicketValue->TryGetString(TmpValue)) {SteamTicket = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -7370,11 +7370,11 @@ bool PlayFab::ClientModels::FListUsersCharactersRequest::readFromValue(const TSh
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
-	if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
-	}
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -7391,15 +7391,15 @@ void PlayFab::ClientModels::FListUsersCharactersResult::writeJSON(JsonWriter& wr
     writer->WriteObjectStart();
     
     if(Characters.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Characters"));
-	
-		for (const FCharacterResult& item : Characters)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Characters"));
+    
+        for (const FCharacterResult& item : Characters)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -7410,14 +7410,14 @@ bool PlayFab::ClientModels::FListUsersCharactersResult::readFromValue(const TSha
 	bool HasSucceeded = true; 
 	
     {
-		const TArray< TSharedPtr<FJsonValue> >&CharactersArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Characters"));
-		for (int32 Idx = 0; Idx < CharactersArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = CharactersArray[Idx];
-			
-			Characters.Add(FCharacterResult(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&CharactersArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Characters"));
+        for (int32 Idx = 0; Idx < CharactersArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = CharactersArray[Idx];
+            
+            Characters.Add(FCharacterResult(CurrentItem->AsObject()));
+        }
+    }
 
     
     
@@ -7439,15 +7439,15 @@ void PlayFab::ClientModels::FLogEventRequest::writeJSON(JsonWriter& writer) cons
     if(EventName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("EventName")); writer->WriteValue(EventName); }
 	
     if(Body.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("Body"));
-		for (TMap<FString, FMultitypeVar>::TConstIterator It(Body); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			(*It).Value.writeJSON(writer);
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("Body"));
+        for (TMap<FString, FMultitypeVar>::TConstIterator It(Body); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            (*It).Value.writeJSON(writer);
+        }
+        writer->WriteObjectEnd();
+     }
 	
     writer->WriteIdentifierPrefix(TEXT("ProfileSetEvent")); writer->WriteValue(ProfileSetEvent);
 	
@@ -7460,34 +7460,34 @@ bool PlayFab::ClientModels::FLogEventRequest::readFromValue(const TSharedPtr<FJs
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> TimestampValue = obj->TryGetField(TEXT("Timestamp"));
-	if(TimestampValue.IsValid())
-	{
-		Timestamp = readDatetime(TimestampValue);
-	}
+    if(TimestampValue.IsValid())
+    {
+        Timestamp = readDatetime(TimestampValue);
+    }
     
     const TSharedPtr<FJsonValue> EventNameValue = obj->TryGetField(TEXT("EventName"));
-	if (EventNameValue.IsValid()&& !EventNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(EventNameValue->TryGetString(TmpValue)) {EventName = TmpValue; }
-	}
+    if (EventNameValue.IsValid()&& !EventNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(EventNameValue->TryGetString(TmpValue)) {EventName = TmpValue; }
+    }
     
     const TSharedPtr<FJsonObject>* BodyObject;
-	if (obj->TryGetObjectField(TEXT("Body"), BodyObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*BodyObject)->Values); It; ++It)
-		{
-			
-			Body.Add(It.Key(), FMultitypeVar(It.Value()->AsObject()));
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("Body"), BodyObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*BodyObject)->Values); It; ++It)
+        {
+            
+            Body.Add(It.Key(), FMultitypeVar(It.Value()->AsObject()));
+        }
+    }
     
     const TSharedPtr<FJsonValue> ProfileSetEventValue = obj->TryGetField(TEXT("ProfileSetEvent"));
-	if (ProfileSetEventValue.IsValid()&& !ProfileSetEventValue->IsNull())
-	{
-		bool TmpValue;
-		if(ProfileSetEventValue->TryGetBool(TmpValue)) {ProfileSetEvent = TmpValue; }
-	}
+    if (ProfileSetEventValue.IsValid()&& !ProfileSetEventValue->IsNull())
+    {
+        bool TmpValue;
+        if(ProfileSetEventValue->TryGetBool(TmpValue)) {ProfileSetEvent = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -7540,25 +7540,25 @@ bool PlayFab::ClientModels::FLoginResult::readFromValue(const TSharedPtr<FJsonOb
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> SessionTicketValue = obj->TryGetField(TEXT("SessionTicket"));
-	if (SessionTicketValue.IsValid()&& !SessionTicketValue->IsNull())
-	{
-		FString TmpValue;
-		if(SessionTicketValue->TryGetString(TmpValue)) {SessionTicket = TmpValue; }
-	}
+    if (SessionTicketValue.IsValid()&& !SessionTicketValue->IsNull())
+    {
+        FString TmpValue;
+        if(SessionTicketValue->TryGetString(TmpValue)) {SessionTicket = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
-	if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
-	}
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> NewlyCreatedValue = obj->TryGetField(TEXT("NewlyCreated"));
-	if (NewlyCreatedValue.IsValid()&& !NewlyCreatedValue->IsNull())
-	{
-		bool TmpValue;
-		if(NewlyCreatedValue->TryGetBool(TmpValue)) {NewlyCreated = TmpValue; }
-	}
+    if (NewlyCreatedValue.IsValid()&& !NewlyCreatedValue->IsNull())
+    {
+        bool TmpValue;
+        if(NewlyCreatedValue->TryGetBool(TmpValue)) {NewlyCreated = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -7593,39 +7593,39 @@ bool PlayFab::ClientModels::FLoginWithAndroidDeviceIDRequest::readFromValue(cons
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-	if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-	}
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> AndroidDeviceIdValue = obj->TryGetField(TEXT("AndroidDeviceId"));
-	if (AndroidDeviceIdValue.IsValid()&& !AndroidDeviceIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(AndroidDeviceIdValue->TryGetString(TmpValue)) {AndroidDeviceId = TmpValue; }
-	}
+    if (AndroidDeviceIdValue.IsValid()&& !AndroidDeviceIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(AndroidDeviceIdValue->TryGetString(TmpValue)) {AndroidDeviceId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> OSValue = obj->TryGetField(TEXT("OS"));
-	if (OSValue.IsValid()&& !OSValue->IsNull())
-	{
-		FString TmpValue;
-		if(OSValue->TryGetString(TmpValue)) {OS = TmpValue; }
-	}
+    if (OSValue.IsValid()&& !OSValue->IsNull())
+    {
+        FString TmpValue;
+        if(OSValue->TryGetString(TmpValue)) {OS = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> AndroidDeviceValue = obj->TryGetField(TEXT("AndroidDevice"));
-	if (AndroidDeviceValue.IsValid()&& !AndroidDeviceValue->IsNull())
-	{
-		FString TmpValue;
-		if(AndroidDeviceValue->TryGetString(TmpValue)) {AndroidDevice = TmpValue; }
-	}
+    if (AndroidDeviceValue.IsValid()&& !AndroidDeviceValue->IsNull())
+    {
+        FString TmpValue;
+        if(AndroidDeviceValue->TryGetString(TmpValue)) {AndroidDevice = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CreateAccountValue = obj->TryGetField(TEXT("CreateAccount"));
-	if (CreateAccountValue.IsValid()&& !CreateAccountValue->IsNull())
-	{
-		bool TmpValue;
-		if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
-	}
+    if (CreateAccountValue.IsValid()&& !CreateAccountValue->IsNull())
+    {
+        bool TmpValue;
+        if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -7656,25 +7656,25 @@ bool PlayFab::ClientModels::FLoginWithCustomIDRequest::readFromValue(const TShar
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-	if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-	}
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CustomIdValue = obj->TryGetField(TEXT("CustomId"));
-	if (CustomIdValue.IsValid()&& !CustomIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(CustomIdValue->TryGetString(TmpValue)) {CustomId = TmpValue; }
-	}
+    if (CustomIdValue.IsValid()&& !CustomIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CustomIdValue->TryGetString(TmpValue)) {CustomId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CreateAccountValue = obj->TryGetField(TEXT("CreateAccount"));
-	if (CreateAccountValue.IsValid()&& !CreateAccountValue->IsNull())
-	{
-		bool TmpValue;
-		if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
-	}
+    if (CreateAccountValue.IsValid()&& !CreateAccountValue->IsNull())
+    {
+        bool TmpValue;
+        if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -7705,25 +7705,25 @@ bool PlayFab::ClientModels::FLoginWithEmailAddressRequest::readFromValue(const T
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-	if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-	}
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> EmailValue = obj->TryGetField(TEXT("Email"));
-	if (EmailValue.IsValid()&& !EmailValue->IsNull())
-	{
-		FString TmpValue;
-		if(EmailValue->TryGetString(TmpValue)) {Email = TmpValue; }
-	}
+    if (EmailValue.IsValid()&& !EmailValue->IsNull())
+    {
+        FString TmpValue;
+        if(EmailValue->TryGetString(TmpValue)) {Email = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PasswordValue = obj->TryGetField(TEXT("Password"));
-	if (PasswordValue.IsValid()&& !PasswordValue->IsNull())
-	{
-		FString TmpValue;
-		if(PasswordValue->TryGetString(TmpValue)) {Password = TmpValue; }
-	}
+    if (PasswordValue.IsValid()&& !PasswordValue->IsNull())
+    {
+        FString TmpValue;
+        if(PasswordValue->TryGetString(TmpValue)) {Password = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -7754,25 +7754,25 @@ bool PlayFab::ClientModels::FLoginWithFacebookRequest::readFromValue(const TShar
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-	if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-	}
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> AccessTokenValue = obj->TryGetField(TEXT("AccessToken"));
-	if (AccessTokenValue.IsValid()&& !AccessTokenValue->IsNull())
-	{
-		FString TmpValue;
-		if(AccessTokenValue->TryGetString(TmpValue)) {AccessToken = TmpValue; }
-	}
+    if (AccessTokenValue.IsValid()&& !AccessTokenValue->IsNull())
+    {
+        FString TmpValue;
+        if(AccessTokenValue->TryGetString(TmpValue)) {AccessToken = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CreateAccountValue = obj->TryGetField(TEXT("CreateAccount"));
-	if (CreateAccountValue.IsValid()&& !CreateAccountValue->IsNull())
-	{
-		bool TmpValue;
-		if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
-	}
+    if (CreateAccountValue.IsValid()&& !CreateAccountValue->IsNull())
+    {
+        bool TmpValue;
+        if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -7805,32 +7805,32 @@ bool PlayFab::ClientModels::FLoginWithGoogleAccountRequest::readFromValue(const 
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-	if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-	}
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> AccessTokenValue = obj->TryGetField(TEXT("AccessToken"));
-	if (AccessTokenValue.IsValid()&& !AccessTokenValue->IsNull())
-	{
-		FString TmpValue;
-		if(AccessTokenValue->TryGetString(TmpValue)) {AccessToken = TmpValue; }
-	}
+    if (AccessTokenValue.IsValid()&& !AccessTokenValue->IsNull())
+    {
+        FString TmpValue;
+        if(AccessTokenValue->TryGetString(TmpValue)) {AccessToken = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CreateAccountValue = obj->TryGetField(TEXT("CreateAccount"));
-	if (CreateAccountValue.IsValid()&& !CreateAccountValue->IsNull())
-	{
-		bool TmpValue;
-		if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
-	}
+    if (CreateAccountValue.IsValid()&& !CreateAccountValue->IsNull())
+    {
+        bool TmpValue;
+        if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PublisherIdValue = obj->TryGetField(TEXT("PublisherId"));
-	if (PublisherIdValue.IsValid()&& !PublisherIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(PublisherIdValue->TryGetString(TmpValue)) {PublisherId = TmpValue; }
-	}
+    if (PublisherIdValue.IsValid()&& !PublisherIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PublisherIdValue->TryGetString(TmpValue)) {PublisherId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -7865,39 +7865,39 @@ bool PlayFab::ClientModels::FLoginWithIOSDeviceIDRequest::readFromValue(const TS
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-	if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-	}
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> DeviceIdValue = obj->TryGetField(TEXT("DeviceId"));
-	if (DeviceIdValue.IsValid()&& !DeviceIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(DeviceIdValue->TryGetString(TmpValue)) {DeviceId = TmpValue; }
-	}
+    if (DeviceIdValue.IsValid()&& !DeviceIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(DeviceIdValue->TryGetString(TmpValue)) {DeviceId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> OSValue = obj->TryGetField(TEXT("OS"));
-	if (OSValue.IsValid()&& !OSValue->IsNull())
-	{
-		FString TmpValue;
-		if(OSValue->TryGetString(TmpValue)) {OS = TmpValue; }
-	}
+    if (OSValue.IsValid()&& !OSValue->IsNull())
+    {
+        FString TmpValue;
+        if(OSValue->TryGetString(TmpValue)) {OS = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> DeviceModelValue = obj->TryGetField(TEXT("DeviceModel"));
-	if (DeviceModelValue.IsValid()&& !DeviceModelValue->IsNull())
-	{
-		FString TmpValue;
-		if(DeviceModelValue->TryGetString(TmpValue)) {DeviceModel = TmpValue; }
-	}
+    if (DeviceModelValue.IsValid()&& !DeviceModelValue->IsNull())
+    {
+        FString TmpValue;
+        if(DeviceModelValue->TryGetString(TmpValue)) {DeviceModel = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CreateAccountValue = obj->TryGetField(TEXT("CreateAccount"));
-	if (CreateAccountValue.IsValid()&& !CreateAccountValue->IsNull())
-	{
-		bool TmpValue;
-		if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
-	}
+    if (CreateAccountValue.IsValid()&& !CreateAccountValue->IsNull())
+    {
+        bool TmpValue;
+        if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -7930,32 +7930,32 @@ bool PlayFab::ClientModels::FLoginWithKongregateRequest::readFromValue(const TSh
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-	if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-	}
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> KongregateIdValue = obj->TryGetField(TEXT("KongregateId"));
-	if (KongregateIdValue.IsValid()&& !KongregateIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(KongregateIdValue->TryGetString(TmpValue)) {KongregateId = TmpValue; }
-	}
+    if (KongregateIdValue.IsValid()&& !KongregateIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(KongregateIdValue->TryGetString(TmpValue)) {KongregateId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> AuthTicketValue = obj->TryGetField(TEXT("AuthTicket"));
-	if (AuthTicketValue.IsValid()&& !AuthTicketValue->IsNull())
-	{
-		FString TmpValue;
-		if(AuthTicketValue->TryGetString(TmpValue)) {AuthTicket = TmpValue; }
-	}
+    if (AuthTicketValue.IsValid()&& !AuthTicketValue->IsNull())
+    {
+        FString TmpValue;
+        if(AuthTicketValue->TryGetString(TmpValue)) {AuthTicket = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CreateAccountValue = obj->TryGetField(TEXT("CreateAccount"));
-	if (CreateAccountValue.IsValid()&& !CreateAccountValue->IsNull())
-	{
-		bool TmpValue;
-		if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
-	}
+    if (CreateAccountValue.IsValid()&& !CreateAccountValue->IsNull())
+    {
+        bool TmpValue;
+        if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -7986,25 +7986,25 @@ bool PlayFab::ClientModels::FLoginWithPlayFabRequest::readFromValue(const TShare
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-	if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-	}
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> UsernameValue = obj->TryGetField(TEXT("Username"));
-	if (UsernameValue.IsValid()&& !UsernameValue->IsNull())
-	{
-		FString TmpValue;
-		if(UsernameValue->TryGetString(TmpValue)) {Username = TmpValue; }
-	}
+    if (UsernameValue.IsValid()&& !UsernameValue->IsNull())
+    {
+        FString TmpValue;
+        if(UsernameValue->TryGetString(TmpValue)) {Username = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PasswordValue = obj->TryGetField(TEXT("Password"));
-	if (PasswordValue.IsValid()&& !PasswordValue->IsNull())
-	{
-		FString TmpValue;
-		if(PasswordValue->TryGetString(TmpValue)) {Password = TmpValue; }
-	}
+    if (PasswordValue.IsValid()&& !PasswordValue->IsNull())
+    {
+        FString TmpValue;
+        if(PasswordValue->TryGetString(TmpValue)) {Password = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -8039,39 +8039,39 @@ bool PlayFab::ClientModels::FLoginWithPSNRequest::readFromValue(const TSharedPtr
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-	if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-	}
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> AuthCodeValue = obj->TryGetField(TEXT("AuthCode"));
-	if (AuthCodeValue.IsValid()&& !AuthCodeValue->IsNull())
-	{
-		FString TmpValue;
-		if(AuthCodeValue->TryGetString(TmpValue)) {AuthCode = TmpValue; }
-	}
+    if (AuthCodeValue.IsValid()&& !AuthCodeValue->IsNull())
+    {
+        FString TmpValue;
+        if(AuthCodeValue->TryGetString(TmpValue)) {AuthCode = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> RedirectUriValue = obj->TryGetField(TEXT("RedirectUri"));
-	if (RedirectUriValue.IsValid()&& !RedirectUriValue->IsNull())
-	{
-		FString TmpValue;
-		if(RedirectUriValue->TryGetString(TmpValue)) {RedirectUri = TmpValue; }
-	}
+    if (RedirectUriValue.IsValid()&& !RedirectUriValue->IsNull())
+    {
+        FString TmpValue;
+        if(RedirectUriValue->TryGetString(TmpValue)) {RedirectUri = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> IssuerIdValue = obj->TryGetField(TEXT("IssuerId"));
-	if (IssuerIdValue.IsValid()&& !IssuerIdValue->IsNull())
-	{
-		int32 TmpValue;
-		if(IssuerIdValue->TryGetNumber(TmpValue)) {IssuerId = TmpValue; }
-	}
+    if (IssuerIdValue.IsValid()&& !IssuerIdValue->IsNull())
+    {
+        int32 TmpValue;
+        if(IssuerIdValue->TryGetNumber(TmpValue)) {IssuerId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CreateAccountValue = obj->TryGetField(TEXT("CreateAccount"));
-	if (CreateAccountValue.IsValid()&& !CreateAccountValue->IsNull())
-	{
-		bool TmpValue;
-		if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
-	}
+    if (CreateAccountValue.IsValid()&& !CreateAccountValue->IsNull())
+    {
+        bool TmpValue;
+        if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -8102,25 +8102,25 @@ bool PlayFab::ClientModels::FLoginWithSteamRequest::readFromValue(const TSharedP
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-	if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-	}
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> SteamTicketValue = obj->TryGetField(TEXT("SteamTicket"));
-	if (SteamTicketValue.IsValid()&& !SteamTicketValue->IsNull())
-	{
-		FString TmpValue;
-		if(SteamTicketValue->TryGetString(TmpValue)) {SteamTicket = TmpValue; }
-	}
+    if (SteamTicketValue.IsValid()&& !SteamTicketValue->IsNull())
+    {
+        FString TmpValue;
+        if(SteamTicketValue->TryGetString(TmpValue)) {SteamTicket = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CreateAccountValue = obj->TryGetField(TEXT("CreateAccount"));
-	if (CreateAccountValue.IsValid()&& !CreateAccountValue->IsNull())
-	{
-		bool TmpValue;
-		if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
-	}
+    if (CreateAccountValue.IsValid()&& !CreateAccountValue->IsNull())
+    {
+        bool TmpValue;
+        if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -8159,48 +8159,48 @@ bool PlayFab::ClientModels::FMatchmakeRequest::readFromValue(const TSharedPtr<FJ
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> BuildVersionValue = obj->TryGetField(TEXT("BuildVersion"));
-	if (BuildVersionValue.IsValid()&& !BuildVersionValue->IsNull())
-	{
-		FString TmpValue;
-		if(BuildVersionValue->TryGetString(TmpValue)) {BuildVersion = TmpValue; }
-	}
+    if (BuildVersionValue.IsValid()&& !BuildVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(BuildVersionValue->TryGetString(TmpValue)) {BuildVersion = TmpValue; }
+    }
     
     pfRegion = readRegionFromValue(obj->TryGetField(TEXT("Region")));
     
     const TSharedPtr<FJsonValue> GameModeValue = obj->TryGetField(TEXT("GameMode"));
-	if (GameModeValue.IsValid()&& !GameModeValue->IsNull())
-	{
-		FString TmpValue;
-		if(GameModeValue->TryGetString(TmpValue)) {GameMode = TmpValue; }
-	}
+    if (GameModeValue.IsValid()&& !GameModeValue->IsNull())
+    {
+        FString TmpValue;
+        if(GameModeValue->TryGetString(TmpValue)) {GameMode = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> LobbyIdValue = obj->TryGetField(TEXT("LobbyId"));
-	if (LobbyIdValue.IsValid()&& !LobbyIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(LobbyIdValue->TryGetString(TmpValue)) {LobbyId = TmpValue; }
-	}
+    if (LobbyIdValue.IsValid()&& !LobbyIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(LobbyIdValue->TryGetString(TmpValue)) {LobbyId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> StatisticNameValue = obj->TryGetField(TEXT("StatisticName"));
-	if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
-	}
+    if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
-	if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
-	}
+    if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> EnableQueueValue = obj->TryGetField(TEXT("EnableQueue"));
-	if (EnableQueueValue.IsValid()&& !EnableQueueValue->IsNull())
-	{
-		bool TmpValue;
-		if(EnableQueueValue->TryGetBool(TmpValue)) {EnableQueue = TmpValue; }
-	}
+    if (EnableQueueValue.IsValid()&& !EnableQueueValue->IsNull())
+    {
+        bool TmpValue;
+        if(EnableQueueValue->TryGetBool(TmpValue)) {EnableQueue = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -8274,46 +8274,46 @@ bool PlayFab::ClientModels::FMatchmakeResult::readFromValue(const TSharedPtr<FJs
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> LobbyIDValue = obj->TryGetField(TEXT("LobbyID"));
-	if (LobbyIDValue.IsValid()&& !LobbyIDValue->IsNull())
-	{
-		FString TmpValue;
-		if(LobbyIDValue->TryGetString(TmpValue)) {LobbyID = TmpValue; }
-	}
+    if (LobbyIDValue.IsValid()&& !LobbyIDValue->IsNull())
+    {
+        FString TmpValue;
+        if(LobbyIDValue->TryGetString(TmpValue)) {LobbyID = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ServerHostnameValue = obj->TryGetField(TEXT("ServerHostname"));
-	if (ServerHostnameValue.IsValid()&& !ServerHostnameValue->IsNull())
-	{
-		FString TmpValue;
-		if(ServerHostnameValue->TryGetString(TmpValue)) {ServerHostname = TmpValue; }
-	}
+    if (ServerHostnameValue.IsValid()&& !ServerHostnameValue->IsNull())
+    {
+        FString TmpValue;
+        if(ServerHostnameValue->TryGetString(TmpValue)) {ServerHostname = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ServerPortValue = obj->TryGetField(TEXT("ServerPort"));
-	if (ServerPortValue.IsValid()&& !ServerPortValue->IsNull())
-	{
-		int32 TmpValue;
-		if(ServerPortValue->TryGetNumber(TmpValue)) {ServerPort = TmpValue; }
-	}
+    if (ServerPortValue.IsValid()&& !ServerPortValue->IsNull())
+    {
+        int32 TmpValue;
+        if(ServerPortValue->TryGetNumber(TmpValue)) {ServerPort = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> TicketValue = obj->TryGetField(TEXT("Ticket"));
-	if (TicketValue.IsValid()&& !TicketValue->IsNull())
-	{
-		FString TmpValue;
-		if(TicketValue->TryGetString(TmpValue)) {Ticket = TmpValue; }
-	}
+    if (TicketValue.IsValid()&& !TicketValue->IsNull())
+    {
+        FString TmpValue;
+        if(TicketValue->TryGetString(TmpValue)) {Ticket = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ExpiresValue = obj->TryGetField(TEXT("Expires"));
-	if (ExpiresValue.IsValid()&& !ExpiresValue->IsNull())
-	{
-		FString TmpValue;
-		if(ExpiresValue->TryGetString(TmpValue)) {Expires = TmpValue; }
-	}
+    if (ExpiresValue.IsValid()&& !ExpiresValue->IsNull())
+    {
+        FString TmpValue;
+        if(ExpiresValue->TryGetString(TmpValue)) {Expires = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PollWaitTimeMSValue = obj->TryGetField(TEXT("PollWaitTimeMS"));
-	if (PollWaitTimeMSValue.IsValid()&& !PollWaitTimeMSValue->IsNull())
-	{
-		int32 TmpValue;
-		if(PollWaitTimeMSValue->TryGetNumber(TmpValue)) {PollWaitTimeMS = TmpValue; }
-	}
+    if (PollWaitTimeMSValue.IsValid()&& !PollWaitTimeMSValue->IsNull())
+    {
+        int32 TmpValue;
+        if(PollWaitTimeMSValue->TryGetNumber(TmpValue)) {PollWaitTimeMS = TmpValue; }
+    }
     
     Status = readMatchmakeStatusFromValue(obj->TryGetField(TEXT("Status")));
     
@@ -8348,32 +8348,32 @@ bool PlayFab::ClientModels::FModifyUserVirtualCurrencyResult::readFromValue(cons
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
-	if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
-	}
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> VirtualCurrencyValue = obj->TryGetField(TEXT("VirtualCurrency"));
-	if (VirtualCurrencyValue.IsValid()&& !VirtualCurrencyValue->IsNull())
-	{
-		FString TmpValue;
-		if(VirtualCurrencyValue->TryGetString(TmpValue)) {VirtualCurrency = TmpValue; }
-	}
+    if (VirtualCurrencyValue.IsValid()&& !VirtualCurrencyValue->IsNull())
+    {
+        FString TmpValue;
+        if(VirtualCurrencyValue->TryGetString(TmpValue)) {VirtualCurrency = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> BalanceChangeValue = obj->TryGetField(TEXT("BalanceChange"));
-	if (BalanceChangeValue.IsValid()&& !BalanceChangeValue->IsNull())
-	{
-		int32 TmpValue;
-		if(BalanceChangeValue->TryGetNumber(TmpValue)) {BalanceChange = TmpValue; }
-	}
+    if (BalanceChangeValue.IsValid()&& !BalanceChangeValue->IsNull())
+    {
+        int32 TmpValue;
+        if(BalanceChangeValue->TryGetNumber(TmpValue)) {BalanceChange = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> BalanceValue = obj->TryGetField(TEXT("Balance"));
-	if (BalanceValue.IsValid()&& !BalanceValue->IsNull())
-	{
-		int32 TmpValue;
-		if(BalanceValue->TryGetNumber(TmpValue)) {Balance = TmpValue; }
-	}
+    if (BalanceValue.IsValid()&& !BalanceValue->IsNull())
+    {
+        int32 TmpValue;
+        if(BalanceValue->TryGetNumber(TmpValue)) {Balance = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -8390,37 +8390,37 @@ void PlayFab::ClientModels::FOpenTradeRequest::writeJSON(JsonWriter& writer) con
     writer->WriteObjectStart();
     
     if(OfferedInventoryInstanceIds.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("OfferedInventoryInstanceIds"));
-	
-		for (const FString& item : OfferedInventoryInstanceIds)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("OfferedInventoryInstanceIds"));
+    
+        for (const FString& item : OfferedInventoryInstanceIds)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(RequestedCatalogItemIds.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("RequestedCatalogItemIds"));
-	
-		for (const FString& item : RequestedCatalogItemIds)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("RequestedCatalogItemIds"));
+    
+        for (const FString& item : RequestedCatalogItemIds)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(AllowedPlayerIds.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("AllowedPlayerIds"));
-	
-		for (const FString& item : AllowedPlayerIds)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("AllowedPlayerIds"));
+    
+        for (const FString& item : AllowedPlayerIds)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -8462,10 +8462,10 @@ bool PlayFab::ClientModels::FOpenTradeResponse::readFromValue(const TSharedPtr<F
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> TradeValue = obj->TryGetField(TEXT("Trade"));
-	if (TradeValue.IsValid()&& !TradeValue->IsNull())
-	{
-		Trade = MakeShareable(new FTradeInfo(TradeValue->AsObject()));
-	}
+    if (TradeValue.IsValid()&& !TradeValue->IsNull())
+    {
+        Trade = MakeShareable(new FTradeInfo(TradeValue->AsObject()));
+    }
     
     
     return HasSucceeded;
@@ -8498,32 +8498,32 @@ bool PlayFab::ClientModels::FPayForPurchaseRequest::readFromValue(const TSharedP
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> OrderIdValue = obj->TryGetField(TEXT("OrderId"));
-	if (OrderIdValue.IsValid()&& !OrderIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(OrderIdValue->TryGetString(TmpValue)) {OrderId = TmpValue; }
-	}
+    if (OrderIdValue.IsValid()&& !OrderIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(OrderIdValue->TryGetString(TmpValue)) {OrderId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ProviderNameValue = obj->TryGetField(TEXT("ProviderName"));
-	if (ProviderNameValue.IsValid()&& !ProviderNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(ProviderNameValue->TryGetString(TmpValue)) {ProviderName = TmpValue; }
-	}
+    if (ProviderNameValue.IsValid()&& !ProviderNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(ProviderNameValue->TryGetString(TmpValue)) {ProviderName = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CurrencyValue = obj->TryGetField(TEXT("Currency"));
-	if (CurrencyValue.IsValid()&& !CurrencyValue->IsNull())
-	{
-		FString TmpValue;
-		if(CurrencyValue->TryGetString(TmpValue)) {Currency = TmpValue; }
-	}
+    if (CurrencyValue.IsValid()&& !CurrencyValue->IsNull())
+    {
+        FString TmpValue;
+        if(CurrencyValue->TryGetString(TmpValue)) {Currency = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ProviderTransactionIdValue = obj->TryGetField(TEXT("ProviderTransactionId"));
-	if (ProviderTransactionIdValue.IsValid()&& !ProviderTransactionIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(ProviderTransactionIdValue->TryGetString(TmpValue)) {ProviderTransactionId = TmpValue; }
-	}
+    if (ProviderTransactionIdValue.IsValid()&& !ProviderTransactionIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ProviderTransactionIdValue->TryGetString(TmpValue)) {ProviderTransactionId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -8613,15 +8613,15 @@ void PlayFab::ClientModels::FPayForPurchaseResult::writeJSON(JsonWriter& writer)
     if(Status.notNull()) { writer->WriteIdentifierPrefix(TEXT("Status")); writeTransactionStatusEnumJSON(Status, writer); }
 	
     if(VCAmount.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("VCAmount"));
-		for (TMap<FString, int32>::TConstIterator It(VCAmount); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			writer->WriteValue((*It).Value);
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("VCAmount"));
+        for (TMap<FString, int32>::TConstIterator It(VCAmount); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue((*It).Value);
+        }
+        writer->WriteObjectEnd();
+     }
 	
     if(PurchaseCurrency.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PurchaseCurrency")); writer->WriteValue(PurchaseCurrency); }
 	
@@ -8634,15 +8634,15 @@ void PlayFab::ClientModels::FPayForPurchaseResult::writeJSON(JsonWriter& writer)
     if(PurchaseConfirmationPageURL.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PurchaseConfirmationPageURL")); writer->WriteValue(PurchaseConfirmationPageURL); }
 	
     if(VirtualCurrency.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("VirtualCurrency"));
-		for (TMap<FString, int32>::TConstIterator It(VirtualCurrency); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			writer->WriteValue((*It).Value);
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("VirtualCurrency"));
+        for (TMap<FString, int32>::TConstIterator It(VirtualCurrency); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue((*It).Value);
+        }
+        writer->WriteObjectEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -8653,68 +8653,68 @@ bool PlayFab::ClientModels::FPayForPurchaseResult::readFromValue(const TSharedPt
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> OrderIdValue = obj->TryGetField(TEXT("OrderId"));
-	if (OrderIdValue.IsValid()&& !OrderIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(OrderIdValue->TryGetString(TmpValue)) {OrderId = TmpValue; }
-	}
+    if (OrderIdValue.IsValid()&& !OrderIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(OrderIdValue->TryGetString(TmpValue)) {OrderId = TmpValue; }
+    }
     
     Status = readTransactionStatusFromValue(obj->TryGetField(TEXT("Status")));
     
     const TSharedPtr<FJsonObject>* VCAmountObject;
-	if (obj->TryGetObjectField(TEXT("VCAmount"), VCAmountObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VCAmountObject)->Values); It; ++It)
-		{
-			int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
-			VCAmount.Add(It.Key(), TmpValue);
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("VCAmount"), VCAmountObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VCAmountObject)->Values); It; ++It)
+        {
+            int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
+            VCAmount.Add(It.Key(), TmpValue);
+        }
+    }
     
     const TSharedPtr<FJsonValue> PurchaseCurrencyValue = obj->TryGetField(TEXT("PurchaseCurrency"));
-	if (PurchaseCurrencyValue.IsValid()&& !PurchaseCurrencyValue->IsNull())
-	{
-		FString TmpValue;
-		if(PurchaseCurrencyValue->TryGetString(TmpValue)) {PurchaseCurrency = TmpValue; }
-	}
+    if (PurchaseCurrencyValue.IsValid()&& !PurchaseCurrencyValue->IsNull())
+    {
+        FString TmpValue;
+        if(PurchaseCurrencyValue->TryGetString(TmpValue)) {PurchaseCurrency = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PurchasePriceValue = obj->TryGetField(TEXT("PurchasePrice"));
-	if (PurchasePriceValue.IsValid()&& !PurchasePriceValue->IsNull())
-	{
-		uint32 TmpValue;
-		if(PurchasePriceValue->TryGetNumber(TmpValue)) {PurchasePrice = TmpValue; }
-	}
+    if (PurchasePriceValue.IsValid()&& !PurchasePriceValue->IsNull())
+    {
+        uint32 TmpValue;
+        if(PurchasePriceValue->TryGetNumber(TmpValue)) {PurchasePrice = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CreditAppliedValue = obj->TryGetField(TEXT("CreditApplied"));
-	if (CreditAppliedValue.IsValid()&& !CreditAppliedValue->IsNull())
-	{
-		uint32 TmpValue;
-		if(CreditAppliedValue->TryGetNumber(TmpValue)) {CreditApplied = TmpValue; }
-	}
+    if (CreditAppliedValue.IsValid()&& !CreditAppliedValue->IsNull())
+    {
+        uint32 TmpValue;
+        if(CreditAppliedValue->TryGetNumber(TmpValue)) {CreditApplied = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ProviderDataValue = obj->TryGetField(TEXT("ProviderData"));
-	if (ProviderDataValue.IsValid()&& !ProviderDataValue->IsNull())
-	{
-		FString TmpValue;
-		if(ProviderDataValue->TryGetString(TmpValue)) {ProviderData = TmpValue; }
-	}
+    if (ProviderDataValue.IsValid()&& !ProviderDataValue->IsNull())
+    {
+        FString TmpValue;
+        if(ProviderDataValue->TryGetString(TmpValue)) {ProviderData = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PurchaseConfirmationPageURLValue = obj->TryGetField(TEXT("PurchaseConfirmationPageURL"));
-	if (PurchaseConfirmationPageURLValue.IsValid()&& !PurchaseConfirmationPageURLValue->IsNull())
-	{
-		FString TmpValue;
-		if(PurchaseConfirmationPageURLValue->TryGetString(TmpValue)) {PurchaseConfirmationPageURL = TmpValue; }
-	}
+    if (PurchaseConfirmationPageURLValue.IsValid()&& !PurchaseConfirmationPageURLValue->IsNull())
+    {
+        FString TmpValue;
+        if(PurchaseConfirmationPageURLValue->TryGetString(TmpValue)) {PurchaseConfirmationPageURL = TmpValue; }
+    }
     
     const TSharedPtr<FJsonObject>* VirtualCurrencyObject;
-	if (obj->TryGetObjectField(TEXT("VirtualCurrency"), VirtualCurrencyObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyObject)->Values); It; ++It)
-		{
-			int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
-			VirtualCurrency.Add(It.Key(), TmpValue);
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("VirtualCurrency"), VirtualCurrencyObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyObject)->Values); It; ++It)
+        {
+            int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
+            VirtualCurrency.Add(It.Key(), TmpValue);
+        }
+    }
     
     
     return HasSucceeded;
@@ -8747,32 +8747,32 @@ bool PlayFab::ClientModels::FPaymentOption::readFromValue(const TSharedPtr<FJson
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> CurrencyValue = obj->TryGetField(TEXT("Currency"));
-	if (CurrencyValue.IsValid()&& !CurrencyValue->IsNull())
-	{
-		FString TmpValue;
-		if(CurrencyValue->TryGetString(TmpValue)) {Currency = TmpValue; }
-	}
+    if (CurrencyValue.IsValid()&& !CurrencyValue->IsNull())
+    {
+        FString TmpValue;
+        if(CurrencyValue->TryGetString(TmpValue)) {Currency = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ProviderNameValue = obj->TryGetField(TEXT("ProviderName"));
-	if (ProviderNameValue.IsValid()&& !ProviderNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(ProviderNameValue->TryGetString(TmpValue)) {ProviderName = TmpValue; }
-	}
+    if (ProviderNameValue.IsValid()&& !ProviderNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(ProviderNameValue->TryGetString(TmpValue)) {ProviderName = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PriceValue = obj->TryGetField(TEXT("Price"));
-	if (PriceValue.IsValid()&& !PriceValue->IsNull())
-	{
-		uint32 TmpValue;
-		if(PriceValue->TryGetNumber(TmpValue)) {Price = TmpValue; }
-	}
+    if (PriceValue.IsValid()&& !PriceValue->IsNull())
+    {
+        uint32 TmpValue;
+        if(PriceValue->TryGetNumber(TmpValue)) {Price = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> StoreCreditValue = obj->TryGetField(TEXT("StoreCredit"));
-	if (StoreCreditValue.IsValid()&& !StoreCreditValue->IsNull())
-	{
-		uint32 TmpValue;
-		if(StoreCreditValue->TryGetNumber(TmpValue)) {StoreCredit = TmpValue; }
-	}
+    if (StoreCreditValue.IsValid()&& !StoreCreditValue->IsNull())
+    {
+        uint32 TmpValue;
+        if(StoreCreditValue->TryGetNumber(TmpValue)) {StoreCredit = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -8809,46 +8809,46 @@ bool PlayFab::ClientModels::FPurchaseItemRequest::readFromValue(const TSharedPtr
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> ItemIdValue = obj->TryGetField(TEXT("ItemId"));
-	if (ItemIdValue.IsValid()&& !ItemIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(ItemIdValue->TryGetString(TmpValue)) {ItemId = TmpValue; }
-	}
+    if (ItemIdValue.IsValid()&& !ItemIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ItemIdValue->TryGetString(TmpValue)) {ItemId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> VirtualCurrencyValue = obj->TryGetField(TEXT("VirtualCurrency"));
-	if (VirtualCurrencyValue.IsValid()&& !VirtualCurrencyValue->IsNull())
-	{
-		FString TmpValue;
-		if(VirtualCurrencyValue->TryGetString(TmpValue)) {VirtualCurrency = TmpValue; }
-	}
+    if (VirtualCurrencyValue.IsValid()&& !VirtualCurrencyValue->IsNull())
+    {
+        FString TmpValue;
+        if(VirtualCurrencyValue->TryGetString(TmpValue)) {VirtualCurrency = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PriceValue = obj->TryGetField(TEXT("Price"));
-	if (PriceValue.IsValid()&& !PriceValue->IsNull())
-	{
-		int32 TmpValue;
-		if(PriceValue->TryGetNumber(TmpValue)) {Price = TmpValue; }
-	}
+    if (PriceValue.IsValid()&& !PriceValue->IsNull())
+    {
+        int32 TmpValue;
+        if(PriceValue->TryGetNumber(TmpValue)) {Price = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CatalogVersionValue = obj->TryGetField(TEXT("CatalogVersion"));
-	if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
-	{
-		FString TmpValue;
-		if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
-	}
+    if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> StoreIdValue = obj->TryGetField(TEXT("StoreId"));
-	if (StoreIdValue.IsValid()&& !StoreIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(StoreIdValue->TryGetString(TmpValue)) {StoreId = TmpValue; }
-	}
+    if (StoreIdValue.IsValid()&& !StoreIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(StoreIdValue->TryGetString(TmpValue)) {StoreId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
-	if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
-	}
+    if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -8865,15 +8865,15 @@ void PlayFab::ClientModels::FPurchaseItemResult::writeJSON(JsonWriter& writer) c
     writer->WriteObjectStart();
     
     if(Items.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Items"));
-	
-		for (const FItemInstance& item : Items)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Items"));
+    
+        for (const FItemInstance& item : Items)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -8884,14 +8884,14 @@ bool PlayFab::ClientModels::FPurchaseItemResult::readFromValue(const TSharedPtr<
 	bool HasSucceeded = true; 
 	
     {
-		const TArray< TSharedPtr<FJsonValue> >&ItemsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Items"));
-		for (int32 Idx = 0; Idx < ItemsArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = ItemsArray[Idx];
-			
-			Items.Add(FItemInstance(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&ItemsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Items"));
+        for (int32 Idx = 0; Idx < ItemsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = ItemsArray[Idx];
+            
+            Items.Add(FItemInstance(CurrentItem->AsObject()));
+        }
+    }
 
     
     
@@ -8921,18 +8921,18 @@ bool PlayFab::ClientModels::FRedeemCouponRequest::readFromValue(const TSharedPtr
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> CouponCodeValue = obj->TryGetField(TEXT("CouponCode"));
-	if (CouponCodeValue.IsValid()&& !CouponCodeValue->IsNull())
-	{
-		FString TmpValue;
-		if(CouponCodeValue->TryGetString(TmpValue)) {CouponCode = TmpValue; }
-	}
+    if (CouponCodeValue.IsValid()&& !CouponCodeValue->IsNull())
+    {
+        FString TmpValue;
+        if(CouponCodeValue->TryGetString(TmpValue)) {CouponCode = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CatalogVersionValue = obj->TryGetField(TEXT("CatalogVersion"));
-	if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
-	{
-		FString TmpValue;
-		if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
-	}
+    if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -8949,15 +8949,15 @@ void PlayFab::ClientModels::FRedeemCouponResult::writeJSON(JsonWriter& writer) c
     writer->WriteObjectStart();
     
     if(GrantedItems.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("GrantedItems"));
-	
-		for (const FItemInstance& item : GrantedItems)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("GrantedItems"));
+    
+        for (const FItemInstance& item : GrantedItems)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -8968,14 +8968,14 @@ bool PlayFab::ClientModels::FRedeemCouponResult::readFromValue(const TSharedPtr<
 	bool HasSucceeded = true; 
 	
     {
-		const TArray< TSharedPtr<FJsonValue> >&GrantedItemsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("GrantedItems"));
-		for (int32 Idx = 0; Idx < GrantedItemsArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = GrantedItemsArray[Idx];
-			
-			GrantedItems.Add(FItemInstance(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&GrantedItemsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("GrantedItems"));
+        for (int32 Idx = 0; Idx < GrantedItemsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = GrantedItemsArray[Idx];
+            
+            GrantedItems.Add(FItemInstance(CurrentItem->AsObject()));
+        }
+    }
 
     
     
@@ -9007,25 +9007,25 @@ bool PlayFab::ClientModels::FRefreshPSNAuthTokenRequest::readFromValue(const TSh
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> AuthCodeValue = obj->TryGetField(TEXT("AuthCode"));
-	if (AuthCodeValue.IsValid()&& !AuthCodeValue->IsNull())
-	{
-		FString TmpValue;
-		if(AuthCodeValue->TryGetString(TmpValue)) {AuthCode = TmpValue; }
-	}
+    if (AuthCodeValue.IsValid()&& !AuthCodeValue->IsNull())
+    {
+        FString TmpValue;
+        if(AuthCodeValue->TryGetString(TmpValue)) {AuthCode = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> RedirectUriValue = obj->TryGetField(TEXT("RedirectUri"));
-	if (RedirectUriValue.IsValid()&& !RedirectUriValue->IsNull())
-	{
-		FString TmpValue;
-		if(RedirectUriValue->TryGetString(TmpValue)) {RedirectUri = TmpValue; }
-	}
+    if (RedirectUriValue.IsValid()&& !RedirectUriValue->IsNull())
+    {
+        FString TmpValue;
+        if(RedirectUriValue->TryGetString(TmpValue)) {RedirectUri = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> IssuerIdValue = obj->TryGetField(TEXT("IssuerId"));
-	if (IssuerIdValue.IsValid()&& !IssuerIdValue->IsNull())
-	{
-		int32 TmpValue;
-		if(IssuerIdValue->TryGetNumber(TmpValue)) {IssuerId = TmpValue; }
-	}
+    if (IssuerIdValue.IsValid()&& !IssuerIdValue->IsNull())
+    {
+        int32 TmpValue;
+        if(IssuerIdValue->TryGetNumber(TmpValue)) {IssuerId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -9056,25 +9056,25 @@ bool PlayFab::ClientModels::FRegisterForIOSPushNotificationRequest::readFromValu
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> DeviceTokenValue = obj->TryGetField(TEXT("DeviceToken"));
-	if (DeviceTokenValue.IsValid()&& !DeviceTokenValue->IsNull())
-	{
-		FString TmpValue;
-		if(DeviceTokenValue->TryGetString(TmpValue)) {DeviceToken = TmpValue; }
-	}
+    if (DeviceTokenValue.IsValid()&& !DeviceTokenValue->IsNull())
+    {
+        FString TmpValue;
+        if(DeviceTokenValue->TryGetString(TmpValue)) {DeviceToken = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> SendPushNotificationConfirmationValue = obj->TryGetField(TEXT("SendPushNotificationConfirmation"));
-	if (SendPushNotificationConfirmationValue.IsValid()&& !SendPushNotificationConfirmationValue->IsNull())
-	{
-		bool TmpValue;
-		if(SendPushNotificationConfirmationValue->TryGetBool(TmpValue)) {SendPushNotificationConfirmation = TmpValue; }
-	}
+    if (SendPushNotificationConfirmationValue.IsValid()&& !SendPushNotificationConfirmationValue->IsNull())
+    {
+        bool TmpValue;
+        if(SendPushNotificationConfirmationValue->TryGetBool(TmpValue)) {SendPushNotificationConfirmation = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ConfirmationMessageValue = obj->TryGetField(TEXT("ConfirmationMessage"));
-	if (ConfirmationMessageValue.IsValid()&& !ConfirmationMessageValue->IsNull())
-	{
-		FString TmpValue;
-		if(ConfirmationMessageValue->TryGetString(TmpValue)) {ConfirmationMessage = TmpValue; }
-	}
+    if (ConfirmationMessageValue.IsValid()&& !ConfirmationMessageValue->IsNull())
+    {
+        FString TmpValue;
+        if(ConfirmationMessageValue->TryGetString(TmpValue)) {ConfirmationMessage = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -9135,53 +9135,53 @@ bool PlayFab::ClientModels::FRegisterPlayFabUserRequest::readFromValue(const TSh
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-	if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-	}
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> UsernameValue = obj->TryGetField(TEXT("Username"));
-	if (UsernameValue.IsValid()&& !UsernameValue->IsNull())
-	{
-		FString TmpValue;
-		if(UsernameValue->TryGetString(TmpValue)) {Username = TmpValue; }
-	}
+    if (UsernameValue.IsValid()&& !UsernameValue->IsNull())
+    {
+        FString TmpValue;
+        if(UsernameValue->TryGetString(TmpValue)) {Username = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> EmailValue = obj->TryGetField(TEXT("Email"));
-	if (EmailValue.IsValid()&& !EmailValue->IsNull())
-	{
-		FString TmpValue;
-		if(EmailValue->TryGetString(TmpValue)) {Email = TmpValue; }
-	}
+    if (EmailValue.IsValid()&& !EmailValue->IsNull())
+    {
+        FString TmpValue;
+        if(EmailValue->TryGetString(TmpValue)) {Email = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PasswordValue = obj->TryGetField(TEXT("Password"));
-	if (PasswordValue.IsValid()&& !PasswordValue->IsNull())
-	{
-		FString TmpValue;
-		if(PasswordValue->TryGetString(TmpValue)) {Password = TmpValue; }
-	}
+    if (PasswordValue.IsValid()&& !PasswordValue->IsNull())
+    {
+        FString TmpValue;
+        if(PasswordValue->TryGetString(TmpValue)) {Password = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> RequireBothUsernameAndEmailValue = obj->TryGetField(TEXT("RequireBothUsernameAndEmail"));
-	if (RequireBothUsernameAndEmailValue.IsValid()&& !RequireBothUsernameAndEmailValue->IsNull())
-	{
-		bool TmpValue;
-		if(RequireBothUsernameAndEmailValue->TryGetBool(TmpValue)) {RequireBothUsernameAndEmail = TmpValue; }
-	}
+    if (RequireBothUsernameAndEmailValue.IsValid()&& !RequireBothUsernameAndEmailValue->IsNull())
+    {
+        bool TmpValue;
+        if(RequireBothUsernameAndEmailValue->TryGetBool(TmpValue)) {RequireBothUsernameAndEmail = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> DisplayNameValue = obj->TryGetField(TEXT("DisplayName"));
-	if (DisplayNameValue.IsValid()&& !DisplayNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(DisplayNameValue->TryGetString(TmpValue)) {DisplayName = TmpValue; }
-	}
+    if (DisplayNameValue.IsValid()&& !DisplayNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(DisplayNameValue->TryGetString(TmpValue)) {DisplayName = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> OriginationValue = obj->TryGetField(TEXT("Origination"));
-	if (OriginationValue.IsValid()&& !OriginationValue->IsNull())
-	{
-		FString TmpValue;
-		if(OriginationValue->TryGetString(TmpValue)) {Origination = TmpValue; }
-	}
+    if (OriginationValue.IsValid()&& !OriginationValue->IsNull())
+    {
+        FString TmpValue;
+        if(OriginationValue->TryGetString(TmpValue)) {Origination = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -9212,25 +9212,25 @@ bool PlayFab::ClientModels::FRegisterPlayFabUserResult::readFromValue(const TSha
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
-	if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
-	}
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> SessionTicketValue = obj->TryGetField(TEXT("SessionTicket"));
-	if (SessionTicketValue.IsValid()&& !SessionTicketValue->IsNull())
-	{
-		FString TmpValue;
-		if(SessionTicketValue->TryGetString(TmpValue)) {SessionTicket = TmpValue; }
-	}
+    if (SessionTicketValue.IsValid()&& !SessionTicketValue->IsNull())
+    {
+        FString TmpValue;
+        if(SessionTicketValue->TryGetString(TmpValue)) {SessionTicket = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> UsernameValue = obj->TryGetField(TEXT("Username"));
-	if (UsernameValue.IsValid()&& !UsernameValue->IsNull())
-	{
-		FString TmpValue;
-		if(UsernameValue->TryGetString(TmpValue)) {Username = TmpValue; }
-	}
+    if (UsernameValue.IsValid()&& !UsernameValue->IsNull())
+    {
+        FString TmpValue;
+        if(UsernameValue->TryGetString(TmpValue)) {Username = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -9257,11 +9257,11 @@ bool PlayFab::ClientModels::FRemoveFriendRequest::readFromValue(const TSharedPtr
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> FriendPlayFabIdValue = obj->TryGetField(TEXT("FriendPlayFabId"));
-	if (FriendPlayFabIdValue.IsValid()&& !FriendPlayFabIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(FriendPlayFabIdValue->TryGetString(TmpValue)) {FriendPlayFabId = TmpValue; }
-	}
+    if (FriendPlayFabIdValue.IsValid()&& !FriendPlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(FriendPlayFabIdValue->TryGetString(TmpValue)) {FriendPlayFabId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -9302,14 +9302,14 @@ void PlayFab::ClientModels::FRemoveSharedGroupMembersRequest::writeJSON(JsonWrit
     writer->WriteIdentifierPrefix(TEXT("SharedGroupId")); writer->WriteValue(SharedGroupId);
 	
     
-		writer->WriteArrayStart(TEXT("PlayFabIds"));
-	
-		for (const FString& item : PlayFabIds)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	
+        writer->WriteArrayStart(TEXT("PlayFabIds"));
+    
+        for (const FString& item : PlayFabIds)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+    
 	
     
     writer->WriteObjectEnd();
@@ -9320,11 +9320,11 @@ bool PlayFab::ClientModels::FRemoveSharedGroupMembersRequest::readFromValue(cons
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> SharedGroupIdValue = obj->TryGetField(TEXT("SharedGroupId"));
-	if (SharedGroupIdValue.IsValid()&& !SharedGroupIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(SharedGroupIdValue->TryGetString(TmpValue)) {SharedGroupId = TmpValue; }
-	}
+    if (SharedGroupIdValue.IsValid()&& !SharedGroupIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(SharedGroupIdValue->TryGetString(TmpValue)) {SharedGroupId = TmpValue; }
+    }
     
     HasSucceeded &= obj->TryGetStringArrayField(TEXT("PlayFabIds"),PlayFabIds);
     
@@ -9377,18 +9377,18 @@ bool PlayFab::ClientModels::FReportPlayerClientRequest::readFromValue(const TSha
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> ReporteeIdValue = obj->TryGetField(TEXT("ReporteeId"));
-	if (ReporteeIdValue.IsValid()&& !ReporteeIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(ReporteeIdValue->TryGetString(TmpValue)) {ReporteeId = TmpValue; }
-	}
+    if (ReporteeIdValue.IsValid()&& !ReporteeIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ReporteeIdValue->TryGetString(TmpValue)) {ReporteeId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CommentValue = obj->TryGetField(TEXT("Comment"));
-	if (CommentValue.IsValid()&& !CommentValue->IsNull())
-	{
-		FString TmpValue;
-		if(CommentValue->TryGetString(TmpValue)) {Comment = TmpValue; }
-	}
+    if (CommentValue.IsValid()&& !CommentValue->IsNull())
+    {
+        FString TmpValue;
+        if(CommentValue->TryGetString(TmpValue)) {Comment = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -9417,18 +9417,18 @@ bool PlayFab::ClientModels::FReportPlayerClientResult::readFromValue(const TShar
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> UpdatedValue = obj->TryGetField(TEXT("Updated"));
-	if (UpdatedValue.IsValid()&& !UpdatedValue->IsNull())
-	{
-		bool TmpValue;
-		if(UpdatedValue->TryGetBool(TmpValue)) {Updated = TmpValue; }
-	}
+    if (UpdatedValue.IsValid()&& !UpdatedValue->IsNull())
+    {
+        bool TmpValue;
+        if(UpdatedValue->TryGetBool(TmpValue)) {Updated = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> SubmissionsRemainingValue = obj->TryGetField(TEXT("SubmissionsRemaining"));
-	if (SubmissionsRemainingValue.IsValid()&& !SubmissionsRemainingValue->IsNull())
-	{
-		int32 TmpValue;
-		if(SubmissionsRemainingValue->TryGetNumber(TmpValue)) {SubmissionsRemaining = TmpValue; }
-	}
+    if (SubmissionsRemainingValue.IsValid()&& !SubmissionsRemainingValue->IsNull())
+    {
+        int32 TmpValue;
+        if(SubmissionsRemainingValue->TryGetNumber(TmpValue)) {SubmissionsRemaining = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -9455,11 +9455,11 @@ bool PlayFab::ClientModels::FRestoreIOSPurchasesRequest::readFromValue(const TSh
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> ReceiptDataValue = obj->TryGetField(TEXT("ReceiptData"));
-	if (ReceiptDataValue.IsValid()&& !ReceiptDataValue->IsNull())
-	{
-		FString TmpValue;
-		if(ReceiptDataValue->TryGetString(TmpValue)) {ReceiptData = TmpValue; }
-	}
+    if (ReceiptDataValue.IsValid()&& !ReceiptDataValue->IsNull())
+    {
+        FString TmpValue;
+        if(ReceiptDataValue->TryGetString(TmpValue)) {ReceiptData = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -9512,24 +9512,24 @@ bool PlayFab::ClientModels::FRunCloudScriptRequest::readFromValue(const TSharedP
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> ActionIdValue = obj->TryGetField(TEXT("ActionId"));
-	if (ActionIdValue.IsValid()&& !ActionIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(ActionIdValue->TryGetString(TmpValue)) {ActionId = TmpValue; }
-	}
+    if (ActionIdValue.IsValid()&& !ActionIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ActionIdValue->TryGetString(TmpValue)) {ActionId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ParamsValue = obj->TryGetField(TEXT("Params"));
-	if (ParamsValue.IsValid()&& !ParamsValue->IsNull())
-	{
-		Params = FMultitypeVar(ParamsValue->AsObject());
-	}
+    if (ParamsValue.IsValid()&& !ParamsValue->IsNull())
+    {
+        Params = FMultitypeVar(ParamsValue->AsObject());
+    }
     
     const TSharedPtr<FJsonValue> ParamsEncodedValue = obj->TryGetField(TEXT("ParamsEncoded"));
-	if (ParamsEncodedValue.IsValid()&& !ParamsEncodedValue->IsNull())
-	{
-		FString TmpValue;
-		if(ParamsEncodedValue->TryGetString(TmpValue)) {ParamsEncoded = TmpValue; }
-	}
+    if (ParamsEncodedValue.IsValid()&& !ParamsEncodedValue->IsNull())
+    {
+        FString TmpValue;
+        if(ParamsEncodedValue->TryGetString(TmpValue)) {ParamsEncoded = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -9568,52 +9568,52 @@ bool PlayFab::ClientModels::FRunCloudScriptResult::readFromValue(const TSharedPt
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> ActionIdValue = obj->TryGetField(TEXT("ActionId"));
-	if (ActionIdValue.IsValid()&& !ActionIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(ActionIdValue->TryGetString(TmpValue)) {ActionId = TmpValue; }
-	}
+    if (ActionIdValue.IsValid()&& !ActionIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ActionIdValue->TryGetString(TmpValue)) {ActionId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> VersionValue = obj->TryGetField(TEXT("Version"));
-	if (VersionValue.IsValid()&& !VersionValue->IsNull())
-	{
-		int32 TmpValue;
-		if(VersionValue->TryGetNumber(TmpValue)) {Version = TmpValue; }
-	}
+    if (VersionValue.IsValid()&& !VersionValue->IsNull())
+    {
+        int32 TmpValue;
+        if(VersionValue->TryGetNumber(TmpValue)) {Version = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> RevisionValue = obj->TryGetField(TEXT("Revision"));
-	if (RevisionValue.IsValid()&& !RevisionValue->IsNull())
-	{
-		int32 TmpValue;
-		if(RevisionValue->TryGetNumber(TmpValue)) {Revision = TmpValue; }
-	}
+    if (RevisionValue.IsValid()&& !RevisionValue->IsNull())
+    {
+        int32 TmpValue;
+        if(RevisionValue->TryGetNumber(TmpValue)) {Revision = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ResultsValue = obj->TryGetField(TEXT("Results"));
-	if (ResultsValue.IsValid()&& !ResultsValue->IsNull())
-	{
-		Results = FMultitypeVar(ResultsValue->AsObject());
-	}
+    if (ResultsValue.IsValid()&& !ResultsValue->IsNull())
+    {
+        Results = FMultitypeVar(ResultsValue->AsObject());
+    }
     
     const TSharedPtr<FJsonValue> ResultsEncodedValue = obj->TryGetField(TEXT("ResultsEncoded"));
-	if (ResultsEncodedValue.IsValid()&& !ResultsEncodedValue->IsNull())
-	{
-		FString TmpValue;
-		if(ResultsEncodedValue->TryGetString(TmpValue)) {ResultsEncoded = TmpValue; }
-	}
+    if (ResultsEncodedValue.IsValid()&& !ResultsEncodedValue->IsNull())
+    {
+        FString TmpValue;
+        if(ResultsEncodedValue->TryGetString(TmpValue)) {ResultsEncoded = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ActionLogValue = obj->TryGetField(TEXT("ActionLog"));
-	if (ActionLogValue.IsValid()&& !ActionLogValue->IsNull())
-	{
-		FString TmpValue;
-		if(ActionLogValue->TryGetString(TmpValue)) {ActionLog = TmpValue; }
-	}
+    if (ActionLogValue.IsValid()&& !ActionLogValue->IsNull())
+    {
+        FString TmpValue;
+        if(ActionLogValue->TryGetString(TmpValue)) {ActionLog = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ExecutionTimeValue = obj->TryGetField(TEXT("ExecutionTime"));
-	if (ExecutionTimeValue.IsValid()&& !ExecutionTimeValue->IsNull())
-	{
-		double TmpValue;
-		if(ExecutionTimeValue->TryGetNumber(TmpValue)) {ExecutionTime = TmpValue; }
-	}
+    if (ExecutionTimeValue.IsValid()&& !ExecutionTimeValue->IsNull())
+    {
+        double TmpValue;
+        if(ExecutionTimeValue->TryGetNumber(TmpValue)) {ExecutionTime = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -9644,25 +9644,25 @@ bool PlayFab::ClientModels::FSendAccountRecoveryEmailRequest::readFromValue(cons
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> EmailValue = obj->TryGetField(TEXT("Email"));
-	if (EmailValue.IsValid()&& !EmailValue->IsNull())
-	{
-		FString TmpValue;
-		if(EmailValue->TryGetString(TmpValue)) {Email = TmpValue; }
-	}
+    if (EmailValue.IsValid()&& !EmailValue->IsNull())
+    {
+        FString TmpValue;
+        if(EmailValue->TryGetString(TmpValue)) {Email = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-	if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-	}
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PublisherIdValue = obj->TryGetField(TEXT("PublisherId"));
-	if (PublisherIdValue.IsValid()&& !PublisherIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(PublisherIdValue->TryGetString(TmpValue)) {PublisherId = TmpValue; }
-	}
+    if (PublisherIdValue.IsValid()&& !PublisherIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PublisherIdValue->TryGetString(TmpValue)) {PublisherId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -9703,14 +9703,14 @@ void PlayFab::ClientModels::FSetFriendTagsRequest::writeJSON(JsonWriter& writer)
     writer->WriteIdentifierPrefix(TEXT("FriendPlayFabId")); writer->WriteValue(FriendPlayFabId);
 	
     
-		writer->WriteArrayStart(TEXT("Tags"));
-	
-		for (const FString& item : Tags)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	
+        writer->WriteArrayStart(TEXT("Tags"));
+    
+        for (const FString& item : Tags)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+    
 	
     
     writer->WriteObjectEnd();
@@ -9721,11 +9721,11 @@ bool PlayFab::ClientModels::FSetFriendTagsRequest::readFromValue(const TSharedPt
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> FriendPlayFabIdValue = obj->TryGetField(TEXT("FriendPlayFabId"));
-	if (FriendPlayFabIdValue.IsValid()&& !FriendPlayFabIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(FriendPlayFabIdValue->TryGetString(TmpValue)) {FriendPlayFabId = TmpValue; }
-	}
+    if (FriendPlayFabIdValue.IsValid()&& !FriendPlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(FriendPlayFabIdValue->TryGetString(TmpValue)) {FriendPlayFabId = TmpValue; }
+    }
     
     HasSucceeded &= obj->TryGetStringArrayField(TEXT("Tags"),Tags);
     
@@ -9786,41 +9786,41 @@ bool PlayFab::ClientModels::FStartGameRequest::readFromValue(const TSharedPtr<FJ
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> BuildVersionValue = obj->TryGetField(TEXT("BuildVersion"));
-	if (BuildVersionValue.IsValid()&& !BuildVersionValue->IsNull())
-	{
-		FString TmpValue;
-		if(BuildVersionValue->TryGetString(TmpValue)) {BuildVersion = TmpValue; }
-	}
+    if (BuildVersionValue.IsValid()&& !BuildVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(BuildVersionValue->TryGetString(TmpValue)) {BuildVersion = TmpValue; }
+    }
     
     pfRegion = readRegionFromValue(obj->TryGetField(TEXT("Region")));
     
     const TSharedPtr<FJsonValue> GameModeValue = obj->TryGetField(TEXT("GameMode"));
-	if (GameModeValue.IsValid()&& !GameModeValue->IsNull())
-	{
-		FString TmpValue;
-		if(GameModeValue->TryGetString(TmpValue)) {GameMode = TmpValue; }
-	}
+    if (GameModeValue.IsValid()&& !GameModeValue->IsNull())
+    {
+        FString TmpValue;
+        if(GameModeValue->TryGetString(TmpValue)) {GameMode = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> StatisticNameValue = obj->TryGetField(TEXT("StatisticName"));
-	if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
-	}
+    if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
-	if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
-	}
+    if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CustomCommandLineDataValue = obj->TryGetField(TEXT("CustomCommandLineData"));
-	if (CustomCommandLineDataValue.IsValid()&& !CustomCommandLineDataValue->IsNull())
-	{
-		FString TmpValue;
-		if(CustomCommandLineDataValue->TryGetString(TmpValue)) {CustomCommandLineData = TmpValue; }
-	}
+    if (CustomCommandLineDataValue.IsValid()&& !CustomCommandLineDataValue->IsNull())
+    {
+        FString TmpValue;
+        if(CustomCommandLineDataValue->TryGetString(TmpValue)) {CustomCommandLineData = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -9857,46 +9857,46 @@ bool PlayFab::ClientModels::FStartGameResult::readFromValue(const TSharedPtr<FJs
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> LobbyIDValue = obj->TryGetField(TEXT("LobbyID"));
-	if (LobbyIDValue.IsValid()&& !LobbyIDValue->IsNull())
-	{
-		FString TmpValue;
-		if(LobbyIDValue->TryGetString(TmpValue)) {LobbyID = TmpValue; }
-	}
+    if (LobbyIDValue.IsValid()&& !LobbyIDValue->IsNull())
+    {
+        FString TmpValue;
+        if(LobbyIDValue->TryGetString(TmpValue)) {LobbyID = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ServerHostnameValue = obj->TryGetField(TEXT("ServerHostname"));
-	if (ServerHostnameValue.IsValid()&& !ServerHostnameValue->IsNull())
-	{
-		FString TmpValue;
-		if(ServerHostnameValue->TryGetString(TmpValue)) {ServerHostname = TmpValue; }
-	}
+    if (ServerHostnameValue.IsValid()&& !ServerHostnameValue->IsNull())
+    {
+        FString TmpValue;
+        if(ServerHostnameValue->TryGetString(TmpValue)) {ServerHostname = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ServerPortValue = obj->TryGetField(TEXT("ServerPort"));
-	if (ServerPortValue.IsValid()&& !ServerPortValue->IsNull())
-	{
-		int32 TmpValue;
-		if(ServerPortValue->TryGetNumber(TmpValue)) {ServerPort = TmpValue; }
-	}
+    if (ServerPortValue.IsValid()&& !ServerPortValue->IsNull())
+    {
+        int32 TmpValue;
+        if(ServerPortValue->TryGetNumber(TmpValue)) {ServerPort = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> TicketValue = obj->TryGetField(TEXT("Ticket"));
-	if (TicketValue.IsValid()&& !TicketValue->IsNull())
-	{
-		FString TmpValue;
-		if(TicketValue->TryGetString(TmpValue)) {Ticket = TmpValue; }
-	}
+    if (TicketValue.IsValid()&& !TicketValue->IsNull())
+    {
+        FString TmpValue;
+        if(TicketValue->TryGetString(TmpValue)) {Ticket = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> ExpiresValue = obj->TryGetField(TEXT("Expires"));
-	if (ExpiresValue.IsValid()&& !ExpiresValue->IsNull())
-	{
-		FString TmpValue;
-		if(ExpiresValue->TryGetString(TmpValue)) {Expires = TmpValue; }
-	}
+    if (ExpiresValue.IsValid()&& !ExpiresValue->IsNull())
+    {
+        FString TmpValue;
+        if(ExpiresValue->TryGetString(TmpValue)) {Expires = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PasswordValue = obj->TryGetField(TEXT("Password"));
-	if (PasswordValue.IsValid()&& !PasswordValue->IsNull())
-	{
-		FString TmpValue;
-		if(PasswordValue->TryGetString(TmpValue)) {Password = TmpValue; }
-	}
+    if (PasswordValue.IsValid()&& !PasswordValue->IsNull())
+    {
+        FString TmpValue;
+        if(PasswordValue->TryGetString(TmpValue)) {Password = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -9917,14 +9917,14 @@ void PlayFab::ClientModels::FStartPurchaseRequest::writeJSON(JsonWriter& writer)
     if(StoreId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("StoreId")); writer->WriteValue(StoreId); }
 	
     
-		writer->WriteArrayStart(TEXT("Items"));
-	
-		for (const FItemPuchaseRequest& item : Items)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	
+        writer->WriteArrayStart(TEXT("Items"));
+    
+        for (const FItemPuchaseRequest& item : Items)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+    
 	
     
     writer->WriteObjectEnd();
@@ -9935,28 +9935,28 @@ bool PlayFab::ClientModels::FStartPurchaseRequest::readFromValue(const TSharedPt
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> CatalogVersionValue = obj->TryGetField(TEXT("CatalogVersion"));
-	if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
-	{
-		FString TmpValue;
-		if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
-	}
+    if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> StoreIdValue = obj->TryGetField(TEXT("StoreId"));
-	if (StoreIdValue.IsValid()&& !StoreIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(StoreIdValue->TryGetString(TmpValue)) {StoreId = TmpValue; }
-	}
+    if (StoreIdValue.IsValid()&& !StoreIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(StoreIdValue->TryGetString(TmpValue)) {StoreId = TmpValue; }
+    }
     
     {
-		const TArray< TSharedPtr<FJsonValue> >&ItemsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Items"));
-		for (int32 Idx = 0; Idx < ItemsArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = ItemsArray[Idx];
-			
-			Items.Add(FItemPuchaseRequest(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&ItemsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Items"));
+        for (int32 Idx = 0; Idx < ItemsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = ItemsArray[Idx];
+            
+            Items.Add(FItemPuchaseRequest(CurrentItem->AsObject()));
+        }
+    }
 
     
     
@@ -9976,37 +9976,37 @@ void PlayFab::ClientModels::FStartPurchaseResult::writeJSON(JsonWriter& writer) 
     if(OrderId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("OrderId")); writer->WriteValue(OrderId); }
 	
     if(Contents.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("Contents"));
-	
-		for (const FCartItem& item : Contents)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("Contents"));
+    
+        for (const FCartItem& item : Contents)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(PaymentOptions.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("PaymentOptions"));
-	
-		for (const FPaymentOption& item : PaymentOptions)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("PaymentOptions"));
+    
+        for (const FPaymentOption& item : PaymentOptions)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(VirtualCurrencyBalances.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("VirtualCurrencyBalances"));
-		for (TMap<FString, int32>::TConstIterator It(VirtualCurrencyBalances); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			writer->WriteValue((*It).Value);
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("VirtualCurrencyBalances"));
+        for (TMap<FString, int32>::TConstIterator It(VirtualCurrencyBalances); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue((*It).Value);
+        }
+        writer->WriteObjectEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -10017,43 +10017,43 @@ bool PlayFab::ClientModels::FStartPurchaseResult::readFromValue(const TSharedPtr
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> OrderIdValue = obj->TryGetField(TEXT("OrderId"));
-	if (OrderIdValue.IsValid()&& !OrderIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(OrderIdValue->TryGetString(TmpValue)) {OrderId = TmpValue; }
-	}
+    if (OrderIdValue.IsValid()&& !OrderIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(OrderIdValue->TryGetString(TmpValue)) {OrderId = TmpValue; }
+    }
     
     {
-		const TArray< TSharedPtr<FJsonValue> >&ContentsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Contents"));
-		for (int32 Idx = 0; Idx < ContentsArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = ContentsArray[Idx];
-			
-			Contents.Add(FCartItem(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&ContentsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Contents"));
+        for (int32 Idx = 0; Idx < ContentsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = ContentsArray[Idx];
+            
+            Contents.Add(FCartItem(CurrentItem->AsObject()));
+        }
+    }
 
     
     {
-		const TArray< TSharedPtr<FJsonValue> >&PaymentOptionsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("PaymentOptions"));
-		for (int32 Idx = 0; Idx < PaymentOptionsArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = PaymentOptionsArray[Idx];
-			
-			PaymentOptions.Add(FPaymentOption(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&PaymentOptionsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("PaymentOptions"));
+        for (int32 Idx = 0; Idx < PaymentOptionsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = PaymentOptionsArray[Idx];
+            
+            PaymentOptions.Add(FPaymentOption(CurrentItem->AsObject()));
+        }
+    }
 
     
     const TSharedPtr<FJsonObject>* VirtualCurrencyBalancesObject;
-	if (obj->TryGetObjectField(TEXT("VirtualCurrencyBalances"), VirtualCurrencyBalancesObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyBalancesObject)->Values); It; ++It)
-		{
-			int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
-			VirtualCurrencyBalances.Add(It.Key(), TmpValue);
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("VirtualCurrencyBalances"), VirtualCurrencyBalancesObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyBalancesObject)->Values); It; ++It)
+        {
+            int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
+            VirtualCurrencyBalances.Add(It.Key(), TmpValue);
+        }
+    }
     
     
     return HasSucceeded;
@@ -10082,18 +10082,18 @@ bool PlayFab::ClientModels::FSubtractUserVirtualCurrencyRequest::readFromValue(c
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> VirtualCurrencyValue = obj->TryGetField(TEXT("VirtualCurrency"));
-	if (VirtualCurrencyValue.IsValid()&& !VirtualCurrencyValue->IsNull())
-	{
-		FString TmpValue;
-		if(VirtualCurrencyValue->TryGetString(TmpValue)) {VirtualCurrency = TmpValue; }
-	}
+    if (VirtualCurrencyValue.IsValid()&& !VirtualCurrencyValue->IsNull())
+    {
+        FString TmpValue;
+        if(VirtualCurrencyValue->TryGetString(TmpValue)) {VirtualCurrency = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> AmountValue = obj->TryGetField(TEXT("Amount"));
-	if (AmountValue.IsValid()&& !AmountValue->IsNull())
-	{
-		int32 TmpValue;
-		if(AmountValue->TryGetNumber(TmpValue)) {Amount = TmpValue; }
-	}
+    if (AmountValue.IsValid()&& !AmountValue->IsNull())
+    {
+        int32 TmpValue;
+        if(AmountValue->TryGetNumber(TmpValue)) {Amount = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -10120,11 +10120,11 @@ bool PlayFab::ClientModels::FUnlinkAndroidDeviceIDRequest::readFromValue(const T
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> AndroidDeviceIdValue = obj->TryGetField(TEXT("AndroidDeviceId"));
-	if (AndroidDeviceIdValue.IsValid()&& !AndroidDeviceIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(AndroidDeviceIdValue->TryGetString(TmpValue)) {AndroidDeviceId = TmpValue; }
-	}
+    if (AndroidDeviceIdValue.IsValid()&& !AndroidDeviceIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(AndroidDeviceIdValue->TryGetString(TmpValue)) {AndroidDeviceId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -10173,11 +10173,11 @@ bool PlayFab::ClientModels::FUnlinkCustomIDRequest::readFromValue(const TSharedP
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> CustomIdValue = obj->TryGetField(TEXT("CustomId"));
-	if (CustomIdValue.IsValid()&& !CustomIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(CustomIdValue->TryGetString(TmpValue)) {CustomId = TmpValue; }
-	}
+    if (CustomIdValue.IsValid()&& !CustomIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CustomIdValue->TryGetString(TmpValue)) {CustomId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -10358,11 +10358,11 @@ bool PlayFab::ClientModels::FUnlinkIOSDeviceIDRequest::readFromValue(const TShar
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> DeviceIdValue = obj->TryGetField(TEXT("DeviceId"));
-	if (DeviceIdValue.IsValid()&& !DeviceIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(DeviceIdValue->TryGetString(TmpValue)) {DeviceId = TmpValue; }
-	}
+    if (DeviceIdValue.IsValid()&& !DeviceIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(DeviceIdValue->TryGetString(TmpValue)) {DeviceId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -10547,25 +10547,25 @@ bool PlayFab::ClientModels::FUnlockContainerItemRequest::readFromValue(const TSh
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> ContainerItemIdValue = obj->TryGetField(TEXT("ContainerItemId"));
-	if (ContainerItemIdValue.IsValid()&& !ContainerItemIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(ContainerItemIdValue->TryGetString(TmpValue)) {ContainerItemId = TmpValue; }
-	}
+    if (ContainerItemIdValue.IsValid()&& !ContainerItemIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ContainerItemIdValue->TryGetString(TmpValue)) {ContainerItemId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CatalogVersionValue = obj->TryGetField(TEXT("CatalogVersion"));
-	if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
-	{
-		FString TmpValue;
-		if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
-	}
+    if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
-	if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
-	}
+    if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -10586,26 +10586,26 @@ void PlayFab::ClientModels::FUnlockContainerItemResult::writeJSON(JsonWriter& wr
     if(UnlockedWithItemInstanceId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("UnlockedWithItemInstanceId")); writer->WriteValue(UnlockedWithItemInstanceId); }
 	
     if(GrantedItems.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("GrantedItems"));
-	
-		for (const FItemInstance& item : GrantedItems)
-		{
-			item.writeJSON(writer);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteArrayStart(TEXT("GrantedItems"));
+    
+        for (const FItemInstance& item : GrantedItems)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     if(VirtualCurrency.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("VirtualCurrency"));
-		for (TMap<FString, uint32>::TConstIterator It(VirtualCurrency); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			writer->WriteValue(static_cast<int64>((*It).Value));
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("VirtualCurrency"));
+        for (TMap<FString, uint32>::TConstIterator It(VirtualCurrency); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue(static_cast<int64>((*It).Value));
+        }
+        writer->WriteObjectEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -10616,39 +10616,39 @@ bool PlayFab::ClientModels::FUnlockContainerItemResult::readFromValue(const TSha
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> UnlockedItemInstanceIdValue = obj->TryGetField(TEXT("UnlockedItemInstanceId"));
-	if (UnlockedItemInstanceIdValue.IsValid()&& !UnlockedItemInstanceIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(UnlockedItemInstanceIdValue->TryGetString(TmpValue)) {UnlockedItemInstanceId = TmpValue; }
-	}
+    if (UnlockedItemInstanceIdValue.IsValid()&& !UnlockedItemInstanceIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(UnlockedItemInstanceIdValue->TryGetString(TmpValue)) {UnlockedItemInstanceId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> UnlockedWithItemInstanceIdValue = obj->TryGetField(TEXT("UnlockedWithItemInstanceId"));
-	if (UnlockedWithItemInstanceIdValue.IsValid()&& !UnlockedWithItemInstanceIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(UnlockedWithItemInstanceIdValue->TryGetString(TmpValue)) {UnlockedWithItemInstanceId = TmpValue; }
-	}
+    if (UnlockedWithItemInstanceIdValue.IsValid()&& !UnlockedWithItemInstanceIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(UnlockedWithItemInstanceIdValue->TryGetString(TmpValue)) {UnlockedWithItemInstanceId = TmpValue; }
+    }
     
     {
-		const TArray< TSharedPtr<FJsonValue> >&GrantedItemsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("GrantedItems"));
-		for (int32 Idx = 0; Idx < GrantedItemsArray.Num(); Idx++)
-		{
-			TSharedPtr<FJsonValue> CurrentItem = GrantedItemsArray[Idx];
-			
-			GrantedItems.Add(FItemInstance(CurrentItem->AsObject()));
-		}
-	}
+        const TArray< TSharedPtr<FJsonValue> >&GrantedItemsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("GrantedItems"));
+        for (int32 Idx = 0; Idx < GrantedItemsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = GrantedItemsArray[Idx];
+            
+            GrantedItems.Add(FItemInstance(CurrentItem->AsObject()));
+        }
+    }
 
     
     const TSharedPtr<FJsonObject>* VirtualCurrencyObject;
-	if (obj->TryGetObjectField(TEXT("VirtualCurrency"), VirtualCurrencyObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyObject)->Values); It; ++It)
-		{
-			uint32 TmpValue; It.Value()->TryGetNumber(TmpValue);
-			VirtualCurrency.Add(It.Key(), TmpValue);
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("VirtualCurrency"), VirtualCurrencyObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyObject)->Values); It; ++It)
+        {
+            uint32 TmpValue; It.Value()->TryGetNumber(TmpValue);
+            VirtualCurrency.Add(It.Key(), TmpValue);
+        }
+    }
     
     
     return HasSucceeded;
@@ -10667,26 +10667,15 @@ void PlayFab::ClientModels::FUpdateCharacterDataRequest::writeJSON(JsonWriter& w
     writer->WriteIdentifierPrefix(TEXT("CharacterId")); writer->WriteValue(CharacterId);
 	
     if(Data.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("Data"));
-		for (TMap<FString, FString>::TConstIterator It(Data); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			writer->WriteValue((*It).Value);
-		}
-		writer->WriteObjectEnd();
- 	}
-	
-    if(KeysToRemove.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("KeysToRemove"));
-	
-		for (const FString& item : KeysToRemove)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteObjectStart(TEXT("Data"));
+        for (TMap<FString, FString>::TConstIterator It(Data); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue((*It).Value);
+        }
+        writer->WriteObjectEnd();
+     }
 	
     if(Permission.notNull()) { writer->WriteIdentifierPrefix(TEXT("Permission")); writeUserDataPermissionEnumJSON(Permission, writer); }
 	
@@ -10699,23 +10688,21 @@ bool PlayFab::ClientModels::FUpdateCharacterDataRequest::readFromValue(const TSh
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
-	if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
-	}
+    if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonObject>* DataObject;
-	if (obj->TryGetObjectField(TEXT("Data"), DataObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*DataObject)->Values); It; ++It)
-		{
-			
-			Data.Add(It.Key(), It.Value()->AsString());
-		}
-	}
-    
-    obj->TryGetStringArrayField(TEXT("KeysToRemove"),KeysToRemove);
+    if (obj->TryGetObjectField(TEXT("Data"), DataObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*DataObject)->Values); It; ++It)
+        {
+            
+            Data.Add(It.Key(), It.Value()->AsString());
+        }
+    }
     
     Permission = readUserDataPermissionFromValue(obj->TryGetField(TEXT("Permission")));
     
@@ -10744,11 +10731,11 @@ bool PlayFab::ClientModels::FUpdateCharacterDataResult::readFromValue(const TSha
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> DataVersionValue = obj->TryGetField(TEXT("DataVersion"));
-	if (DataVersionValue.IsValid()&& !DataVersionValue->IsNull())
-	{
-		uint32 TmpValue;
-		if(DataVersionValue->TryGetNumber(TmpValue)) {DataVersion = TmpValue; }
-	}
+    if (DataVersionValue.IsValid()&& !DataVersionValue->IsNull())
+    {
+        uint32 TmpValue;
+        if(DataVersionValue->TryGetNumber(TmpValue)) {DataVersion = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -10767,26 +10754,15 @@ void PlayFab::ClientModels::FUpdateSharedGroupDataRequest::writeJSON(JsonWriter&
     writer->WriteIdentifierPrefix(TEXT("SharedGroupId")); writer->WriteValue(SharedGroupId);
 	
     if(Data.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("Data"));
-		for (TMap<FString, FString>::TConstIterator It(Data); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			writer->WriteValue((*It).Value);
-		}
-		writer->WriteObjectEnd();
- 	}
-	
-    if(KeysToRemove.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("KeysToRemove"));
-	
-		for (const FString& item : KeysToRemove)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteObjectStart(TEXT("Data"));
+        for (TMap<FString, FString>::TConstIterator It(Data); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue((*It).Value);
+        }
+        writer->WriteObjectEnd();
+     }
 	
     if(Permission.notNull()) { writer->WriteIdentifierPrefix(TEXT("Permission")); writeUserDataPermissionEnumJSON(Permission, writer); }
 	
@@ -10799,23 +10775,21 @@ bool PlayFab::ClientModels::FUpdateSharedGroupDataRequest::readFromValue(const T
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> SharedGroupIdValue = obj->TryGetField(TEXT("SharedGroupId"));
-	if (SharedGroupIdValue.IsValid()&& !SharedGroupIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(SharedGroupIdValue->TryGetString(TmpValue)) {SharedGroupId = TmpValue; }
-	}
+    if (SharedGroupIdValue.IsValid()&& !SharedGroupIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(SharedGroupIdValue->TryGetString(TmpValue)) {SharedGroupId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonObject>* DataObject;
-	if (obj->TryGetObjectField(TEXT("Data"), DataObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*DataObject)->Values); It; ++It)
-		{
-			
-			Data.Add(It.Key(), It.Value()->AsString());
-		}
-	}
-    
-    obj->TryGetStringArrayField(TEXT("KeysToRemove"),KeysToRemove);
+    if (obj->TryGetObjectField(TEXT("Data"), DataObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*DataObject)->Values); It; ++It)
+        {
+            
+            Data.Add(It.Key(), It.Value()->AsString());
+        }
+    }
     
     Permission = readUserDataPermissionFromValue(obj->TryGetField(TEXT("Permission")));
     
@@ -10856,26 +10830,15 @@ void PlayFab::ClientModels::FUpdateUserDataRequest::writeJSON(JsonWriter& writer
     writer->WriteObjectStart();
     
     if(Data.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("Data"));
-		for (TMap<FString, FString>::TConstIterator It(Data); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			writer->WriteValue((*It).Value);
-		}
-		writer->WriteObjectEnd();
- 	}
-	
-    if(KeysToRemove.Num() != 0) 
-	{
-		writer->WriteArrayStart(TEXT("KeysToRemove"));
-	
-		for (const FString& item : KeysToRemove)
-		{
-			writer->WriteValue(item);
-		}
-		writer->WriteArrayEnd();
-	 }
+    {
+        writer->WriteObjectStart(TEXT("Data"));
+        for (TMap<FString, FString>::TConstIterator It(Data); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue((*It).Value);
+        }
+        writer->WriteObjectEnd();
+     }
 	
     if(Permission.notNull()) { writer->WriteIdentifierPrefix(TEXT("Permission")); writeUserDataPermissionEnumJSON(Permission, writer); }
 	
@@ -10888,16 +10851,14 @@ bool PlayFab::ClientModels::FUpdateUserDataRequest::readFromValue(const TSharedP
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonObject>* DataObject;
-	if (obj->TryGetObjectField(TEXT("Data"), DataObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*DataObject)->Values); It; ++It)
-		{
-			
-			Data.Add(It.Key(), It.Value()->AsString());
-		}
-	}
-    
-    obj->TryGetStringArrayField(TEXT("KeysToRemove"),KeysToRemove);
+    if (obj->TryGetObjectField(TEXT("Data"), DataObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*DataObject)->Values); It; ++It)
+        {
+            
+            Data.Add(It.Key(), It.Value()->AsString());
+        }
+    }
     
     Permission = readUserDataPermissionFromValue(obj->TryGetField(TEXT("Permission")));
     
@@ -10926,11 +10887,11 @@ bool PlayFab::ClientModels::FUpdateUserDataResult::readFromValue(const TSharedPt
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> DataVersionValue = obj->TryGetField(TEXT("DataVersion"));
-	if (DataVersionValue.IsValid()&& !DataVersionValue->IsNull())
-	{
-		uint32 TmpValue;
-		if(DataVersionValue->TryGetNumber(TmpValue)) {DataVersion = TmpValue; }
-	}
+    if (DataVersionValue.IsValid()&& !DataVersionValue->IsNull())
+    {
+        uint32 TmpValue;
+        if(DataVersionValue->TryGetNumber(TmpValue)) {DataVersion = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -10947,15 +10908,15 @@ void PlayFab::ClientModels::FUpdateUserStatisticsRequest::writeJSON(JsonWriter& 
     writer->WriteObjectStart();
     
     if(UserStatistics.Num() != 0) 
-	{
-		writer->WriteObjectStart(TEXT("UserStatistics"));
-		for (TMap<FString, int32>::TConstIterator It(UserStatistics); It; ++It)
-		{
-			writer->WriteIdentifierPrefix((*It).Key);
-			writer->WriteValue((*It).Value);
-		}
-		writer->WriteObjectEnd();
- 	}
+    {
+        writer->WriteObjectStart(TEXT("UserStatistics"));
+        for (TMap<FString, int32>::TConstIterator It(UserStatistics); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue((*It).Value);
+        }
+        writer->WriteObjectEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -10966,14 +10927,14 @@ bool PlayFab::ClientModels::FUpdateUserStatisticsRequest::readFromValue(const TS
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonObject>* UserStatisticsObject;
-	if (obj->TryGetObjectField(TEXT("UserStatistics"), UserStatisticsObject))
-	{
-		for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*UserStatisticsObject)->Values); It; ++It)
-		{
-			int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
-			UserStatistics.Add(It.Key(), TmpValue);
-		}
-	}
+    if (obj->TryGetObjectField(TEXT("UserStatistics"), UserStatisticsObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*UserStatisticsObject)->Values); It; ++It)
+        {
+            int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
+            UserStatistics.Add(It.Key(), TmpValue);
+        }
+    }
     
     
     return HasSucceeded;
@@ -11022,11 +10983,11 @@ bool PlayFab::ClientModels::FUpdateUserTitleDisplayNameRequest::readFromValue(co
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> DisplayNameValue = obj->TryGetField(TEXT("DisplayName"));
-	if (DisplayNameValue.IsValid()&& !DisplayNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(DisplayNameValue->TryGetString(TmpValue)) {DisplayName = TmpValue; }
-	}
+    if (DisplayNameValue.IsValid()&& !DisplayNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(DisplayNameValue->TryGetString(TmpValue)) {DisplayName = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -11053,11 +11014,11 @@ bool PlayFab::ClientModels::FUpdateUserTitleDisplayNameResult::readFromValue(con
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> DisplayNameValue = obj->TryGetField(TEXT("DisplayName"));
-	if (DisplayNameValue.IsValid()&& !DisplayNameValue->IsNull())
-	{
-		FString TmpValue;
-		if(DisplayNameValue->TryGetString(TmpValue)) {DisplayName = TmpValue; }
-	}
+    if (DisplayNameValue.IsValid()&& !DisplayNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(DisplayNameValue->TryGetString(TmpValue)) {DisplayName = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -11092,39 +11053,39 @@ bool PlayFab::ClientModels::FValidateAmazonReceiptRequest::readFromValue(const T
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> ReceiptIdValue = obj->TryGetField(TEXT("ReceiptId"));
-	if (ReceiptIdValue.IsValid()&& !ReceiptIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(ReceiptIdValue->TryGetString(TmpValue)) {ReceiptId = TmpValue; }
-	}
+    if (ReceiptIdValue.IsValid()&& !ReceiptIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ReceiptIdValue->TryGetString(TmpValue)) {ReceiptId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> UserIdValue = obj->TryGetField(TEXT("UserId"));
-	if (UserIdValue.IsValid()&& !UserIdValue->IsNull())
-	{
-		FString TmpValue;
-		if(UserIdValue->TryGetString(TmpValue)) {UserId = TmpValue; }
-	}
+    if (UserIdValue.IsValid()&& !UserIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(UserIdValue->TryGetString(TmpValue)) {UserId = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CatalogVersionValue = obj->TryGetField(TEXT("CatalogVersion"));
-	if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
-	{
-		FString TmpValue;
-		if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
-	}
+    if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CurrencyCodeValue = obj->TryGetField(TEXT("CurrencyCode"));
-	if (CurrencyCodeValue.IsValid()&& !CurrencyCodeValue->IsNull())
-	{
-		FString TmpValue;
-		if(CurrencyCodeValue->TryGetString(TmpValue)) {CurrencyCode = TmpValue; }
-	}
+    if (CurrencyCodeValue.IsValid()&& !CurrencyCodeValue->IsNull())
+    {
+        FString TmpValue;
+        if(CurrencyCodeValue->TryGetString(TmpValue)) {CurrencyCode = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PurchasePriceValue = obj->TryGetField(TEXT("PurchasePrice"));
-	if (PurchasePriceValue.IsValid()&& !PurchasePriceValue->IsNull())
-	{
-		int32 TmpValue;
-		if(PurchasePriceValue->TryGetNumber(TmpValue)) {PurchasePrice = TmpValue; }
-	}
+    if (PurchasePriceValue.IsValid()&& !PurchasePriceValue->IsNull())
+    {
+        int32 TmpValue;
+        if(PurchasePriceValue->TryGetNumber(TmpValue)) {PurchasePrice = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -11179,32 +11140,32 @@ bool PlayFab::ClientModels::FValidateGooglePlayPurchaseRequest::readFromValue(co
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> ReceiptJsonValue = obj->TryGetField(TEXT("ReceiptJson"));
-	if (ReceiptJsonValue.IsValid()&& !ReceiptJsonValue->IsNull())
-	{
-		FString TmpValue;
-		if(ReceiptJsonValue->TryGetString(TmpValue)) {ReceiptJson = TmpValue; }
-	}
+    if (ReceiptJsonValue.IsValid()&& !ReceiptJsonValue->IsNull())
+    {
+        FString TmpValue;
+        if(ReceiptJsonValue->TryGetString(TmpValue)) {ReceiptJson = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> SignatureValue = obj->TryGetField(TEXT("Signature"));
-	if (SignatureValue.IsValid()&& !SignatureValue->IsNull())
-	{
-		FString TmpValue;
-		if(SignatureValue->TryGetString(TmpValue)) {Signature = TmpValue; }
-	}
+    if (SignatureValue.IsValid()&& !SignatureValue->IsNull())
+    {
+        FString TmpValue;
+        if(SignatureValue->TryGetString(TmpValue)) {Signature = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CurrencyCodeValue = obj->TryGetField(TEXT("CurrencyCode"));
-	if (CurrencyCodeValue.IsValid()&& !CurrencyCodeValue->IsNull())
-	{
-		FString TmpValue;
-		if(CurrencyCodeValue->TryGetString(TmpValue)) {CurrencyCode = TmpValue; }
-	}
+    if (CurrencyCodeValue.IsValid()&& !CurrencyCodeValue->IsNull())
+    {
+        FString TmpValue;
+        if(CurrencyCodeValue->TryGetString(TmpValue)) {CurrencyCode = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PurchasePriceValue = obj->TryGetField(TEXT("PurchasePrice"));
-	if (PurchasePriceValue.IsValid()&& !PurchasePriceValue->IsNull())
-	{
-		uint32 TmpValue;
-		if(PurchasePriceValue->TryGetNumber(TmpValue)) {PurchasePrice = TmpValue; }
-	}
+    if (PurchasePriceValue.IsValid()&& !PurchasePriceValue->IsNull())
+    {
+        uint32 TmpValue;
+        if(PurchasePriceValue->TryGetNumber(TmpValue)) {PurchasePrice = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -11257,25 +11218,25 @@ bool PlayFab::ClientModels::FValidateIOSReceiptRequest::readFromValue(const TSha
 	bool HasSucceeded = true; 
 	
     const TSharedPtr<FJsonValue> ReceiptDataValue = obj->TryGetField(TEXT("ReceiptData"));
-	if (ReceiptDataValue.IsValid()&& !ReceiptDataValue->IsNull())
-	{
-		FString TmpValue;
-		if(ReceiptDataValue->TryGetString(TmpValue)) {ReceiptData = TmpValue; }
-	}
+    if (ReceiptDataValue.IsValid()&& !ReceiptDataValue->IsNull())
+    {
+        FString TmpValue;
+        if(ReceiptDataValue->TryGetString(TmpValue)) {ReceiptData = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> CurrencyCodeValue = obj->TryGetField(TEXT("CurrencyCode"));
-	if (CurrencyCodeValue.IsValid()&& !CurrencyCodeValue->IsNull())
-	{
-		FString TmpValue;
-		if(CurrencyCodeValue->TryGetString(TmpValue)) {CurrencyCode = TmpValue; }
-	}
+    if (CurrencyCodeValue.IsValid()&& !CurrencyCodeValue->IsNull())
+    {
+        FString TmpValue;
+        if(CurrencyCodeValue->TryGetString(TmpValue)) {CurrencyCode = TmpValue; }
+    }
     
     const TSharedPtr<FJsonValue> PurchasePriceValue = obj->TryGetField(TEXT("PurchasePrice"));
-	if (PurchasePriceValue.IsValid()&& !PurchasePriceValue->IsNull())
-	{
-		int32 TmpValue;
-		if(PurchasePriceValue->TryGetNumber(TmpValue)) {PurchasePrice = TmpValue; }
-	}
+    if (PurchasePriceValue.IsValid()&& !PurchasePriceValue->IsNull())
+    {
+        int32 TmpValue;
+        if(PurchasePriceValue->TryGetNumber(TmpValue)) {PurchasePrice = TmpValue; }
+    }
     
     
     return HasSucceeded;

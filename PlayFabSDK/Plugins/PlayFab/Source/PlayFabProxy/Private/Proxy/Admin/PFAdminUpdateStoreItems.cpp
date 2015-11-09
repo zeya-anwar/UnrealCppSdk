@@ -16,9 +16,9 @@ UPFAdminUpdateStoreItems* UPFAdminUpdateStoreItems::UpdateStoreItems(UObject* Wo
 	Proxy->Request.CatalogVersion = InCatalogVersion;
 	Proxy->Request.StoreId = InStoreId;
 	for (const FBPAdminStoreItem& elem : InStore)
-	{
-		Proxy->Request.Store.Add(elem.Data);
-	}
+    {
+        Proxy->Request.Store.Add(elem.Data);
+    }
 
 	
 

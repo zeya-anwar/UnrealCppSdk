@@ -5,7 +5,7 @@
 
 void UPFMatchmakerProxyLibrary::BreakBPMatchmakerAuthUserRequest(
 		const FBPMatchmakerAuthUserRequest& In
-		,FString& OutAuthorizationTicket
+        ,FString& OutAuthorizationTicket
 	)
 {
     OutAuthorizationTicket = In.Data.AuthorizationTicket;
@@ -14,8 +14,8 @@ void UPFMatchmakerProxyLibrary::BreakBPMatchmakerAuthUserRequest(
 
 void UPFMatchmakerProxyLibrary::BreakBPMatchmakerAuthUserResponse(
 		const FBPMatchmakerAuthUserResponse& In
-		,bool& OutAuthorized
-		,FString& OutPlayFabId
+        ,bool& OutAuthorized
+        ,FString& OutPlayFabId
 	)
 {
     OutAuthorized = In.Data.Authorized;
@@ -25,20 +25,20 @@ void UPFMatchmakerProxyLibrary::BreakBPMatchmakerAuthUserResponse(
 
 void UPFMatchmakerProxyLibrary::BreakBPMatchmakerItemInstance(
 		const FBPMatchmakerItemInstance& In
-		,FString& OutItemId
-		,FString& OutItemInstanceId
-		,FString& OutItemClass
-		,FDateTime& OutPurchaseDate
-		,FDateTime& OutExpiration
-		,int32& OutRemainingUses
-		,int32& OutUsesIncrementedBy
-		,FString& OutAnnotation
-		,FString& OutCatalogVersion
-		,FString& OutBundleParent
-		,FString& OutDisplayName
-		,FString& OutUnitCurrency
-		,int32& OutUnitPrice
-		,TArray<FString>& OutBundleContents
+        ,FString& OutItemId
+        ,FString& OutItemInstanceId
+        ,FString& OutItemClass
+        ,FDateTime& OutPurchaseDate
+        ,FDateTime& OutExpiration
+        ,int32& OutRemainingUses
+        ,int32& OutUsesIncrementedBy
+        ,FString& OutAnnotation
+        ,FString& OutCatalogVersion
+        ,FString& OutBundleParent
+        ,FString& OutDisplayName
+        ,FString& OutUnitCurrency
+        ,int32& OutUnitPrice
+        ,TArray<FString>& OutBundleContents
 	)
 {
     OutItemId = In.Data.ItemId;
@@ -61,8 +61,8 @@ void UPFMatchmakerProxyLibrary::BreakBPMatchmakerItemInstance(
 
 void UPFMatchmakerProxyLibrary::BreakBPMatchmakerPlayerJoinedRequest(
 		const FBPMatchmakerPlayerJoinedRequest& In
-		,FString& OutLobbyId
-		,FString& OutPlayFabId
+        ,FString& OutLobbyId
+        ,FString& OutPlayFabId
 	)
 {
     OutLobbyId = In.Data.LobbyId;
@@ -79,8 +79,8 @@ void UPFMatchmakerProxyLibrary::BreakBPMatchmakerPlayerJoinedResponse(
 
 void UPFMatchmakerProxyLibrary::BreakBPMatchmakerPlayerLeftRequest(
 		const FBPMatchmakerPlayerLeftRequest& In
-		,FString& OutLobbyId
-		,FString& OutPlayFabId
+        ,FString& OutLobbyId
+        ,FString& OutPlayFabId
 	)
 {
     OutLobbyId = In.Data.LobbyId;
@@ -104,10 +104,10 @@ void UPFMatchmakerProxyLibrary::BreakBPMatchmakerRegion(
 
 void UPFMatchmakerProxyLibrary::BreakBPMatchmakerStartGameRequest(
 		const FBPMatchmakerStartGameRequest& In
-		,FString& OutBuild
-		,FString& OutGameMode
-		,FString& OutCustomCommandLineData
-		,FString& OutExternalMatchmakerEventEndpoint
+        ,FString& OutBuild
+        ,FString& OutGameMode
+        ,FString& OutCustomCommandLineData
+        ,FString& OutExternalMatchmakerEventEndpoint
 	)
 {
     OutBuild = In.Data.Build;
@@ -120,9 +120,9 @@ void UPFMatchmakerProxyLibrary::BreakBPMatchmakerStartGameRequest(
 
 void UPFMatchmakerProxyLibrary::BreakBPMatchmakerStartGameResponse(
 		const FBPMatchmakerStartGameResponse& In
-		,FString& OutGameID
-		,FString& OutServerHostname
-		,int32& OutServerPort
+        ,FString& OutGameID
+        ,FString& OutServerHostname
+        ,int32& OutServerPort
 	)
 {
     OutGameID = In.Data.GameID;
@@ -133,8 +133,8 @@ void UPFMatchmakerProxyLibrary::BreakBPMatchmakerStartGameResponse(
 
 void UPFMatchmakerProxyLibrary::BreakBPMatchmakerUserInfoRequest(
 		const FBPMatchmakerUserInfoRequest& In
-		,FString& OutPlayFabId
-		,int32& OutMinCatalogVersion
+        ,FString& OutPlayFabId
+        ,int32& OutMinCatalogVersion
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -144,23 +144,23 @@ void UPFMatchmakerProxyLibrary::BreakBPMatchmakerUserInfoRequest(
 
 void UPFMatchmakerProxyLibrary::BreakBPMatchmakerUserInfoResponse(
 		const FBPMatchmakerUserInfoResponse& In
-		,FString& OutPlayFabId
-		,FString& OutUsername
-		,FString& OutTitleDisplayName
-		,TArray<FBPMatchmakerItemInstance>& OutInventory
-		,bool& OutIsDeveloper
-		,FString& OutSteamId
+        ,FString& OutPlayFabId
+        ,FString& OutUsername
+        ,FString& OutTitleDisplayName
+        ,TArray<FBPMatchmakerItemInstance>& OutInventory
+        ,bool& OutIsDeveloper
+        ,FString& OutSteamId
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
 	OutUsername = In.Data.Username;
 	OutTitleDisplayName = In.Data.TitleDisplayName;
 	for (const PlayFab::MatchmakerModels::FItemInstance& elem : In.Data.Inventory)
-	{
-		FBPMatchmakerItemInstance result;
-		result.Data = elem;
-		OutInventory.Add(result);
-	}
+    {
+        FBPMatchmakerItemInstance result;
+        result.Data = elem;
+        OutInventory.Add(result);
+    }
 
 	
 	
@@ -171,9 +171,9 @@ void UPFMatchmakerProxyLibrary::BreakBPMatchmakerUserInfoResponse(
 
 void UPFMatchmakerProxyLibrary::BreakBPMatchmakerVirtualCurrencyRechargeTime(
 		const FBPMatchmakerVirtualCurrencyRechargeTime& In
-		,int32& OutSecondsToRecharge
-		,FDateTime& OutRechargeTime
-		,int32& OutRechargeMax
+        ,int32& OutSecondsToRecharge
+        ,FDateTime& OutRechargeTime
+        ,int32& OutRechargeMax
 	)
 {
     OutSecondsToRecharge = In.Data.SecondsToRecharge;

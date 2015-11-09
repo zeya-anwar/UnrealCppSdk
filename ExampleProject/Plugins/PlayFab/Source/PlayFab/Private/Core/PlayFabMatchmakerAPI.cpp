@@ -25,7 +25,8 @@ bool UPlayFabMatchmakerAPI::AuthUser(
     const FAuthUserDelegate& SuccessDelegate,
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
-    auto HttpRequest = PlayFabRequestHandler::SendRequest(TEXT("/Matchmaker/AuthUser"), request.toJSONString(),
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Matchmaker/AuthUser")), request.toJSONString(),
         TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
     HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabMatchmakerAPI::OnAuthUserResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
@@ -37,7 +38,7 @@ void UPlayFabMatchmakerAPI::OnAuthUserResult(FHttpRequestPtr HttpRequest, FHttpR
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-
+        
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -46,13 +47,13 @@ void UPlayFabMatchmakerAPI::OnAuthUserResult(FHttpRequestPtr HttpRequest, FHttpR
     }
 }
 
-
 bool UPlayFabMatchmakerAPI::PlayerJoined(
     MatchmakerModels::FPlayerJoinedRequest& request,
     const FPlayerJoinedDelegate& SuccessDelegate,
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
-    auto HttpRequest = PlayFabRequestHandler::SendRequest(TEXT("/Matchmaker/PlayerJoined"), request.toJSONString(),
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Matchmaker/PlayerJoined")), request.toJSONString(),
         TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
     HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabMatchmakerAPI::OnPlayerJoinedResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
@@ -64,7 +65,7 @@ void UPlayFabMatchmakerAPI::OnPlayerJoinedResult(FHttpRequestPtr HttpRequest, FH
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-
+        
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -73,20 +74,14 @@ void UPlayFabMatchmakerAPI::OnPlayerJoinedResult(FHttpRequestPtr HttpRequest, FH
     }
 }
 
-
 bool UPlayFabMatchmakerAPI::PlayerLeft(
     MatchmakerModels::FPlayerLeftRequest& request,
     const FPlayerLeftDelegate& SuccessDelegate,
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
-
-
-
-    auto HttpRequest = PlayFabRequestHandler::SendRequest(TEXT("/Matchmaker/PlayerLeft"), request.toJSONString(),
-
-
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Matchmaker/PlayerLeft")), request.toJSONString(),
         TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
-
     HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabMatchmakerAPI::OnPlayerLeftResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
@@ -97,7 +92,7 @@ void UPlayFabMatchmakerAPI::OnPlayerLeftResult(FHttpRequestPtr HttpRequest, FHtt
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-
+        
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -106,20 +101,14 @@ void UPlayFabMatchmakerAPI::OnPlayerLeftResult(FHttpRequestPtr HttpRequest, FHtt
     }
 }
 
-
 bool UPlayFabMatchmakerAPI::StartGame(
     MatchmakerModels::FStartGameRequest& request,
     const FStartGameDelegate& SuccessDelegate,
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
-
-
-
-    auto HttpRequest = PlayFabRequestHandler::SendRequest(TEXT("/Matchmaker/StartGame"), request.toJSONString(),
-
-
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Matchmaker/StartGame")), request.toJSONString(),
         TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
-
     HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabMatchmakerAPI::OnStartGameResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
@@ -130,7 +119,7 @@ void UPlayFabMatchmakerAPI::OnStartGameResult(FHttpRequestPtr HttpRequest, FHttp
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-
+        
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -139,20 +128,14 @@ void UPlayFabMatchmakerAPI::OnStartGameResult(FHttpRequestPtr HttpRequest, FHttp
     }
 }
 
-
 bool UPlayFabMatchmakerAPI::UserInfo(
     MatchmakerModels::FUserInfoRequest& request,
     const FUserInfoDelegate& SuccessDelegate,
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
-
-
-
-    auto HttpRequest = PlayFabRequestHandler::SendRequest(TEXT("/Matchmaker/UserInfo"), request.toJSONString(),
-
-
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Matchmaker/UserInfo")), request.toJSONString(),
         TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
-
     HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabMatchmakerAPI::OnUserInfoResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
@@ -163,7 +146,7 @@ void UPlayFabMatchmakerAPI::OnUserInfoResult(FHttpRequestPtr HttpRequest, FHttpR
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-
+        
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -171,7 +154,4 @@ void UPlayFabMatchmakerAPI::OnUserInfoResult(FHttpRequestPtr HttpRequest, FHttpR
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
-
-
-
 

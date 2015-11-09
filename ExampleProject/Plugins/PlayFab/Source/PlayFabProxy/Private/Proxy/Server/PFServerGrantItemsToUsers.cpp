@@ -15,9 +15,9 @@ UPFServerGrantItemsToUsers* UPFServerGrantItemsToUsers::GrantItemsToUsers(UObjec
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.CatalogVersion = InCatalogVersion;
 	for (const FBPServerItemGrant& elem : InItemGrants)
-	{
-		Proxy->Request.ItemGrants.Add(elem.Data);
-	}
+    {
+        Proxy->Request.ItemGrants.Add(elem.Data);
+    }
 
 	
 

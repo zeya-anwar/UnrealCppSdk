@@ -76,139 +76,139 @@ namespace PlayFab
         UPlayFabAdminAPI();
         ~UPlayFabAdminAPI();
 
-		
+        int GetPendingCalls();
 
         // ------------ Generated API calls
 		
 		/**
 		 * Retrieves the relevant details for a specified user, based upon a match against a supplied unique identifier
-		 * This API allows for access to details regarding a user in the PlayFab service, usually for purposes of customer support. Note that data returned may be Personally Identifying Information (PII), such as email address, and so care should be taken in how this data is stored and managed. Since this call will always return the relevant information for users who have accessed the title, the recommendation is to not store this data locally.
+         * This API allows for access to details regarding a user in the PlayFab service, usually for purposes of customer support. Note that data returned may be Personally Identifying Information (PII), such as email address, and so care should be taken in how this data is stored and managed. Since this call will always return the relevant information for users who have accessed the title, the recommendation is to not store this data locally.
 		 */
 		bool GetUserAccountInfo(AdminModels::FLookupUserAccountInfoRequest& request, const FGetUserAccountInfoDelegate& SuccessDelegate = FGetUserAccountInfoDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Resets all title-specific information about a particular account, including user data, virtual currency balances, inventory, purchase history, and statistics
-		 * This method is intended for use with test accounts, to allow a developer to reset and test a game experience from the start. Note that in order to reset an account, you must know the username and password. If the account does not have a username and password, you must add one with AddUsernamePassword in the client API prior to calling this method.
+         * This method is intended for use with test accounts, to allow a developer to reset and test a game experience from the start. Note that in order to reset an account, you must know the username and password. If the account does not have a username and password, you must add one with AddUsernamePassword in the client API prior to calling this method.
 		 */
 		bool ResetUsers(AdminModels::FResetUsersRequest& request, const FResetUsersDelegate& SuccessDelegate = FResetUsersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Forces an email to be sent to the registered email address for the specified account, with a link allowing the user to change the password
-		 * If the account in question is a "temporary" account (for example, one that was created via a call to LoginFromIOSDeviceID), thisfunction will have no effect. Only PlayFab accounts which have valid email addresses will be able to receive a password reset email using this API.
+         * If the account in question is a "temporary" account (for example, one that was created via a call to LoginFromIOSDeviceID), thisfunction will have no effect. Only PlayFab accounts which have valid email addresses will be able to receive a password reset email using this API.
 		 */
 		bool SendAccountRecoveryEmail(AdminModels::FSendAccountRecoveryEmailRequest& request, const FSendAccountRecoveryEmailDelegate& SuccessDelegate = FSendAccountRecoveryEmailDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Updates the title specific display name for a user
-		 * In addition to the PlayFab username, titles can make use of a DisplayName which is also a unique identifier, but specific to the title. This allows for unique names which more closely match the theme or genre of a title, for example. This API enables changing that name, whether due to a customer request, an offensive name choice, etc.
+         * In addition to the PlayFab username, titles can make use of a DisplayName which is also a unique identifier, but specific to the title. This allows for unique names which more closely match the theme or genre of a title, for example. This API enables changing that name, whether due to a customer request, an offensive name choice, etc.
 		 */
 		bool UpdateUserTitleDisplayName(AdminModels::FUpdateUserTitleDisplayNameRequest& request, const FUpdateUserTitleDisplayNameDelegate& SuccessDelegate = FUpdateUserTitleDisplayNameDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Deletes the users for the provided game. Deletes custom data, all account linkages, and statistics.
-		 * Note that this action cannot be undone. It is only valid for titles in the testing tiers. It will unlink all accounts and remove all PII information, as well as reset any statistics and leaderboards and clear out any stored custom data for the user.
+         * Note that this action cannot be undone. It is only valid for titles in the testing tiers. It will unlink all accounts and remove all PII information, as well as reset any statistics and leaderboards and clear out any stored custom data for the user.
 		 */
 		bool DeleteUsers(AdminModels::FDeleteUsersRequest& request, const FDeleteUsersDelegate& SuccessDelegate = FDeleteUsersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Retrieves a download URL for the requested report
-		 * An HTTP GET request to the returned report download URL returns the report data in line delimited JSON format. Each line contains a JSON object representing details of a single item in the report. Currently available reports: PurchaseDataReport, TitleNewUserReport, TitleActiveUsersReport, BannedUsersReport.
+         * An HTTP GET request to the returned report download URL returns the report data in line delimited JSON format. Each line contains a JSON object representing details of a single item in the report. Currently available reports: PurchaseDataReport, TitleNewUserReport, TitleActiveUsersReport, BannedUsersReport.
 		 */
 		bool GetDataReport(AdminModels::FGetDataReportRequest& request, const FGetDataReportDelegate& SuccessDelegate = FGetDataReportDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Retrieves the title-specific custom data for the user which is readable and writable by the client
-		 * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
+         * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
 		 */
 		bool GetUserData(AdminModels::FGetUserDataRequest& request, const FGetUserDataDelegate& SuccessDelegate = FGetUserDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Retrieves the title-specific custom data for the user which cannot be accessed by the client
-		 * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
+         * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
 		 */
 		bool GetUserInternalData(AdminModels::FGetUserDataRequest& request, const FGetUserInternalDataDelegate& SuccessDelegate = FGetUserInternalDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Retrieves the publisher-specific custom data for the user which is readable and writable by the client
-		 * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
+         * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
 		 */
 		bool GetUserPublisherData(AdminModels::FGetUserDataRequest& request, const FGetUserPublisherDataDelegate& SuccessDelegate = FGetUserPublisherDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Retrieves the publisher-specific custom data for the user which cannot be accessed by the client
-		 * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
+         * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
 		 */
 		bool GetUserPublisherInternalData(AdminModels::FGetUserDataRequest& request, const FGetUserPublisherInternalDataDelegate& SuccessDelegate = FGetUserPublisherInternalDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Retrieves the publisher-specific custom data for the user which can only be read by the client
-		 * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
+         * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
 		 */
 		bool GetUserPublisherReadOnlyData(AdminModels::FGetUserDataRequest& request, const FGetUserPublisherReadOnlyDataDelegate& SuccessDelegate = FGetUserPublisherReadOnlyDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Retrieves the title-specific custom data for the user which can only be read by the client
-		 * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
+         * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
 		 */
 		bool GetUserReadOnlyData(AdminModels::FGetUserDataRequest& request, const FGetUserReadOnlyDataDelegate& SuccessDelegate = FGetUserReadOnlyDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Completely removes all statistics for the specified user, for the current game
-		 * Note that this action cannot be un-done. All statistics for this user will be deleted, removing the user from all leaderboards for the game.
+         * Note that this action cannot be un-done. All statistics for this user will be deleted, removing the user from all leaderboards for the game.
 		 */
 		bool ResetUserStatistics(AdminModels::FResetUserStatisticsRequest& request, const FResetUserStatisticsDelegate& SuccessDelegate = FResetUserStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Updates the title-specific custom data for the user which is readable and writable by the client
-		 * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, while keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
+         * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, while keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
 		 */
 		bool UpdateUserData(AdminModels::FUpdateUserDataRequest& request, const FUpdateUserDataDelegate& SuccessDelegate = FUpdateUserDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Updates the title-specific custom data for the user which cannot be accessed by the client
-		 * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
+         * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
 		 */
 		bool UpdateUserInternalData(AdminModels::FUpdateUserInternalDataRequest& request, const FUpdateUserInternalDataDelegate& SuccessDelegate = FUpdateUserInternalDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Updates the publisher-specific custom data for the user which is readable and writable by the client
-		 * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, while keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call. Note that in the example call provided, title-specific data is used, as there may be a need to share this across titles (in sequels, for example).
+         * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, while keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call. Note that in the example call provided, title-specific data is used, as there may be a need to share this across titles (in sequels, for example).
 		 */
 		bool UpdateUserPublisherData(AdminModels::FUpdateUserDataRequest& request, const FUpdateUserPublisherDataDelegate& SuccessDelegate = FUpdateUserPublisherDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Updates the publisher-specific custom data for the user which cannot be accessed by the client
-		 * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call. Note that in the example call provided, title-specific data is used, as there may be a need to share this across titles (in sequels, for example).
+         * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call. Note that in the example call provided, title-specific data is used, as there may be a need to share this across titles (in sequels, for example).
 		 */
 		bool UpdateUserPublisherInternalData(AdminModels::FUpdateUserInternalDataRequest& request, const FUpdateUserPublisherInternalDataDelegate& SuccessDelegate = FUpdateUserPublisherInternalDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Updates the publisher-specific custom data for the user which can only be read by the client
-		 * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call. Note that in the example call provided, title-specific data is used, as there may be a need to share this across titles (in sequels, for example).
+         * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call. Note that in the example call provided, title-specific data is used, as there may be a need to share this across titles (in sequels, for example).
 		 */
 		bool UpdateUserPublisherReadOnlyData(AdminModels::FUpdateUserDataRequest& request, const FUpdateUserPublisherReadOnlyDataDelegate& SuccessDelegate = FUpdateUserPublisherReadOnlyDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Updates the title-specific custom data for the user which can only be read by the client
-		 * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
+         * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
 		 */
 		bool UpdateUserReadOnlyData(AdminModels::FUpdateUserDataRequest& request, const FUpdateUserReadOnlyDataDelegate& SuccessDelegate = FUpdateUserReadOnlyDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -221,7 +221,7 @@ namespace PlayFab
 			
 		/**
 		 * Adds one or more virtual currencies to the set defined for the title. Virtual Currencies have a maximum value of 2,147,483,647 when granted to a player. Any value over that will be discarded.
-		 * This operation is additive. Any new currencies defined in the array will be added to the set of those available for the title, while any CurrencyCode identifiers matching existing ones in the game will be overwritten with the new values.
+         * This operation is additive. Any new currencies defined in the array will be added to the set of those available for the title, while any CurrencyCode identifiers matching existing ones in the game will be overwritten with the new values.
 		 */
 		bool AddVirtualCurrencyTypes(AdminModels::FAddVirtualCurrencyTypesRequest& request, const FAddVirtualCurrencyTypesDelegate& SuccessDelegate = FAddVirtualCurrencyTypesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -240,14 +240,14 @@ namespace PlayFab
 			
 		/**
 		 * Retrieves the set of items defined for the specified store, including all prices defined
-		 * A store contains an array of references to items defined in one or more catalog versions of the game, along with the prices for the item, in both real world and virtual currencies. These prices act as an override to any prices defined in the catalog. In this way, the base definitions of the items may be defined in the catalog, with all associated properties, while the pricing can be set for each store, as needed. This allows for subsets of goods to be defined for different purposes (in order to simplify showing some, but not all catalog items to users, based upon different characteristics), along with unique prices. Note that all prices defined in the catalog and store definitions for the item are considered valid, and that a compromised client can be made to send a request for an item based upon any of these definitions. If no price is specified in the store for an item, the price set in the catalog should be displayed to the user.
+         * A store contains an array of references to items defined in one or more catalog versions of the game, along with the prices for the item, in both real world and virtual currencies. These prices act as an override to any prices defined in the catalog. In this way, the base definitions of the items may be defined in the catalog, with all associated properties, while the pricing can be set for each store, as needed. This allows for subsets of goods to be defined for different purposes (in order to simplify showing some, but not all catalog items to users, based upon different characteristics), along with unique prices. Note that all prices defined in the catalog and store definitions for the item are considered valid, and that a compromised client can be made to send a request for an item based upon any of these definitions. If no price is specified in the store for an item, the price set in the catalog should be displayed to the user.
 		 */
 		bool GetStoreItems(AdminModels::FGetStoreItemsRequest& request, const FGetStoreItemsDelegate& SuccessDelegate = FGetStoreItemsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Retrieves the key-value store of custom title settings
-		 * This API is designed to return title specific values which can be read, but not written to, by the client. For example, a developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new build. This AdminAPI call for getting title data guarantees no delay in between update and retrieval of newly set data.
+         * This API is designed to return title specific values which can be read, but not written to, by the client. For example, a developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new build.
 		 */
 		bool GetTitleData(AdminModels::FGetTitleDataRequest& request, const FGetTitleDataDelegate& SuccessDelegate = FGetTitleDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -259,49 +259,49 @@ namespace PlayFab
 		
 		/**
 		 * Creates the catalog configuration of all virtual goods for the specified catalog version
-		 * This operation is not additive. Using it will cause the indicated catalog version to be created from scratch. If there is an existing catalog with the version number in question, it will be deleted and replaced with only the items specified in this call.
+         * This operation is not additive. Using it will cause the indicated catalog version to be created from scratch. If there is an existing catalog with the version number in question, it will be deleted and replaced with only the items specified in this call.
 		 */
 		bool SetCatalogItems(AdminModels::FUpdateCatalogItemsRequest& request, const FSetCatalogItemsDelegate& SuccessDelegate = FSetCatalogItemsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Sets all the items in one virtual store
-		 * This operation is not additive. Using it will cause the indicated virtual store to be created from scratch. If there is an existing store with the same storeId, it will be deleted and replaced with only the items specified in this call. A store contains an array of references to items defined in one or more catalog versions of the game, along with the prices for the item, in both real world and virtual currencies. These prices act as an override to any prices defined in the catalog. In this way, the base definitions of the items may be defined in the catalog, with all associated properties, while the pricing can be set for each store, as needed. This allows for subsets of goods to be defined for different purposes (in order to simplify showing some, but not all catalog items to users, based upon different characteristics), along with unique prices. Note that all prices defined in the catalog and store definitions for the item are considered valid, and that a compromised client can be made to send a request for an item based upon any of these definitions. If no price is specified in the store for an item, the price set in the catalog should be displayed to the user.
+         * This operation is not additive. Using it will cause the indicated virtual store to be created from scratch. If there is an existing store with the same storeId, it will be deleted and replaced with only the items specified in this call. A store contains an array of references to items defined in one or more catalog versions of the game, along with the prices for the item, in both real world and virtual currencies. These prices act as an override to any prices defined in the catalog. In this way, the base definitions of the items may be defined in the catalog, with all associated properties, while the pricing can be set for each store, as needed. This allows for subsets of goods to be defined for different purposes (in order to simplify showing some, but not all catalog items to users, based upon different characteristics), along with unique prices. Note that all prices defined in the catalog and store definitions for the item are considered valid, and that a compromised client can be made to send a request for an item based upon any of these definitions. If no price is specified in the store for an item, the price set in the catalog should be displayed to the user.
 		 */
 		bool SetStoreItems(AdminModels::FUpdateStoreItemsRequest& request, const FSetStoreItemsDelegate& SuccessDelegate = FSetStoreItemsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Creates and updates the key-value store of custom title settings
-		 * This API is designed to store title specific values which can be read, but not written to, by the client. For example, a developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new build. This operation is additive. If a Key does not exist in the current dataset, it will be added with the specified Value. If it already exists, the Value for that key will be overwritten with the new Value.
+         * This API is designed to store title specific values which can be read, but not written to, by the client. For example, a developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new build. This operation is additive. If a Key does not exist in the current dataset, it will be added with the specified Value. If it already exists, the Value for that key will be overwritten with the new Value.
 		 */
 		bool SetTitleData(AdminModels::FSetTitleDataRequest& request, const FSetTitleDataDelegate& SuccessDelegate = FSetTitleDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Sets the Amazon Resource Name (ARN) for iOS and Android push notifications. Documentation on the exact restrictions can be found at: http://docs.aws.amazon.com/sns/latest/api/API_CreatePlatformApplication.html. Currently, Amazon device Messaging is not supported.
-		 * When using the Apple Push Notification service (APNS) or the development version (APNS_SANDBOX), the APNS Private Key should be used as the Credential in this call. With Google Cloud Messaging (GCM), the Android API Key should be used. The current ARN (if one exists) can be overwritten by setting the OverwriteOldARN boolean to true.
+         * When using the Apple Push Notification service (APNS) or the development version (APNS_SANDBOX), the APNS Private Key should be used as the Credential in this call. With Google Cloud Messaging (GCM), the Android API Key should be used. The current ARN (if one exists) can be overwritten by setting the OverwriteOldARN boolean to true.
 		 */
 		bool SetupPushNotification(AdminModels::FSetupPushNotificationRequest& request, const FSetupPushNotificationDelegate& SuccessDelegate = FSetupPushNotificationDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Updates the catalog configuration for virtual goods in the specified catalog version
-		 * This operation is additive. Items with ItemId values not currently in the catalog will be added, while those with ItemId values matching items currently in the catalog will overwrite those items with the given values.
+         * This operation is additive. Items with ItemId values not currently in the catalog will be added, while those with ItemId values matching items currently in the catalog will overwrite those items with the given values.
 		 */
 		bool UpdateCatalogItems(AdminModels::FUpdateCatalogItemsRequest& request, const FUpdateCatalogItemsDelegate& SuccessDelegate = FUpdateCatalogItemsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Updates the random drop table configuration for the title
-		 * This operation is additive. Tables with TableId values not currently defined will be added, while those with TableId values matching Tables currently in the catalog will be overwritten with the given values.
+         * This operation is additive. Tables with TableId values not currently defined will be added, while those with TableId values matching Tables currently in the catalog will be overwritten with the given values.
 		 */
 		bool UpdateRandomResultTables(AdminModels::FUpdateRandomResultTablesRequest& request, const FUpdateRandomResultTablesDelegate& SuccessDelegate = FUpdateRandomResultTablesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Updates an existing virtual item store with new or modified items
-		 * This operation is additive. Items with ItemId values not currently in the store will be added, while those with ItemId values matching items currently in the catalog will overwrite those items with the given values. A store contains an array of references to items defined in one or more catalog versions of the game, along with the prices for the item, in both real world and virtual currencies. These prices act as an override to any prices defined in the catalog. In this way, the base definitions of the items may be defined in the catalog, with all associated properties, while the pricing can be set for each store, as needed. This allows for subsets of goods to be defined for different purposes (in order to simplify showing some, but not all catalog items to users, based upon different characteristics), along with unique prices. Note that all prices defined in the catalog and store definitions for the item are considered valid, and that a compromised client can be made to send a request for an item based upon any of these definitions. If no price is specified in the store for an item, the price set in the catalog should be displayed to the user.
+         * This operation is additive. Items with ItemId values not currently in the store will be added, while those with ItemId values matching items currently in the catalog will overwrite those items with the given values. A store contains an array of references to items defined in one or more catalog versions of the game, along with the prices for the item, in both real world and virtual currencies. These prices act as an override to any prices defined in the catalog. In this way, the base definitions of the items may be defined in the catalog, with all associated properties, while the pricing can be set for each store, as needed. This allows for subsets of goods to be defined for different purposes (in order to simplify showing some, but not all catalog items to users, based upon different characteristics), along with unique prices. Note that all prices defined in the catalog and store definitions for the item are considered valid, and that a compromised client can be made to send a request for an item based upon any of these definitions. If no price is specified in the store for an item, the price set in the catalog should be displayed to the user.
 		 */
 		bool UpdateStoreItems(AdminModels::FUpdateStoreItemsRequest& request, const FUpdateStoreItemsDelegate& SuccessDelegate = FUpdateStoreItemsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -314,21 +314,21 @@ namespace PlayFab
 			
 		/**
 		 * Retrieves the specified user's current inventory of virtual goods
-		 * All items currently in the user inventory will be returned, irrespective of how they were acquired (via purchasing, grants, coupons, etc.). Items that are expired, fully consumed, or are no longer valid are not considered to be in the user's current inventory, and so will not be not included.
+         * All items currently in the user inventory will be returned, irrespective of how they were acquired (via purchasing, grants, coupons, etc.). Items that are expired, fully consumed, or are no longer valid are not considered to be in the user's current inventory, and so will not be not included.
 		 */
 		bool GetUserInventory(AdminModels::FGetUserInventoryRequest& request, const FGetUserInventoryDelegate& SuccessDelegate = FGetUserInventoryDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Adds the specified items to the specified user inventories
-		 * This function directly adds inventory items to user inventories. As a result of this operations, the user will not be charged any transaction fee, regardless of the inventory item catalog definition.
+         * This function directly adds inventory items to user inventories. As a result of this operations, the user will not be charged any transaction fee, regardless of the inventory item catalog definition.
 		 */
 		bool GrantItemsToUsers(AdminModels::FGrantItemsToUsersRequest& request, const FGrantItemsToUsersDelegate& SuccessDelegate = FGrantItemsToUsersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Revokes access to an item in a user's inventory
-		 * In cases where the inventory item in question is a "crate", and the items it contained have already been dispensed, this will not revoke access or otherwise remove the items which were dispensed.
+         * In cases where the inventory item in question is a "crate", and the items it contained have already been dispensed, this will not revoke access or otherwise remove the items which were dispensed.
 		 */
 		bool RevokeInventoryItem(AdminModels::FRevokeInventoryItemRequest& request, const FRevokeInventoryItemDelegate& SuccessDelegate = FRevokeInventoryItemDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -347,14 +347,14 @@ namespace PlayFab
 			
 		/**
 		 * Retrieves the details of defined game modes for the specified game server executable
-		 * These details are used by the PlayFab matchmaking service to determine if an existing Game Server Instance has room for additional users, and by the PlayFab game server management service to determine when a new Game Server Host should be created in order to prevent excess load on existing Hosts.
+         * These details are used by the PlayFab matchmaking service to determine if an existing Game Server Instance has room for additional users, and by the PlayFab game server management service to determine when a new Game Server Host should be created in order to prevent excess load on existing Hosts.
 		 */
 		bool GetMatchmakerGameModes(AdminModels::FGetMatchmakerGameModesRequest& request, const FGetMatchmakerGameModesDelegate& SuccessDelegate = FGetMatchmakerGameModesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Updates the game server mode details for the specified game server executable
-		 * These details are used by the PlayFab matchmaking service to determine if an existing Game Server Instance has room for additional users, and by the PlayFab game server management service to determine when a new Game Server Host should be created in order to prevent excess load on existing Hosts. This operation is not additive. Using it will cause the game mode definition for the game server executable in question to be created from scratch. If there is an existing game server mode definition for the given BuildVersion, it will be deleted and replaced with the data specified in this call.
+         * These details are used by the PlayFab matchmaking service to determine if an existing Game Server Instance has room for additional users, and by the PlayFab game server management service to determine when a new Game Server Host should be created in order to prevent excess load on existing Hosts. This operation is not additive. Using it will cause the game mode definition for the game server executable in question to be created from scratch. If there is an existing game server mode definition for the given BuildVersion, it will be deleted and replaced with the data specified in this call.
 		 */
 		bool ModifyMatchmakerGameModes(AdminModels::FModifyMatchmakerGameModesRequest& request, const FModifyMatchmakerGameModesDelegate& SuccessDelegate = FModifyMatchmakerGameModesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -396,14 +396,14 @@ namespace PlayFab
 			
 		/**
 		 * Retrieves the key-value store of custom publisher settings
-		 * This API is designed to return publisher-specific values which can be read, but not written to, by the client. This data is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a publisher can use this API.  For more information email devrel@playfab.com.  This AdminAPI call for getting title data guarantees no delay in between update and retrieval of newly set data.
+         * This API is designed to return publisher-specific values which can be read, but not written to, by the client. This data is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a publisher can use this API. For more information email devrel@playfab.com
 		 */
 		bool GetPublisherData(AdminModels::FGetPublisherDataRequest& request, const FGetPublisherDataDelegate& SuccessDelegate = FGetPublisherDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Updates the key-value store of custom publisher settings
-		 * This API is designed to store publisher-specific values which can be read, but not written to, by the client. This data is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a publisher can use this API. This operation is additive.  If a Key does not exist in the current dataset, it will be added with the specified Value. If it already exists, the Value for that key will be overwritten with the new Value. For more information email devrel@playfab.com
+         * This API is designed to store publisher-specific values which can be read, but not written to, by the client. This data is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a publisher can use this API. This operation is additive.  If a Key does not exist in the current dataset, it will be added with the specified Value. If it already exists, the Value for that key will be overwritten with the new Value. For more information email devrel@playfab.com
 		 */
 		bool SetPublisherData(AdminModels::FSetPublisherDataRequest& request, const FSetPublisherDataDelegate& SuccessDelegate = FSetPublisherDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -451,7 +451,7 @@ namespace PlayFab
 			
 		/**
 		 * Completely removes all statistics for the specified character, for the current game
-		 * Note that this action cannot be un-done. All statistics for this  character will be deleted, removing the user from all leaderboards for the game.
+         * Note that this action cannot be un-done. All statistics for this  character will be deleted, removing the user from all leaderboards for the game.
 		 */
 		bool ResetCharacterStatistics(AdminModels::FResetCharacterStatisticsRequest& request, const FResetCharacterStatisticsDelegate& SuccessDelegate = FResetCharacterStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 

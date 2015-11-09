@@ -10,7 +10,7 @@ using namespace PlayFab::ClientModels;
 
 UPlayFabClientAPI::UPlayFabClientAPI()
 {
-   
+
 }
 
 UPlayFabClientAPI::~UPlayFabClientAPI()
@@ -19,7 +19,7 @@ UPlayFabClientAPI::~UPlayFabClientAPI()
 
 bool UPlayFabClientAPI::IsClientLoggedIn()
 {
-	return !mUserSessionTicket.IsEmpty();
+    return !mUserSessionTicket.IsEmpty();
 }
 
 
@@ -29,14 +29,9 @@ bool UPlayFabClientAPI::GetPhotonAuthenticationToken(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetPhotonAuthenticationToken")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetPhotonAuthenticationTokenResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetPhotonAuthenticationToken")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetPhotonAuthenticationTokenResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -44,17 +39,16 @@ void UPlayFabClientAPI::OnGetPhotonAuthenticationTokenResult(FHttpRequestPtr Htt
 {
     ClientModels::FGetPhotonAuthenticationTokenResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::LoginWithAndroidDeviceID(
     ClientModels::FLoginWithAndroidDeviceIDRequest& request,
@@ -62,15 +56,10 @@ bool UPlayFabClientAPI::LoginWithAndroidDeviceID(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     if (PlayFabSettings::titleId.Len() > 0)
-		request.TitleId = PlayFabSettings::titleId;
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/LoginWithAndroidDeviceID")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLoginWithAndroidDeviceIDResult, SuccessDelegate, ErrorDelegate);
+        request.TitleId = PlayFabSettings::titleId;
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/LoginWithAndroidDeviceID")), request.toJSONString(),
+        TEXT(""), TEXT(""));
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLoginWithAndroidDeviceIDResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -78,20 +67,19 @@ void UPlayFabClientAPI::OnLoginWithAndroidDeviceIDResult(FHttpRequestPtr HttpReq
 {
     ClientModels::FLoginResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		if (outResult.SessionTicket.Len() > 0)
-			{
-				mUserSessionTicket = outResult.SessionTicket;
-			}
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        if (outResult.SessionTicket.Len() > 0)
+            {
+                mUserSessionTicket = outResult.SessionTicket;
+            }
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::LoginWithCustomID(
     ClientModels::FLoginWithCustomIDRequest& request,
@@ -99,15 +87,10 @@ bool UPlayFabClientAPI::LoginWithCustomID(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     if (PlayFabSettings::titleId.Len() > 0)
-		request.TitleId = PlayFabSettings::titleId;
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/LoginWithCustomID")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLoginWithCustomIDResult, SuccessDelegate, ErrorDelegate);
+        request.TitleId = PlayFabSettings::titleId;
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/LoginWithCustomID")), request.toJSONString(),
+        TEXT(""), TEXT(""));
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLoginWithCustomIDResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -115,20 +98,19 @@ void UPlayFabClientAPI::OnLoginWithCustomIDResult(FHttpRequestPtr HttpRequest, F
 {
     ClientModels::FLoginResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		if (outResult.SessionTicket.Len() > 0)
-			{
-				mUserSessionTicket = outResult.SessionTicket;
-			}
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        if (outResult.SessionTicket.Len() > 0)
+            {
+                mUserSessionTicket = outResult.SessionTicket;
+            }
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::LoginWithEmailAddress(
     ClientModels::FLoginWithEmailAddressRequest& request,
@@ -136,15 +118,10 @@ bool UPlayFabClientAPI::LoginWithEmailAddress(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     if (PlayFabSettings::titleId.Len() > 0)
-		request.TitleId = PlayFabSettings::titleId;
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/LoginWithEmailAddress")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLoginWithEmailAddressResult, SuccessDelegate, ErrorDelegate);
+        request.TitleId = PlayFabSettings::titleId;
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/LoginWithEmailAddress")), request.toJSONString(),
+        TEXT(""), TEXT(""));
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLoginWithEmailAddressResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -152,20 +129,19 @@ void UPlayFabClientAPI::OnLoginWithEmailAddressResult(FHttpRequestPtr HttpReques
 {
     ClientModels::FLoginResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		if (outResult.SessionTicket.Len() > 0)
-			{
-				mUserSessionTicket = outResult.SessionTicket;
-			}
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        if (outResult.SessionTicket.Len() > 0)
+            {
+                mUserSessionTicket = outResult.SessionTicket;
+            }
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::LoginWithFacebook(
     ClientModels::FLoginWithFacebookRequest& request,
@@ -173,15 +149,10 @@ bool UPlayFabClientAPI::LoginWithFacebook(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     if (PlayFabSettings::titleId.Len() > 0)
-		request.TitleId = PlayFabSettings::titleId;
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/LoginWithFacebook")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLoginWithFacebookResult, SuccessDelegate, ErrorDelegate);
+        request.TitleId = PlayFabSettings::titleId;
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/LoginWithFacebook")), request.toJSONString(),
+        TEXT(""), TEXT(""));
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLoginWithFacebookResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -189,20 +160,19 @@ void UPlayFabClientAPI::OnLoginWithFacebookResult(FHttpRequestPtr HttpRequest, F
 {
     ClientModels::FLoginResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		if (outResult.SessionTicket.Len() > 0)
-			{
-				mUserSessionTicket = outResult.SessionTicket;
-			}
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        if (outResult.SessionTicket.Len() > 0)
+            {
+                mUserSessionTicket = outResult.SessionTicket;
+            }
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::LoginWithGoogleAccount(
     ClientModels::FLoginWithGoogleAccountRequest& request,
@@ -210,15 +180,10 @@ bool UPlayFabClientAPI::LoginWithGoogleAccount(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     if (PlayFabSettings::titleId.Len() > 0)
-		request.TitleId = PlayFabSettings::titleId;
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/LoginWithGoogleAccount")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLoginWithGoogleAccountResult, SuccessDelegate, ErrorDelegate);
+        request.TitleId = PlayFabSettings::titleId;
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/LoginWithGoogleAccount")), request.toJSONString(),
+        TEXT(""), TEXT(""));
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLoginWithGoogleAccountResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -226,20 +191,19 @@ void UPlayFabClientAPI::OnLoginWithGoogleAccountResult(FHttpRequestPtr HttpReque
 {
     ClientModels::FLoginResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		if (outResult.SessionTicket.Len() > 0)
-			{
-				mUserSessionTicket = outResult.SessionTicket;
-			}
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        if (outResult.SessionTicket.Len() > 0)
+            {
+                mUserSessionTicket = outResult.SessionTicket;
+            }
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::LoginWithIOSDeviceID(
     ClientModels::FLoginWithIOSDeviceIDRequest& request,
@@ -247,15 +211,10 @@ bool UPlayFabClientAPI::LoginWithIOSDeviceID(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     if (PlayFabSettings::titleId.Len() > 0)
-		request.TitleId = PlayFabSettings::titleId;
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/LoginWithIOSDeviceID")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLoginWithIOSDeviceIDResult, SuccessDelegate, ErrorDelegate);
+        request.TitleId = PlayFabSettings::titleId;
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/LoginWithIOSDeviceID")), request.toJSONString(),
+        TEXT(""), TEXT(""));
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLoginWithIOSDeviceIDResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -263,20 +222,19 @@ void UPlayFabClientAPI::OnLoginWithIOSDeviceIDResult(FHttpRequestPtr HttpRequest
 {
     ClientModels::FLoginResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		if (outResult.SessionTicket.Len() > 0)
-			{
-				mUserSessionTicket = outResult.SessionTicket;
-			}
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        if (outResult.SessionTicket.Len() > 0)
+            {
+                mUserSessionTicket = outResult.SessionTicket;
+            }
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::LoginWithKongregate(
     ClientModels::FLoginWithKongregateRequest& request,
@@ -284,15 +242,10 @@ bool UPlayFabClientAPI::LoginWithKongregate(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     if (PlayFabSettings::titleId.Len() > 0)
-		request.TitleId = PlayFabSettings::titleId;
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/LoginWithKongregate")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLoginWithKongregateResult, SuccessDelegate, ErrorDelegate);
+        request.TitleId = PlayFabSettings::titleId;
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/LoginWithKongregate")), request.toJSONString(),
+        TEXT(""), TEXT(""));
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLoginWithKongregateResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -300,20 +253,19 @@ void UPlayFabClientAPI::OnLoginWithKongregateResult(FHttpRequestPtr HttpRequest,
 {
     ClientModels::FLoginResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		if (outResult.SessionTicket.Len() > 0)
-			{
-				mUserSessionTicket = outResult.SessionTicket;
-			}
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        if (outResult.SessionTicket.Len() > 0)
+            {
+                mUserSessionTicket = outResult.SessionTicket;
+            }
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::LoginWithPlayFab(
     ClientModels::FLoginWithPlayFabRequest& request,
@@ -321,15 +273,10 @@ bool UPlayFabClientAPI::LoginWithPlayFab(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     if (PlayFabSettings::titleId.Len() > 0)
-		request.TitleId = PlayFabSettings::titleId;
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/LoginWithPlayFab")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLoginWithPlayFabResult, SuccessDelegate, ErrorDelegate);
+        request.TitleId = PlayFabSettings::titleId;
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/LoginWithPlayFab")), request.toJSONString(),
+        TEXT(""), TEXT(""));
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLoginWithPlayFabResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -337,20 +284,19 @@ void UPlayFabClientAPI::OnLoginWithPlayFabResult(FHttpRequestPtr HttpRequest, FH
 {
     ClientModels::FLoginResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		if (outResult.SessionTicket.Len() > 0)
-			{
-				mUserSessionTicket = outResult.SessionTicket;
-			}
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        if (outResult.SessionTicket.Len() > 0)
+            {
+                mUserSessionTicket = outResult.SessionTicket;
+            }
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::LoginWithSteam(
     ClientModels::FLoginWithSteamRequest& request,
@@ -358,15 +304,10 @@ bool UPlayFabClientAPI::LoginWithSteam(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     if (PlayFabSettings::titleId.Len() > 0)
-		request.TitleId = PlayFabSettings::titleId;
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/LoginWithSteam")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLoginWithSteamResult, SuccessDelegate, ErrorDelegate);
+        request.TitleId = PlayFabSettings::titleId;
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/LoginWithSteam")), request.toJSONString(),
+        TEXT(""), TEXT(""));
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLoginWithSteamResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -374,20 +315,19 @@ void UPlayFabClientAPI::OnLoginWithSteamResult(FHttpRequestPtr HttpRequest, FHtt
 {
     ClientModels::FLoginResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		if (outResult.SessionTicket.Len() > 0)
-			{
-				mUserSessionTicket = outResult.SessionTicket;
-			}
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        if (outResult.SessionTicket.Len() > 0)
+            {
+                mUserSessionTicket = outResult.SessionTicket;
+            }
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::RegisterPlayFabUser(
     ClientModels::FRegisterPlayFabUserRequest& request,
@@ -395,15 +335,10 @@ bool UPlayFabClientAPI::RegisterPlayFabUser(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     if (PlayFabSettings::titleId.Len() > 0)
-		request.TitleId = PlayFabSettings::titleId;
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/RegisterPlayFabUser")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnRegisterPlayFabUserResult, SuccessDelegate, ErrorDelegate);
+        request.TitleId = PlayFabSettings::titleId;
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/RegisterPlayFabUser")), request.toJSONString(),
+        TEXT(""), TEXT(""));
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnRegisterPlayFabUserResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -411,20 +346,19 @@ void UPlayFabClientAPI::OnRegisterPlayFabUserResult(FHttpRequestPtr HttpRequest,
 {
     ClientModels::FRegisterPlayFabUserResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		if (outResult.SessionTicket.Len() > 0)
-			{
-				mUserSessionTicket = outResult.SessionTicket;
-			}
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        if (outResult.SessionTicket.Len() > 0)
+            {
+                mUserSessionTicket = outResult.SessionTicket;
+            }
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::AddUsernamePassword(
     ClientModels::FAddUsernamePasswordRequest& request,
@@ -432,14 +366,9 @@ bool UPlayFabClientAPI::AddUsernamePassword(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/AddUsernamePassword")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnAddUsernamePasswordResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/AddUsernamePassword")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnAddUsernamePasswordResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -447,17 +376,16 @@ void UPlayFabClientAPI::OnAddUsernamePasswordResult(FHttpRequestPtr HttpRequest,
 {
     ClientModels::FAddUsernamePasswordResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetAccountInfo(
     ClientModels::FGetAccountInfoRequest& request,
@@ -465,14 +393,9 @@ bool UPlayFabClientAPI::GetAccountInfo(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetAccountInfo")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetAccountInfoResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetAccountInfo")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetAccountInfoResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -480,17 +403,16 @@ void UPlayFabClientAPI::OnGetAccountInfoResult(FHttpRequestPtr HttpRequest, FHtt
 {
     ClientModels::FGetAccountInfoResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetPlayFabIDsFromFacebookIDs(
     ClientModels::FGetPlayFabIDsFromFacebookIDsRequest& request,
@@ -498,14 +420,9 @@ bool UPlayFabClientAPI::GetPlayFabIDsFromFacebookIDs(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetPlayFabIDsFromFacebookIDs")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetPlayFabIDsFromFacebookIDsResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetPlayFabIDsFromFacebookIDs")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetPlayFabIDsFromFacebookIDsResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -513,17 +430,16 @@ void UPlayFabClientAPI::OnGetPlayFabIDsFromFacebookIDsResult(FHttpRequestPtr Htt
 {
     ClientModels::FGetPlayFabIDsFromFacebookIDsResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetPlayFabIDsFromGameCenterIDs(
     ClientModels::FGetPlayFabIDsFromGameCenterIDsRequest& request,
@@ -531,14 +447,9 @@ bool UPlayFabClientAPI::GetPlayFabIDsFromGameCenterIDs(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetPlayFabIDsFromGameCenterIDs")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetPlayFabIDsFromGameCenterIDsResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetPlayFabIDsFromGameCenterIDs")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetPlayFabIDsFromGameCenterIDsResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -546,17 +457,16 @@ void UPlayFabClientAPI::OnGetPlayFabIDsFromGameCenterIDsResult(FHttpRequestPtr H
 {
     ClientModels::FGetPlayFabIDsFromGameCenterIDsResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetPlayFabIDsFromGoogleIDs(
     ClientModels::FGetPlayFabIDsFromGoogleIDsRequest& request,
@@ -564,14 +474,9 @@ bool UPlayFabClientAPI::GetPlayFabIDsFromGoogleIDs(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetPlayFabIDsFromGoogleIDs")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetPlayFabIDsFromGoogleIDsResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetPlayFabIDsFromGoogleIDs")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetPlayFabIDsFromGoogleIDsResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -579,17 +484,16 @@ void UPlayFabClientAPI::OnGetPlayFabIDsFromGoogleIDsResult(FHttpRequestPtr HttpR
 {
     ClientModels::FGetPlayFabIDsFromGoogleIDsResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetPlayFabIDsFromSteamIDs(
     ClientModels::FGetPlayFabIDsFromSteamIDsRequest& request,
@@ -597,14 +501,9 @@ bool UPlayFabClientAPI::GetPlayFabIDsFromSteamIDs(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetPlayFabIDsFromSteamIDs")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetPlayFabIDsFromSteamIDsResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetPlayFabIDsFromSteamIDs")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetPlayFabIDsFromSteamIDsResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -612,17 +511,16 @@ void UPlayFabClientAPI::OnGetPlayFabIDsFromSteamIDsResult(FHttpRequestPtr HttpRe
 {
     ClientModels::FGetPlayFabIDsFromSteamIDsResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetUserCombinedInfo(
     ClientModels::FGetUserCombinedInfoRequest& request,
@@ -630,14 +528,9 @@ bool UPlayFabClientAPI::GetUserCombinedInfo(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetUserCombinedInfo")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetUserCombinedInfoResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetUserCombinedInfo")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetUserCombinedInfoResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -645,17 +538,16 @@ void UPlayFabClientAPI::OnGetUserCombinedInfoResult(FHttpRequestPtr HttpRequest,
 {
     ClientModels::FGetUserCombinedInfoResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::LinkAndroidDeviceID(
     ClientModels::FLinkAndroidDeviceIDRequest& request,
@@ -663,14 +555,9 @@ bool UPlayFabClientAPI::LinkAndroidDeviceID(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/LinkAndroidDeviceID")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLinkAndroidDeviceIDResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/LinkAndroidDeviceID")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLinkAndroidDeviceIDResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -678,17 +565,16 @@ void UPlayFabClientAPI::OnLinkAndroidDeviceIDResult(FHttpRequestPtr HttpRequest,
 {
     ClientModels::FLinkAndroidDeviceIDResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::LinkCustomID(
     ClientModels::FLinkCustomIDRequest& request,
@@ -696,14 +582,9 @@ bool UPlayFabClientAPI::LinkCustomID(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/LinkCustomID")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLinkCustomIDResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/LinkCustomID")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLinkCustomIDResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -711,17 +592,16 @@ void UPlayFabClientAPI::OnLinkCustomIDResult(FHttpRequestPtr HttpRequest, FHttpR
 {
     ClientModels::FLinkCustomIDResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::LinkFacebookAccount(
     ClientModels::FLinkFacebookAccountRequest& request,
@@ -729,14 +609,9 @@ bool UPlayFabClientAPI::LinkFacebookAccount(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/LinkFacebookAccount")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLinkFacebookAccountResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/LinkFacebookAccount")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLinkFacebookAccountResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -744,17 +619,16 @@ void UPlayFabClientAPI::OnLinkFacebookAccountResult(FHttpRequestPtr HttpRequest,
 {
     ClientModels::FLinkFacebookAccountResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::LinkGameCenterAccount(
     ClientModels::FLinkGameCenterAccountRequest& request,
@@ -762,14 +636,9 @@ bool UPlayFabClientAPI::LinkGameCenterAccount(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/LinkGameCenterAccount")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLinkGameCenterAccountResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/LinkGameCenterAccount")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLinkGameCenterAccountResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -777,17 +646,16 @@ void UPlayFabClientAPI::OnLinkGameCenterAccountResult(FHttpRequestPtr HttpReques
 {
     ClientModels::FLinkGameCenterAccountResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::LinkGoogleAccount(
     ClientModels::FLinkGoogleAccountRequest& request,
@@ -795,14 +663,9 @@ bool UPlayFabClientAPI::LinkGoogleAccount(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/LinkGoogleAccount")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLinkGoogleAccountResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/LinkGoogleAccount")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLinkGoogleAccountResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -810,17 +673,16 @@ void UPlayFabClientAPI::OnLinkGoogleAccountResult(FHttpRequestPtr HttpRequest, F
 {
     ClientModels::FLinkGoogleAccountResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::LinkIOSDeviceID(
     ClientModels::FLinkIOSDeviceIDRequest& request,
@@ -828,14 +690,9 @@ bool UPlayFabClientAPI::LinkIOSDeviceID(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/LinkIOSDeviceID")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLinkIOSDeviceIDResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/LinkIOSDeviceID")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLinkIOSDeviceIDResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -843,17 +700,16 @@ void UPlayFabClientAPI::OnLinkIOSDeviceIDResult(FHttpRequestPtr HttpRequest, FHt
 {
     ClientModels::FLinkIOSDeviceIDResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::LinkKongregate(
     ClientModels::FLinkKongregateAccountRequest& request,
@@ -861,14 +717,9 @@ bool UPlayFabClientAPI::LinkKongregate(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/LinkKongregate")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLinkKongregateResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/LinkKongregate")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLinkKongregateResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -876,17 +727,16 @@ void UPlayFabClientAPI::OnLinkKongregateResult(FHttpRequestPtr HttpRequest, FHtt
 {
     ClientModels::FLinkKongregateAccountResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::LinkSteamAccount(
     ClientModels::FLinkSteamAccountRequest& request,
@@ -894,14 +744,9 @@ bool UPlayFabClientAPI::LinkSteamAccount(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/LinkSteamAccount")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLinkSteamAccountResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/LinkSteamAccount")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLinkSteamAccountResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -909,17 +754,16 @@ void UPlayFabClientAPI::OnLinkSteamAccountResult(FHttpRequestPtr HttpRequest, FH
 {
     ClientModels::FLinkSteamAccountResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::SendAccountRecoveryEmail(
     ClientModels::FSendAccountRecoveryEmailRequest& request,
@@ -927,14 +771,9 @@ bool UPlayFabClientAPI::SendAccountRecoveryEmail(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/SendAccountRecoveryEmail")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnSendAccountRecoveryEmailResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/SendAccountRecoveryEmail")), request.toJSONString(),
+        TEXT(""), TEXT(""));
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnSendAccountRecoveryEmailResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -942,17 +781,16 @@ void UPlayFabClientAPI::OnSendAccountRecoveryEmailResult(FHttpRequestPtr HttpReq
 {
     ClientModels::FSendAccountRecoveryEmailResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::UnlinkAndroidDeviceID(
     ClientModels::FUnlinkAndroidDeviceIDRequest& request,
@@ -960,14 +798,9 @@ bool UPlayFabClientAPI::UnlinkAndroidDeviceID(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/UnlinkAndroidDeviceID")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUnlinkAndroidDeviceIDResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/UnlinkAndroidDeviceID")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUnlinkAndroidDeviceIDResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -975,17 +808,16 @@ void UPlayFabClientAPI::OnUnlinkAndroidDeviceIDResult(FHttpRequestPtr HttpReques
 {
     ClientModels::FUnlinkAndroidDeviceIDResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::UnlinkCustomID(
     ClientModels::FUnlinkCustomIDRequest& request,
@@ -993,14 +825,9 @@ bool UPlayFabClientAPI::UnlinkCustomID(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/UnlinkCustomID")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUnlinkCustomIDResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/UnlinkCustomID")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUnlinkCustomIDResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1008,17 +835,16 @@ void UPlayFabClientAPI::OnUnlinkCustomIDResult(FHttpRequestPtr HttpRequest, FHtt
 {
     ClientModels::FUnlinkCustomIDResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::UnlinkFacebookAccount(
     
@@ -1026,14 +852,9 @@ bool UPlayFabClientAPI::UnlinkFacebookAccount(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/UnlinkFacebookAccount")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(TEXT("{}"));
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUnlinkFacebookAccountResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/UnlinkFacebookAccount")), TEXT("{}"),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUnlinkFacebookAccountResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1041,17 +862,16 @@ void UPlayFabClientAPI::OnUnlinkFacebookAccountResult(FHttpRequestPtr HttpReques
 {
     ClientModels::FUnlinkFacebookAccountResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::UnlinkGameCenterAccount(
     
@@ -1059,14 +879,9 @@ bool UPlayFabClientAPI::UnlinkGameCenterAccount(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/UnlinkGameCenterAccount")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(TEXT("{}"));
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUnlinkGameCenterAccountResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/UnlinkGameCenterAccount")), TEXT("{}"),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUnlinkGameCenterAccountResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1074,17 +889,16 @@ void UPlayFabClientAPI::OnUnlinkGameCenterAccountResult(FHttpRequestPtr HttpRequ
 {
     ClientModels::FUnlinkGameCenterAccountResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::UnlinkGoogleAccount(
     
@@ -1092,14 +906,9 @@ bool UPlayFabClientAPI::UnlinkGoogleAccount(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/UnlinkGoogleAccount")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(TEXT("{}"));
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUnlinkGoogleAccountResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/UnlinkGoogleAccount")), TEXT("{}"),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUnlinkGoogleAccountResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1107,17 +916,16 @@ void UPlayFabClientAPI::OnUnlinkGoogleAccountResult(FHttpRequestPtr HttpRequest,
 {
     ClientModels::FUnlinkGoogleAccountResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::UnlinkIOSDeviceID(
     ClientModels::FUnlinkIOSDeviceIDRequest& request,
@@ -1125,14 +933,9 @@ bool UPlayFabClientAPI::UnlinkIOSDeviceID(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/UnlinkIOSDeviceID")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUnlinkIOSDeviceIDResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/UnlinkIOSDeviceID")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUnlinkIOSDeviceIDResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1140,17 +943,16 @@ void UPlayFabClientAPI::OnUnlinkIOSDeviceIDResult(FHttpRequestPtr HttpRequest, F
 {
     ClientModels::FUnlinkIOSDeviceIDResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::UnlinkKongregate(
     
@@ -1158,14 +960,9 @@ bool UPlayFabClientAPI::UnlinkKongregate(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/UnlinkKongregate")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(TEXT("{}"));
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUnlinkKongregateResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/UnlinkKongregate")), TEXT("{}"),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUnlinkKongregateResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1173,17 +970,16 @@ void UPlayFabClientAPI::OnUnlinkKongregateResult(FHttpRequestPtr HttpRequest, FH
 {
     ClientModels::FUnlinkKongregateAccountResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::UnlinkSteamAccount(
     
@@ -1191,14 +987,9 @@ bool UPlayFabClientAPI::UnlinkSteamAccount(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/UnlinkSteamAccount")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(TEXT("{}"));
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUnlinkSteamAccountResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/UnlinkSteamAccount")), TEXT("{}"),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUnlinkSteamAccountResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1206,17 +997,16 @@ void UPlayFabClientAPI::OnUnlinkSteamAccountResult(FHttpRequestPtr HttpRequest, 
 {
     ClientModels::FUnlinkSteamAccountResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::UpdateUserTitleDisplayName(
     ClientModels::FUpdateUserTitleDisplayNameRequest& request,
@@ -1224,14 +1014,9 @@ bool UPlayFabClientAPI::UpdateUserTitleDisplayName(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/UpdateUserTitleDisplayName")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUpdateUserTitleDisplayNameResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/UpdateUserTitleDisplayName")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUpdateUserTitleDisplayNameResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1239,17 +1024,16 @@ void UPlayFabClientAPI::OnUpdateUserTitleDisplayNameResult(FHttpRequestPtr HttpR
 {
     ClientModels::FUpdateUserTitleDisplayNameResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetFriendLeaderboard(
     ClientModels::FGetFriendLeaderboardRequest& request,
@@ -1257,14 +1041,9 @@ bool UPlayFabClientAPI::GetFriendLeaderboard(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetFriendLeaderboard")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetFriendLeaderboardResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetFriendLeaderboard")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetFriendLeaderboardResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1272,17 +1051,16 @@ void UPlayFabClientAPI::OnGetFriendLeaderboardResult(FHttpRequestPtr HttpRequest
 {
     ClientModels::FGetLeaderboardResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetLeaderboard(
     ClientModels::FGetLeaderboardRequest& request,
@@ -1290,14 +1068,9 @@ bool UPlayFabClientAPI::GetLeaderboard(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetLeaderboard")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetLeaderboardResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetLeaderboard")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetLeaderboardResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1305,17 +1078,16 @@ void UPlayFabClientAPI::OnGetLeaderboardResult(FHttpRequestPtr HttpRequest, FHtt
 {
     ClientModels::FGetLeaderboardResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetLeaderboardAroundCurrentUser(
     ClientModels::FGetLeaderboardAroundCurrentUserRequest& request,
@@ -1323,14 +1095,9 @@ bool UPlayFabClientAPI::GetLeaderboardAroundCurrentUser(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetLeaderboardAroundCurrentUser")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetLeaderboardAroundCurrentUserResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetLeaderboardAroundCurrentUser")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetLeaderboardAroundCurrentUserResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1338,17 +1105,16 @@ void UPlayFabClientAPI::OnGetLeaderboardAroundCurrentUserResult(FHttpRequestPtr 
 {
     ClientModels::FGetLeaderboardAroundCurrentUserResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetUserData(
     ClientModels::FGetUserDataRequest& request,
@@ -1356,14 +1122,9 @@ bool UPlayFabClientAPI::GetUserData(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetUserData")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetUserDataResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetUserData")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetUserDataResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1371,17 +1132,16 @@ void UPlayFabClientAPI::OnGetUserDataResult(FHttpRequestPtr HttpRequest, FHttpRe
 {
     ClientModels::FGetUserDataResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetUserPublisherData(
     ClientModels::FGetUserDataRequest& request,
@@ -1389,14 +1149,9 @@ bool UPlayFabClientAPI::GetUserPublisherData(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetUserPublisherData")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetUserPublisherDataResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetUserPublisherData")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetUserPublisherDataResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1404,17 +1159,16 @@ void UPlayFabClientAPI::OnGetUserPublisherDataResult(FHttpRequestPtr HttpRequest
 {
     ClientModels::FGetUserDataResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetUserPublisherReadOnlyData(
     ClientModels::FGetUserDataRequest& request,
@@ -1422,14 +1176,9 @@ bool UPlayFabClientAPI::GetUserPublisherReadOnlyData(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetUserPublisherReadOnlyData")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetUserPublisherReadOnlyDataResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetUserPublisherReadOnlyData")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetUserPublisherReadOnlyDataResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1437,17 +1186,16 @@ void UPlayFabClientAPI::OnGetUserPublisherReadOnlyDataResult(FHttpRequestPtr Htt
 {
     ClientModels::FGetUserDataResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetUserReadOnlyData(
     ClientModels::FGetUserDataRequest& request,
@@ -1455,14 +1203,9 @@ bool UPlayFabClientAPI::GetUserReadOnlyData(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetUserReadOnlyData")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetUserReadOnlyDataResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetUserReadOnlyData")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetUserReadOnlyDataResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1470,17 +1213,16 @@ void UPlayFabClientAPI::OnGetUserReadOnlyDataResult(FHttpRequestPtr HttpRequest,
 {
     ClientModels::FGetUserDataResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetUserStatistics(
     
@@ -1488,14 +1230,9 @@ bool UPlayFabClientAPI::GetUserStatistics(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetUserStatistics")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(TEXT("{}"));
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetUserStatisticsResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetUserStatistics")), TEXT("{}"),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetUserStatisticsResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1503,17 +1240,16 @@ void UPlayFabClientAPI::OnGetUserStatisticsResult(FHttpRequestPtr HttpRequest, F
 {
     ClientModels::FGetUserStatisticsResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::UpdateUserData(
     ClientModels::FUpdateUserDataRequest& request,
@@ -1521,14 +1257,9 @@ bool UPlayFabClientAPI::UpdateUserData(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/UpdateUserData")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUpdateUserDataResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/UpdateUserData")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUpdateUserDataResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1536,17 +1267,16 @@ void UPlayFabClientAPI::OnUpdateUserDataResult(FHttpRequestPtr HttpRequest, FHtt
 {
     ClientModels::FUpdateUserDataResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::UpdateUserPublisherData(
     ClientModels::FUpdateUserDataRequest& request,
@@ -1554,14 +1284,9 @@ bool UPlayFabClientAPI::UpdateUserPublisherData(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/UpdateUserPublisherData")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUpdateUserPublisherDataResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/UpdateUserPublisherData")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUpdateUserPublisherDataResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1569,17 +1294,16 @@ void UPlayFabClientAPI::OnUpdateUserPublisherDataResult(FHttpRequestPtr HttpRequ
 {
     ClientModels::FUpdateUserDataResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::UpdateUserStatistics(
     ClientModels::FUpdateUserStatisticsRequest& request,
@@ -1587,14 +1311,9 @@ bool UPlayFabClientAPI::UpdateUserStatistics(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/UpdateUserStatistics")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUpdateUserStatisticsResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/UpdateUserStatistics")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUpdateUserStatisticsResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1602,17 +1321,16 @@ void UPlayFabClientAPI::OnUpdateUserStatisticsResult(FHttpRequestPtr HttpRequest
 {
     ClientModels::FUpdateUserStatisticsResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetCatalogItems(
     ClientModels::FGetCatalogItemsRequest& request,
@@ -1620,14 +1338,9 @@ bool UPlayFabClientAPI::GetCatalogItems(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetCatalogItems")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetCatalogItemsResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetCatalogItems")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetCatalogItemsResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1635,17 +1348,16 @@ void UPlayFabClientAPI::OnGetCatalogItemsResult(FHttpRequestPtr HttpRequest, FHt
 {
     ClientModels::FGetCatalogItemsResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetStoreItems(
     ClientModels::FGetStoreItemsRequest& request,
@@ -1653,14 +1365,9 @@ bool UPlayFabClientAPI::GetStoreItems(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetStoreItems")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetStoreItemsResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetStoreItems")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetStoreItemsResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1668,17 +1375,16 @@ void UPlayFabClientAPI::OnGetStoreItemsResult(FHttpRequestPtr HttpRequest, FHttp
 {
     ClientModels::FGetStoreItemsResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetTitleData(
     ClientModels::FGetTitleDataRequest& request,
@@ -1686,14 +1392,9 @@ bool UPlayFabClientAPI::GetTitleData(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetTitleData")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetTitleDataResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetTitleData")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetTitleDataResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1701,17 +1402,16 @@ void UPlayFabClientAPI::OnGetTitleDataResult(FHttpRequestPtr HttpRequest, FHttpR
 {
     ClientModels::FGetTitleDataResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetTitleNews(
     ClientModels::FGetTitleNewsRequest& request,
@@ -1719,14 +1419,9 @@ bool UPlayFabClientAPI::GetTitleNews(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetTitleNews")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetTitleNewsResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetTitleNews")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetTitleNewsResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1734,17 +1429,16 @@ void UPlayFabClientAPI::OnGetTitleNewsResult(FHttpRequestPtr HttpRequest, FHttpR
 {
     ClientModels::FGetTitleNewsResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::AddUserVirtualCurrency(
     ClientModels::FAddUserVirtualCurrencyRequest& request,
@@ -1752,14 +1446,9 @@ bool UPlayFabClientAPI::AddUserVirtualCurrency(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/AddUserVirtualCurrency")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnAddUserVirtualCurrencyResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/AddUserVirtualCurrency")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnAddUserVirtualCurrencyResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1767,17 +1456,16 @@ void UPlayFabClientAPI::OnAddUserVirtualCurrencyResult(FHttpRequestPtr HttpReque
 {
     ClientModels::FModifyUserVirtualCurrencyResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::ConfirmPurchase(
     ClientModels::FConfirmPurchaseRequest& request,
@@ -1785,14 +1473,9 @@ bool UPlayFabClientAPI::ConfirmPurchase(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/ConfirmPurchase")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnConfirmPurchaseResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/ConfirmPurchase")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnConfirmPurchaseResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1800,17 +1483,16 @@ void UPlayFabClientAPI::OnConfirmPurchaseResult(FHttpRequestPtr HttpRequest, FHt
 {
     ClientModels::FConfirmPurchaseResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::ConsumeItem(
     ClientModels::FConsumeItemRequest& request,
@@ -1818,14 +1500,9 @@ bool UPlayFabClientAPI::ConsumeItem(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/ConsumeItem")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnConsumeItemResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/ConsumeItem")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnConsumeItemResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1833,17 +1510,16 @@ void UPlayFabClientAPI::OnConsumeItemResult(FHttpRequestPtr HttpRequest, FHttpRe
 {
     ClientModels::FConsumeItemResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetCharacterInventory(
     ClientModels::FGetCharacterInventoryRequest& request,
@@ -1851,14 +1527,9 @@ bool UPlayFabClientAPI::GetCharacterInventory(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetCharacterInventory")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetCharacterInventoryResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetCharacterInventory")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetCharacterInventoryResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1866,17 +1537,16 @@ void UPlayFabClientAPI::OnGetCharacterInventoryResult(FHttpRequestPtr HttpReques
 {
     ClientModels::FGetCharacterInventoryResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetPurchase(
     ClientModels::FGetPurchaseRequest& request,
@@ -1884,14 +1554,9 @@ bool UPlayFabClientAPI::GetPurchase(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetPurchase")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetPurchaseResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetPurchase")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetPurchaseResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1899,17 +1564,16 @@ void UPlayFabClientAPI::OnGetPurchaseResult(FHttpRequestPtr HttpRequest, FHttpRe
 {
     ClientModels::FGetPurchaseResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetUserInventory(
     
@@ -1917,14 +1581,9 @@ bool UPlayFabClientAPI::GetUserInventory(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetUserInventory")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(TEXT("{}"));
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetUserInventoryResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetUserInventory")), TEXT("{}"),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetUserInventoryResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1932,17 +1591,16 @@ void UPlayFabClientAPI::OnGetUserInventoryResult(FHttpRequestPtr HttpRequest, FH
 {
     ClientModels::FGetUserInventoryResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::PayForPurchase(
     ClientModels::FPayForPurchaseRequest& request,
@@ -1950,14 +1608,9 @@ bool UPlayFabClientAPI::PayForPurchase(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/PayForPurchase")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnPayForPurchaseResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/PayForPurchase")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnPayForPurchaseResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1965,17 +1618,16 @@ void UPlayFabClientAPI::OnPayForPurchaseResult(FHttpRequestPtr HttpRequest, FHtt
 {
     ClientModels::FPayForPurchaseResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::PurchaseItem(
     ClientModels::FPurchaseItemRequest& request,
@@ -1983,14 +1635,9 @@ bool UPlayFabClientAPI::PurchaseItem(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/PurchaseItem")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnPurchaseItemResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/PurchaseItem")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnPurchaseItemResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -1998,17 +1645,16 @@ void UPlayFabClientAPI::OnPurchaseItemResult(FHttpRequestPtr HttpRequest, FHttpR
 {
     ClientModels::FPurchaseItemResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::RedeemCoupon(
     ClientModels::FRedeemCouponRequest& request,
@@ -2016,14 +1662,9 @@ bool UPlayFabClientAPI::RedeemCoupon(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/RedeemCoupon")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnRedeemCouponResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/RedeemCoupon")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnRedeemCouponResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2031,17 +1672,16 @@ void UPlayFabClientAPI::OnRedeemCouponResult(FHttpRequestPtr HttpRequest, FHttpR
 {
     ClientModels::FRedeemCouponResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::ReportPlayer(
     ClientModels::FReportPlayerClientRequest& request,
@@ -2049,14 +1689,9 @@ bool UPlayFabClientAPI::ReportPlayer(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/ReportPlayer")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnReportPlayerResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/ReportPlayer")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnReportPlayerResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2064,17 +1699,16 @@ void UPlayFabClientAPI::OnReportPlayerResult(FHttpRequestPtr HttpRequest, FHttpR
 {
     ClientModels::FReportPlayerClientResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::StartPurchase(
     ClientModels::FStartPurchaseRequest& request,
@@ -2082,14 +1716,9 @@ bool UPlayFabClientAPI::StartPurchase(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/StartPurchase")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnStartPurchaseResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/StartPurchase")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnStartPurchaseResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2097,17 +1726,16 @@ void UPlayFabClientAPI::OnStartPurchaseResult(FHttpRequestPtr HttpRequest, FHttp
 {
     ClientModels::FStartPurchaseResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::SubtractUserVirtualCurrency(
     ClientModels::FSubtractUserVirtualCurrencyRequest& request,
@@ -2115,14 +1743,9 @@ bool UPlayFabClientAPI::SubtractUserVirtualCurrency(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/SubtractUserVirtualCurrency")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnSubtractUserVirtualCurrencyResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/SubtractUserVirtualCurrency")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnSubtractUserVirtualCurrencyResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2130,17 +1753,16 @@ void UPlayFabClientAPI::OnSubtractUserVirtualCurrencyResult(FHttpRequestPtr Http
 {
     ClientModels::FModifyUserVirtualCurrencyResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::UnlockContainerItem(
     ClientModels::FUnlockContainerItemRequest& request,
@@ -2148,14 +1770,9 @@ bool UPlayFabClientAPI::UnlockContainerItem(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/UnlockContainerItem")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUnlockContainerItemResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/UnlockContainerItem")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUnlockContainerItemResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2163,17 +1780,16 @@ void UPlayFabClientAPI::OnUnlockContainerItemResult(FHttpRequestPtr HttpRequest,
 {
     ClientModels::FUnlockContainerItemResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::AddFriend(
     ClientModels::FAddFriendRequest& request,
@@ -2181,14 +1797,9 @@ bool UPlayFabClientAPI::AddFriend(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/AddFriend")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnAddFriendResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/AddFriend")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnAddFriendResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2196,17 +1807,16 @@ void UPlayFabClientAPI::OnAddFriendResult(FHttpRequestPtr HttpRequest, FHttpResp
 {
     ClientModels::FAddFriendResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetFriendsList(
     ClientModels::FGetFriendsListRequest& request,
@@ -2214,14 +1824,9 @@ bool UPlayFabClientAPI::GetFriendsList(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetFriendsList")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetFriendsListResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetFriendsList")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetFriendsListResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2229,17 +1834,16 @@ void UPlayFabClientAPI::OnGetFriendsListResult(FHttpRequestPtr HttpRequest, FHtt
 {
     ClientModels::FGetFriendsListResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::RemoveFriend(
     ClientModels::FRemoveFriendRequest& request,
@@ -2247,14 +1851,9 @@ bool UPlayFabClientAPI::RemoveFriend(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/RemoveFriend")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnRemoveFriendResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/RemoveFriend")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnRemoveFriendResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2262,17 +1861,16 @@ void UPlayFabClientAPI::OnRemoveFriendResult(FHttpRequestPtr HttpRequest, FHttpR
 {
     ClientModels::FRemoveFriendResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::SetFriendTags(
     ClientModels::FSetFriendTagsRequest& request,
@@ -2280,14 +1878,9 @@ bool UPlayFabClientAPI::SetFriendTags(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/SetFriendTags")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnSetFriendTagsResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/SetFriendTags")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnSetFriendTagsResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2295,17 +1888,16 @@ void UPlayFabClientAPI::OnSetFriendTagsResult(FHttpRequestPtr HttpRequest, FHttp
 {
     ClientModels::FSetFriendTagsResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::RegisterForIOSPushNotification(
     ClientModels::FRegisterForIOSPushNotificationRequest& request,
@@ -2313,14 +1905,9 @@ bool UPlayFabClientAPI::RegisterForIOSPushNotification(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/RegisterForIOSPushNotification")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnRegisterForIOSPushNotificationResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/RegisterForIOSPushNotification")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnRegisterForIOSPushNotificationResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2328,17 +1915,16 @@ void UPlayFabClientAPI::OnRegisterForIOSPushNotificationResult(FHttpRequestPtr H
 {
     ClientModels::FRegisterForIOSPushNotificationResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::RestoreIOSPurchases(
     ClientModels::FRestoreIOSPurchasesRequest& request,
@@ -2346,14 +1932,9 @@ bool UPlayFabClientAPI::RestoreIOSPurchases(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/RestoreIOSPurchases")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnRestoreIOSPurchasesResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/RestoreIOSPurchases")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnRestoreIOSPurchasesResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2361,17 +1942,16 @@ void UPlayFabClientAPI::OnRestoreIOSPurchasesResult(FHttpRequestPtr HttpRequest,
 {
     ClientModels::FRestoreIOSPurchasesResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::ValidateIOSReceipt(
     ClientModels::FValidateIOSReceiptRequest& request,
@@ -2379,14 +1959,9 @@ bool UPlayFabClientAPI::ValidateIOSReceipt(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/ValidateIOSReceipt")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnValidateIOSReceiptResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/ValidateIOSReceipt")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnValidateIOSReceiptResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2394,17 +1969,16 @@ void UPlayFabClientAPI::OnValidateIOSReceiptResult(FHttpRequestPtr HttpRequest, 
 {
     ClientModels::FValidateIOSReceiptResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetCurrentGames(
     ClientModels::FCurrentGamesRequest& request,
@@ -2412,14 +1986,9 @@ bool UPlayFabClientAPI::GetCurrentGames(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetCurrentGames")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetCurrentGamesResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetCurrentGames")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetCurrentGamesResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2427,17 +1996,16 @@ void UPlayFabClientAPI::OnGetCurrentGamesResult(FHttpRequestPtr HttpRequest, FHt
 {
     ClientModels::FCurrentGamesResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetGameServerRegions(
     ClientModels::FGameServerRegionsRequest& request,
@@ -2445,14 +2013,9 @@ bool UPlayFabClientAPI::GetGameServerRegions(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetGameServerRegions")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetGameServerRegionsResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetGameServerRegions")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetGameServerRegionsResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2460,17 +2023,16 @@ void UPlayFabClientAPI::OnGetGameServerRegionsResult(FHttpRequestPtr HttpRequest
 {
     ClientModels::FGameServerRegionsResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::Matchmake(
     ClientModels::FMatchmakeRequest& request,
@@ -2478,14 +2040,9 @@ bool UPlayFabClientAPI::Matchmake(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/Matchmake")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnMatchmakeResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/Matchmake")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnMatchmakeResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2493,17 +2050,16 @@ void UPlayFabClientAPI::OnMatchmakeResult(FHttpRequestPtr HttpRequest, FHttpResp
 {
     ClientModels::FMatchmakeResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::StartGame(
     ClientModels::FStartGameRequest& request,
@@ -2511,14 +2067,9 @@ bool UPlayFabClientAPI::StartGame(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/StartGame")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnStartGameResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/StartGame")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnStartGameResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2526,17 +2077,16 @@ void UPlayFabClientAPI::OnStartGameResult(FHttpRequestPtr HttpRequest, FHttpResp
 {
     ClientModels::FStartGameResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::AndroidDevicePushNotificationRegistration(
     ClientModels::FAndroidDevicePushNotificationRegistrationRequest& request,
@@ -2544,14 +2094,9 @@ bool UPlayFabClientAPI::AndroidDevicePushNotificationRegistration(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/AndroidDevicePushNotificationRegistration")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnAndroidDevicePushNotificationRegistrationResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/AndroidDevicePushNotificationRegistration")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnAndroidDevicePushNotificationRegistrationResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2559,17 +2104,16 @@ void UPlayFabClientAPI::OnAndroidDevicePushNotificationRegistrationResult(FHttpR
 {
     ClientModels::FAndroidDevicePushNotificationRegistrationResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::ValidateGooglePlayPurchase(
     ClientModels::FValidateGooglePlayPurchaseRequest& request,
@@ -2577,14 +2121,9 @@ bool UPlayFabClientAPI::ValidateGooglePlayPurchase(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/ValidateGooglePlayPurchase")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnValidateGooglePlayPurchaseResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/ValidateGooglePlayPurchase")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnValidateGooglePlayPurchaseResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2592,17 +2131,16 @@ void UPlayFabClientAPI::OnValidateGooglePlayPurchaseResult(FHttpRequestPtr HttpR
 {
     ClientModels::FValidateGooglePlayPurchaseResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::LogEvent(
     ClientModels::FLogEventRequest& request,
@@ -2610,14 +2148,9 @@ bool UPlayFabClientAPI::LogEvent(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/LogEvent")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLogEventResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/LogEvent")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLogEventResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2625,17 +2158,16 @@ void UPlayFabClientAPI::OnLogEventResult(FHttpRequestPtr HttpRequest, FHttpRespo
 {
     ClientModels::FLogEventResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::AddSharedGroupMembers(
     ClientModels::FAddSharedGroupMembersRequest& request,
@@ -2643,14 +2175,9 @@ bool UPlayFabClientAPI::AddSharedGroupMembers(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/AddSharedGroupMembers")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnAddSharedGroupMembersResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/AddSharedGroupMembers")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnAddSharedGroupMembersResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2658,17 +2185,16 @@ void UPlayFabClientAPI::OnAddSharedGroupMembersResult(FHttpRequestPtr HttpReques
 {
     ClientModels::FAddSharedGroupMembersResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::CreateSharedGroup(
     ClientModels::FCreateSharedGroupRequest& request,
@@ -2676,14 +2202,9 @@ bool UPlayFabClientAPI::CreateSharedGroup(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/CreateSharedGroup")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnCreateSharedGroupResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/CreateSharedGroup")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnCreateSharedGroupResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2691,17 +2212,16 @@ void UPlayFabClientAPI::OnCreateSharedGroupResult(FHttpRequestPtr HttpRequest, F
 {
     ClientModels::FCreateSharedGroupResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetPublisherData(
     ClientModels::FGetPublisherDataRequest& request,
@@ -2709,14 +2229,9 @@ bool UPlayFabClientAPI::GetPublisherData(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetPublisherData")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetPublisherDataResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetPublisherData")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetPublisherDataResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2724,17 +2239,16 @@ void UPlayFabClientAPI::OnGetPublisherDataResult(FHttpRequestPtr HttpRequest, FH
 {
     ClientModels::FGetPublisherDataResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetSharedGroupData(
     ClientModels::FGetSharedGroupDataRequest& request,
@@ -2742,14 +2256,9 @@ bool UPlayFabClientAPI::GetSharedGroupData(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetSharedGroupData")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetSharedGroupDataResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetSharedGroupData")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetSharedGroupDataResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2757,17 +2266,16 @@ void UPlayFabClientAPI::OnGetSharedGroupDataResult(FHttpRequestPtr HttpRequest, 
 {
     ClientModels::FGetSharedGroupDataResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::RemoveSharedGroupMembers(
     ClientModels::FRemoveSharedGroupMembersRequest& request,
@@ -2775,14 +2283,9 @@ bool UPlayFabClientAPI::RemoveSharedGroupMembers(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/RemoveSharedGroupMembers")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnRemoveSharedGroupMembersResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/RemoveSharedGroupMembers")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnRemoveSharedGroupMembersResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2790,17 +2293,16 @@ void UPlayFabClientAPI::OnRemoveSharedGroupMembersResult(FHttpRequestPtr HttpReq
 {
     ClientModels::FRemoveSharedGroupMembersResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::UpdateSharedGroupData(
     ClientModels::FUpdateSharedGroupDataRequest& request,
@@ -2808,14 +2310,9 @@ bool UPlayFabClientAPI::UpdateSharedGroupData(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/UpdateSharedGroupData")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUpdateSharedGroupDataResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/UpdateSharedGroupData")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUpdateSharedGroupDataResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2823,17 +2320,16 @@ void UPlayFabClientAPI::OnUpdateSharedGroupDataResult(FHttpRequestPtr HttpReques
 {
     ClientModels::FUpdateSharedGroupDataResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetCloudScriptUrl(
     ClientModels::FGetCloudScriptUrlRequest& request,
@@ -2841,14 +2337,9 @@ bool UPlayFabClientAPI::GetCloudScriptUrl(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetCloudScriptUrl")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetCloudScriptUrlResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetCloudScriptUrl")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetCloudScriptUrlResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2856,20 +2347,19 @@ void UPlayFabClientAPI::OnGetCloudScriptUrlResult(FHttpRequestPtr HttpRequest, F
 {
     ClientModels::FGetCloudScriptUrlResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		if (outResult.Url.Len() > 0)
-			{
-				PlayFabSettings::logicServerURL = outResult.Url;
-			}
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        if (outResult.Url.Len() > 0)
+            {
+                PlayFabSettings::logicServerURL = outResult.Url;
+            }
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::RunCloudScript(
     ClientModels::FRunCloudScriptRequest& request,
@@ -2877,14 +2367,9 @@ bool UPlayFabClientAPI::RunCloudScript(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getLogicURL(TEXT("/Client/RunCloudScript")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnRunCloudScriptResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getLogicURL(TEXT("/Client/RunCloudScript")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnRunCloudScriptResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2892,17 +2377,16 @@ void UPlayFabClientAPI::OnRunCloudScriptResult(FHttpRequestPtr HttpRequest, FHtt
 {
     ClientModels::FRunCloudScriptResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetContentDownloadUrl(
     ClientModels::FGetContentDownloadUrlRequest& request,
@@ -2910,14 +2394,9 @@ bool UPlayFabClientAPI::GetContentDownloadUrl(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetContentDownloadUrl")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetContentDownloadUrlResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetContentDownloadUrl")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetContentDownloadUrlResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2925,17 +2404,16 @@ void UPlayFabClientAPI::OnGetContentDownloadUrlResult(FHttpRequestPtr HttpReques
 {
     ClientModels::FGetContentDownloadUrlResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetAllUsersCharacters(
     ClientModels::FListUsersCharactersRequest& request,
@@ -2943,14 +2421,9 @@ bool UPlayFabClientAPI::GetAllUsersCharacters(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetAllUsersCharacters")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetAllUsersCharactersResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetAllUsersCharacters")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetAllUsersCharactersResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2958,17 +2431,16 @@ void UPlayFabClientAPI::OnGetAllUsersCharactersResult(FHttpRequestPtr HttpReques
 {
     ClientModels::FListUsersCharactersResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetCharacterLeaderboard(
     ClientModels::FGetCharacterLeaderboardRequest& request,
@@ -2976,14 +2448,9 @@ bool UPlayFabClientAPI::GetCharacterLeaderboard(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetCharacterLeaderboard")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetCharacterLeaderboardResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetCharacterLeaderboard")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetCharacterLeaderboardResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -2991,17 +2458,16 @@ void UPlayFabClientAPI::OnGetCharacterLeaderboardResult(FHttpRequestPtr HttpRequ
 {
     ClientModels::FGetCharacterLeaderboardResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetLeaderboardAroundCharacter(
     ClientModels::FGetLeaderboardAroundCharacterRequest& request,
@@ -3009,14 +2475,9 @@ bool UPlayFabClientAPI::GetLeaderboardAroundCharacter(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetLeaderboardAroundCharacter")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetLeaderboardAroundCharacterResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetLeaderboardAroundCharacter")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetLeaderboardAroundCharacterResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -3024,17 +2485,16 @@ void UPlayFabClientAPI::OnGetLeaderboardAroundCharacterResult(FHttpRequestPtr Ht
 {
     ClientModels::FGetLeaderboardAroundCharacterResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetLeaderboardForUserCharacters(
     ClientModels::FGetLeaderboardForUsersCharactersRequest& request,
@@ -3042,14 +2502,9 @@ bool UPlayFabClientAPI::GetLeaderboardForUserCharacters(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetLeaderboardForUserCharacters")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetLeaderboardForUserCharactersResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetLeaderboardForUserCharacters")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetLeaderboardForUserCharactersResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -3057,17 +2512,16 @@ void UPlayFabClientAPI::OnGetLeaderboardForUserCharactersResult(FHttpRequestPtr 
 {
     ClientModels::FGetLeaderboardForUsersCharactersResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GrantCharacterToUser(
     ClientModels::FGrantCharacterToUserRequest& request,
@@ -3075,14 +2529,9 @@ bool UPlayFabClientAPI::GrantCharacterToUser(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GrantCharacterToUser")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGrantCharacterToUserResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GrantCharacterToUser")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGrantCharacterToUserResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -3090,17 +2539,16 @@ void UPlayFabClientAPI::OnGrantCharacterToUserResult(FHttpRequestPtr HttpRequest
 {
     ClientModels::FGrantCharacterToUserResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetCharacterData(
     ClientModels::FGetCharacterDataRequest& request,
@@ -3108,14 +2556,9 @@ bool UPlayFabClientAPI::GetCharacterData(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetCharacterData")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetCharacterDataResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetCharacterData")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetCharacterDataResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -3123,17 +2566,16 @@ void UPlayFabClientAPI::OnGetCharacterDataResult(FHttpRequestPtr HttpRequest, FH
 {
     ClientModels::FGetCharacterDataResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetCharacterReadOnlyData(
     ClientModels::FGetCharacterDataRequest& request,
@@ -3141,14 +2583,9 @@ bool UPlayFabClientAPI::GetCharacterReadOnlyData(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetCharacterReadOnlyData")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetCharacterReadOnlyDataResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetCharacterReadOnlyData")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetCharacterReadOnlyDataResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -3156,17 +2593,16 @@ void UPlayFabClientAPI::OnGetCharacterReadOnlyDataResult(FHttpRequestPtr HttpReq
 {
     ClientModels::FGetCharacterDataResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::UpdateCharacterData(
     ClientModels::FUpdateCharacterDataRequest& request,
@@ -3174,14 +2610,9 @@ bool UPlayFabClientAPI::UpdateCharacterData(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/UpdateCharacterData")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUpdateCharacterDataResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/UpdateCharacterData")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUpdateCharacterDataResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -3189,17 +2620,16 @@ void UPlayFabClientAPI::OnUpdateCharacterDataResult(FHttpRequestPtr HttpRequest,
 {
     ClientModels::FUpdateCharacterDataResult outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::AcceptTrade(
     ClientModels::FAcceptTradeRequest& request,
@@ -3207,14 +2637,9 @@ bool UPlayFabClientAPI::AcceptTrade(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/AcceptTrade")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnAcceptTradeResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/AcceptTrade")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnAcceptTradeResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -3222,17 +2647,16 @@ void UPlayFabClientAPI::OnAcceptTradeResult(FHttpRequestPtr HttpRequest, FHttpRe
 {
     ClientModels::FAcceptTradeResponse outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::CancelTrade(
     ClientModels::FCancelTradeRequest& request,
@@ -3240,14 +2664,9 @@ bool UPlayFabClientAPI::CancelTrade(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/CancelTrade")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnCancelTradeResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/CancelTrade")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnCancelTradeResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -3255,17 +2674,16 @@ void UPlayFabClientAPI::OnCancelTradeResult(FHttpRequestPtr HttpRequest, FHttpRe
 {
     ClientModels::FCancelTradeResponse outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetPlayerTrades(
     ClientModels::FGetPlayerTradesRequest& request,
@@ -3273,14 +2691,9 @@ bool UPlayFabClientAPI::GetPlayerTrades(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetPlayerTrades")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetPlayerTradesResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetPlayerTrades")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetPlayerTradesResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -3288,17 +2701,16 @@ void UPlayFabClientAPI::OnGetPlayerTradesResult(FHttpRequestPtr HttpRequest, FHt
 {
     ClientModels::FGetPlayerTradesResponse outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::GetTradeStatus(
     ClientModels::FGetTradeStatusRequest& request,
@@ -3306,14 +2718,9 @@ bool UPlayFabClientAPI::GetTradeStatus(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/GetTradeStatus")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetTradeStatusResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetTradeStatus")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetTradeStatusResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -3321,17 +2728,16 @@ void UPlayFabClientAPI::OnGetTradeStatusResult(FHttpRequestPtr HttpRequest, FHtt
 {
     ClientModels::FGetTradeStatusResponse outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
 
 bool UPlayFabClientAPI::OpenTrade(
     ClientModels::FOpenTradeRequest& request,
@@ -3339,14 +2745,9 @@ bool UPlayFabClientAPI::OpenTrade(
     const FPlayFabErrorDelegate& ErrorDelegate)
 {
     
-	TSharedRef<IHttpRequest> HttpRequest = FHttpModule::Get().CreateRequest();
-	HttpRequest->SetVerb(TEXT("POST"));
-	HttpRequest->SetURL(PlayFabSettings::getURL(TEXT("/Client/OpenTrade")));
-	HttpRequest->SetHeader(TEXT("Content-Type"), TEXT("application/json; charset=utf-8"));
-	HttpRequest->SetHeader(TEXT("X-PlayFabSDK"), PlayFabVersionString);
-	HttpRequest->SetHeader(TEXT("X-Authorization"), mUserSessionTicket);
-    HttpRequest->SetContentAsString(request.toJSONString());
-	HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnOpenTradeResult, SuccessDelegate, ErrorDelegate);
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/OpenTrade")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnOpenTradeResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
 
@@ -3354,17 +2755,14 @@ void UPlayFabClientAPI::OnOpenTradeResult(FHttpRequestPtr HttpRequest, FHttpResp
 {
     ClientModels::FOpenTradeResponse outResult;
     FPlayFabError errorResult;
-	if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-	{
-		
-		SuccessDelegate.ExecuteIfBound(outResult);
-	}
-	else
-	{
-		ErrorDelegate.ExecuteIfBound(errorResult);
-	}
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
 }
-
-
-
 

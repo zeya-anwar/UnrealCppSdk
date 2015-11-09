@@ -15,9 +15,9 @@ UPFAdminGrantItemsToUsers* UPFAdminGrantItemsToUsers::GrantItemsToUsers(UObject*
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.CatalogVersion = InCatalogVersion;
 	for (const FBPAdminItemGrant& elem : InItemGrants)
-	{
-		Proxy->Request.ItemGrants.Add(elem.Data);
-	}
+    {
+        Proxy->Request.ItemGrants.Add(elem.Data);
+    }
 
 	
 

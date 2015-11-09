@@ -15,9 +15,9 @@ UPFAdminUpdateRandomResultTables* UPFAdminUpdateRandomResultTables::UpdateRandom
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.CatalogVersion = InCatalogVersion;
 	for (const FBPAdminRandomResultTable& elem : InTables)
-	{
-		Proxy->Request.Tables.Add(elem.Data);
-	}
+    {
+        Proxy->Request.Tables.Add(elem.Data);
+    }
 
 	
 

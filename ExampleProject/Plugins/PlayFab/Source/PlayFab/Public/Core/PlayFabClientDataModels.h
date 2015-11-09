@@ -7128,8 +7128,6 @@ namespace ClientModels
 		FString CharacterId;
 		// [optional] Data to be written to the user's character's custom data. Note that keys are trimmed of whitespace, are limited to 1024 characters, and may not begin with a '!' character.
 		TMap<FString, FString> Data;
-		// [optional] Optional list of Data-keys to remove from CharacterData
-		TArray<FString> KeysToRemove;
 		// [optional] Permission to be applied to all user data keys written in this request. Defaults to "private" if not set.
 		Boxed<UserDataPermission> Permission;
 	
@@ -7137,7 +7135,6 @@ namespace ClientModels
 			FPlayFabBaseModel(),
 			CharacterId(),
 			Data(),
-			KeysToRemove(),
 			Permission()
 			{}
 		
@@ -7145,7 +7142,6 @@ namespace ClientModels
 			FPlayFabBaseModel(),
 			CharacterId(src.CharacterId),
 			Data(src.Data),
-			KeysToRemove(src.KeysToRemove),
 			Permission(src.Permission)
 			{}
 			
@@ -7194,8 +7190,6 @@ namespace ClientModels
 		FString SharedGroupId;
 		// [optional] Key value pairs to be stored in the shared group - note that keys will be trimmed of whitespace, must not begin with a '!' character, and that null values will result in the removal of the key from the data set.
 		TMap<FString, FString> Data;
-		// [optional] Optional list of Data-keys to remove from GroupData
-		TArray<FString> KeysToRemove;
 		// [optional] Permission to be applied to all user data keys in this request.
 		Boxed<UserDataPermission> Permission;
 	
@@ -7203,7 +7197,6 @@ namespace ClientModels
 			FPlayFabBaseModel(),
 			SharedGroupId(),
 			Data(),
-			KeysToRemove(),
 			Permission()
 			{}
 		
@@ -7211,7 +7204,6 @@ namespace ClientModels
 			FPlayFabBaseModel(),
 			SharedGroupId(src.SharedGroupId),
 			Data(src.Data),
-			KeysToRemove(src.KeysToRemove),
 			Permission(src.Permission)
 			{}
 			
@@ -7254,22 +7246,18 @@ namespace ClientModels
 		
 		// [optional] Data to be written to the user's custom data. Note that keys are trimmed of whitespace, are limited to 1024 characters, and may not begin with a '!' character.
 		TMap<FString, FString> Data;
-		// [optional] Optional list of Data-keys to remove from UserData
-		TArray<FString> KeysToRemove;
 		// [optional] Permission to be applied to all user data keys written in this request. Defaults to "private" if not set.
 		Boxed<UserDataPermission> Permission;
 	
         FUpdateUserDataRequest() :
 			FPlayFabBaseModel(),
 			Data(),
-			KeysToRemove(),
 			Permission()
 			{}
 		
 		FUpdateUserDataRequest(const FUpdateUserDataRequest& src) :
 			FPlayFabBaseModel(),
 			Data(src.Data),
-			KeysToRemove(src.KeysToRemove),
 			Permission(src.Permission)
 			{}
 			

@@ -14,9 +14,9 @@ UPFAdminResetUsers* UPFAdminResetUsers::ResetUsers(UObject* WorldContextObject, 
 	UPFAdminResetUsers* Proxy = NewObject<UPFAdminResetUsers>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	for (const FBPAdminUserCredentials& elem : InUsers)
-	{
-		Proxy->Request.Users.Add(elem.Data);
-	}
+    {
+        Proxy->Request.Users.Add(elem.Data);
+    }
 
 	
 

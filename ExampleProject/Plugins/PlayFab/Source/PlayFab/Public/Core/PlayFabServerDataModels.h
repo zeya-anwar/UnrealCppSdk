@@ -3770,68 +3770,6 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
-	struct PLAYFAB_API FRedeemCouponRequest : public FPlayFabBaseModel
-    {
-		
-		// Generated coupon code to redeem.
-		FString CouponCode;
-		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
-		FString PlayFabId;
-		// [optional] Catalog version of the coupon.
-		FString CatalogVersion;
-	
-        FRedeemCouponRequest() :
-			FPlayFabBaseModel(),
-			CouponCode(),
-			PlayFabId(),
-			CatalogVersion()
-			{}
-		
-		FRedeemCouponRequest(const FRedeemCouponRequest& src) :
-			FPlayFabBaseModel(),
-			CouponCode(src.CouponCode),
-			PlayFabId(src.PlayFabId),
-			CatalogVersion(src.CatalogVersion)
-			{}
-			
-		FRedeemCouponRequest(const TSharedPtr<FJsonObject>& obj) : FRedeemCouponRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FRedeemCouponRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FRedeemCouponResult : public FPlayFabBaseModel
-    {
-		
-		// [optional] Items granted to the player as a result of redeeming the coupon.
-		TArray<FItemInstance> GrantedItems;
-	
-        FRedeemCouponResult() :
-			FPlayFabBaseModel(),
-			GrantedItems()
-			{}
-		
-		FRedeemCouponResult(const FRedeemCouponResult& src) :
-			FPlayFabBaseModel(),
-			GrantedItems(src.GrantedItems)
-			{}
-			
-		FRedeemCouponResult(const TSharedPtr<FJsonObject>& obj) : FRedeemCouponResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FRedeemCouponResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
 	struct PLAYFAB_API FRedeemMatchmakerTicketRequest : public FPlayFabBaseModel
     {
 		
@@ -3903,7 +3841,7 @@ namespace ServerModels
 		
 		// PlayFab identifier of the friend account which is to be removed.
 		FString FriendPlayFabId;
-		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		// The PlayFab identifier of the player to lose a friend
 		FString PlayFabId;
 	
         FRemoveFriendRequest() :
@@ -4302,8 +4240,6 @@ namespace ServerModels
 		FString CharacterId;
 		// [optional] Data to be written to the user's character's custom data. Note that keys are trimmed of whitespace, are limited to 1024 characters, and may not begin with a '!' character.
 		TMap<FString, FString> Data;
-		// [optional] Optional list of Data-keys to remove from CharacterData
-		TArray<FString> KeysToRemove;
 		// [optional] Permission to be applied to all user data keys written in this request. Defaults to "private" if not set.
 		Boxed<UserDataPermission> Permission;
 	
@@ -4312,7 +4248,6 @@ namespace ServerModels
 			PlayFabId(),
 			CharacterId(),
 			Data(),
-			KeysToRemove(),
 			Permission()
 			{}
 		
@@ -4321,7 +4256,6 @@ namespace ServerModels
 			PlayFabId(src.PlayFabId),
 			CharacterId(src.CharacterId),
 			Data(src.Data),
-			KeysToRemove(src.KeysToRemove),
 			Permission(src.Permission)
 			{}
 			
@@ -4428,8 +4362,6 @@ namespace ServerModels
 		FString SharedGroupId;
 		// [optional] Key value pairs to be stored in the shared group - note that keys will be trimmed of whitespace, must not begin with a '!' character, and that null values will result in the removal of the key from the data set.
 		TMap<FString, FString> Data;
-		// [optional] Optional list of Data-keys to remove from GroupData
-		TArray<FString> KeysToRemove;
 		// [optional] Permission to be applied to all user data keys in this request.
 		Boxed<UserDataPermission> Permission;
 	
@@ -4437,7 +4369,6 @@ namespace ServerModels
 			FPlayFabBaseModel(),
 			SharedGroupId(),
 			Data(),
-			KeysToRemove(),
 			Permission()
 			{}
 		
@@ -4445,7 +4376,6 @@ namespace ServerModels
 			FPlayFabBaseModel(),
 			SharedGroupId(src.SharedGroupId),
 			Data(src.Data),
-			KeysToRemove(src.KeysToRemove),
 			Permission(src.Permission)
 			{}
 			
@@ -4490,8 +4420,6 @@ namespace ServerModels
 		FString PlayFabId;
 		// [optional] Data to be written to the user's custom data. Note that keys are trimmed of whitespace, are limited to 1024 characters, and may not begin with a '!' character.
 		TMap<FString, FString> Data;
-		// [optional] Optional list of Data-keys to remove from UserData
-		TArray<FString> KeysToRemove;
 		// [optional] Permission to be applied to all user data keys written in this request. Defaults to "private" if not set.
 		Boxed<UserDataPermission> Permission;
 	
@@ -4499,7 +4427,6 @@ namespace ServerModels
 			FPlayFabBaseModel(),
 			PlayFabId(),
 			Data(),
-			KeysToRemove(),
 			Permission()
 			{}
 		
@@ -4507,7 +4434,6 @@ namespace ServerModels
 			FPlayFabBaseModel(),
 			PlayFabId(src.PlayFabId),
 			Data(src.Data),
-			KeysToRemove(src.KeysToRemove),
 			Permission(src.Permission)
 			{}
 			
@@ -4556,21 +4482,17 @@ namespace ServerModels
 		FString PlayFabId;
 		// [optional] Data to be written to the user's custom data.
 		TMap<FString, FString> Data;
-		// [optional] Optional list of Data-keys to remove from UserData
-		TArray<FString> KeysToRemove;
 	
         FUpdateUserInternalDataRequest() :
 			FPlayFabBaseModel(),
 			PlayFabId(),
-			Data(),
-			KeysToRemove()
+			Data()
 			{}
 		
 		FUpdateUserInternalDataRequest(const FUpdateUserInternalDataRequest& src) :
 			FPlayFabBaseModel(),
 			PlayFabId(src.PlayFabId),
-			Data(src.Data),
-			KeysToRemove(src.KeysToRemove)
+			Data(src.Data)
 			{}
 			
 		FUpdateUserInternalDataRequest(const TSharedPtr<FJsonObject>& obj) : FUpdateUserInternalDataRequest()
@@ -4595,16 +4517,13 @@ namespace ServerModels
 		FString ItemInstanceId;
 		// [optional] Data to be written to the item's custom data. Note that keys are trimmed of whitespace.
 		TMap<FString, FString> Data;
-		// [optional] Optional list of Data-keys to remove from ItemData
-		TArray<FString> KeysToRemove;
 	
         FUpdateUserInventoryItemDataRequest() :
 			FPlayFabBaseModel(),
 			CharacterId(),
 			PlayFabId(),
 			ItemInstanceId(),
-			Data(),
-			KeysToRemove()
+			Data()
 			{}
 		
 		FUpdateUserInventoryItemDataRequest(const FUpdateUserInventoryItemDataRequest& src) :
@@ -4612,8 +4531,7 @@ namespace ServerModels
 			CharacterId(src.CharacterId),
 			PlayFabId(src.PlayFabId),
 			ItemInstanceId(src.ItemInstanceId),
-			Data(src.Data),
-			KeysToRemove(src.KeysToRemove)
+			Data(src.Data)
 			{}
 			
 		FUpdateUserInventoryItemDataRequest(const TSharedPtr<FJsonObject>& obj) : FUpdateUserInventoryItemDataRequest()

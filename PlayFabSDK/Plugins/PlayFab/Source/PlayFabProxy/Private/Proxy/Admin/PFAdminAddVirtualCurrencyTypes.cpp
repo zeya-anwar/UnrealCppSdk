@@ -14,9 +14,9 @@ UPFAdminAddVirtualCurrencyTypes* UPFAdminAddVirtualCurrencyTypes::AddVirtualCurr
 	UPFAdminAddVirtualCurrencyTypes* Proxy = NewObject<UPFAdminAddVirtualCurrencyTypes>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	for (const FBPAdminVirtualCurrencyData& elem : InVirtualCurrencies)
-	{
-		Proxy->Request.VirtualCurrencies.Add(elem.Data);
-	}
+    {
+        Proxy->Request.VirtualCurrencies.Add(elem.Data);
+    }
 
 	
 

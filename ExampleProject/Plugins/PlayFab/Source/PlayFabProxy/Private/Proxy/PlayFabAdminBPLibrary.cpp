@@ -5,9 +5,9 @@
 
 void UPFAdminProxyLibrary::BreakBPAdminAddNewsRequest(
 		const FBPAdminAddNewsRequest& In
-		,FDateTime& OutTimestamp
-		,FString& OutTitle
-		,FString& OutBody
+        ,FDateTime& OutTimestamp
+        ,FString& OutTitle
+        ,FString& OutBody
 	)
 {
     
@@ -18,7 +18,7 @@ void UPFAdminProxyLibrary::BreakBPAdminAddNewsRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminAddNewsResult(
 		const FBPAdminAddNewsResult& In
-		,FString& OutNewsId
+        ,FString& OutNewsId
 	)
 {
     OutNewsId = In.Data.NewsId;
@@ -27,11 +27,11 @@ void UPFAdminProxyLibrary::BreakBPAdminAddNewsResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminAddServerBuildRequest(
 		const FBPAdminAddServerBuildRequest& In
-		,FString& OutBuildId
-		,FString& OutCommandLineTemplate
-		,FString& OutExecutablePath
-		,FString& OutComment
-		,int32& OutMaxGamesPerHost
+        ,FString& OutBuildId
+        ,FString& OutCommandLineTemplate
+        ,FString& OutExecutablePath
+        ,FString& OutComment
+        ,int32& OutMaxGamesPerHost
 	)
 {
     OutBuildId = In.Data.BuildId;
@@ -45,13 +45,13 @@ void UPFAdminProxyLibrary::BreakBPAdminAddServerBuildRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminAddServerBuildResult(
 		const FBPAdminAddServerBuildResult& In
-		,FString& OutBuildId
-		,int32& OutMaxGamesPerHost
-		,FString& OutCommandLineTemplate
-		,FString& OutExecutablePath
-		,FString& OutComment
-		,FDateTime& OutTimestamp
-		,FString& OutTitleId
+        ,FString& OutBuildId
+        ,int32& OutMaxGamesPerHost
+        ,FString& OutCommandLineTemplate
+        ,FString& OutExecutablePath
+        ,FString& OutComment
+        ,FDateTime& OutTimestamp
+        ,FString& OutTitleId
 	)
 {
     OutBuildId = In.Data.BuildId;
@@ -68,9 +68,9 @@ void UPFAdminProxyLibrary::BreakBPAdminAddServerBuildResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminAddUserVirtualCurrencyRequest(
 		const FBPAdminAddUserVirtualCurrencyRequest& In
-		,FString& OutPlayFabId
-		,FString& OutVirtualCurrency
-		,int32& OutAmount
+        ,FString& OutPlayFabId
+        ,FString& OutVirtualCurrency
+        ,int32& OutAmount
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -81,15 +81,15 @@ void UPFAdminProxyLibrary::BreakBPAdminAddUserVirtualCurrencyRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminAddVirtualCurrencyTypesRequest(
 		const FBPAdminAddVirtualCurrencyTypesRequest& In
-		,TArray<FBPAdminVirtualCurrencyData>& OutVirtualCurrencies
+        ,TArray<FBPAdminVirtualCurrencyData>& OutVirtualCurrencies
 	)
 {
     for (const PlayFab::AdminModels::FVirtualCurrencyData& elem : In.Data.VirtualCurrencies)
-	{
-		FBPAdminVirtualCurrencyData result;
-		result.Data = elem;
-		OutVirtualCurrencies.Add(result);
-	}
+    {
+        FBPAdminVirtualCurrencyData result;
+        result.Data = elem;
+        OutVirtualCurrencies.Add(result);
+    }
 
 	
 }
@@ -103,20 +103,20 @@ void UPFAdminProxyLibrary::BreakBPAdminBlankResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminCatalogItem(
 		const FBPAdminCatalogItem& In
-		,FString& OutItemId
-		,FString& OutItemClass
-		,FString& OutCatalogVersion
-		,FString& OutDisplayName
-		,FString& OutDescription
-		,TArray<FString>& OutTags
-		,FString& OutCustomData
-		,FBPAdminCatalogItemConsumableInfo& OutConsumable
-		,FBPAdminCatalogItemContainerInfo& OutContainer
-		,FBPAdminCatalogItemBundleInfo& OutBundle
-		,bool& OutCanBecomeCharacter
-		,bool& OutIsStackable
-		,bool& OutIsTradable
-		,FString& OutItemImageUrl
+        ,FString& OutItemId
+        ,FString& OutItemClass
+        ,FString& OutCatalogVersion
+        ,FString& OutDisplayName
+        ,FString& OutDescription
+        ,TArray<FString>& OutTags
+        ,FString& OutCustomData
+        ,FBPAdminCatalogItemConsumableInfo& OutConsumable
+        ,FBPAdminCatalogItemContainerInfo& OutContainer
+        ,FBPAdminCatalogItemBundleInfo& OutBundle
+        ,bool& OutCanBecomeCharacter
+        ,bool& OutIsStackable
+        ,bool& OutIsTradable
+        ,FString& OutItemImageUrl
 	)
 {
     OutItemId = In.Data.ItemId;
@@ -128,9 +128,9 @@ void UPFAdminProxyLibrary::BreakBPAdminCatalogItem(
 	
 	OutTags = In.Data.Tags;
 	OutCustomData = In.Data.CustomData;
-	if (In.Data.Consumable.IsValid()) {	OutConsumable.Data = *In.Data.Consumable;}
-	if (In.Data.Container.IsValid()) {	OutContainer.Data = *In.Data.Container;}
-	if (In.Data.Bundle.IsValid()) {	OutBundle.Data = *In.Data.Bundle;}
+	if (In.Data.Consumable.IsValid()) {    OutConsumable.Data = *In.Data.Consumable;}
+	if (In.Data.Container.IsValid()) {    OutContainer.Data = *In.Data.Container;}
+	if (In.Data.Bundle.IsValid()) {    OutBundle.Data = *In.Data.Bundle;}
 	OutCanBecomeCharacter = In.Data.CanBecomeCharacter;
 	OutIsStackable = In.Data.IsStackable;
 	OutIsTradable = In.Data.IsTradable;
@@ -140,8 +140,8 @@ void UPFAdminProxyLibrary::BreakBPAdminCatalogItem(
 
 void UPFAdminProxyLibrary::BreakBPAdminCatalogItemBundleInfo(
 		const FBPAdminCatalogItemBundleInfo& In
-		,TArray<FString>& OutBundledItems
-		,TArray<FString>& OutBundledResultTables
+        ,TArray<FString>& OutBundledItems
+        ,TArray<FString>& OutBundledResultTables
 	)
 {
     OutBundledItems = In.Data.BundledItems;
@@ -152,9 +152,9 @@ void UPFAdminProxyLibrary::BreakBPAdminCatalogItemBundleInfo(
 
 void UPFAdminProxyLibrary::BreakBPAdminCatalogItemConsumableInfo(
 		const FBPAdminCatalogItemConsumableInfo& In
-		,int32& OutUsageCount
-		,int32& OutUsagePeriod
-		,FString& OutUsagePeriodGroup
+        ,int32& OutUsageCount
+        ,int32& OutUsagePeriod
+        ,FString& OutUsagePeriodGroup
 	)
 {
     OutUsageCount = In.Data.UsageCount;
@@ -165,9 +165,9 @@ void UPFAdminProxyLibrary::BreakBPAdminCatalogItemConsumableInfo(
 
 void UPFAdminProxyLibrary::BreakBPAdminCatalogItemContainerInfo(
 		const FBPAdminCatalogItemContainerInfo& In
-		,FString& OutKeyItemId
-		,TArray<FString>& OutItemContents
-		,TArray<FString>& OutResultTableContents
+        ,FString& OutKeyItemId
+        ,TArray<FString>& OutItemContents
+        ,TArray<FString>& OutResultTableContents
 	)
 {
     OutKeyItemId = In.Data.KeyItemId;
@@ -179,8 +179,8 @@ void UPFAdminProxyLibrary::BreakBPAdminCatalogItemContainerInfo(
 
 void UPFAdminProxyLibrary::BreakBPAdminCloudScriptFile(
 		const FBPAdminCloudScriptFile& In
-		,FString& OutFilename
-		,FString& OutFileContents
+        ,FString& OutFilename
+        ,FString& OutFileContents
 	)
 {
     OutFilename = In.Data.Filename;
@@ -190,9 +190,9 @@ void UPFAdminProxyLibrary::BreakBPAdminCloudScriptFile(
 
 void UPFAdminProxyLibrary::BreakBPAdminCloudScriptVersionStatus(
 		const FBPAdminCloudScriptVersionStatus& In
-		,int32& OutVersion
-		,int32& OutPublishedRevision
-		,int32& OutLatestRevision
+        ,int32& OutVersion
+        ,int32& OutPublishedRevision
+        ,int32& OutLatestRevision
 	)
 {
     OutVersion = In.Data.Version;
@@ -203,9 +203,9 @@ void UPFAdminProxyLibrary::BreakBPAdminCloudScriptVersionStatus(
 
 void UPFAdminProxyLibrary::BreakBPAdminContentInfo(
 		const FBPAdminContentInfo& In
-		,FString& OutKey
-		,int32& OutSize
-		,FDateTime& OutLastModified
+        ,FString& OutKey
+        ,int32& OutSize
+        ,FDateTime& OutLastModified
 	)
 {
     OutKey = In.Data.Key;
@@ -223,7 +223,7 @@ void UPFAdminProxyLibrary::BreakBPAdminCurrency(
 
 void UPFAdminProxyLibrary::BreakBPAdminDeleteContentRequest(
 		const FBPAdminDeleteContentRequest& In
-		,FString& OutKey
+        ,FString& OutKey
 	)
 {
     OutKey = In.Data.Key;
@@ -232,8 +232,8 @@ void UPFAdminProxyLibrary::BreakBPAdminDeleteContentRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminDeleteUsersRequest(
 		const FBPAdminDeleteUsersRequest& In
-		,TArray<FString>& OutPlayFabIds
-		,FString& OutTitleId
+        ,TArray<FString>& OutPlayFabIds
+        ,FString& OutTitleId
 	)
 {
     OutPlayFabIds = In.Data.PlayFabIds;
@@ -257,9 +257,9 @@ void UPFAdminProxyLibrary::BreakBPAdminGameBuildStatus(
 
 void UPFAdminProxyLibrary::BreakBPAdminGameModeInfo(
 		const FBPAdminGameModeInfo& In
-		,FString& OutGamemode
-		,int32& OutMinPlayerCount
-		,int32& OutMaxPlayerCount
+        ,FString& OutGamemode
+        ,int32& OutMinPlayerCount
+        ,int32& OutMaxPlayerCount
 	)
 {
     OutGamemode = In.Data.Gamemode;
@@ -270,7 +270,7 @@ void UPFAdminProxyLibrary::BreakBPAdminGameModeInfo(
 
 void UPFAdminProxyLibrary::BreakBPAdminGetCatalogItemsRequest(
 		const FBPAdminGetCatalogItemsRequest& In
-		,FString& OutCatalogVersion
+        ,FString& OutCatalogVersion
 	)
 {
     OutCatalogVersion = In.Data.CatalogVersion;
@@ -279,23 +279,23 @@ void UPFAdminProxyLibrary::BreakBPAdminGetCatalogItemsRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminGetCatalogItemsResult(
 		const FBPAdminGetCatalogItemsResult& In
-		,TArray<FBPAdminCatalogItem>& OutCatalog
+        ,TArray<FBPAdminCatalogItem>& OutCatalog
 	)
 {
     for (const PlayFab::AdminModels::FCatalogItem& elem : In.Data.Catalog)
-	{
-		FBPAdminCatalogItem result;
-		result.Data = elem;
-		OutCatalog.Add(result);
-	}
+    {
+        FBPAdminCatalogItem result;
+        result.Data = elem;
+        OutCatalog.Add(result);
+    }
 
 	
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminGetCloudScriptRevisionRequest(
 		const FBPAdminGetCloudScriptRevisionRequest& In
-		,int32& OutVersion
-		,int32& OutRevision
+        ,int32& OutVersion
+        ,int32& OutRevision
 	)
 {
     OutVersion = In.Data.Version;
@@ -305,22 +305,22 @@ void UPFAdminProxyLibrary::BreakBPAdminGetCloudScriptRevisionRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminGetCloudScriptRevisionResult(
 		const FBPAdminGetCloudScriptRevisionResult& In
-		,int32& OutVersion
-		,int32& OutRevision
-		,FDateTime& OutCreatedAt
-		,TArray<FBPAdminCloudScriptFile>& OutFiles
-		,bool& OutIsPublished
+        ,int32& OutVersion
+        ,int32& OutRevision
+        ,FDateTime& OutCreatedAt
+        ,TArray<FBPAdminCloudScriptFile>& OutFiles
+        ,bool& OutIsPublished
 	)
 {
     OutVersion = In.Data.Version;
 	OutRevision = In.Data.Revision;
 	
 	for (const PlayFab::AdminModels::FCloudScriptFile& elem : In.Data.Files)
-	{
-		FBPAdminCloudScriptFile result;
-		result.Data = elem;
-		OutFiles.Add(result);
-	}
+    {
+        FBPAdminCloudScriptFile result;
+        result.Data = elem;
+        OutFiles.Add(result);
+    }
 
 	OutIsPublished = In.Data.IsPublished;
 	
@@ -335,22 +335,22 @@ void UPFAdminProxyLibrary::BreakBPAdminGetCloudScriptVersionsRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminGetCloudScriptVersionsResult(
 		const FBPAdminGetCloudScriptVersionsResult& In
-		,TArray<FBPAdminCloudScriptVersionStatus>& OutVersions
+        ,TArray<FBPAdminCloudScriptVersionStatus>& OutVersions
 	)
 {
     for (const PlayFab::AdminModels::FCloudScriptVersionStatus& elem : In.Data.Versions)
-	{
-		FBPAdminCloudScriptVersionStatus result;
-		result.Data = elem;
-		OutVersions.Add(result);
-	}
+    {
+        FBPAdminCloudScriptVersionStatus result;
+        result.Data = elem;
+        OutVersions.Add(result);
+    }
 
 	
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminGetContentListRequest(
 		const FBPAdminGetContentListRequest& In
-		,FString& OutPrefix
+        ,FString& OutPrefix
 	)
 {
     OutPrefix = In.Data.Prefix;
@@ -359,27 +359,27 @@ void UPFAdminProxyLibrary::BreakBPAdminGetContentListRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminGetContentListResult(
 		const FBPAdminGetContentListResult& In
-		,int32& OutItemCount
-		,int32& OutTotalSize
-		,TArray<FBPAdminContentInfo>& OutContents
+        ,int32& OutItemCount
+        ,int32& OutTotalSize
+        ,TArray<FBPAdminContentInfo>& OutContents
 	)
 {
     OutItemCount = In.Data.ItemCount;
 	OutTotalSize = In.Data.TotalSize;
 	for (const PlayFab::AdminModels::FContentInfo& elem : In.Data.Contents)
-	{
-		FBPAdminContentInfo result;
-		result.Data = elem;
-		OutContents.Add(result);
-	}
+    {
+        FBPAdminContentInfo result;
+        result.Data = elem;
+        OutContents.Add(result);
+    }
 
 	
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminGetContentUploadUrlRequest(
 		const FBPAdminGetContentUploadUrlRequest& In
-		,FString& OutKey
-		,FString& OutContentType
+        ,FString& OutKey
+        ,FString& OutContentType
 	)
 {
     OutKey = In.Data.Key;
@@ -389,7 +389,7 @@ void UPFAdminProxyLibrary::BreakBPAdminGetContentUploadUrlRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminGetContentUploadUrlResult(
 		const FBPAdminGetContentUploadUrlResult& In
-		,FString& OutURL
+        ,FString& OutURL
 	)
 {
     OutURL = In.Data.URL;
@@ -398,10 +398,10 @@ void UPFAdminProxyLibrary::BreakBPAdminGetContentUploadUrlResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminGetDataReportRequest(
 		const FBPAdminGetDataReportRequest& In
-		,FString& OutReportName
-		,int32& OutYear
-		,int32& OutMonth
-		,int32& OutDay
+        ,FString& OutReportName
+        ,int32& OutYear
+        ,int32& OutMonth
+        ,int32& OutDay
 	)
 {
     OutReportName = In.Data.ReportName;
@@ -413,7 +413,7 @@ void UPFAdminProxyLibrary::BreakBPAdminGetDataReportRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminGetDataReportResult(
 		const FBPAdminGetDataReportResult& In
-		,FString& OutDownloadUrl
+        ,FString& OutDownloadUrl
 	)
 {
     OutDownloadUrl = In.Data.DownloadUrl;
@@ -422,7 +422,7 @@ void UPFAdminProxyLibrary::BreakBPAdminGetDataReportResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminGetMatchmakerGameInfoRequest(
 		const FBPAdminGetMatchmakerGameInfoRequest& In
-		,FString& OutLobbyId
+        ,FString& OutLobbyId
 	)
 {
     OutLobbyId = In.Data.LobbyId;
@@ -431,15 +431,15 @@ void UPFAdminProxyLibrary::BreakBPAdminGetMatchmakerGameInfoRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminGetMatchmakerGameInfoResult(
 		const FBPAdminGetMatchmakerGameInfoResult& In
-		,FString& OutLobbyId
-		,FString& OutTitleId
-		,FDateTime& OutStartTime
-		,FDateTime& OutEndTime
-		,FString& OutMode
-		,FString& OutBuildVersion
-		,TArray<FString>& OutPlayers
-		,FString& OutServerAddress
-		,int32& OutServerPort
+        ,FString& OutLobbyId
+        ,FString& OutTitleId
+        ,FDateTime& OutStartTime
+        ,FDateTime& OutEndTime
+        ,FString& OutMode
+        ,FString& OutBuildVersion
+        ,TArray<FString>& OutPlayers
+        ,FString& OutServerAddress
+        ,int32& OutServerPort
 	)
 {
     OutLobbyId = In.Data.LobbyId;
@@ -457,7 +457,7 @@ void UPFAdminProxyLibrary::BreakBPAdminGetMatchmakerGameInfoResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminGetMatchmakerGameModesRequest(
 		const FBPAdminGetMatchmakerGameModesRequest& In
-		,FString& OutBuildVersion
+        ,FString& OutBuildVersion
 	)
 {
     OutBuildVersion = In.Data.BuildVersion;
@@ -466,22 +466,22 @@ void UPFAdminProxyLibrary::BreakBPAdminGetMatchmakerGameModesRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminGetMatchmakerGameModesResult(
 		const FBPAdminGetMatchmakerGameModesResult& In
-		,TArray<FBPAdminGameModeInfo>& OutGameModes
+        ,TArray<FBPAdminGameModeInfo>& OutGameModes
 	)
 {
     for (const PlayFab::AdminModels::FGameModeInfo& elem : In.Data.GameModes)
-	{
-		FBPAdminGameModeInfo result;
-		result.Data = elem;
-		OutGameModes.Add(result);
-	}
+    {
+        FBPAdminGameModeInfo result;
+        result.Data = elem;
+        OutGameModes.Add(result);
+    }
 
 	
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminGetPublisherDataRequest(
 		const FBPAdminGetPublisherDataRequest& In
-		,TArray<FString>& OutKeys
+        ,TArray<FString>& OutKeys
 	)
 {
     OutKeys = In.Data.Keys;
@@ -498,7 +498,7 @@ void UPFAdminProxyLibrary::BreakBPAdminGetPublisherDataResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminGetRandomResultTablesRequest(
 		const FBPAdminGetRandomResultTablesRequest& In
-		,FString& OutCatalogVersion
+        ,FString& OutCatalogVersion
 	)
 {
     OutCatalogVersion = In.Data.CatalogVersion;
@@ -515,7 +515,7 @@ void UPFAdminProxyLibrary::BreakBPAdminGetRandomResultTablesResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminGetServerBuildInfoRequest(
 		const FBPAdminGetServerBuildInfoRequest& In
-		,FString& OutBuildId
+        ,FString& OutBuildId
 	)
 {
     OutBuildId = In.Data.BuildId;
@@ -524,12 +524,12 @@ void UPFAdminProxyLibrary::BreakBPAdminGetServerBuildInfoRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminGetServerBuildInfoResult(
 		const FBPAdminGetServerBuildInfoResult& In
-		,FString& OutBuildId
-		,int32& OutMaxGamesPerHost
-		,FString& OutComment
-		,FDateTime& OutTimestamp
-		,FString& OutTitleId
-		,FString& OutErrorMessage
+        ,FString& OutBuildId
+        ,int32& OutMaxGamesPerHost
+        ,FString& OutComment
+        ,FDateTime& OutTimestamp
+        ,FString& OutTitleId
+        ,FString& OutErrorMessage
 	)
 {
     OutBuildId = In.Data.BuildId;
@@ -545,7 +545,7 @@ void UPFAdminProxyLibrary::BreakBPAdminGetServerBuildInfoResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminGetServerBuildUploadURLRequest(
 		const FBPAdminGetServerBuildUploadURLRequest& In
-		,FString& OutBuildId
+        ,FString& OutBuildId
 	)
 {
     OutBuildId = In.Data.BuildId;
@@ -554,7 +554,7 @@ void UPFAdminProxyLibrary::BreakBPAdminGetServerBuildUploadURLRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminGetServerBuildUploadURLResult(
 		const FBPAdminGetServerBuildUploadURLResult& In
-		,FString& OutURL
+        ,FString& OutURL
 	)
 {
     OutURL = In.Data.URL;
@@ -563,8 +563,8 @@ void UPFAdminProxyLibrary::BreakBPAdminGetServerBuildUploadURLResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminGetStoreItemsRequest(
 		const FBPAdminGetStoreItemsRequest& In
-		,FString& OutCatalogVersion
-		,FString& OutStoreId
+        ,FString& OutCatalogVersion
+        ,FString& OutStoreId
 	)
 {
     OutCatalogVersion = In.Data.CatalogVersion;
@@ -574,22 +574,22 @@ void UPFAdminProxyLibrary::BreakBPAdminGetStoreItemsRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminGetStoreItemsResult(
 		const FBPAdminGetStoreItemsResult& In
-		,TArray<FBPAdminStoreItem>& OutStore
+        ,TArray<FBPAdminStoreItem>& OutStore
 	)
 {
     for (const PlayFab::AdminModels::FStoreItem& elem : In.Data.Store)
-	{
-		FBPAdminStoreItem result;
-		result.Data = elem;
-		OutStore.Add(result);
-	}
+    {
+        FBPAdminStoreItem result;
+        result.Data = elem;
+        OutStore.Add(result);
+    }
 
 	
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminGetTitleDataRequest(
 		const FBPAdminGetTitleDataRequest& In
-		,TArray<FString>& OutKeys
+        ,TArray<FString>& OutKeys
 	)
 {
     OutKeys = In.Data.Keys;
@@ -606,9 +606,9 @@ void UPFAdminProxyLibrary::BreakBPAdminGetTitleDataResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminGetUserDataRequest(
 		const FBPAdminGetUserDataRequest& In
-		,FString& OutPlayFabId
-		,TArray<FString>& OutKeys
-		,int32& OutIfChangedFromDataVersion
+        ,FString& OutPlayFabId
+        ,TArray<FString>& OutKeys
+        ,int32& OutIfChangedFromDataVersion
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -619,8 +619,8 @@ void UPFAdminProxyLibrary::BreakBPAdminGetUserDataRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminGetUserDataResult(
 		const FBPAdminGetUserDataResult& In
-		,FString& OutPlayFabId
-		,int32& OutDataVersion
+        ,FString& OutPlayFabId
+        ,int32& OutDataVersion
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -631,7 +631,7 @@ void UPFAdminProxyLibrary::BreakBPAdminGetUserDataResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminGetUserInventoryRequest(
 		const FBPAdminGetUserInventoryRequest& In
-		,FString& OutPlayFabId
+        ,FString& OutPlayFabId
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -640,17 +640,17 @@ void UPFAdminProxyLibrary::BreakBPAdminGetUserInventoryRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminGetUserInventoryResult(
 		const FBPAdminGetUserInventoryResult& In
-		,FString& OutPlayFabId
-		,TArray<FBPAdminItemInstance>& OutInventory
+        ,FString& OutPlayFabId
+        ,TArray<FBPAdminItemInstance>& OutInventory
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
 	for (const PlayFab::AdminModels::FItemInstance& elem : In.Data.Inventory)
-	{
-		FBPAdminItemInstance result;
-		result.Data = elem;
-		OutInventory.Add(result);
-	}
+    {
+        FBPAdminItemInstance result;
+        result.Data = elem;
+        OutInventory.Add(result);
+    }
 
 	
 	
@@ -659,23 +659,23 @@ void UPFAdminProxyLibrary::BreakBPAdminGetUserInventoryResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminGrantedItemInstance(
 		const FBPAdminGrantedItemInstance& In
-		,FString& OutPlayFabId
-		,FString& OutCharacterId
-		,bool& OutResult
-		,FString& OutItemId
-		,FString& OutItemInstanceId
-		,FString& OutItemClass
-		,FDateTime& OutPurchaseDate
-		,FDateTime& OutExpiration
-		,int32& OutRemainingUses
-		,int32& OutUsesIncrementedBy
-		,FString& OutAnnotation
-		,FString& OutCatalogVersion
-		,FString& OutBundleParent
-		,FString& OutDisplayName
-		,FString& OutUnitCurrency
-		,int32& OutUnitPrice
-		,TArray<FString>& OutBundleContents
+        ,FString& OutPlayFabId
+        ,FString& OutCharacterId
+        ,bool& OutResult
+        ,FString& OutItemId
+        ,FString& OutItemInstanceId
+        ,FString& OutItemClass
+        ,FDateTime& OutPurchaseDate
+        ,FDateTime& OutExpiration
+        ,int32& OutRemainingUses
+        ,int32& OutUsesIncrementedBy
+        ,FString& OutAnnotation
+        ,FString& OutCatalogVersion
+        ,FString& OutBundleParent
+        ,FString& OutDisplayName
+        ,FString& OutUnitCurrency
+        ,int32& OutUnitPrice
+        ,TArray<FString>& OutBundleContents
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -701,42 +701,42 @@ void UPFAdminProxyLibrary::BreakBPAdminGrantedItemInstance(
 
 void UPFAdminProxyLibrary::BreakBPAdminGrantItemsToUsersRequest(
 		const FBPAdminGrantItemsToUsersRequest& In
-		,FString& OutCatalogVersion
-		,TArray<FBPAdminItemGrant>& OutItemGrants
+        ,FString& OutCatalogVersion
+        ,TArray<FBPAdminItemGrant>& OutItemGrants
 	)
 {
     OutCatalogVersion = In.Data.CatalogVersion;
 	for (const PlayFab::AdminModels::FItemGrant& elem : In.Data.ItemGrants)
-	{
-		FBPAdminItemGrant result;
-		result.Data = elem;
-		OutItemGrants.Add(result);
-	}
+    {
+        FBPAdminItemGrant result;
+        result.Data = elem;
+        OutItemGrants.Add(result);
+    }
 
 	
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminGrantItemsToUsersResult(
 		const FBPAdminGrantItemsToUsersResult& In
-		,TArray<FBPAdminGrantedItemInstance>& OutItemGrantResults
+        ,TArray<FBPAdminGrantedItemInstance>& OutItemGrantResults
 	)
 {
     for (const PlayFab::AdminModels::FGrantedItemInstance& elem : In.Data.ItemGrantResults)
-	{
-		FBPAdminGrantedItemInstance result;
-		result.Data = elem;
-		OutItemGrantResults.Add(result);
-	}
+    {
+        FBPAdminGrantedItemInstance result;
+        result.Data = elem;
+        OutItemGrantResults.Add(result);
+    }
 
 	
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminItemGrant(
 		const FBPAdminItemGrant& In
-		,FString& OutPlayFabId
-		,FString& OutItemId
-		,FString& OutAnnotation
-		,FString& OutCharacterId
+        ,FString& OutPlayFabId
+        ,FString& OutItemId
+        ,FString& OutAnnotation
+        ,FString& OutCharacterId
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -748,20 +748,20 @@ void UPFAdminProxyLibrary::BreakBPAdminItemGrant(
 
 void UPFAdminProxyLibrary::BreakBPAdminItemInstance(
 		const FBPAdminItemInstance& In
-		,FString& OutItemId
-		,FString& OutItemInstanceId
-		,FString& OutItemClass
-		,FDateTime& OutPurchaseDate
-		,FDateTime& OutExpiration
-		,int32& OutRemainingUses
-		,int32& OutUsesIncrementedBy
-		,FString& OutAnnotation
-		,FString& OutCatalogVersion
-		,FString& OutBundleParent
-		,FString& OutDisplayName
-		,FString& OutUnitCurrency
-		,int32& OutUnitPrice
-		,TArray<FString>& OutBundleContents
+        ,FString& OutItemId
+        ,FString& OutItemInstanceId
+        ,FString& OutItemClass
+        ,FDateTime& OutPurchaseDate
+        ,FDateTime& OutExpiration
+        ,int32& OutRemainingUses
+        ,int32& OutUsesIncrementedBy
+        ,FString& OutAnnotation
+        ,FString& OutCatalogVersion
+        ,FString& OutBundleParent
+        ,FString& OutDisplayName
+        ,FString& OutUnitCurrency
+        ,int32& OutUnitPrice
+        ,TArray<FString>& OutBundleContents
 	)
 {
     OutItemId = In.Data.ItemId;
@@ -791,15 +791,15 @@ void UPFAdminProxyLibrary::BreakBPAdminListBuildsRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminListBuildsResult(
 		const FBPAdminListBuildsResult& In
-		,TArray<FBPAdminGetServerBuildInfoResult>& OutBuilds
+        ,TArray<FBPAdminGetServerBuildInfoResult>& OutBuilds
 	)
 {
     for (const PlayFab::AdminModels::FGetServerBuildInfoResult& elem : In.Data.Builds)
-	{
-		FBPAdminGetServerBuildInfoResult result;
-		result.Data = elem;
-		OutBuilds.Add(result);
-	}
+    {
+        FBPAdminGetServerBuildInfoResult result;
+        result.Data = elem;
+        OutBuilds.Add(result);
+    }
 
 	
 }
@@ -813,25 +813,25 @@ void UPFAdminProxyLibrary::BreakBPAdminListVirtualCurrencyTypesRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminListVirtualCurrencyTypesResult(
 		const FBPAdminListVirtualCurrencyTypesResult& In
-		,TArray<FBPAdminVirtualCurrencyData>& OutVirtualCurrencies
+        ,TArray<FBPAdminVirtualCurrencyData>& OutVirtualCurrencies
 	)
 {
     for (const PlayFab::AdminModels::FVirtualCurrencyData& elem : In.Data.VirtualCurrencies)
-	{
-		FBPAdminVirtualCurrencyData result;
-		result.Data = elem;
-		OutVirtualCurrencies.Add(result);
-	}
+    {
+        FBPAdminVirtualCurrencyData result;
+        result.Data = elem;
+        OutVirtualCurrencies.Add(result);
+    }
 
 	
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminLookupUserAccountInfoRequest(
 		const FBPAdminLookupUserAccountInfoRequest& In
-		,FString& OutPlayFabId
-		,FString& OutEmail
-		,FString& OutUsername
-		,FString& OutTitleDisplayName
+        ,FString& OutPlayFabId
+        ,FString& OutEmail
+        ,FString& OutUsername
+        ,FString& OutTitleDisplayName
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -843,26 +843,26 @@ void UPFAdminProxyLibrary::BreakBPAdminLookupUserAccountInfoRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminLookupUserAccountInfoResult(
 		const FBPAdminLookupUserAccountInfoResult& In
-		,FBPAdminUserAccountInfo& OutUserInfo
+        ,FBPAdminUserAccountInfo& OutUserInfo
 	)
 {
-    if (In.Data.UserInfo.IsValid()) {	OutUserInfo.Data = *In.Data.UserInfo;}
+    if (In.Data.UserInfo.IsValid()) {    OutUserInfo.Data = *In.Data.UserInfo;}
 	
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminModifyMatchmakerGameModesRequest(
 		const FBPAdminModifyMatchmakerGameModesRequest& In
-		,FString& OutBuildVersion
-		,TArray<FBPAdminGameModeInfo>& OutGameModes
+        ,FString& OutBuildVersion
+        ,TArray<FBPAdminGameModeInfo>& OutGameModes
 	)
 {
     OutBuildVersion = In.Data.BuildVersion;
 	for (const PlayFab::AdminModels::FGameModeInfo& elem : In.Data.GameModes)
-	{
-		FBPAdminGameModeInfo result;
-		result.Data = elem;
-		OutGameModes.Add(result);
-	}
+    {
+        FBPAdminGameModeInfo result;
+        result.Data = elem;
+        OutGameModes.Add(result);
+    }
 
 	
 }
@@ -876,12 +876,12 @@ void UPFAdminProxyLibrary::BreakBPAdminModifyMatchmakerGameModesResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminModifyServerBuildRequest(
 		const FBPAdminModifyServerBuildRequest& In
-		,FString& OutBuildId
-		,FDateTime& OutTimestamp
-		,int32& OutMaxGamesPerHost
-		,FString& OutCommandLineTemplate
-		,FString& OutExecutablePath
-		,FString& OutComment
+        ,FString& OutBuildId
+        ,FDateTime& OutTimestamp
+        ,int32& OutMaxGamesPerHost
+        ,FString& OutCommandLineTemplate
+        ,FString& OutExecutablePath
+        ,FString& OutComment
 	)
 {
     OutBuildId = In.Data.BuildId;
@@ -896,13 +896,13 @@ void UPFAdminProxyLibrary::BreakBPAdminModifyServerBuildRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminModifyServerBuildResult(
 		const FBPAdminModifyServerBuildResult& In
-		,FString& OutBuildId
-		,int32& OutMaxGamesPerHost
-		,FString& OutCommandLineTemplate
-		,FString& OutExecutablePath
-		,FString& OutComment
-		,FDateTime& OutTimestamp
-		,FString& OutTitleId
+        ,FString& OutBuildId
+        ,int32& OutMaxGamesPerHost
+        ,FString& OutCommandLineTemplate
+        ,FString& OutExecutablePath
+        ,FString& OutComment
+        ,FDateTime& OutTimestamp
+        ,FString& OutTitleId
 	)
 {
     OutBuildId = In.Data.BuildId;
@@ -919,10 +919,10 @@ void UPFAdminProxyLibrary::BreakBPAdminModifyServerBuildResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminModifyUserVirtualCurrencyResult(
 		const FBPAdminModifyUserVirtualCurrencyResult& In
-		,FString& OutPlayFabId
-		,FString& OutVirtualCurrency
-		,int32& OutBalanceChange
-		,int32& OutBalance
+        ,FString& OutPlayFabId
+        ,FString& OutVirtualCurrency
+        ,int32& OutBalanceChange
+        ,int32& OutBalance
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -934,45 +934,45 @@ void UPFAdminProxyLibrary::BreakBPAdminModifyUserVirtualCurrencyResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminRandomResultTable(
 		const FBPAdminRandomResultTable& In
-		,FString& OutTableId
-		,TArray<FBPAdminResultTableNode>& OutNodes
+        ,FString& OutTableId
+        ,TArray<FBPAdminResultTableNode>& OutNodes
 	)
 {
     OutTableId = In.Data.TableId;
 	for (const PlayFab::AdminModels::FResultTableNode& elem : In.Data.Nodes)
-	{
-		FBPAdminResultTableNode result;
-		result.Data = elem;
-		OutNodes.Add(result);
-	}
+    {
+        FBPAdminResultTableNode result;
+        result.Data = elem;
+        OutNodes.Add(result);
+    }
 
 	
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminRandomResultTableListing(
 		const FBPAdminRandomResultTableListing& In
-		,FString& OutCatalogVersion
-		,FString& OutTableId
-		,TArray<FBPAdminResultTableNode>& OutNodes
+        ,FString& OutCatalogVersion
+        ,FString& OutTableId
+        ,TArray<FBPAdminResultTableNode>& OutNodes
 	)
 {
     OutCatalogVersion = In.Data.CatalogVersion;
 	OutTableId = In.Data.TableId;
 	for (const PlayFab::AdminModels::FResultTableNode& elem : In.Data.Nodes)
-	{
-		FBPAdminResultTableNode result;
-		result.Data = elem;
-		OutNodes.Add(result);
-	}
+    {
+        FBPAdminResultTableNode result;
+        result.Data = elem;
+        OutNodes.Add(result);
+    }
 
 	
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminRefundPurchaseRequest(
 		const FBPAdminRefundPurchaseRequest& In
-		,FString& OutPlayFabId
-		,FString& OutOrderId
-		,FString& OutReason
+        ,FString& OutPlayFabId
+        ,FString& OutOrderId
+        ,FString& OutReason
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -983,7 +983,7 @@ void UPFAdminProxyLibrary::BreakBPAdminRefundPurchaseRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminRefundPurchaseResponse(
 		const FBPAdminRefundPurchaseResponse& In
-		,FString& OutPurchaseStatus
+        ,FString& OutPurchaseStatus
 	)
 {
     OutPurchaseStatus = In.Data.PurchaseStatus;
@@ -999,7 +999,7 @@ void UPFAdminProxyLibrary::BreakBPAdminRegion(
 
 void UPFAdminProxyLibrary::BreakBPAdminRemoveServerBuildRequest(
 		const FBPAdminRemoveServerBuildRequest& In
-		,FString& OutBuildId
+        ,FString& OutBuildId
 	)
 {
     OutBuildId = In.Data.BuildId;
@@ -1015,8 +1015,8 @@ void UPFAdminProxyLibrary::BreakBPAdminRemoveServerBuildResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminResetCharacterStatisticsRequest(
 		const FBPAdminResetCharacterStatisticsRequest& In
-		,FString& OutPlayFabId
-		,FString& OutCharacterId
+        ,FString& OutPlayFabId
+        ,FString& OutCharacterId
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -1033,22 +1033,22 @@ void UPFAdminProxyLibrary::BreakBPAdminResetCharacterStatisticsResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminResetUsersRequest(
 		const FBPAdminResetUsersRequest& In
-		,TArray<FBPAdminUserCredentials>& OutUsers
+        ,TArray<FBPAdminUserCredentials>& OutUsers
 	)
 {
     for (const PlayFab::AdminModels::FUserCredentials& elem : In.Data.Users)
-	{
-		FBPAdminUserCredentials result;
-		result.Data = elem;
-		OutUsers.Add(result);
-	}
+    {
+        FBPAdminUserCredentials result;
+        result.Data = elem;
+        OutUsers.Add(result);
+    }
 
 	
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminResetUserStatisticsRequest(
 		const FBPAdminResetUserStatisticsRequest& In
-		,FString& OutPlayFabId
+        ,FString& OutPlayFabId
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -1071,9 +1071,9 @@ void UPFAdminProxyLibrary::BreakBPAdminResolutionOutcome(
 
 void UPFAdminProxyLibrary::BreakBPAdminResolvePurchaseDisputeRequest(
 		const FBPAdminResolvePurchaseDisputeRequest& In
-		,FString& OutPlayFabId
-		,FString& OutOrderId
-		,FString& OutReason
+        ,FString& OutPlayFabId
+        ,FString& OutOrderId
+        ,FString& OutReason
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -1085,7 +1085,7 @@ void UPFAdminProxyLibrary::BreakBPAdminResolvePurchaseDisputeRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminResolvePurchaseDisputeResponse(
 		const FBPAdminResolvePurchaseDisputeResponse& In
-		,FString& OutPurchaseStatus
+        ,FString& OutPurchaseStatus
 	)
 {
     OutPurchaseStatus = In.Data.PurchaseStatus;
@@ -1094,8 +1094,8 @@ void UPFAdminProxyLibrary::BreakBPAdminResolvePurchaseDisputeResponse(
 
 void UPFAdminProxyLibrary::BreakBPAdminResultTableNode(
 		const FBPAdminResultTableNode& In
-		,FString& OutResultItem
-		,int32& OutWeight
+        ,FString& OutResultItem
+        ,int32& OutWeight
 	)
 {
     
@@ -1113,9 +1113,9 @@ void UPFAdminProxyLibrary::BreakBPAdminResultTableNodeType(
 
 void UPFAdminProxyLibrary::BreakBPAdminRevokeInventoryItemRequest(
 		const FBPAdminRevokeInventoryItemRequest& In
-		,FString& OutPlayFabId
-		,FString& OutCharacterId
-		,FString& OutItemInstanceId
+        ,FString& OutPlayFabId
+        ,FString& OutCharacterId
+        ,FString& OutItemInstanceId
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -1133,7 +1133,7 @@ void UPFAdminProxyLibrary::BreakBPAdminRevokeInventoryResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminSendAccountRecoveryEmailRequest(
 		const FBPAdminSendAccountRecoveryEmailRequest& In
-		,FString& OutEmail
+        ,FString& OutEmail
 	)
 {
     OutEmail = In.Data.Email;
@@ -1149,8 +1149,8 @@ void UPFAdminProxyLibrary::BreakBPAdminSendAccountRecoveryEmailResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminSetPublishedRevisionRequest(
 		const FBPAdminSetPublishedRevisionRequest& In
-		,int32& OutVersion
-		,int32& OutRevision
+        ,int32& OutVersion
+        ,int32& OutRevision
 	)
 {
     OutVersion = In.Data.Version;
@@ -1167,8 +1167,8 @@ void UPFAdminProxyLibrary::BreakBPAdminSetPublishedRevisionResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminSetPublisherDataRequest(
 		const FBPAdminSetPublisherDataRequest& In
-		,FString& OutKey
-		,FString& OutValue
+        ,FString& OutKey
+        ,FString& OutValue
 	)
 {
     OutKey = In.Data.Key;
@@ -1185,8 +1185,8 @@ void UPFAdminProxyLibrary::BreakBPAdminSetPublisherDataResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminSetTitleDataRequest(
 		const FBPAdminSetTitleDataRequest& In
-		,FString& OutKey
-		,FString& OutValue
+        ,FString& OutKey
+        ,FString& OutValue
 	)
 {
     OutKey = In.Data.Key;
@@ -1203,11 +1203,11 @@ void UPFAdminProxyLibrary::BreakBPAdminSetTitleDataResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminSetupPushNotificationRequest(
 		const FBPAdminSetupPushNotificationRequest& In
-		,FString& OutName
-		,FString& OutPlatform
-		,FString& OutKey
-		,FString& OutCredential
-		,bool& OutOverwriteOldARN
+        ,FString& OutName
+        ,FString& OutPlatform
+        ,FString& OutKey
+        ,FString& OutCredential
+        ,bool& OutOverwriteOldARN
 	)
 {
     OutName = In.Data.Name;
@@ -1220,7 +1220,7 @@ void UPFAdminProxyLibrary::BreakBPAdminSetupPushNotificationRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminSetupPushNotificationResult(
 		const FBPAdminSetupPushNotificationResult& In
-		,FString& OutARN
+        ,FString& OutARN
 	)
 {
     OutARN = In.Data.ARN;
@@ -1229,7 +1229,7 @@ void UPFAdminProxyLibrary::BreakBPAdminSetupPushNotificationResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminStoreItem(
 		const FBPAdminStoreItem& In
-		,FString& OutItemId
+        ,FString& OutItemId
 	)
 {
     OutItemId = In.Data.ItemId;
@@ -1240,9 +1240,9 @@ void UPFAdminProxyLibrary::BreakBPAdminStoreItem(
 
 void UPFAdminProxyLibrary::BreakBPAdminSubtractUserVirtualCurrencyRequest(
 		const FBPAdminSubtractUserVirtualCurrencyRequest& In
-		,FString& OutPlayFabId
-		,FString& OutVirtualCurrency
-		,int32& OutAmount
+        ,FString& OutPlayFabId
+        ,FString& OutVirtualCurrency
+        ,int32& OutAmount
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -1260,17 +1260,17 @@ void UPFAdminProxyLibrary::BreakBPAdminTitleActivationStatus(
 
 void UPFAdminProxyLibrary::BreakBPAdminUpdateCatalogItemsRequest(
 		const FBPAdminUpdateCatalogItemsRequest& In
-		,FString& OutCatalogVersion
-		,TArray<FBPAdminCatalogItem>& OutCatalog
+        ,FString& OutCatalogVersion
+        ,TArray<FBPAdminCatalogItem>& OutCatalog
 	)
 {
     OutCatalogVersion = In.Data.CatalogVersion;
 	for (const PlayFab::AdminModels::FCatalogItem& elem : In.Data.Catalog)
-	{
-		FBPAdminCatalogItem result;
-		result.Data = elem;
-		OutCatalog.Add(result);
-	}
+    {
+        FBPAdminCatalogItem result;
+        result.Data = elem;
+        OutCatalog.Add(result);
+    }
 
 	
 }
@@ -1284,25 +1284,25 @@ void UPFAdminProxyLibrary::BreakBPAdminUpdateCatalogItemsResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminUpdateCloudScriptRequest(
 		const FBPAdminUpdateCloudScriptRequest& In
-		,int32& OutVersion
-		,TArray<FBPAdminCloudScriptFile>& OutFiles
+        ,int32& OutVersion
+        ,TArray<FBPAdminCloudScriptFile>& OutFiles
 	)
 {
     OutVersion = In.Data.Version;
 	for (const PlayFab::AdminModels::FCloudScriptFile& elem : In.Data.Files)
-	{
-		FBPAdminCloudScriptFile result;
-		result.Data = elem;
-		OutFiles.Add(result);
-	}
+    {
+        FBPAdminCloudScriptFile result;
+        result.Data = elem;
+        OutFiles.Add(result);
+    }
 
 	
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminUpdateCloudScriptResult(
 		const FBPAdminUpdateCloudScriptResult& In
-		,int32& OutVersion
-		,int32& OutRevision
+        ,int32& OutVersion
+        ,int32& OutRevision
 	)
 {
     OutVersion = In.Data.Version;
@@ -1312,17 +1312,17 @@ void UPFAdminProxyLibrary::BreakBPAdminUpdateCloudScriptResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminUpdateRandomResultTablesRequest(
 		const FBPAdminUpdateRandomResultTablesRequest& In
-		,FString& OutCatalogVersion
-		,TArray<FBPAdminRandomResultTable>& OutTables
+        ,FString& OutCatalogVersion
+        ,TArray<FBPAdminRandomResultTable>& OutTables
 	)
 {
     OutCatalogVersion = In.Data.CatalogVersion;
 	for (const PlayFab::AdminModels::FRandomResultTable& elem : In.Data.Tables)
-	{
-		FBPAdminRandomResultTable result;
-		result.Data = elem;
-		OutTables.Add(result);
-	}
+    {
+        FBPAdminRandomResultTable result;
+        result.Data = elem;
+        OutTables.Add(result);
+    }
 
 	
 }
@@ -1336,19 +1336,19 @@ void UPFAdminProxyLibrary::BreakBPAdminUpdateRandomResultTablesResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminUpdateStoreItemsRequest(
 		const FBPAdminUpdateStoreItemsRequest& In
-		,FString& OutCatalogVersion
-		,FString& OutStoreId
-		,TArray<FBPAdminStoreItem>& OutStore
+        ,FString& OutCatalogVersion
+        ,FString& OutStoreId
+        ,TArray<FBPAdminStoreItem>& OutStore
 	)
 {
     OutCatalogVersion = In.Data.CatalogVersion;
 	OutStoreId = In.Data.StoreId;
 	for (const PlayFab::AdminModels::FStoreItem& elem : In.Data.Store)
-	{
-		FBPAdminStoreItem result;
-		result.Data = elem;
-		OutStore.Add(result);
-	}
+    {
+        FBPAdminStoreItem result;
+        result.Data = elem;
+        OutStore.Add(result);
+    }
 
 	
 }
@@ -1362,20 +1362,18 @@ void UPFAdminProxyLibrary::BreakBPAdminUpdateStoreItemsResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminUpdateUserDataRequest(
 		const FBPAdminUpdateUserDataRequest& In
-		,FString& OutPlayFabId
-		,TArray<FString>& OutKeysToRemove
+        ,FString& OutPlayFabId
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
 	
-	OutKeysToRemove = In.Data.KeysToRemove;
 	
 	
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminUpdateUserDataResult(
 		const FBPAdminUpdateUserDataResult& In
-		,int32& OutDataVersion
+        ,int32& OutDataVersion
 	)
 {
     OutDataVersion = In.Data.DataVersion;
@@ -1384,20 +1382,18 @@ void UPFAdminProxyLibrary::BreakBPAdminUpdateUserDataResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminUpdateUserInternalDataRequest(
 		const FBPAdminUpdateUserInternalDataRequest& In
-		,FString& OutPlayFabId
-		,TArray<FString>& OutKeysToRemove
+        ,FString& OutPlayFabId
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
 	
-	OutKeysToRemove = In.Data.KeysToRemove;
 	
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminUpdateUserTitleDisplayNameRequest(
 		const FBPAdminUpdateUserTitleDisplayNameRequest& In
-		,FString& OutPlayFabId
-		,FString& OutDisplayName
+        ,FString& OutPlayFabId
+        ,FString& OutDisplayName
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -1407,7 +1403,7 @@ void UPFAdminProxyLibrary::BreakBPAdminUpdateUserTitleDisplayNameRequest(
 
 void UPFAdminProxyLibrary::BreakBPAdminUpdateUserTitleDisplayNameResult(
 		const FBPAdminUpdateUserTitleDisplayNameResult& In
-		,FString& OutDisplayName
+        ,FString& OutDisplayName
 	)
 {
     OutDisplayName = In.Data.DisplayName;
@@ -1416,31 +1412,31 @@ void UPFAdminProxyLibrary::BreakBPAdminUpdateUserTitleDisplayNameResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminUserAccountInfo(
 		const FBPAdminUserAccountInfo& In
-		,FString& OutPlayFabId
-		,FDateTime& OutCreated
-		,FString& OutUsername
-		,FBPAdminUserTitleInfo& OutTitleInfo
-		,FBPAdminUserPrivateAccountInfo& OutPrivateInfo
-		,FBPAdminUserFacebookInfo& OutFacebookInfo
-		,FBPAdminUserSteamInfo& OutSteamInfo
-		,FBPAdminUserGameCenterInfo& OutGameCenterInfo
+        ,FString& OutPlayFabId
+        ,FDateTime& OutCreated
+        ,FString& OutUsername
+        ,FBPAdminUserTitleInfo& OutTitleInfo
+        ,FBPAdminUserPrivateAccountInfo& OutPrivateInfo
+        ,FBPAdminUserFacebookInfo& OutFacebookInfo
+        ,FBPAdminUserSteamInfo& OutSteamInfo
+        ,FBPAdminUserGameCenterInfo& OutGameCenterInfo
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
 	
 	OutUsername = In.Data.Username;
-	if (In.Data.TitleInfo.IsValid()) {	OutTitleInfo.Data = *In.Data.TitleInfo;}
-	if (In.Data.PrivateInfo.IsValid()) {	OutPrivateInfo.Data = *In.Data.PrivateInfo;}
-	if (In.Data.FacebookInfo.IsValid()) {	OutFacebookInfo.Data = *In.Data.FacebookInfo;}
-	if (In.Data.SteamInfo.IsValid()) {	OutSteamInfo.Data = *In.Data.SteamInfo;}
-	if (In.Data.GameCenterInfo.IsValid()) {	OutGameCenterInfo.Data = *In.Data.GameCenterInfo;}
+	if (In.Data.TitleInfo.IsValid()) {    OutTitleInfo.Data = *In.Data.TitleInfo;}
+	if (In.Data.PrivateInfo.IsValid()) {    OutPrivateInfo.Data = *In.Data.PrivateInfo;}
+	if (In.Data.FacebookInfo.IsValid()) {    OutFacebookInfo.Data = *In.Data.FacebookInfo;}
+	if (In.Data.SteamInfo.IsValid()) {    OutSteamInfo.Data = *In.Data.SteamInfo;}
+	if (In.Data.GameCenterInfo.IsValid()) {    OutGameCenterInfo.Data = *In.Data.GameCenterInfo;}
 	
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminUserCredentials(
 		const FBPAdminUserCredentials& In
-		,FString& OutUsername
-		,FString& OutPassword
+        ,FString& OutUsername
+        ,FString& OutPassword
 	)
 {
     OutUsername = In.Data.Username;
@@ -1457,8 +1453,8 @@ void UPFAdminProxyLibrary::BreakBPAdminUserDataPermission(
 
 void UPFAdminProxyLibrary::BreakBPAdminUserDataRecord(
 		const FBPAdminUserDataRecord& In
-		,FString& OutValue
-		,FDateTime& OutLastUpdated
+        ,FString& OutValue
+        ,FDateTime& OutLastUpdated
 	)
 {
     OutValue = In.Data.Value;
@@ -1469,8 +1465,8 @@ void UPFAdminProxyLibrary::BreakBPAdminUserDataRecord(
 
 void UPFAdminProxyLibrary::BreakBPAdminUserFacebookInfo(
 		const FBPAdminUserFacebookInfo& In
-		,FString& OutFacebookId
-		,FString& OutFullName
+        ,FString& OutFacebookId
+        ,FString& OutFullName
 	)
 {
     OutFacebookId = In.Data.FacebookId;
@@ -1480,7 +1476,7 @@ void UPFAdminProxyLibrary::BreakBPAdminUserFacebookInfo(
 
 void UPFAdminProxyLibrary::BreakBPAdminUserGameCenterInfo(
 		const FBPAdminUserGameCenterInfo& In
-		,FString& OutGameCenterId
+        ,FString& OutGameCenterId
 	)
 {
     OutGameCenterId = In.Data.GameCenterId;
@@ -1496,7 +1492,7 @@ void UPFAdminProxyLibrary::BreakBPAdminUserOrigination(
 
 void UPFAdminProxyLibrary::BreakBPAdminUserPrivateAccountInfo(
 		const FBPAdminUserPrivateAccountInfo& In
-		,FString& OutEmail
+        ,FString& OutEmail
 	)
 {
     OutEmail = In.Data.Email;
@@ -1505,8 +1501,8 @@ void UPFAdminProxyLibrary::BreakBPAdminUserPrivateAccountInfo(
 
 void UPFAdminProxyLibrary::BreakBPAdminUserSteamInfo(
 		const FBPAdminUserSteamInfo& In
-		,FString& OutSteamId
-		,FString& OutSteamCountry
+        ,FString& OutSteamId
+        ,FString& OutSteamCountry
 	)
 {
     OutSteamId = In.Data.SteamId;
@@ -1518,11 +1514,11 @@ void UPFAdminProxyLibrary::BreakBPAdminUserSteamInfo(
 
 void UPFAdminProxyLibrary::BreakBPAdminUserTitleInfo(
 		const FBPAdminUserTitleInfo& In
-		,FString& OutDisplayName
-		,FDateTime& OutCreated
-		,FDateTime& OutLastLogin
-		,FDateTime& OutFirstLogin
-		,bool& OutisBanned
+        ,FString& OutDisplayName
+        ,FDateTime& OutCreated
+        ,FDateTime& OutLastLogin
+        ,FDateTime& OutFirstLogin
+        ,bool& OutisBanned
 	)
 {
     OutDisplayName = In.Data.DisplayName;
@@ -1536,11 +1532,11 @@ void UPFAdminProxyLibrary::BreakBPAdminUserTitleInfo(
 
 void UPFAdminProxyLibrary::BreakBPAdminVirtualCurrencyData(
 		const FBPAdminVirtualCurrencyData& In
-		,FString& OutCurrencyCode
-		,FString& OutDisplayName
-		,int32& OutInitialDeposit
-		,int32& OutRechargeRate
-		,int32& OutRechargeMax
+        ,FString& OutCurrencyCode
+        ,FString& OutDisplayName
+        ,int32& OutInitialDeposit
+        ,int32& OutRechargeRate
+        ,int32& OutRechargeMax
 	)
 {
     OutCurrencyCode = In.Data.CurrencyCode;
@@ -1553,9 +1549,9 @@ void UPFAdminProxyLibrary::BreakBPAdminVirtualCurrencyData(
 
 void UPFAdminProxyLibrary::BreakBPAdminVirtualCurrencyRechargeTime(
 		const FBPAdminVirtualCurrencyRechargeTime& In
-		,int32& OutSecondsToRecharge
-		,FDateTime& OutRechargeTime
-		,int32& OutRechargeMax
+        ,int32& OutSecondsToRecharge
+        ,FDateTime& OutRechargeTime
+        ,int32& OutRechargeMax
 	)
 {
     OutSecondsToRecharge = In.Data.SecondsToRecharge;
