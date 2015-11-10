@@ -78,6 +78,8 @@ namespace PlayFab
 
         int GetPendingCalls();
 
+		
+
         // ------------ Generated API calls
 		
 		/**
@@ -247,7 +249,7 @@ namespace PlayFab
 			
 		/**
 		 * Retrieves the key-value store of custom title settings
-         * This API is designed to return title specific values which can be read, but not written to, by the client. For example, a developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new build.
+         * This API is designed to return title specific values which can be read, but not written to, by the client. For example, a developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new build. This AdminAPI call for getting title data guarantees no delay in between update and retrieval of newly set data.
 		 */
 		bool GetTitleData(AdminModels::FGetTitleDataRequest& request, const FGetTitleDataDelegate& SuccessDelegate = FGetTitleDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -396,7 +398,7 @@ namespace PlayFab
 			
 		/**
 		 * Retrieves the key-value store of custom publisher settings
-         * This API is designed to return publisher-specific values which can be read, but not written to, by the client. This data is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a publisher can use this API. For more information email devrel@playfab.com
+         * This API is designed to return publisher-specific values which can be read, but not written to, by the client. This data is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a publisher can use this API.  For more information email devrel@playfab.com.  This AdminAPI call for getting title data guarantees no delay in between update and retrieval of newly set data.
 		 */
 		bool GetPublisherData(AdminModels::FGetPublisherDataRequest& request, const FGetPublisherDataDelegate& SuccessDelegate = FGetPublisherDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 

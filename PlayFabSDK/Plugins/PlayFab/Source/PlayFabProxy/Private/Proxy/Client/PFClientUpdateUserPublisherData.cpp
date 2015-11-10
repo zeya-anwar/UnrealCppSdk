@@ -9,11 +9,12 @@ UPFClientUpdateUserPublisherData::UPFClientUpdateUserPublisherData(const FObject
 {
 }
 
-UPFClientUpdateUserPublisherData* UPFClientUpdateUserPublisherData::UpdateUserPublisherData(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InData)
+UPFClientUpdateUserPublisherData* UPFClientUpdateUserPublisherData::UpdateUserPublisherData(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InData, const TArray<FString>& InKeysToRemove)
 {
 	UPFClientUpdateUserPublisherData* Proxy = NewObject<UPFClientUpdateUserPublisherData>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	
+	Proxy->Request.KeysToRemove = InKeysToRemove;
 	
 	
 

@@ -21,7 +21,7 @@ public:
 	
 	// Adds, updates, and removes data keys for a shared group object. If the permission is set to Public, all fields updated or added in this call will be readable by users not in the group. By default, data permissions are set to Private. Regardless of the permission setting, only members of the group (and the server) can update the data.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Shared Group Data")
-	static UPFServerUpdateSharedGroupData* UpdateSharedGroupData(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InSharedGroupId, const FString& InData);
+	static UPFServerUpdateSharedGroupData* UpdateSharedGroupData(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InSharedGroupId, const FString& InData, const TArray<FString>& InKeysToRemove);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

@@ -9,12 +9,13 @@ UPFServerUpdateUserInternalData::UPFServerUpdateUserInternalData(const FObjectIn
 {
 }
 
-UPFServerUpdateUserInternalData* UPFServerUpdateUserInternalData::UpdateUserInternalData(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InPlayFabId, const FString& InData)
+UPFServerUpdateUserInternalData* UPFServerUpdateUserInternalData::UpdateUserInternalData(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InPlayFabId, const FString& InData, const TArray<FString>& InKeysToRemove)
 {
 	UPFServerUpdateUserInternalData* Proxy = NewObject<UPFServerUpdateUserInternalData>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.PlayFabId = InPlayFabId;
 	
+	Proxy->Request.KeysToRemove = InKeysToRemove;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

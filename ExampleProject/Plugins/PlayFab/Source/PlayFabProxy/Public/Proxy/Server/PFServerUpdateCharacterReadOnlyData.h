@@ -21,7 +21,7 @@ public:
 	
 	// Updates the title-specific custom data for the user's character which can only be read by the client
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Character Data")
-	static UPFServerUpdateCharacterReadOnlyData* UpdateCharacterReadOnlyData(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InPlayFabId, const FString& InCharacterId, const FString& InData);
+	static UPFServerUpdateCharacterReadOnlyData* UpdateCharacterReadOnlyData(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InPlayFabId, const FString& InCharacterId, const FString& InData, const TArray<FString>& InKeysToRemove);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

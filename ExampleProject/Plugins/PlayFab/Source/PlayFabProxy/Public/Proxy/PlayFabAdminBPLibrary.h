@@ -786,6 +786,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPAdminUpdateUserDataRequest(
 		const FBPAdminUpdateUserDataRequest& In
         ,FString& OutPlayFabId
+        ,TArray<FString>& OutKeysToRemove
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -798,6 +799,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPAdminUpdateUserInternalDataRequest(
 		const FBPAdminUpdateUserInternalDataRequest& In
         ,FString& OutPlayFabId
+        ,TArray<FString>& OutKeysToRemove
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))

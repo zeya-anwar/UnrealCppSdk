@@ -119,6 +119,8 @@ namespace PlayFab
         UPlayFabClientAPI();
         ~UPlayFabClientAPI();
 
+        int GetPendingCalls();
+
 		bool IsClientLoggedIn();
 
         // ------------ Generated API calls
@@ -434,7 +436,7 @@ namespace PlayFab
 			
 		/**
 		 * Retrieves the key-value store of custom title settings
-         * This API is designed to return title specific values which can be read, but not written to, by the client. For example, a developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new build.
+         * This API is designed to return title specific values which can be read, but not written to, by the client. For example, a developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new build. Note that there may up to a minute delay in between updating title data and this API call returning the newest value.
 		 */
 		bool GetTitleData(ClientModels::FGetTitleDataRequest& request, const FGetTitleDataDelegate& SuccessDelegate = FGetTitleDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -497,7 +499,7 @@ namespace PlayFab
 
 			
 		/**
-		 * Adds the virtual goods associated with the coupon to the user's inventory. Coupons can be generated  via the Promotions->Coupons tab in the PlayFab Game Manager. See this post for more information on coupons:  https://playfab.com/blog/2015/06/18/using-stores-and-coupons-game-manager
+		 * Adds the virtual goods associated with the coupon to the user's inventory. Coupons can be generated  via the Promotions->Coupons tab in the PlayFab Game Manager. See this post for more information on coupons:  https://playfab.com/blog/using-stores-and-coupons-game-manager/
          * Coupon codes can be created for any item, or set of items, in the catalog for the title. This operation causes the coupon to be consumed, and the specific items to be awarded to the user. Attempting to re-use an already consumed code, or a code which has not yet been created in the service, will result in an error.
 		 */
 		bool RedeemCoupon(ClientModels::FRedeemCouponRequest& request, const FRedeemCouponDelegate& SuccessDelegate = FRedeemCouponDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -636,7 +638,7 @@ namespace PlayFab
 			
 		/**
 		 * Retrieves the key-value store of custom publisher settings
-         * This API is designed to return publisher-specific values which can be read, but not written to, by the client. This data is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a publisher can use this API. For more information email devrel@playfab.com
+         * This API is designed to return publisher-specific values which can be read, but not written to, by the client. This data is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a publisher can use this API.  For more information email devrel@playfab.com. Note that there may up to a minute delay in between updating title data and this API call returning the newest value.
 		 */
 		bool GetPublisherData(ClientModels::FGetPublisherDataRequest& request, const FGetPublisherDataDelegate& SuccessDelegate = FGetPublisherDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 

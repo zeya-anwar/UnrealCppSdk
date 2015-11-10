@@ -1363,10 +1363,12 @@ void UPFAdminProxyLibrary::BreakBPAdminUpdateStoreItemsResult(
 void UPFAdminProxyLibrary::BreakBPAdminUpdateUserDataRequest(
 		const FBPAdminUpdateUserDataRequest& In
         ,FString& OutPlayFabId
+        ,TArray<FString>& OutKeysToRemove
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
 	
+	OutKeysToRemove = In.Data.KeysToRemove;
 	
 	
 }
@@ -1383,10 +1385,12 @@ void UPFAdminProxyLibrary::BreakBPAdminUpdateUserDataResult(
 void UPFAdminProxyLibrary::BreakBPAdminUpdateUserInternalDataRequest(
 		const FBPAdminUpdateUserInternalDataRequest& In
         ,FString& OutPlayFabId
+        ,TArray<FString>& OutKeysToRemove
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
 	
+	OutKeysToRemove = In.Data.KeysToRemove;
 	
 }
 

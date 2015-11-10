@@ -6182,6 +6182,17 @@ void PlayFab::AdminModels::FUpdateUserDataRequest::writeJSON(JsonWriter& writer)
         writer->WriteObjectEnd();
      }
 	
+    if(KeysToRemove.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("KeysToRemove"));
+    
+        for (const FString& item : KeysToRemove)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
+	
     if(Permission.notNull()) { writer->WriteIdentifierPrefix(TEXT("Permission")); writeUserDataPermissionEnumJSON(Permission, writer); }
 	
     
@@ -6208,6 +6219,8 @@ bool PlayFab::AdminModels::FUpdateUserDataRequest::readFromValue(const TSharedPt
             Data.Add(It.Key(), It.Value()->AsString());
         }
     }
+    
+    obj->TryGetStringArrayField(TEXT("KeysToRemove"),KeysToRemove);
     
     Permission = readUserDataPermissionFromValue(obj->TryGetField(TEXT("Permission")));
     
@@ -6269,6 +6282,17 @@ void PlayFab::AdminModels::FUpdateUserInternalDataRequest::writeJSON(JsonWriter&
         writer->WriteObjectEnd();
      }
 	
+    if(KeysToRemove.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("KeysToRemove"));
+    
+        for (const FString& item : KeysToRemove)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
+	
     
     writer->WriteObjectEnd();
 }
@@ -6293,6 +6317,8 @@ bool PlayFab::AdminModels::FUpdateUserInternalDataRequest::readFromValue(const T
             Data.Add(It.Key(), It.Value()->AsString());
         }
     }
+    
+    obj->TryGetStringArrayField(TEXT("KeysToRemove"),KeysToRemove);
     
     
     return HasSucceeded;

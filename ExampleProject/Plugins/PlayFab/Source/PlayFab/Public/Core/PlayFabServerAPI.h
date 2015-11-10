@@ -51,6 +51,7 @@ namespace PlayFab
 		DECLARE_DELEGATE_OneParam(FMoveItemToCharacterFromCharacterDelegate, const ServerModels::FMoveItemToCharacterFromCharacterResult&);
 		DECLARE_DELEGATE_OneParam(FMoveItemToCharacterFromUserDelegate, const ServerModels::FMoveItemToCharacterFromUserResult&);
 		DECLARE_DELEGATE_OneParam(FMoveItemToUserFromCharacterDelegate, const ServerModels::FMoveItemToUserFromCharacterResult&);
+		DECLARE_DELEGATE_OneParam(FRedeemCouponDelegate, const ServerModels::FRedeemCouponResult&);
 		DECLARE_DELEGATE_OneParam(FReportPlayerDelegate, const ServerModels::FReportPlayerServerResult&);
 		DECLARE_DELEGATE_OneParam(FSubtractCharacterVirtualCurrencyDelegate, const ServerModels::FModifyCharacterVirtualCurrencyResult&);
 		DECLARE_DELEGATE_OneParam(FSubtractUserVirtualCurrencyDelegate, const ServerModels::FModifyUserVirtualCurrencyResult&);
@@ -86,6 +87,8 @@ namespace PlayFab
 
         UPlayFabServerAPI();
         ~UPlayFabServerAPI();
+
+        int GetPendingCalls();
 
 		
 
@@ -234,14 +237,14 @@ namespace PlayFab
 			
 		/**
 		 * Retrieves the key-value store of custom title settings
-         * This API is designed to return title specific values which can be read, but not written to, by the client. For example, a developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new build.
+         * This API is designed to return title specific values which can be read, but not written to, by the client. For example, a developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new build. Note that there may up to a minute delay in between updating title data and this API call returning the newest value.
 		 */
 		bool GetTitleData(ServerModels::FGetTitleDataRequest& request, const FGetTitleDataDelegate& SuccessDelegate = FGetTitleDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
 		 * Retrieves the key-value store of custom internal title settings
-         * This API is designed to return title specific values which are accessible only to the server. This can be used to tweak settings on game servers and Cloud Scripts without needed to update and re-deploy them.
+         * This API is designed to return title specific values which are accessible only to the server. This can be used to tweak settings on game servers and Cloud Scripts without needed to update and re-deploy them. Note that there may up to a minute delay in between updating title data and this API call returning the newest value.
 		 */
 		bool GetTitleInternalData(ServerModels::FGetTitleDataRequest& request, const FGetTitleInternalDataDelegate& SuccessDelegate = FGetTitleInternalDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -342,6 +345,13 @@ namespace PlayFab
 
 			
 		/**
+		 * Adds the virtual goods associated with the coupon to the user's inventory. Coupons can be generated  via the Promotions->Coupons tab in the PlayFab Game Manager. See this post for more information on coupons:  https://playfab.com/blog/2015/06/18/using-stores-and-coupons-game-manager
+         * Coupon codes can be created for any item, or set of items, in the catalog for the title. This operation causes the coupon to be consumed, and the specific items to be awarded to the user. Attempting to re-use an already consumed code, or a code which has not yet been created in the service, will result in an error.
+		 */
+		bool RedeemCoupon(ServerModels::FRedeemCouponRequest& request, const FRedeemCouponDelegate& SuccessDelegate = FRedeemCouponDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+
+			
+		/**
 		 * Submit a report about a player (due to bad bahavior, etc.) on behalf of another player, so that customer service representatives for the title can take action concerning potentially poxic players.
 		 */
 		bool ReportPlayer(ServerModels::FReportPlayerServerRequest& request, const FReportPlayerDelegate& SuccessDelegate = FReportPlayerDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -413,7 +423,7 @@ namespace PlayFab
 			
 		/**
 		 * Retrieves the key-value store of custom publisher settings
-         * This API is designed to return publisher-specific values which can be read, but not written to, by the client. This data is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a publisher can use this API. For more information email devrel@playfab.com
+         * This API is designed to return publisher-specific values which can be read, but not written to, by the client. This data is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a publisher can use this API.  For more information email devrel@playfab.com. Note that there may up to a minute delay in between updating title data and this API call returning the newest value.
 		 */
 		bool GetPublisherData(ServerModels::FGetPublisherDataRequest& request, const FGetPublisherDataDelegate& SuccessDelegate = FGetPublisherDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
@@ -586,6 +596,7 @@ namespace PlayFab
 		void OnMoveItemToCharacterFromCharacterResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FMoveItemToCharacterFromCharacterDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnMoveItemToCharacterFromUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FMoveItemToCharacterFromUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnMoveItemToUserFromCharacterResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FMoveItemToUserFromCharacterDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+		void OnRedeemCouponResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRedeemCouponDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnReportPlayerResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FReportPlayerDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnSubtractCharacterVirtualCurrencyResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSubtractCharacterVirtualCurrencyDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnSubtractUserVirtualCurrencyResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSubtractUserVirtualCurrencyDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

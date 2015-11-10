@@ -956,6 +956,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerPlayerLeaderboardEntryDelegate, const FBPServerPlayerLeaderboardEntry&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRedeemCouponRequest"))
+struct FBPServerRedeemCouponRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FRedeemCouponRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRedeemCouponRequestDelegate, const FBPServerRedeemCouponRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRedeemCouponResult"))
+struct FBPServerRedeemCouponResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FRedeemCouponResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRedeemCouponResultDelegate, const FBPServerRedeemCouponResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRedeemMatchmakerTicketRequest"))
 struct FBPServerRedeemMatchmakerTicketRequest
 {

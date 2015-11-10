@@ -5889,6 +5889,99 @@ bool PlayFab::ServerModels::FNotifyMatchmakerPlayerLeftResult::readFromValue(con
 }
 
 
+PlayFab::ServerModels::FRedeemCouponRequest::~FRedeemCouponRequest()
+{
+    
+}
+
+void PlayFab::ServerModels::FRedeemCouponRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("CouponCode")); writer->WriteValue(CouponCode);
+	
+    writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
+	
+    if(CatalogVersion.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CatalogVersion")); writer->WriteValue(CatalogVersion); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FRedeemCouponRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> CouponCodeValue = obj->TryGetField(TEXT("CouponCode"));
+    if (CouponCodeValue.IsValid()&& !CouponCodeValue->IsNull())
+    {
+        FString TmpValue;
+        if(CouponCodeValue->TryGetString(TmpValue)) {CouponCode = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> CatalogVersionValue = obj->TryGetField(TEXT("CatalogVersion"));
+    if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FRedeemCouponResult::~FRedeemCouponResult()
+{
+    
+}
+
+void PlayFab::ServerModels::FRedeemCouponResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(GrantedItems.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("GrantedItems"));
+    
+        for (const FItemInstance& item : GrantedItems)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FRedeemCouponResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&GrantedItemsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("GrantedItems"));
+        for (int32 Idx = 0; Idx < GrantedItemsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = GrantedItemsArray[Idx];
+            
+            GrantedItems.Add(FItemInstance(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ServerModels::FRedeemMatchmakerTicketRequest::~FRedeemMatchmakerTicketRequest()
 {
     
@@ -6508,6 +6601,17 @@ void PlayFab::ServerModels::FUpdateCharacterDataRequest::writeJSON(JsonWriter& w
         writer->WriteObjectEnd();
      }
 	
+    if(KeysToRemove.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("KeysToRemove"));
+    
+        for (const FString& item : KeysToRemove)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
+	
     if(Permission.notNull()) { writer->WriteIdentifierPrefix(TEXT("Permission")); writeUserDataPermissionEnumJSON(Permission, writer); }
 	
     
@@ -6541,6 +6645,8 @@ bool PlayFab::ServerModels::FUpdateCharacterDataRequest::readFromValue(const TSh
             Data.Add(It.Key(), It.Value()->AsString());
         }
     }
+    
+    obj->TryGetStringArrayField(TEXT("KeysToRemove"),KeysToRemove);
     
     Permission = readUserDataPermissionFromValue(obj->TryGetField(TEXT("Permission")));
     
@@ -6685,6 +6791,17 @@ void PlayFab::ServerModels::FUpdateSharedGroupDataRequest::writeJSON(JsonWriter&
         writer->WriteObjectEnd();
      }
 	
+    if(KeysToRemove.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("KeysToRemove"));
+    
+        for (const FString& item : KeysToRemove)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
+	
     if(Permission.notNull()) { writer->WriteIdentifierPrefix(TEXT("Permission")); writeUserDataPermissionEnumJSON(Permission, writer); }
 	
     
@@ -6711,6 +6828,8 @@ bool PlayFab::ServerModels::FUpdateSharedGroupDataRequest::readFromValue(const T
             Data.Add(It.Key(), It.Value()->AsString());
         }
     }
+    
+    obj->TryGetStringArrayField(TEXT("KeysToRemove"),KeysToRemove);
     
     Permission = readUserDataPermissionFromValue(obj->TryGetField(TEXT("Permission")));
     
@@ -6763,6 +6882,17 @@ void PlayFab::ServerModels::FUpdateUserDataRequest::writeJSON(JsonWriter& writer
         writer->WriteObjectEnd();
      }
 	
+    if(KeysToRemove.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("KeysToRemove"));
+    
+        for (const FString& item : KeysToRemove)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
+	
     if(Permission.notNull()) { writer->WriteIdentifierPrefix(TEXT("Permission")); writeUserDataPermissionEnumJSON(Permission, writer); }
 	
     
@@ -6789,6 +6919,8 @@ bool PlayFab::ServerModels::FUpdateUserDataRequest::readFromValue(const TSharedP
             Data.Add(It.Key(), It.Value()->AsString());
         }
     }
+    
+    obj->TryGetStringArrayField(TEXT("KeysToRemove"),KeysToRemove);
     
     Permission = readUserDataPermissionFromValue(obj->TryGetField(TEXT("Permission")));
     
@@ -6850,6 +6982,17 @@ void PlayFab::ServerModels::FUpdateUserInternalDataRequest::writeJSON(JsonWriter
         writer->WriteObjectEnd();
      }
 	
+    if(KeysToRemove.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("KeysToRemove"));
+    
+        for (const FString& item : KeysToRemove)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
+	
     
     writer->WriteObjectEnd();
 }
@@ -6874,6 +7017,8 @@ bool PlayFab::ServerModels::FUpdateUserInternalDataRequest::readFromValue(const 
             Data.Add(It.Key(), It.Value()->AsString());
         }
     }
+    
+    obj->TryGetStringArrayField(TEXT("KeysToRemove"),KeysToRemove);
     
     
     return HasSucceeded;
@@ -6904,6 +7049,17 @@ void PlayFab::ServerModels::FUpdateUserInventoryItemDataRequest::writeJSON(JsonW
             writer->WriteValue((*It).Value);
         }
         writer->WriteObjectEnd();
+     }
+	
+    if(KeysToRemove.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("KeysToRemove"));
+    
+        for (const FString& item : KeysToRemove)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
      }
 	
     
@@ -6944,6 +7100,8 @@ bool PlayFab::ServerModels::FUpdateUserInventoryItemDataRequest::readFromValue(c
             Data.Add(It.Key(), It.Value()->AsString());
         }
     }
+    
+    obj->TryGetStringArrayField(TEXT("KeysToRemove"),KeysToRemove);
     
     
     return HasSucceeded;

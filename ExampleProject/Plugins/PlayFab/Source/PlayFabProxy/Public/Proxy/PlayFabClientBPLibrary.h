@@ -1490,6 +1490,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPClientUpdateCharacterDataRequest(
 		const FBPClientUpdateCharacterDataRequest& In
         ,FString& OutCharacterId
+        ,TArray<FString>& OutKeysToRemove
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1502,6 +1503,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPClientUpdateSharedGroupDataRequest(
 		const FBPClientUpdateSharedGroupDataRequest& In
         ,FString& OutSharedGroupId
+        ,TArray<FString>& OutKeysToRemove
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1512,6 +1514,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientUpdateUserDataRequest(
 		const FBPClientUpdateUserDataRequest& In
+        ,TArray<FString>& OutKeysToRemove
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))

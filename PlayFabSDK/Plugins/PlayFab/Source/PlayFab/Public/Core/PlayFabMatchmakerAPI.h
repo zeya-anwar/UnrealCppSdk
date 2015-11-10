@@ -24,6 +24,8 @@ namespace PlayFab
         UPlayFabMatchmakerAPI();
         ~UPlayFabMatchmakerAPI();
 
+        int GetPendingCalls();
+
 		
 
         // ------------ Generated API calls

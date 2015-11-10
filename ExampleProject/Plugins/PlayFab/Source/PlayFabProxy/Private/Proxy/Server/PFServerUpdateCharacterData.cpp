@@ -9,13 +9,14 @@ UPFServerUpdateCharacterData::UPFServerUpdateCharacterData(const FObjectInitiali
 {
 }
 
-UPFServerUpdateCharacterData* UPFServerUpdateCharacterData::UpdateCharacterData(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InPlayFabId, const FString& InCharacterId, const FString& InData)
+UPFServerUpdateCharacterData* UPFServerUpdateCharacterData::UpdateCharacterData(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InPlayFabId, const FString& InCharacterId, const FString& InData, const TArray<FString>& InKeysToRemove)
 {
 	UPFServerUpdateCharacterData* Proxy = NewObject<UPFServerUpdateCharacterData>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.PlayFabId = InPlayFabId;
 	Proxy->Request.CharacterId = InCharacterId;
 	
+	Proxy->Request.KeysToRemove = InKeysToRemove;
 	
 	
 

@@ -1267,6 +1267,34 @@ void UPFServerProxyLibrary::BreakBPServerPlayerLeaderboardEntry(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerRedeemCouponRequest(
+		const FBPServerRedeemCouponRequest& In
+        ,FString& OutCouponCode
+        ,FString& OutPlayFabId
+        ,FString& OutCatalogVersion
+	)
+{
+    OutCouponCode = In.Data.CouponCode;
+	OutPlayFabId = In.Data.PlayFabId;
+	OutCatalogVersion = In.Data.CatalogVersion;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerRedeemCouponResult(
+		const FBPServerRedeemCouponResult& In
+        ,TArray<FBPServerItemInstance>& OutGrantedItems
+	)
+{
+    for (const PlayFab::ServerModels::FItemInstance& elem : In.Data.GrantedItems)
+    {
+        FBPServerItemInstance result;
+        result.Data = elem;
+        OutGrantedItems.Add(result);
+    }
+
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerRedeemMatchmakerTicketRequest(
 		const FBPServerRedeemMatchmakerTicketRequest& In
         ,FString& OutTicket
@@ -1470,11 +1498,13 @@ void UPFServerProxyLibrary::BreakBPServerUpdateCharacterDataRequest(
 		const FBPServerUpdateCharacterDataRequest& In
         ,FString& OutPlayFabId
         ,FString& OutCharacterId
+        ,TArray<FString>& OutKeysToRemove
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
 	OutCharacterId = In.Data.CharacterId;
 	
+	OutKeysToRemove = In.Data.KeysToRemove;
 	
 	
 }
@@ -1510,10 +1540,12 @@ void UPFServerProxyLibrary::BreakBPServerUpdateCharacterStatisticsResult(
 void UPFServerProxyLibrary::BreakBPServerUpdateSharedGroupDataRequest(
 		const FBPServerUpdateSharedGroupDataRequest& In
         ,FString& OutSharedGroupId
+        ,TArray<FString>& OutKeysToRemove
 	)
 {
     OutSharedGroupId = In.Data.SharedGroupId;
 	
+	OutKeysToRemove = In.Data.KeysToRemove;
 	
 	
 }
@@ -1528,10 +1560,12 @@ void UPFServerProxyLibrary::BreakBPServerUpdateSharedGroupDataResult(
 void UPFServerProxyLibrary::BreakBPServerUpdateUserDataRequest(
 		const FBPServerUpdateUserDataRequest& In
         ,FString& OutPlayFabId
+        ,TArray<FString>& OutKeysToRemove
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
 	
+	OutKeysToRemove = In.Data.KeysToRemove;
 	
 	
 }
@@ -1548,10 +1582,12 @@ void UPFServerProxyLibrary::BreakBPServerUpdateUserDataResult(
 void UPFServerProxyLibrary::BreakBPServerUpdateUserInternalDataRequest(
 		const FBPServerUpdateUserInternalDataRequest& In
         ,FString& OutPlayFabId
+        ,TArray<FString>& OutKeysToRemove
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
 	
+	OutKeysToRemove = In.Data.KeysToRemove;
 	
 }
 
@@ -1560,12 +1596,14 @@ void UPFServerProxyLibrary::BreakBPServerUpdateUserInventoryItemDataRequest(
         ,FString& OutCharacterId
         ,FString& OutPlayFabId
         ,FString& OutItemInstanceId
+        ,TArray<FString>& OutKeysToRemove
 	)
 {
     OutCharacterId = In.Data.CharacterId;
 	OutPlayFabId = In.Data.PlayFabId;
 	OutItemInstanceId = In.Data.ItemInstanceId;
 	
+	OutKeysToRemove = In.Data.KeysToRemove;
 	
 }
 

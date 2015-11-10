@@ -9,12 +9,13 @@ UPFAdminUpdateUserPublisherData::UPFAdminUpdateUserPublisherData(const FObjectIn
 {
 }
 
-UPFAdminUpdateUserPublisherData* UPFAdminUpdateUserPublisherData::UpdateUserPublisherData(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InPlayFabId, const FString& InData)
+UPFAdminUpdateUserPublisherData* UPFAdminUpdateUserPublisherData::UpdateUserPublisherData(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InPlayFabId, const FString& InData, const TArray<FString>& InKeysToRemove)
 {
 	UPFAdminUpdateUserPublisherData* Proxy = NewObject<UPFAdminUpdateUserPublisherData>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.PlayFabId = InPlayFabId;
 	
+	Proxy->Request.KeysToRemove = InKeysToRemove;
 	
 	
 

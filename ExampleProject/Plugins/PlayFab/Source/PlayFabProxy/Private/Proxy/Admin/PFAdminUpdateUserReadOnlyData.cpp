@@ -9,12 +9,13 @@ UPFAdminUpdateUserReadOnlyData::UPFAdminUpdateUserReadOnlyData(const FObjectInit
 {
 }
 
-UPFAdminUpdateUserReadOnlyData* UPFAdminUpdateUserReadOnlyData::UpdateUserReadOnlyData(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InPlayFabId, const FString& InData)
+UPFAdminUpdateUserReadOnlyData* UPFAdminUpdateUserReadOnlyData::UpdateUserReadOnlyData(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InPlayFabId, const FString& InData, const TArray<FString>& InKeysToRemove)
 {
 	UPFAdminUpdateUserReadOnlyData* Proxy = NewObject<UPFAdminUpdateUserReadOnlyData>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.PlayFabId = InPlayFabId;
 	
+	Proxy->Request.KeysToRemove = InKeysToRemove;
 	
 	
 

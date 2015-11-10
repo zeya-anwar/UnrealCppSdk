@@ -2563,10 +2563,12 @@ void UPFClientProxyLibrary::BreakBPClientUnlockContainerItemResult(
 void UPFClientProxyLibrary::BreakBPClientUpdateCharacterDataRequest(
 		const FBPClientUpdateCharacterDataRequest& In
         ,FString& OutCharacterId
+        ,TArray<FString>& OutKeysToRemove
 	)
 {
     OutCharacterId = In.Data.CharacterId;
 	
+	OutKeysToRemove = In.Data.KeysToRemove;
 	
 	
 }
@@ -2583,10 +2585,12 @@ void UPFClientProxyLibrary::BreakBPClientUpdateCharacterDataResult(
 void UPFClientProxyLibrary::BreakBPClientUpdateSharedGroupDataRequest(
 		const FBPClientUpdateSharedGroupDataRequest& In
         ,FString& OutSharedGroupId
+        ,TArray<FString>& OutKeysToRemove
 	)
 {
     OutSharedGroupId = In.Data.SharedGroupId;
 	
+	OutKeysToRemove = In.Data.KeysToRemove;
 	
 	
 }
@@ -2600,9 +2604,11 @@ void UPFClientProxyLibrary::BreakBPClientUpdateSharedGroupDataResult(
 
 void UPFClientProxyLibrary::BreakBPClientUpdateUserDataRequest(
 		const FBPClientUpdateUserDataRequest& In
+        ,TArray<FString>& OutKeysToRemove
 	)
 {
     
+	OutKeysToRemove = In.Data.KeysToRemove;
 	
 	
 }

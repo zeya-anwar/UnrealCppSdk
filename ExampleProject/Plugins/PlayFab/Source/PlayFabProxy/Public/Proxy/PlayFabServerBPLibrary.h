@@ -726,6 +726,20 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerRedeemCouponRequest(
+		const FBPServerRedeemCouponRequest& In
+        ,FString& OutCouponCode
+        ,FString& OutPlayFabId
+        ,FString& OutCatalogVersion
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerRedeemCouponResult(
+		const FBPServerRedeemCouponResult& In
+        ,TArray<FBPServerItemInstance>& OutGrantedItems
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerRedeemMatchmakerTicketRequest(
 		const FBPServerRedeemMatchmakerTicketRequest& In
         ,FString& OutTicket
@@ -856,6 +870,7 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPServerUpdateCharacterDataRequest& In
         ,FString& OutPlayFabId
         ,FString& OutCharacterId
+        ,TArray<FString>& OutKeysToRemove
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
@@ -880,6 +895,7 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPServerUpdateSharedGroupDataRequest(
 		const FBPServerUpdateSharedGroupDataRequest& In
         ,FString& OutSharedGroupId
+        ,TArray<FString>& OutKeysToRemove
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
@@ -891,6 +907,7 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPServerUpdateUserDataRequest(
 		const FBPServerUpdateUserDataRequest& In
         ,FString& OutPlayFabId
+        ,TArray<FString>& OutKeysToRemove
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
@@ -903,6 +920,7 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPServerUpdateUserInternalDataRequest(
 		const FBPServerUpdateUserInternalDataRequest& In
         ,FString& OutPlayFabId
+        ,TArray<FString>& OutKeysToRemove
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
@@ -911,6 +929,7 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutCharacterId
         ,FString& OutPlayFabId
         ,FString& OutItemInstanceId
+        ,TArray<FString>& OutKeysToRemove
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
