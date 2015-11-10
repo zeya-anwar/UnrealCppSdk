@@ -7,7 +7,7 @@ public class ExampleProject : ModuleRules
 	public ExampleProject(TargetInfo Target)
 	{
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "PlayFab" });
-        // PublicIncludePaths.AddRange(new string[] { "PlayFab/Public", "PlayFab/Classes" });
+        PublicDependencyModuleNames.AddRange(new string[] { "Json", "JsonUtilities" });
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 

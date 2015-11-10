@@ -2,6 +2,8 @@
 
 #pragma once
 
+#include "CoreMisc.h"
+
 #include "PlayFab.h"
 #include "Core/PlayFabClientDataModels.h"
 #include "Core/PlayFabClientAPI.h"
@@ -9,7 +11,6 @@
 #include "Core/PlayFabServerAPI.h"
 
 #include "Misc/AutomationTest.h"
-#include "MyCharacter.generated.h"
 
 
 // forward declaration
@@ -258,6 +259,17 @@ private:
 /*
 * ==== Test Suite ====
 */
+struct TestTitleData
+{
+public:
+    FString titleId = TEXT("Your titleID");
+    FString developerSecretKey = TEXT("For the security of your title, keep your secret key private!");
+    FString userName = TEXT("your userName");
+    FString userEmail = TEXT("valid email for userName");
+    FString userPassword = TEXT("valid password for userName");
+    FString characterName = TEXT("arbitrary character name");
+};
+
 #define ADD_TEST(Name) TestFunctions.Add(&PlayFabApiTestSuite::Name); TestFunctionNames.Add(TEXT(#Name));
 class PlayFabApiTestSuite : public FAutomationTestBase
 {
@@ -267,9 +279,21 @@ public:
     static FString playFabId; // Set by PlayFabApiTest_LoginWithEmail upon successful login
     static FString characterId; // Set by PlayFabApiTest_GetAllUsersCharacters upon successfully finding target character
 
+    // TEST CONSTANTS
+    FString TEST_DATA_KEY_1 = TEXT("testCounter");
+    FString TEST_DATA_KEY_2 = TEXT("deleteCounter");
+    FString TEST_STAT_NAME = TEXT("str");
+    FString INVALID_PASSWORD = TEXT("INVALID_PASSWORD");
+    FString CHAR_TEST_TYPE = TEXT("Test");
+    FString CLOUD_ACTION_ID = TEXT("helloWorld");
+
+    // Input from TestTitleData.json
+    TestTitleData testTitleData;
+
     PlayFabApiTestSuite(const FString& InName)
         : FAutomationTestBase(InName, false)
     {
+        LoadTitleData();
         // IPlayFabModuleInterface::Get().SetTitleInformationFromJson(//todo);
 
         ADD_TEST(InvalidLogin);
@@ -287,6 +311,31 @@ public:
     virtual uint32 GetRequiredDeviceNum() const override { return 1; }
 
 protected:
+    bool LoadTitleData()
+    {
+        bool success = true;
+
+        FString jsonInput;
+        TCHAR* filename = TEXT("C:\\depot\\pf-main\\tools\\SDKBuildScripts\\testTitleData.json");
+        success &= FFileHelper::LoadFileToString(jsonInput, filename);
+
+        TSharedPtr<FJsonObject> jsonParsed = nullptr;
+        if (success)
+        {
+            TSharedRef<TJsonReader<>> jsonReader = TJsonReaderFactory<>::Create(jsonInput);
+            success &= FJsonSerializer::Deserialize(jsonReader, jsonParsed);
+        }
+
+        if (success) success &= jsonParsed->TryGetStringField("titleId", testTitleData.titleId);
+        if (success) success &= jsonParsed->TryGetStringField("developerSecretKey", testTitleData.developerSecretKey);
+        if (success) success &= jsonParsed->TryGetStringField("userName", testTitleData.userName);
+        if (success) success &= jsonParsed->TryGetStringField("userEmail", testTitleData.userEmail);
+        if (success) success &= jsonParsed->TryGetStringField("userPassword", testTitleData.userPassword);
+        if (success) success &= jsonParsed->TryGetStringField("characterName", testTitleData.characterName);
+
+        return success;
+    }
+
     virtual FString GetBeautifiedTestName() const override { return "PlayFabApiTests"; }
     virtual void GetTests(TArray<FString>& OutBeautifiedNames, TArray <FString>& OutTestCommands) const override
     {
@@ -319,35 +368,35 @@ protected:
 
     bool InvalidLogin()
     {
-        ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_LoginWithEmail(false, false, TEXT("paul"), TEXT("paul@playfab.com"), TEXT("testPassword_INVALID")));
+        ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_LoginWithEmail(false, false, testTitleData.userName, testTitleData.userEmail, INVALID_PASSWORD));
 
         return true;
     };
 
     bool LoginOrRegister()
     {
-        ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_LoginWithEmail(true, false, TEXT("paul"), TEXT("paul@playfab.com"), TEXT("testPassword")));
+        ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_LoginWithEmail(true, false, testTitleData.userName, testTitleData.userEmail, testTitleData.userPassword));
 
         return true;
     };
 
     bool UserDataApi()
     {
-        ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_GetUserData(TEXT("testCounter"), TEXT("deleteCounter"), -1));
+        ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_GetUserData(TEST_DATA_KEY_1, TEST_DATA_KEY_2, -1));
 
         return true;
     };
 
     bool UserStatisticsApi()
     {
-        ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_UpdateUserStatistics(TEXT("str"), -1));
+        ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_UpdateUserStatistics(TEST_STAT_NAME, -1));
 
         return true;
     };
 
     bool UserCharacter()
     {
-        ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_GetAllUsersCharacters(PlayFabApiTestSuite::playFabId, TEXT("Ragnar"), TEXT("Test"), false));
+        ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_GetAllUsersCharacters(PlayFabApiTestSuite::playFabId, testTitleData.characterName, CHAR_TEST_TYPE, false));
 
         return true;
     };
@@ -355,8 +404,8 @@ protected:
     bool LeaderBoard()
     {
         // These are both read-only, and don't interfere, so they can be run in parallel
-        ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_GetLeaderboardAroundCurrentUser(TEXT("str")));
-        ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_GetLeaderboardAroundUser(PlayFabApiTestSuite::playFabId, TEXT("str")));
+        ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_GetLeaderboardAroundCurrentUser(TEST_STAT_NAME));
+        ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_GetLeaderboardAroundUser(PlayFabApiTestSuite::playFabId, TEST_STAT_NAME));
 
         return true;
     };
@@ -370,7 +419,7 @@ protected:
 
     bool CloudScript()
     {
-        ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_GetCloudScriptUrl(TEXT("helloWorld")));
+        ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_GetCloudScriptUrl(CLOUD_ACTION_ID));
 
         return true;
     };
