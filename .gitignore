@@ -200,3 +200,4 @@ FakesAssemblies/
 *.dll
 *.vcxproj
 *.filters
+*.ini
