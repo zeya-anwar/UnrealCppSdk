@@ -21,6 +21,8 @@ build/
 bld/
 [Bb]in/
 [Oo]bj/
+Intermediate/
+Saved/
 
 # Visual Studo 2015 cache/options directory
 .vs/
@@ -200,4 +202,3 @@ FakesAssemblies/
 *.dll
 *.vcxproj
 *.filters
-*.ini
