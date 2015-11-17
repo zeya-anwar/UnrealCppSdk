@@ -1294,6 +1294,24 @@ void UPFClientProxyLibrary::BreakBPClientGetUserStatisticsResult(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientGetXboxEntitlementsRequest(
+		const FBPClientGetXboxEntitlementsRequest& In
+        ,FString& OutXboxToken
+	)
+{
+    OutXboxToken = In.Data.XboxToken;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetXboxEntitlementsResult(
+		const FBPClientGetXboxEntitlementsResult& In
+        ,FString& OutEntitlements
+	)
+{
+    OutEntitlements = In.Data.Entitlements;
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientGooglePlayFabIdPair(
 		const FBPClientGooglePlayFabIdPair& In
         ,FString& OutGoogleId
@@ -1542,6 +1560,22 @@ void UPFClientProxyLibrary::BreakBPClientLinkSteamAccountResult(
     
 }
 
+void UPFClientProxyLibrary::BreakBPClientLinkXboxAccountRequest(
+		const FBPClientLinkXboxAccountRequest& In
+        ,FString& OutXboxToken
+	)
+{
+    OutXboxToken = In.Data.XboxToken;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientLinkXboxAccountResult(
+		const FBPClientLinkXboxAccountResult& In
+	)
+{
+    
+}
+
 void UPFClientProxyLibrary::BreakBPClientListUsersCharactersRequest(
 		const FBPClientListUsersCharactersRequest& In
         ,FString& OutPlayFabId
@@ -1742,6 +1776,19 @@ void UPFClientProxyLibrary::BreakBPClientLoginWithSteamRequest(
 {
     OutTitleId = In.Data.TitleId;
 	OutSteamTicket = In.Data.SteamTicket;
+	OutCreateAccount = In.Data.CreateAccount;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientLoginWithXboxRequest(
+		const FBPClientLoginWithXboxRequest& In
+        ,FString& OutTitleId
+        ,FString& OutXboxToken
+        ,bool& OutCreateAccount
+	)
+{
+    OutTitleId = In.Data.TitleId;
+	OutXboxToken = In.Data.XboxToken;
 	OutCreateAccount = In.Data.CreateAccount;
 	
 }
@@ -2522,6 +2569,22 @@ void UPFClientProxyLibrary::BreakBPClientUnlinkSteamAccountRequest(
 
 void UPFClientProxyLibrary::BreakBPClientUnlinkSteamAccountResult(
 		const FBPClientUnlinkSteamAccountResult& In
+	)
+{
+    
+}
+
+void UPFClientProxyLibrary::BreakBPClientUnlinkXboxAccountRequest(
+		const FBPClientUnlinkXboxAccountRequest& In
+        ,FString& OutXboxToken
+	)
+{
+    OutXboxToken = In.Data.XboxToken;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientUnlinkXboxAccountResult(
+		const FBPClientUnlinkXboxAccountResult& In
 	)
 {
     

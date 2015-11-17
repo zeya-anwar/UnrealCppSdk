@@ -222,7 +222,8 @@ namespace ServerModels
 		UserOriginationAndroid,
 		UserOriginationPSN,
 		UserOriginationGameCenter,
-		UserOriginationCustomId
+		UserOriginationCustomId,
+		UserOriginationXboxLive
 	};
 	
 	void writeUserOriginationEnumJSON(UserOrigination enumVal, JsonWriter& writer);
@@ -4300,9 +4301,9 @@ namespace ServerModels
 		FString PlayFabId;
 		// Unique PlayFab assigned ID for a specific character owned by a user
 		FString CharacterId;
-		// [optional] Data to be written to the user's character's custom data. Note that keys are trimmed of whitespace, are limited to 1024 characters, and may not begin with a '!' character.
+		// [optional] Key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may not begin with a '!' character.
 		TMap<FString, FString> Data;
-		// [optional] Optional list of Data-keys to remove from CharacterData.  Some SDKs cannot insert null-values into Data due to language constraints.  Use this to delete the keys directly.
+		// [optional] Optional list of Data-keys to remove from UserData.  Some SDKs cannot insert null-values into Data due to language constraints.  Use this to delete the keys directly.
 		TArray<FString> KeysToRemove;
 		// [optional] Permission to be applied to all user data keys written in this request. Defaults to "private" if not set.
 		Boxed<UserDataPermission> Permission;
@@ -4426,9 +4427,9 @@ namespace ServerModels
 		
 		// Unique identifier for the shared group.
 		FString SharedGroupId;
-		// [optional] Key value pairs to be stored in the shared group - note that keys will be trimmed of whitespace, must not begin with a '!' character, and that null values will result in the removal of the key from the data set.
+		// [optional] Key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may not begin with a '!' character.
 		TMap<FString, FString> Data;
-		// [optional] Optional list of Data-keys to remove from GroupData.  Some SDKs cannot insert null-values into Data due to language constraints.  Use this to delete the keys directly.
+		// [optional] Optional list of Data-keys to remove from UserData.  Some SDKs cannot insert null-values into Data due to language constraints.  Use this to delete the keys directly.
 		TArray<FString> KeysToRemove;
 		// [optional] Permission to be applied to all user data keys in this request.
 		Boxed<UserDataPermission> Permission;
@@ -4488,7 +4489,7 @@ namespace ServerModels
 		
 		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
 		FString PlayFabId;
-		// [optional] Data to be written to the user's custom data. Note that keys are trimmed of whitespace, are limited to 1024 characters, and may not begin with a '!' character.
+		// [optional] Key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may not begin with a '!' character.
 		TMap<FString, FString> Data;
 		// [optional] Optional list of Data-keys to remove from UserData.  Some SDKs cannot insert null-values into Data due to language constraints.  Use this to delete the keys directly.
 		TArray<FString> KeysToRemove;
@@ -4554,7 +4555,7 @@ namespace ServerModels
 		
 		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
 		FString PlayFabId;
-		// [optional] Data to be written to the user's custom data.
+		// [optional] Key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may not begin with a '!' character.
 		TMap<FString, FString> Data;
 		// [optional] Optional list of Data-keys to remove from UserData.  Some SDKs cannot insert null-values into Data due to language constraints.  Use this to delete the keys directly.
 		TArray<FString> KeysToRemove;
@@ -4593,9 +4594,9 @@ namespace ServerModels
 		FString PlayFabId;
 		// Unique PlayFab assigned instance identifier of the item
 		FString ItemInstanceId;
-		// [optional] Data to be written to the item's custom data. Note that keys are trimmed of whitespace.
+		// [optional] Key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may not begin with a '!' character.
 		TMap<FString, FString> Data;
-		// [optional] Optional list of Data-keys to remove from ItemData.  Some SDKs cannot insert null-values into Data due to language constraints.  Use this to delete the keys directly.
+		// [optional] Optional list of Data-keys to remove from UserData.  Some SDKs cannot insert null-values into Data due to language constraints.  Use this to delete the keys directly.
 		TArray<FString> KeysToRemove;
 	
         FUpdateUserInventoryItemDataRequest() :

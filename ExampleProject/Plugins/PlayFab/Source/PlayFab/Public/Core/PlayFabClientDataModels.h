@@ -1865,7 +1865,8 @@ namespace ClientModels
 		UserOriginationAndroid,
 		UserOriginationPSN,
 		UserOriginationGameCenter,
-		UserOriginationCustomId
+		UserOriginationCustomId,
+		UserOriginationXboxLive
 	};
 	
 	void writeUserOriginationEnumJSON(UserOrigination enumVal, JsonWriter& writer);
@@ -4023,7 +4024,7 @@ namespace ClientModels
 	struct PLAYFAB_API FGetUserDataRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] Specific keys to search for in the custom user data. Leave null to get all keys.
+		// [optional] Specific keys to search for in the custom data. Leave null to get all keys.
 		TArray<FString> Keys;
 		// [optional] Unique PlayFab identifier of the user to load data for. Optional, defaults to yourself if not set.
 		FString PlayFabId;
@@ -4189,6 +4190,60 @@ namespace ClientModels
         }
 		
 		~FGetUserStatisticsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetXboxEntitlementsRequest : public FPlayFabBaseModel
+    {
+		
+		// Token provided by the Xbox Live SDK/XDK method GetTokenAndSignatureAsync("POST", "https://playfabapi.com", "").
+		FString XboxToken;
+	
+        FGetXboxEntitlementsRequest() :
+			FPlayFabBaseModel(),
+			XboxToken()
+			{}
+		
+		FGetXboxEntitlementsRequest(const FGetXboxEntitlementsRequest& src) :
+			FPlayFabBaseModel(),
+			XboxToken(src.XboxToken)
+			{}
+			
+		FGetXboxEntitlementsRequest(const TSharedPtr<FJsonObject>& obj) : FGetXboxEntitlementsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetXboxEntitlementsRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetXboxEntitlementsResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] undefined
+		FString Entitlements;
+	
+        FGetXboxEntitlementsResult() :
+			FPlayFabBaseModel(),
+			Entitlements()
+			{}
+		
+		FGetXboxEntitlementsResult(const FGetXboxEntitlementsResult& src) :
+			FPlayFabBaseModel(),
+			Entitlements(src.Entitlements)
+			{}
+			
+		FGetXboxEntitlementsResult(const TSharedPtr<FJsonObject>& obj) : FGetXboxEntitlementsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetXboxEntitlementsResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -4785,6 +4840,56 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FLinkXboxAccountRequest : public FPlayFabBaseModel
+    {
+		
+		// Token provided by the Xbox Live SDK/XDK method GetTokenAndSignatureAsync("POST", "https://playfabapi.com", "").
+		FString XboxToken;
+	
+        FLinkXboxAccountRequest() :
+			FPlayFabBaseModel(),
+			XboxToken()
+			{}
+		
+		FLinkXboxAccountRequest(const FLinkXboxAccountRequest& src) :
+			FPlayFabBaseModel(),
+			XboxToken(src.XboxToken)
+			{}
+			
+		FLinkXboxAccountRequest(const TSharedPtr<FJsonObject>& obj) : FLinkXboxAccountRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FLinkXboxAccountRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FLinkXboxAccountResult : public FPlayFabBaseModel
+    {
+		
+	
+        FLinkXboxAccountResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FLinkXboxAccountResult(const FLinkXboxAccountResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FLinkXboxAccountResult(const TSharedPtr<FJsonObject>& obj) : FLinkXboxAccountResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FLinkXboxAccountResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FListUsersCharactersRequest : public FPlayFabBaseModel
     {
 		
@@ -5313,6 +5418,41 @@ namespace ClientModels
         }
 		
 		~FLoginWithSteamRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FLoginWithXboxRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
+		FString TitleId;
+		// Token provided by the Xbox Live SDK/XDK method GetTokenAndSignatureAsync("POST", "https://playfabapi.com", "").
+		FString XboxToken;
+		// [optional] Automatically create a PlayFab account if one is not currently linked to this Xbox Live account.
+		OptionalBool CreateAccount;
+	
+        FLoginWithXboxRequest() :
+			FPlayFabBaseModel(),
+			TitleId(),
+			XboxToken(),
+			CreateAccount()
+			{}
+		
+		FLoginWithXboxRequest(const FLoginWithXboxRequest& src) :
+			FPlayFabBaseModel(),
+			TitleId(src.TitleId),
+			XboxToken(src.XboxToken),
+			CreateAccount(src.CreateAccount)
+			{}
+			
+		FLoginWithXboxRequest(const TSharedPtr<FJsonObject>& obj) : FLoginWithXboxRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FLoginWithXboxRequest();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -7047,6 +7187,56 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FUnlinkXboxAccountRequest : public FPlayFabBaseModel
+    {
+		
+		// Token provided by the Xbox Live SDK/XDK method GetTokenAndSignatureAsync("POST", "https://playfabapi.com", "").
+		FString XboxToken;
+	
+        FUnlinkXboxAccountRequest() :
+			FPlayFabBaseModel(),
+			XboxToken()
+			{}
+		
+		FUnlinkXboxAccountRequest(const FUnlinkXboxAccountRequest& src) :
+			FPlayFabBaseModel(),
+			XboxToken(src.XboxToken)
+			{}
+			
+		FUnlinkXboxAccountRequest(const TSharedPtr<FJsonObject>& obj) : FUnlinkXboxAccountRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUnlinkXboxAccountRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUnlinkXboxAccountResult : public FPlayFabBaseModel
+    {
+		
+	
+        FUnlinkXboxAccountResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FUnlinkXboxAccountResult(const FUnlinkXboxAccountResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FUnlinkXboxAccountResult(const TSharedPtr<FJsonObject>& obj) : FUnlinkXboxAccountResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUnlinkXboxAccountResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FUnlockContainerItemRequest : public FPlayFabBaseModel
     {
 		
@@ -7126,9 +7316,9 @@ namespace ClientModels
 		
 		// Unique PlayFab assigned ID for a specific character owned by a user
 		FString CharacterId;
-		// [optional] Data to be written to the user's character's custom data. Note that keys are trimmed of whitespace, are limited to 1024 characters, and may not begin with a '!' character.
+		// [optional] Key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may not begin with a '!' character.
 		TMap<FString, FString> Data;
-		// [optional] Optional list of Data-keys to remove from CharacterData.  Some SDKs cannot insert null-values into Data due to language constraints.  Use this to delete the keys directly.
+		// [optional] Optional list of Data-keys to remove from UserData.  Some SDKs cannot insert null-values into Data due to language constraints.  Use this to delete the keys directly.
 		TArray<FString> KeysToRemove;
 		// [optional] Permission to be applied to all user data keys written in this request. Defaults to "private" if not set.
 		Boxed<UserDataPermission> Permission;
@@ -7192,9 +7382,9 @@ namespace ClientModels
 		
 		// Unique identifier for the shared group.
 		FString SharedGroupId;
-		// [optional] Key value pairs to be stored in the shared group - note that keys will be trimmed of whitespace, must not begin with a '!' character, and that null values will result in the removal of the key from the data set.
+		// [optional] Key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may not begin with a '!' character.
 		TMap<FString, FString> Data;
-		// [optional] Optional list of Data-keys to remove from GroupData.  Some SDKs cannot insert null-values into Data due to language constraints.  Use this to delete the keys directly.
+		// [optional] Optional list of Data-keys to remove from UserData.  Some SDKs cannot insert null-values into Data due to language constraints.  Use this to delete the keys directly.
 		TArray<FString> KeysToRemove;
 		// [optional] Permission to be applied to all user data keys in this request.
 		Boxed<UserDataPermission> Permission;
@@ -7252,7 +7442,7 @@ namespace ClientModels
 	struct PLAYFAB_API FUpdateUserDataRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] Data to be written to the user's custom data. Note that keys are trimmed of whitespace, are limited to 1024 characters, and may not begin with a '!' character.
+		// [optional] Key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may not begin with a '!' character.
 		TMap<FString, FString> Data;
 		// [optional] Optional list of Data-keys to remove from UserData.  Some SDKs cannot insert null-values into Data due to language constraints.  Use this to delete the keys directly.
 		TArray<FString> KeysToRemove;
