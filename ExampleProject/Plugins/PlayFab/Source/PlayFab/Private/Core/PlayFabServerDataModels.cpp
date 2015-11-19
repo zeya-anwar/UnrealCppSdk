@@ -299,6 +299,7 @@ void PlayFab::ServerModels::writeUserOriginationEnumJSON(UserOrigination enumVal
         case UserOriginationPSN: writer->WriteValue(TEXT("PSN")); break;
         case UserOriginationGameCenter: writer->WriteValue(TEXT("GameCenter")); break;
         case UserOriginationCustomId: writer->WriteValue(TEXT("CustomId")); break;
+        case UserOriginationXboxLive: writer->WriteValue(TEXT("XboxLive")); break;
     }
 }
 
@@ -322,6 +323,7 @@ ServerModels::UserOrigination PlayFab::ServerModels::readUserOriginationFromValu
         _UserOriginationMap.Add(TEXT("PSN"), UserOriginationPSN);
         _UserOriginationMap.Add(TEXT("GameCenter"), UserOriginationGameCenter);
         _UserOriginationMap.Add(TEXT("CustomId"), UserOriginationCustomId);
+        _UserOriginationMap.Add(TEXT("XboxLive"), UserOriginationXboxLive);
 
     } 
 

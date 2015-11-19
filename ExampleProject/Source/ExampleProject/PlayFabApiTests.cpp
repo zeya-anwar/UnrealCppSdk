@@ -148,24 +148,48 @@ bool PlayFabApiTest_GetUserData::Update()
 void PlayFabApiTest_GetUserData::OnSuccess(const PlayFab::ClientModels::FGetUserDataResult& Result)
 {
     int actualValue = -1;
+    FDateTime updateTime;
 
     const PlayFab::ClientModels::FUserDataRecord* target = Result.Data.Find(TEST_DATA_KEY_1);
     if (target != NULL)
+    {
         actualValue = FCString::Atoi(*(target->Value));
+        updateTime = target->LastUpdated;
+    }
 
     if (expectedValue != -1 && expectedValue != actualValue)
     {
-        UE_LOG(LogTemp, Log, TEXT("GetUserData: Update value did not match new value"));
+        // If I know what value I'm expecting, and I did not get it, log an error
+        UE_LOG(LogTemp, Error, TEXT("GetUserData: Update value did not match new value %d!=%d"), expectedValue, actualValue);
     }
     else if (expectedValue != -1 && expectedValue == actualValue)
     {
+        // If I know what value I'm expecting, and I got it, test passed, exit
+        CheckTimestamp(target->LastUpdated); // If the value was updated correctly, check the timestamp
         UE_LOG(LogTemp, Log, TEXT("GetUserData Success"));
     }
     else if (expectedValue == -1)
     {
-        // Call Update with (actualValue + 1)
+        // If I don't know what value I was expecting, Call Update with (actualValue + 1)
         actualValue = (actualValue + 1) % 100;
         ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_UpdateUserData(TEST_DATA_KEY_1, TEST_DATA_KEY_2, actualValue));
+    }
+}
+
+void PlayFabApiTest_GetUserData::CheckTimestamp(const FDateTime& updateTime)
+{
+    FDateTime utcNow = FDateTime::UtcNow();
+    FTimespan delta = FTimespan(0, 5, 0);
+    FDateTime minTest = utcNow - delta;
+    FDateTime maxTest = utcNow + delta;
+
+    if (minTest <= updateTime && updateTime <= maxTest)
+    {
+        UE_LOG(LogTemp, Log, TEXT("GetUserData: LastUpdated timestamp parsed as expected"));
+    }
+    else
+    {
+        UE_LOG(LogTemp, Error, TEXT("GetUserData: LastUpdated timestamp was not parsed correctly"));
     }
 }
 
@@ -193,7 +217,7 @@ bool PlayFabApiTest_UpdateUserData::Update()
         clientAPI = IPlayFabModuleInterface::Get().GetClientAPI();
 
         FString strUpdateValue;
-        strUpdateValue += updateValue;
+        strUpdateValue.AppendInt(updateValue);
 
         PlayFab::ClientModels::FUpdateUserDataRequest request;
         request.Data.Add(TEST_DATA_KEY_1, strUpdateValue);

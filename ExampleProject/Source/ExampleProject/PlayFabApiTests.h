@@ -72,6 +72,7 @@ public:
     bool Update();
 private:
     void OnSuccess(const PlayFab::ClientModels::FGetUserDataResult& Result);
+    void CheckTimestamp(const FDateTime& updateTime);
     void OnError(const PlayFab::FPlayFabError& ErrorResult);
 
     FString TEST_DATA_KEY_1;

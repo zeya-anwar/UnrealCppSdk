@@ -4,7 +4,6 @@
 
 namespace PlayFab
 {
-    const FString PlayFabAPIRevision = "1.9.20151109";
-    const FString PlayFabSDKVersion = "0.0.151019";
-    const FString PlayFabVersionString = "UE4SDK-0.0.151019-1.9.20151109";
+    const FString PlayFabSDKVersion = "0.0.151116";
+    const FString PlayFabVersionString = "UE4SDK-0.0.151116";
 }
