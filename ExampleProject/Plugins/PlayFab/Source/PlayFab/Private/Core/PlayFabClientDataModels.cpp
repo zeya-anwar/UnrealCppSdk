@@ -6643,68 +6643,6 @@ bool PlayFab::ClientModels::FGetUserStatisticsResult::readFromValue(const TShare
 }
 
 
-PlayFab::ClientModels::FGetXboxEntitlementsRequest::~FGetXboxEntitlementsRequest()
-{
-    
-}
-
-void PlayFab::ClientModels::FGetXboxEntitlementsRequest::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-    
-    writer->WriteIdentifierPrefix(TEXT("XboxToken")); writer->WriteValue(XboxToken);
-	
-    
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::ClientModels::FGetXboxEntitlementsRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-	bool HasSucceeded = true; 
-	
-    const TSharedPtr<FJsonValue> XboxTokenValue = obj->TryGetField(TEXT("XboxToken"));
-    if (XboxTokenValue.IsValid()&& !XboxTokenValue->IsNull())
-    {
-        FString TmpValue;
-        if(XboxTokenValue->TryGetString(TmpValue)) {XboxToken = TmpValue; }
-    }
-    
-    
-    return HasSucceeded;
-}
-
-
-PlayFab::ClientModels::FGetXboxEntitlementsResult::~FGetXboxEntitlementsResult()
-{
-    
-}
-
-void PlayFab::ClientModels::FGetXboxEntitlementsResult::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-    
-    if(Entitlements.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Entitlements")); writer->WriteValue(Entitlements); }
-	
-    
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::ClientModels::FGetXboxEntitlementsResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-	bool HasSucceeded = true; 
-	
-    const TSharedPtr<FJsonValue> EntitlementsValue = obj->TryGetField(TEXT("Entitlements"));
-    if (EntitlementsValue.IsValid()&& !EntitlementsValue->IsNull())
-    {
-        FString TmpValue;
-        if(EntitlementsValue->TryGetString(TmpValue)) {Entitlements = TmpValue; }
-    }
-    
-    
-    return HasSucceeded;
-}
-
-
 PlayFab::ClientModels::FGrantCharacterToUserRequest::~FGrantCharacterToUserRequest()
 {
     
@@ -7406,59 +7344,6 @@ void PlayFab::ClientModels::FLinkSteamAccountResult::writeJSON(JsonWriter& write
 }
 
 bool PlayFab::ClientModels::FLinkSteamAccountResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-	bool HasSucceeded = true; 
-	
-    
-    return HasSucceeded;
-}
-
-
-PlayFab::ClientModels::FLinkXboxAccountRequest::~FLinkXboxAccountRequest()
-{
-    
-}
-
-void PlayFab::ClientModels::FLinkXboxAccountRequest::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-    
-    writer->WriteIdentifierPrefix(TEXT("XboxToken")); writer->WriteValue(XboxToken);
-	
-    
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::ClientModels::FLinkXboxAccountRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-	bool HasSucceeded = true; 
-	
-    const TSharedPtr<FJsonValue> XboxTokenValue = obj->TryGetField(TEXT("XboxToken"));
-    if (XboxTokenValue.IsValid()&& !XboxTokenValue->IsNull())
-    {
-        FString TmpValue;
-        if(XboxTokenValue->TryGetString(TmpValue)) {XboxToken = TmpValue; }
-    }
-    
-    
-    return HasSucceeded;
-}
-
-
-PlayFab::ClientModels::FLinkXboxAccountResult::~FLinkXboxAccountResult()
-{
-    
-}
-
-void PlayFab::ClientModels::FLinkXboxAccountResult::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-    
-    
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::ClientModels::FLinkXboxAccountResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
 {
 	bool HasSucceeded = true; 
 	
@@ -8230,55 +8115,6 @@ bool PlayFab::ClientModels::FLoginWithSteamRequest::readFromValue(const TSharedP
     {
         FString TmpValue;
         if(SteamTicketValue->TryGetString(TmpValue)) {SteamTicket = TmpValue; }
-    }
-    
-    const TSharedPtr<FJsonValue> CreateAccountValue = obj->TryGetField(TEXT("CreateAccount"));
-    if (CreateAccountValue.IsValid()&& !CreateAccountValue->IsNull())
-    {
-        bool TmpValue;
-        if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
-    }
-    
-    
-    return HasSucceeded;
-}
-
-
-PlayFab::ClientModels::FLoginWithXboxRequest::~FLoginWithXboxRequest()
-{
-    
-}
-
-void PlayFab::ClientModels::FLoginWithXboxRequest::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-    
-    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
-	
-    writer->WriteIdentifierPrefix(TEXT("XboxToken")); writer->WriteValue(XboxToken);
-	
-    if(CreateAccount.notNull()) { writer->WriteIdentifierPrefix(TEXT("CreateAccount")); writer->WriteValue(CreateAccount); }
-	
-    
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::ClientModels::FLoginWithXboxRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-	bool HasSucceeded = true; 
-	
-    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
-    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
-    {
-        FString TmpValue;
-        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
-    }
-    
-    const TSharedPtr<FJsonValue> XboxTokenValue = obj->TryGetField(TEXT("XboxToken"));
-    if (XboxTokenValue.IsValid()&& !XboxTokenValue->IsNull())
-    {
-        FString TmpValue;
-        if(XboxTokenValue->TryGetString(TmpValue)) {XboxToken = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> CreateAccountValue = obj->TryGetField(TEXT("CreateAccount"));
@@ -10681,59 +10517,6 @@ void PlayFab::ClientModels::FUnlinkSteamAccountResult::writeJSON(JsonWriter& wri
 }
 
 bool PlayFab::ClientModels::FUnlinkSteamAccountResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-	bool HasSucceeded = true; 
-	
-    
-    return HasSucceeded;
-}
-
-
-PlayFab::ClientModels::FUnlinkXboxAccountRequest::~FUnlinkXboxAccountRequest()
-{
-    
-}
-
-void PlayFab::ClientModels::FUnlinkXboxAccountRequest::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-    
-    writer->WriteIdentifierPrefix(TEXT("XboxToken")); writer->WriteValue(XboxToken);
-	
-    
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::ClientModels::FUnlinkXboxAccountRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-	bool HasSucceeded = true; 
-	
-    const TSharedPtr<FJsonValue> XboxTokenValue = obj->TryGetField(TEXT("XboxToken"));
-    if (XboxTokenValue.IsValid()&& !XboxTokenValue->IsNull())
-    {
-        FString TmpValue;
-        if(XboxTokenValue->TryGetString(TmpValue)) {XboxToken = TmpValue; }
-    }
-    
-    
-    return HasSucceeded;
-}
-
-
-PlayFab::ClientModels::FUnlinkXboxAccountResult::~FUnlinkXboxAccountResult()
-{
-    
-}
-
-void PlayFab::ClientModels::FUnlinkXboxAccountResult::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-    
-    
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::ClientModels::FUnlinkXboxAccountResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
 {
 	bool HasSucceeded = true; 
 	

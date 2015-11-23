@@ -4195,60 +4195,6 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
-	struct PLAYFAB_API FGetXboxEntitlementsRequest : public FPlayFabBaseModel
-    {
-		
-		// Token provided by the Xbox Live SDK/XDK method GetTokenAndSignatureAsync("POST", "https://playfabapi.com", "").
-		FString XboxToken;
-	
-        FGetXboxEntitlementsRequest() :
-			FPlayFabBaseModel(),
-			XboxToken()
-			{}
-		
-		FGetXboxEntitlementsRequest(const FGetXboxEntitlementsRequest& src) :
-			FPlayFabBaseModel(),
-			XboxToken(src.XboxToken)
-			{}
-			
-		FGetXboxEntitlementsRequest(const TSharedPtr<FJsonObject>& obj) : FGetXboxEntitlementsRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FGetXboxEntitlementsRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FGetXboxEntitlementsResult : public FPlayFabBaseModel
-    {
-		
-		// [optional] undefined
-		FString Entitlements;
-	
-        FGetXboxEntitlementsResult() :
-			FPlayFabBaseModel(),
-			Entitlements()
-			{}
-		
-		FGetXboxEntitlementsResult(const FGetXboxEntitlementsResult& src) :
-			FPlayFabBaseModel(),
-			Entitlements(src.Entitlements)
-			{}
-			
-		FGetXboxEntitlementsResult(const TSharedPtr<FJsonObject>& obj) : FGetXboxEntitlementsResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FGetXboxEntitlementsResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
 	struct PLAYFAB_API FGrantCharacterToUserRequest : public FPlayFabBaseModel
     {
 		
@@ -4840,56 +4786,6 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
-	struct PLAYFAB_API FLinkXboxAccountRequest : public FPlayFabBaseModel
-    {
-		
-		// Token provided by the Xbox Live SDK/XDK method GetTokenAndSignatureAsync("POST", "https://playfabapi.com", "").
-		FString XboxToken;
-	
-        FLinkXboxAccountRequest() :
-			FPlayFabBaseModel(),
-			XboxToken()
-			{}
-		
-		FLinkXboxAccountRequest(const FLinkXboxAccountRequest& src) :
-			FPlayFabBaseModel(),
-			XboxToken(src.XboxToken)
-			{}
-			
-		FLinkXboxAccountRequest(const TSharedPtr<FJsonObject>& obj) : FLinkXboxAccountRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FLinkXboxAccountRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FLinkXboxAccountResult : public FPlayFabBaseModel
-    {
-		
-	
-        FLinkXboxAccountResult() :
-			FPlayFabBaseModel()
-			{}
-		
-		FLinkXboxAccountResult(const FLinkXboxAccountResult& src) :
-			FPlayFabBaseModel()
-			{}
-			
-		FLinkXboxAccountResult(const TSharedPtr<FJsonObject>& obj) : FLinkXboxAccountResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FLinkXboxAccountResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
 	struct PLAYFAB_API FListUsersCharactersRequest : public FPlayFabBaseModel
     {
 		
@@ -5418,41 +5314,6 @@ namespace ClientModels
         }
 		
 		~FLoginWithSteamRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FLoginWithXboxRequest : public FPlayFabBaseModel
-    {
-		
-		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
-		FString TitleId;
-		// Token provided by the Xbox Live SDK/XDK method GetTokenAndSignatureAsync("POST", "https://playfabapi.com", "").
-		FString XboxToken;
-		// [optional] Automatically create a PlayFab account if one is not currently linked to this Xbox Live account.
-		OptionalBool CreateAccount;
-	
-        FLoginWithXboxRequest() :
-			FPlayFabBaseModel(),
-			TitleId(),
-			XboxToken(),
-			CreateAccount()
-			{}
-		
-		FLoginWithXboxRequest(const FLoginWithXboxRequest& src) :
-			FPlayFabBaseModel(),
-			TitleId(src.TitleId),
-			XboxToken(src.XboxToken),
-			CreateAccount(src.CreateAccount)
-			{}
-			
-		FLoginWithXboxRequest(const TSharedPtr<FJsonObject>& obj) : FLoginWithXboxRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FLoginWithXboxRequest();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -7182,56 +7043,6 @@ namespace ClientModels
         }
 		
 		~FUnlinkSteamAccountResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FUnlinkXboxAccountRequest : public FPlayFabBaseModel
-    {
-		
-		// Token provided by the Xbox Live SDK/XDK method GetTokenAndSignatureAsync("POST", "https://playfabapi.com", "").
-		FString XboxToken;
-	
-        FUnlinkXboxAccountRequest() :
-			FPlayFabBaseModel(),
-			XboxToken()
-			{}
-		
-		FUnlinkXboxAccountRequest(const FUnlinkXboxAccountRequest& src) :
-			FPlayFabBaseModel(),
-			XboxToken(src.XboxToken)
-			{}
-			
-		FUnlinkXboxAccountRequest(const TSharedPtr<FJsonObject>& obj) : FUnlinkXboxAccountRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FUnlinkXboxAccountRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FUnlinkXboxAccountResult : public FPlayFabBaseModel
-    {
-		
-	
-        FUnlinkXboxAccountResult() :
-			FPlayFabBaseModel()
-			{}
-		
-		FUnlinkXboxAccountResult(const FUnlinkXboxAccountResult& src) :
-			FPlayFabBaseModel()
-			{}
-			
-		FUnlinkXboxAccountResult(const TSharedPtr<FJsonObject>& obj) : FUnlinkXboxAccountResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FUnlinkXboxAccountResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
