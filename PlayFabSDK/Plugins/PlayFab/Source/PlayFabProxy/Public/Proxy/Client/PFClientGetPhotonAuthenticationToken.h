@@ -19,7 +19,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FBPClientGetPhotonAuthenticationTokenResultDelegate OnFailure;
 	
-	// Gets a Photon custom authentication token that can be used to securely join the player into a Photon room. See https://playfab.com/using-photon-playfab for more details.
+	// Gets a Photon custom authentication token that can be used to securely join the player into a Photon room. See https://api.playfab.com/docs/using-photon-with-playfab/ for more details.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Authentication")
 	static UPFClientGetPhotonAuthenticationToken* GetPhotonAuthenticationToken(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InPhotonApplicationId);
 
