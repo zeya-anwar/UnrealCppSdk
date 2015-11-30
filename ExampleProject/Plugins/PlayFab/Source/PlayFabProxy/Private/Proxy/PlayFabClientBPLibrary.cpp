@@ -1592,11 +1592,13 @@ void UPFClientProxyLibrary::BreakBPClientLoginResult(
         ,FString& OutSessionTicket
         ,FString& OutPlayFabId
         ,bool& OutNewlyCreated
+        ,FBPClientUserSettings& OutUserSettings
 	)
 {
     OutSessionTicket = In.Data.SessionTicket;
 	OutPlayFabId = In.Data.PlayFabId;
 	OutNewlyCreated = In.Data.NewlyCreated;
+	if (In.Data.UserSettings.IsValid()) {    OutUserSettings.Data = *In.Data.UserSettings;}
 	
 }
 
@@ -2048,11 +2050,13 @@ void UPFClientProxyLibrary::BreakBPClientRegisterPlayFabUserResult(
         ,FString& OutPlayFabId
         ,FString& OutSessionTicket
         ,FString& OutUsername
+        ,FBPClientUserSettings& OutUserSettings
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
 	OutSessionTicket = In.Data.SessionTicket;
 	OutUsername = In.Data.Username;
+	if (In.Data.UserSettings.IsValid()) {    OutUserSettings.Data = *In.Data.UserSettings;}
 	
 }
 
@@ -2730,6 +2734,15 @@ void UPFClientProxyLibrary::BreakBPClientUserPrivateAccountInfo(
 	)
 {
     OutEmail = In.Data.Email;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientUserSettings(
+		const FBPClientUserSettings& In
+        ,bool& OutNeedsAttribution
+	)
+{
+    OutNeedsAttribution = In.Data.NeedsAttribution;
 	
 }
 

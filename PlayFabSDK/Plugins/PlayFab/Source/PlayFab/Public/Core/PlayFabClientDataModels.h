@@ -4902,6 +4902,33 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FUserSettings : public FPlayFabBaseModel
+    {
+		
+		// undefined
+		bool NeedsAttribution;
+	
+        FUserSettings() :
+			FPlayFabBaseModel(),
+			NeedsAttribution(false)
+			{}
+		
+		FUserSettings(const FUserSettings& src) :
+			FPlayFabBaseModel(),
+			NeedsAttribution(src.NeedsAttribution)
+			{}
+			
+		FUserSettings(const TSharedPtr<FJsonObject>& obj) : FUserSettings()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUserSettings();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FLoginResult : public FPlayFabBaseModel
     {
 		
@@ -4911,19 +4938,23 @@ namespace ClientModels
 		FString PlayFabId;
 		// True if the account was newly created on this login.
 		bool NewlyCreated;
+		// [optional] undefined
+		TSharedPtr<FUserSettings> pfUserSettings;
 	
         FLoginResult() :
 			FPlayFabBaseModel(),
 			SessionTicket(),
 			PlayFabId(),
-			NewlyCreated(false)
+			NewlyCreated(false),
+			pfUserSettings(nullptr)
 			{}
 		
 		FLoginResult(const FLoginResult& src) :
 			FPlayFabBaseModel(),
 			SessionTicket(src.SessionTicket),
 			PlayFabId(src.PlayFabId),
-			NewlyCreated(src.NewlyCreated)
+			NewlyCreated(src.NewlyCreated),
+			pfUserSettings(src.pfUserSettings.IsValid() ? MakeShareable(new FUserSettings(*src.pfUserSettings)) : nullptr)
 			{}
 			
 		FLoginResult(const TSharedPtr<FJsonObject>& obj) : FLoginResult()
@@ -5983,19 +6014,23 @@ namespace ClientModels
 		FString SessionTicket;
 		// [optional] PlayFab unique user name.
 		FString Username;
+		// [optional] undefined
+		TSharedPtr<FUserSettings> pfUserSettings;
 	
         FRegisterPlayFabUserResult() :
 			FPlayFabBaseModel(),
 			PlayFabId(),
 			SessionTicket(),
-			Username()
+			Username(),
+			pfUserSettings(nullptr)
 			{}
 		
 		FRegisterPlayFabUserResult(const FRegisterPlayFabUserResult& src) :
 			FPlayFabBaseModel(),
 			PlayFabId(src.PlayFabId),
 			SessionTicket(src.SessionTicket),
-			Username(src.Username)
+			Username(src.Username),
+			pfUserSettings(src.pfUserSettings.IsValid() ? MakeShareable(new FUserSettings(*src.pfUserSettings)) : nullptr)
 			{}
 			
 		FRegisterPlayFabUserResult(const TSharedPtr<FJsonObject>& obj) : FRegisterPlayFabUserResult()
