@@ -911,7 +911,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutSessionTicket
         ,FString& OutPlayFabId
         ,bool& OutNewlyCreated
-        ,FBPClientUserSettings& OutUserSettings
+        ,FBPClientUserSettings& OutSettingsForUser
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1179,7 +1179,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutPlayFabId
         ,FString& OutSessionTicket
         ,FString& OutUsername
-        ,FBPClientUserSettings& OutUserSettings
+        ,FBPClientUserSettings& OutSettingsForUser
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))

@@ -4938,15 +4938,15 @@ namespace ClientModels
 		FString PlayFabId;
 		// True if the account was newly created on this login.
 		bool NewlyCreated;
-		// [optional] undefined
-		TSharedPtr<FUserSettings> pfUserSettings;
+		// [optional] Settings specific to this user.
+		TSharedPtr<FUserSettings> SettingsForUser;
 	
         FLoginResult() :
 			FPlayFabBaseModel(),
 			SessionTicket(),
 			PlayFabId(),
 			NewlyCreated(false),
-			pfUserSettings(nullptr)
+			SettingsForUser(nullptr)
 			{}
 		
 		FLoginResult(const FLoginResult& src) :
@@ -4954,7 +4954,7 @@ namespace ClientModels
 			SessionTicket(src.SessionTicket),
 			PlayFabId(src.PlayFabId),
 			NewlyCreated(src.NewlyCreated),
-			pfUserSettings(src.pfUserSettings.IsValid() ? MakeShareable(new FUserSettings(*src.pfUserSettings)) : nullptr)
+			SettingsForUser(src.SettingsForUser.IsValid() ? MakeShareable(new FUserSettings(*src.SettingsForUser)) : nullptr)
 			{}
 			
 		FLoginResult(const TSharedPtr<FJsonObject>& obj) : FLoginResult()
@@ -6014,15 +6014,15 @@ namespace ClientModels
 		FString SessionTicket;
 		// [optional] PlayFab unique user name.
 		FString Username;
-		// [optional] undefined
-		TSharedPtr<FUserSettings> pfUserSettings;
+		// [optional] Settings specific to this user.
+		TSharedPtr<FUserSettings> SettingsForUser;
 	
         FRegisterPlayFabUserResult() :
 			FPlayFabBaseModel(),
 			PlayFabId(),
 			SessionTicket(),
 			Username(),
-			pfUserSettings(nullptr)
+			SettingsForUser(nullptr)
 			{}
 		
 		FRegisterPlayFabUserResult(const FRegisterPlayFabUserResult& src) :
@@ -6030,7 +6030,7 @@ namespace ClientModels
 			PlayFabId(src.PlayFabId),
 			SessionTicket(src.SessionTicket),
 			Username(src.Username),
-			pfUserSettings(src.pfUserSettings.IsValid() ? MakeShareable(new FUserSettings(*src.pfUserSettings)) : nullptr)
+			SettingsForUser(src.SettingsForUser.IsValid() ? MakeShareable(new FUserSettings(*src.SettingsForUser)) : nullptr)
 			{}
 			
 		FRegisterPlayFabUserResult(const TSharedPtr<FJsonObject>& obj) : FRegisterPlayFabUserResult()

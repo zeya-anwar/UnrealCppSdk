@@ -7551,7 +7551,7 @@ bool PlayFab::ClientModels::FUserSettings::readFromValue(const TSharedPtr<FJsonO
 
 PlayFab::ClientModels::FLoginResult::~FLoginResult()
 {
-    //if(UserSettings != NULL) delete UserSettings;
+    //if(SettingsForUser != NULL) delete SettingsForUser;
     
 }
 
@@ -7565,7 +7565,7 @@ void PlayFab::ClientModels::FLoginResult::writeJSON(JsonWriter& writer) const
 	
     writer->WriteIdentifierPrefix(TEXT("NewlyCreated")); writer->WriteValue(NewlyCreated);
 	
-    if(pfUserSettings.IsValid()) { writer->WriteIdentifierPrefix(TEXT("UserSettings")); pfUserSettings->writeJSON(writer); }
+    if(SettingsForUser.IsValid()) { writer->WriteIdentifierPrefix(TEXT("SettingsForUser")); SettingsForUser->writeJSON(writer); }
 	
     
     writer->WriteObjectEnd();
@@ -7596,10 +7596,10 @@ bool PlayFab::ClientModels::FLoginResult::readFromValue(const TSharedPtr<FJsonOb
         if(NewlyCreatedValue->TryGetBool(TmpValue)) {NewlyCreated = TmpValue; }
     }
     
-    const TSharedPtr<FJsonValue> UserSettingsValue = obj->TryGetField(TEXT("UserSettings"));
-    if (UserSettingsValue.IsValid()&& !UserSettingsValue->IsNull())
+    const TSharedPtr<FJsonValue> SettingsForUserValue = obj->TryGetField(TEXT("SettingsForUser"));
+    if (SettingsForUserValue.IsValid()&& !SettingsForUserValue->IsNull())
     {
-        pfUserSettings = MakeShareable(new FUserSettings(UserSettingsValue->AsObject()));
+        SettingsForUser = MakeShareable(new FUserSettings(SettingsForUserValue->AsObject()));
     }
     
     
@@ -9232,7 +9232,7 @@ bool PlayFab::ClientModels::FRegisterPlayFabUserRequest::readFromValue(const TSh
 
 PlayFab::ClientModels::FRegisterPlayFabUserResult::~FRegisterPlayFabUserResult()
 {
-    //if(UserSettings != NULL) delete UserSettings;
+    //if(SettingsForUser != NULL) delete SettingsForUser;
     
 }
 
@@ -9246,7 +9246,7 @@ void PlayFab::ClientModels::FRegisterPlayFabUserResult::writeJSON(JsonWriter& wr
 	
     if(Username.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Username")); writer->WriteValue(Username); }
 	
-    if(pfUserSettings.IsValid()) { writer->WriteIdentifierPrefix(TEXT("UserSettings")); pfUserSettings->writeJSON(writer); }
+    if(SettingsForUser.IsValid()) { writer->WriteIdentifierPrefix(TEXT("SettingsForUser")); SettingsForUser->writeJSON(writer); }
 	
     
     writer->WriteObjectEnd();
@@ -9277,10 +9277,10 @@ bool PlayFab::ClientModels::FRegisterPlayFabUserResult::readFromValue(const TSha
         if(UsernameValue->TryGetString(TmpValue)) {Username = TmpValue; }
     }
     
-    const TSharedPtr<FJsonValue> UserSettingsValue = obj->TryGetField(TEXT("UserSettings"));
-    if (UserSettingsValue.IsValid()&& !UserSettingsValue->IsNull())
+    const TSharedPtr<FJsonValue> SettingsForUserValue = obj->TryGetField(TEXT("SettingsForUser"));
+    if (SettingsForUserValue.IsValid()&& !SettingsForUserValue->IsNull())
     {
-        pfUserSettings = MakeShareable(new FUserSettings(UserSettingsValue->AsObject()));
+        SettingsForUser = MakeShareable(new FUserSettings(SettingsForUserValue->AsObject()));
     }
     
     
