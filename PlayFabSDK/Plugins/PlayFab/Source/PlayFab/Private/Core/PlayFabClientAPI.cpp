@@ -171,6 +171,36 @@ void UPlayFabClientAPI::OnLoginWithFacebookResult(FHttpRequestPtr HttpRequest, F
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+bool UPlayFabClientAPI::LoginWithGameCenter(
+    ClientModels::FLoginWithGameCenterRequest& request,
+    const FLoginWithGameCenterDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    if (PlayFabSettings::titleId.Len() > 0)
+        request.TitleId = PlayFabSettings::titleId;
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/LoginWithGameCenter")), request.toJSONString(),
+        TEXT(""), TEXT(""));
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnLoginWithGameCenterResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabClientAPI::OnLoginWithGameCenterResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLoginWithGameCenterDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ClientModels::FLoginResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        if (outResult.SessionTicket.Len() > 0)
+            {
+                mUserSessionTicket = outResult.SessionTicket;
+            }
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
 bool UPlayFabClientAPI::LoginWithGoogleAccount(
     ClientModels::FLoginWithGoogleAccountRequest& request,
     const FLoginWithGoogleAccountDelegate& SuccessDelegate,
@@ -1016,6 +1046,32 @@ bool UPlayFabClientAPI::GetFriendLeaderboard(
 void UPlayFabClientAPI::OnGetFriendLeaderboardResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetFriendLeaderboardDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
 {
     ClientModels::FGetLeaderboardResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+bool UPlayFabClientAPI::GetFriendLeaderboardAroundCurrentUser(
+    ClientModels::FGetFriendLeaderboardAroundCurrentUserRequest& request,
+    const FGetFriendLeaderboardAroundCurrentUserDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetFriendLeaderboardAroundCurrentUser")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetFriendLeaderboardAroundCurrentUserResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabClientAPI::OnGetFriendLeaderboardAroundCurrentUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetFriendLeaderboardAroundCurrentUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ClientModels::FGetFriendLeaderboardAroundCurrentUserResult outResult;
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
