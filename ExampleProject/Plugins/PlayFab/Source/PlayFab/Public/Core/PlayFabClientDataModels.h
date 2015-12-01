@@ -2501,6 +2501,111 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FGetFriendLeaderboardAroundCurrentUserRequest : public FPlayFabBaseModel
+    {
+		
+		// Statistic used to rank players for this leaderboard.
+		FString StatisticName;
+		// Maximum number of entries to retrieve.
+		int32 MaxResultsCount;
+		// [optional] Indicates whether Steam service friends should be included in the response. Default is true.
+		OptionalBool IncludeSteamFriends;
+		// [optional] Indicates whether Facebook friends should be included in the response. Default is true.
+		OptionalBool IncludeFacebookFriends;
+	
+        FGetFriendLeaderboardAroundCurrentUserRequest() :
+			FPlayFabBaseModel(),
+			StatisticName(),
+			MaxResultsCount(0),
+			IncludeSteamFriends(),
+			IncludeFacebookFriends()
+			{}
+		
+		FGetFriendLeaderboardAroundCurrentUserRequest(const FGetFriendLeaderboardAroundCurrentUserRequest& src) :
+			FPlayFabBaseModel(),
+			StatisticName(src.StatisticName),
+			MaxResultsCount(src.MaxResultsCount),
+			IncludeSteamFriends(src.IncludeSteamFriends),
+			IncludeFacebookFriends(src.IncludeFacebookFriends)
+			{}
+			
+		FGetFriendLeaderboardAroundCurrentUserRequest(const TSharedPtr<FJsonObject>& obj) : FGetFriendLeaderboardAroundCurrentUserRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetFriendLeaderboardAroundCurrentUserRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FPlayerLeaderboardEntry : public FPlayFabBaseModel
+    {
+		
+		// [optional] PlayFab unique identifier of the user for this leaderboard entry.
+		FString PlayFabId;
+		// [optional] Title-specific display name of the user for this leaderboard entry.
+		FString DisplayName;
+		// Specific value of the user's statistic.
+		int32 StatValue;
+		// User's overall position in the leaderboard.
+		int32 Position;
+	
+        FPlayerLeaderboardEntry() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			DisplayName(),
+			StatValue(0),
+			Position(0)
+			{}
+		
+		FPlayerLeaderboardEntry(const FPlayerLeaderboardEntry& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			DisplayName(src.DisplayName),
+			StatValue(src.StatValue),
+			Position(src.Position)
+			{}
+			
+		FPlayerLeaderboardEntry(const TSharedPtr<FJsonObject>& obj) : FPlayerLeaderboardEntry()
+        {
+            readFromValue(obj);
+        }
+		
+		~FPlayerLeaderboardEntry();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetFriendLeaderboardAroundCurrentUserResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Ordered listing of users and their positions in the requested leaderboard.
+		TArray<FPlayerLeaderboardEntry> Leaderboard;
+	
+        FGetFriendLeaderboardAroundCurrentUserResult() :
+			FPlayFabBaseModel(),
+			Leaderboard()
+			{}
+		
+		FGetFriendLeaderboardAroundCurrentUserResult(const FGetFriendLeaderboardAroundCurrentUserResult& src) :
+			FPlayFabBaseModel(),
+			Leaderboard(src.Leaderboard)
+			{}
+			
+		FGetFriendLeaderboardAroundCurrentUserResult(const TSharedPtr<FJsonObject>& obj) : FGetFriendLeaderboardAroundCurrentUserResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetFriendLeaderboardAroundCurrentUserResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FGetFriendLeaderboardRequest : public FPlayFabBaseModel
     {
 		
@@ -2694,45 +2799,6 @@ namespace ClientModels
         }
 		
 		~FGetLeaderboardAroundCurrentUserRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FPlayerLeaderboardEntry : public FPlayFabBaseModel
-    {
-		
-		// [optional] PlayFab unique identifier of the user for this leaderboard entry.
-		FString PlayFabId;
-		// [optional] Title-specific display name of the user for this leaderboard entry.
-		FString DisplayName;
-		// Specific value of the user's statistic.
-		int32 StatValue;
-		// User's overall position in the leaderboard.
-		int32 Position;
-	
-        FPlayerLeaderboardEntry() :
-			FPlayFabBaseModel(),
-			PlayFabId(),
-			DisplayName(),
-			StatValue(0),
-			Position(0)
-			{}
-		
-		FPlayerLeaderboardEntry(const FPlayerLeaderboardEntry& src) :
-			FPlayFabBaseModel(),
-			PlayFabId(src.PlayFabId),
-			DisplayName(src.DisplayName),
-			StatValue(src.StatValue),
-			Position(src.Position)
-			{}
-			
-		FPlayerLeaderboardEntry(const TSharedPtr<FJsonObject>& obj) : FPlayerLeaderboardEntry()
-        {
-            readFromValue(obj);
-        }
-		
-		~FPlayerLeaderboardEntry();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -5111,6 +5177,41 @@ namespace ClientModels
         }
 		
 		~FLoginWithFacebookRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FLoginWithGameCenterRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
+		FString TitleId;
+		// Unique Game Center player id.
+		FString PlayerId;
+		// [optional] Automatically create a PlayFab account if one is not currently linked to this Game Center id.
+		OptionalBool CreateAccount;
+	
+        FLoginWithGameCenterRequest() :
+			FPlayFabBaseModel(),
+			TitleId(),
+			PlayerId(),
+			CreateAccount()
+			{}
+		
+		FLoginWithGameCenterRequest(const FLoginWithGameCenterRequest& src) :
+			FPlayFabBaseModel(),
+			TitleId(src.TitleId),
+			PlayerId(src.PlayerId),
+			CreateAccount(src.CreateAccount)
+			{}
+			
+		FLoginWithGameCenterRequest(const TSharedPtr<FJsonObject>& obj) : FLoginWithGameCenterRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FLoginWithGameCenterRequest();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

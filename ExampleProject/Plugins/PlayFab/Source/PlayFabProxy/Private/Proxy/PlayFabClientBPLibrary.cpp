@@ -687,6 +687,36 @@ void UPFClientProxyLibrary::BreakBPClientGetContentDownloadUrlResult(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientGetFriendLeaderboardAroundCurrentUserRequest(
+		const FBPClientGetFriendLeaderboardAroundCurrentUserRequest& In
+        ,FString& OutStatisticName
+        ,int32& OutMaxResultsCount
+        ,bool& OutIncludeSteamFriends
+        ,bool& OutIncludeFacebookFriends
+	)
+{
+    OutStatisticName = In.Data.StatisticName;
+	OutMaxResultsCount = In.Data.MaxResultsCount;
+	OutIncludeSteamFriends = In.Data.IncludeSteamFriends;
+	OutIncludeFacebookFriends = In.Data.IncludeFacebookFriends;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetFriendLeaderboardAroundCurrentUserResult(
+		const FBPClientGetFriendLeaderboardAroundCurrentUserResult& In
+        ,TArray<FBPClientPlayerLeaderboardEntry>& OutLeaderboard
+	)
+{
+    for (const PlayFab::ClientModels::FPlayerLeaderboardEntry& elem : In.Data.Leaderboard)
+    {
+        FBPClientPlayerLeaderboardEntry result;
+        result.Data = elem;
+        OutLeaderboard.Add(result);
+    }
+
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientGetFriendLeaderboardRequest(
 		const FBPClientGetFriendLeaderboardRequest& In
         ,FString& OutStatisticName
@@ -1654,6 +1684,19 @@ void UPFClientProxyLibrary::BreakBPClientLoginWithFacebookRequest(
 {
     OutTitleId = In.Data.TitleId;
 	OutAccessToken = In.Data.AccessToken;
+	OutCreateAccount = In.Data.CreateAccount;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientLoginWithGameCenterRequest(
+		const FBPClientLoginWithGameCenterRequest& In
+        ,FString& OutTitleId
+        ,FString& OutPlayerId
+        ,bool& OutCreateAccount
+	)
+{
+    OutTitleId = In.Data.TitleId;
+	OutPlayerId = In.Data.PlayerId;
 	OutCreateAccount = In.Data.CreateAccount;
 	
 }

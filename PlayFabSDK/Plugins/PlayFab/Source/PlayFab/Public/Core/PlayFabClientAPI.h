@@ -19,6 +19,7 @@ namespace PlayFab
 		DECLARE_DELEGATE_OneParam(FLoginWithCustomIDDelegate, const ClientModels::FLoginResult&);
 		DECLARE_DELEGATE_OneParam(FLoginWithEmailAddressDelegate, const ClientModels::FLoginResult&);
 		DECLARE_DELEGATE_OneParam(FLoginWithFacebookDelegate, const ClientModels::FLoginResult&);
+		DECLARE_DELEGATE_OneParam(FLoginWithGameCenterDelegate, const ClientModels::FLoginResult&);
 		DECLARE_DELEGATE_OneParam(FLoginWithGoogleAccountDelegate, const ClientModels::FLoginResult&);
 		DECLARE_DELEGATE_OneParam(FLoginWithIOSDeviceIDDelegate, const ClientModels::FLoginResult&);
 		DECLARE_DELEGATE_OneParam(FLoginWithKongregateDelegate, const ClientModels::FLoginResult&);
@@ -51,6 +52,7 @@ namespace PlayFab
 		DECLARE_DELEGATE_OneParam(FUnlinkSteamAccountDelegate, const ClientModels::FUnlinkSteamAccountResult&);
 		DECLARE_DELEGATE_OneParam(FUpdateUserTitleDisplayNameDelegate, const ClientModels::FUpdateUserTitleDisplayNameResult&);
 		DECLARE_DELEGATE_OneParam(FGetFriendLeaderboardDelegate, const ClientModels::FGetLeaderboardResult&);
+		DECLARE_DELEGATE_OneParam(FGetFriendLeaderboardAroundCurrentUserDelegate, const ClientModels::FGetFriendLeaderboardAroundCurrentUserResult&);
 		DECLARE_DELEGATE_OneParam(FGetLeaderboardDelegate, const ClientModels::FGetLeaderboardResult&);
 		DECLARE_DELEGATE_OneParam(FGetLeaderboardAroundCurrentUserDelegate, const ClientModels::FGetLeaderboardAroundCurrentUserResult&);
 		DECLARE_DELEGATE_OneParam(FGetUserDataDelegate, const ClientModels::FGetUserDataResult&);
@@ -157,6 +159,13 @@ namespace PlayFab
          * Facebook sign-in is accomplished using the Facebook User Access Token. More information on the Token can be found in the Facebook developer documentation (https://developers.facebook.com/docs/facebook-login/access-tokens/). In Unity, for example, the Token is available as AccessToken in the Facebook SDK ScriptableObject FB. If this is the first time a user has signed in with the Facebook account and CreateAccount is set to true, a new PlayFab account will be created and linked to the provided account's Facebook ID. In this case, no email or username will be associated with the PlayFab account. Otherwise, if no PlayFab account is linked to the Facebook account, an error indicating this will be returned, so that the title can guide the user through creation of a PlayFab account.
 		 */
 		bool LoginWithFacebook(ClientModels::FLoginWithFacebookRequest& request, const FLoginWithFacebookDelegate& SuccessDelegate = FLoginWithFacebookDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+
+			
+		/**
+		 * Signs the user in using an iOS Game Center player identifier, returning a session identifier that can subsequently be used for API calls which require an authenticated user
+         * The Game Center player identifier (https://developer.apple.com/library/ios/documentation/Accounts/Reference/ACAccountClassRef/index.html#//apple_ref/occ/instp/ACAccount/identifier) is a generated string which is stored on the local device. As with device identifiers, care must be taken to never expose a player's Game Center identifier to end users, as that could result in a user's account being compromised. If this is the first time a user has signed in with Game Center and CreateAccount is set to true, a new PlayFab account will be created and linked to the Game Center identifier. In this case, no email or username will be associated with the PlayFab account. Otherwise, if no PlayFab account is linked to the Game Center account, an error indicating this will be returned, so that the title can guide the user through creation of a PlayFab account.
+		 */
+		bool LoginWithGameCenter(ClientModels::FLoginWithGameCenterRequest& request, const FLoginWithGameCenterDelegate& SuccessDelegate = FLoginWithGameCenterDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
@@ -353,6 +362,12 @@ namespace PlayFab
 		 * Retrieves a list of ranked friends of the current player for the given statistic, starting from the indicated point in the leaderboard
 		 */
 		bool GetFriendLeaderboard(ClientModels::FGetFriendLeaderboardRequest& request, const FGetFriendLeaderboardDelegate& SuccessDelegate = FGetFriendLeaderboardDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+
+			
+		/**
+		 * Retrieves a list of ranked friends of the current player for the given statistic, centered on the currently signed-in user
+		 */
+		bool GetFriendLeaderboardAroundCurrentUser(ClientModels::FGetFriendLeaderboardAroundCurrentUserRequest& request, const FGetFriendLeaderboardAroundCurrentUserDelegate& SuccessDelegate = FGetFriendLeaderboardAroundCurrentUserDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
@@ -774,6 +789,7 @@ namespace PlayFab
 		void OnLoginWithCustomIDResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLoginWithCustomIDDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnLoginWithEmailAddressResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLoginWithEmailAddressDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnLoginWithFacebookResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLoginWithFacebookDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+		void OnLoginWithGameCenterResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLoginWithGameCenterDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnLoginWithGoogleAccountResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLoginWithGoogleAccountDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnLoginWithIOSDeviceIDResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLoginWithIOSDeviceIDDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnLoginWithKongregateResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLoginWithKongregateDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -806,6 +822,7 @@ namespace PlayFab
 		void OnUnlinkSteamAccountResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlinkSteamAccountDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnUpdateUserTitleDisplayNameResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserTitleDisplayNameDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnGetFriendLeaderboardResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetFriendLeaderboardDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+		void OnGetFriendLeaderboardAroundCurrentUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetFriendLeaderboardAroundCurrentUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnGetLeaderboardResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnGetLeaderboardAroundCurrentUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardAroundCurrentUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnGetUserDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
