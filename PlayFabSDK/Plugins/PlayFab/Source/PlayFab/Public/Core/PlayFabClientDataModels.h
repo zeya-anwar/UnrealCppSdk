@@ -432,6 +432,60 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FAttributeInstallRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] The IdentifierForAdvertisers for iOS Devices.
+		FString Idfa;
+		// [optional] The Android Id for this Android device.
+		FString Android_Id;
+	
+        FAttributeInstallRequest() :
+			FPlayFabBaseModel(),
+			Idfa(),
+			Android_Id()
+			{}
+		
+		FAttributeInstallRequest(const FAttributeInstallRequest& src) :
+			FPlayFabBaseModel(),
+			Idfa(src.Idfa),
+			Android_Id(src.Android_Id)
+			{}
+			
+		FAttributeInstallRequest(const TSharedPtr<FJsonObject>& obj) : FAttributeInstallRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FAttributeInstallRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FAttributeInstallResult : public FPlayFabBaseModel
+    {
+		
+	
+        FAttributeInstallResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FAttributeInstallResult(const FAttributeInstallResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FAttributeInstallResult(const TSharedPtr<FJsonObject>& obj) : FAttributeInstallResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FAttributeInstallResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FCancelTradeRequest : public FPlayFabBaseModel
     {
 		

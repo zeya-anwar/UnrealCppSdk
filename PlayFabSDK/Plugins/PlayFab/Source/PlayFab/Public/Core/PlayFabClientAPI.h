@@ -116,6 +116,7 @@ namespace PlayFab
 		DECLARE_DELEGATE_OneParam(FGetPlayerTradesDelegate, const ClientModels::FGetPlayerTradesResponse&);
 		DECLARE_DELEGATE_OneParam(FGetTradeStatusDelegate, const ClientModels::FGetTradeStatusResponse&);
 		DECLARE_DELEGATE_OneParam(FOpenTradeDelegate, const ClientModels::FOpenTradeResponse&);
+		DECLARE_DELEGATE_OneParam(FAttributeInstallDelegate, const ClientModels::FAttributeInstallResult&);
 		
 
         UPlayFabClientAPI();
@@ -780,6 +781,13 @@ namespace PlayFab
 		bool OpenTrade(ClientModels::FOpenTradeRequest& request, const FOpenTradeDelegate& SuccessDelegate = FOpenTradeDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
+		/**
+		 * Attributes an install for advertisment.
+         * If you have an ad attribution partner enabled, this will post an install to thier service  to track the devices. It uses the given device id to match based on clicks on ads.
+		 */
+		bool AttributeInstall(ClientModels::FAttributeInstallRequest& request, const FAttributeInstallDelegate& SuccessDelegate = FAttributeInstallDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+
+			
 
     private:
 
@@ -886,6 +894,7 @@ namespace PlayFab
 		void OnGetPlayerTradesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerTradesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnGetTradeStatusResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetTradeStatusDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnOpenTradeResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FOpenTradeDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+		void OnAttributeInstallResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAttributeInstallDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		
 		
 		

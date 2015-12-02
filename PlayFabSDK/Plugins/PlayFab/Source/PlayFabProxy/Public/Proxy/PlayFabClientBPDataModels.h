@@ -116,6 +116,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientAndroidDevicePushNotificationRegistrationResultDelegate, const FBPClientAndroidDevicePushNotificationRegistrationResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientAttributeInstallRequest"))
+struct FBPClientAttributeInstallRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FAttributeInstallRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientAttributeInstallRequestDelegate, const FBPClientAttributeInstallRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientAttributeInstallResult"))
+struct FBPClientAttributeInstallResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FAttributeInstallResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientAttributeInstallResultDelegate, const FBPClientAttributeInstallResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientCancelTradeRequest"))
 struct FBPClientCancelTradeRequest
 {

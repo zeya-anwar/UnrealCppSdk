@@ -631,6 +631,68 @@ bool PlayFab::ClientModels::FAndroidDevicePushNotificationRegistrationResult::re
 }
 
 
+PlayFab::ClientModels::FAttributeInstallRequest::~FAttributeInstallRequest()
+{
+    
+}
+
+void PlayFab::ClientModels::FAttributeInstallRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Idfa.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Idfa")); writer->WriteValue(Idfa); }
+	
+    if(Android_Id.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Android_Id")); writer->WriteValue(Android_Id); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FAttributeInstallRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> IdfaValue = obj->TryGetField(TEXT("Idfa"));
+    if (IdfaValue.IsValid()&& !IdfaValue->IsNull())
+    {
+        FString TmpValue;
+        if(IdfaValue->TryGetString(TmpValue)) {Idfa = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> Android_IdValue = obj->TryGetField(TEXT("Android_Id"));
+    if (Android_IdValue.IsValid()&& !Android_IdValue->IsNull())
+    {
+        FString TmpValue;
+        if(Android_IdValue->TryGetString(TmpValue)) {Android_Id = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FAttributeInstallResult::~FAttributeInstallResult()
+{
+    
+}
+
+void PlayFab::ClientModels::FAttributeInstallResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FAttributeInstallResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ClientModels::FCancelTradeRequest::~FCancelTradeRequest()
 {
     

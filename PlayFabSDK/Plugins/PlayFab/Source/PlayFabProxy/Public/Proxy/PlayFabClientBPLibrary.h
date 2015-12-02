@@ -90,6 +90,18 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientAttributeInstallRequest(
+		const FBPClientAttributeInstallRequest& In
+        ,FString& OutIdfa
+        ,FString& OutAndroid_Id
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientAttributeInstallResult(
+		const FBPClientAttributeInstallResult& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientCancelTradeRequest(
 		const FBPClientCancelTradeRequest& In
         ,FString& OutTradeId

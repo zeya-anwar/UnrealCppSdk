@@ -120,6 +120,24 @@ void UPFClientProxyLibrary::BreakBPClientAndroidDevicePushNotificationRegistrati
     
 }
 
+void UPFClientProxyLibrary::BreakBPClientAttributeInstallRequest(
+		const FBPClientAttributeInstallRequest& In
+        ,FString& OutIdfa
+        ,FString& OutAndroid_Id
+	)
+{
+    OutIdfa = In.Data.Idfa;
+	OutAndroid_Id = In.Data.Android_Id;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientAttributeInstallResult(
+		const FBPClientAttributeInstallResult& In
+	)
+{
+    
+}
+
 void UPFClientProxyLibrary::BreakBPClientCancelTradeRequest(
 		const FBPClientCancelTradeRequest& In
         ,FString& OutTradeId
