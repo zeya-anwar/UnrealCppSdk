@@ -8,19 +8,15 @@
 using namespace PlayFab;
 using namespace PlayFab::MatchmakerModels;
 
-UPlayFabMatchmakerAPI::UPlayFabMatchmakerAPI()
-{
+UPlayFabMatchmakerAPI::UPlayFabMatchmakerAPI() {}
 
-}
-
-UPlayFabMatchmakerAPI::~UPlayFabMatchmakerAPI()
-{
-}
+UPlayFabMatchmakerAPI::~UPlayFabMatchmakerAPI() {}
 
 int UPlayFabMatchmakerAPI::GetPendingCalls()
 {
     return PlayFab::PlayFabRequestHandler::GetPendingCalls();
 }
+
 bool UPlayFabMatchmakerAPI::AuthUser(
     MatchmakerModels::FAuthUserRequest& request,
     const FAuthUserDelegate& SuccessDelegate,
@@ -47,6 +43,7 @@ void UPlayFabMatchmakerAPI::OnAuthUserResult(FHttpRequestPtr HttpRequest, FHttpR
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabMatchmakerAPI::PlayerJoined(
     MatchmakerModels::FPlayerJoinedRequest& request,
     const FPlayerJoinedDelegate& SuccessDelegate,
@@ -73,6 +70,7 @@ void UPlayFabMatchmakerAPI::OnPlayerJoinedResult(FHttpRequestPtr HttpRequest, FH
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabMatchmakerAPI::PlayerLeft(
     MatchmakerModels::FPlayerLeftRequest& request,
     const FPlayerLeftDelegate& SuccessDelegate,
@@ -99,6 +97,7 @@ void UPlayFabMatchmakerAPI::OnPlayerLeftResult(FHttpRequestPtr HttpRequest, FHtt
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabMatchmakerAPI::StartGame(
     MatchmakerModels::FStartGameRequest& request,
     const FStartGameDelegate& SuccessDelegate,
@@ -125,6 +124,7 @@ void UPlayFabMatchmakerAPI::OnStartGameResult(FHttpRequestPtr HttpRequest, FHttp
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabMatchmakerAPI::UserInfo(
     MatchmakerModels::FUserInfoRequest& request,
     const FUserInfoDelegate& SuccessDelegate,

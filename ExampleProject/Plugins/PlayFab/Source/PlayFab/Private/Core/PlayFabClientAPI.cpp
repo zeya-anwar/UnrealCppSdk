@@ -8,14 +8,9 @@
 using namespace PlayFab;
 using namespace PlayFab::ClientModels;
 
-UPlayFabClientAPI::UPlayFabClientAPI()
-{
+UPlayFabClientAPI::UPlayFabClientAPI() {}
 
-}
-
-UPlayFabClientAPI::~UPlayFabClientAPI()
-{
-}
+UPlayFabClientAPI::~UPlayFabClientAPI() {}
 
 int UPlayFabClientAPI::GetPendingCalls()
 {
@@ -25,7 +20,24 @@ int UPlayFabClientAPI::GetPendingCalls()
 bool UPlayFabClientAPI::IsClientLoggedIn()
 {
     return !mUserSessionTicket.IsEmpty();
-}bool UPlayFabClientAPI::GetPhotonAuthenticationToken(
+}
+
+void UPlayFabClientAPI::MultiStepClientLogin(bool needsAttribution)
+{
+    if (needsAttribution && !PlayFabSettings::disableAdvertising && !PlayFabSettings::advertisingIdType.IsEmpty() && !PlayFabSettings::advertisingIdValue.IsEmpty())
+    {
+        PlayFab::ClientModels::FAttributeInstallRequest request;
+        if (PlayFabSettings::advertisingIdType == PlayFabSettings::AD_TYPE_IDFA)
+            request.Idfa = PlayFabSettings::advertisingIdValue;
+        else if (PlayFabSettings::advertisingIdType == PlayFabSettings::AD_TYPE_ANDROID_ID)
+            request.Android_Id = PlayFabSettings::advertisingIdValue;
+        else
+            return;
+        AttributeInstall(request);
+    }
+}
+
+bool UPlayFabClientAPI::GetPhotonAuthenticationToken(
     ClientModels::FGetPhotonAuthenticationTokenRequest& request,
     const FGetPhotonAuthenticationTokenDelegate& SuccessDelegate,
     const FPlayFabErrorDelegate& ErrorDelegate)
@@ -51,6 +63,7 @@ void UPlayFabClientAPI::OnGetPhotonAuthenticationTokenResult(FHttpRequestPtr Htt
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::LoginWithAndroidDeviceID(
     ClientModels::FLoginWithAndroidDeviceIDRequest& request,
     const FLoginWithAndroidDeviceIDDelegate& SuccessDelegate,
@@ -71,9 +84,9 @@ void UPlayFabClientAPI::OnLoginWithAndroidDeviceIDResult(FHttpRequestPtr HttpReq
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
         if (outResult.SessionTicket.Len() > 0)
-            {
-                mUserSessionTicket = outResult.SessionTicket;
-            }
+        {
+            mUserSessionTicket = outResult.SessionTicket;
+        }
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -81,6 +94,7 @@ void UPlayFabClientAPI::OnLoginWithAndroidDeviceIDResult(FHttpRequestPtr HttpReq
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::LoginWithCustomID(
     ClientModels::FLoginWithCustomIDRequest& request,
     const FLoginWithCustomIDDelegate& SuccessDelegate,
@@ -101,9 +115,9 @@ void UPlayFabClientAPI::OnLoginWithCustomIDResult(FHttpRequestPtr HttpRequest, F
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
         if (outResult.SessionTicket.Len() > 0)
-            {
-                mUserSessionTicket = outResult.SessionTicket;
-            }
+        {
+            mUserSessionTicket = outResult.SessionTicket;
+        }
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -111,6 +125,7 @@ void UPlayFabClientAPI::OnLoginWithCustomIDResult(FHttpRequestPtr HttpRequest, F
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::LoginWithEmailAddress(
     ClientModels::FLoginWithEmailAddressRequest& request,
     const FLoginWithEmailAddressDelegate& SuccessDelegate,
@@ -131,9 +146,9 @@ void UPlayFabClientAPI::OnLoginWithEmailAddressResult(FHttpRequestPtr HttpReques
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
         if (outResult.SessionTicket.Len() > 0)
-            {
-                mUserSessionTicket = outResult.SessionTicket;
-            }
+        {
+            mUserSessionTicket = outResult.SessionTicket;
+        }
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -141,6 +156,7 @@ void UPlayFabClientAPI::OnLoginWithEmailAddressResult(FHttpRequestPtr HttpReques
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::LoginWithFacebook(
     ClientModels::FLoginWithFacebookRequest& request,
     const FLoginWithFacebookDelegate& SuccessDelegate,
@@ -161,9 +177,9 @@ void UPlayFabClientAPI::OnLoginWithFacebookResult(FHttpRequestPtr HttpRequest, F
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
         if (outResult.SessionTicket.Len() > 0)
-            {
-                mUserSessionTicket = outResult.SessionTicket;
-            }
+        {
+            mUserSessionTicket = outResult.SessionTicket;
+        }
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -171,6 +187,7 @@ void UPlayFabClientAPI::OnLoginWithFacebookResult(FHttpRequestPtr HttpRequest, F
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::LoginWithGameCenter(
     ClientModels::FLoginWithGameCenterRequest& request,
     const FLoginWithGameCenterDelegate& SuccessDelegate,
@@ -191,9 +208,9 @@ void UPlayFabClientAPI::OnLoginWithGameCenterResult(FHttpRequestPtr HttpRequest,
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
         if (outResult.SessionTicket.Len() > 0)
-            {
-                mUserSessionTicket = outResult.SessionTicket;
-            }
+        {
+            mUserSessionTicket = outResult.SessionTicket;
+        }
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -201,6 +218,7 @@ void UPlayFabClientAPI::OnLoginWithGameCenterResult(FHttpRequestPtr HttpRequest,
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::LoginWithGoogleAccount(
     ClientModels::FLoginWithGoogleAccountRequest& request,
     const FLoginWithGoogleAccountDelegate& SuccessDelegate,
@@ -221,9 +239,9 @@ void UPlayFabClientAPI::OnLoginWithGoogleAccountResult(FHttpRequestPtr HttpReque
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
         if (outResult.SessionTicket.Len() > 0)
-            {
-                mUserSessionTicket = outResult.SessionTicket;
-            }
+        {
+            mUserSessionTicket = outResult.SessionTicket;
+        }
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -231,6 +249,7 @@ void UPlayFabClientAPI::OnLoginWithGoogleAccountResult(FHttpRequestPtr HttpReque
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::LoginWithIOSDeviceID(
     ClientModels::FLoginWithIOSDeviceIDRequest& request,
     const FLoginWithIOSDeviceIDDelegate& SuccessDelegate,
@@ -251,9 +270,9 @@ void UPlayFabClientAPI::OnLoginWithIOSDeviceIDResult(FHttpRequestPtr HttpRequest
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
         if (outResult.SessionTicket.Len() > 0)
-            {
-                mUserSessionTicket = outResult.SessionTicket;
-            }
+        {
+            mUserSessionTicket = outResult.SessionTicket;
+        }
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -261,6 +280,7 @@ void UPlayFabClientAPI::OnLoginWithIOSDeviceIDResult(FHttpRequestPtr HttpRequest
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::LoginWithKongregate(
     ClientModels::FLoginWithKongregateRequest& request,
     const FLoginWithKongregateDelegate& SuccessDelegate,
@@ -281,9 +301,9 @@ void UPlayFabClientAPI::OnLoginWithKongregateResult(FHttpRequestPtr HttpRequest,
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
         if (outResult.SessionTicket.Len() > 0)
-            {
-                mUserSessionTicket = outResult.SessionTicket;
-            }
+        {
+            mUserSessionTicket = outResult.SessionTicket;
+        }
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -291,6 +311,7 @@ void UPlayFabClientAPI::OnLoginWithKongregateResult(FHttpRequestPtr HttpRequest,
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::LoginWithPlayFab(
     ClientModels::FLoginWithPlayFabRequest& request,
     const FLoginWithPlayFabDelegate& SuccessDelegate,
@@ -311,9 +332,9 @@ void UPlayFabClientAPI::OnLoginWithPlayFabResult(FHttpRequestPtr HttpRequest, FH
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
         if (outResult.SessionTicket.Len() > 0)
-            {
-                mUserSessionTicket = outResult.SessionTicket;
-            }
+        {
+            mUserSessionTicket = outResult.SessionTicket;
+        }
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -321,6 +342,7 @@ void UPlayFabClientAPI::OnLoginWithPlayFabResult(FHttpRequestPtr HttpRequest, FH
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::LoginWithSteam(
     ClientModels::FLoginWithSteamRequest& request,
     const FLoginWithSteamDelegate& SuccessDelegate,
@@ -341,9 +363,9 @@ void UPlayFabClientAPI::OnLoginWithSteamResult(FHttpRequestPtr HttpRequest, FHtt
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
         if (outResult.SessionTicket.Len() > 0)
-            {
-                mUserSessionTicket = outResult.SessionTicket;
-            }
+        {
+            mUserSessionTicket = outResult.SessionTicket;
+        }
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -351,6 +373,7 @@ void UPlayFabClientAPI::OnLoginWithSteamResult(FHttpRequestPtr HttpRequest, FHtt
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::RegisterPlayFabUser(
     ClientModels::FRegisterPlayFabUserRequest& request,
     const FRegisterPlayFabUserDelegate& SuccessDelegate,
@@ -371,9 +394,9 @@ void UPlayFabClientAPI::OnRegisterPlayFabUserResult(FHttpRequestPtr HttpRequest,
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
         if (outResult.SessionTicket.Len() > 0)
-            {
-                mUserSessionTicket = outResult.SessionTicket;
-            }
+        {
+            mUserSessionTicket = outResult.SessionTicket;
+        }
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -381,6 +404,7 @@ void UPlayFabClientAPI::OnRegisterPlayFabUserResult(FHttpRequestPtr HttpRequest,
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::AddUsernamePassword(
     ClientModels::FAddUsernamePasswordRequest& request,
     const FAddUsernamePasswordDelegate& SuccessDelegate,
@@ -407,6 +431,7 @@ void UPlayFabClientAPI::OnAddUsernamePasswordResult(FHttpRequestPtr HttpRequest,
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetAccountInfo(
     ClientModels::FGetAccountInfoRequest& request,
     const FGetAccountInfoDelegate& SuccessDelegate,
@@ -433,6 +458,7 @@ void UPlayFabClientAPI::OnGetAccountInfoResult(FHttpRequestPtr HttpRequest, FHtt
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetPlayFabIDsFromFacebookIDs(
     ClientModels::FGetPlayFabIDsFromFacebookIDsRequest& request,
     const FGetPlayFabIDsFromFacebookIDsDelegate& SuccessDelegate,
@@ -459,6 +485,7 @@ void UPlayFabClientAPI::OnGetPlayFabIDsFromFacebookIDsResult(FHttpRequestPtr Htt
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetPlayFabIDsFromGameCenterIDs(
     ClientModels::FGetPlayFabIDsFromGameCenterIDsRequest& request,
     const FGetPlayFabIDsFromGameCenterIDsDelegate& SuccessDelegate,
@@ -485,6 +512,7 @@ void UPlayFabClientAPI::OnGetPlayFabIDsFromGameCenterIDsResult(FHttpRequestPtr H
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetPlayFabIDsFromGoogleIDs(
     ClientModels::FGetPlayFabIDsFromGoogleIDsRequest& request,
     const FGetPlayFabIDsFromGoogleIDsDelegate& SuccessDelegate,
@@ -511,6 +539,7 @@ void UPlayFabClientAPI::OnGetPlayFabIDsFromGoogleIDsResult(FHttpRequestPtr HttpR
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetPlayFabIDsFromSteamIDs(
     ClientModels::FGetPlayFabIDsFromSteamIDsRequest& request,
     const FGetPlayFabIDsFromSteamIDsDelegate& SuccessDelegate,
@@ -537,6 +566,7 @@ void UPlayFabClientAPI::OnGetPlayFabIDsFromSteamIDsResult(FHttpRequestPtr HttpRe
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetUserCombinedInfo(
     ClientModels::FGetUserCombinedInfoRequest& request,
     const FGetUserCombinedInfoDelegate& SuccessDelegate,
@@ -563,6 +593,7 @@ void UPlayFabClientAPI::OnGetUserCombinedInfoResult(FHttpRequestPtr HttpRequest,
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::LinkAndroidDeviceID(
     ClientModels::FLinkAndroidDeviceIDRequest& request,
     const FLinkAndroidDeviceIDDelegate& SuccessDelegate,
@@ -589,6 +620,7 @@ void UPlayFabClientAPI::OnLinkAndroidDeviceIDResult(FHttpRequestPtr HttpRequest,
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::LinkCustomID(
     ClientModels::FLinkCustomIDRequest& request,
     const FLinkCustomIDDelegate& SuccessDelegate,
@@ -615,6 +647,7 @@ void UPlayFabClientAPI::OnLinkCustomIDResult(FHttpRequestPtr HttpRequest, FHttpR
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::LinkFacebookAccount(
     ClientModels::FLinkFacebookAccountRequest& request,
     const FLinkFacebookAccountDelegate& SuccessDelegate,
@@ -641,6 +674,7 @@ void UPlayFabClientAPI::OnLinkFacebookAccountResult(FHttpRequestPtr HttpRequest,
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::LinkGameCenterAccount(
     ClientModels::FLinkGameCenterAccountRequest& request,
     const FLinkGameCenterAccountDelegate& SuccessDelegate,
@@ -667,6 +701,7 @@ void UPlayFabClientAPI::OnLinkGameCenterAccountResult(FHttpRequestPtr HttpReques
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::LinkGoogleAccount(
     ClientModels::FLinkGoogleAccountRequest& request,
     const FLinkGoogleAccountDelegate& SuccessDelegate,
@@ -693,6 +728,7 @@ void UPlayFabClientAPI::OnLinkGoogleAccountResult(FHttpRequestPtr HttpRequest, F
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::LinkIOSDeviceID(
     ClientModels::FLinkIOSDeviceIDRequest& request,
     const FLinkIOSDeviceIDDelegate& SuccessDelegate,
@@ -719,6 +755,7 @@ void UPlayFabClientAPI::OnLinkIOSDeviceIDResult(FHttpRequestPtr HttpRequest, FHt
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::LinkKongregate(
     ClientModels::FLinkKongregateAccountRequest& request,
     const FLinkKongregateDelegate& SuccessDelegate,
@@ -745,6 +782,7 @@ void UPlayFabClientAPI::OnLinkKongregateResult(FHttpRequestPtr HttpRequest, FHtt
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::LinkSteamAccount(
     ClientModels::FLinkSteamAccountRequest& request,
     const FLinkSteamAccountDelegate& SuccessDelegate,
@@ -771,6 +809,7 @@ void UPlayFabClientAPI::OnLinkSteamAccountResult(FHttpRequestPtr HttpRequest, FH
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::SendAccountRecoveryEmail(
     ClientModels::FSendAccountRecoveryEmailRequest& request,
     const FSendAccountRecoveryEmailDelegate& SuccessDelegate,
@@ -797,6 +836,7 @@ void UPlayFabClientAPI::OnSendAccountRecoveryEmailResult(FHttpRequestPtr HttpReq
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::UnlinkAndroidDeviceID(
     ClientModels::FUnlinkAndroidDeviceIDRequest& request,
     const FUnlinkAndroidDeviceIDDelegate& SuccessDelegate,
@@ -823,6 +863,7 @@ void UPlayFabClientAPI::OnUnlinkAndroidDeviceIDResult(FHttpRequestPtr HttpReques
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::UnlinkCustomID(
     ClientModels::FUnlinkCustomIDRequest& request,
     const FUnlinkCustomIDDelegate& SuccessDelegate,
@@ -849,6 +890,7 @@ void UPlayFabClientAPI::OnUnlinkCustomIDResult(FHttpRequestPtr HttpRequest, FHtt
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::UnlinkFacebookAccount(
     
     const FUnlinkFacebookAccountDelegate& SuccessDelegate,
@@ -875,6 +917,7 @@ void UPlayFabClientAPI::OnUnlinkFacebookAccountResult(FHttpRequestPtr HttpReques
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::UnlinkGameCenterAccount(
     
     const FUnlinkGameCenterAccountDelegate& SuccessDelegate,
@@ -901,6 +944,7 @@ void UPlayFabClientAPI::OnUnlinkGameCenterAccountResult(FHttpRequestPtr HttpRequ
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::UnlinkGoogleAccount(
     
     const FUnlinkGoogleAccountDelegate& SuccessDelegate,
@@ -927,6 +971,7 @@ void UPlayFabClientAPI::OnUnlinkGoogleAccountResult(FHttpRequestPtr HttpRequest,
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::UnlinkIOSDeviceID(
     ClientModels::FUnlinkIOSDeviceIDRequest& request,
     const FUnlinkIOSDeviceIDDelegate& SuccessDelegate,
@@ -953,6 +998,7 @@ void UPlayFabClientAPI::OnUnlinkIOSDeviceIDResult(FHttpRequestPtr HttpRequest, F
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::UnlinkKongregate(
     
     const FUnlinkKongregateDelegate& SuccessDelegate,
@@ -979,6 +1025,7 @@ void UPlayFabClientAPI::OnUnlinkKongregateResult(FHttpRequestPtr HttpRequest, FH
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::UnlinkSteamAccount(
     
     const FUnlinkSteamAccountDelegate& SuccessDelegate,
@@ -1005,6 +1052,7 @@ void UPlayFabClientAPI::OnUnlinkSteamAccountResult(FHttpRequestPtr HttpRequest, 
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::UpdateUserTitleDisplayName(
     ClientModels::FUpdateUserTitleDisplayNameRequest& request,
     const FUpdateUserTitleDisplayNameDelegate& SuccessDelegate,
@@ -1031,6 +1079,7 @@ void UPlayFabClientAPI::OnUpdateUserTitleDisplayNameResult(FHttpRequestPtr HttpR
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetFriendLeaderboard(
     ClientModels::FGetFriendLeaderboardRequest& request,
     const FGetFriendLeaderboardDelegate& SuccessDelegate,
@@ -1057,6 +1106,7 @@ void UPlayFabClientAPI::OnGetFriendLeaderboardResult(FHttpRequestPtr HttpRequest
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetFriendLeaderboardAroundCurrentUser(
     ClientModels::FGetFriendLeaderboardAroundCurrentUserRequest& request,
     const FGetFriendLeaderboardAroundCurrentUserDelegate& SuccessDelegate,
@@ -1083,6 +1133,7 @@ void UPlayFabClientAPI::OnGetFriendLeaderboardAroundCurrentUserResult(FHttpReque
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetLeaderboard(
     ClientModels::FGetLeaderboardRequest& request,
     const FGetLeaderboardDelegate& SuccessDelegate,
@@ -1109,6 +1160,7 @@ void UPlayFabClientAPI::OnGetLeaderboardResult(FHttpRequestPtr HttpRequest, FHtt
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetLeaderboardAroundCurrentUser(
     ClientModels::FGetLeaderboardAroundCurrentUserRequest& request,
     const FGetLeaderboardAroundCurrentUserDelegate& SuccessDelegate,
@@ -1135,6 +1187,7 @@ void UPlayFabClientAPI::OnGetLeaderboardAroundCurrentUserResult(FHttpRequestPtr 
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetUserData(
     ClientModels::FGetUserDataRequest& request,
     const FGetUserDataDelegate& SuccessDelegate,
@@ -1161,6 +1214,7 @@ void UPlayFabClientAPI::OnGetUserDataResult(FHttpRequestPtr HttpRequest, FHttpRe
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetUserPublisherData(
     ClientModels::FGetUserDataRequest& request,
     const FGetUserPublisherDataDelegate& SuccessDelegate,
@@ -1187,6 +1241,7 @@ void UPlayFabClientAPI::OnGetUserPublisherDataResult(FHttpRequestPtr HttpRequest
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetUserPublisherReadOnlyData(
     ClientModels::FGetUserDataRequest& request,
     const FGetUserPublisherReadOnlyDataDelegate& SuccessDelegate,
@@ -1213,6 +1268,7 @@ void UPlayFabClientAPI::OnGetUserPublisherReadOnlyDataResult(FHttpRequestPtr Htt
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetUserReadOnlyData(
     ClientModels::FGetUserDataRequest& request,
     const FGetUserReadOnlyDataDelegate& SuccessDelegate,
@@ -1239,6 +1295,7 @@ void UPlayFabClientAPI::OnGetUserReadOnlyDataResult(FHttpRequestPtr HttpRequest,
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetUserStatistics(
     
     const FGetUserStatisticsDelegate& SuccessDelegate,
@@ -1265,6 +1322,7 @@ void UPlayFabClientAPI::OnGetUserStatisticsResult(FHttpRequestPtr HttpRequest, F
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::UpdateUserData(
     ClientModels::FUpdateUserDataRequest& request,
     const FUpdateUserDataDelegate& SuccessDelegate,
@@ -1291,6 +1349,7 @@ void UPlayFabClientAPI::OnUpdateUserDataResult(FHttpRequestPtr HttpRequest, FHtt
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::UpdateUserPublisherData(
     ClientModels::FUpdateUserDataRequest& request,
     const FUpdateUserPublisherDataDelegate& SuccessDelegate,
@@ -1317,6 +1376,7 @@ void UPlayFabClientAPI::OnUpdateUserPublisherDataResult(FHttpRequestPtr HttpRequ
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::UpdateUserStatistics(
     ClientModels::FUpdateUserStatisticsRequest& request,
     const FUpdateUserStatisticsDelegate& SuccessDelegate,
@@ -1343,6 +1403,7 @@ void UPlayFabClientAPI::OnUpdateUserStatisticsResult(FHttpRequestPtr HttpRequest
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetCatalogItems(
     ClientModels::FGetCatalogItemsRequest& request,
     const FGetCatalogItemsDelegate& SuccessDelegate,
@@ -1369,6 +1430,7 @@ void UPlayFabClientAPI::OnGetCatalogItemsResult(FHttpRequestPtr HttpRequest, FHt
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetStoreItems(
     ClientModels::FGetStoreItemsRequest& request,
     const FGetStoreItemsDelegate& SuccessDelegate,
@@ -1395,6 +1457,7 @@ void UPlayFabClientAPI::OnGetStoreItemsResult(FHttpRequestPtr HttpRequest, FHttp
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetTitleData(
     ClientModels::FGetTitleDataRequest& request,
     const FGetTitleDataDelegate& SuccessDelegate,
@@ -1421,6 +1484,7 @@ void UPlayFabClientAPI::OnGetTitleDataResult(FHttpRequestPtr HttpRequest, FHttpR
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetTitleNews(
     ClientModels::FGetTitleNewsRequest& request,
     const FGetTitleNewsDelegate& SuccessDelegate,
@@ -1447,6 +1511,7 @@ void UPlayFabClientAPI::OnGetTitleNewsResult(FHttpRequestPtr HttpRequest, FHttpR
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::AddUserVirtualCurrency(
     ClientModels::FAddUserVirtualCurrencyRequest& request,
     const FAddUserVirtualCurrencyDelegate& SuccessDelegate,
@@ -1473,6 +1538,7 @@ void UPlayFabClientAPI::OnAddUserVirtualCurrencyResult(FHttpRequestPtr HttpReque
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::ConfirmPurchase(
     ClientModels::FConfirmPurchaseRequest& request,
     const FConfirmPurchaseDelegate& SuccessDelegate,
@@ -1499,6 +1565,7 @@ void UPlayFabClientAPI::OnConfirmPurchaseResult(FHttpRequestPtr HttpRequest, FHt
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::ConsumeItem(
     ClientModels::FConsumeItemRequest& request,
     const FConsumeItemDelegate& SuccessDelegate,
@@ -1525,6 +1592,7 @@ void UPlayFabClientAPI::OnConsumeItemResult(FHttpRequestPtr HttpRequest, FHttpRe
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetCharacterInventory(
     ClientModels::FGetCharacterInventoryRequest& request,
     const FGetCharacterInventoryDelegate& SuccessDelegate,
@@ -1551,6 +1619,7 @@ void UPlayFabClientAPI::OnGetCharacterInventoryResult(FHttpRequestPtr HttpReques
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetPurchase(
     ClientModels::FGetPurchaseRequest& request,
     const FGetPurchaseDelegate& SuccessDelegate,
@@ -1577,6 +1646,7 @@ void UPlayFabClientAPI::OnGetPurchaseResult(FHttpRequestPtr HttpRequest, FHttpRe
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetUserInventory(
     
     const FGetUserInventoryDelegate& SuccessDelegate,
@@ -1603,6 +1673,7 @@ void UPlayFabClientAPI::OnGetUserInventoryResult(FHttpRequestPtr HttpRequest, FH
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::PayForPurchase(
     ClientModels::FPayForPurchaseRequest& request,
     const FPayForPurchaseDelegate& SuccessDelegate,
@@ -1629,6 +1700,7 @@ void UPlayFabClientAPI::OnPayForPurchaseResult(FHttpRequestPtr HttpRequest, FHtt
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::PurchaseItem(
     ClientModels::FPurchaseItemRequest& request,
     const FPurchaseItemDelegate& SuccessDelegate,
@@ -1655,6 +1727,7 @@ void UPlayFabClientAPI::OnPurchaseItemResult(FHttpRequestPtr HttpRequest, FHttpR
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::RedeemCoupon(
     ClientModels::FRedeemCouponRequest& request,
     const FRedeemCouponDelegate& SuccessDelegate,
@@ -1681,6 +1754,7 @@ void UPlayFabClientAPI::OnRedeemCouponResult(FHttpRequestPtr HttpRequest, FHttpR
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::ReportPlayer(
     ClientModels::FReportPlayerClientRequest& request,
     const FReportPlayerDelegate& SuccessDelegate,
@@ -1707,6 +1781,7 @@ void UPlayFabClientAPI::OnReportPlayerResult(FHttpRequestPtr HttpRequest, FHttpR
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::StartPurchase(
     ClientModels::FStartPurchaseRequest& request,
     const FStartPurchaseDelegate& SuccessDelegate,
@@ -1733,6 +1808,7 @@ void UPlayFabClientAPI::OnStartPurchaseResult(FHttpRequestPtr HttpRequest, FHttp
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::SubtractUserVirtualCurrency(
     ClientModels::FSubtractUserVirtualCurrencyRequest& request,
     const FSubtractUserVirtualCurrencyDelegate& SuccessDelegate,
@@ -1759,6 +1835,7 @@ void UPlayFabClientAPI::OnSubtractUserVirtualCurrencyResult(FHttpRequestPtr Http
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::UnlockContainerItem(
     ClientModels::FUnlockContainerItemRequest& request,
     const FUnlockContainerItemDelegate& SuccessDelegate,
@@ -1785,6 +1862,7 @@ void UPlayFabClientAPI::OnUnlockContainerItemResult(FHttpRequestPtr HttpRequest,
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::AddFriend(
     ClientModels::FAddFriendRequest& request,
     const FAddFriendDelegate& SuccessDelegate,
@@ -1811,6 +1889,7 @@ void UPlayFabClientAPI::OnAddFriendResult(FHttpRequestPtr HttpRequest, FHttpResp
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetFriendsList(
     ClientModels::FGetFriendsListRequest& request,
     const FGetFriendsListDelegate& SuccessDelegate,
@@ -1837,6 +1916,7 @@ void UPlayFabClientAPI::OnGetFriendsListResult(FHttpRequestPtr HttpRequest, FHtt
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::RemoveFriend(
     ClientModels::FRemoveFriendRequest& request,
     const FRemoveFriendDelegate& SuccessDelegate,
@@ -1863,6 +1943,7 @@ void UPlayFabClientAPI::OnRemoveFriendResult(FHttpRequestPtr HttpRequest, FHttpR
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::SetFriendTags(
     ClientModels::FSetFriendTagsRequest& request,
     const FSetFriendTagsDelegate& SuccessDelegate,
@@ -1889,6 +1970,7 @@ void UPlayFabClientAPI::OnSetFriendTagsResult(FHttpRequestPtr HttpRequest, FHttp
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::RegisterForIOSPushNotification(
     ClientModels::FRegisterForIOSPushNotificationRequest& request,
     const FRegisterForIOSPushNotificationDelegate& SuccessDelegate,
@@ -1915,6 +1997,7 @@ void UPlayFabClientAPI::OnRegisterForIOSPushNotificationResult(FHttpRequestPtr H
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::RestoreIOSPurchases(
     ClientModels::FRestoreIOSPurchasesRequest& request,
     const FRestoreIOSPurchasesDelegate& SuccessDelegate,
@@ -1941,6 +2024,7 @@ void UPlayFabClientAPI::OnRestoreIOSPurchasesResult(FHttpRequestPtr HttpRequest,
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::ValidateIOSReceipt(
     ClientModels::FValidateIOSReceiptRequest& request,
     const FValidateIOSReceiptDelegate& SuccessDelegate,
@@ -1967,6 +2051,7 @@ void UPlayFabClientAPI::OnValidateIOSReceiptResult(FHttpRequestPtr HttpRequest, 
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetCurrentGames(
     ClientModels::FCurrentGamesRequest& request,
     const FGetCurrentGamesDelegate& SuccessDelegate,
@@ -1993,6 +2078,7 @@ void UPlayFabClientAPI::OnGetCurrentGamesResult(FHttpRequestPtr HttpRequest, FHt
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetGameServerRegions(
     ClientModels::FGameServerRegionsRequest& request,
     const FGetGameServerRegionsDelegate& SuccessDelegate,
@@ -2019,6 +2105,7 @@ void UPlayFabClientAPI::OnGetGameServerRegionsResult(FHttpRequestPtr HttpRequest
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::Matchmake(
     ClientModels::FMatchmakeRequest& request,
     const FMatchmakeDelegate& SuccessDelegate,
@@ -2045,6 +2132,7 @@ void UPlayFabClientAPI::OnMatchmakeResult(FHttpRequestPtr HttpRequest, FHttpResp
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::StartGame(
     ClientModels::FStartGameRequest& request,
     const FStartGameDelegate& SuccessDelegate,
@@ -2071,6 +2159,7 @@ void UPlayFabClientAPI::OnStartGameResult(FHttpRequestPtr HttpRequest, FHttpResp
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::AndroidDevicePushNotificationRegistration(
     ClientModels::FAndroidDevicePushNotificationRegistrationRequest& request,
     const FAndroidDevicePushNotificationRegistrationDelegate& SuccessDelegate,
@@ -2097,6 +2186,7 @@ void UPlayFabClientAPI::OnAndroidDevicePushNotificationRegistrationResult(FHttpR
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::ValidateGooglePlayPurchase(
     ClientModels::FValidateGooglePlayPurchaseRequest& request,
     const FValidateGooglePlayPurchaseDelegate& SuccessDelegate,
@@ -2123,6 +2213,7 @@ void UPlayFabClientAPI::OnValidateGooglePlayPurchaseResult(FHttpRequestPtr HttpR
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::LogEvent(
     ClientModels::FLogEventRequest& request,
     const FLogEventDelegate& SuccessDelegate,
@@ -2149,6 +2240,7 @@ void UPlayFabClientAPI::OnLogEventResult(FHttpRequestPtr HttpRequest, FHttpRespo
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::AddSharedGroupMembers(
     ClientModels::FAddSharedGroupMembersRequest& request,
     const FAddSharedGroupMembersDelegate& SuccessDelegate,
@@ -2175,6 +2267,7 @@ void UPlayFabClientAPI::OnAddSharedGroupMembersResult(FHttpRequestPtr HttpReques
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::CreateSharedGroup(
     ClientModels::FCreateSharedGroupRequest& request,
     const FCreateSharedGroupDelegate& SuccessDelegate,
@@ -2201,6 +2294,7 @@ void UPlayFabClientAPI::OnCreateSharedGroupResult(FHttpRequestPtr HttpRequest, F
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetPublisherData(
     ClientModels::FGetPublisherDataRequest& request,
     const FGetPublisherDataDelegate& SuccessDelegate,
@@ -2227,6 +2321,7 @@ void UPlayFabClientAPI::OnGetPublisherDataResult(FHttpRequestPtr HttpRequest, FH
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetSharedGroupData(
     ClientModels::FGetSharedGroupDataRequest& request,
     const FGetSharedGroupDataDelegate& SuccessDelegate,
@@ -2253,6 +2348,7 @@ void UPlayFabClientAPI::OnGetSharedGroupDataResult(FHttpRequestPtr HttpRequest, 
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::RemoveSharedGroupMembers(
     ClientModels::FRemoveSharedGroupMembersRequest& request,
     const FRemoveSharedGroupMembersDelegate& SuccessDelegate,
@@ -2279,6 +2375,7 @@ void UPlayFabClientAPI::OnRemoveSharedGroupMembersResult(FHttpRequestPtr HttpReq
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::UpdateSharedGroupData(
     ClientModels::FUpdateSharedGroupDataRequest& request,
     const FUpdateSharedGroupDataDelegate& SuccessDelegate,
@@ -2305,6 +2402,7 @@ void UPlayFabClientAPI::OnUpdateSharedGroupDataResult(FHttpRequestPtr HttpReques
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetCloudScriptUrl(
     ClientModels::FGetCloudScriptUrlRequest& request,
     const FGetCloudScriptUrlDelegate& SuccessDelegate,
@@ -2323,10 +2421,7 @@ void UPlayFabClientAPI::OnGetCloudScriptUrlResult(FHttpRequestPtr HttpRequest, F
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        if (outResult.Url.Len() > 0)
-            {
-                PlayFabSettings::logicServerURL = outResult.Url;
-            }
+        if (outResult.Url.Len() > 0) PlayFabSettings::logicServerURL = outResult.Url;
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -2334,6 +2429,7 @@ void UPlayFabClientAPI::OnGetCloudScriptUrlResult(FHttpRequestPtr HttpRequest, F
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::RunCloudScript(
     ClientModels::FRunCloudScriptRequest& request,
     const FRunCloudScriptDelegate& SuccessDelegate,
@@ -2360,6 +2456,7 @@ void UPlayFabClientAPI::OnRunCloudScriptResult(FHttpRequestPtr HttpRequest, FHtt
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetContentDownloadUrl(
     ClientModels::FGetContentDownloadUrlRequest& request,
     const FGetContentDownloadUrlDelegate& SuccessDelegate,
@@ -2386,6 +2483,7 @@ void UPlayFabClientAPI::OnGetContentDownloadUrlResult(FHttpRequestPtr HttpReques
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetAllUsersCharacters(
     ClientModels::FListUsersCharactersRequest& request,
     const FGetAllUsersCharactersDelegate& SuccessDelegate,
@@ -2412,6 +2510,7 @@ void UPlayFabClientAPI::OnGetAllUsersCharactersResult(FHttpRequestPtr HttpReques
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetCharacterLeaderboard(
     ClientModels::FGetCharacterLeaderboardRequest& request,
     const FGetCharacterLeaderboardDelegate& SuccessDelegate,
@@ -2438,6 +2537,7 @@ void UPlayFabClientAPI::OnGetCharacterLeaderboardResult(FHttpRequestPtr HttpRequ
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetLeaderboardAroundCharacter(
     ClientModels::FGetLeaderboardAroundCharacterRequest& request,
     const FGetLeaderboardAroundCharacterDelegate& SuccessDelegate,
@@ -2464,6 +2564,7 @@ void UPlayFabClientAPI::OnGetLeaderboardAroundCharacterResult(FHttpRequestPtr Ht
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetLeaderboardForUserCharacters(
     ClientModels::FGetLeaderboardForUsersCharactersRequest& request,
     const FGetLeaderboardForUserCharactersDelegate& SuccessDelegate,
@@ -2490,6 +2591,7 @@ void UPlayFabClientAPI::OnGetLeaderboardForUserCharactersResult(FHttpRequestPtr 
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GrantCharacterToUser(
     ClientModels::FGrantCharacterToUserRequest& request,
     const FGrantCharacterToUserDelegate& SuccessDelegate,
@@ -2516,6 +2618,7 @@ void UPlayFabClientAPI::OnGrantCharacterToUserResult(FHttpRequestPtr HttpRequest
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetCharacterData(
     ClientModels::FGetCharacterDataRequest& request,
     const FGetCharacterDataDelegate& SuccessDelegate,
@@ -2542,6 +2645,7 @@ void UPlayFabClientAPI::OnGetCharacterDataResult(FHttpRequestPtr HttpRequest, FH
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetCharacterReadOnlyData(
     ClientModels::FGetCharacterDataRequest& request,
     const FGetCharacterReadOnlyDataDelegate& SuccessDelegate,
@@ -2568,6 +2672,7 @@ void UPlayFabClientAPI::OnGetCharacterReadOnlyDataResult(FHttpRequestPtr HttpReq
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::UpdateCharacterData(
     ClientModels::FUpdateCharacterDataRequest& request,
     const FUpdateCharacterDataDelegate& SuccessDelegate,
@@ -2594,6 +2699,7 @@ void UPlayFabClientAPI::OnUpdateCharacterDataResult(FHttpRequestPtr HttpRequest,
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::AcceptTrade(
     ClientModels::FAcceptTradeRequest& request,
     const FAcceptTradeDelegate& SuccessDelegate,
@@ -2620,6 +2726,7 @@ void UPlayFabClientAPI::OnAcceptTradeResult(FHttpRequestPtr HttpRequest, FHttpRe
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::CancelTrade(
     ClientModels::FCancelTradeRequest& request,
     const FCancelTradeDelegate& SuccessDelegate,
@@ -2646,6 +2753,7 @@ void UPlayFabClientAPI::OnCancelTradeResult(FHttpRequestPtr HttpRequest, FHttpRe
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetPlayerTrades(
     ClientModels::FGetPlayerTradesRequest& request,
     const FGetPlayerTradesDelegate& SuccessDelegate,
@@ -2672,6 +2780,7 @@ void UPlayFabClientAPI::OnGetPlayerTradesResult(FHttpRequestPtr HttpRequest, FHt
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::GetTradeStatus(
     ClientModels::FGetTradeStatusRequest& request,
     const FGetTradeStatusDelegate& SuccessDelegate,
@@ -2698,6 +2807,7 @@ void UPlayFabClientAPI::OnGetTradeStatusResult(FHttpRequestPtr HttpRequest, FHtt
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::OpenTrade(
     ClientModels::FOpenTradeRequest& request,
     const FOpenTradeDelegate& SuccessDelegate,
@@ -2724,6 +2834,7 @@ void UPlayFabClientAPI::OnOpenTradeResult(FHttpRequestPtr HttpRequest, FHttpResp
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+
 bool UPlayFabClientAPI::AttributeInstall(
     ClientModels::FAttributeInstallRequest& request,
     const FAttributeInstallDelegate& SuccessDelegate,
