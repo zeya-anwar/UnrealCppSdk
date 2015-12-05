@@ -184,6 +184,18 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerDeleteUsersRequest(
+		const FBPServerDeleteUsersRequest& In
+        ,TArray<FString>& OutPlayFabIds
+        ,FString& OutTitleId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerDeleteUsersResult(
+		const FBPServerDeleteUsersResult& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerEmptyResult(
 		const FBPServerEmptyResult& In
 	);

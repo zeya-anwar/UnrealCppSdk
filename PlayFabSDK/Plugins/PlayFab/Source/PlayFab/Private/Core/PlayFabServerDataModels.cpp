@@ -1897,6 +1897,71 @@ bool PlayFab::ServerModels::FDeleteSharedGroupRequest::readFromValue(const TShar
 }
 
 
+PlayFab::ServerModels::FDeleteUsersRequest::~FDeleteUsersRequest()
+{
+    
+}
+
+void PlayFab::ServerModels::FDeleteUsersRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+        writer->WriteArrayStart(TEXT("PlayFabIds"));
+    
+        for (const FString& item : PlayFabIds)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+    
+	
+    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FDeleteUsersRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    HasSucceeded &= obj->TryGetStringArrayField(TEXT("PlayFabIds"),PlayFabIds);
+    
+    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FDeleteUsersResult::~FDeleteUsersResult()
+{
+    
+}
+
+void PlayFab::ServerModels::FDeleteUsersResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FDeleteUsersResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ServerModels::FEmptyResult::~FEmptyResult()
 {
     

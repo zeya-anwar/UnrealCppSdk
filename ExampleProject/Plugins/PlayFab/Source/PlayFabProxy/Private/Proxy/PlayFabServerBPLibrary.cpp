@@ -291,6 +291,24 @@ void UPFServerProxyLibrary::BreakBPServerDeleteSharedGroupRequest(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerDeleteUsersRequest(
+		const FBPServerDeleteUsersRequest& In
+        ,TArray<FString>& OutPlayFabIds
+        ,FString& OutTitleId
+	)
+{
+    OutPlayFabIds = In.Data.PlayFabIds;
+	OutTitleId = In.Data.TitleId;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerDeleteUsersResult(
+		const FBPServerDeleteUsersResult& In
+	)
+{
+    
+}
+
 void UPFServerProxyLibrary::BreakBPServerEmptyResult(
 		const FBPServerEmptyResult& In
 	)

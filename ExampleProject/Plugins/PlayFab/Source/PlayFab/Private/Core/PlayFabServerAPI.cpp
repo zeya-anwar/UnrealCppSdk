@@ -125,6 +125,32 @@ void UPlayFabServerAPI::OnSendPushNotificationResult(FHttpRequestPtr HttpRequest
         ErrorDelegate.ExecuteIfBound(errorResult);
     }
 }
+bool UPlayFabServerAPI::DeleteUsers(
+    ServerModels::FDeleteUsersRequest& request,
+    const FDeleteUsersDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Server/DeleteUsers")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabServerAPI::OnDeleteUsersResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabServerAPI::OnDeleteUsersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteUsersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ServerModels::FDeleteUsersResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+        
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
 bool UPlayFabServerAPI::GetLeaderboard(
     ServerModels::FGetLeaderboardRequest& request,
     const FGetLeaderboardDelegate& SuccessDelegate,

@@ -1176,6 +1176,60 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FDeleteUsersRequest : public FPlayFabBaseModel
+    {
+		
+		// An array of unique PlayFab assigned ID of the user on whom the operation will be performed.
+		TArray<FString> PlayFabIds;
+		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
+		FString TitleId;
+	
+        FDeleteUsersRequest() :
+			FPlayFabBaseModel(),
+			PlayFabIds(),
+			TitleId()
+			{}
+		
+		FDeleteUsersRequest(const FDeleteUsersRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabIds(src.PlayFabIds),
+			TitleId(src.TitleId)
+			{}
+			
+		FDeleteUsersRequest(const TSharedPtr<FJsonObject>& obj) : FDeleteUsersRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FDeleteUsersRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FDeleteUsersResult : public FPlayFabBaseModel
+    {
+		
+	
+        FDeleteUsersResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FDeleteUsersResult(const FDeleteUsersResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FDeleteUsersResult(const TSharedPtr<FJsonObject>& obj) : FDeleteUsersResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FDeleteUsersResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FEmptyResult : public FPlayFabBaseModel
     {
 		

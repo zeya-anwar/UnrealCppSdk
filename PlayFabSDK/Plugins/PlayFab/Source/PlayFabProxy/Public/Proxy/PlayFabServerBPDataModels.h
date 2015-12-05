@@ -226,6 +226,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerDeleteSharedGroupRequestDelegate, const FBPServerDeleteSharedGroupRequest&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerDeleteUsersRequest"))
+struct FBPServerDeleteUsersRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FDeleteUsersRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerDeleteUsersRequestDelegate, const FBPServerDeleteUsersRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerDeleteUsersResult"))
+struct FBPServerDeleteUsersResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FDeleteUsersResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerDeleteUsersResultDelegate, const FBPServerDeleteUsersResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerEmptyResult"))
 struct FBPServerEmptyResult
 {

@@ -18,6 +18,7 @@ namespace PlayFab
 		DECLARE_DELEGATE_OneParam(FGetPlayFabIDsFromFacebookIDsDelegate, const ServerModels::FGetPlayFabIDsFromFacebookIDsResult&);
 		DECLARE_DELEGATE_OneParam(FGetUserAccountInfoDelegate, const ServerModels::FGetUserAccountInfoResult&);
 		DECLARE_DELEGATE_OneParam(FSendPushNotificationDelegate, const ServerModels::FSendPushNotificationResult&);
+		DECLARE_DELEGATE_OneParam(FDeleteUsersDelegate, const ServerModels::FDeleteUsersResult&);
 		DECLARE_DELEGATE_OneParam(FGetLeaderboardDelegate, const ServerModels::FGetLeaderboardResult&);
 		DECLARE_DELEGATE_OneParam(FGetLeaderboardAroundUserDelegate, const ServerModels::FGetLeaderboardAroundUserResult&);
 		DECLARE_DELEGATE_OneParam(FGetUserDataDelegate, const ServerModels::FGetUserDataResult&);
@@ -118,6 +119,13 @@ namespace PlayFab
 		 * Sends an iOS/Android Push Notification to a specific user, if that user's device has been configured for Push Notifications in PlayFab. If a user has linked both Android and iOS devices, both will be notified.
 		 */
 		bool SendPushNotification(ServerModels::FSendPushNotificationRequest& request, const FSendPushNotificationDelegate& SuccessDelegate = FSendPushNotificationDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+
+			
+		/**
+		 * Deletes the users for the provided game. Deletes custom data, all account linkages, and statistics.
+         * Note that this action cannot be undone. It will unlink all accounts and remove all PII information, as well as                              reset any statistics and leaderboards and clear out any stored custom data for the user.                               This API must be enabled for use as an option in the game manager website. It is disabled by default.
+		 */
+		bool DeleteUsers(ServerModels::FDeleteUsersRequest& request, const FDeleteUsersDelegate& SuccessDelegate = FDeleteUsersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
 			
 		/**
@@ -563,6 +571,7 @@ namespace PlayFab
 		void OnGetPlayFabIDsFromFacebookIDsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayFabIDsFromFacebookIDsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnGetUserAccountInfoResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserAccountInfoDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnSendPushNotificationResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSendPushNotificationDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+		void OnDeleteUsersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteUsersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnGetLeaderboardResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnGetLeaderboardAroundUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardAroundUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 		void OnGetUserDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
