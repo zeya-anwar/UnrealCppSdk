@@ -5025,7 +5025,7 @@ namespace ClientModels
 	struct PLAYFAB_API FUserSettings : public FPlayFabBaseModel
     {
 		
-		// undefined
+		// Boolean for whether this player is eligible for ad tracking.
 		bool NeedsAttribution;
 	
         FUserSettings() :
