@@ -85,7 +85,9 @@ namespace PlayFab
         UPlayFabServerAPI();
         ~UPlayFabServerAPI();
 
-        int GetPendingCalls();
+        int GetPendingCalls() const;
+        void SetTitleId(const FString& titleId);
+        void SetDevSecretKey(const FString& developerSecretKey);
 
         // ------------ Generated API calls
         /**

@@ -12,9 +12,19 @@ UPlayFabMatchmakerAPI::UPlayFabMatchmakerAPI() {}
 
 UPlayFabMatchmakerAPI::~UPlayFabMatchmakerAPI() {}
 
-int UPlayFabMatchmakerAPI::GetPendingCalls()
+int UPlayFabMatchmakerAPI::GetPendingCalls() const
 {
-    return PlayFab::PlayFabRequestHandler::GetPendingCalls();
+    return PlayFabRequestHandler::GetPendingCalls();
+}
+
+void UPlayFabMatchmakerAPI::SetTitleId(const FString& titleId)
+{
+    PlayFabSettings::titleId = titleId;
+}
+
+void UPlayFabMatchmakerAPI::SetDevSecretKey(const FString& developerSecretKey)
+{
+    PlayFabSettings::developerSecretKey = developerSecretKey;
 }
 
 bool UPlayFabMatchmakerAPI::AuthUser(
@@ -35,7 +45,7 @@ void UPlayFabMatchmakerAPI::OnAuthUserResult(FHttpRequestPtr HttpRequest, FHttpR
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -62,7 +72,7 @@ void UPlayFabMatchmakerAPI::OnPlayerJoinedResult(FHttpRequestPtr HttpRequest, FH
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -89,7 +99,7 @@ void UPlayFabMatchmakerAPI::OnPlayerLeftResult(FHttpRequestPtr HttpRequest, FHtt
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -116,7 +126,7 @@ void UPlayFabMatchmakerAPI::OnStartGameResult(FHttpRequestPtr HttpRequest, FHttp
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -143,7 +153,7 @@ void UPlayFabMatchmakerAPI::OnUserInfoResult(FHttpRequestPtr HttpRequest, FHttpR
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else

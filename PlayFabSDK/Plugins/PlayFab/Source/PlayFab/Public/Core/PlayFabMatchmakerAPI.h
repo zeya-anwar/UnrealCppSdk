@@ -20,7 +20,9 @@ namespace PlayFab
         UPlayFabMatchmakerAPI();
         ~UPlayFabMatchmakerAPI();
 
-        int GetPendingCalls();
+        int GetPendingCalls() const;
+        void SetTitleId(const FString& titleId);
+        void SetDevSecretKey(const FString& developerSecretKey);
 
         // ------------ Generated API calls
         /**

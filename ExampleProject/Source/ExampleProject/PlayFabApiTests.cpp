@@ -2,6 +2,7 @@
 
 #include "ExampleProject.h"
 #include "PlayFabApiTests.h"
+#include "Core/PlayFabSettings.h"
 
 /*
 * ==== Test Suite ====
@@ -43,7 +44,7 @@ bool PlayFabApiTest_LoginWithEmail::Update()
     return clientAPI->GetPendingCalls() == 0;
 }
 
-void PlayFabApiTest_LoginWithEmail::OnSuccess(const PlayFab::ClientModels::FLoginResult& Result)
+void PlayFabApiTest_LoginWithEmail::OnSuccess(const PlayFab::ClientModels::FLoginResult& Result) const
 {
     if (!successExpected)
     {
@@ -56,7 +57,7 @@ void PlayFabApiTest_LoginWithEmail::OnSuccess(const PlayFab::ClientModels::FLogi
     }
 }
 
-void PlayFabApiTest_LoginWithEmail::OnError(const PlayFab::FPlayFabError& ErrorResult)
+void PlayFabApiTest_LoginWithEmail::OnError(const PlayFab::FPlayFabError& ErrorResult) const
 {
     if (successExpected && successMandatory) // Check for success, or ...
     {
@@ -104,20 +105,67 @@ bool PlayFabApiTest_RegisterPlayFabUser::Update()
     return clientAPI->GetPendingCalls() == 0;
 }
 
-void PlayFabApiTest_RegisterPlayFabUser::OnSuccess(const PlayFab::ClientModels::FRegisterPlayFabUserResult& Result)
+void PlayFabApiTest_RegisterPlayFabUser::OnSuccess(const PlayFab::ClientModels::FRegisterPlayFabUserResult& Result) const
 {
     UE_LOG(LogTemp, Log, TEXT("RegisterPlayFabUser Success"));
     ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_LoginWithEmail(true, true, username, email, password));
 }
 
-void PlayFabApiTest_RegisterPlayFabUser::OnError(const PlayFab::FPlayFabError& ErrorResult)
+void PlayFabApiTest_RegisterPlayFabUser::OnError(const PlayFab::FPlayFabError& ErrorResult) const
 {
     UE_LOG(LogTemp, Error, TEXT("RegisterPlayFabUser Failed: %s"), *(ErrorResult.ErrorMessage));
 }
 
 /*
- * ==== GetUserData ====
- */
+* ==== LoginWithAdvertisingId ====
+*/
+PlayFabApiTest_LoginWithAdvertisingId::PlayFabApiTest_LoginWithAdvertisingId(const FString& email, const FString& password)
+{
+    this->tickCounter = 0;
+    this->email = email;
+    this->password = password;
+}
+
+bool PlayFabApiTest_LoginWithAdvertisingId::Update()
+{
+    if (!clientAPI.IsValid())
+    {
+        clientAPI = IPlayFabModuleInterface::Get().GetClientAPI();
+        clientAPI->SetAdvertId("Android_Id", "PlayFabTestId");
+
+        PlayFab::ClientModels::FLoginWithEmailAddressRequest request;
+        request.Email = email;
+        request.Password = password;
+
+        clientAPI->LoginWithEmailAddress(request
+            , PlayFab::UPlayFabClientAPI::FLoginWithEmailAddressDelegate::CreateRaw(this, &PlayFabApiTest_LoginWithAdvertisingId::OnSuccess)
+            , PlayFab::FPlayFabErrorDelegate::CreateRaw(this, &PlayFabApiTest_LoginWithAdvertisingId::OnError)
+            );
+    }
+
+    tickCounter += 1;
+    bool success = clientAPI->AdvertIdSuccessful();
+    bool failure = tickCounter > 300 && !success;
+    if (failure)
+        UE_LOG(LogTemp, Error, TEXT("advertisingId not submitted properly"));
+
+    // Return when the api call is resolved
+    return clientAPI->GetPendingCalls() == 0 && (failure || success);
+}
+
+void PlayFabApiTest_LoginWithAdvertisingId::OnSuccess(const PlayFab::ClientModels::FLoginResult& Result) const
+{
+    UE_LOG(LogTemp, Log, TEXT("RegisterPlayFabUser Success"));
+}
+
+void PlayFabApiTest_LoginWithAdvertisingId::OnError(const PlayFab::FPlayFabError& ErrorResult) const
+{
+    UE_LOG(LogTemp, Error, TEXT("LoginWithAdvertisingId Failed: %s"), *(ErrorResult.ErrorMessage));
+}
+
+/*
+* ==== GetUserData ====
+*/
 PlayFabApiTest_GetUserData::PlayFabApiTest_GetUserData(const FString& TEST_DATA_KEY_1, const FString& TEST_DATA_KEY_2, int expectedValue = -1)
 {
     this->TEST_DATA_KEY_1 = TEST_DATA_KEY_1;
@@ -145,17 +193,13 @@ bool PlayFabApiTest_GetUserData::Update()
     return clientAPI->GetPendingCalls() == 0;
 }
 
-void PlayFabApiTest_GetUserData::OnSuccess(const PlayFab::ClientModels::FGetUserDataResult& Result)
+void PlayFabApiTest_GetUserData::OnSuccess(const PlayFab::ClientModels::FGetUserDataResult& Result) const
 {
     int actualValue = -1;
-    FDateTime updateTime;
 
     const PlayFab::ClientModels::FUserDataRecord* target = Result.Data.Find(TEST_DATA_KEY_1);
-    if (target != NULL)
-    {
+    if (target != nullptr)
         actualValue = FCString::Atoi(*(target->Value));
-        updateTime = target->LastUpdated;
-    }
 
     if (expectedValue != -1 && expectedValue != actualValue)
     {
@@ -176,7 +220,7 @@ void PlayFabApiTest_GetUserData::OnSuccess(const PlayFab::ClientModels::FGetUser
     }
 }
 
-void PlayFabApiTest_GetUserData::CheckTimestamp(const FDateTime& updateTime)
+void PlayFabApiTest_GetUserData::CheckTimestamp(const FDateTime& updateTime) const
 {
     FDateTime utcNow = FDateTime::UtcNow();
     FTimespan delta = FTimespan(0, 5, 0);
@@ -193,7 +237,7 @@ void PlayFabApiTest_GetUserData::CheckTimestamp(const FDateTime& updateTime)
     }
 }
 
-void PlayFabApiTest_GetUserData::OnError(const PlayFab::FPlayFabError& ErrorResult)
+void PlayFabApiTest_GetUserData::OnError(const PlayFab::FPlayFabError& ErrorResult) const
 {
     UE_LOG(LogTemp, Error, TEXT("GetUserData Failed: %s"), *(ErrorResult.ErrorMessage));
 }
@@ -232,13 +276,13 @@ bool PlayFabApiTest_UpdateUserData::Update()
     return clientAPI->GetPendingCalls() == 0;
 }
 
-void PlayFabApiTest_UpdateUserData::OnSuccess(const PlayFab::ClientModels::FUpdateUserDataResult& Result)
+void PlayFabApiTest_UpdateUserData::OnSuccess(const PlayFab::ClientModels::FUpdateUserDataResult& Result) const
 {
     // Update is always followed by another get w/ verification
     ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_GetUserData(TEST_DATA_KEY_1, TEST_DATA_KEY_2, updateValue));
 }
 
-void PlayFabApiTest_UpdateUserData::OnError(const PlayFab::FPlayFabError& ErrorResult)
+void PlayFabApiTest_UpdateUserData::OnError(const PlayFab::FPlayFabError& ErrorResult) const
 {
     UE_LOG(LogTemp, Error, TEXT("UpdateUserData Failed: %s"), *(ErrorResult.ErrorMessage));
 }
@@ -261,7 +305,7 @@ bool PlayFabApiTest_GetUserStatistics::Update()
         clientAPI = IPlayFabModuleInterface::Get().GetClientAPI();
 
         clientAPI->GetUserStatistics(
-              PlayFab::UPlayFabClientAPI::FGetUserStatisticsDelegate::CreateRaw(this, &PlayFabApiTest_GetUserStatistics::OnSuccess)
+            PlayFab::UPlayFabClientAPI::FGetUserStatisticsDelegate::CreateRaw(this, &PlayFabApiTest_GetUserStatistics::OnSuccess)
             , PlayFab::FPlayFabErrorDelegate::CreateRaw(this, &PlayFabApiTest_GetUserStatistics::OnError)
             );
     }
@@ -270,7 +314,7 @@ bool PlayFabApiTest_GetUserStatistics::Update()
     return clientAPI->GetPendingCalls() == 0;
 }
 
-void PlayFabApiTest_GetUserStatistics::OnSuccess(const PlayFab::ClientModels::FGetUserStatisticsResult& Result)
+void PlayFabApiTest_GetUserStatistics::OnSuccess(const PlayFab::ClientModels::FGetUserStatisticsResult& Result) const
 {
     int actualValue = *(Result.UserStatistics.Find(TEST_STAT_NAME));
 
@@ -290,7 +334,7 @@ void PlayFabApiTest_GetUserStatistics::OnSuccess(const PlayFab::ClientModels::FG
     }
 }
 
-void PlayFabApiTest_GetUserStatistics::OnError(const PlayFab::FPlayFabError& ErrorResult)
+void PlayFabApiTest_GetUserStatistics::OnError(const PlayFab::FPlayFabError& ErrorResult) const
 {
     UE_LOG(LogTemp, Error, TEXT("GetUserStatistics Failed: %s"), *(ErrorResult.ErrorMessage));
 }
@@ -325,13 +369,13 @@ bool PlayFabApiTest_UpdateUserStatistics::Update()
     return clientAPI->GetPendingCalls() == 0;
 }
 
-void PlayFabApiTest_UpdateUserStatistics::OnSuccess(const PlayFab::ClientModels::FUpdateUserStatisticsResult& Result)
+void PlayFabApiTest_UpdateUserStatistics::OnSuccess(const PlayFab::ClientModels::FUpdateUserStatisticsResult& Result) const
 {
     // Update is always followed by another get w/ verification
     ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_GetUserStatistics(TEST_STAT_NAME, updateValue));
 }
 
-void PlayFabApiTest_UpdateUserStatistics::OnError(const PlayFab::FPlayFabError& ErrorResult)
+void PlayFabApiTest_UpdateUserStatistics::OnError(const PlayFab::FPlayFabError& ErrorResult) const
 {
     UE_LOG(LogTemp, Error, TEXT("UpdateUserStatistics Failed: %s"), *(ErrorResult.ErrorMessage));
 }
@@ -367,7 +411,7 @@ bool PlayFabApiTest_GetAllUsersCharacters::Update()
     return clientAPI->GetPendingCalls() == 0;
 }
 
-void PlayFabApiTest_GetAllUsersCharacters::OnSuccess(const PlayFab::ClientModels::FListUsersCharactersResult& Result)
+void PlayFabApiTest_GetAllUsersCharacters::OnSuccess(const PlayFab::ClientModels::FListUsersCharactersResult& Result) const
 {
     bool characterFound = false;
     for (auto eachCharacter : Result.Characters)
@@ -393,7 +437,7 @@ void PlayFabApiTest_GetAllUsersCharacters::OnSuccess(const PlayFab::ClientModels
     }
 }
 
-void PlayFabApiTest_GetAllUsersCharacters::OnError(const PlayFab::FPlayFabError& ErrorResult)
+void PlayFabApiTest_GetAllUsersCharacters::OnError(const PlayFab::FPlayFabError& ErrorResult) const
 {
     UE_LOG(LogTemp, Error, TEXT("GetAllUsersCharacters Failed: %s"), *(ErrorResult.ErrorMessage));
 }
@@ -430,13 +474,13 @@ bool PlayFabApiTest_GrantCharacterToUser::Update()
     return serverAPI->GetPendingCalls() == 0;
 }
 
-void PlayFabApiTest_GrantCharacterToUser::OnSuccess(const PlayFab::ServerModels::FGrantCharacterToUserResult& Result)
+void PlayFabApiTest_GrantCharacterToUser::OnSuccess(const PlayFab::ServerModels::FGrantCharacterToUserResult& Result) const
 {
     // Update is always followed by another get w/ verification
     ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_GetAllUsersCharacters(playFabId, CHAR_NAME, CHAR_TEST_TYPE, true));
 }
 
-void PlayFabApiTest_GrantCharacterToUser::OnError(const PlayFab::FPlayFabError& ErrorResult)
+void PlayFabApiTest_GrantCharacterToUser::OnError(const PlayFab::FPlayFabError& ErrorResult) const
 {
     UE_LOG(LogTemp, Error, TEXT("GrantCharacterToUser Failed: %s"), *(ErrorResult.ErrorMessage));
 }
@@ -470,10 +514,10 @@ bool PlayFabApiTest_GetLeaderboardAroundCurrentUser::Update()
     return clientAPI->GetPendingCalls() == 0;
 }
 
-void PlayFabApiTest_GetLeaderboardAroundCurrentUser::OnSuccess(const PlayFab::ClientModels::FGetLeaderboardAroundCurrentUserResult& Result)
+void PlayFabApiTest_GetLeaderboardAroundCurrentUser::OnSuccess(const PlayFab::ClientModels::FGetLeaderboardAroundCurrentUserResult& Result) const
 {
     int count = Result.Leaderboard.Num();
-    
+
     if (count > 0)
     {
         UE_LOG(LogTemp, Log, TEXT("GetLeaderboardAroundCurrentUser Succeeded"));
@@ -484,7 +528,7 @@ void PlayFabApiTest_GetLeaderboardAroundCurrentUser::OnSuccess(const PlayFab::Cl
     }
 }
 
-void PlayFabApiTest_GetLeaderboardAroundCurrentUser::OnError(const PlayFab::FPlayFabError& ErrorResult)
+void PlayFabApiTest_GetLeaderboardAroundCurrentUser::OnError(const PlayFab::FPlayFabError& ErrorResult) const
 {
     UE_LOG(LogTemp, Error, TEXT("GetLeaderboardAroundCurrentUser Failed: %s"), *(ErrorResult.ErrorMessage));
 }
@@ -520,7 +564,7 @@ bool PlayFabApiTest_GetLeaderboardAroundUser::Update()
     return serverAPI->GetPendingCalls() == 0;
 }
 
-void PlayFabApiTest_GetLeaderboardAroundUser::OnSuccess(const PlayFab::ServerModels::FGetLeaderboardAroundUserResult& Result)
+void PlayFabApiTest_GetLeaderboardAroundUser::OnSuccess(const PlayFab::ServerModels::FGetLeaderboardAroundUserResult& Result) const
 {
     int count = Result.Leaderboard.Num();
 
@@ -534,7 +578,7 @@ void PlayFabApiTest_GetLeaderboardAroundUser::OnSuccess(const PlayFab::ServerMod
     }
 }
 
-void PlayFabApiTest_GetLeaderboardAroundUser::OnError(const PlayFab::FPlayFabError& ErrorResult)
+void PlayFabApiTest_GetLeaderboardAroundUser::OnError(const PlayFab::FPlayFabError& ErrorResult) const
 {
     UE_LOG(LogTemp, Error, TEXT("GetLeaderboardAroundUser Failed: %s"), *(ErrorResult.ErrorMessage));
 }
@@ -565,13 +609,13 @@ bool PlayFabApiTest_GetAccountInfo::Update()
     return clientAPI->GetPendingCalls() == 0;
 }
 
-void PlayFabApiTest_GetAccountInfo::OnSuccess(const PlayFab::ClientModels::FGetAccountInfoResult& Result)
+void PlayFabApiTest_GetAccountInfo::OnSuccess(const PlayFab::ClientModels::FGetAccountInfoResult& Result) const
 {
     auto origination = Result.AccountInfo->TitleInfo->Origination.mValue; // C++ can't really do anything with this once fetched
     UE_LOG(LogTemp, Log, TEXT("GetAccountInfo Succeeded"));
 }
 
-void PlayFabApiTest_GetAccountInfo::OnError(const PlayFab::FPlayFabError& ErrorResult)
+void PlayFabApiTest_GetAccountInfo::OnError(const PlayFab::FPlayFabError& ErrorResult) const
 {
     UE_LOG(LogTemp, Error, TEXT("GetAccountInfo Failed: %s"), *(ErrorResult.ErrorMessage));
 }
@@ -603,13 +647,13 @@ bool PlayFabApiTest_GetCloudScriptUrl::Update()
     return clientAPI->GetPendingCalls() == 0;
 }
 
-void PlayFabApiTest_GetCloudScriptUrl::OnSuccess(const PlayFab::ClientModels::FGetCloudScriptUrlResult& Result)
+void PlayFabApiTest_GetCloudScriptUrl::OnSuccess(const PlayFab::ClientModels::FGetCloudScriptUrlResult& Result) const
 {
     UE_LOG(LogTemp, Log, TEXT("GetCloudScriptUrl Succeeded"));
     ADD_LATENT_AUTOMATION_COMMAND(PlayFabApiTest_RunCloudScript(actionId));
 }
 
-void PlayFabApiTest_GetCloudScriptUrl::OnError(const PlayFab::FPlayFabError& ErrorResult)
+void PlayFabApiTest_GetCloudScriptUrl::OnError(const PlayFab::FPlayFabError& ErrorResult) const
 {
     UE_LOG(LogTemp, Error, TEXT("GetCloudScriptUrl Failed: %s"), *(ErrorResult.ErrorMessage));
 }
@@ -643,12 +687,12 @@ bool PlayFabApiTest_RunCloudScript::Update()
     return clientAPI->GetPendingCalls() == 0;
 }
 
-void PlayFabApiTest_RunCloudScript::OnSuccess(const PlayFab::ClientModels::FRunCloudScriptResult& Result)
+void PlayFabApiTest_RunCloudScript::OnSuccess(const PlayFab::ClientModels::FRunCloudScriptResult& Result) const
 {
     UE_LOG(LogTemp, Log, TEXT("RunCloudScript Succeeded"));
 }
 
-void PlayFabApiTest_RunCloudScript::OnError(const PlayFab::FPlayFabError& ErrorResult)
+void PlayFabApiTest_RunCloudScript::OnError(const PlayFab::FPlayFabError& ErrorResult) const
 {
     UE_LOG(LogTemp, Error, TEXT("RunCloudScript Failed: %s"), *(ErrorResult.ErrorMessage));
 }

@@ -118,9 +118,11 @@ namespace PlayFab
         UPlayFabClientAPI();
         ~UPlayFabClientAPI();
 
-        int GetPendingCalls();
-
-        bool IsClientLoggedIn();
+        int GetPendingCalls() const;
+        void SetTitleId(const FString& titleId);
+        bool SetAdvertId(const FString& typeId, const FString& advertisingIdValue);
+        bool AdvertIdSuccessful();
+        bool IsClientLoggedIn() const;
         void MultiStepClientLogin(bool needsAttribution);
 
         // ------------ Generated API calls

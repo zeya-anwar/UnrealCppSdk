@@ -12,9 +12,19 @@ UPlayFabServerAPI::UPlayFabServerAPI() {}
 
 UPlayFabServerAPI::~UPlayFabServerAPI() {}
 
-int UPlayFabServerAPI::GetPendingCalls()
+int UPlayFabServerAPI::GetPendingCalls() const
 {
-    return PlayFab::PlayFabRequestHandler::GetPendingCalls();
+    return PlayFabRequestHandler::GetPendingCalls();
+}
+
+void UPlayFabServerAPI::SetTitleId(const FString& titleId)
+{
+    PlayFabSettings::titleId = titleId;
+}
+
+void UPlayFabServerAPI::SetDevSecretKey(const FString& developerSecretKey)
+{
+    PlayFabSettings::developerSecretKey = developerSecretKey;
 }
 
 bool UPlayFabServerAPI::AuthenticateSessionTicket(
@@ -35,7 +45,7 @@ void UPlayFabServerAPI::OnAuthenticateSessionTicketResult(FHttpRequestPtr HttpRe
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -62,7 +72,7 @@ void UPlayFabServerAPI::OnGetPlayFabIDsFromFacebookIDsResult(FHttpRequestPtr Htt
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -89,7 +99,7 @@ void UPlayFabServerAPI::OnGetUserAccountInfoResult(FHttpRequestPtr HttpRequest, 
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -116,7 +126,7 @@ void UPlayFabServerAPI::OnSendPushNotificationResult(FHttpRequestPtr HttpRequest
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -143,7 +153,7 @@ void UPlayFabServerAPI::OnDeleteUsersResult(FHttpRequestPtr HttpRequest, FHttpRe
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -170,7 +180,7 @@ void UPlayFabServerAPI::OnGetLeaderboardResult(FHttpRequestPtr HttpRequest, FHtt
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -197,7 +207,7 @@ void UPlayFabServerAPI::OnGetLeaderboardAroundUserResult(FHttpRequestPtr HttpReq
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -224,7 +234,7 @@ void UPlayFabServerAPI::OnGetUserDataResult(FHttpRequestPtr HttpRequest, FHttpRe
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -251,7 +261,7 @@ void UPlayFabServerAPI::OnGetUserInternalDataResult(FHttpRequestPtr HttpRequest,
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -278,7 +288,7 @@ void UPlayFabServerAPI::OnGetUserPublisherDataResult(FHttpRequestPtr HttpRequest
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -305,7 +315,7 @@ void UPlayFabServerAPI::OnGetUserPublisherInternalDataResult(FHttpRequestPtr Htt
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -332,7 +342,7 @@ void UPlayFabServerAPI::OnGetUserPublisherReadOnlyDataResult(FHttpRequestPtr Htt
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -359,7 +369,7 @@ void UPlayFabServerAPI::OnGetUserReadOnlyDataResult(FHttpRequestPtr HttpRequest,
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -386,7 +396,7 @@ void UPlayFabServerAPI::OnGetUserStatisticsResult(FHttpRequestPtr HttpRequest, F
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -413,7 +423,7 @@ void UPlayFabServerAPI::OnUpdateUserDataResult(FHttpRequestPtr HttpRequest, FHtt
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -440,7 +450,7 @@ void UPlayFabServerAPI::OnUpdateUserInternalDataResult(FHttpRequestPtr HttpReque
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -467,7 +477,7 @@ void UPlayFabServerAPI::OnUpdateUserPublisherDataResult(FHttpRequestPtr HttpRequ
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -494,7 +504,7 @@ void UPlayFabServerAPI::OnUpdateUserPublisherInternalDataResult(FHttpRequestPtr 
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -521,7 +531,7 @@ void UPlayFabServerAPI::OnUpdateUserPublisherReadOnlyDataResult(FHttpRequestPtr 
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -548,7 +558,7 @@ void UPlayFabServerAPI::OnUpdateUserReadOnlyDataResult(FHttpRequestPtr HttpReque
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -575,7 +585,7 @@ void UPlayFabServerAPI::OnUpdateUserStatisticsResult(FHttpRequestPtr HttpRequest
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -602,7 +612,7 @@ void UPlayFabServerAPI::OnGetCatalogItemsResult(FHttpRequestPtr HttpRequest, FHt
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -629,7 +639,7 @@ void UPlayFabServerAPI::OnGetTitleDataResult(FHttpRequestPtr HttpRequest, FHttpR
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -656,7 +666,7 @@ void UPlayFabServerAPI::OnGetTitleInternalDataResult(FHttpRequestPtr HttpRequest
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -683,7 +693,7 @@ void UPlayFabServerAPI::OnGetTitleNewsResult(FHttpRequestPtr HttpRequest, FHttpR
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -710,7 +720,7 @@ void UPlayFabServerAPI::OnSetTitleDataResult(FHttpRequestPtr HttpRequest, FHttpR
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -737,7 +747,7 @@ void UPlayFabServerAPI::OnSetTitleInternalDataResult(FHttpRequestPtr HttpRequest
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -764,7 +774,7 @@ void UPlayFabServerAPI::OnAddCharacterVirtualCurrencyResult(FHttpRequestPtr Http
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -791,7 +801,7 @@ void UPlayFabServerAPI::OnAddUserVirtualCurrencyResult(FHttpRequestPtr HttpReque
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -818,7 +828,7 @@ void UPlayFabServerAPI::OnGetCharacterInventoryResult(FHttpRequestPtr HttpReques
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -845,7 +855,7 @@ void UPlayFabServerAPI::OnGetUserInventoryResult(FHttpRequestPtr HttpRequest, FH
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -872,7 +882,7 @@ void UPlayFabServerAPI::OnGrantItemsToCharacterResult(FHttpRequestPtr HttpReques
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -899,7 +909,7 @@ void UPlayFabServerAPI::OnGrantItemsToUserResult(FHttpRequestPtr HttpRequest, FH
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -926,7 +936,7 @@ void UPlayFabServerAPI::OnGrantItemsToUsersResult(FHttpRequestPtr HttpRequest, F
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -953,7 +963,7 @@ void UPlayFabServerAPI::OnModifyItemUsesResult(FHttpRequestPtr HttpRequest, FHtt
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -980,7 +990,7 @@ void UPlayFabServerAPI::OnMoveItemToCharacterFromCharacterResult(FHttpRequestPtr
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1007,7 +1017,7 @@ void UPlayFabServerAPI::OnMoveItemToCharacterFromUserResult(FHttpRequestPtr Http
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1034,7 +1044,7 @@ void UPlayFabServerAPI::OnMoveItemToUserFromCharacterResult(FHttpRequestPtr Http
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1061,7 +1071,7 @@ void UPlayFabServerAPI::OnRedeemCouponResult(FHttpRequestPtr HttpRequest, FHttpR
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1088,7 +1098,7 @@ void UPlayFabServerAPI::OnReportPlayerResult(FHttpRequestPtr HttpRequest, FHttpR
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1115,7 +1125,7 @@ void UPlayFabServerAPI::OnSubtractCharacterVirtualCurrencyResult(FHttpRequestPtr
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1142,7 +1152,7 @@ void UPlayFabServerAPI::OnSubtractUserVirtualCurrencyResult(FHttpRequestPtr Http
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1169,7 +1179,7 @@ void UPlayFabServerAPI::OnUpdateUserInventoryItemCustomDataResult(FHttpRequestPt
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1196,7 +1206,7 @@ void UPlayFabServerAPI::OnNotifyMatchmakerPlayerLeftResult(FHttpRequestPtr HttpR
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1223,7 +1233,7 @@ void UPlayFabServerAPI::OnRedeemMatchmakerTicketResult(FHttpRequestPtr HttpReque
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1250,7 +1260,7 @@ void UPlayFabServerAPI::OnAwardSteamAchievementResult(FHttpRequestPtr HttpReques
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1277,7 +1287,7 @@ void UPlayFabServerAPI::OnLogEventResult(FHttpRequestPtr HttpRequest, FHttpRespo
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1304,7 +1314,7 @@ void UPlayFabServerAPI::OnAddSharedGroupMembersResult(FHttpRequestPtr HttpReques
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1331,7 +1341,7 @@ void UPlayFabServerAPI::OnCreateSharedGroupResult(FHttpRequestPtr HttpRequest, F
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1358,7 +1368,7 @@ void UPlayFabServerAPI::OnDeleteSharedGroupResult(FHttpRequestPtr HttpRequest, F
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1385,7 +1395,7 @@ void UPlayFabServerAPI::OnGetPublisherDataResult(FHttpRequestPtr HttpRequest, FH
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1412,7 +1422,7 @@ void UPlayFabServerAPI::OnGetSharedGroupDataResult(FHttpRequestPtr HttpRequest, 
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1439,7 +1449,7 @@ void UPlayFabServerAPI::OnRemoveSharedGroupMembersResult(FHttpRequestPtr HttpReq
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1466,7 +1476,7 @@ void UPlayFabServerAPI::OnSetPublisherDataResult(FHttpRequestPtr HttpRequest, FH
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1493,7 +1503,7 @@ void UPlayFabServerAPI::OnUpdateSharedGroupDataResult(FHttpRequestPtr HttpReques
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1520,7 +1530,7 @@ void UPlayFabServerAPI::OnGetContentDownloadUrlResult(FHttpRequestPtr HttpReques
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1547,7 +1557,7 @@ void UPlayFabServerAPI::OnDeleteCharacterFromUserResult(FHttpRequestPtr HttpRequ
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1574,7 +1584,7 @@ void UPlayFabServerAPI::OnGetAllUsersCharactersResult(FHttpRequestPtr HttpReques
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1601,7 +1611,7 @@ void UPlayFabServerAPI::OnGetCharacterLeaderboardResult(FHttpRequestPtr HttpRequ
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1628,7 +1638,7 @@ void UPlayFabServerAPI::OnGetCharacterStatisticsResult(FHttpRequestPtr HttpReque
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1655,7 +1665,7 @@ void UPlayFabServerAPI::OnGetLeaderboardAroundCharacterResult(FHttpRequestPtr Ht
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1682,7 +1692,7 @@ void UPlayFabServerAPI::OnGetLeaderboardForUserCharactersResult(FHttpRequestPtr 
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1709,7 +1719,7 @@ void UPlayFabServerAPI::OnGrantCharacterToUserResult(FHttpRequestPtr HttpRequest
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1736,7 +1746,7 @@ void UPlayFabServerAPI::OnUpdateCharacterStatisticsResult(FHttpRequestPtr HttpRe
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1763,7 +1773,7 @@ void UPlayFabServerAPI::OnGetCharacterDataResult(FHttpRequestPtr HttpRequest, FH
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1790,7 +1800,7 @@ void UPlayFabServerAPI::OnGetCharacterInternalDataResult(FHttpRequestPtr HttpReq
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1817,7 +1827,7 @@ void UPlayFabServerAPI::OnGetCharacterReadOnlyDataResult(FHttpRequestPtr HttpReq
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1844,7 +1854,7 @@ void UPlayFabServerAPI::OnUpdateCharacterDataResult(FHttpRequestPtr HttpRequest,
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1871,7 +1881,7 @@ void UPlayFabServerAPI::OnUpdateCharacterInternalDataResult(FHttpRequestPtr Http
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
@@ -1898,7 +1908,7 @@ void UPlayFabServerAPI::OnUpdateCharacterReadOnlyDataResult(FHttpRequestPtr Http
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
-        
+
         SuccessDelegate.ExecuteIfBound(outResult);
     }
     else
