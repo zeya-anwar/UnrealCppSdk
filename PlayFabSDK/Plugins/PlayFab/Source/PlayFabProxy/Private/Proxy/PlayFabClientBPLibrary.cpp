@@ -906,6 +906,30 @@ void UPFClientProxyLibrary::BreakBPClientGetPhotonAuthenticationTokenResult(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientGetPlayerStatisticsRequest(
+		const FBPClientGetPlayerStatisticsRequest& In
+        ,TArray<FString>& OutStatisticNames
+	)
+{
+    OutStatisticNames = In.Data.StatisticNames;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetPlayerStatisticsResult(
+		const FBPClientGetPlayerStatisticsResult& In
+        ,TArray<FBPClientStatisticValue>& OutStatistics
+	)
+{
+    for (const PlayFab::ClientModels::FStatisticValue& elem : In.Data.Statistics)
+    {
+        FBPClientStatisticValue result;
+        result.Data = elem;
+        OutStatistics.Add(result);
+    }
+
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientGetPlayerTradesRequest(
 		const FBPClientGetPlayerTradesRequest& In
 	)
@@ -2359,6 +2383,32 @@ void UPFClientProxyLibrary::BreakBPClientStartPurchaseResult(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientStatisticUpdate(
+		const FBPClientStatisticUpdate& In
+        ,FString& OutStatisticName
+        ,FString& OutVersion
+        ,int32& OutValue
+	)
+{
+    OutStatisticName = In.Data.StatisticName;
+	OutVersion = In.Data.Version;
+	OutValue = In.Data.Value;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientStatisticValue(
+		const FBPClientStatisticValue& In
+        ,FString& OutStatisticName
+        ,int32& OutValue
+        ,FString& OutVersion
+	)
+{
+    OutStatisticName = In.Data.StatisticName;
+	OutValue = In.Data.Value;
+	OutVersion = In.Data.Version;
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientSteamPlayFabIdPair(
 		const FBPClientSteamPlayFabIdPair& In
         ,int32& OutSteamId
@@ -2645,6 +2695,28 @@ void UPFClientProxyLibrary::BreakBPClientUpdateCharacterDataResult(
 {
     OutDataVersion = In.Data.DataVersion;
 	
+}
+
+void UPFClientProxyLibrary::BreakBPClientUpdatePlayerStatisticsRequest(
+		const FBPClientUpdatePlayerStatisticsRequest& In
+        ,TArray<FBPClientStatisticUpdate>& OutStatistics
+	)
+{
+    for (const PlayFab::ClientModels::FStatisticUpdate& elem : In.Data.Statistics)
+    {
+        FBPClientStatisticUpdate result;
+        result.Data = elem;
+        OutStatistics.Add(result);
+    }
+
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientUpdatePlayerStatisticsResult(
+		const FBPClientUpdatePlayerStatisticsResult& In
+	)
+{
+    
 }
 
 void UPFClientProxyLibrary::BreakBPClientUpdateSharedGroupDataRequest(

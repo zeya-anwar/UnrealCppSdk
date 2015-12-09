@@ -506,6 +506,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetLeaderboardResultDelegate, const FBPServerGetLeaderboardResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetPlayerStatisticsRequest"))
+struct FBPServerGetPlayerStatisticsRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetPlayerStatisticsRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetPlayerStatisticsRequestDelegate, const FBPServerGetPlayerStatisticsRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetPlayerStatisticsResult"))
+struct FBPServerGetPlayerStatisticsResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetPlayerStatisticsResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetPlayerStatisticsResultDelegate, const FBPServerGetPlayerStatisticsResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetPlayFabIDsFromFacebookIDsRequest"))
 struct FBPServerGetPlayFabIDsFromFacebookIDsRequest
 {
@@ -1136,6 +1156,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerSharedGroupDataRecordDelegate, const FBPServerSharedGroupDataRecord&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerStatisticUpdate"))
+struct FBPServerStatisticUpdate
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FStatisticUpdate Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerStatisticUpdateDelegate, const FBPServerStatisticUpdate&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerStatisticValue"))
+struct FBPServerStatisticValue
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FStatisticValue Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerStatisticValueDelegate, const FBPServerStatisticValue&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerSubtractCharacterVirtualCurrencyRequest"))
 struct FBPServerSubtractCharacterVirtualCurrencyRequest
 {
@@ -1215,6 +1255,26 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUpdateCharacterStatisticsResultDelegate, const FBPServerUpdateCharacterStatisticsResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUpdatePlayerStatisticsRequest"))
+struct FBPServerUpdatePlayerStatisticsRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FUpdatePlayerStatisticsRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUpdatePlayerStatisticsRequestDelegate, const FBPServerUpdatePlayerStatisticsRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUpdatePlayerStatisticsResult"))
+struct FBPServerUpdatePlayerStatisticsResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FUpdatePlayerStatisticsResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUpdatePlayerStatisticsResultDelegate, const FBPServerUpdatePlayerStatisticsResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUpdateSharedGroupDataRequest"))
 struct FBPServerUpdateSharedGroupDataRequest

@@ -677,6 +677,34 @@ void UPFServerProxyLibrary::BreakBPServerGetLeaderboardResult(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerGetPlayerStatisticsRequest(
+		const FBPServerGetPlayerStatisticsRequest& In
+        ,FString& OutPlayFabId
+        ,TArray<FString>& OutStatisticNames
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutStatisticNames = In.Data.StatisticNames;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetPlayerStatisticsResult(
+		const FBPServerGetPlayerStatisticsResult& In
+        ,FString& OutPlayFabId
+        ,TArray<FBPServerStatisticValue>& OutStatistics
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	for (const PlayFab::ServerModels::FStatisticValue& elem : In.Data.Statistics)
+    {
+        FBPServerStatisticValue result;
+        result.Data = elem;
+        OutStatistics.Add(result);
+    }
+
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerGetPlayFabIDsFromFacebookIDsRequest(
 		const FBPServerGetPlayFabIDsFromFacebookIDsRequest& In
         ,TArray<FString>& OutFacebookIDs
@@ -1462,6 +1490,32 @@ void UPFServerProxyLibrary::BreakBPServerSharedGroupDataRecord(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerStatisticUpdate(
+		const FBPServerStatisticUpdate& In
+        ,FString& OutStatisticName
+        ,FString& OutVersion
+        ,int32& OutValue
+	)
+{
+    OutStatisticName = In.Data.StatisticName;
+	OutVersion = In.Data.Version;
+	OutValue = In.Data.Value;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerStatisticValue(
+		const FBPServerStatisticValue& In
+        ,FString& OutStatisticName
+        ,int32& OutValue
+        ,FString& OutVersion
+	)
+{
+    OutStatisticName = In.Data.StatisticName;
+	OutValue = In.Data.Value;
+	OutVersion = In.Data.Version;
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerSubtractCharacterVirtualCurrencyRequest(
 		const FBPServerSubtractCharacterVirtualCurrencyRequest& In
         ,FString& OutPlayFabId
@@ -1550,6 +1604,30 @@ void UPFServerProxyLibrary::BreakBPServerUpdateCharacterStatisticsRequest(
 
 void UPFServerProxyLibrary::BreakBPServerUpdateCharacterStatisticsResult(
 		const FBPServerUpdateCharacterStatisticsResult& In
+	)
+{
+    
+}
+
+void UPFServerProxyLibrary::BreakBPServerUpdatePlayerStatisticsRequest(
+		const FBPServerUpdatePlayerStatisticsRequest& In
+        ,FString& OutPlayFabId
+        ,TArray<FBPServerStatisticUpdate>& OutStatistics
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	for (const PlayFab::ServerModels::FStatisticUpdate& elem : In.Data.Statistics)
+    {
+        FBPServerStatisticUpdate result;
+        result.Data = elem;
+        OutStatistics.Add(result);
+    }
+
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerUpdatePlayerStatisticsResult(
+		const FBPServerUpdatePlayerStatisticsResult& In
 	)
 {
     

@@ -214,6 +214,25 @@ void UPFAdminProxyLibrary::BreakBPAdminContentInfo(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminCreatePlayerStatisticDefinitionRequest(
+		const FBPAdminCreatePlayerStatisticDefinitionRequest& In
+        ,FString& OutName
+	)
+{
+    OutName = In.Data.Name;
+	
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminCreatePlayerStatisticDefinitionResult(
+		const FBPAdminCreatePlayerStatisticDefinitionResult& In
+        ,FBPAdminPlayerStatisticDefinition& OutStatistic
+	)
+{
+    if (In.Data.Statistic.IsValid()) {    OutStatistic.Data = *In.Data.Statistic;}
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminCurrency(
 		const FBPAdminCurrency& In
 	)
@@ -479,6 +498,52 @@ void UPFAdminProxyLibrary::BreakBPAdminGetMatchmakerGameModesResult(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminGetPlayerStatisticDefinitionsRequest(
+		const FBPAdminGetPlayerStatisticDefinitionsRequest& In
+	)
+{
+    
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetPlayerStatisticDefinitionsResult(
+		const FBPAdminGetPlayerStatisticDefinitionsResult& In
+        ,TArray<FBPAdminPlayerStatisticDefinition>& OutStatistics
+	)
+{
+    for (const PlayFab::AdminModels::FPlayerStatisticDefinition& elem : In.Data.Statistics)
+    {
+        FBPAdminPlayerStatisticDefinition result;
+        result.Data = elem;
+        OutStatistics.Add(result);
+    }
+
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetPlayerStatisticVersionsRequest(
+		const FBPAdminGetPlayerStatisticVersionsRequest& In
+        ,FString& OutStatisticName
+	)
+{
+    OutStatisticName = In.Data.StatisticName;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetPlayerStatisticVersionsResult(
+		const FBPAdminGetPlayerStatisticVersionsResult& In
+        ,TArray<FBPAdminPlayerStatisticVersion>& OutStatisticVersions
+	)
+{
+    for (const PlayFab::AdminModels::FPlayerStatisticVersion& elem : In.Data.StatisticVersions)
+    {
+        FBPAdminPlayerStatisticVersion result;
+        result.Data = elem;
+        OutStatisticVersions.Add(result);
+    }
+
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminGetPublisherDataRequest(
 		const FBPAdminGetPublisherDataRequest& In
         ,TArray<FString>& OutKeys
@@ -731,6 +796,31 @@ void UPFAdminProxyLibrary::BreakBPAdminGrantItemsToUsersResult(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminIncrementPlayerStatisticVersionRequest(
+		const FBPAdminIncrementPlayerStatisticVersionRequest& In
+        ,FString& OutStatisticName
+	)
+{
+    OutStatisticName = In.Data.StatisticName;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminIncrementPlayerStatisticVersionResult(
+		const FBPAdminIncrementPlayerStatisticVersionResult& In
+        ,FBPAdminPlayerStatisticVersion& OutStatisticVersion
+	)
+{
+    if (In.Data.StatisticVersion.IsValid()) {    OutStatisticVersion.Data = *In.Data.StatisticVersion;}
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminInterval(
+		const FBPAdminInterval& In
+	)
+{
+    
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminItemGrant(
 		const FBPAdminItemGrant& In
         ,FString& OutPlayFabId
@@ -929,6 +1019,35 @@ void UPFAdminProxyLibrary::BreakBPAdminModifyUserVirtualCurrencyResult(
 	OutVirtualCurrency = In.Data.VirtualCurrency;
 	OutBalanceChange = In.Data.BalanceChange;
 	OutBalance = In.Data.Balance;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminPlayerStatisticDefinition(
+		const FBPAdminPlayerStatisticDefinition& In
+        ,FString& OutStatisticName
+        ,FString& OutCurrentVersion
+	)
+{
+    OutStatisticName = In.Data.StatisticName;
+	OutCurrentVersion = In.Data.CurrentVersion;
+	
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminPlayerStatisticVersion(
+		const FBPAdminPlayerStatisticVersion& In
+        ,FString& OutStatisticName
+        ,FString& OutVersion
+        ,FDateTime& OutScheduledVersionChangeIntervalTime
+        ,FDateTime& OutCreatedTime
+	)
+{
+    OutStatisticName = In.Data.StatisticName;
+	OutVersion = In.Data.Version;
+	
+	
+	
+	
 	
 }
 
@@ -1227,6 +1346,13 @@ void UPFAdminProxyLibrary::BreakBPAdminSetupPushNotificationResult(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminStatisticVersionArchivalStatus(
+		const FBPAdminStatisticVersionArchivalStatus& In
+	)
+{
+    
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminStoreItem(
 		const FBPAdminStoreItem& In
         ,FString& OutItemId
@@ -1307,6 +1433,25 @@ void UPFAdminProxyLibrary::BreakBPAdminUpdateCloudScriptResult(
 {
     OutVersion = In.Data.Version;
 	OutRevision = In.Data.Revision;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminUpdatePlayerStatisticDefinitionRequest(
+		const FBPAdminUpdatePlayerStatisticDefinitionRequest& In
+        ,FString& OutStatisticName
+	)
+{
+    OutStatisticName = In.Data.StatisticName;
+	
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminUpdatePlayerStatisticDefinitionResult(
+		const FBPAdminUpdatePlayerStatisticDefinitionResult& In
+        ,FBPAdminPlayerStatisticDefinition& OutStatistic
+	)
+{
+    if (In.Data.Statistic.IsValid()) {    OutStatistic.Data = *In.Data.Statistic;}
 	
 }
 

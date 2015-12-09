@@ -3059,6 +3059,95 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FGetPlayerStatisticsRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] statistics to return
+		TArray<FString> StatisticNames;
+	
+        FGetPlayerStatisticsRequest() :
+			FPlayFabBaseModel(),
+			StatisticNames()
+			{}
+		
+		FGetPlayerStatisticsRequest(const FGetPlayerStatisticsRequest& src) :
+			FPlayFabBaseModel(),
+			StatisticNames(src.StatisticNames)
+			{}
+			
+		FGetPlayerStatisticsRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayerStatisticsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerStatisticsRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FStatisticValue : public FPlayFabBaseModel
+    {
+		
+		// [optional] unique name of the statistic
+		FString StatisticName;
+		// statistic value for the player
+		int32 Value;
+		// [optional] for updates to an existing statistic value for a player, the version of the statistic when it was loaded
+		FString Version;
+	
+        FStatisticValue() :
+			FPlayFabBaseModel(),
+			StatisticName(),
+			Value(0),
+			Version()
+			{}
+		
+		FStatisticValue(const FStatisticValue& src) :
+			FPlayFabBaseModel(),
+			StatisticName(src.StatisticName),
+			Value(src.Value),
+			Version(src.Version)
+			{}
+			
+		FStatisticValue(const TSharedPtr<FJsonObject>& obj) : FStatisticValue()
+        {
+            readFromValue(obj);
+        }
+		
+		~FStatisticValue();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerStatisticsResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] User statistics for the requested user.
+		TArray<FStatisticValue> Statistics;
+	
+        FGetPlayerStatisticsResult() :
+			FPlayFabBaseModel(),
+			Statistics()
+			{}
+		
+		FGetPlayerStatisticsResult(const FGetPlayerStatisticsResult& src) :
+			FPlayFabBaseModel(),
+			Statistics(src.Statistics)
+			{}
+			
+		FGetPlayerStatisticsResult(const TSharedPtr<FJsonObject>& obj) : FGetPlayerStatisticsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerStatisticsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FGetPlayerTradesRequest : public FPlayFabBaseModel
     {
 		
@@ -4292,16 +4381,16 @@ namespace ClientModels
     {
 		
 		// [optional] User statistics for the active title.
-		TMap<FString, int32> UserStatistics;
+		TMap<FString, int32> Statistics;
 	
         FGetUserStatisticsResult() :
 			FPlayFabBaseModel(),
-			UserStatistics()
+			Statistics()
 			{}
 		
 		FGetUserStatisticsResult(const FGetUserStatisticsResult& src) :
 			FPlayFabBaseModel(),
-			UserStatistics(src.UserStatistics)
+			Statistics(src.Statistics)
 			{}
 			
 		FGetUserStatisticsResult(const TSharedPtr<FJsonObject>& obj) : FGetUserStatisticsResult()
@@ -6781,6 +6870,41 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FStatisticUpdate : public FPlayFabBaseModel
+    {
+		
+		// [optional] unique name of the statistic
+		FString StatisticName;
+		// [optional] for updates to an existing statistic value for a player, the version of the statistic when it was loaded. Null when setting the statistic value for the first time.
+		FString Version;
+		// statistic value for the player
+		int32 Value;
+	
+        FStatisticUpdate() :
+			FPlayFabBaseModel(),
+			StatisticName(),
+			Version(),
+			Value(0)
+			{}
+		
+		FStatisticUpdate(const FStatisticUpdate& src) :
+			FPlayFabBaseModel(),
+			StatisticName(src.StatisticName),
+			Version(src.Version),
+			Value(src.Value)
+			{}
+			
+		FStatisticUpdate(const TSharedPtr<FJsonObject>& obj) : FStatisticUpdate()
+        {
+            readFromValue(obj);
+        }
+		
+		~FStatisticUpdate();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FSubtractUserVirtualCurrencyRequest : public FPlayFabBaseModel
     {
 		
@@ -7373,6 +7497,56 @@ namespace ClientModels
         }
 		
 		~FUpdateCharacterDataResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUpdatePlayerStatisticsRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] Statistics to be updated with the provided values
+		TArray<FStatisticUpdate> Statistics;
+	
+        FUpdatePlayerStatisticsRequest() :
+			FPlayFabBaseModel(),
+			Statistics()
+			{}
+		
+		FUpdatePlayerStatisticsRequest(const FUpdatePlayerStatisticsRequest& src) :
+			FPlayFabBaseModel(),
+			Statistics(src.Statistics)
+			{}
+			
+		FUpdatePlayerStatisticsRequest(const TSharedPtr<FJsonObject>& obj) : FUpdatePlayerStatisticsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUpdatePlayerStatisticsRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUpdatePlayerStatisticsResult : public FPlayFabBaseModel
+    {
+		
+	
+        FUpdatePlayerStatisticsResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FUpdatePlayerStatisticsResult(const FUpdatePlayerStatisticsResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FUpdatePlayerStatisticsResult(const TSharedPtr<FJsonObject>& obj) : FUpdatePlayerStatisticsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUpdatePlayerStatisticsResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
