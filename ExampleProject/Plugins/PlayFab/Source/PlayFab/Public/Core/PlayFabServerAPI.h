@@ -110,7 +110,7 @@ namespace PlayFab
         bool SendPushNotification(ServerModels::FSendPushNotificationRequest& request, const FSendPushNotificationDelegate& SuccessDelegate = FSendPushNotificationDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Deletes the users for the provided game. Deletes custom data, all account linkages, and statistics.
-         * Note that this action cannot be undone. It will unlink all accounts and remove all PII information, as well as                              reset any statistics and leaderboards and clear out any stored custom data for the user.                               This API must be enabled for use as an option in the game manager website. It is disabled by default.
+         * Note that this action cannot be undone. It will unlink all accounts and remove all PII information, as well as reset any statistics and leaderboards and clear out any stored custom data for the user.  This API must be enabled for use as an option in the game manager website. It is disabled by default.
          */
         bool DeleteUsers(ServerModels::FDeleteUsersRequest& request, const FDeleteUsersDelegate& SuccessDelegate = FDeleteUsersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**

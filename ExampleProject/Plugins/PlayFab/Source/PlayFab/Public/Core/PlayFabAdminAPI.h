@@ -99,7 +99,7 @@ namespace PlayFab
         bool UpdateUserTitleDisplayName(AdminModels::FUpdateUserTitleDisplayNameRequest& request, const FUpdateUserTitleDisplayNameDelegate& SuccessDelegate = FUpdateUserTitleDisplayNameDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Deletes the users for the provided game. Deletes custom data, all account linkages, and statistics.
-         * Note that this action cannot be undone. It will unlink all accounts and remove all PII information, as well as                              reset any statistics and leaderboards and clear out any stored custom data for the user.
+         * Note that this action cannot be undone. It will unlink all accounts and remove all PII information, as well as reset any statistics and leaderboards and clear out any stored custom data for the user.
          */
         bool DeleteUsers(AdminModels::FDeleteUsersRequest& request, const FDeleteUsersDelegate& SuccessDelegate = FDeleteUsersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
