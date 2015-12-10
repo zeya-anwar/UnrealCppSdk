@@ -6901,10 +6901,10 @@ void PlayFab::ClientModels::FGetUserStatisticsResult::writeJSON(JsonWriter& writ
 {
     writer->WriteObjectStart();
     
-    if(Statistics.Num() != 0) 
+    if(UserStatistics.Num() != 0) 
     {
-        writer->WriteObjectStart(TEXT("Statistics"));
-        for (TMap<FString, int32>::TConstIterator It(Statistics); It; ++It)
+        writer->WriteObjectStart(TEXT("UserStatistics"));
+        for (TMap<FString, int32>::TConstIterator It(UserStatistics); It; ++It)
         {
             writer->WriteIdentifierPrefix((*It).Key);
             writer->WriteValue((*It).Value);
@@ -6920,13 +6920,13 @@ bool PlayFab::ClientModels::FGetUserStatisticsResult::readFromValue(const TShare
 {
 	bool HasSucceeded = true; 
 	
-    const TSharedPtr<FJsonObject>* StatisticsObject;
-    if (obj->TryGetObjectField(TEXT("Statistics"), StatisticsObject))
+    const TSharedPtr<FJsonObject>* UserStatisticsObject;
+    if (obj->TryGetObjectField(TEXT("UserStatistics"), UserStatisticsObject))
     {
-        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*StatisticsObject)->Values); It; ++It)
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*UserStatisticsObject)->Values); It; ++It)
         {
             int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
-            Statistics.Add(It.Key(), TmpValue);
+            UserStatistics.Add(It.Key(), TmpValue);
         }
     }
     

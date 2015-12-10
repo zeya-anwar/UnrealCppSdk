@@ -4381,16 +4381,16 @@ namespace ClientModels
     {
 		
 		// [optional] User statistics for the active title.
-		TMap<FString, int32> Statistics;
+		TMap<FString, int32> UserStatistics;
 	
         FGetUserStatisticsResult() :
 			FPlayFabBaseModel(),
-			Statistics()
+			UserStatistics()
 			{}
 		
 		FGetUserStatisticsResult(const FGetUserStatisticsResult& src) :
 			FPlayFabBaseModel(),
-			Statistics(src.Statistics)
+			UserStatistics(src.UserStatistics)
 			{}
 			
 		FGetUserStatisticsResult(const TSharedPtr<FJsonObject>& obj) : FGetUserStatisticsResult()
