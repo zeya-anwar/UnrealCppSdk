@@ -630,6 +630,111 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	enum Interval
+	{
+		IntervalHour,
+		IntervalDay,
+		IntervalWeek,
+		IntervalMonth
+	};
+	
+	void writeIntervalEnumJSON(Interval enumVal, JsonWriter& writer);
+	Interval readIntervalFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
+	struct PLAYFAB_API FCreatePlayerStatisticDefinitionRequest : public FPlayFabBaseModel
+    {
+		
+		// unique name of the statistic
+		FString Name;
+		// [optional] interval at which the values of the statistic for all players are reset. Resets begin at the next interval boundary
+		Boxed<Interval> VersionChangeInterval;
+	
+        FCreatePlayerStatisticDefinitionRequest() :
+			FPlayFabBaseModel(),
+			Name(),
+			VersionChangeInterval()
+			{}
+		
+		FCreatePlayerStatisticDefinitionRequest(const FCreatePlayerStatisticDefinitionRequest& src) :
+			FPlayFabBaseModel(),
+			Name(src.Name),
+			VersionChangeInterval(src.VersionChangeInterval)
+			{}
+			
+		FCreatePlayerStatisticDefinitionRequest(const TSharedPtr<FJsonObject>& obj) : FCreatePlayerStatisticDefinitionRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FCreatePlayerStatisticDefinitionRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FPlayerStatisticDefinition : public FPlayFabBaseModel
+    {
+		
+		// [optional] unique name of the statistic
+		FString StatisticName;
+		// [optional] current active version of the statistic, incremented each time the statistic resets
+		FString CurrentVersion;
+		// [optional] interval at which the values of the statistic for all players are reset
+		Boxed<Interval> VersionChangeInterval;
+	
+        FPlayerStatisticDefinition() :
+			FPlayFabBaseModel(),
+			StatisticName(),
+			CurrentVersion(),
+			VersionChangeInterval()
+			{}
+		
+		FPlayerStatisticDefinition(const FPlayerStatisticDefinition& src) :
+			FPlayFabBaseModel(),
+			StatisticName(src.StatisticName),
+			CurrentVersion(src.CurrentVersion),
+			VersionChangeInterval(src.VersionChangeInterval)
+			{}
+			
+		FPlayerStatisticDefinition(const TSharedPtr<FJsonObject>& obj) : FPlayerStatisticDefinition()
+        {
+            readFromValue(obj);
+        }
+		
+		~FPlayerStatisticDefinition();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FCreatePlayerStatisticDefinitionResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] created statistic definition
+		TSharedPtr<FPlayerStatisticDefinition> Statistic;
+	
+        FCreatePlayerStatisticDefinitionResult() :
+			FPlayFabBaseModel(),
+			Statistic(nullptr)
+			{}
+		
+		FCreatePlayerStatisticDefinitionResult(const FCreatePlayerStatisticDefinitionResult& src) :
+			FPlayFabBaseModel(),
+			Statistic(src.Statistic.IsValid() ? MakeShareable(new FPlayerStatisticDefinition(*src.Statistic)) : nullptr)
+			{}
+			
+		FCreatePlayerStatisticDefinitionResult(const TSharedPtr<FJsonObject>& obj) : FCreatePlayerStatisticDefinitionResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FCreatePlayerStatisticDefinitionResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	enum Currency
 	{
 		CurrencyAED,
@@ -1419,6 +1524,170 @@ namespace AdminModels
         }
 		
 		~FGetMatchmakerGameModesResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerStatisticDefinitionsRequest : public FPlayFabBaseModel
+    {
+		
+	
+        FGetPlayerStatisticDefinitionsRequest() :
+			FPlayFabBaseModel()
+			{}
+		
+		FGetPlayerStatisticDefinitionsRequest(const FGetPlayerStatisticDefinitionsRequest& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FGetPlayerStatisticDefinitionsRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayerStatisticDefinitionsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerStatisticDefinitionsRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerStatisticDefinitionsResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] definitions of all statistics for the title
+		TArray<FPlayerStatisticDefinition> Statistics;
+	
+        FGetPlayerStatisticDefinitionsResult() :
+			FPlayFabBaseModel(),
+			Statistics()
+			{}
+		
+		FGetPlayerStatisticDefinitionsResult(const FGetPlayerStatisticDefinitionsResult& src) :
+			FPlayFabBaseModel(),
+			Statistics(src.Statistics)
+			{}
+			
+		FGetPlayerStatisticDefinitionsResult(const TSharedPtr<FJsonObject>& obj) : FGetPlayerStatisticDefinitionsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerStatisticDefinitionsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerStatisticVersionsRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] unique name of the statistic
+		FString StatisticName;
+	
+        FGetPlayerStatisticVersionsRequest() :
+			FPlayFabBaseModel(),
+			StatisticName()
+			{}
+		
+		FGetPlayerStatisticVersionsRequest(const FGetPlayerStatisticVersionsRequest& src) :
+			FPlayFabBaseModel(),
+			StatisticName(src.StatisticName)
+			{}
+			
+		FGetPlayerStatisticVersionsRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayerStatisticVersionsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerStatisticVersionsRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	enum StatisticVersionArchivalStatus
+	{
+		StatisticVersionArchivalStatusNotScheduled,
+		StatisticVersionArchivalStatusScheduled,
+		StatisticVersionArchivalStatusInProgress,
+		StatisticVersionArchivalStatusFailed,
+		StatisticVersionArchivalStatusComplete
+	};
+	
+	void writeStatisticVersionArchivalStatusEnumJSON(StatisticVersionArchivalStatus enumVal, JsonWriter& writer);
+	StatisticVersionArchivalStatus readStatisticVersionArchivalStatusFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
+	struct PLAYFAB_API FPlayerStatisticVersion : public FPlayFabBaseModel
+    {
+		
+		// [optional] name of the statistic when the version became active
+		FString StatisticName;
+		// [optional] version of the statistic
+		FString Version;
+		// [optional] time for which the statistic version was scheduled to become active, based on the configured ResetInterval
+		OptionalTime ScheduledVersionChangeIntervalTime;
+		// time when the statistic version became active
+		FDateTime CreatedTime;
+		// [optional] status of the process of saving player statistic values of the previous version to a downloadable archive, if configured
+		Boxed<StatisticVersionArchivalStatus> ArchivalStatus;
+		// [optional] reset interval that triggered the version to become active, if configured
+		Boxed<Interval> ResetInterval;
+	
+        FPlayerStatisticVersion() :
+			FPlayFabBaseModel(),
+			StatisticName(),
+			Version(),
+			ScheduledVersionChangeIntervalTime(),
+			CreatedTime(0),
+			ArchivalStatus(),
+			ResetInterval()
+			{}
+		
+		FPlayerStatisticVersion(const FPlayerStatisticVersion& src) :
+			FPlayFabBaseModel(),
+			StatisticName(src.StatisticName),
+			Version(src.Version),
+			ScheduledVersionChangeIntervalTime(src.ScheduledVersionChangeIntervalTime),
+			CreatedTime(src.CreatedTime),
+			ArchivalStatus(src.ArchivalStatus),
+			ResetInterval(src.ResetInterval)
+			{}
+			
+		FPlayerStatisticVersion(const TSharedPtr<FJsonObject>& obj) : FPlayerStatisticVersion()
+        {
+            readFromValue(obj);
+        }
+		
+		~FPlayerStatisticVersion();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerStatisticVersionsResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] version change history of the statistic
+		TArray<FPlayerStatisticVersion> StatisticVersions;
+	
+        FGetPlayerStatisticVersionsResult() :
+			FPlayFabBaseModel(),
+			StatisticVersions()
+			{}
+		
+		FGetPlayerStatisticVersionsResult(const FGetPlayerStatisticVersionsResult& src) :
+			FPlayFabBaseModel(),
+			StatisticVersions(src.StatisticVersions)
+			{}
+			
+		FGetPlayerStatisticVersionsResult(const TSharedPtr<FJsonObject>& obj) : FGetPlayerStatisticVersionsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerStatisticVersionsResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -2381,6 +2650,60 @@ namespace AdminModels
         }
 		
 		~FGrantItemsToUsersResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FIncrementPlayerStatisticVersionRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] unique name of the statistic
+		FString StatisticName;
+	
+        FIncrementPlayerStatisticVersionRequest() :
+			FPlayFabBaseModel(),
+			StatisticName()
+			{}
+		
+		FIncrementPlayerStatisticVersionRequest(const FIncrementPlayerStatisticVersionRequest& src) :
+			FPlayFabBaseModel(),
+			StatisticName(src.StatisticName)
+			{}
+			
+		FIncrementPlayerStatisticVersionRequest(const TSharedPtr<FJsonObject>& obj) : FIncrementPlayerStatisticVersionRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FIncrementPlayerStatisticVersionRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FIncrementPlayerStatisticVersionResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] version change history of the statistic
+		TSharedPtr<FPlayerStatisticVersion> StatisticVersion;
+	
+        FIncrementPlayerStatisticVersionResult() :
+			FPlayFabBaseModel(),
+			StatisticVersion(nullptr)
+			{}
+		
+		FIncrementPlayerStatisticVersionResult(const FIncrementPlayerStatisticVersionResult& src) :
+			FPlayFabBaseModel(),
+			StatisticVersion(src.StatisticVersion.IsValid() ? MakeShareable(new FPlayerStatisticVersion(*src.StatisticVersion)) : nullptr)
+			{}
+			
+		FIncrementPlayerStatisticVersionResult(const TSharedPtr<FJsonObject>& obj) : FIncrementPlayerStatisticVersionResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FIncrementPlayerStatisticVersionResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -3885,6 +4208,64 @@ namespace AdminModels
         }
 		
 		~FUpdateCloudScriptResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUpdatePlayerStatisticDefinitionRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] unique name of the statistic
+		FString StatisticName;
+		// [optional] interval at which the values of the statistic for all players are reset. Changes are effective at the next interval boundary
+		Boxed<Interval> VersionChangeInterval;
+	
+        FUpdatePlayerStatisticDefinitionRequest() :
+			FPlayFabBaseModel(),
+			StatisticName(),
+			VersionChangeInterval()
+			{}
+		
+		FUpdatePlayerStatisticDefinitionRequest(const FUpdatePlayerStatisticDefinitionRequest& src) :
+			FPlayFabBaseModel(),
+			StatisticName(src.StatisticName),
+			VersionChangeInterval(src.VersionChangeInterval)
+			{}
+			
+		FUpdatePlayerStatisticDefinitionRequest(const TSharedPtr<FJsonObject>& obj) : FUpdatePlayerStatisticDefinitionRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUpdatePlayerStatisticDefinitionRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUpdatePlayerStatisticDefinitionResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] updated statistic definition
+		TSharedPtr<FPlayerStatisticDefinition> Statistic;
+	
+        FUpdatePlayerStatisticDefinitionResult() :
+			FPlayFabBaseModel(),
+			Statistic(nullptr)
+			{}
+		
+		FUpdatePlayerStatisticDefinitionResult(const FUpdatePlayerStatisticDefinitionResult& src) :
+			FPlayFabBaseModel(),
+			Statistic(src.Statistic.IsValid() ? MakeShareable(new FPlayerStatisticDefinition(*src.Statistic)) : nullptr)
+			{}
+			
+		FUpdatePlayerStatisticDefinitionResult(const TSharedPtr<FJsonObject>& obj) : FUpdatePlayerStatisticDefinitionResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUpdatePlayerStatisticDefinitionResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

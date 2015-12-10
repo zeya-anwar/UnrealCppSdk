@@ -1897,6 +1897,71 @@ bool PlayFab::ServerModels::FDeleteSharedGroupRequest::readFromValue(const TShar
 }
 
 
+PlayFab::ServerModels::FDeleteUsersRequest::~FDeleteUsersRequest()
+{
+    
+}
+
+void PlayFab::ServerModels::FDeleteUsersRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+        writer->WriteArrayStart(TEXT("PlayFabIds"));
+    
+        for (const FString& item : PlayFabIds)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+    
+	
+    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FDeleteUsersRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    HasSucceeded &= obj->TryGetStringArrayField(TEXT("PlayFabIds"),PlayFabIds);
+    
+    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FDeleteUsersResult::~FDeleteUsersResult()
+{
+    
+}
+
+void PlayFab::ServerModels::FDeleteUsersResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FDeleteUsersResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ServerModels::FEmptyResult::~FEmptyResult()
 {
     
@@ -3612,6 +3677,152 @@ bool PlayFab::ServerModels::FGetLeaderboardResult::readFromValue(const TSharedPt
             TSharedPtr<FJsonValue> CurrentItem = LeaderboardArray[Idx];
             
             Leaderboard.Add(FPlayerLeaderboardEntry(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FGetPlayerStatisticsRequest::~FGetPlayerStatisticsRequest()
+{
+    
+}
+
+void PlayFab::ServerModels::FGetPlayerStatisticsRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
+	
+    if(StatisticNames.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("StatisticNames"));
+    
+        for (const FString& item : StatisticNames)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FGetPlayerStatisticsRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    obj->TryGetStringArrayField(TEXT("StatisticNames"),StatisticNames);
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FStatisticValue::~FStatisticValue()
+{
+    
+}
+
+void PlayFab::ServerModels::FStatisticValue::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(StatisticName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("StatisticName")); writer->WriteValue(StatisticName); }
+	
+    writer->WriteIdentifierPrefix(TEXT("Value")); writer->WriteValue(Value);
+	
+    if(Version.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FStatisticValue::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> StatisticNameValue = obj->TryGetField(TEXT("StatisticName"));
+    if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ValueValue = obj->TryGetField(TEXT("Value"));
+    if (ValueValue.IsValid()&& !ValueValue->IsNull())
+    {
+        int32 TmpValue;
+        if(ValueValue->TryGetNumber(TmpValue)) {Value = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> VersionValue = obj->TryGetField(TEXT("Version"));
+    if (VersionValue.IsValid()&& !VersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(VersionValue->TryGetString(TmpValue)) {Version = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FGetPlayerStatisticsResult::~FGetPlayerStatisticsResult()
+{
+    
+}
+
+void PlayFab::ServerModels::FGetPlayerStatisticsResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(PlayFabId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId); }
+	
+    if(Statistics.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("Statistics"));
+    
+        for (const FStatisticValue& item : Statistics)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FGetPlayerStatisticsResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    {
+        const TArray< TSharedPtr<FJsonValue> >&StatisticsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Statistics"));
+        for (int32 Idx = 0; Idx < StatisticsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = StatisticsArray[Idx];
+            
+            Statistics.Add(FStatisticValue(CurrentItem->AsObject()));
         }
     }
 
@@ -6472,6 +6683,55 @@ bool PlayFab::ServerModels::FSetTitleDataResult::readFromValue(const TSharedPtr<
 }
 
 
+PlayFab::ServerModels::FStatisticUpdate::~FStatisticUpdate()
+{
+    
+}
+
+void PlayFab::ServerModels::FStatisticUpdate::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(StatisticName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("StatisticName")); writer->WriteValue(StatisticName); }
+	
+    if(Version.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version); }
+	
+    writer->WriteIdentifierPrefix(TEXT("Value")); writer->WriteValue(Value);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FStatisticUpdate::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> StatisticNameValue = obj->TryGetField(TEXT("StatisticName"));
+    if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> VersionValue = obj->TryGetField(TEXT("Version"));
+    if (VersionValue.IsValid()&& !VersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(VersionValue->TryGetString(TmpValue)) {Version = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ValueValue = obj->TryGetField(TEXT("Value"));
+    if (ValueValue.IsValid()&& !ValueValue->IsNull())
+    {
+        int32 TmpValue;
+        if(ValueValue->TryGetNumber(TmpValue)) {Value = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ServerModels::FSubtractCharacterVirtualCurrencyRequest::~FSubtractCharacterVirtualCurrencyRequest()
 {
     
@@ -6763,6 +7023,81 @@ void PlayFab::ServerModels::FUpdateCharacterStatisticsResult::writeJSON(JsonWrit
 }
 
 bool PlayFab::ServerModels::FUpdateCharacterStatisticsResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FUpdatePlayerStatisticsRequest::~FUpdatePlayerStatisticsRequest()
+{
+    
+}
+
+void PlayFab::ServerModels::FUpdatePlayerStatisticsRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
+	
+    if(Statistics.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("Statistics"));
+    
+        for (const FStatisticUpdate& item : Statistics)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FUpdatePlayerStatisticsRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    {
+        const TArray< TSharedPtr<FJsonValue> >&StatisticsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Statistics"));
+        for (int32 Idx = 0; Idx < StatisticsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = StatisticsArray[Idx];
+            
+            Statistics.Add(FStatisticUpdate(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FUpdatePlayerStatisticsResult::~FUpdatePlayerStatisticsResult()
+{
+    
+}
+
+void PlayFab::ServerModels::FUpdatePlayerStatisticsResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FUpdatePlayerStatisticsResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
 {
 	bool HasSucceeded = true; 
 	

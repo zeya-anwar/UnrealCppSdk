@@ -135,6 +135,18 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminCreatePlayerStatisticDefinitionRequest(
+		const FBPAdminCreatePlayerStatisticDefinitionRequest& In
+        ,FString& OutName
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminCreatePlayerStatisticDefinitionResult(
+		const FBPAdminCreatePlayerStatisticDefinitionResult& In
+        ,FBPAdminPlayerStatisticDefinition& OutStatistic
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminCurrency(
 		const FBPAdminCurrency& In
 	);
@@ -285,6 +297,29 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminGetPlayerStatisticDefinitionsRequest(
+		const FBPAdminGetPlayerStatisticDefinitionsRequest& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminGetPlayerStatisticDefinitionsResult(
+		const FBPAdminGetPlayerStatisticDefinitionsResult& In
+        ,TArray<FBPAdminPlayerStatisticDefinition>& OutStatistics
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminGetPlayerStatisticVersionsRequest(
+		const FBPAdminGetPlayerStatisticVersionsRequest& In
+        ,FString& OutStatisticName
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminGetPlayerStatisticVersionsResult(
+		const FBPAdminGetPlayerStatisticVersionsResult& In
+        ,TArray<FBPAdminPlayerStatisticVersion>& OutStatisticVersions
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminGetPublisherDataRequest(
 		const FBPAdminGetPublisherDataRequest& In
         ,TArray<FString>& OutKeys
@@ -423,6 +458,23 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminIncrementPlayerStatisticVersionRequest(
+		const FBPAdminIncrementPlayerStatisticVersionRequest& In
+        ,FString& OutStatisticName
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminIncrementPlayerStatisticVersionResult(
+		const FBPAdminIncrementPlayerStatisticVersionResult& In
+        ,FBPAdminPlayerStatisticVersion& OutStatisticVersion
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminInterval(
+		const FBPAdminInterval& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminItemGrant(
 		const FBPAdminItemGrant& In
         ,FString& OutPlayFabId
@@ -529,6 +581,22 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutVirtualCurrency
         ,int32& OutBalanceChange
         ,int32& OutBalance
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminPlayerStatisticDefinition(
+		const FBPAdminPlayerStatisticDefinition& In
+        ,FString& OutStatisticName
+        ,FString& OutCurrentVersion
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminPlayerStatisticVersion(
+		const FBPAdminPlayerStatisticVersion& In
+        ,FString& OutStatisticName
+        ,FString& OutVersion
+        ,FDateTime& OutScheduledVersionChangeIntervalTime
+        ,FDateTime& OutCreatedTime
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -713,6 +781,11 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminStatisticVersionArchivalStatus(
+		const FBPAdminStatisticVersionArchivalStatus& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminStoreItem(
 		const FBPAdminStoreItem& In
         ,FString& OutItemId
@@ -755,6 +828,18 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPAdminUpdateCloudScriptResult& In
         ,int32& OutVersion
         ,int32& OutRevision
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminUpdatePlayerStatisticDefinitionRequest(
+		const FBPAdminUpdatePlayerStatisticDefinitionRequest& In
+        ,FString& OutStatisticName
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminUpdatePlayerStatisticDefinitionResult(
+		const FBPAdminUpdatePlayerStatisticDefinitionResult& In
+        ,FBPAdminPlayerStatisticDefinition& OutStatistic
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))

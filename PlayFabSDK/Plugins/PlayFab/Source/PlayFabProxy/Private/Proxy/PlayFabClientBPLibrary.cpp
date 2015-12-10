@@ -120,6 +120,24 @@ void UPFClientProxyLibrary::BreakBPClientAndroidDevicePushNotificationRegistrati
     
 }
 
+void UPFClientProxyLibrary::BreakBPClientAttributeInstallRequest(
+		const FBPClientAttributeInstallRequest& In
+        ,FString& OutIdfa
+        ,FString& OutAndroid_Id
+	)
+{
+    OutIdfa = In.Data.Idfa;
+	OutAndroid_Id = In.Data.Android_Id;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientAttributeInstallResult(
+		const FBPClientAttributeInstallResult& In
+	)
+{
+    
+}
+
 void UPFClientProxyLibrary::BreakBPClientCancelTradeRequest(
 		const FBPClientCancelTradeRequest& In
         ,FString& OutTradeId
@@ -888,6 +906,30 @@ void UPFClientProxyLibrary::BreakBPClientGetPhotonAuthenticationTokenResult(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientGetPlayerStatisticsRequest(
+		const FBPClientGetPlayerStatisticsRequest& In
+        ,TArray<FString>& OutStatisticNames
+	)
+{
+    OutStatisticNames = In.Data.StatisticNames;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetPlayerStatisticsResult(
+		const FBPClientGetPlayerStatisticsResult& In
+        ,TArray<FBPClientStatisticValue>& OutStatistics
+	)
+{
+    for (const PlayFab::ClientModels::FStatisticValue& elem : In.Data.Statistics)
+    {
+        FBPClientStatisticValue result;
+        result.Data = elem;
+        OutStatistics.Add(result);
+    }
+
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientGetPlayerTradesRequest(
 		const FBPClientGetPlayerTradesRequest& In
 	)
@@ -1572,6 +1614,22 @@ void UPFClientProxyLibrary::BreakBPClientLinkSteamAccountResult(
     
 }
 
+void UPFClientProxyLibrary::BreakBPClientLinkXboxAccountRequest(
+		const FBPClientLinkXboxAccountRequest& In
+        ,FString& OutXboxToken
+	)
+{
+    OutXboxToken = In.Data.XboxToken;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientLinkXboxAccountResult(
+		const FBPClientLinkXboxAccountResult& In
+	)
+{
+    
+}
+
 void UPFClientProxyLibrary::BreakBPClientListUsersCharactersRequest(
 		const FBPClientListUsersCharactersRequest& In
         ,FString& OutPlayFabId
@@ -1787,6 +1845,19 @@ void UPFClientProxyLibrary::BreakBPClientLoginWithSteamRequest(
 {
     OutTitleId = In.Data.TitleId;
 	OutSteamTicket = In.Data.SteamTicket;
+	OutCreateAccount = In.Data.CreateAccount;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientLoginWithXboxRequest(
+		const FBPClientLoginWithXboxRequest& In
+        ,FString& OutTitleId
+        ,FString& OutXboxToken
+        ,bool& OutCreateAccount
+	)
+{
+    OutTitleId = In.Data.TitleId;
+	OutXboxToken = In.Data.XboxToken;
 	OutCreateAccount = In.Data.CreateAccount;
 	
 }
@@ -2341,6 +2412,32 @@ void UPFClientProxyLibrary::BreakBPClientStartPurchaseResult(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientStatisticUpdate(
+		const FBPClientStatisticUpdate& In
+        ,FString& OutStatisticName
+        ,FString& OutVersion
+        ,int32& OutValue
+	)
+{
+    OutStatisticName = In.Data.StatisticName;
+	OutVersion = In.Data.Version;
+	OutValue = In.Data.Value;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientStatisticValue(
+		const FBPClientStatisticValue& In
+        ,FString& OutStatisticName
+        ,int32& OutValue
+        ,FString& OutVersion
+	)
+{
+    OutStatisticName = In.Data.StatisticName;
+	OutValue = In.Data.Value;
+	OutVersion = In.Data.Version;
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientSteamPlayFabIdPair(
 		const FBPClientSteamPlayFabIdPair& In
         ,int32& OutSteamId
@@ -2574,6 +2671,22 @@ void UPFClientProxyLibrary::BreakBPClientUnlinkSteamAccountResult(
     
 }
 
+void UPFClientProxyLibrary::BreakBPClientUnlinkXboxAccountRequest(
+		const FBPClientUnlinkXboxAccountRequest& In
+        ,FString& OutXboxToken
+	)
+{
+    OutXboxToken = In.Data.XboxToken;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientUnlinkXboxAccountResult(
+		const FBPClientUnlinkXboxAccountResult& In
+	)
+{
+    
+}
+
 void UPFClientProxyLibrary::BreakBPClientUnlockContainerItemRequest(
 		const FBPClientUnlockContainerItemRequest& In
         ,FString& OutContainerItemId
@@ -2627,6 +2740,28 @@ void UPFClientProxyLibrary::BreakBPClientUpdateCharacterDataResult(
 {
     OutDataVersion = In.Data.DataVersion;
 	
+}
+
+void UPFClientProxyLibrary::BreakBPClientUpdatePlayerStatisticsRequest(
+		const FBPClientUpdatePlayerStatisticsRequest& In
+        ,TArray<FBPClientStatisticUpdate>& OutStatistics
+	)
+{
+    for (const PlayFab::ClientModels::FStatisticUpdate& elem : In.Data.Statistics)
+    {
+        FBPClientStatisticUpdate result;
+        result.Data = elem;
+        OutStatistics.Add(result);
+    }
+
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientUpdatePlayerStatisticsResult(
+		const FBPClientUpdatePlayerStatisticsResult& In
+	)
+{
+    
 }
 
 void UPFClientProxyLibrary::BreakBPClientUpdateSharedGroupDataRequest(

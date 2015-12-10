@@ -146,6 +146,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminContentInfoDelegate, const FBPAdminContentInfo&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminCreatePlayerStatisticDefinitionRequest"))
+struct FBPAdminCreatePlayerStatisticDefinitionRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FCreatePlayerStatisticDefinitionRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminCreatePlayerStatisticDefinitionRequestDelegate, const FBPAdminCreatePlayerStatisticDefinitionRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminCreatePlayerStatisticDefinitionResult"))
+struct FBPAdminCreatePlayerStatisticDefinitionResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FCreatePlayerStatisticDefinitionResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminCreatePlayerStatisticDefinitionResultDelegate, const FBPAdminCreatePlayerStatisticDefinitionResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminCurrency"))
 struct FBPAdminCurrency
 {
@@ -366,6 +386,46 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetMatchmakerGameModesResultDelegate, const FBPAdminGetMatchmakerGameModesResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminGetPlayerStatisticDefinitionsRequest"))
+struct FBPAdminGetPlayerStatisticDefinitionsRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FGetPlayerStatisticDefinitionsRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetPlayerStatisticDefinitionsRequestDelegate, const FBPAdminGetPlayerStatisticDefinitionsRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminGetPlayerStatisticDefinitionsResult"))
+struct FBPAdminGetPlayerStatisticDefinitionsResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FGetPlayerStatisticDefinitionsResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetPlayerStatisticDefinitionsResultDelegate, const FBPAdminGetPlayerStatisticDefinitionsResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminGetPlayerStatisticVersionsRequest"))
+struct FBPAdminGetPlayerStatisticVersionsRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FGetPlayerStatisticVersionsRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetPlayerStatisticVersionsRequestDelegate, const FBPAdminGetPlayerStatisticVersionsRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminGetPlayerStatisticVersionsResult"))
+struct FBPAdminGetPlayerStatisticVersionsResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FGetPlayerStatisticVersionsResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetPlayerStatisticVersionsResultDelegate, const FBPAdminGetPlayerStatisticVersionsResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminGetPublisherDataRequest"))
 struct FBPAdminGetPublisherDataRequest
 {
@@ -556,6 +616,36 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGrantItemsToUsersResultDelegate, const FBPAdminGrantItemsToUsersResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminIncrementPlayerStatisticVersionRequest"))
+struct FBPAdminIncrementPlayerStatisticVersionRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FIncrementPlayerStatisticVersionRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminIncrementPlayerStatisticVersionRequestDelegate, const FBPAdminIncrementPlayerStatisticVersionRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminIncrementPlayerStatisticVersionResult"))
+struct FBPAdminIncrementPlayerStatisticVersionResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FIncrementPlayerStatisticVersionResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminIncrementPlayerStatisticVersionResultDelegate, const FBPAdminIncrementPlayerStatisticVersionResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminInterval"))
+struct FBPAdminInterval
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::Interval Data;	
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminIntervalDelegate, const FBPAdminInterval&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminItemGrant"))
 struct FBPAdminItemGrant
 {
@@ -685,6 +775,26 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminModifyUserVirtualCurrencyResultDelegate, const FBPAdminModifyUserVirtualCurrencyResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminPlayerStatisticDefinition"))
+struct FBPAdminPlayerStatisticDefinition
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FPlayerStatisticDefinition Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminPlayerStatisticDefinitionDelegate, const FBPAdminPlayerStatisticDefinition&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminPlayerStatisticVersion"))
+struct FBPAdminPlayerStatisticVersion
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FPlayerStatisticVersion Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminPlayerStatisticVersionDelegate, const FBPAdminPlayerStatisticVersion&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminRandomResultTable"))
 struct FBPAdminRandomResultTable
@@ -976,6 +1086,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminSetupPushNotificationResultDelegate, const FBPAdminSetupPushNotificationResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminStatisticVersionArchivalStatus"))
+struct FBPAdminStatisticVersionArchivalStatus
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::StatisticVersionArchivalStatus Data;	
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminStatisticVersionArchivalStatusDelegate, const FBPAdminStatisticVersionArchivalStatus&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminStoreItem"))
 struct FBPAdminStoreItem
 {
@@ -1045,6 +1165,26 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUpdateCloudScriptResultDelegate, const FBPAdminUpdateCloudScriptResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUpdatePlayerStatisticDefinitionRequest"))
+struct FBPAdminUpdatePlayerStatisticDefinitionRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FUpdatePlayerStatisticDefinitionRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUpdatePlayerStatisticDefinitionRequestDelegate, const FBPAdminUpdatePlayerStatisticDefinitionRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUpdatePlayerStatisticDefinitionResult"))
+struct FBPAdminUpdatePlayerStatisticDefinitionResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FUpdatePlayerStatisticDefinitionResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUpdatePlayerStatisticDefinitionResultDelegate, const FBPAdminUpdatePlayerStatisticDefinitionResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUpdateRandomResultTablesRequest"))
 struct FBPAdminUpdateRandomResultTablesRequest

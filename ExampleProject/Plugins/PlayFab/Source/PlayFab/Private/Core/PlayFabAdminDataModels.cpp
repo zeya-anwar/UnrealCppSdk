@@ -1077,6 +1077,153 @@ bool PlayFab::AdminModels::FContentInfo::readFromValue(const TSharedPtr<FJsonObj
 }
 
 
+void PlayFab::AdminModels::writeIntervalEnumJSON(Interval enumVal, JsonWriter& writer)
+{
+    switch(enumVal)
+    {
+        
+        case IntervalHour: writer->WriteValue(TEXT("Hour")); break;
+        case IntervalDay: writer->WriteValue(TEXT("Day")); break;
+        case IntervalWeek: writer->WriteValue(TEXT("Week")); break;
+        case IntervalMonth: writer->WriteValue(TEXT("Month")); break;
+    }
+}
+
+AdminModels::Interval PlayFab::AdminModels::readIntervalFromValue(const TSharedPtr<FJsonValue>& value)
+{
+    static TMap<FString, Interval> _IntervalMap;
+    if (_IntervalMap.Num() == 0)
+    {
+        // Auto-generate the map on the first use
+        _IntervalMap.Add(TEXT("Hour"), IntervalHour);
+        _IntervalMap.Add(TEXT("Day"), IntervalDay);
+        _IntervalMap.Add(TEXT("Week"), IntervalWeek);
+        _IntervalMap.Add(TEXT("Month"), IntervalMonth);
+
+    } 
+
+	if(value.IsValid())
+	{
+	    auto output = _IntervalMap.Find(value->AsString());
+		if (output != nullptr)
+			return *output;
+	}
+
+
+    return IntervalHour; // Basically critical fail
+}
+
+
+PlayFab::AdminModels::FCreatePlayerStatisticDefinitionRequest::~FCreatePlayerStatisticDefinitionRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FCreatePlayerStatisticDefinitionRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("Name")); writer->WriteValue(Name);
+	
+    if(VersionChangeInterval.notNull()) { writer->WriteIdentifierPrefix(TEXT("VersionChangeInterval")); writeIntervalEnumJSON(VersionChangeInterval, writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FCreatePlayerStatisticDefinitionRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> NameValue = obj->TryGetField(TEXT("Name"));
+    if (NameValue.IsValid()&& !NameValue->IsNull())
+    {
+        FString TmpValue;
+        if(NameValue->TryGetString(TmpValue)) {Name = TmpValue; }
+    }
+    
+    VersionChangeInterval = readIntervalFromValue(obj->TryGetField(TEXT("VersionChangeInterval")));
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FPlayerStatisticDefinition::~FPlayerStatisticDefinition()
+{
+    
+}
+
+void PlayFab::AdminModels::FPlayerStatisticDefinition::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(StatisticName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("StatisticName")); writer->WriteValue(StatisticName); }
+	
+    if(CurrentVersion.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CurrentVersion")); writer->WriteValue(CurrentVersion); }
+	
+    if(VersionChangeInterval.notNull()) { writer->WriteIdentifierPrefix(TEXT("VersionChangeInterval")); writeIntervalEnumJSON(VersionChangeInterval, writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FPlayerStatisticDefinition::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> StatisticNameValue = obj->TryGetField(TEXT("StatisticName"));
+    if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> CurrentVersionValue = obj->TryGetField(TEXT("CurrentVersion"));
+    if (CurrentVersionValue.IsValid()&& !CurrentVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(CurrentVersionValue->TryGetString(TmpValue)) {CurrentVersion = TmpValue; }
+    }
+    
+    VersionChangeInterval = readIntervalFromValue(obj->TryGetField(TEXT("VersionChangeInterval")));
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FCreatePlayerStatisticDefinitionResult::~FCreatePlayerStatisticDefinitionResult()
+{
+    //if(Statistic != NULL) delete Statistic;
+    
+}
+
+void PlayFab::AdminModels::FCreatePlayerStatisticDefinitionResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Statistic.IsValid()) { writer->WriteIdentifierPrefix(TEXT("Statistic")); Statistic->writeJSON(writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FCreatePlayerStatisticDefinitionResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> StatisticValue = obj->TryGetField(TEXT("Statistic"));
+    if (StatisticValue.IsValid()&& !StatisticValue->IsNull())
+    {
+        Statistic = MakeShareable(new FPlayerStatisticDefinition(StatisticValue->AsObject()));
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
 void PlayFab::AdminModels::writeCurrencyEnumJSON(Currency enumVal, JsonWriter& writer)
 {
     switch(enumVal)
@@ -2294,6 +2441,250 @@ bool PlayFab::AdminModels::FGetMatchmakerGameModesResult::readFromValue(const TS
             TSharedPtr<FJsonValue> CurrentItem = GameModesArray[Idx];
             
             GameModes.Add(FGameModeInfo(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetPlayerStatisticDefinitionsRequest::~FGetPlayerStatisticDefinitionsRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetPlayerStatisticDefinitionsRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetPlayerStatisticDefinitionsRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetPlayerStatisticDefinitionsResult::~FGetPlayerStatisticDefinitionsResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetPlayerStatisticDefinitionsResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Statistics.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("Statistics"));
+    
+        for (const FPlayerStatisticDefinition& item : Statistics)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetPlayerStatisticDefinitionsResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&StatisticsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Statistics"));
+        for (int32 Idx = 0; Idx < StatisticsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = StatisticsArray[Idx];
+            
+            Statistics.Add(FPlayerStatisticDefinition(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetPlayerStatisticVersionsRequest::~FGetPlayerStatisticVersionsRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetPlayerStatisticVersionsRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(StatisticName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("StatisticName")); writer->WriteValue(StatisticName); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetPlayerStatisticVersionsRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> StatisticNameValue = obj->TryGetField(TEXT("StatisticName"));
+    if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+void PlayFab::AdminModels::writeStatisticVersionArchivalStatusEnumJSON(StatisticVersionArchivalStatus enumVal, JsonWriter& writer)
+{
+    switch(enumVal)
+    {
+        
+        case StatisticVersionArchivalStatusNotScheduled: writer->WriteValue(TEXT("NotScheduled")); break;
+        case StatisticVersionArchivalStatusScheduled: writer->WriteValue(TEXT("Scheduled")); break;
+        case StatisticVersionArchivalStatusInProgress: writer->WriteValue(TEXT("InProgress")); break;
+        case StatisticVersionArchivalStatusFailed: writer->WriteValue(TEXT("Failed")); break;
+        case StatisticVersionArchivalStatusComplete: writer->WriteValue(TEXT("Complete")); break;
+    }
+}
+
+AdminModels::StatisticVersionArchivalStatus PlayFab::AdminModels::readStatisticVersionArchivalStatusFromValue(const TSharedPtr<FJsonValue>& value)
+{
+    static TMap<FString, StatisticVersionArchivalStatus> _StatisticVersionArchivalStatusMap;
+    if (_StatisticVersionArchivalStatusMap.Num() == 0)
+    {
+        // Auto-generate the map on the first use
+        _StatisticVersionArchivalStatusMap.Add(TEXT("NotScheduled"), StatisticVersionArchivalStatusNotScheduled);
+        _StatisticVersionArchivalStatusMap.Add(TEXT("Scheduled"), StatisticVersionArchivalStatusScheduled);
+        _StatisticVersionArchivalStatusMap.Add(TEXT("InProgress"), StatisticVersionArchivalStatusInProgress);
+        _StatisticVersionArchivalStatusMap.Add(TEXT("Failed"), StatisticVersionArchivalStatusFailed);
+        _StatisticVersionArchivalStatusMap.Add(TEXT("Complete"), StatisticVersionArchivalStatusComplete);
+
+    } 
+
+	if(value.IsValid())
+	{
+	    auto output = _StatisticVersionArchivalStatusMap.Find(value->AsString());
+		if (output != nullptr)
+			return *output;
+	}
+
+
+    return StatisticVersionArchivalStatusNotScheduled; // Basically critical fail
+}
+
+
+PlayFab::AdminModels::FPlayerStatisticVersion::~FPlayerStatisticVersion()
+{
+    
+}
+
+void PlayFab::AdminModels::FPlayerStatisticVersion::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(StatisticName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("StatisticName")); writer->WriteValue(StatisticName); }
+	
+    if(Version.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version); }
+	
+    if(ScheduledVersionChangeIntervalTime.notNull()) { writer->WriteIdentifierPrefix(TEXT("ScheduledVersionChangeIntervalTime")); writeDatetime(ScheduledVersionChangeIntervalTime, writer); }
+	
+    writer->WriteIdentifierPrefix(TEXT("CreatedTime")); writeDatetime(CreatedTime, writer);
+	
+    if(ArchivalStatus.notNull()) { writer->WriteIdentifierPrefix(TEXT("ArchivalStatus")); writeStatisticVersionArchivalStatusEnumJSON(ArchivalStatus, writer); }
+	
+    if(ResetInterval.notNull()) { writer->WriteIdentifierPrefix(TEXT("ResetInterval")); writeIntervalEnumJSON(ResetInterval, writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FPlayerStatisticVersion::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> StatisticNameValue = obj->TryGetField(TEXT("StatisticName"));
+    if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> VersionValue = obj->TryGetField(TEXT("Version"));
+    if (VersionValue.IsValid()&& !VersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(VersionValue->TryGetString(TmpValue)) {Version = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ScheduledVersionChangeIntervalTimeValue = obj->TryGetField(TEXT("ScheduledVersionChangeIntervalTime"));
+    if(ScheduledVersionChangeIntervalTimeValue.IsValid())
+    {
+        ScheduledVersionChangeIntervalTime = readDatetime(ScheduledVersionChangeIntervalTimeValue);
+    }
+    
+    const TSharedPtr<FJsonValue> CreatedTimeValue = obj->TryGetField(TEXT("CreatedTime"));
+    if(CreatedTimeValue.IsValid())
+    {
+        CreatedTime = readDatetime(CreatedTimeValue);
+    }
+    
+    ArchivalStatus = readStatisticVersionArchivalStatusFromValue(obj->TryGetField(TEXT("ArchivalStatus")));
+    
+    ResetInterval = readIntervalFromValue(obj->TryGetField(TEXT("ResetInterval")));
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetPlayerStatisticVersionsResult::~FGetPlayerStatisticVersionsResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetPlayerStatisticVersionsResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(StatisticVersions.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("StatisticVersions"));
+    
+        for (const FPlayerStatisticVersion& item : StatisticVersions)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetPlayerStatisticVersionsResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&StatisticVersionsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("StatisticVersions"));
+        for (int32 Idx = 0; Idx < StatisticVersionsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = StatisticVersionsArray[Idx];
+            
+            StatisticVersions.Add(FPlayerStatisticVersion(CurrentItem->AsObject()));
         }
     }
 
@@ -3902,6 +4293,68 @@ bool PlayFab::AdminModels::FGrantItemsToUsersResult::readFromValue(const TShared
         }
     }
 
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FIncrementPlayerStatisticVersionRequest::~FIncrementPlayerStatisticVersionRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FIncrementPlayerStatisticVersionRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(StatisticName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("StatisticName")); writer->WriteValue(StatisticName); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FIncrementPlayerStatisticVersionRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> StatisticNameValue = obj->TryGetField(TEXT("StatisticName"));
+    if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FIncrementPlayerStatisticVersionResult::~FIncrementPlayerStatisticVersionResult()
+{
+    //if(StatisticVersion != NULL) delete StatisticVersion;
+    
+}
+
+void PlayFab::AdminModels::FIncrementPlayerStatisticVersionResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(StatisticVersion.IsValid()) { writer->WriteIdentifierPrefix(TEXT("StatisticVersion")); StatisticVersion->writeJSON(writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FIncrementPlayerStatisticVersionResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> StatisticVersionValue = obj->TryGetField(TEXT("StatisticVersion"));
+    if (StatisticVersionValue.IsValid()&& !StatisticVersionValue->IsNull())
+    {
+        StatisticVersion = MakeShareable(new FPlayerStatisticVersion(StatisticVersionValue->AsObject()));
+    }
     
     
     return HasSucceeded;
@@ -5996,6 +6449,72 @@ bool PlayFab::AdminModels::FUpdateCloudScriptResult::readFromValue(const TShared
     {
         int32 TmpValue;
         if(RevisionValue->TryGetNumber(TmpValue)) {Revision = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FUpdatePlayerStatisticDefinitionRequest::~FUpdatePlayerStatisticDefinitionRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FUpdatePlayerStatisticDefinitionRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(StatisticName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("StatisticName")); writer->WriteValue(StatisticName); }
+	
+    if(VersionChangeInterval.notNull()) { writer->WriteIdentifierPrefix(TEXT("VersionChangeInterval")); writeIntervalEnumJSON(VersionChangeInterval, writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FUpdatePlayerStatisticDefinitionRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> StatisticNameValue = obj->TryGetField(TEXT("StatisticName"));
+    if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
+    }
+    
+    VersionChangeInterval = readIntervalFromValue(obj->TryGetField(TEXT("VersionChangeInterval")));
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FUpdatePlayerStatisticDefinitionResult::~FUpdatePlayerStatisticDefinitionResult()
+{
+    //if(Statistic != NULL) delete Statistic;
+    
+}
+
+void PlayFab::AdminModels::FUpdatePlayerStatisticDefinitionResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Statistic.IsValid()) { writer->WriteIdentifierPrefix(TEXT("Statistic")); Statistic->writeJSON(writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FUpdatePlayerStatisticDefinitionResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> StatisticValue = obj->TryGetField(TEXT("Statistic"));
+    if (StatisticValue.IsValid()&& !StatisticValue->IsNull())
+    {
+        Statistic = MakeShareable(new FPlayerStatisticDefinition(StatisticValue->AsObject()));
     }
     
     
