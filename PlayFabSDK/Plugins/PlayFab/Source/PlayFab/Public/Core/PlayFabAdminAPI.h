@@ -15,15 +15,22 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FResetUsersDelegate, const AdminModels::FBlankResult&);
         DECLARE_DELEGATE_OneParam(FSendAccountRecoveryEmailDelegate, const AdminModels::FSendAccountRecoveryEmailResult&);
         DECLARE_DELEGATE_OneParam(FUpdateUserTitleDisplayNameDelegate, const AdminModels::FUpdateUserTitleDisplayNameResult&);
+        DECLARE_DELEGATE_OneParam(FCreatePlayerStatisticDefinitionDelegate, const AdminModels::FCreatePlayerStatisticDefinitionResult&);
         DECLARE_DELEGATE_OneParam(FDeleteUsersDelegate, const AdminModels::FDeleteUsersResult&);
         DECLARE_DELEGATE_OneParam(FGetDataReportDelegate, const AdminModels::FGetDataReportResult&);
+        DECLARE_DELEGATE_OneParam(FGetPlayerStatisticDefinitionsDelegate, const AdminModels::FGetPlayerStatisticDefinitionsResult&);
+        DECLARE_DELEGATE_OneParam(FGetPlayerStatisticVersionsDelegate, const AdminModels::FGetPlayerStatisticVersionsResult&);
         DECLARE_DELEGATE_OneParam(FGetUserDataDelegate, const AdminModels::FGetUserDataResult&);
         DECLARE_DELEGATE_OneParam(FGetUserInternalDataDelegate, const AdminModels::FGetUserDataResult&);
         DECLARE_DELEGATE_OneParam(FGetUserPublisherDataDelegate, const AdminModels::FGetUserDataResult&);
         DECLARE_DELEGATE_OneParam(FGetUserPublisherInternalDataDelegate, const AdminModels::FGetUserDataResult&);
         DECLARE_DELEGATE_OneParam(FGetUserPublisherReadOnlyDataDelegate, const AdminModels::FGetUserDataResult&);
         DECLARE_DELEGATE_OneParam(FGetUserReadOnlyDataDelegate, const AdminModels::FGetUserDataResult&);
+        DECLARE_DELEGATE_OneParam(FIncrementPlayerStatisticVersionDelegate, const AdminModels::FIncrementPlayerStatisticVersionResult&);
+        DECLARE_DELEGATE_OneParam(FRefundPurchaseDelegate, const AdminModels::FRefundPurchaseResponse&);
         DECLARE_DELEGATE_OneParam(FResetUserStatisticsDelegate, const AdminModels::FResetUserStatisticsResult&);
+        DECLARE_DELEGATE_OneParam(FResolvePurchaseDisputeDelegate, const AdminModels::FResolvePurchaseDisputeResponse&);
+        DECLARE_DELEGATE_OneParam(FUpdatePlayerStatisticDefinitionDelegate, const AdminModels::FUpdatePlayerStatisticDefinitionResult&);
         DECLARE_DELEGATE_OneParam(FUpdateUserDataDelegate, const AdminModels::FUpdateUserDataResult&);
         DECLARE_DELEGATE_OneParam(FUpdateUserInternalDataDelegate, const AdminModels::FUpdateUserDataResult&);
         DECLARE_DELEGATE_OneParam(FUpdateUserPublisherDataDelegate, const AdminModels::FUpdateUserDataResult&);
@@ -98,6 +105,10 @@ namespace PlayFab
          */
         bool UpdateUserTitleDisplayName(AdminModels::FUpdateUserTitleDisplayNameRequest& request, const FUpdateUserTitleDisplayNameDelegate& SuccessDelegate = FUpdateUserTitleDisplayNameDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * 
+         */
+        bool CreatePlayerStatisticDefinition(AdminModels::FCreatePlayerStatisticDefinitionRequest& request, const FCreatePlayerStatisticDefinitionDelegate& SuccessDelegate = FCreatePlayerStatisticDefinitionDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Deletes the users for the provided game. Deletes custom data, all account linkages, and statistics.
          * Note that this action cannot be undone. It will unlink all accounts and remove all PII information, as well as reset any statistics and leaderboards and clear out any stored custom data for the user.
          */
@@ -107,6 +118,14 @@ namespace PlayFab
          * An HTTP GET request to the returned report download URL returns the report data in line delimited JSON format. Each line contains a JSON object representing details of a single item in the report. Currently available reports: PurchaseDataReport, TitleNewUserReport, TitleActiveUsersReport, BannedUsersReport.
          */
         bool GetDataReport(AdminModels::FGetDataReportRequest& request, const FGetDataReportDelegate& SuccessDelegate = FGetDataReportDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * 
+         */
+        bool GetPlayerStatisticDefinitions(const FGetPlayerStatisticDefinitionsDelegate& SuccessDelegate = FGetPlayerStatisticDefinitionsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * 
+         */
+        bool GetPlayerStatisticVersions(AdminModels::FGetPlayerStatisticVersionsRequest& request, const FGetPlayerStatisticVersionsDelegate& SuccessDelegate = FGetPlayerStatisticVersionsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves the title-specific custom data for the user which is readable and writable by the client
          * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
@@ -138,10 +157,26 @@ namespace PlayFab
          */
         bool GetUserReadOnlyData(AdminModels::FGetUserDataRequest& request, const FGetUserReadOnlyDataDelegate& SuccessDelegate = FGetUserReadOnlyDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * 
+         */
+        bool IncrementPlayerStatisticVersion(AdminModels::FIncrementPlayerStatisticVersionRequest& request, const FIncrementPlayerStatisticVersionDelegate& SuccessDelegate = FIncrementPlayerStatisticVersionDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Attempts to process an order refund through the original real money payment provider.
+         */
+        bool RefundPurchase(AdminModels::FRefundPurchaseRequest& request, const FRefundPurchaseDelegate& SuccessDelegate = FRefundPurchaseDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Completely removes all statistics for the specified user, for the current game
          * Note that this action cannot be un-done. All statistics for this user will be deleted, removing the user from all leaderboards for the game.
          */
         bool ResetUserStatistics(AdminModels::FResetUserStatisticsRequest& request, const FResetUserStatisticsDelegate& SuccessDelegate = FResetUserStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Attempts to resolve a dispute with the original order's payment provider.
+         */
+        bool ResolvePurchaseDispute(AdminModels::FResolvePurchaseDisputeRequest& request, const FResolvePurchaseDisputeDelegate& SuccessDelegate = FResolvePurchaseDisputeDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * 
+         */
+        bool UpdatePlayerStatisticDefinition(AdminModels::FUpdatePlayerStatisticDefinitionRequest& request, const FUpdatePlayerStatisticDefinitionDelegate& SuccessDelegate = FUpdatePlayerStatisticDefinitionDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Updates the title-specific custom data for the user which is readable and writable by the client
          * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, while keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
@@ -349,15 +384,22 @@ namespace PlayFab
         void OnResetUsersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FResetUsersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSendAccountRecoveryEmailResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSendAccountRecoveryEmailDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateUserTitleDisplayNameResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserTitleDisplayNameDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnCreatePlayerStatisticDefinitionResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FCreatePlayerStatisticDefinitionDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnDeleteUsersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteUsersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetDataReportResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetDataReportDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetPlayerStatisticDefinitionsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerStatisticDefinitionsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetPlayerStatisticVersionsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerStatisticVersionsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserInternalDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserInternalDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserPublisherInternalDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserPublisherInternalDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserPublisherReadOnlyDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserPublisherReadOnlyDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserReadOnlyDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserReadOnlyDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnIncrementPlayerStatisticVersionResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FIncrementPlayerStatisticVersionDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnRefundPurchaseResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRefundPurchaseDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnResetUserStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FResetUserStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnResolvePurchaseDisputeResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FResolvePurchaseDisputeDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnUpdatePlayerStatisticDefinitionResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdatePlayerStatisticDefinitionDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateUserDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateUserInternalDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserInternalDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateUserPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
