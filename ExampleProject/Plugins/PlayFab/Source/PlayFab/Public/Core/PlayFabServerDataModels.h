@@ -1005,11 +1005,11 @@ namespace ServerModels
 	struct PLAYFAB_API FCharacterResult : public FPlayFabBaseModel
     {
 		
-		// [optional] undefined
+		// [optional] The id for this character on this player.
 		FString CharacterId;
-		// [optional] undefined
+		// [optional] The name of this character.
 		FString CharacterName;
-		// [optional] undefined
+		// [optional] The type-string that was given to this character on creation.
 		FString CharacterType;
 	
         FCharacterResult() :
@@ -1574,7 +1574,7 @@ namespace ServerModels
 		FString CatalogVersion;
 		// [optional] Unique identifier for the parent inventory item, as defined in the catalog, for object which were added from a bundle or container.
 		FString BundleParent;
-		// [optional] undefined
+		// [optional] CatalogItem.DisplayName at the time this item was purchased.
 		FString DisplayName;
 		// [optional] Currency type for the cost of the catalog item.
 		FString UnitCurrency;
@@ -3110,7 +3110,7 @@ namespace ServerModels
 		FString CatalogVersion;
 		// [optional] Unique identifier for the parent inventory item, as defined in the catalog, for object which were added from a bundle or container.
 		FString BundleParent;
-		// [optional] undefined
+		// [optional] CatalogItem.DisplayName at the time this item was purchased.
 		FString DisplayName;
 		// [optional] Currency type for the cost of the catalog item.
 		FString UnitCurrency;
@@ -3439,7 +3439,7 @@ namespace ServerModels
 	struct PLAYFAB_API FListUsersCharactersResult : public FPlayFabBaseModel
     {
 		
-		// [optional] undefined
+		// [optional] The requested list of characters.
 		TArray<FCharacterResult> Characters;
 	
         FListUsersCharactersResult() :
@@ -4177,9 +4177,9 @@ namespace ServerModels
 	struct PLAYFAB_API FReportPlayerServerResult : public FPlayFabBaseModel
     {
 		
-		// undefined
+		// Indicates whether this action completed successfully.
 		bool Updated;
-		// undefined
+		// The number of remaining reports which may be filed today by this reporting player.
 		int32 SubmissionsRemaining;
 	
         FReportPlayerServerResult() :

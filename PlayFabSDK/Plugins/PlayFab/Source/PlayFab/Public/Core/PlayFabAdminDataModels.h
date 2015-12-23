@@ -1231,9 +1231,9 @@ namespace AdminModels
 		
 		// Number of content items returned. We currently have a maximum of 1000 items limit.
 		int64 ItemCount;
-		// The total size of listed contents in bytes
+		// The total size of listed contents in bytes.
 		int64 TotalSize;
-		// [optional] undefined
+		// [optional] List of content items.
 		TArray<FContentInfo> Contents;
 	
         FGetContentListResult() :
@@ -1361,7 +1361,7 @@ namespace AdminModels
 	struct PLAYFAB_API FGetDataReportResult : public FPlayFabBaseModel
     {
 		
-		// [optional] undefined
+		// [optional] The URL where the requested report can be downloaded.
 		FString DownloadUrl;
 	
         FGetDataReportResult() :
@@ -2329,7 +2329,7 @@ namespace AdminModels
 		FString CatalogVersion;
 		// [optional] Unique identifier for the parent inventory item, as defined in the catalog, for object which were added from a bundle or container.
 		FString BundleParent;
-		// [optional] undefined
+		// [optional] CatalogItem.DisplayName at the time this item was purchased.
 		FString DisplayName;
 		// [optional] Currency type for the cost of the catalog item.
 		FString UnitCurrency;
@@ -2492,7 +2492,7 @@ namespace AdminModels
 		FString CatalogVersion;
 		// [optional] Unique identifier for the parent inventory item, as defined in the catalog, for object which were added from a bundle or container.
 		FString BundleParent;
-		// [optional] undefined
+		// [optional] CatalogItem.DisplayName at the time this item was purchased.
 		FString DisplayName;
 		// [optional] Currency type for the cost of the catalog item.
 		FString UnitCurrency;
