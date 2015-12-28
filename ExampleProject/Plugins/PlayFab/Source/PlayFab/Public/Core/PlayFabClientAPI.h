@@ -636,7 +636,7 @@ namespace PlayFab
         bool OpenTrade(ClientModels::FOpenTradeRequest& request, const FOpenTradeDelegate& SuccessDelegate = FOpenTradeDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Attributes an install for advertisment.
-         * If you have an ad attribution partner enabled, this will post an install to thier service  to track the devices. It uses the given device id to match based on clicks on ads.
+         * If you have an ad attribution partner enabled, this will post an install to their service  to track the device. It uses the given device id to match based on clicks on ads.
          */
         bool AttributeInstall(ClientModels::FAttributeInstallRequest& request, const FAttributeInstallDelegate& SuccessDelegate = FAttributeInstallDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
