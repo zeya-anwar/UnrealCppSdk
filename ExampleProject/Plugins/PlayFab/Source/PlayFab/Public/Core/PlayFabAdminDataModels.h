@@ -4100,9 +4100,9 @@ namespace AdminModels
 	struct PLAYFAB_API FUpdateCatalogItemsRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] which catalog is being updated
+		// [optional] Which catalog is being updated
 		FString CatalogVersion;
-		// [optional] array of catalog items to be submitted
+		// [optional] Array of catalog items to be submitted. Note that while CatalogItem has a parameter for CatalogVersion, it is not required and ignored in this call.
 		TArray<FCatalogItem> Catalog;
 	
         FUpdateCatalogItemsRequest() :
