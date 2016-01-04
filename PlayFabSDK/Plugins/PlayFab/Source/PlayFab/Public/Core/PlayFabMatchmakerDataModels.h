@@ -90,7 +90,7 @@ namespace MatchmakerModels
 		FString CatalogVersion;
 		// [optional] Unique identifier for the parent inventory item, as defined in the catalog, for object which were added from a bundle or container.
 		FString BundleParent;
-		// [optional] undefined
+		// [optional] CatalogItem.DisplayName at the time this item was purchased.
 		FString DisplayName;
 		// [optional] Currency type for the cost of the catalog item.
 		FString UnitCurrency;

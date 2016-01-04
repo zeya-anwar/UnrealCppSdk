@@ -62,31 +62,31 @@ namespace ClientModels
 	struct PLAYFAB_API FTradeInfo : public FPlayFabBaseModel
     {
 		
-		// [optional] undefined
+		// [optional] Describes the current state of this trade.
 		Boxed<TradeStatus> Status;
-		// [optional] undefined
+		// [optional] The identifier for this trade.
 		FString TradeId;
-		// [optional] undefined
+		// [optional] The PlayFabId for the offering player.
 		FString OfferingPlayerId;
-		// [optional] undefined
+		// [optional] The itemInstance Ids that are being offered.
 		TArray<FString> OfferedInventoryInstanceIds;
-		// [optional] undefined
+		// [optional] The catalogItem Ids of the item instances being offered.
 		TArray<FString> OfferedCatalogItemIds;
-		// [optional] undefined
+		// [optional] The catalogItem Ids requested in exchange.
 		TArray<FString> RequestedCatalogItemIds;
-		// [optional] undefined
+		// [optional] An optional list of players allowed to complete this trade.  If null, anybody can complete the trade.
 		TArray<FString> AllowedPlayerIds;
-		// [optional] undefined
+		// [optional] The PlayFab ID of the player who accepted the trade. If null, no one has accepted the trade.
 		FString AcceptedPlayerId;
-		// [optional] undefined
+		// [optional] Item instances from the accepting player that are used to fulfill the trade. If null, no one has accepted the trade.
 		TArray<FString> AcceptedInventoryInstanceIds;
-		// [optional] undefined
+		// [optional] The UTC time when this trade was created.
 		OptionalTime OpenedAt;
-		// [optional] undefined
+		// [optional] If set, The UTC time when this trade was fulfilled.
 		OptionalTime FilledAt;
-		// [optional] undefined
+		// [optional] If set, The UTC time when this trade was canceled.
 		OptionalTime CancelledAt;
-		// [optional] undefined
+		// [optional] If set, The UTC time when this trade was made invalid.
 		OptionalTime InvalidatedAt;
 	
         FTradeInfo() :
@@ -137,7 +137,7 @@ namespace ClientModels
 	struct PLAYFAB_API FAcceptTradeResponse : public FPlayFabBaseModel
     {
 		
-		// [optional] undefined
+		// [optional] Details about trade which was just accepted.
 		TSharedPtr<FTradeInfo> Trade;
 	
         FAcceptTradeResponse() :
@@ -516,7 +516,7 @@ namespace ClientModels
 	struct PLAYFAB_API FCancelTradeResponse : public FPlayFabBaseModel
     {
 		
-		// [optional] undefined
+		// [optional] Details about trade which was just canceled.
 		TSharedPtr<FTradeInfo> Trade;
 	
         FCancelTradeResponse() :
@@ -845,11 +845,11 @@ namespace ClientModels
 	struct PLAYFAB_API FCharacterResult : public FPlayFabBaseModel
     {
 		
-		// [optional] undefined
+		// [optional] The id for this character on this player.
 		FString CharacterId;
-		// [optional] undefined
+		// [optional] The name of this character.
 		FString CharacterName;
-		// [optional] undefined
+		// [optional] The type-string that was given to this character on creation.
 		FString CharacterType;
 	
         FCharacterResult() :
@@ -927,7 +927,7 @@ namespace ClientModels
 		FString CatalogVersion;
 		// [optional] Unique identifier for the parent inventory item, as defined in the catalog, for object which were added from a bundle or container.
 		FString BundleParent;
-		// [optional] undefined
+		// [optional] CatalogItem.DisplayName at the time this item was purchased.
 		FString DisplayName;
 		// [optional] Currency type for the cost of the catalog item.
 		FString UnitCurrency;
@@ -3008,7 +3008,7 @@ namespace ClientModels
 	struct PLAYFAB_API FGetPhotonAuthenticationTokenRequest : public FPlayFabBaseModel
     {
 		
-		// undefined
+		// The Photon applicationId for the game you wish to log into.
 		FString PhotonApplicationId;
 	
         FGetPhotonAuthenticationTokenRequest() :
@@ -3035,7 +3035,7 @@ namespace ClientModels
 	struct PLAYFAB_API FGetPhotonAuthenticationTokenResult : public FPlayFabBaseModel
     {
 		
-		// [optional] undefined
+		// [optional] The Photon authentication token for this game-session.
 		FString PhotonCustomAuthenticationToken;
 	
         FGetPhotonAuthenticationTokenResult() :
@@ -3178,9 +3178,9 @@ namespace ClientModels
 	struct PLAYFAB_API FGetPlayerTradesResponse : public FPlayFabBaseModel
     {
 		
-		// [optional] undefined
+		// [optional] The trades for this player which are currently available to be accepted.
 		TArray<FTradeInfo> OpenedTrades;
-		// [optional] undefined
+		// [optional] History of trades which this player has accepted.
 		TArray<FTradeInfo> AcceptedTrades;
 	
         FGetPlayerTradesResponse() :
@@ -4080,7 +4080,7 @@ namespace ClientModels
 	struct PLAYFAB_API FGetTradeStatusResponse : public FPlayFabBaseModel
     {
 		
-		// [optional] undefined
+		// [optional] Information about the requested trade.
 		TSharedPtr<FTradeInfo> Trade;
 	
         FGetTradeStatusResponse() :
@@ -4446,7 +4446,7 @@ namespace ClientModels
 		FString CharacterId;
 		// [optional] Type of character that was created.
 		FString CharacterType;
-		// undefined
+		// Indicates whether this character was created successfully.
 		bool Result;
 	
         FGrantCharacterToUserResult() :
@@ -5075,7 +5075,7 @@ namespace ClientModels
 	struct PLAYFAB_API FListUsersCharactersResult : public FPlayFabBaseModel
     {
 		
-		// [optional] undefined
+		// [optional] The requested list of characters.
 		TArray<FCharacterResult> Characters;
 	
         FListUsersCharactersResult() :
@@ -5419,7 +5419,7 @@ namespace ClientModels
 		FString AccessToken;
 		// [optional] Automatically create a PlayFab account if one is not currently linked to this Google account.
 		OptionalBool CreateAccount;
-		// [optional] undefined
+		// [optional] Deprecated - unused
 		FString PublisherId;
 	
         FLoginWithGoogleAccountRequest() :
@@ -5869,7 +5869,7 @@ namespace ClientModels
 	struct PLAYFAB_API FOpenTradeResponse : public FPlayFabBaseModel
     {
 		
-		// [optional] undefined
+		// [optional] The information about the trade that was just opened.
 		TSharedPtr<FTradeInfo> Trade;
 	
         FOpenTradeResponse() :
@@ -6511,9 +6511,9 @@ namespace ClientModels
 	struct PLAYFAB_API FReportPlayerClientResult : public FPlayFabBaseModel
     {
 		
-		// undefined
+		// Indicates whether this action completed successfully.
 		bool Updated;
-		// undefined
+		// The number of remaining reports which may be filed today.
 		int32 SubmissionsRemaining;
 	
         FReportPlayerClientResult() :
@@ -6682,7 +6682,7 @@ namespace ClientModels
 		FString Email;
 		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
 		FString TitleId;
-		// [optional] undefined
+		// [optional] Deprecated - unused
 		FString PublisherId;
 	
         FSendAccountRecoveryEmailRequest() :
