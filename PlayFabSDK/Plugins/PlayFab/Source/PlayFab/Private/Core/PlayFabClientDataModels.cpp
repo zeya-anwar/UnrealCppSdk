@@ -8621,11 +8621,11 @@ void PlayFab::ClientModels::FMatchmakeRequest::writeJSON(JsonWriter& writer) con
 {
     writer->WriteObjectStart();
     
-    if(BuildVersion.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("BuildVersion")); writer->WriteValue(BuildVersion); }
+    writer->WriteIdentifierPrefix(TEXT("BuildVersion")); writer->WriteValue(BuildVersion);
 	
-    if(pfRegion.notNull()) { writer->WriteIdentifierPrefix(TEXT("Region")); writeRegionEnumJSON(pfRegion, writer); }
+    writer->WriteIdentifierPrefix(TEXT("Region")); writeRegionEnumJSON(pfRegion, writer);
 	
-    if(GameMode.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("GameMode")); writer->WriteValue(GameMode); }
+    writer->WriteIdentifierPrefix(TEXT("GameMode")); writer->WriteValue(GameMode);
 	
     if(LobbyId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("LobbyId")); writer->WriteValue(LobbyId); }
 	
