@@ -10565,7 +10565,7 @@ void PlayFab::ClientModels::FStatisticUpdate::writeJSON(JsonWriter& writer) cons
     
     if(StatisticName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("StatisticName")); writer->WriteValue(StatisticName); }
 	
-    if(Version.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version); }
+    if(Version.notNull()) { writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(static_cast<int64>(Version)); }
 	
     writer->WriteIdentifierPrefix(TEXT("Value")); writer->WriteValue(Value);
 	
@@ -10587,8 +10587,8 @@ bool PlayFab::ClientModels::FStatisticUpdate::readFromValue(const TSharedPtr<FJs
     const TSharedPtr<FJsonValue> VersionValue = obj->TryGetField(TEXT("Version"));
     if (VersionValue.IsValid()&& !VersionValue->IsNull())
     {
-        FString TmpValue;
-        if(VersionValue->TryGetString(TmpValue)) {Version = TmpValue; }
+        uint32 TmpValue;
+        if(VersionValue->TryGetNumber(TmpValue)) {Version = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> ValueValue = obj->TryGetField(TEXT("Value"));

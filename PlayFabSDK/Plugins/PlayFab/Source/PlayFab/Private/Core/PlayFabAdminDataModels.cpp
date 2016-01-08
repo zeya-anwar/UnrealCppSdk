@@ -1160,7 +1160,7 @@ void PlayFab::AdminModels::FPlayerStatisticDefinition::writeJSON(JsonWriter& wri
     
     if(StatisticName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("StatisticName")); writer->WriteValue(StatisticName); }
 	
-    if(CurrentVersion.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CurrentVersion")); writer->WriteValue(CurrentVersion); }
+    writer->WriteIdentifierPrefix(TEXT("CurrentVersion")); writer->WriteValue(static_cast<int64>(CurrentVersion));
 	
     if(VersionChangeInterval.notNull()) { writer->WriteIdentifierPrefix(TEXT("VersionChangeInterval")); writeIntervalEnumJSON(VersionChangeInterval, writer); }
 	
@@ -1182,8 +1182,8 @@ bool PlayFab::AdminModels::FPlayerStatisticDefinition::readFromValue(const TShar
     const TSharedPtr<FJsonValue> CurrentVersionValue = obj->TryGetField(TEXT("CurrentVersion"));
     if (CurrentVersionValue.IsValid()&& !CurrentVersionValue->IsNull())
     {
-        FString TmpValue;
-        if(CurrentVersionValue->TryGetString(TmpValue)) {CurrentVersion = TmpValue; }
+        uint32 TmpValue;
+        if(CurrentVersionValue->TryGetNumber(TmpValue)) {CurrentVersion = TmpValue; }
     }
     
     VersionChangeInterval = readIntervalFromValue(obj->TryGetField(TEXT("VersionChangeInterval")));
@@ -2554,8 +2554,8 @@ void PlayFab::AdminModels::writeStatisticVersionArchivalStatusEnumJSON(Statistic
         
         case StatisticVersionArchivalStatusNotScheduled: writer->WriteValue(TEXT("NotScheduled")); break;
         case StatisticVersionArchivalStatusScheduled: writer->WriteValue(TEXT("Scheduled")); break;
+        case StatisticVersionArchivalStatusQueued: writer->WriteValue(TEXT("Queued")); break;
         case StatisticVersionArchivalStatusInProgress: writer->WriteValue(TEXT("InProgress")); break;
-        case StatisticVersionArchivalStatusFailed: writer->WriteValue(TEXT("Failed")); break;
         case StatisticVersionArchivalStatusComplete: writer->WriteValue(TEXT("Complete")); break;
     }
 }
@@ -2568,8 +2568,8 @@ AdminModels::StatisticVersionArchivalStatus PlayFab::AdminModels::readStatisticV
         // Auto-generate the map on the first use
         _StatisticVersionArchivalStatusMap.Add(TEXT("NotScheduled"), StatisticVersionArchivalStatusNotScheduled);
         _StatisticVersionArchivalStatusMap.Add(TEXT("Scheduled"), StatisticVersionArchivalStatusScheduled);
+        _StatisticVersionArchivalStatusMap.Add(TEXT("Queued"), StatisticVersionArchivalStatusQueued);
         _StatisticVersionArchivalStatusMap.Add(TEXT("InProgress"), StatisticVersionArchivalStatusInProgress);
-        _StatisticVersionArchivalStatusMap.Add(TEXT("Failed"), StatisticVersionArchivalStatusFailed);
         _StatisticVersionArchivalStatusMap.Add(TEXT("Complete"), StatisticVersionArchivalStatusComplete);
 
     } 
@@ -2597,15 +2597,19 @@ void PlayFab::AdminModels::FPlayerStatisticVersion::writeJSON(JsonWriter& writer
     
     if(StatisticName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("StatisticName")); writer->WriteValue(StatisticName); }
 	
-    if(Version.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version); }
+    writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(static_cast<int64>(Version));
 	
-    if(ScheduledVersionChangeIntervalTime.notNull()) { writer->WriteIdentifierPrefix(TEXT("ScheduledVersionChangeIntervalTime")); writeDatetime(ScheduledVersionChangeIntervalTime, writer); }
+    if(ScheduledActivationTime.notNull()) { writer->WriteIdentifierPrefix(TEXT("ScheduledActivationTime")); writeDatetime(ScheduledActivationTime, writer); }
 	
-    writer->WriteIdentifierPrefix(TEXT("CreatedTime")); writeDatetime(CreatedTime, writer);
+    writer->WriteIdentifierPrefix(TEXT("ActivationTime")); writeDatetime(ActivationTime, writer);
+	
+    if(ScheduledDeactivationTime.notNull()) { writer->WriteIdentifierPrefix(TEXT("ScheduledDeactivationTime")); writeDatetime(ScheduledDeactivationTime, writer); }
+	
+    if(DeactivationTime.notNull()) { writer->WriteIdentifierPrefix(TEXT("DeactivationTime")); writeDatetime(DeactivationTime, writer); }
 	
     if(ArchivalStatus.notNull()) { writer->WriteIdentifierPrefix(TEXT("ArchivalStatus")); writeStatisticVersionArchivalStatusEnumJSON(ArchivalStatus, writer); }
 	
-    if(ResetInterval.notNull()) { writer->WriteIdentifierPrefix(TEXT("ResetInterval")); writeIntervalEnumJSON(ResetInterval, writer); }
+    if(ArchiveDownloadUrl.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ArchiveDownloadUrl")); writer->WriteValue(ArchiveDownloadUrl); }
 	
     
     writer->WriteObjectEnd();
@@ -2625,25 +2629,42 @@ bool PlayFab::AdminModels::FPlayerStatisticVersion::readFromValue(const TSharedP
     const TSharedPtr<FJsonValue> VersionValue = obj->TryGetField(TEXT("Version"));
     if (VersionValue.IsValid()&& !VersionValue->IsNull())
     {
-        FString TmpValue;
-        if(VersionValue->TryGetString(TmpValue)) {Version = TmpValue; }
+        uint32 TmpValue;
+        if(VersionValue->TryGetNumber(TmpValue)) {Version = TmpValue; }
     }
     
-    const TSharedPtr<FJsonValue> ScheduledVersionChangeIntervalTimeValue = obj->TryGetField(TEXT("ScheduledVersionChangeIntervalTime"));
-    if(ScheduledVersionChangeIntervalTimeValue.IsValid())
+    const TSharedPtr<FJsonValue> ScheduledActivationTimeValue = obj->TryGetField(TEXT("ScheduledActivationTime"));
+    if(ScheduledActivationTimeValue.IsValid())
     {
-        ScheduledVersionChangeIntervalTime = readDatetime(ScheduledVersionChangeIntervalTimeValue);
+        ScheduledActivationTime = readDatetime(ScheduledActivationTimeValue);
     }
     
-    const TSharedPtr<FJsonValue> CreatedTimeValue = obj->TryGetField(TEXT("CreatedTime"));
-    if(CreatedTimeValue.IsValid())
+    const TSharedPtr<FJsonValue> ActivationTimeValue = obj->TryGetField(TEXT("ActivationTime"));
+    if(ActivationTimeValue.IsValid())
     {
-        CreatedTime = readDatetime(CreatedTimeValue);
+        ActivationTime = readDatetime(ActivationTimeValue);
+    }
+    
+    const TSharedPtr<FJsonValue> ScheduledDeactivationTimeValue = obj->TryGetField(TEXT("ScheduledDeactivationTime"));
+    if(ScheduledDeactivationTimeValue.IsValid())
+    {
+        ScheduledDeactivationTime = readDatetime(ScheduledDeactivationTimeValue);
+    }
+    
+    const TSharedPtr<FJsonValue> DeactivationTimeValue = obj->TryGetField(TEXT("DeactivationTime"));
+    if(DeactivationTimeValue.IsValid())
+    {
+        DeactivationTime = readDatetime(DeactivationTimeValue);
     }
     
     ArchivalStatus = readStatisticVersionArchivalStatusFromValue(obj->TryGetField(TEXT("ArchivalStatus")));
     
-    ResetInterval = readIntervalFromValue(obj->TryGetField(TEXT("ResetInterval")));
+    const TSharedPtr<FJsonValue> ArchiveDownloadUrlValue = obj->TryGetField(TEXT("ArchiveDownloadUrl"));
+    if (ArchiveDownloadUrlValue.IsValid()&& !ArchiveDownloadUrlValue->IsNull())
+    {
+        FString TmpValue;
+        if(ArchiveDownloadUrlValue->TryGetString(TmpValue)) {ArchiveDownloadUrl = TmpValue; }
+    }
     
     
     return HasSucceeded;

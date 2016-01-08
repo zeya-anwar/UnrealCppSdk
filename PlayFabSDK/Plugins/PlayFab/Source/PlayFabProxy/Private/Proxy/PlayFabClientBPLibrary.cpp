@@ -2415,7 +2415,7 @@ void UPFClientProxyLibrary::BreakBPClientStartPurchaseResult(
 void UPFClientProxyLibrary::BreakBPClientStatisticUpdate(
 		const FBPClientStatisticUpdate& In
         ,FString& OutStatisticName
-        ,FString& OutVersion
+        ,int32& OutVersion
         ,int32& OutValue
 	)
 {

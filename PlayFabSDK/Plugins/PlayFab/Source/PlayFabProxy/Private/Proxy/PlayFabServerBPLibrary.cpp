@@ -1493,7 +1493,7 @@ void UPFServerProxyLibrary::BreakBPServerSharedGroupDataRecord(
 void UPFServerProxyLibrary::BreakBPServerStatisticUpdate(
 		const FBPServerStatisticUpdate& In
         ,FString& OutStatisticName
-        ,FString& OutVersion
+        ,int32& OutVersion
         ,int32& OutValue
 	)
 {

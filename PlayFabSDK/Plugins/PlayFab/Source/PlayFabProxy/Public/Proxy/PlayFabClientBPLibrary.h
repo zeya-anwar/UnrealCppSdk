@@ -1388,7 +1388,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPClientStatisticUpdate(
 		const FBPClientStatisticUpdate& In
         ,FString& OutStatisticName
-        ,FString& OutVersion
+        ,int32& OutVersion
         ,int32& OutValue
 	);
 	

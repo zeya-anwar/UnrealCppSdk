@@ -587,16 +587,19 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPAdminPlayerStatisticDefinition(
 		const FBPAdminPlayerStatisticDefinition& In
         ,FString& OutStatisticName
-        ,FString& OutCurrentVersion
+        ,int32& OutCurrentVersion
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminPlayerStatisticVersion(
 		const FBPAdminPlayerStatisticVersion& In
         ,FString& OutStatisticName
-        ,FString& OutVersion
-        ,FDateTime& OutScheduledVersionChangeIntervalTime
-        ,FDateTime& OutCreatedTime
+        ,int32& OutVersion
+        ,FDateTime& OutScheduledActivationTime
+        ,FDateTime& OutActivationTime
+        ,FDateTime& OutScheduledDeactivationTime
+        ,FDateTime& OutDeactivationTime
+        ,FString& OutArchiveDownloadUrl
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
