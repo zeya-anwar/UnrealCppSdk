@@ -2378,15 +2378,15 @@ namespace ClientModels
 		FString StatisticName;
 		// First entry in the leaderboard to be retrieved.
 		int32 StartPosition;
-		// Maximum number of entries to retrieve.
-		int32 MaxResultsCount;
+		// [optional] Maximum number of entries to retrieve. Default 10, maximum 100.
+		OptionalInt32 MaxResultsCount;
 	
         FGetCharacterLeaderboardRequest() :
 			FPlayFabBaseModel(),
 			CharacterType(),
 			StatisticName(),
 			StartPosition(0),
-			MaxResultsCount(0)
+			MaxResultsCount()
 			{}
 		
 		FGetCharacterLeaderboardRequest(const FGetCharacterLeaderboardRequest& src) :
@@ -2560,8 +2560,8 @@ namespace ClientModels
 		
 		// Statistic used to rank players for this leaderboard.
 		FString StatisticName;
-		// Maximum number of entries to retrieve.
-		int32 MaxResultsCount;
+		// [optional] Maximum number of entries to retrieve. Default 10, maximum 100.
+		OptionalInt32 MaxResultsCount;
 		// [optional] Indicates whether Steam service friends should be included in the response. Default is true.
 		OptionalBool IncludeSteamFriends;
 		// [optional] Indicates whether Facebook friends should be included in the response. Default is true.
@@ -2570,7 +2570,7 @@ namespace ClientModels
         FGetFriendLeaderboardAroundCurrentUserRequest() :
 			FPlayFabBaseModel(),
 			StatisticName(),
-			MaxResultsCount(0),
+			MaxResultsCount(),
 			IncludeSteamFriends(),
 			IncludeFacebookFriends()
 			{}
@@ -2660,6 +2660,76 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FGetFriendLeaderboardAroundPlayerRequest : public FPlayFabBaseModel
+    {
+		
+		// Statistic used to rank players for this leaderboard.
+		FString StatisticName;
+		// [optional] Maximum number of entries to retrieve. Default 10, maximum 100.
+		OptionalInt32 MaxResultsCount;
+		// [optional] PlayFab unique identifier of the user to center the leaderboard around. If null will center on the logged in user.
+		FString PlayFabId;
+		// [optional] Indicates whether Steam service friends should be included in the response. Default is true.
+		OptionalBool IncludeSteamFriends;
+		// [optional] Indicates whether Facebook friends should be included in the response. Default is true.
+		OptionalBool IncludeFacebookFriends;
+	
+        FGetFriendLeaderboardAroundPlayerRequest() :
+			FPlayFabBaseModel(),
+			StatisticName(),
+			MaxResultsCount(),
+			PlayFabId(),
+			IncludeSteamFriends(),
+			IncludeFacebookFriends()
+			{}
+		
+		FGetFriendLeaderboardAroundPlayerRequest(const FGetFriendLeaderboardAroundPlayerRequest& src) :
+			FPlayFabBaseModel(),
+			StatisticName(src.StatisticName),
+			MaxResultsCount(src.MaxResultsCount),
+			PlayFabId(src.PlayFabId),
+			IncludeSteamFriends(src.IncludeSteamFriends),
+			IncludeFacebookFriends(src.IncludeFacebookFriends)
+			{}
+			
+		FGetFriendLeaderboardAroundPlayerRequest(const TSharedPtr<FJsonObject>& obj) : FGetFriendLeaderboardAroundPlayerRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetFriendLeaderboardAroundPlayerRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetFriendLeaderboardAroundPlayerResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Ordered listing of users and their positions in the requested leaderboard.
+		TArray<FPlayerLeaderboardEntry> Leaderboard;
+	
+        FGetFriendLeaderboardAroundPlayerResult() :
+			FPlayFabBaseModel(),
+			Leaderboard()
+			{}
+		
+		FGetFriendLeaderboardAroundPlayerResult(const FGetFriendLeaderboardAroundPlayerResult& src) :
+			FPlayFabBaseModel(),
+			Leaderboard(src.Leaderboard)
+			{}
+			
+		FGetFriendLeaderboardAroundPlayerResult(const TSharedPtr<FJsonObject>& obj) : FGetFriendLeaderboardAroundPlayerResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetFriendLeaderboardAroundPlayerResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FGetFriendLeaderboardRequest : public FPlayFabBaseModel
     {
 		
@@ -2667,8 +2737,8 @@ namespace ClientModels
 		FString StatisticName;
 		// Position in the leaderboard to start this listing (defaults to the first entry).
 		int32 StartPosition;
-		// Maximum number of entries to retrieve.
-		int32 MaxResultsCount;
+		// [optional] Maximum number of entries to retrieve. Default 10, maximum 100.
+		OptionalInt32 MaxResultsCount;
 		// [optional] Indicates whether Steam service friends should be included in the response. Default is true.
 		OptionalBool IncludeSteamFriends;
 		// [optional] Indicates whether Facebook friends should be included in the response. Default is true.
@@ -2678,7 +2748,7 @@ namespace ClientModels
 			FPlayFabBaseModel(),
 			StatisticName(),
 			StartPosition(0),
-			MaxResultsCount(0),
+			MaxResultsCount(),
 			IncludeSteamFriends(),
 			IncludeFacebookFriends()
 			{}
@@ -2766,19 +2836,19 @@ namespace ClientModels
 		
 		// Unique identifier for the title-specific statistic for the leaderboard.
 		FString StatisticName;
-		// Unique PlayFab assigned ID for a specific character owned by a user
+		// Unique PlayFab assigned ID for a specific character on which to center the leaderboard.
 		FString CharacterId;
 		// [optional] Optional character type on which to filter the leaderboard entries.
 		FString CharacterType;
-		// Maximum number of entries to retrieve.
-		int32 MaxResultsCount;
+		// [optional] Maximum number of entries to retrieve. Default 10, maximum 100.
+		OptionalInt32 MaxResultsCount;
 	
         FGetLeaderboardAroundCharacterRequest() :
 			FPlayFabBaseModel(),
 			StatisticName(),
 			CharacterId(),
 			CharacterType(),
-			MaxResultsCount(0)
+			MaxResultsCount()
 			{}
 		
 		FGetLeaderboardAroundCharacterRequest(const FGetLeaderboardAroundCharacterRequest& src) :
@@ -2832,13 +2902,13 @@ namespace ClientModels
 		
 		// Statistic used to rank players for this leaderboard.
 		FString StatisticName;
-		// Maximum number of entries to retrieve.
-		int32 MaxResultsCount;
+		// [optional] Maximum number of entries to retrieve. Default 10, maximum 100.
+		OptionalInt32 MaxResultsCount;
 	
         FGetLeaderboardAroundCurrentUserRequest() :
 			FPlayFabBaseModel(),
 			StatisticName(),
-			MaxResultsCount(0)
+			MaxResultsCount()
 			{}
 		
 		FGetLeaderboardAroundCurrentUserRequest(const FGetLeaderboardAroundCurrentUserRequest& src) :
@@ -2880,6 +2950,68 @@ namespace ClientModels
         }
 		
 		~FGetLeaderboardAroundCurrentUserResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetLeaderboardAroundPlayerRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] PlayFab unique identifier of the user to center the leaderboard around. If null will center on the logged in user.
+		FString PlayFabId;
+		// Statistic used to rank players for this leaderboard.
+		FString StatisticName;
+		// [optional] Maximum number of entries to retrieve. Default 10, maximum 100.
+		OptionalInt32 MaxResultsCount;
+	
+        FGetLeaderboardAroundPlayerRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			StatisticName(),
+			MaxResultsCount()
+			{}
+		
+		FGetLeaderboardAroundPlayerRequest(const FGetLeaderboardAroundPlayerRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			StatisticName(src.StatisticName),
+			MaxResultsCount(src.MaxResultsCount)
+			{}
+			
+		FGetLeaderboardAroundPlayerRequest(const TSharedPtr<FJsonObject>& obj) : FGetLeaderboardAroundPlayerRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetLeaderboardAroundPlayerRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetLeaderboardAroundPlayerResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Ordered listing of users and their positions in the requested leaderboard.
+		TArray<FPlayerLeaderboardEntry> Leaderboard;
+	
+        FGetLeaderboardAroundPlayerResult() :
+			FPlayFabBaseModel(),
+			Leaderboard()
+			{}
+		
+		FGetLeaderboardAroundPlayerResult(const FGetLeaderboardAroundPlayerResult& src) :
+			FPlayFabBaseModel(),
+			Leaderboard(src.Leaderboard)
+			{}
+			
+		FGetLeaderboardAroundPlayerResult(const TSharedPtr<FJsonObject>& obj) : FGetLeaderboardAroundPlayerResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetLeaderboardAroundPlayerResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -2950,14 +3082,14 @@ namespace ClientModels
 		FString StatisticName;
 		// Position in the leaderboard to start this listing (defaults to the first entry).
 		int32 StartPosition;
-		// Maximum number of entries to retrieve.
-		int32 MaxResultsCount;
+		// [optional] Maximum number of entries to retrieve. Default 10, maximum 100.
+		OptionalInt32 MaxResultsCount;
 	
         FGetLeaderboardRequest() :
 			FPlayFabBaseModel(),
 			StatisticName(),
 			StartPosition(0),
-			MaxResultsCount(0)
+			MaxResultsCount()
 			{}
 		
 		FGetLeaderboardRequest(const FGetLeaderboardRequest& src) :

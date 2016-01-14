@@ -57,8 +57,10 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FUpdateUserTitleDisplayNameDelegate, const ClientModels::FUpdateUserTitleDisplayNameResult&);
         DECLARE_DELEGATE_OneParam(FGetFriendLeaderboardDelegate, const ClientModels::FGetLeaderboardResult&);
         DECLARE_DELEGATE_OneParam(FGetFriendLeaderboardAroundCurrentUserDelegate, const ClientModels::FGetFriendLeaderboardAroundCurrentUserResult&);
+        DECLARE_DELEGATE_OneParam(FGetFriendLeaderboardAroundPlayerDelegate, const ClientModels::FGetFriendLeaderboardAroundPlayerResult&);
         DECLARE_DELEGATE_OneParam(FGetLeaderboardDelegate, const ClientModels::FGetLeaderboardResult&);
         DECLARE_DELEGATE_OneParam(FGetLeaderboardAroundCurrentUserDelegate, const ClientModels::FGetLeaderboardAroundCurrentUserResult&);
+        DECLARE_DELEGATE_OneParam(FGetLeaderboardAroundPlayerDelegate, const ClientModels::FGetLeaderboardAroundPlayerResult&);
         DECLARE_DELEGATE_OneParam(FGetUserDataDelegate, const ClientModels::FGetUserDataResult&);
         DECLARE_DELEGATE_OneParam(FGetUserPublisherDataDelegate, const ClientModels::FGetUserDataResult&);
         DECLARE_DELEGATE_OneParam(FGetUserPublisherReadOnlyDataDelegate, const ClientModels::FGetUserDataResult&);
@@ -337,6 +339,10 @@ namespace PlayFab
          */
         bool GetFriendLeaderboardAroundCurrentUser(ClientModels::FGetFriendLeaderboardAroundCurrentUserRequest& request, const FGetFriendLeaderboardAroundCurrentUserDelegate& SuccessDelegate = FGetFriendLeaderboardAroundCurrentUserDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Retrieves a list of ranked friends of the current player for the given statistic, centered on the requested PlayFab user. If PlayFabId is empty or null will return currently logged in user.
+         */
+        bool GetFriendLeaderboardAroundPlayer(ClientModels::FGetFriendLeaderboardAroundPlayerRequest& request, const FGetFriendLeaderboardAroundPlayerDelegate& SuccessDelegate = FGetFriendLeaderboardAroundPlayerDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Retrieves a list of ranked users for the given statistic, starting from the indicated point in the leaderboard
          */
         bool GetLeaderboard(ClientModels::FGetLeaderboardRequest& request, const FGetLeaderboardDelegate& SuccessDelegate = FGetLeaderboardDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -344,6 +350,10 @@ namespace PlayFab
          * Retrieves a list of ranked users for the given statistic, centered on the currently signed-in user
          */
         bool GetLeaderboardAroundCurrentUser(ClientModels::FGetLeaderboardAroundCurrentUserRequest& request, const FGetLeaderboardAroundCurrentUserDelegate& SuccessDelegate = FGetLeaderboardAroundCurrentUserDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Retrieves a list of ranked users for the given statistic, centered on the requested player. If PlayFabId is empty or null will return currently logged in user.
+         */
+        bool GetLeaderboardAroundPlayer(ClientModels::FGetLeaderboardAroundPlayerRequest& request, const FGetLeaderboardAroundPlayerDelegate& SuccessDelegate = FGetLeaderboardAroundPlayerDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves the title-specific custom data for the user which is readable and writable by the client
          * Data is stored as JSON key-value pairs. Every time the data is updated via any source, the version counter is incremented. If the Version parameter is provided, then this call will only return data if the current version on the system is greater than the value provided. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
@@ -583,7 +593,7 @@ namespace PlayFab
          */
         bool GetCharacterLeaderboard(ClientModels::FGetCharacterLeaderboardRequest& request, const FGetCharacterLeaderboardDelegate& SuccessDelegate = FGetCharacterLeaderboardDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Retrieves a list of ranked characters for the given statistic, centered on the currently signed-in user
+         * Retrieves a list of ranked characters for the given statistic, centered on the requested Character ID
          */
         bool GetLeaderboardAroundCharacter(ClientModels::FGetLeaderboardAroundCharacterRequest& request, const FGetLeaderboardAroundCharacterDelegate& SuccessDelegate = FGetLeaderboardAroundCharacterDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
@@ -688,8 +698,10 @@ namespace PlayFab
         void OnUpdateUserTitleDisplayNameResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserTitleDisplayNameDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetFriendLeaderboardResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetFriendLeaderboardDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetFriendLeaderboardAroundCurrentUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetFriendLeaderboardAroundCurrentUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetFriendLeaderboardAroundPlayerResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetFriendLeaderboardAroundPlayerDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetLeaderboardResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetLeaderboardAroundCurrentUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardAroundCurrentUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetLeaderboardAroundPlayerResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardAroundPlayerDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserPublisherReadOnlyDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserPublisherReadOnlyDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

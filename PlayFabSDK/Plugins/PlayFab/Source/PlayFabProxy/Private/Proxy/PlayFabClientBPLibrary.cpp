@@ -735,6 +735,38 @@ void UPFClientProxyLibrary::BreakBPClientGetFriendLeaderboardAroundCurrentUserRe
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientGetFriendLeaderboardAroundPlayerRequest(
+		const FBPClientGetFriendLeaderboardAroundPlayerRequest& In
+        ,FString& OutStatisticName
+        ,int32& OutMaxResultsCount
+        ,FString& OutPlayFabId
+        ,bool& OutIncludeSteamFriends
+        ,bool& OutIncludeFacebookFriends
+	)
+{
+    OutStatisticName = In.Data.StatisticName;
+	OutMaxResultsCount = In.Data.MaxResultsCount;
+	OutPlayFabId = In.Data.PlayFabId;
+	OutIncludeSteamFriends = In.Data.IncludeSteamFriends;
+	OutIncludeFacebookFriends = In.Data.IncludeFacebookFriends;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetFriendLeaderboardAroundPlayerResult(
+		const FBPClientGetFriendLeaderboardAroundPlayerResult& In
+        ,TArray<FBPClientPlayerLeaderboardEntry>& OutLeaderboard
+	)
+{
+    for (const PlayFab::ClientModels::FPlayerLeaderboardEntry& elem : In.Data.Leaderboard)
+    {
+        FBPClientPlayerLeaderboardEntry result;
+        result.Data = elem;
+        OutLeaderboard.Add(result);
+    }
+
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientGetFriendLeaderboardRequest(
 		const FBPClientGetFriendLeaderboardRequest& In
         ,FString& OutStatisticName
@@ -821,6 +853,34 @@ void UPFClientProxyLibrary::BreakBPClientGetLeaderboardAroundCurrentUserRequest(
 
 void UPFClientProxyLibrary::BreakBPClientGetLeaderboardAroundCurrentUserResult(
 		const FBPClientGetLeaderboardAroundCurrentUserResult& In
+        ,TArray<FBPClientPlayerLeaderboardEntry>& OutLeaderboard
+	)
+{
+    for (const PlayFab::ClientModels::FPlayerLeaderboardEntry& elem : In.Data.Leaderboard)
+    {
+        FBPClientPlayerLeaderboardEntry result;
+        result.Data = elem;
+        OutLeaderboard.Add(result);
+    }
+
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetLeaderboardAroundPlayerRequest(
+		const FBPClientGetLeaderboardAroundPlayerRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutStatisticName
+        ,int32& OutMaxResultsCount
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutStatisticName = In.Data.StatisticName;
+	OutMaxResultsCount = In.Data.MaxResultsCount;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetLeaderboardAroundPlayerResult(
+		const FBPClientGetLeaderboardAroundPlayerResult& In
         ,TArray<FBPClientPlayerLeaderboardEntry>& OutLeaderboard
 	)
 {

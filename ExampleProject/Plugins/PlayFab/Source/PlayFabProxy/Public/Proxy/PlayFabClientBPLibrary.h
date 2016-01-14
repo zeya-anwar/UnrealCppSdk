@@ -435,6 +435,22 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientGetFriendLeaderboardAroundPlayerRequest(
+		const FBPClientGetFriendLeaderboardAroundPlayerRequest& In
+        ,FString& OutStatisticName
+        ,int32& OutMaxResultsCount
+        ,FString& OutPlayFabId
+        ,bool& OutIncludeSteamFriends
+        ,bool& OutIncludeFacebookFriends
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientGetFriendLeaderboardAroundPlayerResult(
+		const FBPClientGetFriendLeaderboardAroundPlayerResult& In
+        ,TArray<FBPClientPlayerLeaderboardEntry>& OutLeaderboard
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientGetFriendLeaderboardRequest(
 		const FBPClientGetFriendLeaderboardRequest& In
         ,FString& OutStatisticName
@@ -482,6 +498,20 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientGetLeaderboardAroundCurrentUserResult(
 		const FBPClientGetLeaderboardAroundCurrentUserResult& In
+        ,TArray<FBPClientPlayerLeaderboardEntry>& OutLeaderboard
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientGetLeaderboardAroundPlayerRequest(
+		const FBPClientGetLeaderboardAroundPlayerRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutStatisticName
+        ,int32& OutMaxResultsCount
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientGetLeaderboardAroundPlayerResult(
+		const FBPClientGetLeaderboardAroundPlayerResult& In
         ,TArray<FBPClientPlayerLeaderboardEntry>& OutLeaderboard
 	);
 	

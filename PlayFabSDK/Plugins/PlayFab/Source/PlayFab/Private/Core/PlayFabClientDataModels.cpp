@@ -3845,7 +3845,7 @@ void PlayFab::ClientModels::FGetCharacterLeaderboardRequest::writeJSON(JsonWrite
 	
     writer->WriteIdentifierPrefix(TEXT("StartPosition")); writer->WriteValue(StartPosition);
 	
-    writer->WriteIdentifierPrefix(TEXT("MaxResultsCount")); writer->WriteValue(MaxResultsCount);
+    if(MaxResultsCount.notNull()) { writer->WriteIdentifierPrefix(TEXT("MaxResultsCount")); writer->WriteValue(MaxResultsCount); }
 	
     
     writer->WriteObjectEnd();
@@ -4094,7 +4094,7 @@ void PlayFab::ClientModels::FGetFriendLeaderboardAroundCurrentUserRequest::write
     
     writer->WriteIdentifierPrefix(TEXT("StatisticName")); writer->WriteValue(StatisticName);
 	
-    writer->WriteIdentifierPrefix(TEXT("MaxResultsCount")); writer->WriteValue(MaxResultsCount);
+    if(MaxResultsCount.notNull()) { writer->WriteIdentifierPrefix(TEXT("MaxResultsCount")); writer->WriteValue(MaxResultsCount); }
 	
     if(IncludeSteamFriends.notNull()) { writer->WriteIdentifierPrefix(TEXT("IncludeSteamFriends")); writer->WriteValue(IncludeSteamFriends); }
 	
@@ -4243,6 +4243,117 @@ bool PlayFab::ClientModels::FGetFriendLeaderboardAroundCurrentUserResult::readFr
 }
 
 
+PlayFab::ClientModels::FGetFriendLeaderboardAroundPlayerRequest::~FGetFriendLeaderboardAroundPlayerRequest()
+{
+    
+}
+
+void PlayFab::ClientModels::FGetFriendLeaderboardAroundPlayerRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("StatisticName")); writer->WriteValue(StatisticName);
+	
+    if(MaxResultsCount.notNull()) { writer->WriteIdentifierPrefix(TEXT("MaxResultsCount")); writer->WriteValue(MaxResultsCount); }
+	
+    if(PlayFabId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId); }
+	
+    if(IncludeSteamFriends.notNull()) { writer->WriteIdentifierPrefix(TEXT("IncludeSteamFriends")); writer->WriteValue(IncludeSteamFriends); }
+	
+    if(IncludeFacebookFriends.notNull()) { writer->WriteIdentifierPrefix(TEXT("IncludeFacebookFriends")); writer->WriteValue(IncludeFacebookFriends); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FGetFriendLeaderboardAroundPlayerRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> StatisticNameValue = obj->TryGetField(TEXT("StatisticName"));
+    if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> MaxResultsCountValue = obj->TryGetField(TEXT("MaxResultsCount"));
+    if (MaxResultsCountValue.IsValid()&& !MaxResultsCountValue->IsNull())
+    {
+        int32 TmpValue;
+        if(MaxResultsCountValue->TryGetNumber(TmpValue)) {MaxResultsCount = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> IncludeSteamFriendsValue = obj->TryGetField(TEXT("IncludeSteamFriends"));
+    if (IncludeSteamFriendsValue.IsValid()&& !IncludeSteamFriendsValue->IsNull())
+    {
+        bool TmpValue;
+        if(IncludeSteamFriendsValue->TryGetBool(TmpValue)) {IncludeSteamFriends = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> IncludeFacebookFriendsValue = obj->TryGetField(TEXT("IncludeFacebookFriends"));
+    if (IncludeFacebookFriendsValue.IsValid()&& !IncludeFacebookFriendsValue->IsNull())
+    {
+        bool TmpValue;
+        if(IncludeFacebookFriendsValue->TryGetBool(TmpValue)) {IncludeFacebookFriends = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FGetFriendLeaderboardAroundPlayerResult::~FGetFriendLeaderboardAroundPlayerResult()
+{
+    
+}
+
+void PlayFab::ClientModels::FGetFriendLeaderboardAroundPlayerResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Leaderboard.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("Leaderboard"));
+    
+        for (const FPlayerLeaderboardEntry& item : Leaderboard)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FGetFriendLeaderboardAroundPlayerResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&LeaderboardArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Leaderboard"));
+        for (int32 Idx = 0; Idx < LeaderboardArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = LeaderboardArray[Idx];
+            
+            Leaderboard.Add(FPlayerLeaderboardEntry(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ClientModels::FGetFriendLeaderboardRequest::~FGetFriendLeaderboardRequest()
 {
     
@@ -4256,7 +4367,7 @@ void PlayFab::ClientModels::FGetFriendLeaderboardRequest::writeJSON(JsonWriter& 
 	
     writer->WriteIdentifierPrefix(TEXT("StartPosition")); writer->WriteValue(StartPosition);
 	
-    writer->WriteIdentifierPrefix(TEXT("MaxResultsCount")); writer->WriteValue(MaxResultsCount);
+    if(MaxResultsCount.notNull()) { writer->WriteIdentifierPrefix(TEXT("MaxResultsCount")); writer->WriteValue(MaxResultsCount); }
 	
     if(IncludeSteamFriends.notNull()) { writer->WriteIdentifierPrefix(TEXT("IncludeSteamFriends")); writer->WriteValue(IncludeSteamFriends); }
 	
@@ -4409,7 +4520,7 @@ void PlayFab::ClientModels::FGetLeaderboardAroundCharacterRequest::writeJSON(Jso
 	
     if(CharacterType.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CharacterType")); writer->WriteValue(CharacterType); }
 	
-    writer->WriteIdentifierPrefix(TEXT("MaxResultsCount")); writer->WriteValue(MaxResultsCount);
+    if(MaxResultsCount.notNull()) { writer->WriteIdentifierPrefix(TEXT("MaxResultsCount")); writer->WriteValue(MaxResultsCount); }
 	
     
     writer->WriteObjectEnd();
@@ -4507,7 +4618,7 @@ void PlayFab::ClientModels::FGetLeaderboardAroundCurrentUserRequest::writeJSON(J
     
     writer->WriteIdentifierPrefix(TEXT("StatisticName")); writer->WriteValue(StatisticName);
 	
-    writer->WriteIdentifierPrefix(TEXT("MaxResultsCount")); writer->WriteValue(MaxResultsCount);
+    if(MaxResultsCount.notNull()) { writer->WriteIdentifierPrefix(TEXT("MaxResultsCount")); writer->WriteValue(MaxResultsCount); }
 	
     
     writer->WriteObjectEnd();
@@ -4561,6 +4672,99 @@ void PlayFab::ClientModels::FGetLeaderboardAroundCurrentUserResult::writeJSON(Js
 }
 
 bool PlayFab::ClientModels::FGetLeaderboardAroundCurrentUserResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&LeaderboardArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Leaderboard"));
+        for (int32 Idx = 0; Idx < LeaderboardArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = LeaderboardArray[Idx];
+            
+            Leaderboard.Add(FPlayerLeaderboardEntry(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FGetLeaderboardAroundPlayerRequest::~FGetLeaderboardAroundPlayerRequest()
+{
+    
+}
+
+void PlayFab::ClientModels::FGetLeaderboardAroundPlayerRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(PlayFabId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId); }
+	
+    writer->WriteIdentifierPrefix(TEXT("StatisticName")); writer->WriteValue(StatisticName);
+	
+    if(MaxResultsCount.notNull()) { writer->WriteIdentifierPrefix(TEXT("MaxResultsCount")); writer->WriteValue(MaxResultsCount); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FGetLeaderboardAroundPlayerRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> StatisticNameValue = obj->TryGetField(TEXT("StatisticName"));
+    if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> MaxResultsCountValue = obj->TryGetField(TEXT("MaxResultsCount"));
+    if (MaxResultsCountValue.IsValid()&& !MaxResultsCountValue->IsNull())
+    {
+        int32 TmpValue;
+        if(MaxResultsCountValue->TryGetNumber(TmpValue)) {MaxResultsCount = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FGetLeaderboardAroundPlayerResult::~FGetLeaderboardAroundPlayerResult()
+{
+    
+}
+
+void PlayFab::ClientModels::FGetLeaderboardAroundPlayerResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Leaderboard.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("Leaderboard"));
+    
+        for (const FPlayerLeaderboardEntry& item : Leaderboard)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FGetLeaderboardAroundPlayerResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
 {
 	bool HasSucceeded = true; 
 	
@@ -4677,7 +4881,7 @@ void PlayFab::ClientModels::FGetLeaderboardRequest::writeJSON(JsonWriter& writer
 	
     writer->WriteIdentifierPrefix(TEXT("StartPosition")); writer->WriteValue(StartPosition);
 	
-    writer->WriteIdentifierPrefix(TEXT("MaxResultsCount")); writer->WriteValue(MaxResultsCount);
+    if(MaxResultsCount.notNull()) { writer->WriteIdentifierPrefix(TEXT("MaxResultsCount")); writer->WriteValue(MaxResultsCount); }
 	
     
     writer->WriteObjectEnd();

@@ -19,7 +19,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FBPClientGetLeaderboardAroundCharacterResultDelegate OnFailure;
 	
-	// Retrieves a list of ranked characters for the given statistic, centered on the currently signed-in user
+	// Retrieves a list of ranked characters for the given statistic, centered on the requested Character ID
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Characters")
 	static UPFClientGetLeaderboardAroundCharacter* GetLeaderboardAroundCharacter(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InStatisticName, const FString& InCharacterId, const FString& InCharacterType, const int32& InMaxResultsCount);
 
