@@ -5814,11 +5814,11 @@ namespace ClientModels
 	struct PLAYFAB_API FMatchmakeRequest : public FPlayFabBaseModel
     {
 		
-		// build version to match against
+		// [optional] build version to match against [Note: Required if LobbyId is not specified]
 		FString BuildVersion;
-		// region to match make against
-		Region pfRegion;
-		// game mode to match make against
+		// [optional] region to match make against [Note: Required if LobbyId is not specified]
+		Boxed<Region> pfRegion;
+		// [optional] game mode to match make against [Note: Required if LobbyId is not specified]
 		FString GameMode;
 		// [optional] lobby identifier to match make against (used to select a specific server)
 		FString LobbyId;
