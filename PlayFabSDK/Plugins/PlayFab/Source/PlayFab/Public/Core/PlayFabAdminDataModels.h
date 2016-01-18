@@ -678,15 +678,15 @@ namespace AdminModels
 		
 		// [optional] unique name of the statistic
 		FString StatisticName;
-		// [optional] current active version of the statistic, incremented each time the statistic resets
-		FString CurrentVersion;
+		// current active version of the statistic, incremented each time the statistic resets
+		uint32 CurrentVersion;
 		// [optional] interval at which the values of the statistic for all players are reset
 		Boxed<Interval> VersionChangeInterval;
 	
         FPlayerStatisticDefinition() :
 			FPlayFabBaseModel(),
 			StatisticName(),
-			CurrentVersion(),
+			CurrentVersion(0),
 			VersionChangeInterval()
 			{}
 		
@@ -1610,8 +1610,8 @@ namespace AdminModels
 	{
 		StatisticVersionArchivalStatusNotScheduled,
 		StatisticVersionArchivalStatusScheduled,
+		StatisticVersionArchivalStatusQueued,
 		StatisticVersionArchivalStatusInProgress,
-		StatisticVersionArchivalStatusFailed,
 		StatisticVersionArchivalStatusComplete
 	};
 	
@@ -1624,35 +1624,43 @@ namespace AdminModels
 		
 		// [optional] name of the statistic when the version became active
 		FString StatisticName;
-		// [optional] version of the statistic
-		FString Version;
-		// [optional] time for which the statistic version was scheduled to become active, based on the configured ResetInterval
-		OptionalTime ScheduledVersionChangeIntervalTime;
+		// version of the statistic
+		uint32 Version;
+		// [optional] time at which the statistic version was scheduled to become active, based on the configured ResetInterval
+		OptionalTime ScheduledActivationTime;
 		// time when the statistic version became active
-		FDateTime CreatedTime;
-		// [optional] status of the process of saving player statistic values of the previous version to a downloadable archive, if configured
+		FDateTime ActivationTime;
+		// [optional] time at which the statistic version was scheduled to become inactive, based on the configured ResetInterval
+		OptionalTime ScheduledDeactivationTime;
+		// [optional] time when the statistic version became inactive due to statistic version incrementing
+		OptionalTime DeactivationTime;
+		// [optional] status of the process of saving player statistic values of the previous version to a downloadable archive
 		Boxed<StatisticVersionArchivalStatus> ArchivalStatus;
-		// [optional] reset interval that triggered the version to become active, if configured
-		Boxed<Interval> ResetInterval;
+		// [optional] URL for the downloadable archive of player statistic values, if available
+		FString ArchiveDownloadUrl;
 	
         FPlayerStatisticVersion() :
 			FPlayFabBaseModel(),
 			StatisticName(),
-			Version(),
-			ScheduledVersionChangeIntervalTime(),
-			CreatedTime(0),
+			Version(0),
+			ScheduledActivationTime(),
+			ActivationTime(0),
+			ScheduledDeactivationTime(),
+			DeactivationTime(),
 			ArchivalStatus(),
-			ResetInterval()
+			ArchiveDownloadUrl()
 			{}
 		
 		FPlayerStatisticVersion(const FPlayerStatisticVersion& src) :
 			FPlayFabBaseModel(),
 			StatisticName(src.StatisticName),
 			Version(src.Version),
-			ScheduledVersionChangeIntervalTime(src.ScheduledVersionChangeIntervalTime),
-			CreatedTime(src.CreatedTime),
+			ScheduledActivationTime(src.ScheduledActivationTime),
+			ActivationTime(src.ActivationTime),
+			ScheduledDeactivationTime(src.ScheduledDeactivationTime),
+			DeactivationTime(src.DeactivationTime),
 			ArchivalStatus(src.ArchivalStatus),
-			ResetInterval(src.ResetInterval)
+			ArchiveDownloadUrl(src.ArchiveDownloadUrl)
 			{}
 			
 		FPlayerStatisticVersion(const TSharedPtr<FJsonObject>& obj) : FPlayerStatisticVersion()
@@ -4100,9 +4108,9 @@ namespace AdminModels
 	struct PLAYFAB_API FUpdateCatalogItemsRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] which catalog is being updated
+		// [optional] Which catalog is being updated
 		FString CatalogVersion;
-		// [optional] array of catalog items to be submitted
+		// [optional] Array of catalog items to be submitted. Note that while CatalogItem has a parameter for CatalogVersion, it is not required and ignored in this call.
 		TArray<FCatalogItem> Catalog;
 	
         FUpdateCatalogItemsRequest() :

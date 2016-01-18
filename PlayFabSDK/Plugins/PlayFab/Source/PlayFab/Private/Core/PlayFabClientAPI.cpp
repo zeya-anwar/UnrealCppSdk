@@ -1366,6 +1366,33 @@ void UPlayFabClientAPI::OnGetFriendLeaderboardAroundCurrentUserResult(FHttpReque
     }
 }
 
+bool UPlayFabClientAPI::GetFriendLeaderboardAroundPlayer(
+    ClientModels::FGetFriendLeaderboardAroundPlayerRequest& request,
+    const FGetFriendLeaderboardAroundPlayerDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetFriendLeaderboardAroundPlayer")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetFriendLeaderboardAroundPlayerResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabClientAPI::OnGetFriendLeaderboardAroundPlayerResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetFriendLeaderboardAroundPlayerDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ClientModels::FGetFriendLeaderboardAroundPlayerResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
 bool UPlayFabClientAPI::GetLeaderboard(
     ClientModels::FGetLeaderboardRequest& request,
     const FGetLeaderboardDelegate& SuccessDelegate,
@@ -1408,6 +1435,33 @@ bool UPlayFabClientAPI::GetLeaderboardAroundCurrentUser(
 void UPlayFabClientAPI::OnGetLeaderboardAroundCurrentUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardAroundCurrentUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
 {
     ClientModels::FGetLeaderboardAroundCurrentUserResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
+bool UPlayFabClientAPI::GetLeaderboardAroundPlayer(
+    ClientModels::FGetLeaderboardAroundPlayerRequest& request,
+    const FGetLeaderboardAroundPlayerDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetLeaderboardAroundPlayer")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetLeaderboardAroundPlayerResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabClientAPI::OnGetLeaderboardAroundPlayerResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardAroundPlayerDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ClientModels::FGetLeaderboardAroundPlayerResult outResult;
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {

@@ -566,6 +566,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetFriendLeaderboardAroundCurrentUserResultDelegate, const FBPClientGetFriendLeaderboardAroundCurrentUserResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetFriendLeaderboardAroundPlayerRequest"))
+struct FBPClientGetFriendLeaderboardAroundPlayerRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FGetFriendLeaderboardAroundPlayerRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetFriendLeaderboardAroundPlayerRequestDelegate, const FBPClientGetFriendLeaderboardAroundPlayerRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetFriendLeaderboardAroundPlayerResult"))
+struct FBPClientGetFriendLeaderboardAroundPlayerResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FGetFriendLeaderboardAroundPlayerResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetFriendLeaderboardAroundPlayerResultDelegate, const FBPClientGetFriendLeaderboardAroundPlayerResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetFriendLeaderboardRequest"))
 struct FBPClientGetFriendLeaderboardRequest
 {
@@ -635,6 +655,26 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetLeaderboardAroundCurrentUserResultDelegate, const FBPClientGetLeaderboardAroundCurrentUserResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetLeaderboardAroundPlayerRequest"))
+struct FBPClientGetLeaderboardAroundPlayerRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FGetLeaderboardAroundPlayerRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetLeaderboardAroundPlayerRequestDelegate, const FBPClientGetLeaderboardAroundPlayerRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetLeaderboardAroundPlayerResult"))
+struct FBPClientGetLeaderboardAroundPlayerResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FGetLeaderboardAroundPlayerResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetLeaderboardAroundPlayerResultDelegate, const FBPClientGetLeaderboardAroundPlayerResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetLeaderboardForUsersCharactersRequest"))
 struct FBPClientGetLeaderboardForUsersCharactersRequest

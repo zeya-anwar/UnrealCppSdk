@@ -4377,7 +4377,7 @@ namespace ServerModels
 		// [optional] unique name of the statistic
 		FString StatisticName;
 		// [optional] for updates to an existing statistic value for a player, the version of the statistic when it was loaded. Null when setting the statistic value for the first time.
-		FString Version;
+		OptionalUint32 Version;
 		// statistic value for the player
 		int32 Value;
 	

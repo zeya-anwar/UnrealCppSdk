@@ -1025,7 +1025,7 @@ void UPFAdminProxyLibrary::BreakBPAdminModifyUserVirtualCurrencyResult(
 void UPFAdminProxyLibrary::BreakBPAdminPlayerStatisticDefinition(
 		const FBPAdminPlayerStatisticDefinition& In
         ,FString& OutStatisticName
-        ,FString& OutCurrentVersion
+        ,int32& OutCurrentVersion
 	)
 {
     OutStatisticName = In.Data.StatisticName;
@@ -1037,9 +1037,12 @@ void UPFAdminProxyLibrary::BreakBPAdminPlayerStatisticDefinition(
 void UPFAdminProxyLibrary::BreakBPAdminPlayerStatisticVersion(
 		const FBPAdminPlayerStatisticVersion& In
         ,FString& OutStatisticName
-        ,FString& OutVersion
-        ,FDateTime& OutScheduledVersionChangeIntervalTime
-        ,FDateTime& OutCreatedTime
+        ,int32& OutVersion
+        ,FDateTime& OutScheduledActivationTime
+        ,FDateTime& OutActivationTime
+        ,FDateTime& OutScheduledDeactivationTime
+        ,FDateTime& OutDeactivationTime
+        ,FString& OutArchiveDownloadUrl
 	)
 {
     OutStatisticName = In.Data.StatisticName;
@@ -1048,6 +1051,8 @@ void UPFAdminProxyLibrary::BreakBPAdminPlayerStatisticVersion(
 	
 	
 	
+	
+	OutArchiveDownloadUrl = In.Data.ArchiveDownloadUrl;
 	
 }
 

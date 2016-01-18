@@ -864,7 +864,7 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPServerStatisticUpdate(
 		const FBPServerStatisticUpdate& In
         ,FString& OutStatisticName
-        ,FString& OutVersion
+        ,int32& OutVersion
         ,int32& OutValue
 	);
 	
