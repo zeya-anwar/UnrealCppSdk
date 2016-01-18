@@ -3733,11 +3733,11 @@ namespace AdminModels
 	struct PLAYFAB_API FRevokeInventoryItemRequest : public FPlayFabBaseModel
     {
 		
-		// unique PlayFab identifier for the user account which is to have the specified item removed
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
 		FString PlayFabId;
 		// [optional] Unique PlayFab assigned ID for a specific character owned by a user
 		FString CharacterId;
-		// unique PlayFab identifier for the item instance to be removed
+		// Unique PlayFab assigned instance identifier of the item
 		FString ItemInstanceId;
 	
         FRevokeInventoryItemRequest() :

@@ -4205,6 +4205,64 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FRevokeInventoryItemRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+		// [optional] Unique PlayFab assigned ID for a specific character owned by a user
+		FString CharacterId;
+		// Unique PlayFab assigned instance identifier of the item
+		FString ItemInstanceId;
+	
+        FRevokeInventoryItemRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			CharacterId(),
+			ItemInstanceId()
+			{}
+		
+		FRevokeInventoryItemRequest(const FRevokeInventoryItemRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			CharacterId(src.CharacterId),
+			ItemInstanceId(src.ItemInstanceId)
+			{}
+			
+		FRevokeInventoryItemRequest(const TSharedPtr<FJsonObject>& obj) : FRevokeInventoryItemRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRevokeInventoryItemRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FRevokeInventoryResult : public FPlayFabBaseModel
+    {
+		
+	
+        FRevokeInventoryResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FRevokeInventoryResult(const FRevokeInventoryResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FRevokeInventoryResult(const TSharedPtr<FJsonObject>& obj) : FRevokeInventoryResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRevokeInventoryResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FSendPushNotificationRequest : public FPlayFabBaseModel
     {
 		

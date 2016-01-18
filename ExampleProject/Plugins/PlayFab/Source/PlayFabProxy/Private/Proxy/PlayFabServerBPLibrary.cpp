@@ -1420,6 +1420,26 @@ void UPFServerProxyLibrary::BreakBPServerReportPlayerServerResult(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerRevokeInventoryItemRequest(
+		const FBPServerRevokeInventoryItemRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutCharacterId
+        ,FString& OutItemInstanceId
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutCharacterId = In.Data.CharacterId;
+	OutItemInstanceId = In.Data.ItemInstanceId;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerRevokeInventoryResult(
+		const FBPServerRevokeInventoryResult& In
+	)
+{
+    
+}
+
 void UPFServerProxyLibrary::BreakBPServerSendPushNotificationRequest(
 		const FBPServerSendPushNotificationRequest& In
         ,FString& OutRecipient

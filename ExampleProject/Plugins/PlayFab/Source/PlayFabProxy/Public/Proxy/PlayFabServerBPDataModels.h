@@ -1086,6 +1086,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerReportPlayerServerResultDelegate, const FBPServerReportPlayerServerResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRevokeInventoryItemRequest"))
+struct FBPServerRevokeInventoryItemRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FRevokeInventoryItemRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRevokeInventoryItemRequestDelegate, const FBPServerRevokeInventoryItemRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRevokeInventoryResult"))
+struct FBPServerRevokeInventoryResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FRevokeInventoryResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRevokeInventoryResultDelegate, const FBPServerRevokeInventoryResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerSendPushNotificationRequest"))
 struct FBPServerSendPushNotificationRequest
 {

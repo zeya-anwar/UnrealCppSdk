@@ -1107,6 +1107,33 @@ void UPlayFabServerAPI::OnReportPlayerResult(FHttpRequestPtr HttpRequest, FHttpR
     }
 }
 
+bool UPlayFabServerAPI::RevokeInventoryItem(
+    ServerModels::FRevokeInventoryItemRequest& request,
+    const FRevokeInventoryItemDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Server/RevokeInventoryItem")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabServerAPI::OnRevokeInventoryItemResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabServerAPI::OnRevokeInventoryItemResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRevokeInventoryItemDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ServerModels::FRevokeInventoryResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
 bool UPlayFabServerAPI::SubtractCharacterVirtualCurrency(
     ServerModels::FSubtractCharacterVirtualCurrencyRequest& request,
     const FSubtractCharacterVirtualCurrencyDelegate& SuccessDelegate,
