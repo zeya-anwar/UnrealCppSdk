@@ -8116,6 +8116,8 @@ void PlayFab::ClientModels::FLoginResult::writeJSON(JsonWriter& writer) const
 	
     if(SettingsForUser.IsValid()) { writer->WriteIdentifierPrefix(TEXT("SettingsForUser")); SettingsForUser->writeJSON(writer); }
 	
+    if(LastLoginTime.notNull()) { writer->WriteIdentifierPrefix(TEXT("LastLoginTime")); writeDatetime(LastLoginTime, writer); }
+	
     
     writer->WriteObjectEnd();
 }
@@ -8149,6 +8151,12 @@ bool PlayFab::ClientModels::FLoginResult::readFromValue(const TSharedPtr<FJsonOb
     if (SettingsForUserValue.IsValid()&& !SettingsForUserValue->IsNull())
     {
         SettingsForUser = MakeShareable(new FUserSettings(SettingsForUserValue->AsObject()));
+    }
+    
+    const TSharedPtr<FJsonValue> LastLoginTimeValue = obj->TryGetField(TEXT("LastLoginTime"));
+    if(LastLoginTimeValue.IsValid())
+    {
+        LastLoginTime = readDatetime(LastLoginTimeValue);
     }
     
     

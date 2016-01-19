@@ -992,6 +992,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutPlayFabId
         ,bool& OutNewlyCreated
         ,FBPClientUserSettings& OutSettingsForUser
+        ,FDateTime& OutLastLoginTime
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))

@@ -1741,12 +1741,14 @@ void UPFClientProxyLibrary::BreakBPClientLoginResult(
         ,FString& OutPlayFabId
         ,bool& OutNewlyCreated
         ,FBPClientUserSettings& OutSettingsForUser
+        ,FDateTime& OutLastLoginTime
 	)
 {
     OutSessionTicket = In.Data.SessionTicket;
 	OutPlayFabId = In.Data.PlayFabId;
 	OutNewlyCreated = In.Data.NewlyCreated;
 	if (In.Data.SettingsForUser.IsValid()) {    OutSettingsForUser.Data = *In.Data.SettingsForUser;}
+	
 	
 }
 

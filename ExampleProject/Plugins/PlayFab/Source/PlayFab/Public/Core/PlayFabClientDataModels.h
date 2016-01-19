@@ -5331,13 +5331,16 @@ namespace ClientModels
 		bool NewlyCreated;
 		// [optional] Settings specific to this user.
 		TSharedPtr<FUserSettings> SettingsForUser;
+		// [optional] The time of this user's previous login. If there was no previous login, then it's DateTime.MinValue
+		OptionalTime LastLoginTime;
 	
         FLoginResult() :
 			FPlayFabBaseModel(),
 			SessionTicket(),
 			PlayFabId(),
 			NewlyCreated(false),
-			SettingsForUser(nullptr)
+			SettingsForUser(nullptr),
+			LastLoginTime()
 			{}
 		
 		FLoginResult(const FLoginResult& src) :
@@ -5345,7 +5348,8 @@ namespace ClientModels
 			SessionTicket(src.SessionTicket),
 			PlayFabId(src.PlayFabId),
 			NewlyCreated(src.NewlyCreated),
-			SettingsForUser(src.SettingsForUser.IsValid() ? MakeShareable(new FUserSettings(*src.SettingsForUser)) : nullptr)
+			SettingsForUser(src.SettingsForUser.IsValid() ? MakeShareable(new FUserSettings(*src.SettingsForUser)) : nullptr),
+			LastLoginTime(src.LastLoginTime)
 			{}
 			
 		FLoginResult(const TSharedPtr<FJsonObject>& obj) : FLoginResult()
