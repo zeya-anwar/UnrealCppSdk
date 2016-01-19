@@ -9,7 +9,7 @@ UPFAdminAddServerBuild::UPFAdminAddServerBuild(const FObjectInitializer& ObjectI
 {
 }
 
-UPFAdminAddServerBuild* UPFAdminAddServerBuild::AddServerBuild(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InBuildId, const FString& InCommandLineTemplate, const FString& InExecutablePath, const FString& InComment, const int32& InMaxGamesPerHost)
+UPFAdminAddServerBuild* UPFAdminAddServerBuild::AddServerBuild(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InBuildId, const FString& InCommandLineTemplate, const FString& InExecutablePath, const FString& InComment, const int32& InMaxGamesPerHost, const int32& InMinFreeGameSlots)
 {
 	UPFAdminAddServerBuild* Proxy = NewObject<UPFAdminAddServerBuild>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
@@ -19,6 +19,7 @@ UPFAdminAddServerBuild* UPFAdminAddServerBuild::AddServerBuild(UObject* WorldCon
 	
 	Proxy->Request.Comment = InComment;
 	Proxy->Request.MaxGamesPerHost = InMaxGamesPerHost;
+	Proxy->Request.MinFreeGameSlots = InMinFreeGameSlots;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

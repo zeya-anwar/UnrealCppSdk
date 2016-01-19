@@ -36,6 +36,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutExecutablePath
         ,FString& OutComment
         ,int32& OutMaxGamesPerHost
+        ,int32& OutMinFreeGameSlots
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -43,6 +44,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPAdminAddServerBuildResult& In
         ,FString& OutBuildId
         ,int32& OutMaxGamesPerHost
+        ,int32& OutMinFreeGameSlots
         ,FString& OutCommandLineTemplate
         ,FString& OutExecutablePath
         ,FString& OutComment
@@ -352,6 +354,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPAdminGetServerBuildInfoResult& In
         ,FString& OutBuildId
         ,int32& OutMaxGamesPerHost
+        ,int32& OutMinFreeGameSlots
         ,FString& OutComment
         ,FDateTime& OutTimestamp
         ,FString& OutTitleId
@@ -557,6 +560,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutBuildId
         ,FDateTime& OutTimestamp
         ,int32& OutMaxGamesPerHost
+        ,int32& OutMinFreeGameSlots
         ,FString& OutCommandLineTemplate
         ,FString& OutExecutablePath
         ,FString& OutComment
@@ -567,6 +571,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPAdminModifyServerBuildResult& In
         ,FString& OutBuildId
         ,int32& OutMaxGamesPerHost
+        ,int32& OutMinFreeGameSlots
         ,FString& OutCommandLineTemplate
         ,FString& OutExecutablePath
         ,FString& OutComment

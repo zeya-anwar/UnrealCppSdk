@@ -161,6 +161,8 @@ void PlayFab::AdminModels::FAddServerBuildRequest::writeJSON(JsonWriter& writer)
 	
     writer->WriteIdentifierPrefix(TEXT("MaxGamesPerHost")); writer->WriteValue(MaxGamesPerHost);
 	
+    writer->WriteIdentifierPrefix(TEXT("MinFreeGameSlots")); writer->WriteValue(MinFreeGameSlots);
+	
     
     writer->WriteObjectEnd();
 }
@@ -213,6 +215,13 @@ bool PlayFab::AdminModels::FAddServerBuildRequest::readFromValue(const TSharedPt
     {
         int32 TmpValue;
         if(MaxGamesPerHostValue->TryGetNumber(TmpValue)) {MaxGamesPerHost = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> MinFreeGameSlotsValue = obj->TryGetField(TEXT("MinFreeGameSlots"));
+    if (MinFreeGameSlotsValue.IsValid()&& !MinFreeGameSlotsValue->IsNull())
+    {
+        int32 TmpValue;
+        if(MinFreeGameSlotsValue->TryGetNumber(TmpValue)) {MinFreeGameSlots = TmpValue; }
     }
     
     
@@ -283,6 +292,8 @@ void PlayFab::AdminModels::FAddServerBuildResult::writeJSON(JsonWriter& writer) 
 	
     writer->WriteIdentifierPrefix(TEXT("MaxGamesPerHost")); writer->WriteValue(MaxGamesPerHost);
 	
+    writer->WriteIdentifierPrefix(TEXT("MinFreeGameSlots")); writer->WriteValue(MinFreeGameSlots);
+	
     if(CommandLineTemplate.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CommandLineTemplate")); writer->WriteValue(CommandLineTemplate); }
 	
     if(ExecutablePath.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ExecutablePath")); writer->WriteValue(ExecutablePath); }
@@ -326,6 +337,13 @@ bool PlayFab::AdminModels::FAddServerBuildResult::readFromValue(const TSharedPtr
     {
         int32 TmpValue;
         if(MaxGamesPerHostValue->TryGetNumber(TmpValue)) {MaxGamesPerHost = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> MinFreeGameSlotsValue = obj->TryGetField(TEXT("MinFreeGameSlots"));
+    if (MinFreeGameSlotsValue.IsValid()&& !MinFreeGameSlotsValue->IsNull())
+    {
+        int32 TmpValue;
+        if(MinFreeGameSlotsValue->TryGetNumber(TmpValue)) {MinFreeGameSlots = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> CommandLineTemplateValue = obj->TryGetField(TEXT("CommandLineTemplate"));
@@ -3059,6 +3077,8 @@ void PlayFab::AdminModels::FGetServerBuildInfoResult::writeJSON(JsonWriter& writ
 	
     writer->WriteIdentifierPrefix(TEXT("MaxGamesPerHost")); writer->WriteValue(MaxGamesPerHost);
 	
+    writer->WriteIdentifierPrefix(TEXT("MinFreeGameSlots")); writer->WriteValue(MinFreeGameSlots);
+	
     if(Comment.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Comment")); writer->WriteValue(Comment); }
 	
     writer->WriteIdentifierPrefix(TEXT("Timestamp")); writeDatetime(Timestamp, writer);
@@ -3100,6 +3120,13 @@ bool PlayFab::AdminModels::FGetServerBuildInfoResult::readFromValue(const TShare
     {
         int32 TmpValue;
         if(MaxGamesPerHostValue->TryGetNumber(TmpValue)) {MaxGamesPerHost = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> MinFreeGameSlotsValue = obj->TryGetField(TEXT("MinFreeGameSlots"));
+    if (MinFreeGameSlotsValue.IsValid()&& !MinFreeGameSlotsValue->IsNull())
+    {
+        int32 TmpValue;
+        if(MinFreeGameSlotsValue->TryGetNumber(TmpValue)) {MinFreeGameSlots = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> CommentValue = obj->TryGetField(TEXT("Comment"));
@@ -5112,6 +5139,8 @@ void PlayFab::AdminModels::FModifyServerBuildRequest::writeJSON(JsonWriter& writ
 	
     writer->WriteIdentifierPrefix(TEXT("MaxGamesPerHost")); writer->WriteValue(MaxGamesPerHost);
 	
+    writer->WriteIdentifierPrefix(TEXT("MinFreeGameSlots")); writer->WriteValue(MinFreeGameSlots);
+	
     if(CommandLineTemplate.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CommandLineTemplate")); writer->WriteValue(CommandLineTemplate); }
 	
     if(ExecutablePath.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ExecutablePath")); writer->WriteValue(ExecutablePath); }
@@ -5155,6 +5184,13 @@ bool PlayFab::AdminModels::FModifyServerBuildRequest::readFromValue(const TShare
     {
         int32 TmpValue;
         if(MaxGamesPerHostValue->TryGetNumber(TmpValue)) {MaxGamesPerHost = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> MinFreeGameSlotsValue = obj->TryGetField(TEXT("MinFreeGameSlots"));
+    if (MinFreeGameSlotsValue.IsValid()&& !MinFreeGameSlotsValue->IsNull())
+    {
+        int32 TmpValue;
+        if(MinFreeGameSlotsValue->TryGetNumber(TmpValue)) {MinFreeGameSlots = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> CommandLineTemplateValue = obj->TryGetField(TEXT("CommandLineTemplate"));
@@ -5207,6 +5243,8 @@ void PlayFab::AdminModels::FModifyServerBuildResult::writeJSON(JsonWriter& write
 	
     writer->WriteIdentifierPrefix(TEXT("MaxGamesPerHost")); writer->WriteValue(MaxGamesPerHost);
 	
+    writer->WriteIdentifierPrefix(TEXT("MinFreeGameSlots")); writer->WriteValue(MinFreeGameSlots);
+	
     if(CommandLineTemplate.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CommandLineTemplate")); writer->WriteValue(CommandLineTemplate); }
 	
     if(ExecutablePath.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ExecutablePath")); writer->WriteValue(ExecutablePath); }
@@ -5250,6 +5288,13 @@ bool PlayFab::AdminModels::FModifyServerBuildResult::readFromValue(const TShared
     {
         int32 TmpValue;
         if(MaxGamesPerHostValue->TryGetNumber(TmpValue)) {MaxGamesPerHost = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> MinFreeGameSlotsValue = obj->TryGetField(TEXT("MinFreeGameSlots"));
+    if (MinFreeGameSlotsValue.IsValid()&& !MinFreeGameSlotsValue->IsNull())
+    {
+        int32 TmpValue;
+        if(MinFreeGameSlotsValue->TryGetNumber(TmpValue)) {MinFreeGameSlots = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> CommandLineTemplateValue = obj->TryGetField(TEXT("CommandLineTemplate"));

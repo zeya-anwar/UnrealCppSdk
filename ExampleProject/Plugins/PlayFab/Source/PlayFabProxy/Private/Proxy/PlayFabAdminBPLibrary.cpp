@@ -32,6 +32,7 @@ void UPFAdminProxyLibrary::BreakBPAdminAddServerBuildRequest(
         ,FString& OutExecutablePath
         ,FString& OutComment
         ,int32& OutMaxGamesPerHost
+        ,int32& OutMinFreeGameSlots
 	)
 {
     OutBuildId = In.Data.BuildId;
@@ -40,6 +41,7 @@ void UPFAdminProxyLibrary::BreakBPAdminAddServerBuildRequest(
 	
 	OutComment = In.Data.Comment;
 	OutMaxGamesPerHost = In.Data.MaxGamesPerHost;
+	OutMinFreeGameSlots = In.Data.MinFreeGameSlots;
 	
 }
 
@@ -47,6 +49,7 @@ void UPFAdminProxyLibrary::BreakBPAdminAddServerBuildResult(
 		const FBPAdminAddServerBuildResult& In
         ,FString& OutBuildId
         ,int32& OutMaxGamesPerHost
+        ,int32& OutMinFreeGameSlots
         ,FString& OutCommandLineTemplate
         ,FString& OutExecutablePath
         ,FString& OutComment
@@ -57,6 +60,7 @@ void UPFAdminProxyLibrary::BreakBPAdminAddServerBuildResult(
     OutBuildId = In.Data.BuildId;
 	
 	OutMaxGamesPerHost = In.Data.MaxGamesPerHost;
+	OutMinFreeGameSlots = In.Data.MinFreeGameSlots;
 	OutCommandLineTemplate = In.Data.CommandLineTemplate;
 	OutExecutablePath = In.Data.ExecutablePath;
 	OutComment = In.Data.Comment;
@@ -591,6 +595,7 @@ void UPFAdminProxyLibrary::BreakBPAdminGetServerBuildInfoResult(
 		const FBPAdminGetServerBuildInfoResult& In
         ,FString& OutBuildId
         ,int32& OutMaxGamesPerHost
+        ,int32& OutMinFreeGameSlots
         ,FString& OutComment
         ,FDateTime& OutTimestamp
         ,FString& OutTitleId
@@ -600,6 +605,7 @@ void UPFAdminProxyLibrary::BreakBPAdminGetServerBuildInfoResult(
     OutBuildId = In.Data.BuildId;
 	
 	OutMaxGamesPerHost = In.Data.MaxGamesPerHost;
+	OutMinFreeGameSlots = In.Data.MinFreeGameSlots;
 	OutComment = In.Data.Comment;
 	
 	OutTitleId = In.Data.TitleId;
@@ -969,6 +975,7 @@ void UPFAdminProxyLibrary::BreakBPAdminModifyServerBuildRequest(
         ,FString& OutBuildId
         ,FDateTime& OutTimestamp
         ,int32& OutMaxGamesPerHost
+        ,int32& OutMinFreeGameSlots
         ,FString& OutCommandLineTemplate
         ,FString& OutExecutablePath
         ,FString& OutComment
@@ -978,6 +985,7 @@ void UPFAdminProxyLibrary::BreakBPAdminModifyServerBuildRequest(
 	
 	
 	OutMaxGamesPerHost = In.Data.MaxGamesPerHost;
+	OutMinFreeGameSlots = In.Data.MinFreeGameSlots;
 	OutCommandLineTemplate = In.Data.CommandLineTemplate;
 	OutExecutablePath = In.Data.ExecutablePath;
 	OutComment = In.Data.Comment;
@@ -988,6 +996,7 @@ void UPFAdminProxyLibrary::BreakBPAdminModifyServerBuildResult(
 		const FBPAdminModifyServerBuildResult& In
         ,FString& OutBuildId
         ,int32& OutMaxGamesPerHost
+        ,int32& OutMinFreeGameSlots
         ,FString& OutCommandLineTemplate
         ,FString& OutExecutablePath
         ,FString& OutComment
@@ -998,6 +1007,7 @@ void UPFAdminProxyLibrary::BreakBPAdminModifyServerBuildResult(
     OutBuildId = In.Data.BuildId;
 	
 	OutMaxGamesPerHost = In.Data.MaxGamesPerHost;
+	OutMinFreeGameSlots = In.Data.MinFreeGameSlots;
 	OutCommandLineTemplate = In.Data.CommandLineTemplate;
 	OutExecutablePath = In.Data.ExecutablePath;
 	OutComment = In.Data.Comment;

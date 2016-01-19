@@ -517,6 +517,7 @@ namespace PlayFab
         bool Matchmake(ClientModels::FMatchmakeRequest& request, const FMatchmakeDelegate& SuccessDelegate = FMatchmakeDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Start a new game server with a given configuration, add the current player and return the connection information.
+         * This API must be enabled for use as an option in the game manager website. It is disabled by default.
          */
         bool StartGame(ClientModels::FStartGameRequest& request, const FStartGameDelegate& SuccessDelegate = FStartGameDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**

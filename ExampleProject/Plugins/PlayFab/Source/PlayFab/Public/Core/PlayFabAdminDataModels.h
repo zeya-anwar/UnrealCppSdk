@@ -101,6 +101,8 @@ namespace AdminModels
 		FString Comment;
 		// maximum number of game server instances that can run on a single host machine
 		int32 MaxGamesPerHost;
+		// minimum capacity of additional game server instances that can be started before the autoscaling service starts new host machines (given the number of current running host machines and game server instances)
+		int32 MinFreeGameSlots;
 	
         FAddServerBuildRequest() :
 			FPlayFabBaseModel(),
@@ -109,7 +111,8 @@ namespace AdminModels
 			ExecutablePath(),
 			ActiveRegions(),
 			Comment(),
-			MaxGamesPerHost(0)
+			MaxGamesPerHost(0),
+			MinFreeGameSlots(0)
 			{}
 		
 		FAddServerBuildRequest(const FAddServerBuildRequest& src) :
@@ -119,7 +122,8 @@ namespace AdminModels
 			ExecutablePath(src.ExecutablePath),
 			ActiveRegions(src.ActiveRegions),
 			Comment(src.Comment),
-			MaxGamesPerHost(src.MaxGamesPerHost)
+			MaxGamesPerHost(src.MaxGamesPerHost),
+			MinFreeGameSlots(src.MinFreeGameSlots)
 			{}
 			
 		FAddServerBuildRequest(const TSharedPtr<FJsonObject>& obj) : FAddServerBuildRequest()
@@ -155,6 +159,8 @@ namespace AdminModels
 		TArray<Region> ActiveRegions;
 		// maximum number of game server instances that can run on a single host machine
 		int32 MaxGamesPerHost;
+		// minimum capacity of additional game server instances that can be started before the autoscaling service starts new host machines (given the number of current running host machines and game server instances)
+		int32 MinFreeGameSlots;
 		// [optional] appended to the end of the command line when starting game servers
 		FString CommandLineTemplate;
 		// [optional] path to the game server executable. Defaults to gameserver.exe
@@ -173,6 +179,7 @@ namespace AdminModels
 			BuildId(),
 			ActiveRegions(),
 			MaxGamesPerHost(0),
+			MinFreeGameSlots(0),
 			CommandLineTemplate(),
 			ExecutablePath(),
 			Comment(),
@@ -186,6 +193,7 @@ namespace AdminModels
 			BuildId(src.BuildId),
 			ActiveRegions(src.ActiveRegions),
 			MaxGamesPerHost(src.MaxGamesPerHost),
+			MinFreeGameSlots(src.MinFreeGameSlots),
 			CommandLineTemplate(src.CommandLineTemplate),
 			ExecutablePath(src.ExecutablePath),
 			Comment(src.Comment),
@@ -1925,6 +1933,8 @@ namespace AdminModels
 		TArray<Region> ActiveRegions;
 		// maximum number of game server instances that can run on a single host machine
 		int32 MaxGamesPerHost;
+		// minimum capacity of additional game server instances that can be started before the autoscaling service starts new host machines (given the number of current running host machines and game server instances)
+		int32 MinFreeGameSlots;
 		// [optional] developer comment(s) for this build
 		FString Comment;
 		// time this build was last modified (or uploaded, if this build has never been modified)
@@ -1941,6 +1951,7 @@ namespace AdminModels
 			BuildId(),
 			ActiveRegions(),
 			MaxGamesPerHost(0),
+			MinFreeGameSlots(0),
 			Comment(),
 			Timestamp(0),
 			TitleId(),
@@ -1953,6 +1964,7 @@ namespace AdminModels
 			BuildId(src.BuildId),
 			ActiveRegions(src.ActiveRegions),
 			MaxGamesPerHost(src.MaxGamesPerHost),
+			MinFreeGameSlots(src.MinFreeGameSlots),
 			Comment(src.Comment),
 			Timestamp(src.Timestamp),
 			TitleId(src.TitleId),
@@ -3210,6 +3222,8 @@ namespace AdminModels
 		TArray<Region> ActiveRegions;
 		// maximum number of game server instances that can run on a single host machine
 		int32 MaxGamesPerHost;
+		// minimum capacity of additional game server instances that can be started before the autoscaling service starts new host machines (given the number of current running host machines and game server instances)
+		int32 MinFreeGameSlots;
 		// [optional] appended to the end of the command line when starting game servers
 		FString CommandLineTemplate;
 		// [optional] path to the game server executable. Defaults to gameserver.exe
@@ -3223,6 +3237,7 @@ namespace AdminModels
 			Timestamp(),
 			ActiveRegions(),
 			MaxGamesPerHost(0),
+			MinFreeGameSlots(0),
 			CommandLineTemplate(),
 			ExecutablePath(),
 			Comment()
@@ -3234,6 +3249,7 @@ namespace AdminModels
 			Timestamp(src.Timestamp),
 			ActiveRegions(src.ActiveRegions),
 			MaxGamesPerHost(src.MaxGamesPerHost),
+			MinFreeGameSlots(src.MinFreeGameSlots),
 			CommandLineTemplate(src.CommandLineTemplate),
 			ExecutablePath(src.ExecutablePath),
 			Comment(src.Comment)
@@ -3259,6 +3275,8 @@ namespace AdminModels
 		TArray<Region> ActiveRegions;
 		// maximum number of game server instances that can run on a single host machine
 		int32 MaxGamesPerHost;
+		// minimum capacity of additional game server instances that can be started before the autoscaling service starts new host machines (given the number of current running host machines and game server instances)
+		int32 MinFreeGameSlots;
 		// [optional] appended to the end of the command line when starting game servers
 		FString CommandLineTemplate;
 		// [optional] path to the game server executable. Defaults to gameserver.exe
@@ -3277,6 +3295,7 @@ namespace AdminModels
 			BuildId(),
 			ActiveRegions(),
 			MaxGamesPerHost(0),
+			MinFreeGameSlots(0),
 			CommandLineTemplate(),
 			ExecutablePath(),
 			Comment(),
@@ -3290,6 +3309,7 @@ namespace AdminModels
 			BuildId(src.BuildId),
 			ActiveRegions(src.ActiveRegions),
 			MaxGamesPerHost(src.MaxGamesPerHost),
+			MinFreeGameSlots(src.MinFreeGameSlots),
 			CommandLineTemplate(src.CommandLineTemplate),
 			ExecutablePath(src.ExecutablePath),
 			Comment(src.Comment),
