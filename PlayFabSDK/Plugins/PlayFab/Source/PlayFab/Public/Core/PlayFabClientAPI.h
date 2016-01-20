@@ -113,9 +113,11 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FGetContentDownloadUrlDelegate, const ClientModels::FGetContentDownloadUrlResult&);
         DECLARE_DELEGATE_OneParam(FGetAllUsersCharactersDelegate, const ClientModels::FListUsersCharactersResult&);
         DECLARE_DELEGATE_OneParam(FGetCharacterLeaderboardDelegate, const ClientModels::FGetCharacterLeaderboardResult&);
+        DECLARE_DELEGATE_OneParam(FGetCharacterStatisticsDelegate, const ClientModels::FGetCharacterStatisticsResult&);
         DECLARE_DELEGATE_OneParam(FGetLeaderboardAroundCharacterDelegate, const ClientModels::FGetLeaderboardAroundCharacterResult&);
         DECLARE_DELEGATE_OneParam(FGetLeaderboardForUserCharactersDelegate, const ClientModels::FGetLeaderboardForUsersCharactersResult&);
         DECLARE_DELEGATE_OneParam(FGrantCharacterToUserDelegate, const ClientModels::FGrantCharacterToUserResult&);
+        DECLARE_DELEGATE_OneParam(FUpdateCharacterStatisticsDelegate, const ClientModels::FUpdateCharacterStatisticsResult&);
         DECLARE_DELEGATE_OneParam(FGetCharacterDataDelegate, const ClientModels::FGetCharacterDataResult&);
         DECLARE_DELEGATE_OneParam(FGetCharacterReadOnlyDataDelegate, const ClientModels::FGetCharacterDataResult&);
         DECLARE_DELEGATE_OneParam(FUpdateCharacterDataDelegate, const ClientModels::FUpdateCharacterDataResult&);
@@ -390,7 +392,7 @@ namespace PlayFab
         bool UpdateUserPublisherData(ClientModels::FUpdateUserDataRequest& request, const FUpdateUserPublisherDataDelegate& SuccessDelegate = FUpdateUserPublisherDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Updates the values of the specified title-specific statistics for the user
-         * This operation is additive. Statistics not currently defined will be added, while those already defined will be updated with the given values. All other user statistics will remain unchanged. This API must be enabled for use as an option in the game manager website. It is disabled by default.
+         * Enable this option with the 'Allow Client to Post Player Statistics' option in PlayFab GameManager for your title. However, this is not best practice, as this data will no longer be safely controlled by the server. This operation is additive.  Statistics not currently defined will be added, while those already defined will be updated with the given values. All other user statistics will remain unchanged.  Statistics are used by the leaderboard apis, and accessible for custom game-logic.
          */
         bool UpdateUserStatistics(ClientModels::FUpdateUserStatisticsRequest& request, const FUpdateUserStatisticsDelegate& SuccessDelegate = FUpdateUserStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
@@ -594,6 +596,10 @@ namespace PlayFab
          */
         bool GetCharacterLeaderboard(ClientModels::FGetCharacterLeaderboardRequest& request, const FGetCharacterLeaderboardDelegate& SuccessDelegate = FGetCharacterLeaderboardDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Retrieves the details of all title-specific statistics for the user
+         */
+        bool GetCharacterStatistics(ClientModels::FGetCharacterStatisticsRequest& request, const FGetCharacterStatisticsDelegate& SuccessDelegate = FGetCharacterStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Retrieves a list of ranked characters for the given statistic, centered on the requested Character ID
          */
         bool GetLeaderboardAroundCharacter(ClientModels::FGetLeaderboardAroundCharacterRequest& request, const FGetLeaderboardAroundCharacterDelegate& SuccessDelegate = FGetLeaderboardAroundCharacterDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -606,6 +612,11 @@ namespace PlayFab
          * Grants a character to the user of the type specified by the item ID. The user must  already have an instance of this item in their inventory in order to allow character creation. This item can come from a purchase or grant, which must be done before calling to create the character.
          */
         bool GrantCharacterToUser(ClientModels::FGrantCharacterToUserRequest& request, const FGrantCharacterToUserDelegate& SuccessDelegate = FGrantCharacterToUserDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Updates the values of the specified title-specific statistics for the specific character
+         * Enable this option with the 'Allow Client to Post Player Statistics' option in PlayFab GameManager for your title. However, this is not best practice, as this data will no longer be safely controlled by the server. This operation is additive.  Character Statistics not currently defined will be added, while those already defined will be updated with the given values. All other user statistics will remain unchanged.  Character statistics are used by the character-leaderboard apis, and accessible for custom game-logic.
+         */
+        bool UpdateCharacterStatistics(ClientModels::FUpdateCharacterStatisticsRequest& request, const FUpdateCharacterStatisticsDelegate& SuccessDelegate = FUpdateCharacterStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves the title-specific custom data for the character which is readable and writable by the client
          * Data is stored as JSON key-value pairs. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full  set of custom character data will be returned.
@@ -755,9 +766,11 @@ namespace PlayFab
         void OnGetContentDownloadUrlResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetContentDownloadUrlDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetAllUsersCharactersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetAllUsersCharactersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetCharacterLeaderboardResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCharacterLeaderboardDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetCharacterStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCharacterStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetLeaderboardAroundCharacterResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardAroundCharacterDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetLeaderboardForUserCharactersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardForUserCharactersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGrantCharacterToUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGrantCharacterToUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnUpdateCharacterStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateCharacterStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetCharacterDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCharacterDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetCharacterReadOnlyDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCharacterReadOnlyDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateCharacterDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateCharacterDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

@@ -663,6 +663,23 @@ void UPFClientProxyLibrary::BreakBPClientGetCharacterLeaderboardResult(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientGetCharacterStatisticsRequest(
+		const FBPClientGetCharacterStatisticsRequest& In
+        ,FString& OutCharacterId
+	)
+{
+    OutCharacterId = In.Data.CharacterId;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetCharacterStatisticsResult(
+		const FBPClientGetCharacterStatisticsResult& In
+	)
+{
+    
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientGetCloudScriptUrlRequest(
 		const FBPClientGetCloudScriptUrlRequest& In
         ,int32& OutVersion
@@ -2802,6 +2819,23 @@ void UPFClientProxyLibrary::BreakBPClientUpdateCharacterDataResult(
 {
     OutDataVersion = In.Data.DataVersion;
 	
+}
+
+void UPFClientProxyLibrary::BreakBPClientUpdateCharacterStatisticsRequest(
+		const FBPClientUpdateCharacterStatisticsRequest& In
+        ,FString& OutCharacterId
+	)
+{
+    OutCharacterId = In.Data.CharacterId;
+	
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientUpdateCharacterStatisticsResult(
+		const FBPClientUpdateCharacterStatisticsResult& In
+	)
+{
+    
 }
 
 void UPFClientProxyLibrary::BreakBPClientUpdatePlayerStatisticsRequest(

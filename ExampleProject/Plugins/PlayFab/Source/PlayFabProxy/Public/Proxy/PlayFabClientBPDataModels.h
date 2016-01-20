@@ -506,6 +506,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetCharacterLeaderboardResultDelegate, const FBPClientGetCharacterLeaderboardResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetCharacterStatisticsRequest"))
+struct FBPClientGetCharacterStatisticsRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FGetCharacterStatisticsRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetCharacterStatisticsRequestDelegate, const FBPClientGetCharacterStatisticsRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetCharacterStatisticsResult"))
+struct FBPClientGetCharacterStatisticsResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FGetCharacterStatisticsResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetCharacterStatisticsResultDelegate, const FBPClientGetCharacterStatisticsResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetCloudScriptUrlRequest"))
 struct FBPClientGetCloudScriptUrlRequest
 {
@@ -2265,6 +2285,26 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientUpdateCharacterDataResultDelegate, const FBPClientUpdateCharacterDataResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientUpdateCharacterStatisticsRequest"))
+struct FBPClientUpdateCharacterStatisticsRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FUpdateCharacterStatisticsRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientUpdateCharacterStatisticsRequestDelegate, const FBPClientUpdateCharacterStatisticsRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientUpdateCharacterStatisticsResult"))
+struct FBPClientUpdateCharacterStatisticsResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FUpdateCharacterStatisticsResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientUpdateCharacterStatisticsResultDelegate, const FBPClientUpdateCharacterStatisticsResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientUpdatePlayerStatisticsRequest"))
 struct FBPClientUpdatePlayerStatisticsRequest

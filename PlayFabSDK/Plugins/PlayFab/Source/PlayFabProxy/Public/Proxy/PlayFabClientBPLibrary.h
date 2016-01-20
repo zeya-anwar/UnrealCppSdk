@@ -393,6 +393,17 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientGetCharacterStatisticsRequest(
+		const FBPClientGetCharacterStatisticsRequest& In
+        ,FString& OutCharacterId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientGetCharacterStatisticsResult(
+		const FBPClientGetCharacterStatisticsResult& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientGetCloudScriptUrlRequest(
 		const FBPClientGetCloudScriptUrlRequest& In
         ,int32& OutVersion
@@ -1623,6 +1634,17 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPClientUpdateCharacterDataResult(
 		const FBPClientUpdateCharacterDataResult& In
         ,int32& OutDataVersion
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientUpdateCharacterStatisticsRequest(
+		const FBPClientUpdateCharacterStatisticsRequest& In
+        ,FString& OutCharacterId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientUpdateCharacterStatisticsResult(
+		const FBPClientUpdateCharacterStatisticsResult& In
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))

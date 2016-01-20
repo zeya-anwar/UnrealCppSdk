@@ -4257,6 +4257,80 @@ bool PlayFab::ClientModels::FGetCharacterLeaderboardResult::readFromValue(const 
 }
 
 
+PlayFab::ClientModels::FGetCharacterStatisticsRequest::~FGetCharacterStatisticsRequest()
+{
+    
+}
+
+void PlayFab::ClientModels::FGetCharacterStatisticsRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("CharacterId")); writer->WriteValue(CharacterId);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FGetCharacterStatisticsRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
+    if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FGetCharacterStatisticsResult::~FGetCharacterStatisticsResult()
+{
+    
+}
+
+void PlayFab::ClientModels::FGetCharacterStatisticsResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(CharacterStatistics.Num() != 0) 
+    {
+        writer->WriteObjectStart(TEXT("CharacterStatistics"));
+        for (TMap<FString, int32>::TConstIterator It(CharacterStatistics); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue((*It).Value);
+        }
+        writer->WriteObjectEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FGetCharacterStatisticsResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonObject>* CharacterStatisticsObject;
+    if (obj->TryGetObjectField(TEXT("CharacterStatistics"), CharacterStatisticsObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*CharacterStatisticsObject)->Values); It; ++It)
+        {
+            int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
+            CharacterStatistics.Add(It.Key(), TmpValue);
+        }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ClientModels::FGetCloudScriptUrlRequest::~FGetCloudScriptUrlRequest()
 {
     
@@ -11883,6 +11957,80 @@ bool PlayFab::ClientModels::FUpdateCharacterDataResult::readFromValue(const TSha
         if(DataVersionValue->TryGetNumber(TmpValue)) {DataVersion = TmpValue; }
     }
     
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FUpdateCharacterStatisticsRequest::~FUpdateCharacterStatisticsRequest()
+{
+    
+}
+
+void PlayFab::ClientModels::FUpdateCharacterStatisticsRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("CharacterId")); writer->WriteValue(CharacterId);
+	
+    if(CharacterStatistics.Num() != 0) 
+    {
+        writer->WriteObjectStart(TEXT("CharacterStatistics"));
+        for (TMap<FString, int32>::TConstIterator It(CharacterStatistics); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue((*It).Value);
+        }
+        writer->WriteObjectEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FUpdateCharacterStatisticsRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
+    if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonObject>* CharacterStatisticsObject;
+    if (obj->TryGetObjectField(TEXT("CharacterStatistics"), CharacterStatisticsObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*CharacterStatisticsObject)->Values); It; ++It)
+        {
+            int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
+            CharacterStatistics.Add(It.Key(), TmpValue);
+        }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FUpdateCharacterStatisticsResult::~FUpdateCharacterStatisticsResult()
+{
+    
+}
+
+void PlayFab::ClientModels::FUpdateCharacterStatisticsResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FUpdateCharacterStatisticsResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
     
     return HasSucceeded;
 }

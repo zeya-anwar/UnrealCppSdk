@@ -2672,6 +2672,60 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FGetCharacterStatisticsRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID for a specific character owned by a user
+		FString CharacterId;
+	
+        FGetCharacterStatisticsRequest() :
+			FPlayFabBaseModel(),
+			CharacterId()
+			{}
+		
+		FGetCharacterStatisticsRequest(const FGetCharacterStatisticsRequest& src) :
+			FPlayFabBaseModel(),
+			CharacterId(src.CharacterId)
+			{}
+			
+		FGetCharacterStatisticsRequest(const TSharedPtr<FJsonObject>& obj) : FGetCharacterStatisticsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetCharacterStatisticsRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetCharacterStatisticsResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] The requested character statistics.
+		TMap<FString, int32> CharacterStatistics;
+	
+        FGetCharacterStatisticsResult() :
+			FPlayFabBaseModel(),
+			CharacterStatistics()
+			{}
+		
+		FGetCharacterStatisticsResult(const FGetCharacterStatisticsResult& src) :
+			FPlayFabBaseModel(),
+			CharacterStatistics(src.CharacterStatistics)
+			{}
+			
+		FGetCharacterStatisticsResult(const TSharedPtr<FJsonObject>& obj) : FGetCharacterStatisticsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetCharacterStatisticsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FGetCloudScriptUrlRequest : public FPlayFabBaseModel
     {
 		
@@ -8005,6 +8059,60 @@ namespace ClientModels
         }
 		
 		~FUpdateCharacterDataResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUpdateCharacterStatisticsRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID for a specific character owned by a user
+		FString CharacterId;
+		// [optional] Statistics to be updated with the provided values.
+		TMap<FString, int32> CharacterStatistics;
+	
+        FUpdateCharacterStatisticsRequest() :
+			FPlayFabBaseModel(),
+			CharacterId(),
+			CharacterStatistics()
+			{}
+		
+		FUpdateCharacterStatisticsRequest(const FUpdateCharacterStatisticsRequest& src) :
+			FPlayFabBaseModel(),
+			CharacterId(src.CharacterId),
+			CharacterStatistics(src.CharacterStatistics)
+			{}
+			
+		FUpdateCharacterStatisticsRequest(const TSharedPtr<FJsonObject>& obj) : FUpdateCharacterStatisticsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUpdateCharacterStatisticsRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUpdateCharacterStatisticsResult : public FPlayFabBaseModel
+    {
+		
+	
+        FUpdateCharacterStatisticsResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FUpdateCharacterStatisticsResult(const FUpdateCharacterStatisticsResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FUpdateCharacterStatisticsResult(const TSharedPtr<FJsonObject>& obj) : FUpdateCharacterStatisticsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUpdateCharacterStatisticsResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
