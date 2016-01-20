@@ -1693,6 +1693,25 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,FBPClientUserFacebookInfo& OutFacebookInfo
         ,FBPClientUserSteamInfo& OutSteamInfo
         ,FBPClientUserGameCenterInfo& OutGameCenterInfo
+        ,FBPClientUserIosDeviceInfo& OutIosDeviceInfo
+        ,FBPClientUserAndroidDeviceInfo& OutAndroidDeviceInfo
+        ,FBPClientUserKongregateInfo& OutKongregateInfo
+        ,FBPClientUserPsnInfo& OutPsnInfo
+        ,FBPClientUserGoogleInfo& OutGoogleInfo
+        ,FBPClientUserXboxInfo& OutXboxInfo
+        ,FBPClientUserCustomIdInfo& OutCustomIdInfo
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientUserAndroidDeviceInfo(
+		const FBPClientUserAndroidDeviceInfo& In
+        ,FString& OutAndroidDeviceId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientUserCustomIdInfo(
+		const FBPClientUserCustomIdInfo& In
+        ,FString& OutCustomId
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1721,6 +1740,28 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientUserGoogleInfo(
+		const FBPClientUserGoogleInfo& In
+        ,FString& OutGoogleId
+        ,FString& OutGoogleEmail
+        ,FString& OutGoogleLocale
+        ,FString& OutGoogleGender
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientUserIosDeviceInfo(
+		const FBPClientUserIosDeviceInfo& In
+        ,FString& OutIosDeviceId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientUserKongregateInfo(
+		const FBPClientUserKongregateInfo& In
+        ,FString& OutKongregateId
+        ,FString& OutKongregateName
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientUserOrigination(
 		const FBPClientUserOrigination& In
 	);
@@ -1729,6 +1770,13 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPClientUserPrivateAccountInfo(
 		const FBPClientUserPrivateAccountInfo& In
         ,FString& OutEmail
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientUserPsnInfo(
+		const FBPClientUserPsnInfo& In
+        ,FString& OutPsnAccountId
+        ,FString& OutPsnOnlineId
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1752,6 +1800,12 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,FDateTime& OutLastLogin
         ,FDateTime& OutFirstLogin
         ,bool& OutisBanned
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientUserXboxInfo(
+		const FBPClientUserXboxInfo& In
+        ,FString& OutXboxUserId
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))

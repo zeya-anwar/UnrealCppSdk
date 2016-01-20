@@ -949,6 +949,268 @@ bool PlayFab::ServerModels::FUserGameCenterInfo::readFromValue(const TSharedPtr<
 }
 
 
+PlayFab::ServerModels::FUserIosDeviceInfo::~FUserIosDeviceInfo()
+{
+    
+}
+
+void PlayFab::ServerModels::FUserIosDeviceInfo::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(IosDeviceId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("IosDeviceId")); writer->WriteValue(IosDeviceId); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FUserIosDeviceInfo::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> IosDeviceIdValue = obj->TryGetField(TEXT("IosDeviceId"));
+    if (IosDeviceIdValue.IsValid()&& !IosDeviceIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(IosDeviceIdValue->TryGetString(TmpValue)) {IosDeviceId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FUserAndroidDeviceInfo::~FUserAndroidDeviceInfo()
+{
+    
+}
+
+void PlayFab::ServerModels::FUserAndroidDeviceInfo::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(AndroidDeviceId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("AndroidDeviceId")); writer->WriteValue(AndroidDeviceId); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FUserAndroidDeviceInfo::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> AndroidDeviceIdValue = obj->TryGetField(TEXT("AndroidDeviceId"));
+    if (AndroidDeviceIdValue.IsValid()&& !AndroidDeviceIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(AndroidDeviceIdValue->TryGetString(TmpValue)) {AndroidDeviceId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FUserKongregateInfo::~FUserKongregateInfo()
+{
+    
+}
+
+void PlayFab::ServerModels::FUserKongregateInfo::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(KongregateId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("KongregateId")); writer->WriteValue(KongregateId); }
+	
+    if(KongregateName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("KongregateName")); writer->WriteValue(KongregateName); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FUserKongregateInfo::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> KongregateIdValue = obj->TryGetField(TEXT("KongregateId"));
+    if (KongregateIdValue.IsValid()&& !KongregateIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(KongregateIdValue->TryGetString(TmpValue)) {KongregateId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> KongregateNameValue = obj->TryGetField(TEXT("KongregateName"));
+    if (KongregateNameValue.IsValid()&& !KongregateNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(KongregateNameValue->TryGetString(TmpValue)) {KongregateName = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FUserPsnInfo::~FUserPsnInfo()
+{
+    
+}
+
+void PlayFab::ServerModels::FUserPsnInfo::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(PsnAccountId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PsnAccountId")); writer->WriteValue(PsnAccountId); }
+	
+    if(PsnOnlineId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PsnOnlineId")); writer->WriteValue(PsnOnlineId); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FUserPsnInfo::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PsnAccountIdValue = obj->TryGetField(TEXT("PsnAccountId"));
+    if (PsnAccountIdValue.IsValid()&& !PsnAccountIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PsnAccountIdValue->TryGetString(TmpValue)) {PsnAccountId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> PsnOnlineIdValue = obj->TryGetField(TEXT("PsnOnlineId"));
+    if (PsnOnlineIdValue.IsValid()&& !PsnOnlineIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PsnOnlineIdValue->TryGetString(TmpValue)) {PsnOnlineId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FUserGoogleInfo::~FUserGoogleInfo()
+{
+    
+}
+
+void PlayFab::ServerModels::FUserGoogleInfo::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(GoogleId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("GoogleId")); writer->WriteValue(GoogleId); }
+	
+    if(GoogleEmail.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("GoogleEmail")); writer->WriteValue(GoogleEmail); }
+	
+    if(GoogleLocale.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("GoogleLocale")); writer->WriteValue(GoogleLocale); }
+	
+    if(GoogleGender.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("GoogleGender")); writer->WriteValue(GoogleGender); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FUserGoogleInfo::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> GoogleIdValue = obj->TryGetField(TEXT("GoogleId"));
+    if (GoogleIdValue.IsValid()&& !GoogleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(GoogleIdValue->TryGetString(TmpValue)) {GoogleId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> GoogleEmailValue = obj->TryGetField(TEXT("GoogleEmail"));
+    if (GoogleEmailValue.IsValid()&& !GoogleEmailValue->IsNull())
+    {
+        FString TmpValue;
+        if(GoogleEmailValue->TryGetString(TmpValue)) {GoogleEmail = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> GoogleLocaleValue = obj->TryGetField(TEXT("GoogleLocale"));
+    if (GoogleLocaleValue.IsValid()&& !GoogleLocaleValue->IsNull())
+    {
+        FString TmpValue;
+        if(GoogleLocaleValue->TryGetString(TmpValue)) {GoogleLocale = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> GoogleGenderValue = obj->TryGetField(TEXT("GoogleGender"));
+    if (GoogleGenderValue.IsValid()&& !GoogleGenderValue->IsNull())
+    {
+        FString TmpValue;
+        if(GoogleGenderValue->TryGetString(TmpValue)) {GoogleGender = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FUserXboxInfo::~FUserXboxInfo()
+{
+    
+}
+
+void PlayFab::ServerModels::FUserXboxInfo::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(XboxUserId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("XboxUserId")); writer->WriteValue(XboxUserId); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FUserXboxInfo::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> XboxUserIdValue = obj->TryGetField(TEXT("XboxUserId"));
+    if (XboxUserIdValue.IsValid()&& !XboxUserIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(XboxUserIdValue->TryGetString(TmpValue)) {XboxUserId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FUserCustomIdInfo::~FUserCustomIdInfo()
+{
+    
+}
+
+void PlayFab::ServerModels::FUserCustomIdInfo::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(CustomId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CustomId")); writer->WriteValue(CustomId); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FUserCustomIdInfo::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> CustomIdValue = obj->TryGetField(TEXT("CustomId"));
+    if (CustomIdValue.IsValid()&& !CustomIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CustomIdValue->TryGetString(TmpValue)) {CustomId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ServerModels::FUserAccountInfo::~FUserAccountInfo()
 {
     //if(TitleInfo != NULL) delete TitleInfo;
@@ -956,6 +1218,13 @@ PlayFab::ServerModels::FUserAccountInfo::~FUserAccountInfo()
     //if(FacebookInfo != NULL) delete FacebookInfo;
     //if(SteamInfo != NULL) delete SteamInfo;
     //if(GameCenterInfo != NULL) delete GameCenterInfo;
+    //if(IosDeviceInfo != NULL) delete IosDeviceInfo;
+    //if(AndroidDeviceInfo != NULL) delete AndroidDeviceInfo;
+    //if(KongregateInfo != NULL) delete KongregateInfo;
+    //if(PsnInfo != NULL) delete PsnInfo;
+    //if(GoogleInfo != NULL) delete GoogleInfo;
+    //if(XboxInfo != NULL) delete XboxInfo;
+    //if(CustomIdInfo != NULL) delete CustomIdInfo;
     
 }
 
@@ -978,6 +1247,20 @@ void PlayFab::ServerModels::FUserAccountInfo::writeJSON(JsonWriter& writer) cons
     if(SteamInfo.IsValid()) { writer->WriteIdentifierPrefix(TEXT("SteamInfo")); SteamInfo->writeJSON(writer); }
 	
     if(GameCenterInfo.IsValid()) { writer->WriteIdentifierPrefix(TEXT("GameCenterInfo")); GameCenterInfo->writeJSON(writer); }
+	
+    if(IosDeviceInfo.IsValid()) { writer->WriteIdentifierPrefix(TEXT("IosDeviceInfo")); IosDeviceInfo->writeJSON(writer); }
+	
+    if(AndroidDeviceInfo.IsValid()) { writer->WriteIdentifierPrefix(TEXT("AndroidDeviceInfo")); AndroidDeviceInfo->writeJSON(writer); }
+	
+    if(KongregateInfo.IsValid()) { writer->WriteIdentifierPrefix(TEXT("KongregateInfo")); KongregateInfo->writeJSON(writer); }
+	
+    if(PsnInfo.IsValid()) { writer->WriteIdentifierPrefix(TEXT("PsnInfo")); PsnInfo->writeJSON(writer); }
+	
+    if(GoogleInfo.IsValid()) { writer->WriteIdentifierPrefix(TEXT("GoogleInfo")); GoogleInfo->writeJSON(writer); }
+	
+    if(XboxInfo.IsValid()) { writer->WriteIdentifierPrefix(TEXT("XboxInfo")); XboxInfo->writeJSON(writer); }
+	
+    if(CustomIdInfo.IsValid()) { writer->WriteIdentifierPrefix(TEXT("CustomIdInfo")); CustomIdInfo->writeJSON(writer); }
 	
     
     writer->WriteObjectEnd();
@@ -1035,6 +1318,48 @@ bool PlayFab::ServerModels::FUserAccountInfo::readFromValue(const TSharedPtr<FJs
     if (GameCenterInfoValue.IsValid()&& !GameCenterInfoValue->IsNull())
     {
         GameCenterInfo = MakeShareable(new FUserGameCenterInfo(GameCenterInfoValue->AsObject()));
+    }
+    
+    const TSharedPtr<FJsonValue> IosDeviceInfoValue = obj->TryGetField(TEXT("IosDeviceInfo"));
+    if (IosDeviceInfoValue.IsValid()&& !IosDeviceInfoValue->IsNull())
+    {
+        IosDeviceInfo = MakeShareable(new FUserIosDeviceInfo(IosDeviceInfoValue->AsObject()));
+    }
+    
+    const TSharedPtr<FJsonValue> AndroidDeviceInfoValue = obj->TryGetField(TEXT("AndroidDeviceInfo"));
+    if (AndroidDeviceInfoValue.IsValid()&& !AndroidDeviceInfoValue->IsNull())
+    {
+        AndroidDeviceInfo = MakeShareable(new FUserAndroidDeviceInfo(AndroidDeviceInfoValue->AsObject()));
+    }
+    
+    const TSharedPtr<FJsonValue> KongregateInfoValue = obj->TryGetField(TEXT("KongregateInfo"));
+    if (KongregateInfoValue.IsValid()&& !KongregateInfoValue->IsNull())
+    {
+        KongregateInfo = MakeShareable(new FUserKongregateInfo(KongregateInfoValue->AsObject()));
+    }
+    
+    const TSharedPtr<FJsonValue> PsnInfoValue = obj->TryGetField(TEXT("PsnInfo"));
+    if (PsnInfoValue.IsValid()&& !PsnInfoValue->IsNull())
+    {
+        PsnInfo = MakeShareable(new FUserPsnInfo(PsnInfoValue->AsObject()));
+    }
+    
+    const TSharedPtr<FJsonValue> GoogleInfoValue = obj->TryGetField(TEXT("GoogleInfo"));
+    if (GoogleInfoValue.IsValid()&& !GoogleInfoValue->IsNull())
+    {
+        GoogleInfo = MakeShareable(new FUserGoogleInfo(GoogleInfoValue->AsObject()));
+    }
+    
+    const TSharedPtr<FJsonValue> XboxInfoValue = obj->TryGetField(TEXT("XboxInfo"));
+    if (XboxInfoValue.IsValid()&& !XboxInfoValue->IsNull())
+    {
+        XboxInfo = MakeShareable(new FUserXboxInfo(XboxInfoValue->AsObject()));
+    }
+    
+    const TSharedPtr<FJsonValue> CustomIdInfoValue = obj->TryGetField(TEXT("CustomIdInfo"));
+    if (CustomIdInfoValue.IsValid()&& !CustomIdInfoValue->IsNull())
+    {
+        CustomIdInfo = MakeShareable(new FUserCustomIdInfo(CustomIdInfoValue->AsObject()));
     }
     
     

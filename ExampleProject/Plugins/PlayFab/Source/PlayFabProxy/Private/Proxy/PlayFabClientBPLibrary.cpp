@@ -2909,6 +2909,13 @@ void UPFClientProxyLibrary::BreakBPClientUserAccountInfo(
         ,FBPClientUserFacebookInfo& OutFacebookInfo
         ,FBPClientUserSteamInfo& OutSteamInfo
         ,FBPClientUserGameCenterInfo& OutGameCenterInfo
+        ,FBPClientUserIosDeviceInfo& OutIosDeviceInfo
+        ,FBPClientUserAndroidDeviceInfo& OutAndroidDeviceInfo
+        ,FBPClientUserKongregateInfo& OutKongregateInfo
+        ,FBPClientUserPsnInfo& OutPsnInfo
+        ,FBPClientUserGoogleInfo& OutGoogleInfo
+        ,FBPClientUserXboxInfo& OutXboxInfo
+        ,FBPClientUserCustomIdInfo& OutCustomIdInfo
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -2919,6 +2926,31 @@ void UPFClientProxyLibrary::BreakBPClientUserAccountInfo(
 	if (In.Data.FacebookInfo.IsValid()) {    OutFacebookInfo.Data = *In.Data.FacebookInfo;}
 	if (In.Data.SteamInfo.IsValid()) {    OutSteamInfo.Data = *In.Data.SteamInfo;}
 	if (In.Data.GameCenterInfo.IsValid()) {    OutGameCenterInfo.Data = *In.Data.GameCenterInfo;}
+	if (In.Data.IosDeviceInfo.IsValid()) {    OutIosDeviceInfo.Data = *In.Data.IosDeviceInfo;}
+	if (In.Data.AndroidDeviceInfo.IsValid()) {    OutAndroidDeviceInfo.Data = *In.Data.AndroidDeviceInfo;}
+	if (In.Data.KongregateInfo.IsValid()) {    OutKongregateInfo.Data = *In.Data.KongregateInfo;}
+	if (In.Data.PsnInfo.IsValid()) {    OutPsnInfo.Data = *In.Data.PsnInfo;}
+	if (In.Data.GoogleInfo.IsValid()) {    OutGoogleInfo.Data = *In.Data.GoogleInfo;}
+	if (In.Data.XboxInfo.IsValid()) {    OutXboxInfo.Data = *In.Data.XboxInfo;}
+	if (In.Data.CustomIdInfo.IsValid()) {    OutCustomIdInfo.Data = *In.Data.CustomIdInfo;}
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientUserAndroidDeviceInfo(
+		const FBPClientUserAndroidDeviceInfo& In
+        ,FString& OutAndroidDeviceId
+	)
+{
+    OutAndroidDeviceId = In.Data.AndroidDeviceId;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientUserCustomIdInfo(
+		const FBPClientUserCustomIdInfo& In
+        ,FString& OutCustomId
+	)
+{
+    OutCustomId = In.Data.CustomId;
 	
 }
 
@@ -2961,6 +2993,41 @@ void UPFClientProxyLibrary::BreakBPClientUserGameCenterInfo(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientUserGoogleInfo(
+		const FBPClientUserGoogleInfo& In
+        ,FString& OutGoogleId
+        ,FString& OutGoogleEmail
+        ,FString& OutGoogleLocale
+        ,FString& OutGoogleGender
+	)
+{
+    OutGoogleId = In.Data.GoogleId;
+	OutGoogleEmail = In.Data.GoogleEmail;
+	OutGoogleLocale = In.Data.GoogleLocale;
+	OutGoogleGender = In.Data.GoogleGender;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientUserIosDeviceInfo(
+		const FBPClientUserIosDeviceInfo& In
+        ,FString& OutIosDeviceId
+	)
+{
+    OutIosDeviceId = In.Data.IosDeviceId;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientUserKongregateInfo(
+		const FBPClientUserKongregateInfo& In
+        ,FString& OutKongregateId
+        ,FString& OutKongregateName
+	)
+{
+    OutKongregateId = In.Data.KongregateId;
+	OutKongregateName = In.Data.KongregateName;
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientUserOrigination(
 		const FBPClientUserOrigination& In
 	)
@@ -2974,6 +3041,17 @@ void UPFClientProxyLibrary::BreakBPClientUserPrivateAccountInfo(
 	)
 {
     OutEmail = In.Data.Email;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientUserPsnInfo(
+		const FBPClientUserPsnInfo& In
+        ,FString& OutPsnAccountId
+        ,FString& OutPsnOnlineId
+	)
+{
+    OutPsnAccountId = In.Data.PsnAccountId;
+	OutPsnOnlineId = In.Data.PsnOnlineId;
 	
 }
 
@@ -3014,6 +3092,15 @@ void UPFClientProxyLibrary::BreakBPClientUserTitleInfo(
 	
 	
 	OutisBanned = In.Data.isBanned;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientUserXboxInfo(
+		const FBPClientUserXboxInfo& In
+        ,FString& OutXboxUserId
+	)
+{
+    OutXboxUserId = In.Data.XboxUserId;
 	
 }
 
