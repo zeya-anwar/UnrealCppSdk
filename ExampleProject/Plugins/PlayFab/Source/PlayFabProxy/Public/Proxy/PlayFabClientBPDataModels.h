@@ -1156,15 +1156,15 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientItemInstanceDelegate, const FBPClientItemInstance&, Result);
 
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientItemPuchaseRequest"))
-struct FBPClientItemPuchaseRequest
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientItemPurchaseRequest"))
+struct FBPClientItemPurchaseRequest
 {
 	GENERATED_USTRUCT_BODY()
 public:
-	 PlayFab::ClientModels::FItemPuchaseRequest Data; 
+	 PlayFab::ClientModels::FItemPurchaseRequest Data; 
 };
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientItemPuchaseRequestDelegate, const FBPClientItemPuchaseRequest&, Result);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientItemPurchaseRequestDelegate, const FBPClientItemPurchaseRequest&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientLinkAndroidDeviceIDRequest"))
 struct FBPClientLinkAndroidDeviceIDRequest

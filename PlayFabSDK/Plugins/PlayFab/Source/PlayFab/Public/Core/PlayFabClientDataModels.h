@@ -4897,7 +4897,7 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
-	struct PLAYFAB_API FItemPuchaseRequest : public FPlayFabBaseModel
+	struct PLAYFAB_API FItemPurchaseRequest : public FPlayFabBaseModel
     {
 		
 		// Unique ItemId of the item to purchase.
@@ -4909,7 +4909,7 @@ namespace ClientModels
 		// [optional] Items to be upgraded as a result of this purchase (upgraded items are hidden, as they are "replaced" by the new items).
 		TArray<FString> UpgradeFromItems;
 	
-        FItemPuchaseRequest() :
+        FItemPurchaseRequest() :
 			FPlayFabBaseModel(),
 			ItemId(),
 			Quantity(0),
@@ -4917,7 +4917,7 @@ namespace ClientModels
 			UpgradeFromItems()
 			{}
 		
-		FItemPuchaseRequest(const FItemPuchaseRequest& src) :
+		FItemPurchaseRequest(const FItemPurchaseRequest& src) :
 			FPlayFabBaseModel(),
 			ItemId(src.ItemId),
 			Quantity(src.Quantity),
@@ -4925,12 +4925,12 @@ namespace ClientModels
 			UpgradeFromItems(src.UpgradeFromItems)
 			{}
 			
-		FItemPuchaseRequest(const TSharedPtr<FJsonObject>& obj) : FItemPuchaseRequest()
+		FItemPurchaseRequest(const TSharedPtr<FJsonObject>& obj) : FItemPurchaseRequest()
         {
             readFromValue(obj);
         }
 		
-		~FItemPuchaseRequest();
+		~FItemPurchaseRequest();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -7316,7 +7316,7 @@ namespace ClientModels
 		// [optional] Store through which to purchase items. If not set, prices will be pulled from the catalog itself.
 		FString StoreId;
 		// Array of items to purchase.
-		TArray<FItemPuchaseRequest> Items;
+		TArray<FItemPurchaseRequest> Items;
 	
         FStartPurchaseRequest() :
 			FPlayFabBaseModel(),

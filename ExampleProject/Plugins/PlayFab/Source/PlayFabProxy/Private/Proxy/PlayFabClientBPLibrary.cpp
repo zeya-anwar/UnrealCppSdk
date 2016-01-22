@@ -1516,8 +1516,8 @@ void UPFClientProxyLibrary::BreakBPClientItemInstance(
 	
 }
 
-void UPFClientProxyLibrary::BreakBPClientItemPuchaseRequest(
-		const FBPClientItemPuchaseRequest& In
+void UPFClientProxyLibrary::BreakBPClientItemPurchaseRequest(
+		const FBPClientItemPurchaseRequest& In
         ,FString& OutItemId
         ,int32& OutQuantity
         ,FString& OutAnnotation
@@ -2450,14 +2450,14 @@ void UPFClientProxyLibrary::BreakBPClientStartPurchaseRequest(
 		const FBPClientStartPurchaseRequest& In
         ,FString& OutCatalogVersion
         ,FString& OutStoreId
-        ,TArray<FBPClientItemPuchaseRequest>& OutItems
+        ,TArray<FBPClientItemPurchaseRequest>& OutItems
 	)
 {
     OutCatalogVersion = In.Data.CatalogVersion;
 	OutStoreId = In.Data.StoreId;
-	for (const PlayFab::ClientModels::FItemPuchaseRequest& elem : In.Data.Items)
+	for (const PlayFab::ClientModels::FItemPurchaseRequest& elem : In.Data.Items)
     {
-        FBPClientItemPuchaseRequest result;
+        FBPClientItemPurchaseRequest result;
         result.Data = elem;
         OutItems.Add(result);
     }

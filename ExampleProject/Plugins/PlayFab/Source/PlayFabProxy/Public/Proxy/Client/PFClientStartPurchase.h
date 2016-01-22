@@ -21,7 +21,7 @@ public:
 	
 	// Creates an order for a list of items from the title catalog
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Player Item Management")
-	static UPFClientStartPurchase* StartPurchase(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InCatalogVersion, const FString& InStoreId, const TArray<FBPClientItemPuchaseRequest>& InItems);
+	static UPFClientStartPurchase* StartPurchase(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InCatalogVersion, const FString& InStoreId, const TArray<FBPClientItemPurchaseRequest>& InItems);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

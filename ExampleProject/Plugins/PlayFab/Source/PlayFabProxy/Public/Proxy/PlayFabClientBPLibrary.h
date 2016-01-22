@@ -845,8 +845,8 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientItemPuchaseRequest(
-		const FBPClientItemPuchaseRequest& In
+	static void BreakBPClientItemPurchaseRequest(
+		const FBPClientItemPurchaseRequest& In
         ,FString& OutItemId
         ,int32& OutQuantity
         ,FString& OutAnnotation
@@ -1415,7 +1415,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPClientStartPurchaseRequest& In
         ,FString& OutCatalogVersion
         ,FString& OutStoreId
-        ,TArray<FBPClientItemPuchaseRequest>& OutItems
+        ,TArray<FBPClientItemPurchaseRequest>& OutItems
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))

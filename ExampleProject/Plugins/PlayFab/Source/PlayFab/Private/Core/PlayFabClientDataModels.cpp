@@ -7636,12 +7636,12 @@ bool PlayFab::ClientModels::FGrantCharacterToUserResult::readFromValue(const TSh
 }
 
 
-PlayFab::ClientModels::FItemPuchaseRequest::~FItemPuchaseRequest()
+PlayFab::ClientModels::FItemPurchaseRequest::~FItemPurchaseRequest()
 {
     
 }
 
-void PlayFab::ClientModels::FItemPuchaseRequest::writeJSON(JsonWriter& writer) const
+void PlayFab::ClientModels::FItemPurchaseRequest::writeJSON(JsonWriter& writer) const
 {
     writer->WriteObjectStart();
     
@@ -7666,7 +7666,7 @@ void PlayFab::ClientModels::FItemPuchaseRequest::writeJSON(JsonWriter& writer) c
     writer->WriteObjectEnd();
 }
 
-bool PlayFab::ClientModels::FItemPuchaseRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+bool PlayFab::ClientModels::FItemPurchaseRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
 {
 	bool HasSucceeded = true; 
 	
@@ -11024,7 +11024,7 @@ void PlayFab::ClientModels::FStartPurchaseRequest::writeJSON(JsonWriter& writer)
     
         writer->WriteArrayStart(TEXT("Items"));
     
-        for (const FItemPuchaseRequest& item : Items)
+        for (const FItemPurchaseRequest& item : Items)
         {
             item.writeJSON(writer);
         }
@@ -11059,7 +11059,7 @@ bool PlayFab::ClientModels::FStartPurchaseRequest::readFromValue(const TSharedPt
         {
             TSharedPtr<FJsonValue> CurrentItem = ItemsArray[Idx];
             
-            Items.Add(FItemPuchaseRequest(CurrentItem->AsObject()));
+            Items.Add(FItemPurchaseRequest(CurrentItem->AsObject()));
         }
     }
 
