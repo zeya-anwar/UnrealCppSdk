@@ -1110,6 +1110,30 @@ void UPFClientProxyLibrary::BreakBPClientGetPlayFabIDsFromGoogleIDsResult(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientGetPlayFabIDsFromKongregateIDsRequest(
+		const FBPClientGetPlayFabIDsFromKongregateIDsRequest& In
+        ,TArray<FString>& OutKongregateIDs
+	)
+{
+    OutKongregateIDs = In.Data.KongregateIDs;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetPlayFabIDsFromKongregateIDsResult(
+		const FBPClientGetPlayFabIDsFromKongregateIDsResult& In
+        ,TArray<FBPClientKongregatePlayFabIdPair>& OutData
+	)
+{
+    for (const PlayFab::ClientModels::FKongregatePlayFabIdPair& elem : In.Data.Data)
+    {
+        FBPClientKongregatePlayFabIdPair result;
+        result.Data = elem;
+        OutData.Add(result);
+    }
+
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientGetPlayFabIDsFromPSNAccountIDsRequest(
 		const FBPClientGetPlayFabIDsFromPSNAccountIDsRequest& In
         ,TArray<FString>& OutPSNAccountIDs
@@ -1528,6 +1552,17 @@ void UPFClientProxyLibrary::BreakBPClientItemPurchaseRequest(
 	OutQuantity = In.Data.Quantity;
 	OutAnnotation = In.Data.Annotation;
 	OutUpgradeFromItems = In.Data.UpgradeFromItems;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientKongregatePlayFabIdPair(
+		const FBPClientKongregatePlayFabIdPair& In
+        ,FString& OutKongregateId
+        ,FString& OutPlayFabId
+	)
+{
+    OutKongregateId = In.Data.KongregateId;
+	OutPlayFabId = In.Data.PlayFabId;
 	
 }
 

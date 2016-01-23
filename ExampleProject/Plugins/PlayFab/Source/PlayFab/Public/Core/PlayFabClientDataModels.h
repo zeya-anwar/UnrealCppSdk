@@ -3822,6 +3822,91 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FGetPlayFabIDsFromKongregateIDsRequest : public FPlayFabBaseModel
+    {
+		
+		// Array of unique Kongregate identifiers (Kongregate's user_id) for which the title needs to get PlayFab identifiers.
+		TArray<FString> KongregateIDs;
+	
+        FGetPlayFabIDsFromKongregateIDsRequest() :
+			FPlayFabBaseModel(),
+			KongregateIDs()
+			{}
+		
+		FGetPlayFabIDsFromKongregateIDsRequest(const FGetPlayFabIDsFromKongregateIDsRequest& src) :
+			FPlayFabBaseModel(),
+			KongregateIDs(src.KongregateIDs)
+			{}
+			
+		FGetPlayFabIDsFromKongregateIDsRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayFabIDsFromKongregateIDsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayFabIDsFromKongregateIDsRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FKongregatePlayFabIdPair : public FPlayFabBaseModel
+    {
+		
+		// [optional] Unique Kongregate identifier for a user.
+		FString KongregateId;
+		// [optional] Unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Kongregate identifier.
+		FString PlayFabId;
+	
+        FKongregatePlayFabIdPair() :
+			FPlayFabBaseModel(),
+			KongregateId(),
+			PlayFabId()
+			{}
+		
+		FKongregatePlayFabIdPair(const FKongregatePlayFabIdPair& src) :
+			FPlayFabBaseModel(),
+			KongregateId(src.KongregateId),
+			PlayFabId(src.PlayFabId)
+			{}
+			
+		FKongregatePlayFabIdPair(const TSharedPtr<FJsonObject>& obj) : FKongregatePlayFabIdPair()
+        {
+            readFromValue(obj);
+        }
+		
+		~FKongregatePlayFabIdPair();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayFabIDsFromKongregateIDsResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Mapping of Kongregate identifiers to PlayFab identifiers.
+		TArray<FKongregatePlayFabIdPair> Data;
+	
+        FGetPlayFabIDsFromKongregateIDsResult() :
+			FPlayFabBaseModel(),
+			Data()
+			{}
+		
+		FGetPlayFabIDsFromKongregateIDsResult(const FGetPlayFabIDsFromKongregateIDsResult& src) :
+			FPlayFabBaseModel(),
+			Data(src.Data)
+			{}
+			
+		FGetPlayFabIDsFromKongregateIDsResult(const TSharedPtr<FJsonObject>& obj) : FGetPlayFabIDsFromKongregateIDsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayFabIDsFromKongregateIDsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FGetPlayFabIDsFromPSNAccountIDsRequest : public FPlayFabBaseModel
     {
 		

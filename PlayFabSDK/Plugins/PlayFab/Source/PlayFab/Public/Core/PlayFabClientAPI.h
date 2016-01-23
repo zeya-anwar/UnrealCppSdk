@@ -30,6 +30,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FGetPlayFabIDsFromFacebookIDsDelegate, const ClientModels::FGetPlayFabIDsFromFacebookIDsResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayFabIDsFromGameCenterIDsDelegate, const ClientModels::FGetPlayFabIDsFromGameCenterIDsResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayFabIDsFromGoogleIDsDelegate, const ClientModels::FGetPlayFabIDsFromGoogleIDsResult&);
+        DECLARE_DELEGATE_OneParam(FGetPlayFabIDsFromKongregateIDsDelegate, const ClientModels::FGetPlayFabIDsFromKongregateIDsResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayFabIDsFromPSNAccountIDsDelegate, const ClientModels::FGetPlayFabIDsFromPSNAccountIDsResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayFabIDsFromSteamIDsDelegate, const ClientModels::FGetPlayFabIDsFromSteamIDsResult&);
         DECLARE_DELEGATE_OneParam(FGetUserCombinedInfoDelegate, const ClientModels::FGetUserCombinedInfoResult&);
@@ -228,6 +229,10 @@ namespace PlayFab
          * Retrieves the unique PlayFab identifiers for the given set of Google identifiers. The Google identifiers are the IDs for the user accounts, available as "id" in the Google+ People API calls.
          */
         bool GetPlayFabIDsFromGoogleIDs(ClientModels::FGetPlayFabIDsFromGoogleIDsRequest& request, const FGetPlayFabIDsFromGoogleIDsDelegate& SuccessDelegate = FGetPlayFabIDsFromGoogleIDsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Retrieves the unique PlayFab identifiers for the given set of Kongregate identifiers. The Kongregate identifiers are the IDs for the user accounts, available as "user_id" from the Kongregate API methods(ex: http://developers.kongregate.com/docs/client/getUserId).
+         */
+        bool GetPlayFabIDsFromKongregateIDs(ClientModels::FGetPlayFabIDsFromKongregateIDsRequest& request, const FGetPlayFabIDsFromKongregateIDsDelegate& SuccessDelegate = FGetPlayFabIDsFromKongregateIDsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves the unique PlayFab identifiers for the given set of PlayStation Network identifiers.
          */
@@ -683,6 +688,7 @@ namespace PlayFab
         void OnGetPlayFabIDsFromFacebookIDsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayFabIDsFromFacebookIDsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayFabIDsFromGameCenterIDsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayFabIDsFromGameCenterIDsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayFabIDsFromGoogleIDsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayFabIDsFromGoogleIDsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetPlayFabIDsFromKongregateIDsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayFabIDsFromKongregateIDsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayFabIDsFromPSNAccountIDsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayFabIDsFromPSNAccountIDsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayFabIDsFromSteamIDsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayFabIDsFromSteamIDsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserCombinedInfoResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserCombinedInfoDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

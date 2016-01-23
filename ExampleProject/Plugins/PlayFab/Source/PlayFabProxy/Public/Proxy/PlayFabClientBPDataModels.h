@@ -856,6 +856,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetPlayFabIDsFromGoogleIDsResultDelegate, const FBPClientGetPlayFabIDsFromGoogleIDsResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetPlayFabIDsFromKongregateIDsRequest"))
+struct FBPClientGetPlayFabIDsFromKongregateIDsRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FGetPlayFabIDsFromKongregateIDsRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetPlayFabIDsFromKongregateIDsRequestDelegate, const FBPClientGetPlayFabIDsFromKongregateIDsRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetPlayFabIDsFromKongregateIDsResult"))
+struct FBPClientGetPlayFabIDsFromKongregateIDsResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FGetPlayFabIDsFromKongregateIDsResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetPlayFabIDsFromKongregateIDsResultDelegate, const FBPClientGetPlayFabIDsFromKongregateIDsResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetPlayFabIDsFromPSNAccountIDsRequest"))
 struct FBPClientGetPlayFabIDsFromPSNAccountIDsRequest
 {
@@ -1165,6 +1185,16 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientItemPurchaseRequestDelegate, const FBPClientItemPurchaseRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientKongregatePlayFabIdPair"))
+struct FBPClientKongregatePlayFabIdPair
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FKongregatePlayFabIdPair Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientKongregatePlayFabIdPairDelegate, const FBPClientKongregatePlayFabIdPair&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientLinkAndroidDeviceIDRequest"))
 struct FBPClientLinkAndroidDeviceIDRequest

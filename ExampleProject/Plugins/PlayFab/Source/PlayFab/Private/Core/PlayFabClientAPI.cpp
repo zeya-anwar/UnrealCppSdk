@@ -637,6 +637,33 @@ void UPlayFabClientAPI::OnGetPlayFabIDsFromGoogleIDsResult(FHttpRequestPtr HttpR
     }
 }
 
+bool UPlayFabClientAPI::GetPlayFabIDsFromKongregateIDs(
+    ClientModels::FGetPlayFabIDsFromKongregateIDsRequest& request,
+    const FGetPlayFabIDsFromKongregateIDsDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/GetPlayFabIDsFromKongregateIDs")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnGetPlayFabIDsFromKongregateIDsResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabClientAPI::OnGetPlayFabIDsFromKongregateIDsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayFabIDsFromKongregateIDsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ClientModels::FGetPlayFabIDsFromKongregateIDsResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
 bool UPlayFabClientAPI::GetPlayFabIDsFromPSNAccountIDs(
     ClientModels::FGetPlayFabIDsFromPSNAccountIDsRequest& request,
     const FGetPlayFabIDsFromPSNAccountIDsDelegate& SuccessDelegate,

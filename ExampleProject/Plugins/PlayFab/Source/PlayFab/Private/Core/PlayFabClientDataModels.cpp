@@ -5916,6 +5916,124 @@ bool PlayFab::ClientModels::FGetPlayFabIDsFromGoogleIDsResult::readFromValue(con
 }
 
 
+PlayFab::ClientModels::FGetPlayFabIDsFromKongregateIDsRequest::~FGetPlayFabIDsFromKongregateIDsRequest()
+{
+    
+}
+
+void PlayFab::ClientModels::FGetPlayFabIDsFromKongregateIDsRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+        writer->WriteArrayStart(TEXT("KongregateIDs"));
+    
+        for (const FString& item : KongregateIDs)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+    
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FGetPlayFabIDsFromKongregateIDsRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    HasSucceeded &= obj->TryGetStringArrayField(TEXT("KongregateIDs"),KongregateIDs);
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FKongregatePlayFabIdPair::~FKongregatePlayFabIdPair()
+{
+    
+}
+
+void PlayFab::ClientModels::FKongregatePlayFabIdPair::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(KongregateId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("KongregateId")); writer->WriteValue(KongregateId); }
+	
+    if(PlayFabId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FKongregatePlayFabIdPair::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> KongregateIdValue = obj->TryGetField(TEXT("KongregateId"));
+    if (KongregateIdValue.IsValid()&& !KongregateIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(KongregateIdValue->TryGetString(TmpValue)) {KongregateId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FGetPlayFabIDsFromKongregateIDsResult::~FGetPlayFabIDsFromKongregateIDsResult()
+{
+    
+}
+
+void PlayFab::ClientModels::FGetPlayFabIDsFromKongregateIDsResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Data.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("Data"));
+    
+        for (const FKongregatePlayFabIdPair& item : Data)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FGetPlayFabIDsFromKongregateIDsResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&DataArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Data"));
+        for (int32 Idx = 0; Idx < DataArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = DataArray[Idx];
+            
+            Data.Add(FKongregatePlayFabIdPair(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ClientModels::FGetPlayFabIDsFromPSNAccountIDsRequest::~FGetPlayFabIDsFromPSNAccountIDsRequest()
 {
     

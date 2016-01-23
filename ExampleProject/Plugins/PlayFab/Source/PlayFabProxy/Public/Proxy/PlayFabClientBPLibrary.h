@@ -626,6 +626,18 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientGetPlayFabIDsFromKongregateIDsRequest(
+		const FBPClientGetPlayFabIDsFromKongregateIDsRequest& In
+        ,TArray<FString>& OutKongregateIDs
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientGetPlayFabIDsFromKongregateIDsResult(
+		const FBPClientGetPlayFabIDsFromKongregateIDsResult& In
+        ,TArray<FBPClientKongregatePlayFabIdPair>& OutData
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientGetPlayFabIDsFromPSNAccountIDsRequest(
 		const FBPClientGetPlayFabIDsFromPSNAccountIDsRequest& In
         ,TArray<FString>& OutPSNAccountIDs
@@ -851,6 +863,13 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,int32& OutQuantity
         ,FString& OutAnnotation
         ,TArray<FString>& OutUpgradeFromItems
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientKongregatePlayFabIdPair(
+		const FBPClientKongregatePlayFabIdPair& In
+        ,FString& OutKongregateId
+        ,FString& OutPlayFabId
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
