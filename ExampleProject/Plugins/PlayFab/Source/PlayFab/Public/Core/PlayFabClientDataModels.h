@@ -2001,25 +2001,248 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FUserIosDeviceInfo : public FPlayFabBaseModel
+    {
+		
+		// [optional] iOS device ID
+		FString IosDeviceId;
+	
+        FUserIosDeviceInfo() :
+			FPlayFabBaseModel(),
+			IosDeviceId()
+			{}
+		
+		FUserIosDeviceInfo(const FUserIosDeviceInfo& src) :
+			FPlayFabBaseModel(),
+			IosDeviceId(src.IosDeviceId)
+			{}
+			
+		FUserIosDeviceInfo(const TSharedPtr<FJsonObject>& obj) : FUserIosDeviceInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUserIosDeviceInfo();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUserAndroidDeviceInfo : public FPlayFabBaseModel
+    {
+		
+		// [optional] Android device ID
+		FString AndroidDeviceId;
+	
+        FUserAndroidDeviceInfo() :
+			FPlayFabBaseModel(),
+			AndroidDeviceId()
+			{}
+		
+		FUserAndroidDeviceInfo(const FUserAndroidDeviceInfo& src) :
+			FPlayFabBaseModel(),
+			AndroidDeviceId(src.AndroidDeviceId)
+			{}
+			
+		FUserAndroidDeviceInfo(const TSharedPtr<FJsonObject>& obj) : FUserAndroidDeviceInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUserAndroidDeviceInfo();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUserKongregateInfo : public FPlayFabBaseModel
+    {
+		
+		// [optional] Kongregate ID
+		FString KongregateId;
+		// [optional] Kongregate Username
+		FString KongregateName;
+	
+        FUserKongregateInfo() :
+			FPlayFabBaseModel(),
+			KongregateId(),
+			KongregateName()
+			{}
+		
+		FUserKongregateInfo(const FUserKongregateInfo& src) :
+			FPlayFabBaseModel(),
+			KongregateId(src.KongregateId),
+			KongregateName(src.KongregateName)
+			{}
+			
+		FUserKongregateInfo(const TSharedPtr<FJsonObject>& obj) : FUserKongregateInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUserKongregateInfo();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUserPsnInfo : public FPlayFabBaseModel
+    {
+		
+		// [optional] PSN account ID
+		FString PsnAccountId;
+		// [optional] PSN online ID
+		FString PsnOnlineId;
+	
+        FUserPsnInfo() :
+			FPlayFabBaseModel(),
+			PsnAccountId(),
+			PsnOnlineId()
+			{}
+		
+		FUserPsnInfo(const FUserPsnInfo& src) :
+			FPlayFabBaseModel(),
+			PsnAccountId(src.PsnAccountId),
+			PsnOnlineId(src.PsnOnlineId)
+			{}
+			
+		FUserPsnInfo(const TSharedPtr<FJsonObject>& obj) : FUserPsnInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUserPsnInfo();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUserGoogleInfo : public FPlayFabBaseModel
+    {
+		
+		// [optional] Google ID
+		FString GoogleId;
+		// [optional] Email address of the Google account
+		FString GoogleEmail;
+		// [optional] Locale of the Google account
+		FString GoogleLocale;
+		// [optional] Gender information of the Google account
+		FString GoogleGender;
+	
+        FUserGoogleInfo() :
+			FPlayFabBaseModel(),
+			GoogleId(),
+			GoogleEmail(),
+			GoogleLocale(),
+			GoogleGender()
+			{}
+		
+		FUserGoogleInfo(const FUserGoogleInfo& src) :
+			FPlayFabBaseModel(),
+			GoogleId(src.GoogleId),
+			GoogleEmail(src.GoogleEmail),
+			GoogleLocale(src.GoogleLocale),
+			GoogleGender(src.GoogleGender)
+			{}
+			
+		FUserGoogleInfo(const TSharedPtr<FJsonObject>& obj) : FUserGoogleInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUserGoogleInfo();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUserXboxInfo : public FPlayFabBaseModel
+    {
+		
+		// [optional] XBox user ID
+		FString XboxUserId;
+	
+        FUserXboxInfo() :
+			FPlayFabBaseModel(),
+			XboxUserId()
+			{}
+		
+		FUserXboxInfo(const FUserXboxInfo& src) :
+			FPlayFabBaseModel(),
+			XboxUserId(src.XboxUserId)
+			{}
+			
+		FUserXboxInfo(const TSharedPtr<FJsonObject>& obj) : FUserXboxInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUserXboxInfo();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUserCustomIdInfo : public FPlayFabBaseModel
+    {
+		
+		// [optional] Custom ID
+		FString CustomId;
+	
+        FUserCustomIdInfo() :
+			FPlayFabBaseModel(),
+			CustomId()
+			{}
+		
+		FUserCustomIdInfo(const FUserCustomIdInfo& src) :
+			FPlayFabBaseModel(),
+			CustomId(src.CustomId)
+			{}
+			
+		FUserCustomIdInfo(const TSharedPtr<FJsonObject>& obj) : FUserCustomIdInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUserCustomIdInfo();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FUserAccountInfo : public FPlayFabBaseModel
     {
 		
-		// [optional] unique identifier for the user account
+		// [optional] Unique identifier for the user account
 		FString PlayFabId;
-		// timestamp indicating when the user account was created
+		// Timestamp indicating when the user account was created
 		FDateTime Created;
-		// [optional] user account name in the PlayFab service
+		// [optional] User account name in the PlayFab service
 		FString Username;
-		// [optional] title-specific information for the user account
+		// [optional] Title-specific information for the user account
 		TSharedPtr<FUserTitleInfo> TitleInfo;
-		// [optional] personal information for the user which is considered more sensitive
+		// [optional] Personal information for the user which is considered more sensitive
 		TSharedPtr<FUserPrivateAccountInfo> PrivateInfo;
-		// [optional] user Facebook information, if a Facebook account has been linked
+		// [optional] User Facebook information, if a Facebook account has been linked
 		TSharedPtr<FUserFacebookInfo> FacebookInfo;
-		// [optional] user Steam information, if a Steam account has been linked
+		// [optional] User Steam information, if a Steam account has been linked
 		TSharedPtr<FUserSteamInfo> SteamInfo;
-		// [optional] user Gamecenter information, if a Gamecenter account has been linked
+		// [optional] User Gamecenter information, if a Gamecenter account has been linked
 		TSharedPtr<FUserGameCenterInfo> GameCenterInfo;
+		// [optional] User iOS device information, if an iOS device has been linked
+		TSharedPtr<FUserIosDeviceInfo> IosDeviceInfo;
+		// [optional] User Android device information, if an Android device has been linked
+		TSharedPtr<FUserAndroidDeviceInfo> AndroidDeviceInfo;
+		// [optional] User Kongregate account information, if a Kongregate account has been linked
+		TSharedPtr<FUserKongregateInfo> KongregateInfo;
+		// [optional] User PSN account information, if a PSN account has been linked
+		TSharedPtr<FUserPsnInfo> PsnInfo;
+		// [optional] User Google account information, if a Google account has been linked
+		TSharedPtr<FUserGoogleInfo> GoogleInfo;
+		// [optional] User XBox account information, if a XBox account has been linked
+		TSharedPtr<FUserXboxInfo> XboxInfo;
+		// [optional] Custom ID information, if a custom ID has been assigned
+		TSharedPtr<FUserCustomIdInfo> CustomIdInfo;
 	
         FUserAccountInfo() :
 			FPlayFabBaseModel(),
@@ -2030,7 +2253,14 @@ namespace ClientModels
 			PrivateInfo(nullptr),
 			FacebookInfo(nullptr),
 			SteamInfo(nullptr),
-			GameCenterInfo(nullptr)
+			GameCenterInfo(nullptr),
+			IosDeviceInfo(nullptr),
+			AndroidDeviceInfo(nullptr),
+			KongregateInfo(nullptr),
+			PsnInfo(nullptr),
+			GoogleInfo(nullptr),
+			XboxInfo(nullptr),
+			CustomIdInfo(nullptr)
 			{}
 		
 		FUserAccountInfo(const FUserAccountInfo& src) :
@@ -2042,7 +2272,14 @@ namespace ClientModels
 			PrivateInfo(src.PrivateInfo.IsValid() ? MakeShareable(new FUserPrivateAccountInfo(*src.PrivateInfo)) : nullptr),
 			FacebookInfo(src.FacebookInfo.IsValid() ? MakeShareable(new FUserFacebookInfo(*src.FacebookInfo)) : nullptr),
 			SteamInfo(src.SteamInfo.IsValid() ? MakeShareable(new FUserSteamInfo(*src.SteamInfo)) : nullptr),
-			GameCenterInfo(src.GameCenterInfo.IsValid() ? MakeShareable(new FUserGameCenterInfo(*src.GameCenterInfo)) : nullptr)
+			GameCenterInfo(src.GameCenterInfo.IsValid() ? MakeShareable(new FUserGameCenterInfo(*src.GameCenterInfo)) : nullptr),
+			IosDeviceInfo(src.IosDeviceInfo.IsValid() ? MakeShareable(new FUserIosDeviceInfo(*src.IosDeviceInfo)) : nullptr),
+			AndroidDeviceInfo(src.AndroidDeviceInfo.IsValid() ? MakeShareable(new FUserAndroidDeviceInfo(*src.AndroidDeviceInfo)) : nullptr),
+			KongregateInfo(src.KongregateInfo.IsValid() ? MakeShareable(new FUserKongregateInfo(*src.KongregateInfo)) : nullptr),
+			PsnInfo(src.PsnInfo.IsValid() ? MakeShareable(new FUserPsnInfo(*src.PsnInfo)) : nullptr),
+			GoogleInfo(src.GoogleInfo.IsValid() ? MakeShareable(new FUserGoogleInfo(*src.GoogleInfo)) : nullptr),
+			XboxInfo(src.XboxInfo.IsValid() ? MakeShareable(new FUserXboxInfo(*src.XboxInfo)) : nullptr),
+			CustomIdInfo(src.CustomIdInfo.IsValid() ? MakeShareable(new FUserCustomIdInfo(*src.CustomIdInfo)) : nullptr)
 			{}
 			
 		FUserAccountInfo(const TSharedPtr<FJsonObject>& obj) : FUserAccountInfo()
@@ -2430,6 +2667,60 @@ namespace ClientModels
         }
 		
 		~FGetCharacterLeaderboardResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetCharacterStatisticsRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID for a specific character owned by a user
+		FString CharacterId;
+	
+        FGetCharacterStatisticsRequest() :
+			FPlayFabBaseModel(),
+			CharacterId()
+			{}
+		
+		FGetCharacterStatisticsRequest(const FGetCharacterStatisticsRequest& src) :
+			FPlayFabBaseModel(),
+			CharacterId(src.CharacterId)
+			{}
+			
+		FGetCharacterStatisticsRequest(const TSharedPtr<FJsonObject>& obj) : FGetCharacterStatisticsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetCharacterStatisticsRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetCharacterStatisticsResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] The requested character statistics.
+		TMap<FString, int32> CharacterStatistics;
+	
+        FGetCharacterStatisticsResult() :
+			FPlayFabBaseModel(),
+			CharacterStatistics()
+			{}
+		
+		FGetCharacterStatisticsResult(const FGetCharacterStatisticsResult& src) :
+			FPlayFabBaseModel(),
+			CharacterStatistics(src.CharacterStatistics)
+			{}
+			
+		FGetCharacterStatisticsResult(const TSharedPtr<FJsonObject>& obj) : FGetCharacterStatisticsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetCharacterStatisticsResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -3531,6 +3822,91 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FGetPlayFabIDsFromKongregateIDsRequest : public FPlayFabBaseModel
+    {
+		
+		// Array of unique Kongregate identifiers (Kongregate's user_id) for which the title needs to get PlayFab identifiers.
+		TArray<FString> KongregateIDs;
+	
+        FGetPlayFabIDsFromKongregateIDsRequest() :
+			FPlayFabBaseModel(),
+			KongregateIDs()
+			{}
+		
+		FGetPlayFabIDsFromKongregateIDsRequest(const FGetPlayFabIDsFromKongregateIDsRequest& src) :
+			FPlayFabBaseModel(),
+			KongregateIDs(src.KongregateIDs)
+			{}
+			
+		FGetPlayFabIDsFromKongregateIDsRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayFabIDsFromKongregateIDsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayFabIDsFromKongregateIDsRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FKongregatePlayFabIdPair : public FPlayFabBaseModel
+    {
+		
+		// [optional] Unique Kongregate identifier for a user.
+		FString KongregateId;
+		// [optional] Unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Kongregate identifier.
+		FString PlayFabId;
+	
+        FKongregatePlayFabIdPair() :
+			FPlayFabBaseModel(),
+			KongregateId(),
+			PlayFabId()
+			{}
+		
+		FKongregatePlayFabIdPair(const FKongregatePlayFabIdPair& src) :
+			FPlayFabBaseModel(),
+			KongregateId(src.KongregateId),
+			PlayFabId(src.PlayFabId)
+			{}
+			
+		FKongregatePlayFabIdPair(const TSharedPtr<FJsonObject>& obj) : FKongregatePlayFabIdPair()
+        {
+            readFromValue(obj);
+        }
+		
+		~FKongregatePlayFabIdPair();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayFabIDsFromKongregateIDsResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Mapping of Kongregate identifiers to PlayFab identifiers.
+		TArray<FKongregatePlayFabIdPair> Data;
+	
+        FGetPlayFabIDsFromKongregateIDsResult() :
+			FPlayFabBaseModel(),
+			Data()
+			{}
+		
+		FGetPlayFabIDsFromKongregateIDsResult(const FGetPlayFabIDsFromKongregateIDsResult& src) :
+			FPlayFabBaseModel(),
+			Data(src.Data)
+			{}
+			
+		FGetPlayFabIDsFromKongregateIDsResult(const TSharedPtr<FJsonObject>& obj) : FGetPlayFabIDsFromKongregateIDsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayFabIDsFromKongregateIDsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FGetPlayFabIDsFromPSNAccountIDsRequest : public FPlayFabBaseModel
     {
 		
@@ -4606,7 +4982,7 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
-	struct PLAYFAB_API FItemPuchaseRequest : public FPlayFabBaseModel
+	struct PLAYFAB_API FItemPurchaseRequest : public FPlayFabBaseModel
     {
 		
 		// Unique ItemId of the item to purchase.
@@ -4618,7 +4994,7 @@ namespace ClientModels
 		// [optional] Items to be upgraded as a result of this purchase (upgraded items are hidden, as they are "replaced" by the new items).
 		TArray<FString> UpgradeFromItems;
 	
-        FItemPuchaseRequest() :
+        FItemPurchaseRequest() :
 			FPlayFabBaseModel(),
 			ItemId(),
 			Quantity(0),
@@ -4626,7 +5002,7 @@ namespace ClientModels
 			UpgradeFromItems()
 			{}
 		
-		FItemPuchaseRequest(const FItemPuchaseRequest& src) :
+		FItemPurchaseRequest(const FItemPurchaseRequest& src) :
 			FPlayFabBaseModel(),
 			ItemId(src.ItemId),
 			Quantity(src.Quantity),
@@ -4634,12 +5010,12 @@ namespace ClientModels
 			UpgradeFromItems(src.UpgradeFromItems)
 			{}
 			
-		FItemPuchaseRequest(const TSharedPtr<FJsonObject>& obj) : FItemPuchaseRequest()
+		FItemPurchaseRequest(const TSharedPtr<FJsonObject>& obj) : FItemPurchaseRequest()
         {
             readFromValue(obj);
         }
 		
-		~FItemPuchaseRequest();
+		~FItemPurchaseRequest();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -5331,13 +5707,16 @@ namespace ClientModels
 		bool NewlyCreated;
 		// [optional] Settings specific to this user.
 		TSharedPtr<FUserSettings> SettingsForUser;
+		// [optional] The time of this user's previous login. If there was no previous login, then it's DateTime.MinValue
+		OptionalTime LastLoginTime;
 	
         FLoginResult() :
 			FPlayFabBaseModel(),
 			SessionTicket(),
 			PlayFabId(),
 			NewlyCreated(false),
-			SettingsForUser(nullptr)
+			SettingsForUser(nullptr),
+			LastLoginTime()
 			{}
 		
 		FLoginResult(const FLoginResult& src) :
@@ -5345,7 +5724,8 @@ namespace ClientModels
 			SessionTicket(src.SessionTicket),
 			PlayFabId(src.PlayFabId),
 			NewlyCreated(src.NewlyCreated),
-			SettingsForUser(src.SettingsForUser.IsValid() ? MakeShareable(new FUserSettings(*src.SettingsForUser)) : nullptr)
+			SettingsForUser(src.SettingsForUser.IsValid() ? MakeShareable(new FUserSettings(*src.SettingsForUser)) : nullptr),
+			LastLoginTime(src.LastLoginTime)
 			{}
 			
 		FLoginResult(const TSharedPtr<FJsonObject>& obj) : FLoginResult()
@@ -7021,7 +7401,7 @@ namespace ClientModels
 		// [optional] Store through which to purchase items. If not set, prices will be pulled from the catalog itself.
 		FString StoreId;
 		// Array of items to purchase.
-		TArray<FItemPuchaseRequest> Items;
+		TArray<FItemPurchaseRequest> Items;
 	
         FStartPurchaseRequest() :
 			FPlayFabBaseModel(),
@@ -7764,6 +8144,60 @@ namespace ClientModels
         }
 		
 		~FUpdateCharacterDataResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUpdateCharacterStatisticsRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID for a specific character owned by a user
+		FString CharacterId;
+		// [optional] Statistics to be updated with the provided values.
+		TMap<FString, int32> CharacterStatistics;
+	
+        FUpdateCharacterStatisticsRequest() :
+			FPlayFabBaseModel(),
+			CharacterId(),
+			CharacterStatistics()
+			{}
+		
+		FUpdateCharacterStatisticsRequest(const FUpdateCharacterStatisticsRequest& src) :
+			FPlayFabBaseModel(),
+			CharacterId(src.CharacterId),
+			CharacterStatistics(src.CharacterStatistics)
+			{}
+			
+		FUpdateCharacterStatisticsRequest(const TSharedPtr<FJsonObject>& obj) : FUpdateCharacterStatisticsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUpdateCharacterStatisticsRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUpdateCharacterStatisticsResult : public FPlayFabBaseModel
+    {
+		
+	
+        FUpdateCharacterStatisticsResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FUpdateCharacterStatisticsResult(const FUpdateCharacterStatisticsResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FUpdateCharacterStatisticsResult(const TSharedPtr<FJsonObject>& obj) : FUpdateCharacterStatisticsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUpdateCharacterStatisticsResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

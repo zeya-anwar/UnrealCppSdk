@@ -1286,6 +1286,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUserAccountInfoDelegate, const FBPAdminUserAccountInfo&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUserAndroidDeviceInfo"))
+struct FBPAdminUserAndroidDeviceInfo
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FUserAndroidDeviceInfo Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUserAndroidDeviceInfoDelegate, const FBPAdminUserAndroidDeviceInfo&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUserCredentials"))
 struct FBPAdminUserCredentials
 {
@@ -1295,6 +1305,16 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUserCredentialsDelegate, const FBPAdminUserCredentials&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUserCustomIdInfo"))
+struct FBPAdminUserCustomIdInfo
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FUserCustomIdInfo Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUserCustomIdInfoDelegate, const FBPAdminUserCustomIdInfo&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUserDataPermission"))
 struct FBPAdminUserDataPermission
@@ -1336,6 +1356,36 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUserGameCenterInfoDelegate, const FBPAdminUserGameCenterInfo&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUserGoogleInfo"))
+struct FBPAdminUserGoogleInfo
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FUserGoogleInfo Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUserGoogleInfoDelegate, const FBPAdminUserGoogleInfo&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUserIosDeviceInfo"))
+struct FBPAdminUserIosDeviceInfo
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FUserIosDeviceInfo Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUserIosDeviceInfoDelegate, const FBPAdminUserIosDeviceInfo&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUserKongregateInfo"))
+struct FBPAdminUserKongregateInfo
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FUserKongregateInfo Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUserKongregateInfoDelegate, const FBPAdminUserKongregateInfo&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUserOrigination"))
 struct FBPAdminUserOrigination
 {
@@ -1356,6 +1406,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUserPrivateAccountInfoDelegate, const FBPAdminUserPrivateAccountInfo&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUserPsnInfo"))
+struct FBPAdminUserPsnInfo
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FUserPsnInfo Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUserPsnInfoDelegate, const FBPAdminUserPsnInfo&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUserSteamInfo"))
 struct FBPAdminUserSteamInfo
 {
@@ -1375,6 +1435,16 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUserTitleInfoDelegate, const FBPAdminUserTitleInfo&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUserXboxInfo"))
+struct FBPAdminUserXboxInfo
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FUserXboxInfo Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUserXboxInfoDelegate, const FBPAdminUserXboxInfo&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminVirtualCurrencyData"))
 struct FBPAdminVirtualCurrencyData

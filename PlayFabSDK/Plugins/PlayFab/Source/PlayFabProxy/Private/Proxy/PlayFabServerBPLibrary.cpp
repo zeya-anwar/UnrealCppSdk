@@ -1420,6 +1420,26 @@ void UPFServerProxyLibrary::BreakBPServerReportPlayerServerResult(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerRevokeInventoryItemRequest(
+		const FBPServerRevokeInventoryItemRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutCharacterId
+        ,FString& OutItemInstanceId
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutCharacterId = In.Data.CharacterId;
+	OutItemInstanceId = In.Data.ItemInstanceId;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerRevokeInventoryResult(
+		const FBPServerRevokeInventoryResult& In
+	)
+{
+    
+}
+
 void UPFServerProxyLibrary::BreakBPServerSendPushNotificationRequest(
 		const FBPServerSendPushNotificationRequest& In
         ,FString& OutRecipient
@@ -1737,6 +1757,13 @@ void UPFServerProxyLibrary::BreakBPServerUserAccountInfo(
         ,FBPServerUserFacebookInfo& OutFacebookInfo
         ,FBPServerUserSteamInfo& OutSteamInfo
         ,FBPServerUserGameCenterInfo& OutGameCenterInfo
+        ,FBPServerUserIosDeviceInfo& OutIosDeviceInfo
+        ,FBPServerUserAndroidDeviceInfo& OutAndroidDeviceInfo
+        ,FBPServerUserKongregateInfo& OutKongregateInfo
+        ,FBPServerUserPsnInfo& OutPsnInfo
+        ,FBPServerUserGoogleInfo& OutGoogleInfo
+        ,FBPServerUserXboxInfo& OutXboxInfo
+        ,FBPServerUserCustomIdInfo& OutCustomIdInfo
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -1747,6 +1774,31 @@ void UPFServerProxyLibrary::BreakBPServerUserAccountInfo(
 	if (In.Data.FacebookInfo.IsValid()) {    OutFacebookInfo.Data = *In.Data.FacebookInfo;}
 	if (In.Data.SteamInfo.IsValid()) {    OutSteamInfo.Data = *In.Data.SteamInfo;}
 	if (In.Data.GameCenterInfo.IsValid()) {    OutGameCenterInfo.Data = *In.Data.GameCenterInfo;}
+	if (In.Data.IosDeviceInfo.IsValid()) {    OutIosDeviceInfo.Data = *In.Data.IosDeviceInfo;}
+	if (In.Data.AndroidDeviceInfo.IsValid()) {    OutAndroidDeviceInfo.Data = *In.Data.AndroidDeviceInfo;}
+	if (In.Data.KongregateInfo.IsValid()) {    OutKongregateInfo.Data = *In.Data.KongregateInfo;}
+	if (In.Data.PsnInfo.IsValid()) {    OutPsnInfo.Data = *In.Data.PsnInfo;}
+	if (In.Data.GoogleInfo.IsValid()) {    OutGoogleInfo.Data = *In.Data.GoogleInfo;}
+	if (In.Data.XboxInfo.IsValid()) {    OutXboxInfo.Data = *In.Data.XboxInfo;}
+	if (In.Data.CustomIdInfo.IsValid()) {    OutCustomIdInfo.Data = *In.Data.CustomIdInfo;}
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerUserAndroidDeviceInfo(
+		const FBPServerUserAndroidDeviceInfo& In
+        ,FString& OutAndroidDeviceId
+	)
+{
+    OutAndroidDeviceId = In.Data.AndroidDeviceId;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerUserCustomIdInfo(
+		const FBPServerUserCustomIdInfo& In
+        ,FString& OutCustomId
+	)
+{
+    OutCustomId = In.Data.CustomId;
 	
 }
 
@@ -1789,6 +1841,41 @@ void UPFServerProxyLibrary::BreakBPServerUserGameCenterInfo(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerUserGoogleInfo(
+		const FBPServerUserGoogleInfo& In
+        ,FString& OutGoogleId
+        ,FString& OutGoogleEmail
+        ,FString& OutGoogleLocale
+        ,FString& OutGoogleGender
+	)
+{
+    OutGoogleId = In.Data.GoogleId;
+	OutGoogleEmail = In.Data.GoogleEmail;
+	OutGoogleLocale = In.Data.GoogleLocale;
+	OutGoogleGender = In.Data.GoogleGender;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerUserIosDeviceInfo(
+		const FBPServerUserIosDeviceInfo& In
+        ,FString& OutIosDeviceId
+	)
+{
+    OutIosDeviceId = In.Data.IosDeviceId;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerUserKongregateInfo(
+		const FBPServerUserKongregateInfo& In
+        ,FString& OutKongregateId
+        ,FString& OutKongregateName
+	)
+{
+    OutKongregateId = In.Data.KongregateId;
+	OutKongregateName = In.Data.KongregateName;
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerUserOrigination(
 		const FBPServerUserOrigination& In
 	)
@@ -1802,6 +1889,17 @@ void UPFServerProxyLibrary::BreakBPServerUserPrivateAccountInfo(
 	)
 {
     OutEmail = In.Data.Email;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerUserPsnInfo(
+		const FBPServerUserPsnInfo& In
+        ,FString& OutPsnAccountId
+        ,FString& OutPsnOnlineId
+	)
+{
+    OutPsnAccountId = In.Data.PsnAccountId;
+	OutPsnOnlineId = In.Data.PsnOnlineId;
 	
 }
 
@@ -1833,6 +1931,15 @@ void UPFServerProxyLibrary::BreakBPServerUserTitleInfo(
 	
 	
 	OutisBanned = In.Data.isBanned;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerUserXboxInfo(
+		const FBPServerUserXboxInfo& In
+        ,FString& OutXboxUserId
+	)
+{
+    OutXboxUserId = In.Data.XboxUserId;
 	
 }
 

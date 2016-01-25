@@ -51,6 +51,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FMoveItemToUserFromCharacterDelegate, const ServerModels::FMoveItemToUserFromCharacterResult&);
         DECLARE_DELEGATE_OneParam(FRedeemCouponDelegate, const ServerModels::FRedeemCouponResult&);
         DECLARE_DELEGATE_OneParam(FReportPlayerDelegate, const ServerModels::FReportPlayerServerResult&);
+        DECLARE_DELEGATE_OneParam(FRevokeInventoryItemDelegate, const ServerModels::FRevokeInventoryResult&);
         DECLARE_DELEGATE_OneParam(FSubtractCharacterVirtualCurrencyDelegate, const ServerModels::FModifyCharacterVirtualCurrencyResult&);
         DECLARE_DELEGATE_OneParam(FSubtractUserVirtualCurrencyDelegate, const ServerModels::FModifyUserVirtualCurrencyResult&);
         DECLARE_DELEGATE_OneParam(FUpdateUserInventoryItemCustomDataDelegate, const ServerModels::FUpdateUserInventoryItemDataResult&);
@@ -281,6 +282,11 @@ namespace PlayFab
          */
         bool ReportPlayer(ServerModels::FReportPlayerServerRequest& request, const FReportPlayerDelegate& SuccessDelegate = FReportPlayerDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Revokes access to an item in a user's inventory
+         * In cases where the inventory item in question is a "crate", and the items it contained have already been dispensed, this will not revoke access or otherwise remove the items which were dispensed.
+         */
+        bool RevokeInventoryItem(ServerModels::FRevokeInventoryItemRequest& request, const FRevokeInventoryItemDelegate& SuccessDelegate = FRevokeInventoryItemDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Decrements the character's balance of the specified virtual currency by the stated amount
          */
         bool SubtractCharacterVirtualCurrency(ServerModels::FSubtractCharacterVirtualCurrencyRequest& request, const FSubtractCharacterVirtualCurrencyDelegate& SuccessDelegate = FSubtractCharacterVirtualCurrencyDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -461,6 +467,7 @@ namespace PlayFab
         void OnMoveItemToUserFromCharacterResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FMoveItemToUserFromCharacterDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRedeemCouponResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRedeemCouponDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnReportPlayerResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FReportPlayerDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnRevokeInventoryItemResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRevokeInventoryItemDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSubtractCharacterVirtualCurrencyResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSubtractCharacterVirtualCurrencyDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSubtractUserVirtualCurrencyResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSubtractUserVirtualCurrencyDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateUserInventoryItemCustomDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserInventoryItemCustomDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

@@ -1086,6 +1086,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerReportPlayerServerResultDelegate, const FBPServerReportPlayerServerResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRevokeInventoryItemRequest"))
+struct FBPServerRevokeInventoryItemRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FRevokeInventoryItemRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRevokeInventoryItemRequestDelegate, const FBPServerRevokeInventoryItemRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRevokeInventoryResult"))
+struct FBPServerRevokeInventoryResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FRevokeInventoryResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRevokeInventoryResultDelegate, const FBPServerRevokeInventoryResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerSendPushNotificationRequest"))
 struct FBPServerSendPushNotificationRequest
 {
@@ -1376,6 +1396,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUserAccountInfoDelegate, const FBPServerUserAccountInfo&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUserAndroidDeviceInfo"))
+struct FBPServerUserAndroidDeviceInfo
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FUserAndroidDeviceInfo Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUserAndroidDeviceInfoDelegate, const FBPServerUserAndroidDeviceInfo&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUserCustomIdInfo"))
+struct FBPServerUserCustomIdInfo
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FUserCustomIdInfo Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUserCustomIdInfoDelegate, const FBPServerUserCustomIdInfo&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUserDataPermission"))
 struct FBPServerUserDataPermission
 {
@@ -1416,6 +1456,36 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUserGameCenterInfoDelegate, const FBPServerUserGameCenterInfo&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUserGoogleInfo"))
+struct FBPServerUserGoogleInfo
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FUserGoogleInfo Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUserGoogleInfoDelegate, const FBPServerUserGoogleInfo&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUserIosDeviceInfo"))
+struct FBPServerUserIosDeviceInfo
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FUserIosDeviceInfo Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUserIosDeviceInfoDelegate, const FBPServerUserIosDeviceInfo&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUserKongregateInfo"))
+struct FBPServerUserKongregateInfo
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FUserKongregateInfo Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUserKongregateInfoDelegate, const FBPServerUserKongregateInfo&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUserOrigination"))
 struct FBPServerUserOrigination
 {
@@ -1436,6 +1506,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUserPrivateAccountInfoDelegate, const FBPServerUserPrivateAccountInfo&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUserPsnInfo"))
+struct FBPServerUserPsnInfo
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FUserPsnInfo Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUserPsnInfoDelegate, const FBPServerUserPsnInfo&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUserSteamInfo"))
 struct FBPServerUserSteamInfo
 {
@@ -1455,6 +1535,16 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUserTitleInfoDelegate, const FBPServerUserTitleInfo&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUserXboxInfo"))
+struct FBPServerUserXboxInfo
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FUserXboxInfo Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUserXboxInfoDelegate, const FBPServerUserXboxInfo&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerVirtualCurrencyRechargeTime"))
 struct FBPServerVirtualCurrencyRechargeTime

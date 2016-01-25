@@ -101,6 +101,8 @@ namespace AdminModels
 		FString Comment;
 		// maximum number of game server instances that can run on a single host machine
 		int32 MaxGamesPerHost;
+		// minimum capacity of additional game server instances that can be started before the autoscaling service starts new host machines (given the number of current running host machines and game server instances)
+		int32 MinFreeGameSlots;
 	
         FAddServerBuildRequest() :
 			FPlayFabBaseModel(),
@@ -109,7 +111,8 @@ namespace AdminModels
 			ExecutablePath(),
 			ActiveRegions(),
 			Comment(),
-			MaxGamesPerHost(0)
+			MaxGamesPerHost(0),
+			MinFreeGameSlots(0)
 			{}
 		
 		FAddServerBuildRequest(const FAddServerBuildRequest& src) :
@@ -119,7 +122,8 @@ namespace AdminModels
 			ExecutablePath(src.ExecutablePath),
 			ActiveRegions(src.ActiveRegions),
 			Comment(src.Comment),
-			MaxGamesPerHost(src.MaxGamesPerHost)
+			MaxGamesPerHost(src.MaxGamesPerHost),
+			MinFreeGameSlots(src.MinFreeGameSlots)
 			{}
 			
 		FAddServerBuildRequest(const TSharedPtr<FJsonObject>& obj) : FAddServerBuildRequest()
@@ -155,6 +159,8 @@ namespace AdminModels
 		TArray<Region> ActiveRegions;
 		// maximum number of game server instances that can run on a single host machine
 		int32 MaxGamesPerHost;
+		// minimum capacity of additional game server instances that can be started before the autoscaling service starts new host machines (given the number of current running host machines and game server instances)
+		int32 MinFreeGameSlots;
 		// [optional] appended to the end of the command line when starting game servers
 		FString CommandLineTemplate;
 		// [optional] path to the game server executable. Defaults to gameserver.exe
@@ -173,6 +179,7 @@ namespace AdminModels
 			BuildId(),
 			ActiveRegions(),
 			MaxGamesPerHost(0),
+			MinFreeGameSlots(0),
 			CommandLineTemplate(),
 			ExecutablePath(),
 			Comment(),
@@ -186,6 +193,7 @@ namespace AdminModels
 			BuildId(src.BuildId),
 			ActiveRegions(src.ActiveRegions),
 			MaxGamesPerHost(src.MaxGamesPerHost),
+			MinFreeGameSlots(src.MinFreeGameSlots),
 			CommandLineTemplate(src.CommandLineTemplate),
 			ExecutablePath(src.ExecutablePath),
 			Comment(src.Comment),
@@ -1925,6 +1933,8 @@ namespace AdminModels
 		TArray<Region> ActiveRegions;
 		// maximum number of game server instances that can run on a single host machine
 		int32 MaxGamesPerHost;
+		// minimum capacity of additional game server instances that can be started before the autoscaling service starts new host machines (given the number of current running host machines and game server instances)
+		int32 MinFreeGameSlots;
 		// [optional] developer comment(s) for this build
 		FString Comment;
 		// time this build was last modified (or uploaded, if this build has never been modified)
@@ -1941,6 +1951,7 @@ namespace AdminModels
 			BuildId(),
 			ActiveRegions(),
 			MaxGamesPerHost(0),
+			MinFreeGameSlots(0),
 			Comment(),
 			Timestamp(0),
 			TitleId(),
@@ -1953,6 +1964,7 @@ namespace AdminModels
 			BuildId(src.BuildId),
 			ActiveRegions(src.ActiveRegions),
 			MaxGamesPerHost(src.MaxGamesPerHost),
+			MinFreeGameSlots(src.MinFreeGameSlots),
 			Comment(src.Comment),
 			Timestamp(src.Timestamp),
 			TitleId(src.TitleId),
@@ -3063,25 +3075,248 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FUserIosDeviceInfo : public FPlayFabBaseModel
+    {
+		
+		// [optional] iOS device ID
+		FString IosDeviceId;
+	
+        FUserIosDeviceInfo() :
+			FPlayFabBaseModel(),
+			IosDeviceId()
+			{}
+		
+		FUserIosDeviceInfo(const FUserIosDeviceInfo& src) :
+			FPlayFabBaseModel(),
+			IosDeviceId(src.IosDeviceId)
+			{}
+			
+		FUserIosDeviceInfo(const TSharedPtr<FJsonObject>& obj) : FUserIosDeviceInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUserIosDeviceInfo();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUserAndroidDeviceInfo : public FPlayFabBaseModel
+    {
+		
+		// [optional] Android device ID
+		FString AndroidDeviceId;
+	
+        FUserAndroidDeviceInfo() :
+			FPlayFabBaseModel(),
+			AndroidDeviceId()
+			{}
+		
+		FUserAndroidDeviceInfo(const FUserAndroidDeviceInfo& src) :
+			FPlayFabBaseModel(),
+			AndroidDeviceId(src.AndroidDeviceId)
+			{}
+			
+		FUserAndroidDeviceInfo(const TSharedPtr<FJsonObject>& obj) : FUserAndroidDeviceInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUserAndroidDeviceInfo();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUserKongregateInfo : public FPlayFabBaseModel
+    {
+		
+		// [optional] Kongregate ID
+		FString KongregateId;
+		// [optional] Kongregate Username
+		FString KongregateName;
+	
+        FUserKongregateInfo() :
+			FPlayFabBaseModel(),
+			KongregateId(),
+			KongregateName()
+			{}
+		
+		FUserKongregateInfo(const FUserKongregateInfo& src) :
+			FPlayFabBaseModel(),
+			KongregateId(src.KongregateId),
+			KongregateName(src.KongregateName)
+			{}
+			
+		FUserKongregateInfo(const TSharedPtr<FJsonObject>& obj) : FUserKongregateInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUserKongregateInfo();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUserPsnInfo : public FPlayFabBaseModel
+    {
+		
+		// [optional] PSN account ID
+		FString PsnAccountId;
+		// [optional] PSN online ID
+		FString PsnOnlineId;
+	
+        FUserPsnInfo() :
+			FPlayFabBaseModel(),
+			PsnAccountId(),
+			PsnOnlineId()
+			{}
+		
+		FUserPsnInfo(const FUserPsnInfo& src) :
+			FPlayFabBaseModel(),
+			PsnAccountId(src.PsnAccountId),
+			PsnOnlineId(src.PsnOnlineId)
+			{}
+			
+		FUserPsnInfo(const TSharedPtr<FJsonObject>& obj) : FUserPsnInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUserPsnInfo();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUserGoogleInfo : public FPlayFabBaseModel
+    {
+		
+		// [optional] Google ID
+		FString GoogleId;
+		// [optional] Email address of the Google account
+		FString GoogleEmail;
+		// [optional] Locale of the Google account
+		FString GoogleLocale;
+		// [optional] Gender information of the Google account
+		FString GoogleGender;
+	
+        FUserGoogleInfo() :
+			FPlayFabBaseModel(),
+			GoogleId(),
+			GoogleEmail(),
+			GoogleLocale(),
+			GoogleGender()
+			{}
+		
+		FUserGoogleInfo(const FUserGoogleInfo& src) :
+			FPlayFabBaseModel(),
+			GoogleId(src.GoogleId),
+			GoogleEmail(src.GoogleEmail),
+			GoogleLocale(src.GoogleLocale),
+			GoogleGender(src.GoogleGender)
+			{}
+			
+		FUserGoogleInfo(const TSharedPtr<FJsonObject>& obj) : FUserGoogleInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUserGoogleInfo();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUserXboxInfo : public FPlayFabBaseModel
+    {
+		
+		// [optional] XBox user ID
+		FString XboxUserId;
+	
+        FUserXboxInfo() :
+			FPlayFabBaseModel(),
+			XboxUserId()
+			{}
+		
+		FUserXboxInfo(const FUserXboxInfo& src) :
+			FPlayFabBaseModel(),
+			XboxUserId(src.XboxUserId)
+			{}
+			
+		FUserXboxInfo(const TSharedPtr<FJsonObject>& obj) : FUserXboxInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUserXboxInfo();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUserCustomIdInfo : public FPlayFabBaseModel
+    {
+		
+		// [optional] Custom ID
+		FString CustomId;
+	
+        FUserCustomIdInfo() :
+			FPlayFabBaseModel(),
+			CustomId()
+			{}
+		
+		FUserCustomIdInfo(const FUserCustomIdInfo& src) :
+			FPlayFabBaseModel(),
+			CustomId(src.CustomId)
+			{}
+			
+		FUserCustomIdInfo(const TSharedPtr<FJsonObject>& obj) : FUserCustomIdInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUserCustomIdInfo();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FUserAccountInfo : public FPlayFabBaseModel
     {
 		
-		// [optional] unique identifier for the user account
+		// [optional] Unique identifier for the user account
 		FString PlayFabId;
-		// timestamp indicating when the user account was created
+		// Timestamp indicating when the user account was created
 		FDateTime Created;
-		// [optional] user account name in the PlayFab service
+		// [optional] User account name in the PlayFab service
 		FString Username;
-		// [optional] title-specific information for the user account
+		// [optional] Title-specific information for the user account
 		TSharedPtr<FUserTitleInfo> TitleInfo;
-		// [optional] personal information for the user which is considered more sensitive
+		// [optional] Personal information for the user which is considered more sensitive
 		TSharedPtr<FUserPrivateAccountInfo> PrivateInfo;
-		// [optional] user Facebook information, if a Facebook account has been linked
+		// [optional] User Facebook information, if a Facebook account has been linked
 		TSharedPtr<FUserFacebookInfo> FacebookInfo;
-		// [optional] user Steam information, if a Steam account has been linked
+		// [optional] User Steam information, if a Steam account has been linked
 		TSharedPtr<FUserSteamInfo> SteamInfo;
-		// [optional] user Gamecenter information, if a Gamecenter account has been linked
+		// [optional] User Gamecenter information, if a Gamecenter account has been linked
 		TSharedPtr<FUserGameCenterInfo> GameCenterInfo;
+		// [optional] User iOS device information, if an iOS device has been linked
+		TSharedPtr<FUserIosDeviceInfo> IosDeviceInfo;
+		// [optional] User Android device information, if an Android device has been linked
+		TSharedPtr<FUserAndroidDeviceInfo> AndroidDeviceInfo;
+		// [optional] User Kongregate account information, if a Kongregate account has been linked
+		TSharedPtr<FUserKongregateInfo> KongregateInfo;
+		// [optional] User PSN account information, if a PSN account has been linked
+		TSharedPtr<FUserPsnInfo> PsnInfo;
+		// [optional] User Google account information, if a Google account has been linked
+		TSharedPtr<FUserGoogleInfo> GoogleInfo;
+		// [optional] User XBox account information, if a XBox account has been linked
+		TSharedPtr<FUserXboxInfo> XboxInfo;
+		// [optional] Custom ID information, if a custom ID has been assigned
+		TSharedPtr<FUserCustomIdInfo> CustomIdInfo;
 	
         FUserAccountInfo() :
 			FPlayFabBaseModel(),
@@ -3092,7 +3327,14 @@ namespace AdminModels
 			PrivateInfo(nullptr),
 			FacebookInfo(nullptr),
 			SteamInfo(nullptr),
-			GameCenterInfo(nullptr)
+			GameCenterInfo(nullptr),
+			IosDeviceInfo(nullptr),
+			AndroidDeviceInfo(nullptr),
+			KongregateInfo(nullptr),
+			PsnInfo(nullptr),
+			GoogleInfo(nullptr),
+			XboxInfo(nullptr),
+			CustomIdInfo(nullptr)
 			{}
 		
 		FUserAccountInfo(const FUserAccountInfo& src) :
@@ -3104,7 +3346,14 @@ namespace AdminModels
 			PrivateInfo(src.PrivateInfo.IsValid() ? MakeShareable(new FUserPrivateAccountInfo(*src.PrivateInfo)) : nullptr),
 			FacebookInfo(src.FacebookInfo.IsValid() ? MakeShareable(new FUserFacebookInfo(*src.FacebookInfo)) : nullptr),
 			SteamInfo(src.SteamInfo.IsValid() ? MakeShareable(new FUserSteamInfo(*src.SteamInfo)) : nullptr),
-			GameCenterInfo(src.GameCenterInfo.IsValid() ? MakeShareable(new FUserGameCenterInfo(*src.GameCenterInfo)) : nullptr)
+			GameCenterInfo(src.GameCenterInfo.IsValid() ? MakeShareable(new FUserGameCenterInfo(*src.GameCenterInfo)) : nullptr),
+			IosDeviceInfo(src.IosDeviceInfo.IsValid() ? MakeShareable(new FUserIosDeviceInfo(*src.IosDeviceInfo)) : nullptr),
+			AndroidDeviceInfo(src.AndroidDeviceInfo.IsValid() ? MakeShareable(new FUserAndroidDeviceInfo(*src.AndroidDeviceInfo)) : nullptr),
+			KongregateInfo(src.KongregateInfo.IsValid() ? MakeShareable(new FUserKongregateInfo(*src.KongregateInfo)) : nullptr),
+			PsnInfo(src.PsnInfo.IsValid() ? MakeShareable(new FUserPsnInfo(*src.PsnInfo)) : nullptr),
+			GoogleInfo(src.GoogleInfo.IsValid() ? MakeShareable(new FUserGoogleInfo(*src.GoogleInfo)) : nullptr),
+			XboxInfo(src.XboxInfo.IsValid() ? MakeShareable(new FUserXboxInfo(*src.XboxInfo)) : nullptr),
+			CustomIdInfo(src.CustomIdInfo.IsValid() ? MakeShareable(new FUserCustomIdInfo(*src.CustomIdInfo)) : nullptr)
 			{}
 			
 		FUserAccountInfo(const TSharedPtr<FJsonObject>& obj) : FUserAccountInfo()
@@ -3210,6 +3459,8 @@ namespace AdminModels
 		TArray<Region> ActiveRegions;
 		// maximum number of game server instances that can run on a single host machine
 		int32 MaxGamesPerHost;
+		// minimum capacity of additional game server instances that can be started before the autoscaling service starts new host machines (given the number of current running host machines and game server instances)
+		int32 MinFreeGameSlots;
 		// [optional] appended to the end of the command line when starting game servers
 		FString CommandLineTemplate;
 		// [optional] path to the game server executable. Defaults to gameserver.exe
@@ -3223,6 +3474,7 @@ namespace AdminModels
 			Timestamp(),
 			ActiveRegions(),
 			MaxGamesPerHost(0),
+			MinFreeGameSlots(0),
 			CommandLineTemplate(),
 			ExecutablePath(),
 			Comment()
@@ -3234,6 +3486,7 @@ namespace AdminModels
 			Timestamp(src.Timestamp),
 			ActiveRegions(src.ActiveRegions),
 			MaxGamesPerHost(src.MaxGamesPerHost),
+			MinFreeGameSlots(src.MinFreeGameSlots),
 			CommandLineTemplate(src.CommandLineTemplate),
 			ExecutablePath(src.ExecutablePath),
 			Comment(src.Comment)
@@ -3259,6 +3512,8 @@ namespace AdminModels
 		TArray<Region> ActiveRegions;
 		// maximum number of game server instances that can run on a single host machine
 		int32 MaxGamesPerHost;
+		// minimum capacity of additional game server instances that can be started before the autoscaling service starts new host machines (given the number of current running host machines and game server instances)
+		int32 MinFreeGameSlots;
 		// [optional] appended to the end of the command line when starting game servers
 		FString CommandLineTemplate;
 		// [optional] path to the game server executable. Defaults to gameserver.exe
@@ -3277,6 +3532,7 @@ namespace AdminModels
 			BuildId(),
 			ActiveRegions(),
 			MaxGamesPerHost(0),
+			MinFreeGameSlots(0),
 			CommandLineTemplate(),
 			ExecutablePath(),
 			Comment(),
@@ -3290,6 +3546,7 @@ namespace AdminModels
 			BuildId(src.BuildId),
 			ActiveRegions(src.ActiveRegions),
 			MaxGamesPerHost(src.MaxGamesPerHost),
+			MinFreeGameSlots(src.MinFreeGameSlots),
 			CommandLineTemplate(src.CommandLineTemplate),
 			ExecutablePath(src.ExecutablePath),
 			Comment(src.Comment),
@@ -3733,11 +3990,11 @@ namespace AdminModels
 	struct PLAYFAB_API FRevokeInventoryItemRequest : public FPlayFabBaseModel
     {
 		
-		// unique PlayFab identifier for the user account which is to have the specified item removed
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
 		FString PlayFabId;
 		// [optional] Unique PlayFab assigned ID for a specific character owned by a user
 		FString CharacterId;
-		// unique PlayFab identifier for the item instance to be removed
+		// Unique PlayFab assigned instance identifier of the item
 		FString ItemInstanceId;
 	
         FRevokeInventoryItemRequest() :

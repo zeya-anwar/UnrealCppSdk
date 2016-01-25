@@ -9,13 +9,13 @@ UPFClientStartPurchase::UPFClientStartPurchase(const FObjectInitializer& ObjectI
 {
 }
 
-UPFClientStartPurchase* UPFClientStartPurchase::StartPurchase(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InCatalogVersion, const FString& InStoreId, const TArray<FBPClientItemPuchaseRequest>& InItems)
+UPFClientStartPurchase* UPFClientStartPurchase::StartPurchase(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InCatalogVersion, const FString& InStoreId, const TArray<FBPClientItemPurchaseRequest>& InItems)
 {
 	UPFClientStartPurchase* Proxy = NewObject<UPFClientStartPurchase>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.CatalogVersion = InCatalogVersion;
 	Proxy->Request.StoreId = InStoreId;
-	for (const FBPClientItemPuchaseRequest& elem : InItems)
+	for (const FBPClientItemPurchaseRequest& elem : InItems)
     {
         Proxy->Request.Items.Add(elem.Data);
     }

@@ -36,6 +36,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutExecutablePath
         ,FString& OutComment
         ,int32& OutMaxGamesPerHost
+        ,int32& OutMinFreeGameSlots
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -43,6 +44,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPAdminAddServerBuildResult& In
         ,FString& OutBuildId
         ,int32& OutMaxGamesPerHost
+        ,int32& OutMinFreeGameSlots
         ,FString& OutCommandLineTemplate
         ,FString& OutExecutablePath
         ,FString& OutComment
@@ -352,6 +354,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPAdminGetServerBuildInfoResult& In
         ,FString& OutBuildId
         ,int32& OutMaxGamesPerHost
+        ,int32& OutMinFreeGameSlots
         ,FString& OutComment
         ,FDateTime& OutTimestamp
         ,FString& OutTitleId
@@ -557,6 +560,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutBuildId
         ,FDateTime& OutTimestamp
         ,int32& OutMaxGamesPerHost
+        ,int32& OutMinFreeGameSlots
         ,FString& OutCommandLineTemplate
         ,FString& OutExecutablePath
         ,FString& OutComment
@@ -567,6 +571,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPAdminModifyServerBuildResult& In
         ,FString& OutBuildId
         ,int32& OutMaxGamesPerHost
+        ,int32& OutMinFreeGameSlots
         ,FString& OutCommandLineTemplate
         ,FString& OutExecutablePath
         ,FString& OutComment
@@ -914,6 +919,19 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
         ,FBPAdminUserFacebookInfo& OutFacebookInfo
         ,FBPAdminUserSteamInfo& OutSteamInfo
         ,FBPAdminUserGameCenterInfo& OutGameCenterInfo
+        ,FBPAdminUserIosDeviceInfo& OutIosDeviceInfo
+        ,FBPAdminUserAndroidDeviceInfo& OutAndroidDeviceInfo
+        ,FBPAdminUserKongregateInfo& OutKongregateInfo
+        ,FBPAdminUserPsnInfo& OutPsnInfo
+        ,FBPAdminUserGoogleInfo& OutGoogleInfo
+        ,FBPAdminUserXboxInfo& OutXboxInfo
+        ,FBPAdminUserCustomIdInfo& OutCustomIdInfo
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminUserAndroidDeviceInfo(
+		const FBPAdminUserAndroidDeviceInfo& In
+        ,FString& OutAndroidDeviceId
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -921,6 +939,12 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPAdminUserCredentials& In
         ,FString& OutUsername
         ,FString& OutPassword
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminUserCustomIdInfo(
+		const FBPAdminUserCustomIdInfo& In
+        ,FString& OutCustomId
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -949,6 +973,28 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminUserGoogleInfo(
+		const FBPAdminUserGoogleInfo& In
+        ,FString& OutGoogleId
+        ,FString& OutGoogleEmail
+        ,FString& OutGoogleLocale
+        ,FString& OutGoogleGender
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminUserIosDeviceInfo(
+		const FBPAdminUserIosDeviceInfo& In
+        ,FString& OutIosDeviceId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminUserKongregateInfo(
+		const FBPAdminUserKongregateInfo& In
+        ,FString& OutKongregateId
+        ,FString& OutKongregateName
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminUserOrigination(
 		const FBPAdminUserOrigination& In
 	);
@@ -957,6 +1003,13 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPAdminUserPrivateAccountInfo(
 		const FBPAdminUserPrivateAccountInfo& In
         ,FString& OutEmail
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminUserPsnInfo(
+		const FBPAdminUserPsnInfo& In
+        ,FString& OutPsnAccountId
+        ,FString& OutPsnOnlineId
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -974,6 +1027,12 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
         ,FDateTime& OutLastLogin
         ,FDateTime& OutFirstLogin
         ,bool& OutisBanned
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminUserXboxInfo(
+		const FBPAdminUserXboxInfo& In
+        ,FString& OutXboxUserId
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))

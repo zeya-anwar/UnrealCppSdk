@@ -32,6 +32,7 @@ void UPFAdminProxyLibrary::BreakBPAdminAddServerBuildRequest(
         ,FString& OutExecutablePath
         ,FString& OutComment
         ,int32& OutMaxGamesPerHost
+        ,int32& OutMinFreeGameSlots
 	)
 {
     OutBuildId = In.Data.BuildId;
@@ -40,6 +41,7 @@ void UPFAdminProxyLibrary::BreakBPAdminAddServerBuildRequest(
 	
 	OutComment = In.Data.Comment;
 	OutMaxGamesPerHost = In.Data.MaxGamesPerHost;
+	OutMinFreeGameSlots = In.Data.MinFreeGameSlots;
 	
 }
 
@@ -47,6 +49,7 @@ void UPFAdminProxyLibrary::BreakBPAdminAddServerBuildResult(
 		const FBPAdminAddServerBuildResult& In
         ,FString& OutBuildId
         ,int32& OutMaxGamesPerHost
+        ,int32& OutMinFreeGameSlots
         ,FString& OutCommandLineTemplate
         ,FString& OutExecutablePath
         ,FString& OutComment
@@ -57,6 +60,7 @@ void UPFAdminProxyLibrary::BreakBPAdminAddServerBuildResult(
     OutBuildId = In.Data.BuildId;
 	
 	OutMaxGamesPerHost = In.Data.MaxGamesPerHost;
+	OutMinFreeGameSlots = In.Data.MinFreeGameSlots;
 	OutCommandLineTemplate = In.Data.CommandLineTemplate;
 	OutExecutablePath = In.Data.ExecutablePath;
 	OutComment = In.Data.Comment;
@@ -591,6 +595,7 @@ void UPFAdminProxyLibrary::BreakBPAdminGetServerBuildInfoResult(
 		const FBPAdminGetServerBuildInfoResult& In
         ,FString& OutBuildId
         ,int32& OutMaxGamesPerHost
+        ,int32& OutMinFreeGameSlots
         ,FString& OutComment
         ,FDateTime& OutTimestamp
         ,FString& OutTitleId
@@ -600,6 +605,7 @@ void UPFAdminProxyLibrary::BreakBPAdminGetServerBuildInfoResult(
     OutBuildId = In.Data.BuildId;
 	
 	OutMaxGamesPerHost = In.Data.MaxGamesPerHost;
+	OutMinFreeGameSlots = In.Data.MinFreeGameSlots;
 	OutComment = In.Data.Comment;
 	
 	OutTitleId = In.Data.TitleId;
@@ -969,6 +975,7 @@ void UPFAdminProxyLibrary::BreakBPAdminModifyServerBuildRequest(
         ,FString& OutBuildId
         ,FDateTime& OutTimestamp
         ,int32& OutMaxGamesPerHost
+        ,int32& OutMinFreeGameSlots
         ,FString& OutCommandLineTemplate
         ,FString& OutExecutablePath
         ,FString& OutComment
@@ -978,6 +985,7 @@ void UPFAdminProxyLibrary::BreakBPAdminModifyServerBuildRequest(
 	
 	
 	OutMaxGamesPerHost = In.Data.MaxGamesPerHost;
+	OutMinFreeGameSlots = In.Data.MinFreeGameSlots;
 	OutCommandLineTemplate = In.Data.CommandLineTemplate;
 	OutExecutablePath = In.Data.ExecutablePath;
 	OutComment = In.Data.Comment;
@@ -988,6 +996,7 @@ void UPFAdminProxyLibrary::BreakBPAdminModifyServerBuildResult(
 		const FBPAdminModifyServerBuildResult& In
         ,FString& OutBuildId
         ,int32& OutMaxGamesPerHost
+        ,int32& OutMinFreeGameSlots
         ,FString& OutCommandLineTemplate
         ,FString& OutExecutablePath
         ,FString& OutComment
@@ -998,6 +1007,7 @@ void UPFAdminProxyLibrary::BreakBPAdminModifyServerBuildResult(
     OutBuildId = In.Data.BuildId;
 	
 	OutMaxGamesPerHost = In.Data.MaxGamesPerHost;
+	OutMinFreeGameSlots = In.Data.MinFreeGameSlots;
 	OutCommandLineTemplate = In.Data.CommandLineTemplate;
 	OutExecutablePath = In.Data.ExecutablePath;
 	OutComment = In.Data.Comment;
@@ -1574,6 +1584,13 @@ void UPFAdminProxyLibrary::BreakBPAdminUserAccountInfo(
         ,FBPAdminUserFacebookInfo& OutFacebookInfo
         ,FBPAdminUserSteamInfo& OutSteamInfo
         ,FBPAdminUserGameCenterInfo& OutGameCenterInfo
+        ,FBPAdminUserIosDeviceInfo& OutIosDeviceInfo
+        ,FBPAdminUserAndroidDeviceInfo& OutAndroidDeviceInfo
+        ,FBPAdminUserKongregateInfo& OutKongregateInfo
+        ,FBPAdminUserPsnInfo& OutPsnInfo
+        ,FBPAdminUserGoogleInfo& OutGoogleInfo
+        ,FBPAdminUserXboxInfo& OutXboxInfo
+        ,FBPAdminUserCustomIdInfo& OutCustomIdInfo
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -1584,6 +1601,22 @@ void UPFAdminProxyLibrary::BreakBPAdminUserAccountInfo(
 	if (In.Data.FacebookInfo.IsValid()) {    OutFacebookInfo.Data = *In.Data.FacebookInfo;}
 	if (In.Data.SteamInfo.IsValid()) {    OutSteamInfo.Data = *In.Data.SteamInfo;}
 	if (In.Data.GameCenterInfo.IsValid()) {    OutGameCenterInfo.Data = *In.Data.GameCenterInfo;}
+	if (In.Data.IosDeviceInfo.IsValid()) {    OutIosDeviceInfo.Data = *In.Data.IosDeviceInfo;}
+	if (In.Data.AndroidDeviceInfo.IsValid()) {    OutAndroidDeviceInfo.Data = *In.Data.AndroidDeviceInfo;}
+	if (In.Data.KongregateInfo.IsValid()) {    OutKongregateInfo.Data = *In.Data.KongregateInfo;}
+	if (In.Data.PsnInfo.IsValid()) {    OutPsnInfo.Data = *In.Data.PsnInfo;}
+	if (In.Data.GoogleInfo.IsValid()) {    OutGoogleInfo.Data = *In.Data.GoogleInfo;}
+	if (In.Data.XboxInfo.IsValid()) {    OutXboxInfo.Data = *In.Data.XboxInfo;}
+	if (In.Data.CustomIdInfo.IsValid()) {    OutCustomIdInfo.Data = *In.Data.CustomIdInfo;}
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminUserAndroidDeviceInfo(
+		const FBPAdminUserAndroidDeviceInfo& In
+        ,FString& OutAndroidDeviceId
+	)
+{
+    OutAndroidDeviceId = In.Data.AndroidDeviceId;
 	
 }
 
@@ -1595,6 +1628,15 @@ void UPFAdminProxyLibrary::BreakBPAdminUserCredentials(
 {
     OutUsername = In.Data.Username;
 	OutPassword = In.Data.Password;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminUserCustomIdInfo(
+		const FBPAdminUserCustomIdInfo& In
+        ,FString& OutCustomId
+	)
+{
+    OutCustomId = In.Data.CustomId;
 	
 }
 
@@ -1637,6 +1679,41 @@ void UPFAdminProxyLibrary::BreakBPAdminUserGameCenterInfo(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminUserGoogleInfo(
+		const FBPAdminUserGoogleInfo& In
+        ,FString& OutGoogleId
+        ,FString& OutGoogleEmail
+        ,FString& OutGoogleLocale
+        ,FString& OutGoogleGender
+	)
+{
+    OutGoogleId = In.Data.GoogleId;
+	OutGoogleEmail = In.Data.GoogleEmail;
+	OutGoogleLocale = In.Data.GoogleLocale;
+	OutGoogleGender = In.Data.GoogleGender;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminUserIosDeviceInfo(
+		const FBPAdminUserIosDeviceInfo& In
+        ,FString& OutIosDeviceId
+	)
+{
+    OutIosDeviceId = In.Data.IosDeviceId;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminUserKongregateInfo(
+		const FBPAdminUserKongregateInfo& In
+        ,FString& OutKongregateId
+        ,FString& OutKongregateName
+	)
+{
+    OutKongregateId = In.Data.KongregateId;
+	OutKongregateName = In.Data.KongregateName;
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminUserOrigination(
 		const FBPAdminUserOrigination& In
 	)
@@ -1650,6 +1727,17 @@ void UPFAdminProxyLibrary::BreakBPAdminUserPrivateAccountInfo(
 	)
 {
     OutEmail = In.Data.Email;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminUserPsnInfo(
+		const FBPAdminUserPsnInfo& In
+        ,FString& OutPsnAccountId
+        ,FString& OutPsnOnlineId
+	)
+{
+    OutPsnAccountId = In.Data.PsnAccountId;
+	OutPsnOnlineId = In.Data.PsnOnlineId;
 	
 }
 
@@ -1681,6 +1769,15 @@ void UPFAdminProxyLibrary::BreakBPAdminUserTitleInfo(
 	
 	
 	OutisBanned = In.Data.isBanned;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminUserXboxInfo(
+		const FBPAdminUserXboxInfo& In
+        ,FString& OutXboxUserId
+	)
+{
+    OutXboxUserId = In.Data.XboxUserId;
 	
 }
 

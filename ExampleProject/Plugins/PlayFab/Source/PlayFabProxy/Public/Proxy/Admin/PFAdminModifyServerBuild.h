@@ -21,7 +21,7 @@ public:
 	
 	// Updates the build details for the specified game server executable
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Admin|Custom Server Management")
-	static UPFAdminModifyServerBuild* ModifyServerBuild(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InBuildId, const FDateTime& InTimestamp, const int32& InMaxGamesPerHost, const FString& InCommandLineTemplate, const FString& InExecutablePath, const FString& InComment);
+	static UPFAdminModifyServerBuild* ModifyServerBuild(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InBuildId, const FDateTime& InTimestamp, const int32& InMaxGamesPerHost, const int32& InMinFreeGameSlots, const FString& InCommandLineTemplate, const FString& InExecutablePath, const FString& InComment);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

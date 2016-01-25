@@ -663,6 +663,23 @@ void UPFClientProxyLibrary::BreakBPClientGetCharacterLeaderboardResult(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientGetCharacterStatisticsRequest(
+		const FBPClientGetCharacterStatisticsRequest& In
+        ,FString& OutCharacterId
+	)
+{
+    OutCharacterId = In.Data.CharacterId;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetCharacterStatisticsResult(
+		const FBPClientGetCharacterStatisticsResult& In
+	)
+{
+    
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientGetCloudScriptUrlRequest(
 		const FBPClientGetCloudScriptUrlRequest& In
         ,int32& OutVersion
@@ -1093,6 +1110,30 @@ void UPFClientProxyLibrary::BreakBPClientGetPlayFabIDsFromGoogleIDsResult(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientGetPlayFabIDsFromKongregateIDsRequest(
+		const FBPClientGetPlayFabIDsFromKongregateIDsRequest& In
+        ,TArray<FString>& OutKongregateIDs
+	)
+{
+    OutKongregateIDs = In.Data.KongregateIDs;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetPlayFabIDsFromKongregateIDsResult(
+		const FBPClientGetPlayFabIDsFromKongregateIDsResult& In
+        ,TArray<FBPClientKongregatePlayFabIdPair>& OutData
+	)
+{
+    for (const PlayFab::ClientModels::FKongregatePlayFabIdPair& elem : In.Data.Data)
+    {
+        FBPClientKongregatePlayFabIdPair result;
+        result.Data = elem;
+        OutData.Add(result);
+    }
+
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientGetPlayFabIDsFromPSNAccountIDsRequest(
 		const FBPClientGetPlayFabIDsFromPSNAccountIDsRequest& In
         ,TArray<FString>& OutPSNAccountIDs
@@ -1499,8 +1540,8 @@ void UPFClientProxyLibrary::BreakBPClientItemInstance(
 	
 }
 
-void UPFClientProxyLibrary::BreakBPClientItemPuchaseRequest(
-		const FBPClientItemPuchaseRequest& In
+void UPFClientProxyLibrary::BreakBPClientItemPurchaseRequest(
+		const FBPClientItemPurchaseRequest& In
         ,FString& OutItemId
         ,int32& OutQuantity
         ,FString& OutAnnotation
@@ -1511,6 +1552,17 @@ void UPFClientProxyLibrary::BreakBPClientItemPuchaseRequest(
 	OutQuantity = In.Data.Quantity;
 	OutAnnotation = In.Data.Annotation;
 	OutUpgradeFromItems = In.Data.UpgradeFromItems;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientKongregatePlayFabIdPair(
+		const FBPClientKongregatePlayFabIdPair& In
+        ,FString& OutKongregateId
+        ,FString& OutPlayFabId
+	)
+{
+    OutKongregateId = In.Data.KongregateId;
+	OutPlayFabId = In.Data.PlayFabId;
 	
 }
 
@@ -1741,12 +1793,14 @@ void UPFClientProxyLibrary::BreakBPClientLoginResult(
         ,FString& OutPlayFabId
         ,bool& OutNewlyCreated
         ,FBPClientUserSettings& OutSettingsForUser
+        ,FDateTime& OutLastLoginTime
 	)
 {
     OutSessionTicket = In.Data.SessionTicket;
 	OutPlayFabId = In.Data.PlayFabId;
 	OutNewlyCreated = In.Data.NewlyCreated;
 	if (In.Data.SettingsForUser.IsValid()) {    OutSettingsForUser.Data = *In.Data.SettingsForUser;}
+	
 	
 }
 
@@ -2431,14 +2485,14 @@ void UPFClientProxyLibrary::BreakBPClientStartPurchaseRequest(
 		const FBPClientStartPurchaseRequest& In
         ,FString& OutCatalogVersion
         ,FString& OutStoreId
-        ,TArray<FBPClientItemPuchaseRequest>& OutItems
+        ,TArray<FBPClientItemPurchaseRequest>& OutItems
 	)
 {
     OutCatalogVersion = In.Data.CatalogVersion;
 	OutStoreId = In.Data.StoreId;
-	for (const PlayFab::ClientModels::FItemPuchaseRequest& elem : In.Data.Items)
+	for (const PlayFab::ClientModels::FItemPurchaseRequest& elem : In.Data.Items)
     {
-        FBPClientItemPuchaseRequest result;
+        FBPClientItemPurchaseRequest result;
         result.Data = elem;
         OutItems.Add(result);
     }
@@ -2802,6 +2856,23 @@ void UPFClientProxyLibrary::BreakBPClientUpdateCharacterDataResult(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientUpdateCharacterStatisticsRequest(
+		const FBPClientUpdateCharacterStatisticsRequest& In
+        ,FString& OutCharacterId
+	)
+{
+    OutCharacterId = In.Data.CharacterId;
+	
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientUpdateCharacterStatisticsResult(
+		const FBPClientUpdateCharacterStatisticsResult& In
+	)
+{
+    
+}
+
 void UPFClientProxyLibrary::BreakBPClientUpdatePlayerStatisticsRequest(
 		const FBPClientUpdatePlayerStatisticsRequest& In
         ,TArray<FBPClientStatisticUpdate>& OutStatistics
@@ -2907,6 +2978,13 @@ void UPFClientProxyLibrary::BreakBPClientUserAccountInfo(
         ,FBPClientUserFacebookInfo& OutFacebookInfo
         ,FBPClientUserSteamInfo& OutSteamInfo
         ,FBPClientUserGameCenterInfo& OutGameCenterInfo
+        ,FBPClientUserIosDeviceInfo& OutIosDeviceInfo
+        ,FBPClientUserAndroidDeviceInfo& OutAndroidDeviceInfo
+        ,FBPClientUserKongregateInfo& OutKongregateInfo
+        ,FBPClientUserPsnInfo& OutPsnInfo
+        ,FBPClientUserGoogleInfo& OutGoogleInfo
+        ,FBPClientUserXboxInfo& OutXboxInfo
+        ,FBPClientUserCustomIdInfo& OutCustomIdInfo
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -2917,6 +2995,31 @@ void UPFClientProxyLibrary::BreakBPClientUserAccountInfo(
 	if (In.Data.FacebookInfo.IsValid()) {    OutFacebookInfo.Data = *In.Data.FacebookInfo;}
 	if (In.Data.SteamInfo.IsValid()) {    OutSteamInfo.Data = *In.Data.SteamInfo;}
 	if (In.Data.GameCenterInfo.IsValid()) {    OutGameCenterInfo.Data = *In.Data.GameCenterInfo;}
+	if (In.Data.IosDeviceInfo.IsValid()) {    OutIosDeviceInfo.Data = *In.Data.IosDeviceInfo;}
+	if (In.Data.AndroidDeviceInfo.IsValid()) {    OutAndroidDeviceInfo.Data = *In.Data.AndroidDeviceInfo;}
+	if (In.Data.KongregateInfo.IsValid()) {    OutKongregateInfo.Data = *In.Data.KongregateInfo;}
+	if (In.Data.PsnInfo.IsValid()) {    OutPsnInfo.Data = *In.Data.PsnInfo;}
+	if (In.Data.GoogleInfo.IsValid()) {    OutGoogleInfo.Data = *In.Data.GoogleInfo;}
+	if (In.Data.XboxInfo.IsValid()) {    OutXboxInfo.Data = *In.Data.XboxInfo;}
+	if (In.Data.CustomIdInfo.IsValid()) {    OutCustomIdInfo.Data = *In.Data.CustomIdInfo;}
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientUserAndroidDeviceInfo(
+		const FBPClientUserAndroidDeviceInfo& In
+        ,FString& OutAndroidDeviceId
+	)
+{
+    OutAndroidDeviceId = In.Data.AndroidDeviceId;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientUserCustomIdInfo(
+		const FBPClientUserCustomIdInfo& In
+        ,FString& OutCustomId
+	)
+{
+    OutCustomId = In.Data.CustomId;
 	
 }
 
@@ -2959,6 +3062,41 @@ void UPFClientProxyLibrary::BreakBPClientUserGameCenterInfo(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientUserGoogleInfo(
+		const FBPClientUserGoogleInfo& In
+        ,FString& OutGoogleId
+        ,FString& OutGoogleEmail
+        ,FString& OutGoogleLocale
+        ,FString& OutGoogleGender
+	)
+{
+    OutGoogleId = In.Data.GoogleId;
+	OutGoogleEmail = In.Data.GoogleEmail;
+	OutGoogleLocale = In.Data.GoogleLocale;
+	OutGoogleGender = In.Data.GoogleGender;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientUserIosDeviceInfo(
+		const FBPClientUserIosDeviceInfo& In
+        ,FString& OutIosDeviceId
+	)
+{
+    OutIosDeviceId = In.Data.IosDeviceId;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientUserKongregateInfo(
+		const FBPClientUserKongregateInfo& In
+        ,FString& OutKongregateId
+        ,FString& OutKongregateName
+	)
+{
+    OutKongregateId = In.Data.KongregateId;
+	OutKongregateName = In.Data.KongregateName;
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientUserOrigination(
 		const FBPClientUserOrigination& In
 	)
@@ -2972,6 +3110,17 @@ void UPFClientProxyLibrary::BreakBPClientUserPrivateAccountInfo(
 	)
 {
     OutEmail = In.Data.Email;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientUserPsnInfo(
+		const FBPClientUserPsnInfo& In
+        ,FString& OutPsnAccountId
+        ,FString& OutPsnOnlineId
+	)
+{
+    OutPsnAccountId = In.Data.PsnAccountId;
+	OutPsnOnlineId = In.Data.PsnOnlineId;
 	
 }
 
@@ -3012,6 +3161,15 @@ void UPFClientProxyLibrary::BreakBPClientUserTitleInfo(
 	
 	
 	OutisBanned = In.Data.isBanned;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientUserXboxInfo(
+		const FBPClientUserXboxInfo& In
+        ,FString& OutXboxUserId
+	)
+{
+    OutXboxUserId = In.Data.XboxUserId;
 	
 }
 

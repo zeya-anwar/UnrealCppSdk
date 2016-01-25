@@ -21,7 +21,7 @@ public:
 	
 	// Adds the game server executable specified (previously uploaded - see GetServerBuildUploadUrl) to the set of those a client is permitted to request in a call to StartGame
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Admin|Custom Server Management")
-	static UPFAdminAddServerBuild* AddServerBuild(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InBuildId, const FString& InCommandLineTemplate, const FString& InExecutablePath, const FString& InComment, const int32& InMaxGamesPerHost);
+	static UPFAdminAddServerBuild* AddServerBuild(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InBuildId, const FString& InCommandLineTemplate, const FString& InExecutablePath, const FString& InComment, const int32& InMaxGamesPerHost, const int32& InMinFreeGameSlots);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;
