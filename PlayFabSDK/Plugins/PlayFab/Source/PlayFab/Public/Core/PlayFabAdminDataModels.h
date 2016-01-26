@@ -640,6 +640,8 @@ namespace AdminModels
 	
 	enum Interval
 	{
+		IntervalFiveMinutes,
+		IntervalFifteenMinutes,
 		IntervalHour,
 		IntervalDay,
 		IntervalWeek,

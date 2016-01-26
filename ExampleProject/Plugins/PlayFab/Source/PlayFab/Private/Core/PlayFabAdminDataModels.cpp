@@ -1100,6 +1100,8 @@ void PlayFab::AdminModels::writeIntervalEnumJSON(Interval enumVal, JsonWriter& w
     switch(enumVal)
     {
         
+        case IntervalFiveMinutes: writer->WriteValue(TEXT("FiveMinutes")); break;
+        case IntervalFifteenMinutes: writer->WriteValue(TEXT("FifteenMinutes")); break;
         case IntervalHour: writer->WriteValue(TEXT("Hour")); break;
         case IntervalDay: writer->WriteValue(TEXT("Day")); break;
         case IntervalWeek: writer->WriteValue(TEXT("Week")); break;
@@ -1113,6 +1115,8 @@ AdminModels::Interval PlayFab::AdminModels::readIntervalFromValue(const TSharedP
     if (_IntervalMap.Num() == 0)
     {
         // Auto-generate the map on the first use
+        _IntervalMap.Add(TEXT("FiveMinutes"), IntervalFiveMinutes);
+        _IntervalMap.Add(TEXT("FifteenMinutes"), IntervalFifteenMinutes);
         _IntervalMap.Add(TEXT("Hour"), IntervalHour);
         _IntervalMap.Add(TEXT("Day"), IntervalDay);
         _IntervalMap.Add(TEXT("Week"), IntervalWeek);
@@ -1128,7 +1132,7 @@ AdminModels::Interval PlayFab::AdminModels::readIntervalFromValue(const TSharedP
 	}
 
 
-    return IntervalHour; // Basically critical fail
+    return IntervalFiveMinutes; // Basically critical fail
 }
 
 
