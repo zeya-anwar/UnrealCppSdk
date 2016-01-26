@@ -237,6 +237,32 @@ void UPFServerProxyLibrary::BreakBPServerCharacterResult(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerConsumeItemRequest(
+		const FBPServerConsumeItemRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutItemInstanceId
+        ,int32& OutConsumeCount
+        ,FString& OutCharacterId
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutItemInstanceId = In.Data.ItemInstanceId;
+	OutConsumeCount = In.Data.ConsumeCount;
+	OutCharacterId = In.Data.CharacterId;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerConsumeItemResult(
+		const FBPServerConsumeItemResult& In
+        ,FString& OutItemInstanceId
+        ,int32& OutRemainingUses
+	)
+{
+    OutItemInstanceId = In.Data.ItemInstanceId;
+	OutRemainingUses = In.Data.RemainingUses;
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerCreateSharedGroupRequest(
 		const FBPServerCreateSharedGroupRequest& In
         ,FString& OutSharedGroupId

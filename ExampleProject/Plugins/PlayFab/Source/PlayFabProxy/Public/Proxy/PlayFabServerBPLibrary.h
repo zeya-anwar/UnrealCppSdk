@@ -148,6 +148,22 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerConsumeItemRequest(
+		const FBPServerConsumeItemRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutItemInstanceId
+        ,int32& OutConsumeCount
+        ,FString& OutCharacterId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerConsumeItemResult(
+		const FBPServerConsumeItemResult& In
+        ,FString& OutItemInstanceId
+        ,int32& OutRemainingUses
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerCreateSharedGroupRequest(
 		const FBPServerCreateSharedGroupRequest& In
         ,FString& OutSharedGroupId
