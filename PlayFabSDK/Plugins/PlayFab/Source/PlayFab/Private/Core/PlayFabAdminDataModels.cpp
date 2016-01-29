@@ -1058,7 +1058,7 @@ void PlayFab::AdminModels::FContentInfo::writeJSON(JsonWriter& writer) const
     
     if(Key.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Key")); writer->WriteValue(Key); }
 	
-    writer->WriteIdentifierPrefix(TEXT("Size")); writer->WriteValue(Size);
+    writer->WriteIdentifierPrefix(TEXT("Size")); writer->WriteValue(static_cast<int64>(Size));
 	
     writer->WriteIdentifierPrefix(TEXT("LastModified")); writeDatetime(LastModified, writer);
 	
@@ -1080,7 +1080,7 @@ bool PlayFab::AdminModels::FContentInfo::readFromValue(const TSharedPtr<FJsonObj
     const TSharedPtr<FJsonValue> SizeValue = obj->TryGetField(TEXT("Size"));
     if (SizeValue.IsValid()&& !SizeValue->IsNull())
     {
-        int64 TmpValue;
+        uint32 TmpValue;
         if(SizeValue->TryGetNumber(TmpValue)) {Size = TmpValue; }
     }
     
@@ -2046,7 +2046,7 @@ void PlayFab::AdminModels::FGetContentListResult::writeJSON(JsonWriter& writer) 
     
     writer->WriteIdentifierPrefix(TEXT("ItemCount")); writer->WriteValue(ItemCount);
 	
-    writer->WriteIdentifierPrefix(TEXT("TotalSize")); writer->WriteValue(TotalSize);
+    writer->WriteIdentifierPrefix(TEXT("TotalSize")); writer->WriteValue(static_cast<int64>(TotalSize));
 	
     if(Contents.Num() != 0) 
     {
@@ -2070,14 +2070,14 @@ bool PlayFab::AdminModels::FGetContentListResult::readFromValue(const TSharedPtr
     const TSharedPtr<FJsonValue> ItemCountValue = obj->TryGetField(TEXT("ItemCount"));
     if (ItemCountValue.IsValid()&& !ItemCountValue->IsNull())
     {
-        int64 TmpValue;
+        int32 TmpValue;
         if(ItemCountValue->TryGetNumber(TmpValue)) {ItemCount = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> TotalSizeValue = obj->TryGetField(TEXT("TotalSize"));
     if (TotalSizeValue.IsValid()&& !TotalSizeValue->IsNull())
     {
-        int64 TmpValue;
+        uint32 TmpValue;
         if(TotalSizeValue->TryGetNumber(TmpValue)) {TotalSize = TmpValue; }
     }
     
