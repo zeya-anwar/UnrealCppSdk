@@ -1168,7 +1168,7 @@ bool UPlayFabAdminAPI::GetServerBuildInfo(
 {
     
     auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Admin/GetServerBuildInfo")), request.toJSONString(),
-        TEXT(""), TEXT(""));
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
     HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabAdminAPI::OnGetServerBuildInfoResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }

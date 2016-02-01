@@ -1274,6 +1274,76 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FConsumeItemRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+		// Unique instance identifier of the item to be consumed.
+		FString ItemInstanceId;
+		// Number of uses to consume from the item.
+		int32 ConsumeCount;
+		// [optional] Unique PlayFab assigned ID for a specific character owned by a user
+		FString CharacterId;
+	
+        FConsumeItemRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			ItemInstanceId(),
+			ConsumeCount(0),
+			CharacterId()
+			{}
+		
+		FConsumeItemRequest(const FConsumeItemRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			ItemInstanceId(src.ItemInstanceId),
+			ConsumeCount(src.ConsumeCount),
+			CharacterId(src.CharacterId)
+			{}
+			
+		FConsumeItemRequest(const TSharedPtr<FJsonObject>& obj) : FConsumeItemRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FConsumeItemRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FConsumeItemResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Unique instance identifier of the item with uses consumed.
+		FString ItemInstanceId;
+		// Number of uses remaining on the item.
+		int32 RemainingUses;
+	
+        FConsumeItemResult() :
+			FPlayFabBaseModel(),
+			ItemInstanceId(),
+			RemainingUses(0)
+			{}
+		
+		FConsumeItemResult(const FConsumeItemResult& src) :
+			FPlayFabBaseModel(),
+			ItemInstanceId(src.ItemInstanceId),
+			RemainingUses(src.RemainingUses)
+			{}
+			
+		FConsumeItemResult(const TSharedPtr<FJsonObject>& obj) : FConsumeItemResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FConsumeItemResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FCreateSharedGroupRequest : public FPlayFabBaseModel
     {
 		

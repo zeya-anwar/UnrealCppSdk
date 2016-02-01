@@ -609,7 +609,7 @@ namespace AdminModels
 		// [optional] Key of the content
 		FString Key;
 		// Size of the content in bytes
-		int64 Size;
+		uint32 Size;
 		// Last modified time
 		FDateTime LastModified;
 	
@@ -640,6 +640,8 @@ namespace AdminModels
 	
 	enum Interval
 	{
+		IntervalFiveMinutes,
+		IntervalFifteenMinutes,
 		IntervalHour,
 		IntervalDay,
 		IntervalWeek,
@@ -1238,9 +1240,9 @@ namespace AdminModels
     {
 		
 		// Number of content items returned. We currently have a maximum of 1000 items limit.
-		int64 ItemCount;
+		int32 ItemCount;
 		// The total size of listed contents in bytes.
-		int64 TotalSize;
+		uint32 TotalSize;
 		// [optional] List of content items.
 		TArray<FContentInfo> Contents;
 	
