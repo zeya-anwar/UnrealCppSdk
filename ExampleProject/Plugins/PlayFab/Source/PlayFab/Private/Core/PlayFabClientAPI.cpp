@@ -3020,7 +3020,7 @@ bool UPlayFabClientAPI::UpdateCharacterStatistics(
 {
     
     auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/UpdateCharacterStatistics")), request.toJSONString(),
-        TEXT(""), TEXT(""));
+        TEXT("X-Authorization"), mUserSessionTicket);
     HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUpdateCharacterStatisticsResult, SuccessDelegate, ErrorDelegate);
     return HttpRequest->ProcessRequest();
 }
