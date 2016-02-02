@@ -1165,7 +1165,11 @@ void UPFClientProxyLibrary::BreakBPClientGetPlayFabIDsFromSteamIDsRequest(
         ,TArray<int32>& OutSteamIDs
 	)
 {
-    OutSteamIDs = In.Data.SteamIDs;
+    for (const int32& elem : In.Data.SteamIDs)
+    {
+        OutSteamIDs.Add(static_cast<uint64>(elem));
+    }
+
 	
 }
 

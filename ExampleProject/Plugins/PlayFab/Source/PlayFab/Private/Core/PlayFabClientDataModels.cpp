@@ -6173,9 +6173,9 @@ void PlayFab::ClientModels::FGetPlayFabIDsFromSteamIDsRequest::writeJSON(JsonWri
     
         writer->WriteArrayStart(TEXT("SteamIDs"));
     
-        for (const uint32& item : SteamIDs)
+        for (const uint64& item : SteamIDs)
         {
-            writer->WriteValue(item);
+            writer->WriteValue(static_cast<int64>(item));
         }
         writer->WriteArrayEnd();
     
@@ -6193,7 +6193,7 @@ bool PlayFab::ClientModels::FGetPlayFabIDsFromSteamIDsRequest::readFromValue(con
         for (int32 Idx = 0; Idx < SteamIDsArray.Num(); Idx++)
         {
             TSharedPtr<FJsonValue> CurrentItem = SteamIDsArray[Idx];
-            uint32 TmpValue;
+            int64 TmpValue;
 CurrentItem->TryGetNumber(TmpValue);
 
             SteamIDs.Add(TmpValue);
@@ -6230,7 +6230,7 @@ bool PlayFab::ClientModels::FSteamPlayFabIdPair::readFromValue(const TSharedPtr<
     const TSharedPtr<FJsonValue> SteamIdValue = obj->TryGetField(TEXT("SteamId"));
     if (SteamIdValue.IsValid()&& !SteamIdValue->IsNull())
     {
-        uint32 TmpValue;
+        int64 TmpValue;
         if(SteamIdValue->TryGetNumber(TmpValue)) {SteamId = TmpValue; }
     }
     

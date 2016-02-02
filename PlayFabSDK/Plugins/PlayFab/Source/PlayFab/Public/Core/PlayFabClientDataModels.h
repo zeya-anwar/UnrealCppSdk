@@ -4000,7 +4000,7 @@ namespace ClientModels
     {
 		
 		// Array of unique Steam identifiers (Steam profile IDs) for which the title needs to get PlayFab identifiers.
-		TArray<uint32> SteamIDs;
+		TArray<uint64> SteamIDs;
 	
         FGetPlayFabIDsFromSteamIDsRequest() :
 			FPlayFabBaseModel(),
@@ -4027,7 +4027,7 @@ namespace ClientModels
     {
 		
 		// Unique Steam identifier for a user.
-		uint32 SteamId;
+		uint64 SteamId;
 		// [optional] Unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Steam identifier.
 		FString PlayFabId;
 	

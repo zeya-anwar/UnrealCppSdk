@@ -13,7 +13,11 @@ UPFClientGetPlayFabIDsFromSteamIDs* UPFClientGetPlayFabIDsFromSteamIDs::GetPlayF
 {
 	UPFClientGetPlayFabIDsFromSteamIDs* Proxy = NewObject<UPFClientGetPlayFabIDsFromSteamIDs>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
-	Proxy->Request.SteamIDs = InSteamIDs;
+	for (const int32& elem : InSteamIDs)
+    {
+        Proxy->Request.SteamIDs.Add(static_cast<uint64>(elem));
+    }
+
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;
