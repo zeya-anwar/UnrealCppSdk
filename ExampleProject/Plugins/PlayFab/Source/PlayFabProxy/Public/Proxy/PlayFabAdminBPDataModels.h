@@ -636,16 +636,6 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminIncrementPlayerStatisticVersionResultDelegate, const FBPAdminIncrementPlayerStatisticVersionResult&, Result);
 
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminInterval"))
-struct FBPAdminInterval
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::AdminModels::Interval Data;	
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminIntervalDelegate, const FBPAdminInterval&, Result);
-
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminItemGrant"))
 struct FBPAdminItemGrant
 {
@@ -1085,6 +1075,16 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminSetupPushNotificationResultDelegate, const FBPAdminSetupPushNotificationResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminStatisticResetIntervalOption"))
+struct FBPAdminStatisticResetIntervalOption
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::StatisticResetIntervalOption Data;	
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminStatisticResetIntervalOptionDelegate, const FBPAdminStatisticResetIntervalOption&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminStatisticVersionArchivalStatus"))
 struct FBPAdminStatisticVersionArchivalStatus

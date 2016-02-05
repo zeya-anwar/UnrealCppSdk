@@ -220,10 +220,10 @@ void UPFAdminProxyLibrary::BreakBPAdminContentInfo(
 
 void UPFAdminProxyLibrary::BreakBPAdminCreatePlayerStatisticDefinitionRequest(
 		const FBPAdminCreatePlayerStatisticDefinitionRequest& In
-        ,FString& OutName
+        ,FString& OutStatisticName
 	)
 {
-    OutName = In.Data.Name;
+    OutStatisticName = In.Data.StatisticName;
 	
 	
 }
@@ -820,13 +820,6 @@ void UPFAdminProxyLibrary::BreakBPAdminIncrementPlayerStatisticVersionResult(
 	
 }
 
-void UPFAdminProxyLibrary::BreakBPAdminInterval(
-		const FBPAdminInterval& In
-	)
-{
-    
-}
-
 void UPFAdminProxyLibrary::BreakBPAdminItemGrant(
 		const FBPAdminItemGrant& In
         ,FString& OutPlayFabId
@@ -1359,6 +1352,13 @@ void UPFAdminProxyLibrary::BreakBPAdminSetupPushNotificationResult(
 {
     OutARN = In.Data.ARN;
 	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminStatisticResetIntervalOption(
+		const FBPAdminStatisticResetIntervalOption& In
+	)
+{
+    
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminStatisticVersionArchivalStatus(

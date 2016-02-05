@@ -1095,44 +1095,42 @@ bool PlayFab::AdminModels::FContentInfo::readFromValue(const TSharedPtr<FJsonObj
 }
 
 
-void PlayFab::AdminModels::writeIntervalEnumJSON(Interval enumVal, JsonWriter& writer)
+void PlayFab::AdminModels::writeStatisticResetIntervalOptionEnumJSON(StatisticResetIntervalOption enumVal, JsonWriter& writer)
 {
     switch(enumVal)
     {
         
-        case IntervalFiveMinutes: writer->WriteValue(TEXT("FiveMinutes")); break;
-        case IntervalFifteenMinutes: writer->WriteValue(TEXT("FifteenMinutes")); break;
-        case IntervalHour: writer->WriteValue(TEXT("Hour")); break;
-        case IntervalDay: writer->WriteValue(TEXT("Day")); break;
-        case IntervalWeek: writer->WriteValue(TEXT("Week")); break;
-        case IntervalMonth: writer->WriteValue(TEXT("Month")); break;
+        case StatisticResetIntervalOptionNever: writer->WriteValue(TEXT("Never")); break;
+        case StatisticResetIntervalOptionHour: writer->WriteValue(TEXT("Hour")); break;
+        case StatisticResetIntervalOptionDay: writer->WriteValue(TEXT("Day")); break;
+        case StatisticResetIntervalOptionWeek: writer->WriteValue(TEXT("Week")); break;
+        case StatisticResetIntervalOptionMonth: writer->WriteValue(TEXT("Month")); break;
     }
 }
 
-AdminModels::Interval PlayFab::AdminModels::readIntervalFromValue(const TSharedPtr<FJsonValue>& value)
+AdminModels::StatisticResetIntervalOption PlayFab::AdminModels::readStatisticResetIntervalOptionFromValue(const TSharedPtr<FJsonValue>& value)
 {
-    static TMap<FString, Interval> _IntervalMap;
-    if (_IntervalMap.Num() == 0)
+    static TMap<FString, StatisticResetIntervalOption> _StatisticResetIntervalOptionMap;
+    if (_StatisticResetIntervalOptionMap.Num() == 0)
     {
         // Auto-generate the map on the first use
-        _IntervalMap.Add(TEXT("FiveMinutes"), IntervalFiveMinutes);
-        _IntervalMap.Add(TEXT("FifteenMinutes"), IntervalFifteenMinutes);
-        _IntervalMap.Add(TEXT("Hour"), IntervalHour);
-        _IntervalMap.Add(TEXT("Day"), IntervalDay);
-        _IntervalMap.Add(TEXT("Week"), IntervalWeek);
-        _IntervalMap.Add(TEXT("Month"), IntervalMonth);
+        _StatisticResetIntervalOptionMap.Add(TEXT("Never"), StatisticResetIntervalOptionNever);
+        _StatisticResetIntervalOptionMap.Add(TEXT("Hour"), StatisticResetIntervalOptionHour);
+        _StatisticResetIntervalOptionMap.Add(TEXT("Day"), StatisticResetIntervalOptionDay);
+        _StatisticResetIntervalOptionMap.Add(TEXT("Week"), StatisticResetIntervalOptionWeek);
+        _StatisticResetIntervalOptionMap.Add(TEXT("Month"), StatisticResetIntervalOptionMonth);
 
     } 
 
 	if(value.IsValid())
 	{
-	    auto output = _IntervalMap.Find(value->AsString());
+	    auto output = _StatisticResetIntervalOptionMap.Find(value->AsString());
 		if (output != nullptr)
 			return *output;
 	}
 
 
-    return IntervalFiveMinutes; // Basically critical fail
+    return StatisticResetIntervalOptionNever; // Basically critical fail
 }
 
 
@@ -1145,9 +1143,9 @@ void PlayFab::AdminModels::FCreatePlayerStatisticDefinitionRequest::writeJSON(Js
 {
     writer->WriteObjectStart();
     
-    writer->WriteIdentifierPrefix(TEXT("Name")); writer->WriteValue(Name);
+    writer->WriteIdentifierPrefix(TEXT("StatisticName")); writer->WriteValue(StatisticName);
 	
-    if(VersionChangeInterval.notNull()) { writer->WriteIdentifierPrefix(TEXT("VersionChangeInterval")); writeIntervalEnumJSON(VersionChangeInterval, writer); }
+    if(VersionChangeInterval.notNull()) { writer->WriteIdentifierPrefix(TEXT("VersionChangeInterval")); writeStatisticResetIntervalOptionEnumJSON(VersionChangeInterval, writer); }
 	
     
     writer->WriteObjectEnd();
@@ -1157,14 +1155,14 @@ bool PlayFab::AdminModels::FCreatePlayerStatisticDefinitionRequest::readFromValu
 {
 	bool HasSucceeded = true; 
 	
-    const TSharedPtr<FJsonValue> NameValue = obj->TryGetField(TEXT("Name"));
-    if (NameValue.IsValid()&& !NameValue->IsNull())
+    const TSharedPtr<FJsonValue> StatisticNameValue = obj->TryGetField(TEXT("StatisticName"));
+    if (StatisticNameValue.IsValid()&& !StatisticNameValue->IsNull())
     {
         FString TmpValue;
-        if(NameValue->TryGetString(TmpValue)) {Name = TmpValue; }
+        if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
     }
     
-    VersionChangeInterval = readIntervalFromValue(obj->TryGetField(TEXT("VersionChangeInterval")));
+    VersionChangeInterval = readStatisticResetIntervalOptionFromValue(obj->TryGetField(TEXT("VersionChangeInterval")));
     
     
     return HasSucceeded;
@@ -1184,7 +1182,7 @@ void PlayFab::AdminModels::FPlayerStatisticDefinition::writeJSON(JsonWriter& wri
 	
     writer->WriteIdentifierPrefix(TEXT("CurrentVersion")); writer->WriteValue(static_cast<int64>(CurrentVersion));
 	
-    if(VersionChangeInterval.notNull()) { writer->WriteIdentifierPrefix(TEXT("VersionChangeInterval")); writeIntervalEnumJSON(VersionChangeInterval, writer); }
+    if(VersionChangeInterval.notNull()) { writer->WriteIdentifierPrefix(TEXT("VersionChangeInterval")); writeStatisticResetIntervalOptionEnumJSON(VersionChangeInterval, writer); }
 	
     
     writer->WriteObjectEnd();
@@ -1208,7 +1206,7 @@ bool PlayFab::AdminModels::FPlayerStatisticDefinition::readFromValue(const TShar
         if(CurrentVersionValue->TryGetNumber(TmpValue)) {CurrentVersion = TmpValue; }
     }
     
-    VersionChangeInterval = readIntervalFromValue(obj->TryGetField(TEXT("VersionChangeInterval")));
+    VersionChangeInterval = readStatisticResetIntervalOptionFromValue(obj->TryGetField(TEXT("VersionChangeInterval")));
     
     
     return HasSucceeded;
@@ -6862,7 +6860,7 @@ void PlayFab::AdminModels::FUpdatePlayerStatisticDefinitionRequest::writeJSON(Js
     
     if(StatisticName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("StatisticName")); writer->WriteValue(StatisticName); }
 	
-    if(VersionChangeInterval.notNull()) { writer->WriteIdentifierPrefix(TEXT("VersionChangeInterval")); writeIntervalEnumJSON(VersionChangeInterval, writer); }
+    if(VersionChangeInterval.notNull()) { writer->WriteIdentifierPrefix(TEXT("VersionChangeInterval")); writeStatisticResetIntervalOptionEnumJSON(VersionChangeInterval, writer); }
 	
     
     writer->WriteObjectEnd();
@@ -6879,7 +6877,7 @@ bool PlayFab::AdminModels::FUpdatePlayerStatisticDefinitionRequest::readFromValu
         if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
     }
     
-    VersionChangeInterval = readIntervalFromValue(obj->TryGetField(TEXT("VersionChangeInterval")));
+    VersionChangeInterval = readStatisticResetIntervalOptionFromValue(obj->TryGetField(TEXT("VersionChangeInterval")));
     
     
     return HasSucceeded;

@@ -638,37 +638,36 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
-	enum Interval
+	enum StatisticResetIntervalOption
 	{
-		IntervalFiveMinutes,
-		IntervalFifteenMinutes,
-		IntervalHour,
-		IntervalDay,
-		IntervalWeek,
-		IntervalMonth
+		StatisticResetIntervalOptionNever,
+		StatisticResetIntervalOptionHour,
+		StatisticResetIntervalOptionDay,
+		StatisticResetIntervalOptionWeek,
+		StatisticResetIntervalOptionMonth
 	};
 	
-	void writeIntervalEnumJSON(Interval enumVal, JsonWriter& writer);
-	Interval readIntervalFromValue(const TSharedPtr<FJsonValue>& value);
+	void writeStatisticResetIntervalOptionEnumJSON(StatisticResetIntervalOption enumVal, JsonWriter& writer);
+	StatisticResetIntervalOption readStatisticResetIntervalOptionFromValue(const TSharedPtr<FJsonValue>& value);
 	
 	
 	struct PLAYFAB_API FCreatePlayerStatisticDefinitionRequest : public FPlayFabBaseModel
     {
 		
 		// unique name of the statistic
-		FString Name;
+		FString StatisticName;
 		// [optional] interval at which the values of the statistic for all players are reset. Resets begin at the next interval boundary
-		Boxed<Interval> VersionChangeInterval;
+		Boxed<StatisticResetIntervalOption> VersionChangeInterval;
 	
         FCreatePlayerStatisticDefinitionRequest() :
 			FPlayFabBaseModel(),
-			Name(),
+			StatisticName(),
 			VersionChangeInterval()
 			{}
 		
 		FCreatePlayerStatisticDefinitionRequest(const FCreatePlayerStatisticDefinitionRequest& src) :
 			FPlayFabBaseModel(),
-			Name(src.Name),
+			StatisticName(src.StatisticName),
 			VersionChangeInterval(src.VersionChangeInterval)
 			{}
 			
@@ -691,7 +690,7 @@ namespace AdminModels
 		// current active version of the statistic, incremented each time the statistic resets
 		uint32 CurrentVersion;
 		// [optional] interval at which the values of the statistic for all players are reset
-		Boxed<Interval> VersionChangeInterval;
+		Boxed<StatisticResetIntervalOption> VersionChangeInterval;
 	
         FPlayerStatisticDefinition() :
 			FPlayFabBaseModel(),
@@ -4486,7 +4485,7 @@ namespace AdminModels
 		// [optional] unique name of the statistic
 		FString StatisticName;
 		// [optional] interval at which the values of the statistic for all players are reset. Changes are effective at the next interval boundary
-		Boxed<Interval> VersionChangeInterval;
+		Boxed<StatisticResetIntervalOption> VersionChangeInterval;
 	
         FUpdatePlayerStatisticDefinitionRequest() :
 			FPlayFabBaseModel(),
