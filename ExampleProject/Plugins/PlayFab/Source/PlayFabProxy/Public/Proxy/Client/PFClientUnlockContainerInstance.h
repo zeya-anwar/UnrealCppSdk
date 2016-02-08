@@ -5,10 +5,10 @@
 #include "Core/PlayFabClientAPI.h"
 #include "Core/PlayFabClientDataModels.h"
 #include "Proxy/PlayFabClientBPDataModels.h"
-#include "PFClientUnlockContainerItem.generated.h"
+#include "PFClientUnlockContainerInstance.generated.h"
 
 UCLASS()
-class PLAYFABPROXY_API UPFClientUnlockContainerItem : public UOnlineBlueprintCallProxyBase
+class PLAYFABPROXY_API UPFClientUnlockContainerInstance : public UOnlineBlueprintCallProxyBase
 {
 	GENERATED_UCLASS_BODY()
 public:
@@ -19,9 +19,9 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FBPClientUnlockContainerItemResultDelegate OnFailure;
 	
-	// Searches target inventory for an ItemInstance matching the given CatalogItemId, if necessary unlocks it using an appropriate key, and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses > 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
+	// Opens the specified container, with the specified key (when required), and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses > 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Player Item Management")
-	static UPFClientUnlockContainerItem* UnlockContainerItem(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InContainerItemId, const FString& InCatalogVersion, const FString& InCharacterId);
+	static UPFClientUnlockContainerInstance* UnlockContainerInstance(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InCharacterId, const FString& InContainerItemInstanceId, const FString& InKeyItemInstanceId, const FString& InCatalogVersion);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;
@@ -29,9 +29,9 @@ public:
 
 private:
 
-	PlayFab::ClientModels::FUnlockContainerItemRequest Request;
+	PlayFab::ClientModels::FUnlockContainerInstanceRequest Request;
 
-	PlayFab::UPlayFabClientAPI::FUnlockContainerItemDelegate	SuccessDelegate;
+	PlayFab::UPlayFabClientAPI::FUnlockContainerInstanceDelegate	SuccessDelegate;
 	PlayFab::FPlayFabErrorDelegate							ErrorDelegate;
 
 	void OnSuccessCallback(const PlayFab::ClientModels::FUnlockContainerItemResult& Result);

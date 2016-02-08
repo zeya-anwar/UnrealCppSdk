@@ -8009,12 +8009,51 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FUnlockContainerInstanceRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] Unique PlayFab assigned ID for a specific character owned by a user
+		FString CharacterId;
+		// ItemInstanceId of the container to unlock.
+		FString ContainerItemInstanceId;
+		// [optional] ItemInstanceId of the key that will be consumed by unlocking this container.  If the container requires a key, this parameter is required.
+		FString KeyItemInstanceId;
+		// [optional] Specifies the catalog version that should be used to determine container contents.  If unspecified, uses catalog associated with the item instance.
+		FString CatalogVersion;
+	
+        FUnlockContainerInstanceRequest() :
+			FPlayFabBaseModel(),
+			CharacterId(),
+			ContainerItemInstanceId(),
+			KeyItemInstanceId(),
+			CatalogVersion()
+			{}
+		
+		FUnlockContainerInstanceRequest(const FUnlockContainerInstanceRequest& src) :
+			FPlayFabBaseModel(),
+			CharacterId(src.CharacterId),
+			ContainerItemInstanceId(src.ContainerItemInstanceId),
+			KeyItemInstanceId(src.KeyItemInstanceId),
+			CatalogVersion(src.CatalogVersion)
+			{}
+			
+		FUnlockContainerInstanceRequest(const TSharedPtr<FJsonObject>& obj) : FUnlockContainerInstanceRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUnlockContainerInstanceRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FUnlockContainerItemRequest : public FPlayFabBaseModel
     {
 		
-		// Category ItemId of the container type to unlock.
+		// Catalog ItemId of the container type to unlock.
 		FString ContainerItemId;
-		// [optional] Catalog version of the container.
+		// [optional] Specifies the catalog version that should be used to determine container contents.  If unspecified, uses default/primary catalog.
 		FString CatalogVersion;
 		// [optional] Unique PlayFab assigned ID for a specific character owned by a user
 		FString CharacterId;
@@ -8047,7 +8086,7 @@ namespace ClientModels
 	struct PLAYFAB_API FUnlockContainerItemResult : public FPlayFabBaseModel
     {
 		
-		// Unique instance identifier of the container unlocked.
+		// [optional] Unique instance identifier of the container unlocked.
 		FString UnlockedItemInstanceId;
 		// [optional] Unique instance identifier of the key used to unlock the container, if applicable.
 		FString UnlockedWithItemInstanceId;

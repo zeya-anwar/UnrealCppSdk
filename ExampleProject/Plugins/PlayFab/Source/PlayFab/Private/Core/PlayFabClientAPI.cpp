@@ -2149,6 +2149,33 @@ void UPlayFabClientAPI::OnSubtractUserVirtualCurrencyResult(FHttpRequestPtr Http
     }
 }
 
+bool UPlayFabClientAPI::UnlockContainerInstance(
+    ClientModels::FUnlockContainerInstanceRequest& request,
+    const FUnlockContainerInstanceDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/UnlockContainerInstance")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnUnlockContainerInstanceResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabClientAPI::OnUnlockContainerInstanceResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlockContainerInstanceDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ClientModels::FUnlockContainerItemResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
 bool UPlayFabClientAPI::UnlockContainerItem(
     ClientModels::FUnlockContainerItemRequest& request,
     const FUnlockContainerItemDelegate& SuccessDelegate,

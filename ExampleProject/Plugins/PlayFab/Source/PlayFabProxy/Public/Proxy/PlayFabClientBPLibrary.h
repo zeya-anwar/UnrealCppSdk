@@ -1627,6 +1627,15 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientUnlockContainerInstanceRequest(
+		const FBPClientUnlockContainerInstanceRequest& In
+        ,FString& OutCharacterId
+        ,FString& OutContainerItemInstanceId
+        ,FString& OutKeyItemInstanceId
+        ,FString& OutCatalogVersion
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientUnlockContainerItemRequest(
 		const FBPClientUnlockContainerItemRequest& In
         ,FString& OutContainerItemId

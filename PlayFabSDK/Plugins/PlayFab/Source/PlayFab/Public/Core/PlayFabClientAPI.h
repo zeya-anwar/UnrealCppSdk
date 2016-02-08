@@ -86,6 +86,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FReportPlayerDelegate, const ClientModels::FReportPlayerClientResult&);
         DECLARE_DELEGATE_OneParam(FStartPurchaseDelegate, const ClientModels::FStartPurchaseResult&);
         DECLARE_DELEGATE_OneParam(FSubtractUserVirtualCurrencyDelegate, const ClientModels::FModifyUserVirtualCurrencyResult&);
+        DECLARE_DELEGATE_OneParam(FUnlockContainerInstanceDelegate, const ClientModels::FUnlockContainerItemResult&);
         DECLARE_DELEGATE_OneParam(FUnlockContainerItemDelegate, const ClientModels::FUnlockContainerItemResult&);
         DECLARE_DELEGATE_OneParam(FAddFriendDelegate, const ClientModels::FAddFriendResult&);
         DECLARE_DELEGATE_OneParam(FGetFriendsListDelegate, const ClientModels::FGetFriendsListResult&);
@@ -474,8 +475,13 @@ namespace PlayFab
          */
         bool SubtractUserVirtualCurrency(ClientModels::FSubtractUserVirtualCurrencyRequest& request, const FSubtractUserVirtualCurrencyDelegate& SuccessDelegate = FSubtractUserVirtualCurrencyDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Unlocks a container item in the user's inventory and consumes a key item of the type indicated by the container item
-         * Container items and their associated unlocking items ("crates" and "keys") are paired inventory objects which provide developers with a secure way to have an object which requires another object to activate, without providing the client with the opportunity to use replay attacks, packet blocking, or similar techniques to gain the objects in the container illegitimately. If an optional character ID is provided, this call will look into just that character's inventory for the crate + key. Items will then be granted to that character upon unlock.
+         * Opens the specified container, with the specified key (when required), and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses > 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
+         * Specify the container and optionally the catalogVersion for the container to open
+         */
+        bool UnlockContainerInstance(ClientModels::FUnlockContainerInstanceRequest& request, const FUnlockContainerInstanceDelegate& SuccessDelegate = FUnlockContainerInstanceDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Searches target inventory for an ItemInstance matching the given CatalogItemId, if necessary unlocks it using an appropriate key, and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses > 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
+         * Specify the type of container to open and optionally the catalogVersion for the container to open
          */
         bool UnlockContainerItem(ClientModels::FUnlockContainerItemRequest& request, const FUnlockContainerItemDelegate& SuccessDelegate = FUnlockContainerItemDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
@@ -744,6 +750,7 @@ namespace PlayFab
         void OnReportPlayerResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FReportPlayerDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnStartPurchaseResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FStartPurchaseDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSubtractUserVirtualCurrencyResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSubtractUserVirtualCurrencyDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnUnlockContainerInstanceResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlockContainerInstanceDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUnlockContainerItemResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlockContainerItemDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAddFriendResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddFriendDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetFriendsListResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetFriendsListDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

@@ -55,6 +55,8 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FRevokeInventoryItemDelegate, const ServerModels::FRevokeInventoryResult&);
         DECLARE_DELEGATE_OneParam(FSubtractCharacterVirtualCurrencyDelegate, const ServerModels::FModifyCharacterVirtualCurrencyResult&);
         DECLARE_DELEGATE_OneParam(FSubtractUserVirtualCurrencyDelegate, const ServerModels::FModifyUserVirtualCurrencyResult&);
+        DECLARE_DELEGATE_OneParam(FUnlockContainerInstanceDelegate, const ServerModels::FUnlockContainerItemResult&);
+        DECLARE_DELEGATE_OneParam(FUnlockContainerItemDelegate, const ServerModels::FUnlockContainerItemResult&);
         DECLARE_DELEGATE_OneParam(FUpdateUserInventoryItemCustomDataDelegate, const ServerModels::FUpdateUserInventoryItemDataResult&);
         DECLARE_DELEGATE_OneParam(FNotifyMatchmakerPlayerLeftDelegate, const ServerModels::FNotifyMatchmakerPlayerLeftResult&);
         DECLARE_DELEGATE_OneParam(FRedeemMatchmakerTicketDelegate, const ServerModels::FRedeemMatchmakerTicketResult&);
@@ -300,6 +302,16 @@ namespace PlayFab
          */
         bool SubtractUserVirtualCurrency(ServerModels::FSubtractUserVirtualCurrencyRequest& request, const FSubtractUserVirtualCurrencyDelegate& SuccessDelegate = FSubtractUserVirtualCurrencyDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Opens a specific container (ContainerItemInstanceId), with a specific key (KeyItemInstanceId, when required), and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses > 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
+         * Specify the container and optionally the catalogVersion for the container to open
+         */
+        bool UnlockContainerInstance(ServerModels::FUnlockContainerInstanceRequest& request, const FUnlockContainerInstanceDelegate& SuccessDelegate = FUnlockContainerInstanceDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Searches Player or Character inventory for any ItemInstance matching the given CatalogItemId, if necessary unlocks it using any appropriate key, and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses > 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
+         * Specify the type of container to open and optionally the catalogVersion for the container to open
+         */
+        bool UnlockContainerItem(ServerModels::FUnlockContainerItemRequest& request, const FUnlockContainerItemDelegate& SuccessDelegate = FUnlockContainerItemDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Updates the key-value pair data tagged to the specified item, which is read-only from the client.
          * This function performs an additive update of the arbitrary JSON object containing the custom data for the item instance which belongs to the specified user. In updating the custom data object, keys which already exist in the object will have their values overwritten, while  keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
          */
@@ -476,6 +488,8 @@ namespace PlayFab
         void OnRevokeInventoryItemResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRevokeInventoryItemDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSubtractCharacterVirtualCurrencyResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSubtractCharacterVirtualCurrencyDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSubtractUserVirtualCurrencyResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSubtractUserVirtualCurrencyDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnUnlockContainerInstanceResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlockContainerInstanceDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnUnlockContainerItemResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlockContainerItemDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateUserInventoryItemCustomDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserInventoryItemCustomDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnNotifyMatchmakerPlayerLeftResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FNotifyMatchmakerPlayerLeftDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRedeemMatchmakerTicketResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRedeemMatchmakerTicketDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

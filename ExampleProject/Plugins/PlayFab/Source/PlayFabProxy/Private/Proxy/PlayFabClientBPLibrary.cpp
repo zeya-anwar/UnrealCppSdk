@@ -2801,6 +2801,21 @@ void UPFClientProxyLibrary::BreakBPClientUnlinkXboxAccountResult(
     
 }
 
+void UPFClientProxyLibrary::BreakBPClientUnlockContainerInstanceRequest(
+		const FBPClientUnlockContainerInstanceRequest& In
+        ,FString& OutCharacterId
+        ,FString& OutContainerItemInstanceId
+        ,FString& OutKeyItemInstanceId
+        ,FString& OutCatalogVersion
+	)
+{
+    OutCharacterId = In.Data.CharacterId;
+	OutContainerItemInstanceId = In.Data.ContainerItemInstanceId;
+	OutKeyItemInstanceId = In.Data.KeyItemInstanceId;
+	OutCatalogVersion = In.Data.CatalogVersion;
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientUnlockContainerItemRequest(
 		const FBPClientUnlockContainerItemRequest& In
         ,FString& OutContainerItemId

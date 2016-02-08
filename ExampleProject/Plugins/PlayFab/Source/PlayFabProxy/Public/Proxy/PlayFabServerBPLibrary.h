@@ -937,6 +937,33 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerUnlockContainerInstanceRequest(
+		const FBPServerUnlockContainerInstanceRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutCharacterId
+        ,FString& OutContainerItemInstanceId
+        ,FString& OutKeyItemInstanceId
+        ,FString& OutCatalogVersion
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerUnlockContainerItemRequest(
+		const FBPServerUnlockContainerItemRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutCharacterId
+        ,FString& OutContainerItemId
+        ,FString& OutCatalogVersion
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerUnlockContainerItemResult(
+		const FBPServerUnlockContainerItemResult& In
+        ,FString& OutUnlockedItemInstanceId
+        ,FString& OutUnlockedWithItemInstanceId
+        ,TArray<FBPServerItemInstance>& OutGrantedItems
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerUpdateCharacterDataRequest(
 		const FBPServerUpdateCharacterDataRequest& In
         ,FString& OutPlayFabId
