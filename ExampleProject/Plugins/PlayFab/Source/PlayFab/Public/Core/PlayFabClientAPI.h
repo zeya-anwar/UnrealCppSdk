@@ -497,7 +497,7 @@ namespace PlayFab
         bool SetFriendTags(ClientModels::FSetFriendTagsRequest& request, const FSetFriendTagsDelegate& SuccessDelegate = FSetFriendTagsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Registers the iOS device to receive push notifications
-         * More information can be found on configuring your game for the Apple Push Notification service in the  Apple documentation, here:  https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Chapters/ApplePushService.html#//apple_ref/doc/uid/TP40008194-CH100-SW9.  The steps to configure and send Push Notifications is described in the PlayFab forums, here:  https://support.playfab.com/discussions/topics/1000041035.
+         * More information can be found on configuring your game for the Apple Push Notification service in the  Apple documentation, here:  https://developer.apple.com/library/ios/documentation/NetworkingInternet/Conceptual/RemoteNotificationsPG/Chapters/ApplePushService.html#//apple_ref/doc/uid/TP40008194-CH100-SW9.  The steps to configure and send Push Notifications is described in the PlayFab tutorials, here:  https://api.playfab.com/docs/pushCrashCourse/.
          */
         bool RegisterForIOSPushNotification(ClientModels::FRegisterForIOSPushNotificationRequest& request, const FRegisterForIOSPushNotificationDelegate& SuccessDelegate = FRegisterForIOSPushNotificationDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
@@ -529,7 +529,7 @@ namespace PlayFab
         bool StartGame(ClientModels::FStartGameRequest& request, const FStartGameDelegate& SuccessDelegate = FStartGameDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Registers the Android device to receive push notifications
-         * More information can be found on configuring your game for the Google Cloud Messaging service in the Google developer documentation, here:  http://developer.android.com/google/gcm/client.html.  The steps to configure and send Push Notifications is described in the PlayFab forums, here:  https://support.playfab.com/discussions/topics/1000041035.
+         * More information can be found on configuring your game for the Google Cloud Messaging service in the Google developer documentation, here:  http://developer.android.com/google/gcm/client.html.  The steps to configure and send Push Notifications is described in the PlayFab tutorials, here:  https://api.playfab.com/docs/pushCrashCourse/.
          */
         bool AndroidDevicePushNotificationRegistration(ClientModels::FAndroidDevicePushNotificationRegistrationRequest& request, const FAndroidDevicePushNotificationRegistrationDelegate& SuccessDelegate = FAndroidDevicePushNotificationRegistrationDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
@@ -588,7 +588,7 @@ namespace PlayFab
          */
         bool RunCloudScript(ClientModels::FRunCloudScriptRequest& request, const FRunCloudScriptDelegate& SuccessDelegate = FRunCloudScriptDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * This API retrieves a pre-signed URL for accessing a content file for the title. A subsequent  HTTP GET to the returned URL will attempt to download the content. A HEAD query to the returned URL will attempt to  retrieve the metadata of the content. Note that a successful result does not guarantee the existence of this content -  if it has not been uploaded, the query to retrieve the data will fail. See this post for more information:  https://support.playfab.com/support/discussions/topics/1000059929
+         * This API retrieves a pre-signed URL for accessing a content file for the title. A subsequent  HTTP GET to the returned URL will attempt to download the content. A HEAD query to the returned URL will attempt to  retrieve the metadata of the content. Note that a successful result does not guarantee the existence of this content -  if it has not been uploaded, the query to retrieve the data will fail. See this post for more information:  https://community.playfab.com/hc/en-us/community/posts/205469488-How-to-upload-files-to-PlayFab-s-Content-Service
          */
         bool GetContentDownloadUrl(ClientModels::FGetContentDownloadUrlRequest& request, const FGetContentDownloadUrlDelegate& SuccessDelegate = FGetContentDownloadUrlDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**

@@ -139,7 +139,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminCreatePlayerStatisticDefinitionRequest(
 		const FBPAdminCreatePlayerStatisticDefinitionRequest& In
-        ,FString& OutName
+        ,FString& OutStatisticName
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -473,11 +473,6 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
-	static void BreakBPAdminInterval(
-		const FBPAdminInterval& In
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminItemGrant(
 		const FBPAdminItemGrant& In
         ,FString& OutPlayFabId
@@ -786,6 +781,11 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPAdminSetupPushNotificationResult(
 		const FBPAdminSetupPushNotificationResult& In
         ,FString& OutARN
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminStatisticResetIntervalOption(
+		const FBPAdminStatisticResetIntervalOption& In
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
