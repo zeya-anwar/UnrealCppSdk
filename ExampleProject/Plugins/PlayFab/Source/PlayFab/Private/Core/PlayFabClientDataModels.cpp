@@ -6170,7 +6170,8 @@ void PlayFab::ClientModels::FGetPlayFabIDsFromSteamIDsRequest::writeJSON(JsonWri
 {
     writer->WriteObjectStart();
     
-    
+    if(SteamIDs.Num() != 0) 
+    {
         writer->WriteArrayStart(TEXT("SteamIDs"));
     
         for (const uint64& item : SteamIDs)
@@ -6178,7 +6179,18 @@ void PlayFab::ClientModels::FGetPlayFabIDsFromSteamIDsRequest::writeJSON(JsonWri
             writer->WriteValue(static_cast<int64>(item));
         }
         writer->WriteArrayEnd();
+     }
+	
+    if(SteamStringIDs.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("SteamStringIDs"));
     
+        for (const FString& item : SteamStringIDs)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -6201,6 +6213,8 @@ CurrentItem->TryGetNumber(TmpValue);
     }
 
     
+    obj->TryGetStringArrayField(TEXT("SteamStringIDs"),SteamStringIDs);
+    
     
     return HasSucceeded;
 }
@@ -6217,6 +6231,8 @@ void PlayFab::ClientModels::FSteamPlayFabIdPair::writeJSON(JsonWriter& writer) c
     
     writer->WriteIdentifierPrefix(TEXT("SteamId")); writer->WriteValue(static_cast<int64>(SteamId));
 	
+    if(SteamStringId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("SteamStringId")); writer->WriteValue(SteamStringId); }
+	
     if(PlayFabId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId); }
 	
     
@@ -6232,6 +6248,13 @@ bool PlayFab::ClientModels::FSteamPlayFabIdPair::readFromValue(const TSharedPtr<
     {
         int64 TmpValue;
         if(SteamIdValue->TryGetNumber(TmpValue)) {SteamId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> SteamStringIdValue = obj->TryGetField(TEXT("SteamStringId"));
+    if (SteamStringIdValue.IsValid()&& !SteamStringIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(SteamStringIdValue->TryGetString(TmpValue)) {SteamStringId = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));

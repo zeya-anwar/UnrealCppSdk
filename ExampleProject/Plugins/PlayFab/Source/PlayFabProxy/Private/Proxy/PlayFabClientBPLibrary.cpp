@@ -1163,6 +1163,7 @@ void UPFClientProxyLibrary::BreakBPClientGetPlayFabIDsFromPSNAccountIDsResult(
 void UPFClientProxyLibrary::BreakBPClientGetPlayFabIDsFromSteamIDsRequest(
 		const FBPClientGetPlayFabIDsFromSteamIDsRequest& In
         ,TArray<int32>& OutSteamIDs
+        ,TArray<FString>& OutSteamStringIDs
 	)
 {
     for (const int32& elem : In.Data.SteamIDs)
@@ -1170,6 +1171,7 @@ void UPFClientProxyLibrary::BreakBPClientGetPlayFabIDsFromSteamIDsRequest(
         OutSteamIDs.Add(static_cast<uint64>(elem));
     }
 
+	OutSteamStringIDs = In.Data.SteamStringIDs;
 	
 }
 
@@ -2555,10 +2557,12 @@ void UPFClientProxyLibrary::BreakBPClientStatisticValue(
 void UPFClientProxyLibrary::BreakBPClientSteamPlayFabIdPair(
 		const FBPClientSteamPlayFabIdPair& In
         ,int32& OutSteamId
+        ,FString& OutSteamStringId
         ,FString& OutPlayFabId
 	)
 {
     OutSteamId = In.Data.SteamId;
+	OutSteamStringId = In.Data.SteamStringId;
 	OutPlayFabId = In.Data.PlayFabId;
 	
 }

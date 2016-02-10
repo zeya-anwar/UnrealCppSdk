@@ -654,6 +654,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPClientGetPlayFabIDsFromSteamIDsRequest(
 		const FBPClientGetPlayFabIDsFromSteamIDsRequest& In
         ,TArray<int32>& OutSteamIDs
+        ,TArray<FString>& OutSteamStringIDs
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1465,6 +1466,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPClientSteamPlayFabIdPair(
 		const FBPClientSteamPlayFabIdPair& In
         ,int32& OutSteamId
+        ,FString& OutSteamStringId
         ,FString& OutPlayFabId
 	);
 	
