@@ -6017,7 +6017,7 @@ namespace ClientModels
 		
 		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
 		FString TitleId;
-		// Unique identifier from Kongregate for the user.
+		// Numeric user ID assigned by Kongregate
 		FString KongregateId;
 		// Token issued by Kongregate's client API for the user.
 		FString AuthTicket;
