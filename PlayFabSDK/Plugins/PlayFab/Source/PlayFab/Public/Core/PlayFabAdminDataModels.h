@@ -2885,7 +2885,8 @@ namespace AdminModels
 		UserOriginationPSN,
 		UserOriginationGameCenter,
 		UserOriginationCustomId,
-		UserOriginationXboxLive
+		UserOriginationXboxLive,
+		UserOriginationParse
 	};
 	
 	void writeUserOriginationEnumJSON(UserOrigination enumVal, JsonWriter& writer);
