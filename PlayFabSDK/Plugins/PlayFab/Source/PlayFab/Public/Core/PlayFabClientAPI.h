@@ -62,11 +62,13 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FGetLeaderboardDelegate, const ClientModels::FGetLeaderboardResult&);
         DECLARE_DELEGATE_OneParam(FGetLeaderboardAroundCurrentUserDelegate, const ClientModels::FGetLeaderboardAroundCurrentUserResult&);
         DECLARE_DELEGATE_OneParam(FGetLeaderboardAroundPlayerDelegate, const ClientModels::FGetLeaderboardAroundPlayerResult&);
+        DECLARE_DELEGATE_OneParam(FGetPlayerStatisticsDelegate, const ClientModels::FGetPlayerStatisticsResult&);
         DECLARE_DELEGATE_OneParam(FGetUserDataDelegate, const ClientModels::FGetUserDataResult&);
         DECLARE_DELEGATE_OneParam(FGetUserPublisherDataDelegate, const ClientModels::FGetUserDataResult&);
         DECLARE_DELEGATE_OneParam(FGetUserPublisherReadOnlyDataDelegate, const ClientModels::FGetUserDataResult&);
         DECLARE_DELEGATE_OneParam(FGetUserReadOnlyDataDelegate, const ClientModels::FGetUserDataResult&);
         DECLARE_DELEGATE_OneParam(FGetUserStatisticsDelegate, const ClientModels::FGetUserStatisticsResult&);
+        DECLARE_DELEGATE_OneParam(FUpdatePlayerStatisticsDelegate, const ClientModels::FUpdatePlayerStatisticsResult&);
         DECLARE_DELEGATE_OneParam(FUpdateUserDataDelegate, const ClientModels::FUpdateUserDataResult&);
         DECLARE_DELEGATE_OneParam(FUpdateUserPublisherDataDelegate, const ClientModels::FUpdateUserDataResult&);
         DECLARE_DELEGATE_OneParam(FUpdateUserStatisticsDelegate, const ClientModels::FUpdateUserStatisticsResult&);
@@ -363,6 +365,10 @@ namespace PlayFab
          */
         bool GetLeaderboardAroundPlayer(ClientModels::FGetLeaderboardAroundPlayerRequest& request, const FGetLeaderboardAroundPlayerDelegate& SuccessDelegate = FGetLeaderboardAroundPlayerDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Retrieves the current version and values for the indicated statistics, for the local player.
+         */
+        bool GetPlayerStatistics(ClientModels::FGetPlayerStatisticsRequest& request, const FGetPlayerStatisticsDelegate& SuccessDelegate = FGetPlayerStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Retrieves the title-specific custom data for the user which is readable and writable by the client
          * Data is stored as JSON key-value pairs. Every time the data is updated via any source, the version counter is incremented. If the Version parameter is provided, then this call will only return data if the current version on the system is greater than the value provided. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
          */
@@ -386,6 +392,11 @@ namespace PlayFab
          * Retrieves the details of all title-specific statistics for the user
          */
         bool GetUserStatistics(const FGetUserStatisticsDelegate& SuccessDelegate = FGetUserStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Updates the values of the specified title-specific statistics for the user
+         * Enable this option with the 'Allow Client to Post Player Statistics' option in PlayFab GameManager for your title. However, this is not best practice, as this data will no longer be safely controlled by the server. This operation is additive.  Statistics not currently defined will be added, while those already defined will be updated with the given values. All other user statistics will remain unchanged.  Note that if the statistic is intended to have a reset period, the UpdatePlayerStatisticDefinition API call can be used to define that reset period. Once a statistic has been versioned (reset), the now-previous version can still be written to for up a short, pre-defined period (currently 10 seconds), using the Version parameter in this call.
+         */
+        bool UpdatePlayerStatistics(ClientModels::FUpdatePlayerStatisticsRequest& request, const FUpdatePlayerStatisticsDelegate& SuccessDelegate = FUpdatePlayerStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Creates and updates the title-specific custom data for the user which is readable and writable by the client
          * This function performs an additive update of the arbitrary strings containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, while keys with null values will be removed. New keys will be added, with the given values. No other key-value pairs will be changed apart from those specified in the call.
@@ -726,11 +737,13 @@ namespace PlayFab
         void OnGetLeaderboardResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetLeaderboardAroundCurrentUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardAroundCurrentUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetLeaderboardAroundPlayerResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardAroundPlayerDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetPlayerStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserPublisherReadOnlyDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserPublisherReadOnlyDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserReadOnlyDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserReadOnlyDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnUpdatePlayerStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdatePlayerStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateUserDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateUserPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateUserStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
