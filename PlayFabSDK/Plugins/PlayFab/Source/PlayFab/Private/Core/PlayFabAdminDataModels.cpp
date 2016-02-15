@@ -6860,7 +6860,7 @@ void PlayFab::AdminModels::FUpdatePlayerStatisticDefinitionRequest::writeJSON(Js
 {
     writer->WriteObjectStart();
     
-    if(StatisticName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("StatisticName")); writer->WriteValue(StatisticName); }
+    writer->WriteIdentifierPrefix(TEXT("StatisticName")); writer->WriteValue(StatisticName);
 	
     if(VersionChangeInterval.notNull()) { writer->WriteIdentifierPrefix(TEXT("VersionChangeInterval")); writeStatisticResetIntervalOptionEnumJSON(VersionChangeInterval, writer); }
 	

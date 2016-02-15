@@ -11317,7 +11317,7 @@ void PlayFab::ClientModels::FStatisticUpdate::writeJSON(JsonWriter& writer) cons
 {
     writer->WriteObjectStart();
     
-    if(StatisticName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("StatisticName")); writer->WriteValue(StatisticName); }
+    writer->WriteIdentifierPrefix(TEXT("StatisticName")); writer->WriteValue(StatisticName);
 	
     if(Version.notNull()) { writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(static_cast<int64>(Version)); }
 	
