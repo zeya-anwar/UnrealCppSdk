@@ -3093,6 +3093,7 @@ void PlayFab::ClientModels::writeUserOriginationEnumJSON(UserOrigination enumVal
         case UserOriginationGameCenter: writer->WriteValue(TEXT("GameCenter")); break;
         case UserOriginationCustomId: writer->WriteValue(TEXT("CustomId")); break;
         case UserOriginationXboxLive: writer->WriteValue(TEXT("XboxLive")); break;
+        case UserOriginationParse: writer->WriteValue(TEXT("Parse")); break;
     }
 }
 
@@ -3117,6 +3118,7 @@ ClientModels::UserOrigination PlayFab::ClientModels::readUserOriginationFromValu
         _UserOriginationMap.Add(TEXT("GameCenter"), UserOriginationGameCenter);
         _UserOriginationMap.Add(TEXT("CustomId"), UserOriginationCustomId);
         _UserOriginationMap.Add(TEXT("XboxLive"), UserOriginationXboxLive);
+        _UserOriginationMap.Add(TEXT("Parse"), UserOriginationParse);
 
     } 
 
@@ -6170,7 +6172,8 @@ void PlayFab::ClientModels::FGetPlayFabIDsFromSteamIDsRequest::writeJSON(JsonWri
 {
     writer->WriteObjectStart();
     
-    
+    if(SteamIDs.Num() != 0) 
+    {
         writer->WriteArrayStart(TEXT("SteamIDs"));
     
         for (const uint64& item : SteamIDs)
@@ -6178,7 +6181,18 @@ void PlayFab::ClientModels::FGetPlayFabIDsFromSteamIDsRequest::writeJSON(JsonWri
             writer->WriteValue(static_cast<int64>(item));
         }
         writer->WriteArrayEnd();
+     }
+	
+    if(SteamStringIDs.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("SteamStringIDs"));
     
+        for (const FString& item : SteamStringIDs)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -6201,6 +6215,8 @@ CurrentItem->TryGetNumber(TmpValue);
     }
 
     
+    obj->TryGetStringArrayField(TEXT("SteamStringIDs"),SteamStringIDs);
+    
     
     return HasSucceeded;
 }
@@ -6217,6 +6233,8 @@ void PlayFab::ClientModels::FSteamPlayFabIdPair::writeJSON(JsonWriter& writer) c
     
     writer->WriteIdentifierPrefix(TEXT("SteamId")); writer->WriteValue(static_cast<int64>(SteamId));
 	
+    if(SteamStringId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("SteamStringId")); writer->WriteValue(SteamStringId); }
+	
     if(PlayFabId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId); }
 	
     
@@ -6232,6 +6250,13 @@ bool PlayFab::ClientModels::FSteamPlayFabIdPair::readFromValue(const TSharedPtr<
     {
         int64 TmpValue;
         if(SteamIdValue->TryGetNumber(TmpValue)) {SteamId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> SteamStringIdValue = obj->TryGetField(TEXT("SteamStringId"));
+    if (SteamStringIdValue.IsValid()&& !SteamStringIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(SteamStringIdValue->TryGetString(TmpValue)) {SteamStringId = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
@@ -11848,6 +11873,64 @@ bool PlayFab::ClientModels::FUnlinkXboxAccountResult::readFromValue(const TShare
 }
 
 
+PlayFab::ClientModels::FUnlockContainerInstanceRequest::~FUnlockContainerInstanceRequest()
+{
+    
+}
+
+void PlayFab::ClientModels::FUnlockContainerInstanceRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(CharacterId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CharacterId")); writer->WriteValue(CharacterId); }
+	
+    writer->WriteIdentifierPrefix(TEXT("ContainerItemInstanceId")); writer->WriteValue(ContainerItemInstanceId);
+	
+    if(KeyItemInstanceId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("KeyItemInstanceId")); writer->WriteValue(KeyItemInstanceId); }
+	
+    if(CatalogVersion.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CatalogVersion")); writer->WriteValue(CatalogVersion); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FUnlockContainerInstanceRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
+    if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ContainerItemInstanceIdValue = obj->TryGetField(TEXT("ContainerItemInstanceId"));
+    if (ContainerItemInstanceIdValue.IsValid()&& !ContainerItemInstanceIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ContainerItemInstanceIdValue->TryGetString(TmpValue)) {ContainerItemInstanceId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> KeyItemInstanceIdValue = obj->TryGetField(TEXT("KeyItemInstanceId"));
+    if (KeyItemInstanceIdValue.IsValid()&& !KeyItemInstanceIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(KeyItemInstanceIdValue->TryGetString(TmpValue)) {KeyItemInstanceId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> CatalogVersionValue = obj->TryGetField(TEXT("CatalogVersion"));
+    if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ClientModels::FUnlockContainerItemRequest::~FUnlockContainerItemRequest()
 {
     
@@ -11906,7 +11989,7 @@ void PlayFab::ClientModels::FUnlockContainerItemResult::writeJSON(JsonWriter& wr
 {
     writer->WriteObjectStart();
     
-    writer->WriteIdentifierPrefix(TEXT("UnlockedItemInstanceId")); writer->WriteValue(UnlockedItemInstanceId);
+    if(UnlockedItemInstanceId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("UnlockedItemInstanceId")); writer->WriteValue(UnlockedItemInstanceId); }
 	
     if(UnlockedWithItemInstanceId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("UnlockedWithItemInstanceId")); writer->WriteValue(UnlockedWithItemInstanceId); }
 	

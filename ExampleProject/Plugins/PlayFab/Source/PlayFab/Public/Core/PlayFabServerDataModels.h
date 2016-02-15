@@ -223,7 +223,8 @@ namespace ServerModels
 		UserOriginationPSN,
 		UserOriginationGameCenter,
 		UserOriginationCustomId,
-		UserOriginationXboxLive
+		UserOriginationXboxLive,
+		UserOriginationParse
 	};
 	
 	void writeUserOriginationEnumJSON(UserOrigination enumVal, JsonWriter& writer);
@@ -4840,6 +4841,127 @@ namespace ServerModels
         }
 		
 		~FSubtractUserVirtualCurrencyRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUnlockContainerInstanceRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+		// [optional] Unique PlayFab assigned ID for a specific character owned by a user
+		FString CharacterId;
+		// ItemInstanceId of the container to unlock.
+		FString ContainerItemInstanceId;
+		// [optional] ItemInstanceId of the key that will be consumed by unlocking this container.  If the container requires a key, this parameter is required.
+		FString KeyItemInstanceId;
+		// [optional] Specifies the catalog version that should be used to determine container contents.  If unspecified, uses catalog associated with the item instance.
+		FString CatalogVersion;
+	
+        FUnlockContainerInstanceRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			CharacterId(),
+			ContainerItemInstanceId(),
+			KeyItemInstanceId(),
+			CatalogVersion()
+			{}
+		
+		FUnlockContainerInstanceRequest(const FUnlockContainerInstanceRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			CharacterId(src.CharacterId),
+			ContainerItemInstanceId(src.ContainerItemInstanceId),
+			KeyItemInstanceId(src.KeyItemInstanceId),
+			CatalogVersion(src.CatalogVersion)
+			{}
+			
+		FUnlockContainerInstanceRequest(const TSharedPtr<FJsonObject>& obj) : FUnlockContainerInstanceRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUnlockContainerInstanceRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUnlockContainerItemRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+		// [optional] Unique PlayFab assigned ID for a specific character owned by a user
+		FString CharacterId;
+		// Catalog ItemId of the container type to unlock.
+		FString ContainerItemId;
+		// [optional] Specifies the catalog version that should be used to determine container contents.  If unspecified, uses default/primary catalog.
+		FString CatalogVersion;
+	
+        FUnlockContainerItemRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			CharacterId(),
+			ContainerItemId(),
+			CatalogVersion()
+			{}
+		
+		FUnlockContainerItemRequest(const FUnlockContainerItemRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			CharacterId(src.CharacterId),
+			ContainerItemId(src.ContainerItemId),
+			CatalogVersion(src.CatalogVersion)
+			{}
+			
+		FUnlockContainerItemRequest(const TSharedPtr<FJsonObject>& obj) : FUnlockContainerItemRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUnlockContainerItemRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUnlockContainerItemResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Unique instance identifier of the container unlocked.
+		FString UnlockedItemInstanceId;
+		// [optional] Unique instance identifier of the key used to unlock the container, if applicable.
+		FString UnlockedWithItemInstanceId;
+		// [optional] Items granted to the player as a result of unlocking the container.
+		TArray<FItemInstance> GrantedItems;
+		// [optional] Virtual currency granted to the player as a result of unlocking the container.
+		TMap<FString, uint32> VirtualCurrency;
+	
+        FUnlockContainerItemResult() :
+			FPlayFabBaseModel(),
+			UnlockedItemInstanceId(),
+			UnlockedWithItemInstanceId(),
+			GrantedItems(),
+			VirtualCurrency()
+			{}
+		
+		FUnlockContainerItemResult(const FUnlockContainerItemResult& src) :
+			FPlayFabBaseModel(),
+			UnlockedItemInstanceId(src.UnlockedItemInstanceId),
+			UnlockedWithItemInstanceId(src.UnlockedWithItemInstanceId),
+			GrantedItems(src.GrantedItems),
+			VirtualCurrency(src.VirtualCurrency)
+			{}
+			
+		FUnlockContainerItemResult(const TSharedPtr<FJsonObject>& obj) : FUnlockContainerItemResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUnlockContainerItemResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

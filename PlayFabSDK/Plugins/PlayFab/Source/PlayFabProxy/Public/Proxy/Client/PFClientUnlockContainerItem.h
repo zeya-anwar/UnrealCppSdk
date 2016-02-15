@@ -19,7 +19,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FBPClientUnlockContainerItemResultDelegate OnFailure;
 	
-	// Unlocks a container item in the user's inventory and consumes a key item of the type indicated by the container item
+	// Searches target inventory for an ItemInstance matching the given CatalogItemId, if necessary unlocks it using an appropriate key, and returns the contents of the opened container. If the container (and key when relevant) are consumable (RemainingUses > 0), their RemainingUses will be decremented, consistent with the operation of ConsumeItem.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Player Item Management")
 	static UPFClientUnlockContainerItem* UnlockContainerItem(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InContainerItemId, const FString& InCatalogVersion, const FString& InCharacterId);
 

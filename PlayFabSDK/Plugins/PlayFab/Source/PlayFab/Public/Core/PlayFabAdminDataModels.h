@@ -656,7 +656,7 @@ namespace AdminModels
 		
 		// unique name of the statistic
 		FString StatisticName;
-		// [optional] interval at which the values of the statistic for all players are reset. Resets begin at the next interval boundary
+		// [optional] interval at which the values of the statistic for all players are reset (resets begin at the next interval boundary)
 		Boxed<StatisticResetIntervalOption> VersionChangeInterval;
 	
         FCreatePlayerStatisticDefinitionRequest() :
@@ -689,7 +689,7 @@ namespace AdminModels
 		FString StatisticName;
 		// current active version of the statistic, incremented each time the statistic resets
 		uint32 CurrentVersion;
-		// [optional] interval at which the values of the statistic for all players are reset
+		// [optional] interval at which the values of the statistic for all players are reset automatically
 		Boxed<StatisticResetIntervalOption> VersionChangeInterval;
 	
         FPlayerStatisticDefinition() :
@@ -1564,7 +1564,7 @@ namespace AdminModels
 	struct PLAYFAB_API FGetPlayerStatisticDefinitionsResult : public FPlayFabBaseModel
     {
 		
-		// [optional] definitions of all statistics for the title
+		// [optional] the player statistic definitions for the title
 		TArray<FPlayerStatisticDefinition> Statistics;
 	
         FGetPlayerStatisticDefinitionsResult() :
@@ -2885,7 +2885,8 @@ namespace AdminModels
 		UserOriginationPSN,
 		UserOriginationGameCenter,
 		UserOriginationCustomId,
-		UserOriginationXboxLive
+		UserOriginationXboxLive,
+		UserOriginationParse
 	};
 	
 	void writeUserOriginationEnumJSON(UserOrigination enumVal, JsonWriter& writer);
@@ -4484,7 +4485,7 @@ namespace AdminModels
 		
 		// [optional] unique name of the statistic
 		FString StatisticName;
-		// [optional] interval at which the values of the statistic for all players are reset. Changes are effective at the next interval boundary
+		// [optional] interval at which the values of the statistic for all players are reset (changes are effective at the next occurance of the new interval boundary)
 		Boxed<StatisticResetIntervalOption> VersionChangeInterval;
 	
         FUpdatePlayerStatisticDefinitionRequest() :

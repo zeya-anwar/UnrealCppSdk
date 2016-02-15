@@ -21,7 +21,7 @@ public:
 	
 	// Retrieves the unique PlayFab identifiers for the given set of Steam identifiers. The Steam identifiers  are the profile IDs for the user accounts, available as SteamId in the Steamworks Community API calls.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Account Management")
-	static UPFClientGetPlayFabIDsFromSteamIDs* GetPlayFabIDsFromSteamIDs(UObject* WorldContextObject, class APlayerController* PlayerController, const TArray<int32>& InSteamIDs);
+	static UPFClientGetPlayFabIDsFromSteamIDs* GetPlayFabIDsFromSteamIDs(UObject* WorldContextObject, class APlayerController* PlayerController, const TArray<int32>& InSteamIDs, const TArray<FString>& InSteamStringIDs);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

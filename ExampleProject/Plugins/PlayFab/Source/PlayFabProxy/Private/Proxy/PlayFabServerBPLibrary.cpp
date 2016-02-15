@@ -1612,6 +1612,58 @@ void UPFServerProxyLibrary::BreakBPServerTitleNewsItem(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerUnlockContainerInstanceRequest(
+		const FBPServerUnlockContainerInstanceRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutCharacterId
+        ,FString& OutContainerItemInstanceId
+        ,FString& OutKeyItemInstanceId
+        ,FString& OutCatalogVersion
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutCharacterId = In.Data.CharacterId;
+	OutContainerItemInstanceId = In.Data.ContainerItemInstanceId;
+	OutKeyItemInstanceId = In.Data.KeyItemInstanceId;
+	OutCatalogVersion = In.Data.CatalogVersion;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerUnlockContainerItemRequest(
+		const FBPServerUnlockContainerItemRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutCharacterId
+        ,FString& OutContainerItemId
+        ,FString& OutCatalogVersion
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutCharacterId = In.Data.CharacterId;
+	OutContainerItemId = In.Data.ContainerItemId;
+	OutCatalogVersion = In.Data.CatalogVersion;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerUnlockContainerItemResult(
+		const FBPServerUnlockContainerItemResult& In
+        ,FString& OutUnlockedItemInstanceId
+        ,FString& OutUnlockedWithItemInstanceId
+        ,TArray<FBPServerItemInstance>& OutGrantedItems
+	)
+{
+    OutUnlockedItemInstanceId = In.Data.UnlockedItemInstanceId;
+	OutUnlockedWithItemInstanceId = In.Data.UnlockedWithItemInstanceId;
+	for (const PlayFab::ServerModels::FItemInstance& elem : In.Data.GrantedItems)
+    {
+        FBPServerItemInstance result;
+        result.Data = elem;
+        OutGrantedItems.Add(result);
+    }
+
+	
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerUpdateCharacterDataRequest(
 		const FBPServerUpdateCharacterDataRequest& In
         ,FString& OutPlayFabId

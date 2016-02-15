@@ -2276,6 +2276,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientUnlinkXboxAccountResultDelegate, const FBPClientUnlinkXboxAccountResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientUnlockContainerInstanceRequest"))
+struct FBPClientUnlockContainerInstanceRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FUnlockContainerInstanceRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientUnlockContainerInstanceRequestDelegate, const FBPClientUnlockContainerInstanceRequest&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientUnlockContainerItemRequest"))
 struct FBPClientUnlockContainerItemRequest
 {

@@ -1920,7 +1920,8 @@ namespace ClientModels
 		UserOriginationPSN,
 		UserOriginationGameCenter,
 		UserOriginationCustomId,
-		UserOriginationXboxLive
+		UserOriginationXboxLive,
+		UserOriginationParse
 	};
 	
 	void writeUserOriginationEnumJSON(UserOrigination enumVal, JsonWriter& writer);
@@ -3999,17 +4000,21 @@ namespace ClientModels
 	struct PLAYFAB_API FGetPlayFabIDsFromSteamIDsRequest : public FPlayFabBaseModel
     {
 		
-		// Array of unique Steam identifiers (Steam profile IDs) for which the title needs to get PlayFab identifiers.
+		// [optional] Deprecated: Please use SteamStringIDs
 		TArray<uint64> SteamIDs;
+		// [optional] Array of unique Steam identifiers (Steam profile IDs) for which the title needs to get PlayFab identifiers.
+		TArray<FString> SteamStringIDs;
 	
         FGetPlayFabIDsFromSteamIDsRequest() :
 			FPlayFabBaseModel(),
-			SteamIDs()
+			SteamIDs(),
+			SteamStringIDs()
 			{}
 		
 		FGetPlayFabIDsFromSteamIDsRequest(const FGetPlayFabIDsFromSteamIDsRequest& src) :
 			FPlayFabBaseModel(),
-			SteamIDs(src.SteamIDs)
+			SteamIDs(src.SteamIDs),
+			SteamStringIDs(src.SteamStringIDs)
 			{}
 			
 		FGetPlayFabIDsFromSteamIDsRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayFabIDsFromSteamIDsRequest()
@@ -4026,20 +4031,24 @@ namespace ClientModels
 	struct PLAYFAB_API FSteamPlayFabIdPair : public FPlayFabBaseModel
     {
 		
-		// Unique Steam identifier for a user.
+		// Deprecated: Please use SteamStringId
 		uint64 SteamId;
+		// [optional] Unique Steam identifier for a user.
+		FString SteamStringId;
 		// [optional] Unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Steam identifier.
 		FString PlayFabId;
 	
         FSteamPlayFabIdPair() :
 			FPlayFabBaseModel(),
 			SteamId(0),
+			SteamStringId(),
 			PlayFabId()
 			{}
 		
 		FSteamPlayFabIdPair(const FSteamPlayFabIdPair& src) :
 			FPlayFabBaseModel(),
 			SteamId(src.SteamId),
+			SteamStringId(src.SteamStringId),
 			PlayFabId(src.PlayFabId)
 			{}
 			
@@ -6009,7 +6018,7 @@ namespace ClientModels
 		
 		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
 		FString TitleId;
-		// Unique identifier from Kongregate for the user.
+		// Numeric user ID assigned by Kongregate
 		FString KongregateId;
 		// Token issued by Kongregate's client API for the user.
 		FString AuthTicket;
@@ -8009,12 +8018,51 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FUnlockContainerInstanceRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] Unique PlayFab assigned ID for a specific character owned by a user
+		FString CharacterId;
+		// ItemInstanceId of the container to unlock.
+		FString ContainerItemInstanceId;
+		// [optional] ItemInstanceId of the key that will be consumed by unlocking this container.  If the container requires a key, this parameter is required.
+		FString KeyItemInstanceId;
+		// [optional] Specifies the catalog version that should be used to determine container contents.  If unspecified, uses catalog associated with the item instance.
+		FString CatalogVersion;
+	
+        FUnlockContainerInstanceRequest() :
+			FPlayFabBaseModel(),
+			CharacterId(),
+			ContainerItemInstanceId(),
+			KeyItemInstanceId(),
+			CatalogVersion()
+			{}
+		
+		FUnlockContainerInstanceRequest(const FUnlockContainerInstanceRequest& src) :
+			FPlayFabBaseModel(),
+			CharacterId(src.CharacterId),
+			ContainerItemInstanceId(src.ContainerItemInstanceId),
+			KeyItemInstanceId(src.KeyItemInstanceId),
+			CatalogVersion(src.CatalogVersion)
+			{}
+			
+		FUnlockContainerInstanceRequest(const TSharedPtr<FJsonObject>& obj) : FUnlockContainerInstanceRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUnlockContainerInstanceRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FUnlockContainerItemRequest : public FPlayFabBaseModel
     {
 		
-		// Category ItemId of the container type to unlock.
+		// Catalog ItemId of the container type to unlock.
 		FString ContainerItemId;
-		// [optional] Catalog version of the container.
+		// [optional] Specifies the catalog version that should be used to determine container contents.  If unspecified, uses default/primary catalog.
 		FString CatalogVersion;
 		// [optional] Unique PlayFab assigned ID for a specific character owned by a user
 		FString CharacterId;
@@ -8047,7 +8095,7 @@ namespace ClientModels
 	struct PLAYFAB_API FUnlockContainerItemResult : public FPlayFabBaseModel
     {
 		
-		// Unique instance identifier of the container unlocked.
+		// [optional] Unique instance identifier of the container unlocked.
 		FString UnlockedItemInstanceId;
 		// [optional] Unique instance identifier of the key used to unlock the container, if applicable.
 		FString UnlockedWithItemInstanceId;

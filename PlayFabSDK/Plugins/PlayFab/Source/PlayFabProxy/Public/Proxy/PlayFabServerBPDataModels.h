@@ -1256,6 +1256,36 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerTitleNewsItemDelegate, const FBPServerTitleNewsItem&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUnlockContainerInstanceRequest"))
+struct FBPServerUnlockContainerInstanceRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FUnlockContainerInstanceRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUnlockContainerInstanceRequestDelegate, const FBPServerUnlockContainerInstanceRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUnlockContainerItemRequest"))
+struct FBPServerUnlockContainerItemRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FUnlockContainerItemRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUnlockContainerItemRequestDelegate, const FBPServerUnlockContainerItemRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUnlockContainerItemResult"))
+struct FBPServerUnlockContainerItemResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FUnlockContainerItemResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUnlockContainerItemResultDelegate, const FBPServerUnlockContainerItemResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUpdateCharacterDataRequest"))
 struct FBPServerUpdateCharacterDataRequest
 {
