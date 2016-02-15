@@ -4483,7 +4483,7 @@ namespace AdminModels
 	struct PLAYFAB_API FUpdatePlayerStatisticDefinitionRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] unique name of the statistic
+		// unique name of the statistic
 		FString StatisticName;
 		// [optional] interval at which the values of the statistic for all players are reset (changes are effective at the next occurance of the new interval boundary)
 		Boxed<StatisticResetIntervalOption> VersionChangeInterval;

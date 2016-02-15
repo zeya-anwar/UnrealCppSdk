@@ -7479,7 +7479,7 @@ namespace ClientModels
 	struct PLAYFAB_API FStatisticUpdate : public FPlayFabBaseModel
     {
 		
-		// [optional] unique name of the statistic
+		// unique name of the statistic
 		FString StatisticName;
 		// [optional] for updates to an existing statistic value for a player, the version of the statistic when it was loaded. Null when setting the statistic value for the first time.
 		OptionalUint32 Version;
