@@ -435,6 +435,19 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerGetPlayFabIDsFromSteamIDsRequest(
+		const FBPServerGetPlayFabIDsFromSteamIDsRequest& In
+        ,TArray<int32>& OutSteamIDs
+        ,TArray<FString>& OutSteamStringIDs
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerGetPlayFabIDsFromSteamIDsResult(
+		const FBPServerGetPlayFabIDsFromSteamIDsResult& In
+        ,TArray<FBPServerSteamPlayFabIdPair>& OutData
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerGetPublisherDataRequest(
 		const FBPServerGetPublisherDataRequest& In
         ,TArray<FString>& OutKeys
@@ -903,6 +916,14 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutStatisticName
         ,int32& OutValue
         ,FString& OutVersion
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerSteamPlayFabIdPair(
+		const FBPServerSteamPlayFabIdPair& In
+        ,int32& OutSteamId
+        ,FString& OutSteamStringId
+        ,FString& OutPlayFabId
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))

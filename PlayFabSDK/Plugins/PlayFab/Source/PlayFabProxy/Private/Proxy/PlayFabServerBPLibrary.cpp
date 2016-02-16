@@ -755,6 +755,36 @@ void UPFServerProxyLibrary::BreakBPServerGetPlayFabIDsFromFacebookIDsResult(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerGetPlayFabIDsFromSteamIDsRequest(
+		const FBPServerGetPlayFabIDsFromSteamIDsRequest& In
+        ,TArray<int32>& OutSteamIDs
+        ,TArray<FString>& OutSteamStringIDs
+	)
+{
+    for (const int32& elem : In.Data.SteamIDs)
+    {
+        OutSteamIDs.Add(static_cast<uint64>(elem));
+    }
+
+	OutSteamStringIDs = In.Data.SteamStringIDs;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetPlayFabIDsFromSteamIDsResult(
+		const FBPServerGetPlayFabIDsFromSteamIDsResult& In
+        ,TArray<FBPServerSteamPlayFabIdPair>& OutData
+	)
+{
+    for (const PlayFab::ServerModels::FSteamPlayFabIdPair& elem : In.Data.Data)
+    {
+        FBPServerSteamPlayFabIdPair result;
+        result.Data = elem;
+        OutData.Add(result);
+    }
+
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerGetPublisherDataRequest(
 		const FBPServerGetPublisherDataRequest& In
         ,TArray<FString>& OutKeys
@@ -1559,6 +1589,19 @@ void UPFServerProxyLibrary::BreakBPServerStatisticValue(
     OutStatisticName = In.Data.StatisticName;
 	OutValue = In.Data.Value;
 	OutVersion = In.Data.Version;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerSteamPlayFabIdPair(
+		const FBPServerSteamPlayFabIdPair& In
+        ,int32& OutSteamId
+        ,FString& OutSteamStringId
+        ,FString& OutPlayFabId
+	)
+{
+    OutSteamId = In.Data.SteamId;
+	OutSteamStringId = In.Data.SteamStringId;
+	OutPlayFabId = In.Data.PlayFabId;
 	
 }
 

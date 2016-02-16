@@ -4335,6 +4335,158 @@ bool PlayFab::ServerModels::FGetPlayFabIDsFromFacebookIDsResult::readFromValue(c
 }
 
 
+PlayFab::ServerModels::FGetPlayFabIDsFromSteamIDsRequest::~FGetPlayFabIDsFromSteamIDsRequest()
+{
+    
+}
+
+void PlayFab::ServerModels::FGetPlayFabIDsFromSteamIDsRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(SteamIDs.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("SteamIDs"));
+    
+        for (const uint64& item : SteamIDs)
+        {
+            writer->WriteValue(static_cast<int64>(item));
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    if(SteamStringIDs.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("SteamStringIDs"));
+    
+        for (const FString& item : SteamStringIDs)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FGetPlayFabIDsFromSteamIDsRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&SteamIDsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("SteamIDs"));
+        for (int32 Idx = 0; Idx < SteamIDsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = SteamIDsArray[Idx];
+            int64 TmpValue;
+CurrentItem->TryGetNumber(TmpValue);
+
+            SteamIDs.Add(TmpValue);
+        }
+    }
+
+    
+    obj->TryGetStringArrayField(TEXT("SteamStringIDs"),SteamStringIDs);
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FSteamPlayFabIdPair::~FSteamPlayFabIdPair()
+{
+    
+}
+
+void PlayFab::ServerModels::FSteamPlayFabIdPair::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("SteamId")); writer->WriteValue(static_cast<int64>(SteamId));
+	
+    if(SteamStringId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("SteamStringId")); writer->WriteValue(SteamStringId); }
+	
+    if(PlayFabId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FSteamPlayFabIdPair::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> SteamIdValue = obj->TryGetField(TEXT("SteamId"));
+    if (SteamIdValue.IsValid()&& !SteamIdValue->IsNull())
+    {
+        int64 TmpValue;
+        if(SteamIdValue->TryGetNumber(TmpValue)) {SteamId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> SteamStringIdValue = obj->TryGetField(TEXT("SteamStringId"));
+    if (SteamStringIdValue.IsValid()&& !SteamStringIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(SteamStringIdValue->TryGetString(TmpValue)) {SteamStringId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FGetPlayFabIDsFromSteamIDsResult::~FGetPlayFabIDsFromSteamIDsResult()
+{
+    
+}
+
+void PlayFab::ServerModels::FGetPlayFabIDsFromSteamIDsResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Data.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("Data"));
+    
+        for (const FSteamPlayFabIdPair& item : Data)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FGetPlayFabIDsFromSteamIDsResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&DataArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Data"));
+        for (int32 Idx = 0; Idx < DataArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = DataArray[Idx];
+            
+            Data.Add(FSteamPlayFabIdPair(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ServerModels::FGetPublisherDataRequest::~FGetPublisherDataRequest()
 {
     

@@ -566,6 +566,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetPlayFabIDsFromFacebookIDsResultDelegate, const FBPServerGetPlayFabIDsFromFacebookIDsResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetPlayFabIDsFromSteamIDsRequest"))
+struct FBPServerGetPlayFabIDsFromSteamIDsRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetPlayFabIDsFromSteamIDsRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetPlayFabIDsFromSteamIDsRequestDelegate, const FBPServerGetPlayFabIDsFromSteamIDsRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetPlayFabIDsFromSteamIDsResult"))
+struct FBPServerGetPlayFabIDsFromSteamIDsResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetPlayFabIDsFromSteamIDsResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetPlayFabIDsFromSteamIDsResultDelegate, const FBPServerGetPlayFabIDsFromSteamIDsResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetPublisherDataRequest"))
 struct FBPServerGetPublisherDataRequest
 {
@@ -1215,6 +1235,16 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerStatisticValueDelegate, const FBPServerStatisticValue&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerSteamPlayFabIdPair"))
+struct FBPServerSteamPlayFabIdPair
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FSteamPlayFabIdPair Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerSteamPlayFabIdPairDelegate, const FBPServerSteamPlayFabIdPair&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerSubtractCharacterVirtualCurrencyRequest"))
 struct FBPServerSubtractCharacterVirtualCurrencyRequest
