@@ -73,8 +73,6 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FRemoveSharedGroupMembersDelegate, const ServerModels::FRemoveSharedGroupMembersResult&);
         DECLARE_DELEGATE_OneParam(FSetPublisherDataDelegate, const ServerModels::FSetPublisherDataResult&);
         DECLARE_DELEGATE_OneParam(FUpdateSharedGroupDataDelegate, const ServerModels::FUpdateSharedGroupDataResult&);
-        DECLARE_DELEGATE_OneParam(FGetCloudScriptUrlDelegate, const ServerModels::FGetCloudScriptUrlResult&);
-        DECLARE_DELEGATE_OneParam(FRunServerCloudScriptDelegate, const ServerModels::FRunCloudScriptResult&);
         DECLARE_DELEGATE_OneParam(FGetContentDownloadUrlDelegate, const ServerModels::FGetContentDownloadUrlResult&);
         DECLARE_DELEGATE_OneParam(FDeleteCharacterFromUserDelegate, const ServerModels::FDeleteCharacterFromUserResult&);
         DECLARE_DELEGATE_OneParam(FGetAllUsersCharactersDelegate, const ServerModels::FListUsersCharactersResult&);
@@ -389,16 +387,6 @@ namespace PlayFab
          */
         bool UpdateSharedGroupData(ServerModels::FUpdateSharedGroupDataRequest& request, const FUpdateSharedGroupDataDelegate& SuccessDelegate = FUpdateSharedGroupDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Retrieves the title-specific URL for Cloud Script servers. This must be queried once, prior  to making any calls to RunCloudScript.
-         * Cloud Scripts in PlayFab have both Versions and Revisions. Each time a new script is  uploaded against a Version, this creates a new Revision. If Testing is set to true, the URL returned will be for the Cloud Script Revision which was most recently uploaded. If Testing is set to false, the URL returned will be for the  Cloud Script Revision which was most recently deployed to live.
-         */
-        bool GetCloudScriptUrl(ServerModels::FGetCloudScriptUrlRequest& request, const FGetCloudScriptUrlDelegate& SuccessDelegate = FGetCloudScriptUrlDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Triggers a particular server action, passing the provided inputs to the hosted Cloud Script. An action in this context is a handler in the JavaScript. NOTE: Before calling this API, you must call GetCloudScriptUrl to be assigned a Cloud Script server URL. When using an official PlayFab SDK, this URL is stored internally in the SDK, but GetCloudScriptUrl must still be manually called.
-         * Inputs to the Cloud Script may be specified either using Params, which is an object containing one or more parameters, or ParamsEncoded, which is a string containing the parameters encoded into JSON. Titles should only specify the parameters in one of these inputs - if both are specified, the ParamsEncoded will be used.
-         */
-        bool RunServerCloudScript(ServerModels::FRunServerCloudScriptRequest& request, const FRunServerCloudScriptDelegate& SuccessDelegate = FRunServerCloudScriptDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
          * This API retrieves a pre-signed URL for accessing a content file for the title. A subsequent  HTTP GET to the returned URL will attempt to download the content. A HEAD query to the returned URL will attempt to  retrieve the metadata of the content. Note that a successful result does not guarantee the existence of this content -  if it has not been uploaded, the query to retrieve the data will fail. See this post for more information:  https://community.playfab.com/hc/en-us/community/posts/205469488-How-to-upload-files-to-PlayFab-s-Content-Service
          */
         bool GetContentDownloadUrl(ServerModels::FGetContentDownloadUrlRequest& request, const FGetContentDownloadUrlDelegate& SuccessDelegate = FGetContentDownloadUrlDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -534,8 +522,6 @@ namespace PlayFab
         void OnRemoveSharedGroupMembersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemoveSharedGroupMembersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateSharedGroupDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateSharedGroupDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnGetCloudScriptUrlResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCloudScriptUrlDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnRunServerCloudScriptResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRunServerCloudScriptDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetContentDownloadUrlResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetContentDownloadUrlDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnDeleteCharacterFromUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteCharacterFromUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetAllUsersCharactersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetAllUsersCharactersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
