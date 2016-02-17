@@ -312,6 +312,19 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerGetCloudScriptUrlRequest(
+		const FBPServerGetCloudScriptUrlRequest& In
+        ,int32& OutVersion
+        ,bool& OutTesting
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerGetCloudScriptUrlResult(
+		const FBPServerGetCloudScriptUrlResult& In
+        ,FString& OutUrl
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerGetContentDownloadUrlRequest(
 		const FBPServerGetContentDownloadUrlRequest& In
         ,FString& OutKey
@@ -855,6 +868,25 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerRevokeInventoryResult(
 		const FBPServerRevokeInventoryResult& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerRunCloudScriptResult(
+		const FBPServerRunCloudScriptResult& In
+        ,FString& OutActionId
+        ,int32& OutVersion
+        ,int32& OutRevision
+        ,FString& OutResultsEncoded
+        ,FString& OutActionLog
+        ,float& OutExecutionTime
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerRunServerCloudScriptRequest(
+		const FBPServerRunServerCloudScriptRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutActionId
+        ,FString& OutParamsEncoded
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))

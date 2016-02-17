@@ -1701,6 +1701,60 @@ void UPlayFabServerAPI::OnUpdateSharedGroupDataResult(FHttpRequestPtr HttpReques
     }
 }
 
+bool UPlayFabServerAPI::GetCloudScriptUrl(
+    ServerModels::FGetCloudScriptUrlRequest& request,
+    const FGetCloudScriptUrlDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Server/GetCloudScriptUrl")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabServerAPI::OnGetCloudScriptUrlResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabServerAPI::OnGetCloudScriptUrlResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCloudScriptUrlDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ServerModels::FGetCloudScriptUrlResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
+bool UPlayFabServerAPI::RunServerCloudScript(
+    ServerModels::FRunServerCloudScriptRequest& request,
+    const FRunServerCloudScriptDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getLogicURL(TEXT("/Server/RunServerCloudScript")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabServerAPI::OnRunServerCloudScriptResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabServerAPI::OnRunServerCloudScriptResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRunServerCloudScriptDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ServerModels::FRunCloudScriptResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
 bool UPlayFabServerAPI::GetContentDownloadUrl(
     ServerModels::FGetContentDownloadUrlRequest& request,
     const FGetContentDownloadUrlDelegate& SuccessDelegate,

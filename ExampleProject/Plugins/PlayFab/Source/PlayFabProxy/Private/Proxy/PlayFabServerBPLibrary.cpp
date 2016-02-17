@@ -518,6 +518,26 @@ void UPFServerProxyLibrary::BreakBPServerGetCharacterStatisticsResult(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerGetCloudScriptUrlRequest(
+		const FBPServerGetCloudScriptUrlRequest& In
+        ,int32& OutVersion
+        ,bool& OutTesting
+	)
+{
+    OutVersion = In.Data.Version;
+	OutTesting = In.Data.Testing;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetCloudScriptUrlResult(
+		const FBPServerGetCloudScriptUrlResult& In
+        ,FString& OutUrl
+	)
+{
+    OutUrl = In.Data.Url;
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerGetContentDownloadUrlRequest(
 		const FBPServerGetContentDownloadUrlRequest& In
         ,FString& OutKey
@@ -1494,6 +1514,40 @@ void UPFServerProxyLibrary::BreakBPServerRevokeInventoryResult(
 	)
 {
     
+}
+
+void UPFServerProxyLibrary::BreakBPServerRunCloudScriptResult(
+		const FBPServerRunCloudScriptResult& In
+        ,FString& OutActionId
+        ,int32& OutVersion
+        ,int32& OutRevision
+        ,FString& OutResultsEncoded
+        ,FString& OutActionLog
+        ,float& OutExecutionTime
+	)
+{
+    OutActionId = In.Data.ActionId;
+	OutVersion = In.Data.Version;
+	OutRevision = In.Data.Revision;
+	
+	OutResultsEncoded = In.Data.ResultsEncoded;
+	OutActionLog = In.Data.ActionLog;
+	OutExecutionTime = In.Data.ExecutionTime;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerRunServerCloudScriptRequest(
+		const FBPServerRunServerCloudScriptRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutActionId
+        ,FString& OutParamsEncoded
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutActionId = In.Data.ActionId;
+	
+	OutParamsEncoded = In.Data.ParamsEncoded;
+	
 }
 
 void UPFServerProxyLibrary::BreakBPServerSendPushNotificationRequest(

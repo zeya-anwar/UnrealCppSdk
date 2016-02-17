@@ -396,6 +396,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetCharacterStatisticsResultDelegate, const FBPServerGetCharacterStatisticsResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetCloudScriptUrlRequest"))
+struct FBPServerGetCloudScriptUrlRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetCloudScriptUrlRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetCloudScriptUrlRequestDelegate, const FBPServerGetCloudScriptUrlRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetCloudScriptUrlResult"))
+struct FBPServerGetCloudScriptUrlResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetCloudScriptUrlResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetCloudScriptUrlResultDelegate, const FBPServerGetCloudScriptUrlResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetContentDownloadUrlRequest"))
 struct FBPServerGetContentDownloadUrlRequest
 {
@@ -1145,6 +1165,26 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRevokeInventoryResultDelegate, const FBPServerRevokeInventoryResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRunCloudScriptResult"))
+struct FBPServerRunCloudScriptResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FRunCloudScriptResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRunCloudScriptResultDelegate, const FBPServerRunCloudScriptResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRunServerCloudScriptRequest"))
+struct FBPServerRunServerCloudScriptRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FRunServerCloudScriptRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRunServerCloudScriptRequestDelegate, const FBPServerRunServerCloudScriptRequest&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerSendPushNotificationRequest"))
 struct FBPServerSendPushNotificationRequest

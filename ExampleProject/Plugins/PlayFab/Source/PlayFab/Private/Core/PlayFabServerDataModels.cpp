@@ -3414,6 +3414,77 @@ bool PlayFab::ServerModels::FGetCharacterStatisticsResult::readFromValue(const T
 }
 
 
+PlayFab::ServerModels::FGetCloudScriptUrlRequest::~FGetCloudScriptUrlRequest()
+{
+    
+}
+
+void PlayFab::ServerModels::FGetCloudScriptUrlRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Version.notNull()) { writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version); }
+	
+    if(Testing.notNull()) { writer->WriteIdentifierPrefix(TEXT("Testing")); writer->WriteValue(Testing); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FGetCloudScriptUrlRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> VersionValue = obj->TryGetField(TEXT("Version"));
+    if (VersionValue.IsValid()&& !VersionValue->IsNull())
+    {
+        int32 TmpValue;
+        if(VersionValue->TryGetNumber(TmpValue)) {Version = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TestingValue = obj->TryGetField(TEXT("Testing"));
+    if (TestingValue.IsValid()&& !TestingValue->IsNull())
+    {
+        bool TmpValue;
+        if(TestingValue->TryGetBool(TmpValue)) {Testing = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FGetCloudScriptUrlResult::~FGetCloudScriptUrlResult()
+{
+    
+}
+
+void PlayFab::ServerModels::FGetCloudScriptUrlResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Url.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Url")); writer->WriteValue(Url); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FGetCloudScriptUrlResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> UrlValue = obj->TryGetField(TEXT("Url"));
+    if (UrlValue.IsValid()&& !UrlValue->IsNull())
+    {
+        FString TmpValue;
+        if(UrlValue->TryGetString(TmpValue)) {Url = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ServerModels::FGetContentDownloadUrlRequest::~FGetContentDownloadUrlRequest()
 {
     
@@ -7131,6 +7202,147 @@ bool PlayFab::ServerModels::FRevokeInventoryResult::readFromValue(const TSharedP
 {
 	bool HasSucceeded = true; 
 	
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FRunCloudScriptResult::~FRunCloudScriptResult()
+{
+    
+}
+
+void PlayFab::ServerModels::FRunCloudScriptResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(ActionId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ActionId")); writer->WriteValue(ActionId); }
+	
+    writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version);
+	
+    writer->WriteIdentifierPrefix(TEXT("Revision")); writer->WriteValue(Revision);
+	
+    if(Results.notNull()) { writer->WriteIdentifierPrefix(TEXT("Results")); Results.writeJSON(writer); }
+	
+    if(ResultsEncoded.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ResultsEncoded")); writer->WriteValue(ResultsEncoded); }
+	
+    if(ActionLog.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ActionLog")); writer->WriteValue(ActionLog); }
+	
+    writer->WriteIdentifierPrefix(TEXT("ExecutionTime")); writer->WriteValue(ExecutionTime);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FRunCloudScriptResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> ActionIdValue = obj->TryGetField(TEXT("ActionId"));
+    if (ActionIdValue.IsValid()&& !ActionIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ActionIdValue->TryGetString(TmpValue)) {ActionId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> VersionValue = obj->TryGetField(TEXT("Version"));
+    if (VersionValue.IsValid()&& !VersionValue->IsNull())
+    {
+        int32 TmpValue;
+        if(VersionValue->TryGetNumber(TmpValue)) {Version = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> RevisionValue = obj->TryGetField(TEXT("Revision"));
+    if (RevisionValue.IsValid()&& !RevisionValue->IsNull())
+    {
+        int32 TmpValue;
+        if(RevisionValue->TryGetNumber(TmpValue)) {Revision = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ResultsValue = obj->TryGetField(TEXT("Results"));
+    if (ResultsValue.IsValid()&& !ResultsValue->IsNull())
+    {
+        Results = FMultitypeVar(ResultsValue->AsObject());
+    }
+    
+    const TSharedPtr<FJsonValue> ResultsEncodedValue = obj->TryGetField(TEXT("ResultsEncoded"));
+    if (ResultsEncodedValue.IsValid()&& !ResultsEncodedValue->IsNull())
+    {
+        FString TmpValue;
+        if(ResultsEncodedValue->TryGetString(TmpValue)) {ResultsEncoded = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ActionLogValue = obj->TryGetField(TEXT("ActionLog"));
+    if (ActionLogValue.IsValid()&& !ActionLogValue->IsNull())
+    {
+        FString TmpValue;
+        if(ActionLogValue->TryGetString(TmpValue)) {ActionLog = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ExecutionTimeValue = obj->TryGetField(TEXT("ExecutionTime"));
+    if (ExecutionTimeValue.IsValid()&& !ExecutionTimeValue->IsNull())
+    {
+        double TmpValue;
+        if(ExecutionTimeValue->TryGetNumber(TmpValue)) {ExecutionTime = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FRunServerCloudScriptRequest::~FRunServerCloudScriptRequest()
+{
+    
+}
+
+void PlayFab::ServerModels::FRunServerCloudScriptRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(PlayFabId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId); }
+	
+    writer->WriteIdentifierPrefix(TEXT("ActionId")); writer->WriteValue(ActionId);
+	
+    if(Params.notNull()) { writer->WriteIdentifierPrefix(TEXT("Params")); Params.writeJSON(writer); }
+	
+    if(ParamsEncoded.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ParamsEncoded")); writer->WriteValue(ParamsEncoded); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FRunServerCloudScriptRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ActionIdValue = obj->TryGetField(TEXT("ActionId"));
+    if (ActionIdValue.IsValid()&& !ActionIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ActionIdValue->TryGetString(TmpValue)) {ActionId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ParamsValue = obj->TryGetField(TEXT("Params"));
+    if (ParamsValue.IsValid()&& !ParamsValue->IsNull())
+    {
+        Params = FMultitypeVar(ParamsValue->AsObject());
+    }
+    
+    const TSharedPtr<FJsonValue> ParamsEncodedValue = obj->TryGetField(TEXT("ParamsEncoded"));
+    if (ParamsEncodedValue.IsValid()&& !ParamsEncodedValue->IsNull())
+    {
+        FString TmpValue;
+        if(ParamsEncodedValue->TryGetString(TmpValue)) {ParamsEncoded = TmpValue; }
+    }
+    
     
     return HasSucceeded;
 }
