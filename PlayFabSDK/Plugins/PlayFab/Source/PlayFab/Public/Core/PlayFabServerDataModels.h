@@ -2156,6 +2156,64 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FGetCloudScriptUrlRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] Cloud Script Version to use. Defaults to 1.
+		OptionalInt32 Version;
+		// [optional] Specifies whether the URL returned should be the one for the most recently uploaded Revision of the Cloud Script (true), or the Revision most recently set to live (false). Defaults to false.
+		OptionalBool Testing;
+	
+        FGetCloudScriptUrlRequest() :
+			FPlayFabBaseModel(),
+			Version(),
+			Testing()
+			{}
+		
+		FGetCloudScriptUrlRequest(const FGetCloudScriptUrlRequest& src) :
+			FPlayFabBaseModel(),
+			Version(src.Version),
+			Testing(src.Testing)
+			{}
+			
+		FGetCloudScriptUrlRequest(const TSharedPtr<FJsonObject>& obj) : FGetCloudScriptUrlRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetCloudScriptUrlRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetCloudScriptUrlResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] URL of the Cloud Script logic server.
+		FString Url;
+	
+        FGetCloudScriptUrlResult() :
+			FPlayFabBaseModel(),
+			Url()
+			{}
+		
+		FGetCloudScriptUrlResult(const FGetCloudScriptUrlResult& src) :
+			FPlayFabBaseModel(),
+			Url(src.Url)
+			{}
+			
+		FGetCloudScriptUrlResult(const TSharedPtr<FJsonObject>& obj) : FGetCloudScriptUrlResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetCloudScriptUrlResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FGetContentDownloadUrlRequest : public FPlayFabBaseModel
     {
 		
@@ -2768,6 +2826,99 @@ namespace ServerModels
         }
 		
 		~FGetPlayFabIDsFromFacebookIDsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayFabIDsFromSteamIDsRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] Deprecated: Please use SteamStringIDs
+		TArray<uint64> SteamIDs;
+		// [optional] Array of unique Steam identifiers (Steam profile IDs) for which the title needs to get PlayFab identifiers.
+		TArray<FString> SteamStringIDs;
+	
+        FGetPlayFabIDsFromSteamIDsRequest() :
+			FPlayFabBaseModel(),
+			SteamIDs(),
+			SteamStringIDs()
+			{}
+		
+		FGetPlayFabIDsFromSteamIDsRequest(const FGetPlayFabIDsFromSteamIDsRequest& src) :
+			FPlayFabBaseModel(),
+			SteamIDs(src.SteamIDs),
+			SteamStringIDs(src.SteamStringIDs)
+			{}
+			
+		FGetPlayFabIDsFromSteamIDsRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayFabIDsFromSteamIDsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayFabIDsFromSteamIDsRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FSteamPlayFabIdPair : public FPlayFabBaseModel
+    {
+		
+		// Deprecated: Please use SteamStringId
+		uint64 SteamId;
+		// [optional] Unique Steam identifier for a user.
+		FString SteamStringId;
+		// [optional] Unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Steam identifier.
+		FString PlayFabId;
+	
+        FSteamPlayFabIdPair() :
+			FPlayFabBaseModel(),
+			SteamId(0),
+			SteamStringId(),
+			PlayFabId()
+			{}
+		
+		FSteamPlayFabIdPair(const FSteamPlayFabIdPair& src) :
+			FPlayFabBaseModel(),
+			SteamId(src.SteamId),
+			SteamStringId(src.SteamStringId),
+			PlayFabId(src.PlayFabId)
+			{}
+			
+		FSteamPlayFabIdPair(const TSharedPtr<FJsonObject>& obj) : FSteamPlayFabIdPair()
+        {
+            readFromValue(obj);
+        }
+		
+		~FSteamPlayFabIdPair();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayFabIDsFromSteamIDsResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Mapping of Steam identifiers to PlayFab identifiers.
+		TArray<FSteamPlayFabIdPair> Data;
+	
+        FGetPlayFabIDsFromSteamIDsResult() :
+			FPlayFabBaseModel(),
+			Data()
+			{}
+		
+		FGetPlayFabIDsFromSteamIDsResult(const FGetPlayFabIDsFromSteamIDsResult& src) :
+			FPlayFabBaseModel(),
+			Data(src.Data)
+			{}
+			
+		FGetPlayFabIDsFromSteamIDsResult(const TSharedPtr<FJsonObject>& obj) : FGetPlayFabIDsFromSteamIDsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayFabIDsFromSteamIDsResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -4566,6 +4717,96 @@ namespace ServerModels
         }
 		
 		~FRevokeInventoryResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FRunCloudScriptResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] id of Cloud Script run
+		FString ActionId;
+		// version of Cloud Script run
+		int32 Version;
+		// revision of Cloud Script run
+		int32 Revision;
+		// [optional] return values from the server action as a dynamic object
+		FMultitypeVar Results;
+		// [optional] return values from the server action as a JSON encoded string
+		FString ResultsEncoded;
+		// [optional] any log statements generated during the run of this action
+		FString ActionLog;
+		// time this script took to run, in seconds
+		double ExecutionTime;
+	
+        FRunCloudScriptResult() :
+			FPlayFabBaseModel(),
+			ActionId(),
+			Version(0),
+			Revision(0),
+			Results(),
+			ResultsEncoded(),
+			ActionLog(),
+			ExecutionTime(0)
+			{}
+		
+		FRunCloudScriptResult(const FRunCloudScriptResult& src) :
+			FPlayFabBaseModel(),
+			ActionId(src.ActionId),
+			Version(src.Version),
+			Revision(src.Revision),
+			Results(src.Results),
+			ResultsEncoded(src.ResultsEncoded),
+			ActionLog(src.ActionLog),
+			ExecutionTime(src.ExecutionTime)
+			{}
+			
+		FRunCloudScriptResult(const TSharedPtr<FJsonObject>& obj) : FRunCloudScriptResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRunCloudScriptResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FRunServerCloudScriptRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+		// server action to trigger
+		FString ActionId;
+		// [optional] parameters to pass into the action (If you use this, don't use ParamsEncoded)
+		FMultitypeVar Params;
+		// [optional] json-encoded parameters to pass into the action (If you use this, don't use Params)
+		FString ParamsEncoded;
+	
+        FRunServerCloudScriptRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			ActionId(),
+			Params(),
+			ParamsEncoded()
+			{}
+		
+		FRunServerCloudScriptRequest(const FRunServerCloudScriptRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			ActionId(src.ActionId),
+			Params(src.Params),
+			ParamsEncoded(src.ParamsEncoded)
+			{}
+			
+		FRunServerCloudScriptRequest(const TSharedPtr<FJsonObject>& obj) : FRunServerCloudScriptRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRunServerCloudScriptRequest();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
