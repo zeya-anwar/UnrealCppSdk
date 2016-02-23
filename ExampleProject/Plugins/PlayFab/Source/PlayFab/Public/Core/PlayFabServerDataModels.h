@@ -48,49 +48,6 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
-	struct PLAYFAB_API FAddFriendRequest : public FPlayFabBaseModel
-    {
-		
-		// PlayFab identifier of the player to add a new friend.
-		FString PlayFabId;
-		// [optional] The PlayFab identifier of the user being added.
-		FString FriendPlayFabId;
-		// [optional] The PlayFab username of the user being added
-		FString FriendUsername;
-		// [optional] Email address of the user being added.
-		FString FriendEmail;
-		// [optional] Title-specific display name of the user to being added.
-		FString FriendTitleDisplayName;
-	
-        FAddFriendRequest() :
-			FPlayFabBaseModel(),
-			PlayFabId(),
-			FriendPlayFabId(),
-			FriendUsername(),
-			FriendEmail(),
-			FriendTitleDisplayName()
-			{}
-		
-		FAddFriendRequest(const FAddFriendRequest& src) :
-			FPlayFabBaseModel(),
-			PlayFabId(src.PlayFabId),
-			FriendPlayFabId(src.FriendPlayFabId),
-			FriendUsername(src.FriendUsername),
-			FriendEmail(src.FriendEmail),
-			FriendTitleDisplayName(src.FriendTitleDisplayName)
-			{}
-			
-		FAddFriendRequest(const TSharedPtr<FJsonObject>& obj) : FAddFriendRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FAddFriendRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
 	struct PLAYFAB_API FAddSharedGroupMembersRequest : public FPlayFabBaseModel
     {
 		
@@ -2276,115 +2233,6 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
-	struct PLAYFAB_API FGetFriendLeaderboardRequest : public FPlayFabBaseModel
-    {
-		
-		// The player whose friend leaderboard to get
-		FString PlayFabId;
-		// Statistic used to rank friends for this leaderboard.
-		FString StatisticName;
-		// Position in the leaderboard to start this listing (defaults to the first entry).
-		int32 StartPosition;
-		// Maximum number of entries to retrieve.
-		int32 MaxResultsCount;
-		// [optional] Indicates whether Steam service friends should be included in the response. Default is true.
-		OptionalBool IncludeSteamFriends;
-		// [optional] Indicates whether Facebook friends should be included in the response. Default is true.
-		OptionalBool IncludeFacebookFriends;
-	
-        FGetFriendLeaderboardRequest() :
-			FPlayFabBaseModel(),
-			PlayFabId(),
-			StatisticName(),
-			StartPosition(0),
-			MaxResultsCount(0),
-			IncludeSteamFriends(),
-			IncludeFacebookFriends()
-			{}
-		
-		FGetFriendLeaderboardRequest(const FGetFriendLeaderboardRequest& src) :
-			FPlayFabBaseModel(),
-			PlayFabId(src.PlayFabId),
-			StatisticName(src.StatisticName),
-			StartPosition(src.StartPosition),
-			MaxResultsCount(src.MaxResultsCount),
-			IncludeSteamFriends(src.IncludeSteamFriends),
-			IncludeFacebookFriends(src.IncludeFacebookFriends)
-			{}
-			
-		FGetFriendLeaderboardRequest(const TSharedPtr<FJsonObject>& obj) : FGetFriendLeaderboardRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FGetFriendLeaderboardRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FGetFriendsListRequest : public FPlayFabBaseModel
-    {
-		
-		// PlayFab identifier of the player whose friend list to get.
-		FString PlayFabId;
-		// [optional] Indicates whether Steam service friends should be included in the response. Default is true.
-		OptionalBool IncludeSteamFriends;
-		// [optional] Indicates whether Facebook friends should be included in the response. Default is true.
-		OptionalBool IncludeFacebookFriends;
-	
-        FGetFriendsListRequest() :
-			FPlayFabBaseModel(),
-			PlayFabId(),
-			IncludeSteamFriends(),
-			IncludeFacebookFriends()
-			{}
-		
-		FGetFriendsListRequest(const FGetFriendsListRequest& src) :
-			FPlayFabBaseModel(),
-			PlayFabId(src.PlayFabId),
-			IncludeSteamFriends(src.IncludeSteamFriends),
-			IncludeFacebookFriends(src.IncludeFacebookFriends)
-			{}
-			
-		FGetFriendsListRequest(const TSharedPtr<FJsonObject>& obj) : FGetFriendsListRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FGetFriendsListRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FGetFriendsListResult : public FPlayFabBaseModel
-    {
-		
-		// [optional] Array of friends found.
-		TArray<FFriendInfo> Friends;
-	
-        FGetFriendsListResult() :
-			FPlayFabBaseModel(),
-			Friends()
-			{}
-		
-		FGetFriendsListResult(const FGetFriendsListResult& src) :
-			FPlayFabBaseModel(),
-			Friends(src.Friends)
-			{}
-			
-		FGetFriendsListResult(const TSharedPtr<FJsonObject>& obj) : FGetFriendsListResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FGetFriendsListResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
 	struct PLAYFAB_API FGetLeaderboardAroundCharacterRequest : public FPlayFabBaseModel
     {
 		
@@ -4509,37 +4357,6 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
-	struct PLAYFAB_API FRemoveFriendRequest : public FPlayFabBaseModel
-    {
-		
-		// PlayFab identifier of the friend account which is to be removed.
-		FString FriendPlayFabId;
-		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
-		FString PlayFabId;
-	
-        FRemoveFriendRequest() :
-			FPlayFabBaseModel(),
-			FriendPlayFabId(),
-			PlayFabId()
-			{}
-		
-		FRemoveFriendRequest(const FRemoveFriendRequest& src) :
-			FPlayFabBaseModel(),
-			FriendPlayFabId(src.FriendPlayFabId),
-			PlayFabId(src.PlayFabId)
-			{}
-			
-		FRemoveFriendRequest(const TSharedPtr<FJsonObject>& obj) : FRemoveFriendRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FRemoveFriendRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
 	struct PLAYFAB_API FRemoveSharedGroupMembersRequest : public FPlayFabBaseModel
     {
 		
@@ -4768,45 +4585,6 @@ namespace ServerModels
         }
 		
 		~FRunCloudScriptResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FRunServerCloudScriptRequest : public FPlayFabBaseModel
-    {
-		
-		// [optional] Unique PlayFab assigned ID of the user on whom the operation will be performed.
-		FString PlayFabId;
-		// server action to trigger
-		FString ActionId;
-		// [optional] parameters to pass into the action (If you use this, don't use ParamsEncoded)
-		FMultitypeVar Params;
-		// [optional] json-encoded parameters to pass into the action (If you use this, don't use Params)
-		FString ParamsEncoded;
-	
-        FRunServerCloudScriptRequest() :
-			FPlayFabBaseModel(),
-			PlayFabId(),
-			ActionId(),
-			Params(),
-			ParamsEncoded()
-			{}
-		
-		FRunServerCloudScriptRequest(const FRunServerCloudScriptRequest& src) :
-			FPlayFabBaseModel(),
-			PlayFabId(src.PlayFabId),
-			ActionId(src.ActionId),
-			Params(src.Params),
-			ParamsEncoded(src.ParamsEncoded)
-			{}
-			
-		FRunServerCloudScriptRequest(const TSharedPtr<FJsonObject>& obj) : FRunServerCloudScriptRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FRunServerCloudScriptRequest();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

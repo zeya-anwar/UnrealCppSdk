@@ -24,16 +24,6 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
-	static void BreakBPServerAddFriendRequest(
-		const FBPServerAddFriendRequest& In
-        ,FString& OutPlayFabId
-        ,FString& OutFriendPlayFabId
-        ,FString& OutFriendUsername
-        ,FString& OutFriendEmail
-        ,FString& OutFriendTitleDisplayName
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerAddSharedGroupMembersRequest(
 		const FBPServerAddSharedGroupMembersRequest& In
         ,FString& OutSharedGroupId
@@ -336,31 +326,6 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPServerGetContentDownloadUrlResult(
 		const FBPServerGetContentDownloadUrlResult& In
         ,FString& OutURL
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
-	static void BreakBPServerGetFriendLeaderboardRequest(
-		const FBPServerGetFriendLeaderboardRequest& In
-        ,FString& OutPlayFabId
-        ,FString& OutStatisticName
-        ,int32& OutStartPosition
-        ,int32& OutMaxResultsCount
-        ,bool& OutIncludeSteamFriends
-        ,bool& OutIncludeFacebookFriends
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
-	static void BreakBPServerGetFriendsListRequest(
-		const FBPServerGetFriendsListRequest& In
-        ,FString& OutPlayFabId
-        ,bool& OutIncludeSteamFriends
-        ,bool& OutIncludeFacebookFriends
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
-	static void BreakBPServerGetFriendsListResult(
-		const FBPServerGetFriendsListResult& In
-        ,TArray<FBPServerFriendInfo>& OutFriends
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
@@ -823,13 +788,6 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
-	static void BreakBPServerRemoveFriendRequest(
-		const FBPServerRemoveFriendRequest& In
-        ,FString& OutFriendPlayFabId
-        ,FString& OutPlayFabId
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerRemoveSharedGroupMembersRequest(
 		const FBPServerRemoveSharedGroupMembersRequest& In
         ,FString& OutSharedGroupId
@@ -879,14 +837,6 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutResultsEncoded
         ,FString& OutActionLog
         ,float& OutExecutionTime
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
-	static void BreakBPServerRunServerCloudScriptRequest(
-		const FBPServerRunServerCloudScriptRequest& In
-        ,FString& OutPlayFabId
-        ,FString& OutActionId
-        ,FString& OutParamsEncoded
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))

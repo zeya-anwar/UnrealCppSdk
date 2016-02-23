@@ -215,19 +215,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientConsumePSNEntitlementsRequest(
-		const FBPClientConsumePSNEntitlementsRequest& In
-        ,FString& OutCatalogVersion
-        ,int32& OutServiceLabel
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientConsumePSNEntitlementsResult(
-		const FBPClientConsumePSNEntitlementsResult& In
-        ,TArray<FBPClientItemInstance>& OutItemsGranted
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientCreateSharedGroupRequest(
 		const FBPClientCreateSharedGroupRequest& In
         ,FString& OutSharedGroupId
@@ -638,19 +625,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientGetPlayFabIDsFromPSNAccountIDsRequest(
-		const FBPClientGetPlayFabIDsFromPSNAccountIDsRequest& In
-        ,TArray<FString>& OutPSNAccountIDs
-        ,int32& OutIssuerId
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientGetPlayFabIDsFromPSNAccountIDsResult(
-		const FBPClientGetPlayFabIDsFromPSNAccountIDsResult& In
-        ,TArray<FBPClientPSNAccountPlayFabIdPair>& OutData
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientGetPlayFabIDsFromSteamIDsRequest(
 		const FBPClientGetPlayFabIDsFromSteamIDsRequest& In
         ,TArray<int32>& OutSteamIDs
@@ -957,19 +931,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientLinkPSNAccountRequest(
-		const FBPClientLinkPSNAccountRequest& In
-        ,FString& OutAuthCode
-        ,FString& OutRedirectUri
-        ,int32& OutIssuerId
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientLinkPSNAccountResult(
-		const FBPClientLinkPSNAccountResult& In
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientLinkSteamAccountRequest(
 		const FBPClientLinkSteamAccountRequest& In
         ,FString& OutSteamTicket
@@ -978,17 +939,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientLinkSteamAccountResult(
 		const FBPClientLinkSteamAccountResult& In
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientLinkXboxAccountRequest(
-		const FBPClientLinkXboxAccountRequest& In
-        ,FString& OutXboxToken
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientLinkXboxAccountResult(
-		const FBPClientLinkXboxAccountResult& In
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1105,28 +1055,10 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientLoginWithPSNRequest(
-		const FBPClientLoginWithPSNRequest& In
-        ,FString& OutTitleId
-        ,FString& OutAuthCode
-        ,FString& OutRedirectUri
-        ,int32& OutIssuerId
-        ,bool& OutCreateAccount
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientLoginWithSteamRequest(
 		const FBPClientLoginWithSteamRequest& In
         ,FString& OutTitleId
         ,FString& OutSteamTicket
-        ,bool& OutCreateAccount
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientLoginWithXboxRequest(
-		const FBPClientLoginWithXboxRequest& In
-        ,FString& OutTitleId
-        ,FString& OutXboxToken
         ,bool& OutCreateAccount
 	);
 	
@@ -1219,13 +1151,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientPSNAccountPlayFabIdPair(
-		const FBPClientPSNAccountPlayFabIdPair& In
-        ,FString& OutPSNAccountId
-        ,FString& OutPlayFabId
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientPurchaseItemRequest(
 		const FBPClientPurchaseItemRequest& In
         ,FString& OutItemId
@@ -1253,14 +1178,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPClientRedeemCouponResult(
 		const FBPClientRedeemCouponResult& In
         ,TArray<FBPClientItemInstance>& OutGrantedItems
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientRefreshPSNAuthTokenRequest(
-		const FBPClientRefreshPSNAuthTokenRequest& In
-        ,FString& OutAuthCode
-        ,FString& OutRedirectUri
-        ,int32& OutIssuerId
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1598,16 +1515,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientUnlinkPSNAccountRequest(
-		const FBPClientUnlinkPSNAccountRequest& In
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientUnlinkPSNAccountResult(
-		const FBPClientUnlinkPSNAccountResult& In
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientUnlinkSteamAccountRequest(
 		const FBPClientUnlinkSteamAccountRequest& In
 	);
@@ -1615,17 +1522,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientUnlinkSteamAccountResult(
 		const FBPClientUnlinkSteamAccountResult& In
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientUnlinkXboxAccountRequest(
-		const FBPClientUnlinkXboxAccountRequest& In
-        ,FString& OutXboxToken
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientUnlinkXboxAccountResult(
-		const FBPClientUnlinkXboxAccountResult& In
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))

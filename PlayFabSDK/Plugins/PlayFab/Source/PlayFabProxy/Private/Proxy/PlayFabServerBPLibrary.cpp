@@ -18,23 +18,6 @@ void UPFServerProxyLibrary::BreakBPServerAddCharacterVirtualCurrencyRequest(
 	
 }
 
-void UPFServerProxyLibrary::BreakBPServerAddFriendRequest(
-		const FBPServerAddFriendRequest& In
-        ,FString& OutPlayFabId
-        ,FString& OutFriendPlayFabId
-        ,FString& OutFriendUsername
-        ,FString& OutFriendEmail
-        ,FString& OutFriendTitleDisplayName
-	)
-{
-    OutPlayFabId = In.Data.PlayFabId;
-	OutFriendPlayFabId = In.Data.FriendPlayFabId;
-	OutFriendUsername = In.Data.FriendUsername;
-	OutFriendEmail = In.Data.FriendEmail;
-	OutFriendTitleDisplayName = In.Data.FriendTitleDisplayName;
-	
-}
-
 void UPFServerProxyLibrary::BreakBPServerAddSharedGroupMembersRequest(
 		const FBPServerAddSharedGroupMembersRequest& In
         ,FString& OutSharedGroupId
@@ -557,53 +540,6 @@ void UPFServerProxyLibrary::BreakBPServerGetContentDownloadUrlResult(
 	)
 {
     OutURL = In.Data.URL;
-	
-}
-
-void UPFServerProxyLibrary::BreakBPServerGetFriendLeaderboardRequest(
-		const FBPServerGetFriendLeaderboardRequest& In
-        ,FString& OutPlayFabId
-        ,FString& OutStatisticName
-        ,int32& OutStartPosition
-        ,int32& OutMaxResultsCount
-        ,bool& OutIncludeSteamFriends
-        ,bool& OutIncludeFacebookFriends
-	)
-{
-    OutPlayFabId = In.Data.PlayFabId;
-	OutStatisticName = In.Data.StatisticName;
-	OutStartPosition = In.Data.StartPosition;
-	OutMaxResultsCount = In.Data.MaxResultsCount;
-	OutIncludeSteamFriends = In.Data.IncludeSteamFriends;
-	OutIncludeFacebookFriends = In.Data.IncludeFacebookFriends;
-	
-}
-
-void UPFServerProxyLibrary::BreakBPServerGetFriendsListRequest(
-		const FBPServerGetFriendsListRequest& In
-        ,FString& OutPlayFabId
-        ,bool& OutIncludeSteamFriends
-        ,bool& OutIncludeFacebookFriends
-	)
-{
-    OutPlayFabId = In.Data.PlayFabId;
-	OutIncludeSteamFriends = In.Data.IncludeSteamFriends;
-	OutIncludeFacebookFriends = In.Data.IncludeFacebookFriends;
-	
-}
-
-void UPFServerProxyLibrary::BreakBPServerGetFriendsListResult(
-		const FBPServerGetFriendsListResult& In
-        ,TArray<FBPServerFriendInfo>& OutFriends
-	)
-{
-    for (const PlayFab::ServerModels::FFriendInfo& elem : In.Data.Friends)
-    {
-        FBPServerFriendInfo result;
-        result.Data = elem;
-        OutFriends.Add(result);
-    }
-
 	
 }
 
@@ -1441,17 +1377,6 @@ void UPFServerProxyLibrary::BreakBPServerRedeemMatchmakerTicketResult(
 	
 }
 
-void UPFServerProxyLibrary::BreakBPServerRemoveFriendRequest(
-		const FBPServerRemoveFriendRequest& In
-        ,FString& OutFriendPlayFabId
-        ,FString& OutPlayFabId
-	)
-{
-    OutFriendPlayFabId = In.Data.FriendPlayFabId;
-	OutPlayFabId = In.Data.PlayFabId;
-	
-}
-
 void UPFServerProxyLibrary::BreakBPServerRemoveSharedGroupMembersRequest(
 		const FBPServerRemoveSharedGroupMembersRequest& In
         ,FString& OutSharedGroupId
@@ -1533,20 +1458,6 @@ void UPFServerProxyLibrary::BreakBPServerRunCloudScriptResult(
 	OutResultsEncoded = In.Data.ResultsEncoded;
 	OutActionLog = In.Data.ActionLog;
 	OutExecutionTime = In.Data.ExecutionTime;
-	
-}
-
-void UPFServerProxyLibrary::BreakBPServerRunServerCloudScriptRequest(
-		const FBPServerRunServerCloudScriptRequest& In
-        ,FString& OutPlayFabId
-        ,FString& OutActionId
-        ,FString& OutParamsEncoded
-	)
-{
-    OutPlayFabId = In.Data.PlayFabId;
-	OutActionId = In.Data.ActionId;
-	
-	OutParamsEncoded = In.Data.ParamsEncoded;
 	
 }
 
