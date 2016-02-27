@@ -556,25 +556,12 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPClientGetPlayerStatisticsRequest(
 		const FBPClientGetPlayerStatisticsRequest& In
         ,TArray<FString>& OutStatisticNames
-        ,TArray<FBPClientStatisticNameVersion>& OutStatisticNameVersions
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientGetPlayerStatisticsResult(
 		const FBPClientGetPlayerStatisticsResult& In
         ,TArray<FBPClientStatisticValue>& OutStatistics
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientGetPlayerStatisticVersionsRequest(
-		const FBPClientGetPlayerStatisticVersionsRequest& In
-        ,FString& OutStatisticName
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientGetPlayerStatisticVersionsResult(
-		const FBPClientGetPlayerStatisticVersionsResult& In
-        ,TArray<FBPClientPlayerStatisticVersion>& OutStatisticVersions
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1164,17 +1151,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientPlayerStatisticVersion(
-		const FBPClientPlayerStatisticVersion& In
-        ,FString& OutStatisticName
-        ,int32& OutVersion
-        ,FDateTime& OutScheduledActivationTime
-        ,FDateTime& OutActivationTime
-        ,FDateTime& OutScheduledDeactivationTime
-        ,FDateTime& OutDeactivationTime
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientPurchaseItemRequest(
 		const FBPClientPurchaseItemRequest& In
         ,FString& OutItemId
@@ -1388,13 +1364,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientStatisticNameVersion(
-		const FBPClientStatisticNameVersion& In
-        ,FString& OutStatisticName
-        ,int32& OutVersion
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientStatisticUpdate(
 		const FBPClientStatisticUpdate& In
         ,FString& OutStatisticName
@@ -1407,7 +1376,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPClientStatisticValue& In
         ,FString& OutStatisticName
         ,int32& OutValue
-        ,FString& OutVersion
+        ,int32& OutVersion
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))

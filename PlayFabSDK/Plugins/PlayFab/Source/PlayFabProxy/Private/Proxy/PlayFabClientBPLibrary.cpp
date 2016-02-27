@@ -960,17 +960,9 @@ void UPFClientProxyLibrary::BreakBPClientGetPhotonAuthenticationTokenResult(
 void UPFClientProxyLibrary::BreakBPClientGetPlayerStatisticsRequest(
 		const FBPClientGetPlayerStatisticsRequest& In
         ,TArray<FString>& OutStatisticNames
-        ,TArray<FBPClientStatisticNameVersion>& OutStatisticNameVersions
 	)
 {
     OutStatisticNames = In.Data.StatisticNames;
-	for (const PlayFab::ClientModels::FStatisticNameVersion& elem : In.Data.StatisticNameVersions)
-    {
-        FBPClientStatisticNameVersion result;
-        result.Data = elem;
-        OutStatisticNameVersions.Add(result);
-    }
-
 	
 }
 
@@ -984,30 +976,6 @@ void UPFClientProxyLibrary::BreakBPClientGetPlayerStatisticsResult(
         FBPClientStatisticValue result;
         result.Data = elem;
         OutStatistics.Add(result);
-    }
-
-	
-}
-
-void UPFClientProxyLibrary::BreakBPClientGetPlayerStatisticVersionsRequest(
-		const FBPClientGetPlayerStatisticVersionsRequest& In
-        ,FString& OutStatisticName
-	)
-{
-    OutStatisticName = In.Data.StatisticName;
-	
-}
-
-void UPFClientProxyLibrary::BreakBPClientGetPlayerStatisticVersionsResult(
-		const FBPClientGetPlayerStatisticVersionsResult& In
-        ,TArray<FBPClientPlayerStatisticVersion>& OutStatisticVersions
-	)
-{
-    for (const PlayFab::ClientModels::FPlayerStatisticVersion& elem : In.Data.StatisticVersions)
-    {
-        FBPClientPlayerStatisticVersion result;
-        result.Data = elem;
-        OutStatisticVersions.Add(result);
     }
 
 	
@@ -2043,25 +2011,6 @@ void UPFClientProxyLibrary::BreakBPClientPlayerLeaderboardEntry(
 	
 }
 
-void UPFClientProxyLibrary::BreakBPClientPlayerStatisticVersion(
-		const FBPClientPlayerStatisticVersion& In
-        ,FString& OutStatisticName
-        ,int32& OutVersion
-        ,FDateTime& OutScheduledActivationTime
-        ,FDateTime& OutActivationTime
-        ,FDateTime& OutScheduledDeactivationTime
-        ,FDateTime& OutDeactivationTime
-	)
-{
-    OutStatisticName = In.Data.StatisticName;
-	OutVersion = In.Data.Version;
-	
-	
-	
-	
-	
-}
-
 void UPFClientProxyLibrary::BreakBPClientPurchaseItemRequest(
 		const FBPClientPurchaseItemRequest& In
         ,FString& OutItemId
@@ -2437,17 +2386,6 @@ void UPFClientProxyLibrary::BreakBPClientStartPurchaseResult(
 	
 }
 
-void UPFClientProxyLibrary::BreakBPClientStatisticNameVersion(
-		const FBPClientStatisticNameVersion& In
-        ,FString& OutStatisticName
-        ,int32& OutVersion
-	)
-{
-    OutStatisticName = In.Data.StatisticName;
-	OutVersion = In.Data.Version;
-	
-}
-
 void UPFClientProxyLibrary::BreakBPClientStatisticUpdate(
 		const FBPClientStatisticUpdate& In
         ,FString& OutStatisticName
@@ -2465,7 +2403,7 @@ void UPFClientProxyLibrary::BreakBPClientStatisticValue(
 		const FBPClientStatisticValue& In
         ,FString& OutStatisticName
         ,int32& OutValue
-        ,FString& OutVersion
+        ,int32& OutVersion
 	)
 {
     OutStatisticName = In.Data.StatisticName;

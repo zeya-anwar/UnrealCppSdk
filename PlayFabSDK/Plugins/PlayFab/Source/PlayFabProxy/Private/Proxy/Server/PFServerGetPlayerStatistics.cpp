@@ -9,17 +9,12 @@ UPFServerGetPlayerStatistics::UPFServerGetPlayerStatistics(const FObjectInitiali
 {
 }
 
-UPFServerGetPlayerStatistics* UPFServerGetPlayerStatistics::GetPlayerStatistics(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InPlayFabId, const TArray<FString>& InStatisticNames, const TArray<FBPServerStatisticNameVersion>& InStatisticNameVersions)
+UPFServerGetPlayerStatistics* UPFServerGetPlayerStatistics::GetPlayerStatistics(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InPlayFabId, const TArray<FString>& InStatisticNames)
 {
 	UPFServerGetPlayerStatistics* Proxy = NewObject<UPFServerGetPlayerStatistics>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.PlayFabId = InPlayFabId;
 	Proxy->Request.StatisticNames = InStatisticNames;
-	for (const FBPServerStatisticNameVersion& elem : InStatisticNameVersions)
-    {
-        Proxy->Request.StatisticNameVersions.Add(elem.Data);
-    }
-
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

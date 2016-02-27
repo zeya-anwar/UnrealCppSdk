@@ -21,7 +21,7 @@ public:
 	
 	// Retrieves the current version and values for the indicated statistics, for the local player.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Player Data Management")
-	static UPFServerGetPlayerStatistics* GetPlayerStatistics(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InPlayFabId, const TArray<FString>& InStatisticNames, const TArray<FBPServerStatisticNameVersion>& InStatisticNameVersions);
+	static UPFServerGetPlayerStatistics* GetPlayerStatistics(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InPlayFabId, const TArray<FString>& InStatisticNames);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;
