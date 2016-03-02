@@ -3425,20 +3425,55 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FStatisticNameVersion : public FPlayFabBaseModel
+    {
+		
+		// unique name of the statistic
+		FString StatisticName;
+		// the version of the statistic to be returned
+		uint32 Version;
+	
+        FStatisticNameVersion() :
+			FPlayFabBaseModel(),
+			StatisticName(),
+			Version(0)
+			{}
+		
+		FStatisticNameVersion(const FStatisticNameVersion& src) :
+			FPlayFabBaseModel(),
+			StatisticName(src.StatisticName),
+			Version(src.Version)
+			{}
+			
+		FStatisticNameVersion(const TSharedPtr<FJsonObject>& obj) : FStatisticNameVersion()
+        {
+            readFromValue(obj);
+        }
+		
+		~FStatisticNameVersion();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FGetPlayerStatisticsRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] statistics to return
+		// [optional] statistics to return (current version will be returned for each)
 		TArray<FString> StatisticNames;
+		// [optional] statistics to return, if StatisticNames is not set (only statistics which have a version matching that provided will be returned)
+		TArray<FStatisticNameVersion> StatisticNameVersions;
 	
         FGetPlayerStatisticsRequest() :
 			FPlayFabBaseModel(),
-			StatisticNames()
+			StatisticNames(),
+			StatisticNameVersions()
 			{}
 		
 		FGetPlayerStatisticsRequest(const FGetPlayerStatisticsRequest& src) :
 			FPlayFabBaseModel(),
-			StatisticNames(src.StatisticNames)
+			StatisticNames(src.StatisticNames),
+			StatisticNameVersions(src.StatisticNameVersions)
 			{}
 			
 		FGetPlayerStatisticsRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayerStatisticsRequest()
@@ -3509,6 +3544,107 @@ namespace ClientModels
         }
 		
 		~FGetPlayerStatisticsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerStatisticVersionsRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] unique name of the statistic
+		FString StatisticName;
+	
+        FGetPlayerStatisticVersionsRequest() :
+			FPlayFabBaseModel(),
+			StatisticName()
+			{}
+		
+		FGetPlayerStatisticVersionsRequest(const FGetPlayerStatisticVersionsRequest& src) :
+			FPlayFabBaseModel(),
+			StatisticName(src.StatisticName)
+			{}
+			
+		FGetPlayerStatisticVersionsRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayerStatisticVersionsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerStatisticVersionsRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FPlayerStatisticVersion : public FPlayFabBaseModel
+    {
+		
+		// [optional] name of the statistic when the version became active
+		FString StatisticName;
+		// version of the statistic
+		uint32 Version;
+		// [optional] time at which the statistic version was scheduled to become active, based on the configured ResetInterval
+		OptionalTime ScheduledActivationTime;
+		// time when the statistic version became active
+		FDateTime ActivationTime;
+		// [optional] time at which the statistic version was scheduled to become inactive, based on the configured ResetInterval
+		OptionalTime ScheduledDeactivationTime;
+		// [optional] time when the statistic version became inactive due to statistic version incrementing
+		OptionalTime DeactivationTime;
+	
+        FPlayerStatisticVersion() :
+			FPlayFabBaseModel(),
+			StatisticName(),
+			Version(0),
+			ScheduledActivationTime(),
+			ActivationTime(0),
+			ScheduledDeactivationTime(),
+			DeactivationTime()
+			{}
+		
+		FPlayerStatisticVersion(const FPlayerStatisticVersion& src) :
+			FPlayFabBaseModel(),
+			StatisticName(src.StatisticName),
+			Version(src.Version),
+			ScheduledActivationTime(src.ScheduledActivationTime),
+			ActivationTime(src.ActivationTime),
+			ScheduledDeactivationTime(src.ScheduledDeactivationTime),
+			DeactivationTime(src.DeactivationTime)
+			{}
+			
+		FPlayerStatisticVersion(const TSharedPtr<FJsonObject>& obj) : FPlayerStatisticVersion()
+        {
+            readFromValue(obj);
+        }
+		
+		~FPlayerStatisticVersion();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerStatisticVersionsResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] version change history of the statistic
+		TArray<FPlayerStatisticVersion> StatisticVersions;
+	
+        FGetPlayerStatisticVersionsResult() :
+			FPlayFabBaseModel(),
+			StatisticVersions()
+			{}
+		
+		FGetPlayerStatisticVersionsResult(const FGetPlayerStatisticVersionsResult& src) :
+			FPlayFabBaseModel(),
+			StatisticVersions(src.StatisticVersions)
+			{}
+			
+		FGetPlayerStatisticVersionsResult(const TSharedPtr<FJsonObject>& obj) : FGetPlayerStatisticVersionsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerStatisticVersionsResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
