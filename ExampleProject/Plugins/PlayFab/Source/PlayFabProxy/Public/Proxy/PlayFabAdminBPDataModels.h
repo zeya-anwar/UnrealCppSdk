@@ -806,26 +806,6 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminRandomResultTableListingDelegate, const FBPAdminRandomResultTableListing&, Result);
 
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminRefundPurchaseRequest"))
-struct FBPAdminRefundPurchaseRequest
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::AdminModels::FRefundPurchaseRequest Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminRefundPurchaseRequestDelegate, const FBPAdminRefundPurchaseRequest&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminRefundPurchaseResponse"))
-struct FBPAdminRefundPurchaseResponse
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::AdminModels::FRefundPurchaseResponse Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminRefundPurchaseResponseDelegate, const FBPAdminRefundPurchaseResponse&, Result);
-
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminRegion"))
 struct FBPAdminRegion
 {
@@ -905,36 +885,6 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminResetUserStatisticsResultDelegate, const FBPAdminResetUserStatisticsResult&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminResolutionOutcome"))
-struct FBPAdminResolutionOutcome
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::AdminModels::ResolutionOutcome Data;	
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminResolutionOutcomeDelegate, const FBPAdminResolutionOutcome&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminResolvePurchaseDisputeRequest"))
-struct FBPAdminResolvePurchaseDisputeRequest
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::AdminModels::FResolvePurchaseDisputeRequest Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminResolvePurchaseDisputeRequestDelegate, const FBPAdminResolvePurchaseDisputeRequest&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminResolvePurchaseDisputeResponse"))
-struct FBPAdminResolvePurchaseDisputeResponse
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::AdminModels::FResolvePurchaseDisputeResponse Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminResolvePurchaseDisputeResponseDelegate, const FBPAdminResolvePurchaseDisputeResponse&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminResultTableNode"))
 struct FBPAdminResultTableNode

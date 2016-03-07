@@ -1088,64 +1088,6 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
-	struct PLAYFAB_API FConsumePSNEntitlementsRequest : public FPlayFabBaseModel
-    {
-		
-		// [optional] Which catalog to match granted entitlements against. If null, defaults to title default catalog
-		FString CatalogVersion;
-		// Id of the PSN service label to consume entitlements from
-		int32 ServiceLabel;
-	
-        FConsumePSNEntitlementsRequest() :
-			FPlayFabBaseModel(),
-			CatalogVersion(),
-			ServiceLabel(0)
-			{}
-		
-		FConsumePSNEntitlementsRequest(const FConsumePSNEntitlementsRequest& src) :
-			FPlayFabBaseModel(),
-			CatalogVersion(src.CatalogVersion),
-			ServiceLabel(src.ServiceLabel)
-			{}
-			
-		FConsumePSNEntitlementsRequest(const TSharedPtr<FJsonObject>& obj) : FConsumePSNEntitlementsRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FConsumePSNEntitlementsRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FConsumePSNEntitlementsResult : public FPlayFabBaseModel
-    {
-		
-		// [optional] Array of items granted to the player as a result of consuming entitlements.
-		TArray<FItemInstance> ItemsGranted;
-	
-        FConsumePSNEntitlementsResult() :
-			FPlayFabBaseModel(),
-			ItemsGranted()
-			{}
-		
-		FConsumePSNEntitlementsResult(const FConsumePSNEntitlementsResult& src) :
-			FPlayFabBaseModel(),
-			ItemsGranted(src.ItemsGranted)
-			{}
-			
-		FConsumePSNEntitlementsResult(const TSharedPtr<FJsonObject>& obj) : FConsumePSNEntitlementsResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FConsumePSNEntitlementsResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
 	struct PLAYFAB_API FCreateSharedGroupRequest : public FPlayFabBaseModel
     {
 		
@@ -3483,20 +3425,55 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FStatisticNameVersion : public FPlayFabBaseModel
+    {
+		
+		// unique name of the statistic
+		FString StatisticName;
+		// the version of the statistic to be returned
+		uint32 Version;
+	
+        FStatisticNameVersion() :
+			FPlayFabBaseModel(),
+			StatisticName(),
+			Version(0)
+			{}
+		
+		FStatisticNameVersion(const FStatisticNameVersion& src) :
+			FPlayFabBaseModel(),
+			StatisticName(src.StatisticName),
+			Version(src.Version)
+			{}
+			
+		FStatisticNameVersion(const TSharedPtr<FJsonObject>& obj) : FStatisticNameVersion()
+        {
+            readFromValue(obj);
+        }
+		
+		~FStatisticNameVersion();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FGetPlayerStatisticsRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] statistics to return
+		// [optional] statistics to return (current version will be returned for each)
 		TArray<FString> StatisticNames;
+		// [optional] statistics to return, if StatisticNames is not set (only statistics which have a version matching that provided will be returned)
+		TArray<FStatisticNameVersion> StatisticNameVersions;
 	
         FGetPlayerStatisticsRequest() :
 			FPlayFabBaseModel(),
-			StatisticNames()
+			StatisticNames(),
+			StatisticNameVersions()
 			{}
 		
 		FGetPlayerStatisticsRequest(const FGetPlayerStatisticsRequest& src) :
 			FPlayFabBaseModel(),
-			StatisticNames(src.StatisticNames)
+			StatisticNames(src.StatisticNames),
+			StatisticNameVersions(src.StatisticNameVersions)
 			{}
 			
 		FGetPlayerStatisticsRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayerStatisticsRequest()
@@ -3517,14 +3494,14 @@ namespace ClientModels
 		FString StatisticName;
 		// statistic value for the player
 		int32 Value;
-		// [optional] for updates to an existing statistic value for a player, the version of the statistic when it was loaded
-		FString Version;
+		// for updates to an existing statistic value for a player, the version of the statistic when it was loaded
+		uint32 Version;
 	
         FStatisticValue() :
 			FPlayFabBaseModel(),
 			StatisticName(),
 			Value(0),
-			Version()
+			Version(0)
 			{}
 		
 		FStatisticValue(const FStatisticValue& src) :
@@ -3567,6 +3544,107 @@ namespace ClientModels
         }
 		
 		~FGetPlayerStatisticsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerStatisticVersionsRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] unique name of the statistic
+		FString StatisticName;
+	
+        FGetPlayerStatisticVersionsRequest() :
+			FPlayFabBaseModel(),
+			StatisticName()
+			{}
+		
+		FGetPlayerStatisticVersionsRequest(const FGetPlayerStatisticVersionsRequest& src) :
+			FPlayFabBaseModel(),
+			StatisticName(src.StatisticName)
+			{}
+			
+		FGetPlayerStatisticVersionsRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayerStatisticVersionsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerStatisticVersionsRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FPlayerStatisticVersion : public FPlayFabBaseModel
+    {
+		
+		// [optional] name of the statistic when the version became active
+		FString StatisticName;
+		// version of the statistic
+		uint32 Version;
+		// [optional] time at which the statistic version was scheduled to become active, based on the configured ResetInterval
+		OptionalTime ScheduledActivationTime;
+		// time when the statistic version became active
+		FDateTime ActivationTime;
+		// [optional] time at which the statistic version was scheduled to become inactive, based on the configured ResetInterval
+		OptionalTime ScheduledDeactivationTime;
+		// [optional] time when the statistic version became inactive due to statistic version incrementing
+		OptionalTime DeactivationTime;
+	
+        FPlayerStatisticVersion() :
+			FPlayFabBaseModel(),
+			StatisticName(),
+			Version(0),
+			ScheduledActivationTime(),
+			ActivationTime(0),
+			ScheduledDeactivationTime(),
+			DeactivationTime()
+			{}
+		
+		FPlayerStatisticVersion(const FPlayerStatisticVersion& src) :
+			FPlayFabBaseModel(),
+			StatisticName(src.StatisticName),
+			Version(src.Version),
+			ScheduledActivationTime(src.ScheduledActivationTime),
+			ActivationTime(src.ActivationTime),
+			ScheduledDeactivationTime(src.ScheduledDeactivationTime),
+			DeactivationTime(src.DeactivationTime)
+			{}
+			
+		FPlayerStatisticVersion(const TSharedPtr<FJsonObject>& obj) : FPlayerStatisticVersion()
+        {
+            readFromValue(obj);
+        }
+		
+		~FPlayerStatisticVersion();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerStatisticVersionsResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] version change history of the statistic
+		TArray<FPlayerStatisticVersion> StatisticVersions;
+	
+        FGetPlayerStatisticVersionsResult() :
+			FPlayFabBaseModel(),
+			StatisticVersions()
+			{}
+		
+		FGetPlayerStatisticVersionsResult(const FGetPlayerStatisticVersionsResult& src) :
+			FPlayFabBaseModel(),
+			StatisticVersions(src.StatisticVersions)
+			{}
+			
+		FGetPlayerStatisticVersionsResult(const TSharedPtr<FJsonObject>& obj) : FGetPlayerStatisticVersionsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerStatisticVersionsResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -3903,95 +3981,6 @@ namespace ClientModels
         }
 		
 		~FGetPlayFabIDsFromKongregateIDsResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FGetPlayFabIDsFromPSNAccountIDsRequest : public FPlayFabBaseModel
-    {
-		
-		// Array of unique PlayStation Network identifiers for which the title needs to get PlayFab identifiers.
-		TArray<FString> PSNAccountIDs;
-		// [optional] Id of the PSN issuer environment. If null, defaults to 256 (production)
-		OptionalInt32 IssuerId;
-	
-        FGetPlayFabIDsFromPSNAccountIDsRequest() :
-			FPlayFabBaseModel(),
-			PSNAccountIDs(),
-			IssuerId()
-			{}
-		
-		FGetPlayFabIDsFromPSNAccountIDsRequest(const FGetPlayFabIDsFromPSNAccountIDsRequest& src) :
-			FPlayFabBaseModel(),
-			PSNAccountIDs(src.PSNAccountIDs),
-			IssuerId(src.IssuerId)
-			{}
-			
-		FGetPlayFabIDsFromPSNAccountIDsRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayFabIDsFromPSNAccountIDsRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FGetPlayFabIDsFromPSNAccountIDsRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FPSNAccountPlayFabIdPair : public FPlayFabBaseModel
-    {
-		
-		// [optional] Unique PlayStation Network identifier for a user.
-		FString PSNAccountId;
-		// [optional] Unique PlayFab identifier for a user, or null if no PlayFab account is linked to the PlayStation Network identifier.
-		FString PlayFabId;
-	
-        FPSNAccountPlayFabIdPair() :
-			FPlayFabBaseModel(),
-			PSNAccountId(),
-			PlayFabId()
-			{}
-		
-		FPSNAccountPlayFabIdPair(const FPSNAccountPlayFabIdPair& src) :
-			FPlayFabBaseModel(),
-			PSNAccountId(src.PSNAccountId),
-			PlayFabId(src.PlayFabId)
-			{}
-			
-		FPSNAccountPlayFabIdPair(const TSharedPtr<FJsonObject>& obj) : FPSNAccountPlayFabIdPair()
-        {
-            readFromValue(obj);
-        }
-		
-		~FPSNAccountPlayFabIdPair();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FGetPlayFabIDsFromPSNAccountIDsResult : public FPlayFabBaseModel
-    {
-		
-		// [optional] Mapping of PlayStation Network identifiers to PlayFab identifiers.
-		TArray<FPSNAccountPlayFabIdPair> Data;
-	
-        FGetPlayFabIDsFromPSNAccountIDsResult() :
-			FPlayFabBaseModel(),
-			Data()
-			{}
-		
-		FGetPlayFabIDsFromPSNAccountIDsResult(const FGetPlayFabIDsFromPSNAccountIDsResult& src) :
-			FPlayFabBaseModel(),
-			Data(src.Data)
-			{}
-			
-		FGetPlayFabIDsFromPSNAccountIDsResult(const TSharedPtr<FJsonObject>& obj) : FGetPlayFabIDsFromPSNAccountIDsResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FGetPlayFabIDsFromPSNAccountIDsResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -5404,64 +5393,6 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
-	struct PLAYFAB_API FLinkPSNAccountRequest : public FPlayFabBaseModel
-    {
-		
-		// Authentication code provided by the PlayStation Network.
-		FString AuthCode;
-		// Redirect URI supplied to PSN when requesting an auth code
-		FString RedirectUri;
-		// [optional] Id of the PSN issuer environment. If null, defaults to 256 (production)
-		OptionalInt32 IssuerId;
-	
-        FLinkPSNAccountRequest() :
-			FPlayFabBaseModel(),
-			AuthCode(),
-			RedirectUri(),
-			IssuerId()
-			{}
-		
-		FLinkPSNAccountRequest(const FLinkPSNAccountRequest& src) :
-			FPlayFabBaseModel(),
-			AuthCode(src.AuthCode),
-			RedirectUri(src.RedirectUri),
-			IssuerId(src.IssuerId)
-			{}
-			
-		FLinkPSNAccountRequest(const TSharedPtr<FJsonObject>& obj) : FLinkPSNAccountRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FLinkPSNAccountRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FLinkPSNAccountResult : public FPlayFabBaseModel
-    {
-		
-	
-        FLinkPSNAccountResult() :
-			FPlayFabBaseModel()
-			{}
-		
-		FLinkPSNAccountResult(const FLinkPSNAccountResult& src) :
-			FPlayFabBaseModel()
-			{}
-			
-		FLinkPSNAccountResult(const TSharedPtr<FJsonObject>& obj) : FLinkPSNAccountResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FLinkPSNAccountResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
 	struct PLAYFAB_API FLinkSteamAccountRequest : public FPlayFabBaseModel
     {
 		
@@ -5507,56 +5438,6 @@ namespace ClientModels
         }
 		
 		~FLinkSteamAccountResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FLinkXboxAccountRequest : public FPlayFabBaseModel
-    {
-		
-		// Token provided by the Xbox Live SDK/XDK method GetTokenAndSignatureAsync("POST", "https://playfabapi.com", "").
-		FString XboxToken;
-	
-        FLinkXboxAccountRequest() :
-			FPlayFabBaseModel(),
-			XboxToken()
-			{}
-		
-		FLinkXboxAccountRequest(const FLinkXboxAccountRequest& src) :
-			FPlayFabBaseModel(),
-			XboxToken(src.XboxToken)
-			{}
-			
-		FLinkXboxAccountRequest(const TSharedPtr<FJsonObject>& obj) : FLinkXboxAccountRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FLinkXboxAccountRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FLinkXboxAccountResult : public FPlayFabBaseModel
-    {
-		
-	
-        FLinkXboxAccountResult() :
-			FPlayFabBaseModel()
-			{}
-		
-		FLinkXboxAccountResult(const FLinkXboxAccountResult& src) :
-			FPlayFabBaseModel()
-			{}
-			
-		FLinkXboxAccountResult(const TSharedPtr<FJsonObject>& obj) : FLinkXboxAccountResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FLinkXboxAccountResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -6087,49 +5968,6 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
-	struct PLAYFAB_API FLoginWithPSNRequest : public FPlayFabBaseModel
-    {
-		
-		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
-		FString TitleId;
-		// Auth code provided by the PSN OAuth provider.
-		FString AuthCode;
-		// Redirect URI supplied to PSN when requesting an auth code
-		FString RedirectUri;
-		// [optional] Id of the PSN issuer environment. If null, defaults to 256 (production)
-		OptionalInt32 IssuerId;
-		// [optional] Automatically create a PlayFab account if one is not currently linked to this PSN account.
-		OptionalBool CreateAccount;
-	
-        FLoginWithPSNRequest() :
-			FPlayFabBaseModel(),
-			TitleId(),
-			AuthCode(),
-			RedirectUri(),
-			IssuerId(),
-			CreateAccount()
-			{}
-		
-		FLoginWithPSNRequest(const FLoginWithPSNRequest& src) :
-			FPlayFabBaseModel(),
-			TitleId(src.TitleId),
-			AuthCode(src.AuthCode),
-			RedirectUri(src.RedirectUri),
-			IssuerId(src.IssuerId),
-			CreateAccount(src.CreateAccount)
-			{}
-			
-		FLoginWithPSNRequest(const TSharedPtr<FJsonObject>& obj) : FLoginWithPSNRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FLoginWithPSNRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
 	struct PLAYFAB_API FLoginWithSteamRequest : public FPlayFabBaseModel
     {
 		
@@ -6160,41 +5998,6 @@ namespace ClientModels
         }
 		
 		~FLoginWithSteamRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FLoginWithXboxRequest : public FPlayFabBaseModel
-    {
-		
-		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
-		FString TitleId;
-		// Token provided by the Xbox Live SDK/XDK method GetTokenAndSignatureAsync("POST", "https://playfabapi.com", "").
-		FString XboxToken;
-		// [optional] Automatically create a PlayFab account if one is not currently linked to this Xbox Live account.
-		OptionalBool CreateAccount;
-	
-        FLoginWithXboxRequest() :
-			FPlayFabBaseModel(),
-			TitleId(),
-			XboxToken(),
-			CreateAccount()
-			{}
-		
-		FLoginWithXboxRequest(const FLoginWithXboxRequest& src) :
-			FPlayFabBaseModel(),
-			TitleId(src.TitleId),
-			XboxToken(src.XboxToken),
-			CreateAccount(src.CreateAccount)
-			{}
-			
-		FLoginWithXboxRequest(const TSharedPtr<FJsonObject>& obj) : FLoginWithXboxRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FLoginWithXboxRequest();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -6706,41 +6509,6 @@ namespace ClientModels
         }
 		
 		~FRedeemCouponResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FRefreshPSNAuthTokenRequest : public FPlayFabBaseModel
-    {
-		
-		// Auth code returned by PSN OAuth system.
-		FString AuthCode;
-		// Redirect URI supplied to PSN when requesting an auth code
-		FString RedirectUri;
-		// [optional] Id of the PSN issuer environment. If null, defaults to 256 (production)
-		OptionalInt32 IssuerId;
-	
-        FRefreshPSNAuthTokenRequest() :
-			FPlayFabBaseModel(),
-			AuthCode(),
-			RedirectUri(),
-			IssuerId()
-			{}
-		
-		FRefreshPSNAuthTokenRequest(const FRefreshPSNAuthTokenRequest& src) :
-			FPlayFabBaseModel(),
-			AuthCode(src.AuthCode),
-			RedirectUri(src.RedirectUri),
-			IssuerId(src.IssuerId)
-			{}
-			
-		FRefreshPSNAuthTokenRequest(const TSharedPtr<FJsonObject>& obj) : FRefreshPSNAuthTokenRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FRefreshPSNAuthTokenRequest();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -7876,52 +7644,6 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
-	struct PLAYFAB_API FUnlinkPSNAccountRequest : public FPlayFabBaseModel
-    {
-		
-	
-        FUnlinkPSNAccountRequest() :
-			FPlayFabBaseModel()
-			{}
-		
-		FUnlinkPSNAccountRequest(const FUnlinkPSNAccountRequest& src) :
-			FPlayFabBaseModel()
-			{}
-			
-		FUnlinkPSNAccountRequest(const TSharedPtr<FJsonObject>& obj) : FUnlinkPSNAccountRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FUnlinkPSNAccountRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FUnlinkPSNAccountResult : public FPlayFabBaseModel
-    {
-		
-	
-        FUnlinkPSNAccountResult() :
-			FPlayFabBaseModel()
-			{}
-		
-		FUnlinkPSNAccountResult(const FUnlinkPSNAccountResult& src) :
-			FPlayFabBaseModel()
-			{}
-			
-		FUnlinkPSNAccountResult(const TSharedPtr<FJsonObject>& obj) : FUnlinkPSNAccountResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FUnlinkPSNAccountResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
 	struct PLAYFAB_API FUnlinkSteamAccountRequest : public FPlayFabBaseModel
     {
 		
@@ -7963,56 +7685,6 @@ namespace ClientModels
         }
 		
 		~FUnlinkSteamAccountResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FUnlinkXboxAccountRequest : public FPlayFabBaseModel
-    {
-		
-		// Token provided by the Xbox Live SDK/XDK method GetTokenAndSignatureAsync("POST", "https://playfabapi.com", "").
-		FString XboxToken;
-	
-        FUnlinkXboxAccountRequest() :
-			FPlayFabBaseModel(),
-			XboxToken()
-			{}
-		
-		FUnlinkXboxAccountRequest(const FUnlinkXboxAccountRequest& src) :
-			FPlayFabBaseModel(),
-			XboxToken(src.XboxToken)
-			{}
-			
-		FUnlinkXboxAccountRequest(const TSharedPtr<FJsonObject>& obj) : FUnlinkXboxAccountRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FUnlinkXboxAccountRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FUnlinkXboxAccountResult : public FPlayFabBaseModel
-    {
-		
-	
-        FUnlinkXboxAccountResult() :
-			FPlayFabBaseModel()
-			{}
-		
-		FUnlinkXboxAccountResult(const FUnlinkXboxAccountResult& src) :
-			FPlayFabBaseModel()
-			{}
-			
-		FUnlinkXboxAccountResult(const TSharedPtr<FJsonObject>& obj) : FUnlinkXboxAccountResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FUnlinkXboxAccountResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

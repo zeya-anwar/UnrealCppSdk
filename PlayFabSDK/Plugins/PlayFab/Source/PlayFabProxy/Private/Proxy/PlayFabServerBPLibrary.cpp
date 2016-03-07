@@ -18,23 +18,6 @@ void UPFServerProxyLibrary::BreakBPServerAddCharacterVirtualCurrencyRequest(
 	
 }
 
-void UPFServerProxyLibrary::BreakBPServerAddFriendRequest(
-		const FBPServerAddFriendRequest& In
-        ,FString& OutPlayFabId
-        ,FString& OutFriendPlayFabId
-        ,FString& OutFriendUsername
-        ,FString& OutFriendEmail
-        ,FString& OutFriendTitleDisplayName
-	)
-{
-    OutPlayFabId = In.Data.PlayFabId;
-	OutFriendPlayFabId = In.Data.FriendPlayFabId;
-	OutFriendUsername = In.Data.FriendUsername;
-	OutFriendEmail = In.Data.FriendEmail;
-	OutFriendTitleDisplayName = In.Data.FriendTitleDisplayName;
-	
-}
-
 void UPFServerProxyLibrary::BreakBPServerAddSharedGroupMembersRequest(
 		const FBPServerAddSharedGroupMembersRequest& In
         ,FString& OutSharedGroupId
@@ -560,53 +543,6 @@ void UPFServerProxyLibrary::BreakBPServerGetContentDownloadUrlResult(
 	
 }
 
-void UPFServerProxyLibrary::BreakBPServerGetFriendLeaderboardRequest(
-		const FBPServerGetFriendLeaderboardRequest& In
-        ,FString& OutPlayFabId
-        ,FString& OutStatisticName
-        ,int32& OutStartPosition
-        ,int32& OutMaxResultsCount
-        ,bool& OutIncludeSteamFriends
-        ,bool& OutIncludeFacebookFriends
-	)
-{
-    OutPlayFabId = In.Data.PlayFabId;
-	OutStatisticName = In.Data.StatisticName;
-	OutStartPosition = In.Data.StartPosition;
-	OutMaxResultsCount = In.Data.MaxResultsCount;
-	OutIncludeSteamFriends = In.Data.IncludeSteamFriends;
-	OutIncludeFacebookFriends = In.Data.IncludeFacebookFriends;
-	
-}
-
-void UPFServerProxyLibrary::BreakBPServerGetFriendsListRequest(
-		const FBPServerGetFriendsListRequest& In
-        ,FString& OutPlayFabId
-        ,bool& OutIncludeSteamFriends
-        ,bool& OutIncludeFacebookFriends
-	)
-{
-    OutPlayFabId = In.Data.PlayFabId;
-	OutIncludeSteamFriends = In.Data.IncludeSteamFriends;
-	OutIncludeFacebookFriends = In.Data.IncludeFacebookFriends;
-	
-}
-
-void UPFServerProxyLibrary::BreakBPServerGetFriendsListResult(
-		const FBPServerGetFriendsListResult& In
-        ,TArray<FBPServerFriendInfo>& OutFriends
-	)
-{
-    for (const PlayFab::ServerModels::FFriendInfo& elem : In.Data.Friends)
-    {
-        FBPServerFriendInfo result;
-        result.Data = elem;
-        OutFriends.Add(result);
-    }
-
-	
-}
-
 void UPFServerProxyLibrary::BreakBPServerGetLeaderboardAroundCharacterRequest(
 		const FBPServerGetLeaderboardAroundCharacterRequest& In
         ,FString& OutStatisticName
@@ -727,10 +663,18 @@ void UPFServerProxyLibrary::BreakBPServerGetPlayerStatisticsRequest(
 		const FBPServerGetPlayerStatisticsRequest& In
         ,FString& OutPlayFabId
         ,TArray<FString>& OutStatisticNames
+        ,TArray<FBPServerStatisticNameVersion>& OutStatisticNameVersions
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
 	OutStatisticNames = In.Data.StatisticNames;
+	for (const PlayFab::ServerModels::FStatisticNameVersion& elem : In.Data.StatisticNameVersions)
+    {
+        FBPServerStatisticNameVersion result;
+        result.Data = elem;
+        OutStatisticNameVersions.Add(result);
+    }
+
 	
 }
 
@@ -746,6 +690,30 @@ void UPFServerProxyLibrary::BreakBPServerGetPlayerStatisticsResult(
         FBPServerStatisticValue result;
         result.Data = elem;
         OutStatistics.Add(result);
+    }
+
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetPlayerStatisticVersionsRequest(
+		const FBPServerGetPlayerStatisticVersionsRequest& In
+        ,FString& OutStatisticName
+	)
+{
+    OutStatisticName = In.Data.StatisticName;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetPlayerStatisticVersionsResult(
+		const FBPServerGetPlayerStatisticVersionsResult& In
+        ,TArray<FBPServerPlayerStatisticVersion>& OutStatisticVersions
+	)
+{
+    for (const PlayFab::ServerModels::FPlayerStatisticVersion& elem : In.Data.StatisticVersions)
+    {
+        FBPServerPlayerStatisticVersion result;
+        result.Data = elem;
+        OutStatisticVersions.Add(result);
     }
 
 	
@@ -1389,6 +1357,25 @@ void UPFServerProxyLibrary::BreakBPServerPlayerLeaderboardEntry(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerPlayerStatisticVersion(
+		const FBPServerPlayerStatisticVersion& In
+        ,FString& OutStatisticName
+        ,int32& OutVersion
+        ,FDateTime& OutScheduledActivationTime
+        ,FDateTime& OutActivationTime
+        ,FDateTime& OutScheduledDeactivationTime
+        ,FDateTime& OutDeactivationTime
+	)
+{
+    OutStatisticName = In.Data.StatisticName;
+	OutVersion = In.Data.Version;
+	
+	
+	
+	
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerRedeemCouponRequest(
 		const FBPServerRedeemCouponRequest& In
         ,FString& OutCouponCode
@@ -1438,17 +1425,6 @@ void UPFServerProxyLibrary::BreakBPServerRedeemMatchmakerTicketResult(
     OutTicketIsValid = In.Data.TicketIsValid;
 	OutError = In.Data.Error;
 	if (In.Data.UserInfo.IsValid()) {    OutUserInfo.Data = *In.Data.UserInfo;}
-	
-}
-
-void UPFServerProxyLibrary::BreakBPServerRemoveFriendRequest(
-		const FBPServerRemoveFriendRequest& In
-        ,FString& OutFriendPlayFabId
-        ,FString& OutPlayFabId
-	)
-{
-    OutFriendPlayFabId = In.Data.FriendPlayFabId;
-	OutPlayFabId = In.Data.PlayFabId;
 	
 }
 
@@ -1536,20 +1512,6 @@ void UPFServerProxyLibrary::BreakBPServerRunCloudScriptResult(
 	
 }
 
-void UPFServerProxyLibrary::BreakBPServerRunServerCloudScriptRequest(
-		const FBPServerRunServerCloudScriptRequest& In
-        ,FString& OutPlayFabId
-        ,FString& OutActionId
-        ,FString& OutParamsEncoded
-	)
-{
-    OutPlayFabId = In.Data.PlayFabId;
-	OutActionId = In.Data.ActionId;
-	
-	OutParamsEncoded = In.Data.ParamsEncoded;
-	
-}
-
 void UPFServerProxyLibrary::BreakBPServerSendPushNotificationRequest(
 		const FBPServerSendPushNotificationRequest& In
         ,FString& OutRecipient
@@ -1620,6 +1582,17 @@ void UPFServerProxyLibrary::BreakBPServerSharedGroupDataRecord(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerStatisticNameVersion(
+		const FBPServerStatisticNameVersion& In
+        ,FString& OutStatisticName
+        ,int32& OutVersion
+	)
+{
+    OutStatisticName = In.Data.StatisticName;
+	OutVersion = In.Data.Version;
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerStatisticUpdate(
 		const FBPServerStatisticUpdate& In
         ,FString& OutStatisticName
@@ -1637,7 +1610,7 @@ void UPFServerProxyLibrary::BreakBPServerStatisticValue(
 		const FBPServerStatisticValue& In
         ,FString& OutStatisticName
         ,int32& OutValue
-        ,FString& OutVersion
+        ,int32& OutVersion
 	)
 {
     OutStatisticName = In.Data.StatisticName;

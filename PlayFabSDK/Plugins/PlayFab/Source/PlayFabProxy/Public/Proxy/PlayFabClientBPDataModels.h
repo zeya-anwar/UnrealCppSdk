@@ -266,26 +266,6 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientConsumeItemResultDelegate, const FBPClientConsumeItemResult&, Result);
 
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientConsumePSNEntitlementsRequest"))
-struct FBPClientConsumePSNEntitlementsRequest
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ClientModels::FConsumePSNEntitlementsRequest Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientConsumePSNEntitlementsRequestDelegate, const FBPClientConsumePSNEntitlementsRequest&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientConsumePSNEntitlementsResult"))
-struct FBPClientConsumePSNEntitlementsResult
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ClientModels::FConsumePSNEntitlementsResult Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientConsumePSNEntitlementsResultDelegate, const FBPClientConsumePSNEntitlementsResult&, Result);
-
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientCreateSharedGroupRequest"))
 struct FBPClientCreateSharedGroupRequest
 {
@@ -776,6 +756,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetPlayerStatisticsResultDelegate, const FBPClientGetPlayerStatisticsResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetPlayerStatisticVersionsRequest"))
+struct FBPClientGetPlayerStatisticVersionsRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FGetPlayerStatisticVersionsRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetPlayerStatisticVersionsRequestDelegate, const FBPClientGetPlayerStatisticVersionsRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetPlayerStatisticVersionsResult"))
+struct FBPClientGetPlayerStatisticVersionsResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FGetPlayerStatisticVersionsResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetPlayerStatisticVersionsResultDelegate, const FBPClientGetPlayerStatisticVersionsResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetPlayerTradesRequest"))
 struct FBPClientGetPlayerTradesRequest
 {
@@ -875,26 +875,6 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetPlayFabIDsFromKongregateIDsResultDelegate, const FBPClientGetPlayFabIDsFromKongregateIDsResult&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetPlayFabIDsFromPSNAccountIDsRequest"))
-struct FBPClientGetPlayFabIDsFromPSNAccountIDsRequest
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ClientModels::FGetPlayFabIDsFromPSNAccountIDsRequest Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetPlayFabIDsFromPSNAccountIDsRequestDelegate, const FBPClientGetPlayFabIDsFromPSNAccountIDsRequest&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetPlayFabIDsFromPSNAccountIDsResult"))
-struct FBPClientGetPlayFabIDsFromPSNAccountIDsResult
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ClientModels::FGetPlayFabIDsFromPSNAccountIDsResult Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetPlayFabIDsFromPSNAccountIDsResultDelegate, const FBPClientGetPlayFabIDsFromPSNAccountIDsResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetPlayFabIDsFromSteamIDsRequest"))
 struct FBPClientGetPlayFabIDsFromSteamIDsRequest
@@ -1336,26 +1316,6 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientLinkKongregateAccountResultDelegate, const FBPClientLinkKongregateAccountResult&, Result);
 
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientLinkPSNAccountRequest"))
-struct FBPClientLinkPSNAccountRequest
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ClientModels::FLinkPSNAccountRequest Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientLinkPSNAccountRequestDelegate, const FBPClientLinkPSNAccountRequest&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientLinkPSNAccountResult"))
-struct FBPClientLinkPSNAccountResult
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ClientModels::FLinkPSNAccountResult Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientLinkPSNAccountResultDelegate, const FBPClientLinkPSNAccountResult&, Result);
-
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientLinkSteamAccountRequest"))
 struct FBPClientLinkSteamAccountRequest
 {
@@ -1375,26 +1335,6 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientLinkSteamAccountResultDelegate, const FBPClientLinkSteamAccountResult&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientLinkXboxAccountRequest"))
-struct FBPClientLinkXboxAccountRequest
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ClientModels::FLinkXboxAccountRequest Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientLinkXboxAccountRequestDelegate, const FBPClientLinkXboxAccountRequest&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientLinkXboxAccountResult"))
-struct FBPClientLinkXboxAccountResult
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ClientModels::FLinkXboxAccountResult Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientLinkXboxAccountResultDelegate, const FBPClientLinkXboxAccountResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientListUsersCharactersRequest"))
 struct FBPClientListUsersCharactersRequest
@@ -1536,16 +1476,6 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientLoginWithPlayFabRequestDelegate, const FBPClientLoginWithPlayFabRequest&, Result);
 
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientLoginWithPSNRequest"))
-struct FBPClientLoginWithPSNRequest
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ClientModels::FLoginWithPSNRequest Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientLoginWithPSNRequestDelegate, const FBPClientLoginWithPSNRequest&, Result);
-
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientLoginWithSteamRequest"))
 struct FBPClientLoginWithSteamRequest
 {
@@ -1555,16 +1485,6 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientLoginWithSteamRequestDelegate, const FBPClientLoginWithSteamRequest&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientLoginWithXboxRequest"))
-struct FBPClientLoginWithXboxRequest
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ClientModels::FLoginWithXboxRequest Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientLoginWithXboxRequestDelegate, const FBPClientLoginWithXboxRequest&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientMatchmakeRequest"))
 struct FBPClientMatchmakeRequest
@@ -1666,15 +1586,15 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientPlayerLeaderboardEntryDelegate, const FBPClientPlayerLeaderboardEntry&, Result);
 
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientPSNAccountPlayFabIdPair"))
-struct FBPClientPSNAccountPlayFabIdPair
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientPlayerStatisticVersion"))
+struct FBPClientPlayerStatisticVersion
 {
 	GENERATED_USTRUCT_BODY()
 public:
-	 PlayFab::ClientModels::FPSNAccountPlayFabIdPair Data; 
+	 PlayFab::ClientModels::FPlayerStatisticVersion Data; 
 };
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientPSNAccountPlayFabIdPairDelegate, const FBPClientPSNAccountPlayFabIdPair&, Result);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientPlayerStatisticVersionDelegate, const FBPClientPlayerStatisticVersion&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientPurchaseItemRequest"))
 struct FBPClientPurchaseItemRequest
@@ -1715,16 +1635,6 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientRedeemCouponResultDelegate, const FBPClientRedeemCouponResult&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientRefreshPSNAuthTokenRequest"))
-struct FBPClientRefreshPSNAuthTokenRequest
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ClientModels::FRefreshPSNAuthTokenRequest Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientRefreshPSNAuthTokenRequestDelegate, const FBPClientRefreshPSNAuthTokenRequest&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientRegion"))
 struct FBPClientRegion
@@ -1976,6 +1886,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientStartPurchaseResultDelegate, const FBPClientStartPurchaseResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientStatisticNameVersion"))
+struct FBPClientStatisticNameVersion
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FStatisticNameVersion Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientStatisticNameVersionDelegate, const FBPClientStatisticNameVersion&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientStatisticUpdate"))
 struct FBPClientStatisticUpdate
 {
@@ -2216,26 +2136,6 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientUnlinkKongregateAccountResultDelegate, const FBPClientUnlinkKongregateAccountResult&, Result);
 
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientUnlinkPSNAccountRequest"))
-struct FBPClientUnlinkPSNAccountRequest
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ClientModels::FUnlinkPSNAccountRequest Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientUnlinkPSNAccountRequestDelegate, const FBPClientUnlinkPSNAccountRequest&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientUnlinkPSNAccountResult"))
-struct FBPClientUnlinkPSNAccountResult
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ClientModels::FUnlinkPSNAccountResult Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientUnlinkPSNAccountResultDelegate, const FBPClientUnlinkPSNAccountResult&, Result);
-
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientUnlinkSteamAccountRequest"))
 struct FBPClientUnlinkSteamAccountRequest
 {
@@ -2255,26 +2155,6 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientUnlinkSteamAccountResultDelegate, const FBPClientUnlinkSteamAccountResult&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientUnlinkXboxAccountRequest"))
-struct FBPClientUnlinkXboxAccountRequest
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ClientModels::FUnlinkXboxAccountRequest Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientUnlinkXboxAccountRequestDelegate, const FBPClientUnlinkXboxAccountRequest&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientUnlinkXboxAccountResult"))
-struct FBPClientUnlinkXboxAccountResult
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ClientModels::FUnlinkXboxAccountResult Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientUnlinkXboxAccountResultDelegate, const FBPClientUnlinkXboxAccountResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientUnlockContainerInstanceRequest"))
 struct FBPClientUnlockContainerInstanceRequest

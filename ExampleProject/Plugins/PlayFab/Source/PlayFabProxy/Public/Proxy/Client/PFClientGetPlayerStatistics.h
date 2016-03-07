@@ -19,9 +19,9 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FBPClientGetPlayerStatisticsResultDelegate OnFailure;
 	
-	// Retrieves the current version and values for the indicated statistics, for the local player.
+	// Retrieves the indicated statistics (current version and values for all statistics, if none are specified), for the local player.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Player Data Management")
-	static UPFClientGetPlayerStatistics* GetPlayerStatistics(UObject* WorldContextObject, class APlayerController* PlayerController, const TArray<FString>& InStatisticNames);
+	static UPFClientGetPlayerStatistics* GetPlayerStatistics(UObject* WorldContextObject, class APlayerController* PlayerController, const TArray<FString>& InStatisticNames, const TArray<FBPClientStatisticNameVersion>& InStatisticNameVersions);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

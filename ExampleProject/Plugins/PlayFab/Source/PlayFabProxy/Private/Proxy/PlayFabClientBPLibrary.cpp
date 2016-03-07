@@ -338,32 +338,6 @@ void UPFClientProxyLibrary::BreakBPClientConsumeItemResult(
 	
 }
 
-void UPFClientProxyLibrary::BreakBPClientConsumePSNEntitlementsRequest(
-		const FBPClientConsumePSNEntitlementsRequest& In
-        ,FString& OutCatalogVersion
-        ,int32& OutServiceLabel
-	)
-{
-    OutCatalogVersion = In.Data.CatalogVersion;
-	OutServiceLabel = In.Data.ServiceLabel;
-	
-}
-
-void UPFClientProxyLibrary::BreakBPClientConsumePSNEntitlementsResult(
-		const FBPClientConsumePSNEntitlementsResult& In
-        ,TArray<FBPClientItemInstance>& OutItemsGranted
-	)
-{
-    for (const PlayFab::ClientModels::FItemInstance& elem : In.Data.ItemsGranted)
-    {
-        FBPClientItemInstance result;
-        result.Data = elem;
-        OutItemsGranted.Add(result);
-    }
-
-	
-}
-
 void UPFClientProxyLibrary::BreakBPClientCreateSharedGroupRequest(
 		const FBPClientCreateSharedGroupRequest& In
         ,FString& OutSharedGroupId
@@ -986,9 +960,17 @@ void UPFClientProxyLibrary::BreakBPClientGetPhotonAuthenticationTokenResult(
 void UPFClientProxyLibrary::BreakBPClientGetPlayerStatisticsRequest(
 		const FBPClientGetPlayerStatisticsRequest& In
         ,TArray<FString>& OutStatisticNames
+        ,TArray<FBPClientStatisticNameVersion>& OutStatisticNameVersions
 	)
 {
     OutStatisticNames = In.Data.StatisticNames;
+	for (const PlayFab::ClientModels::FStatisticNameVersion& elem : In.Data.StatisticNameVersions)
+    {
+        FBPClientStatisticNameVersion result;
+        result.Data = elem;
+        OutStatisticNameVersions.Add(result);
+    }
+
 	
 }
 
@@ -1002,6 +984,30 @@ void UPFClientProxyLibrary::BreakBPClientGetPlayerStatisticsResult(
         FBPClientStatisticValue result;
         result.Data = elem;
         OutStatistics.Add(result);
+    }
+
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetPlayerStatisticVersionsRequest(
+		const FBPClientGetPlayerStatisticVersionsRequest& In
+        ,FString& OutStatisticName
+	)
+{
+    OutStatisticName = In.Data.StatisticName;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetPlayerStatisticVersionsResult(
+		const FBPClientGetPlayerStatisticVersionsResult& In
+        ,TArray<FBPClientPlayerStatisticVersion>& OutStatisticVersions
+	)
+{
+    for (const PlayFab::ClientModels::FPlayerStatisticVersion& elem : In.Data.StatisticVersions)
+    {
+        FBPClientPlayerStatisticVersion result;
+        result.Data = elem;
+        OutStatisticVersions.Add(result);
     }
 
 	
@@ -1127,32 +1133,6 @@ void UPFClientProxyLibrary::BreakBPClientGetPlayFabIDsFromKongregateIDsResult(
     for (const PlayFab::ClientModels::FKongregatePlayFabIdPair& elem : In.Data.Data)
     {
         FBPClientKongregatePlayFabIdPair result;
-        result.Data = elem;
-        OutData.Add(result);
-    }
-
-	
-}
-
-void UPFClientProxyLibrary::BreakBPClientGetPlayFabIDsFromPSNAccountIDsRequest(
-		const FBPClientGetPlayFabIDsFromPSNAccountIDsRequest& In
-        ,TArray<FString>& OutPSNAccountIDs
-        ,int32& OutIssuerId
-	)
-{
-    OutPSNAccountIDs = In.Data.PSNAccountIDs;
-	OutIssuerId = In.Data.IssuerId;
-	
-}
-
-void UPFClientProxyLibrary::BreakBPClientGetPlayFabIDsFromPSNAccountIDsResult(
-		const FBPClientGetPlayFabIDsFromPSNAccountIDsResult& In
-        ,TArray<FBPClientPSNAccountPlayFabIdPair>& OutData
-	)
-{
-    for (const PlayFab::ClientModels::FPSNAccountPlayFabIdPair& elem : In.Data.Data)
-    {
-        FBPClientPSNAccountPlayFabIdPair result;
         result.Data = elem;
         OutData.Add(result);
     }
@@ -1692,26 +1672,6 @@ void UPFClientProxyLibrary::BreakBPClientLinkKongregateAccountResult(
     
 }
 
-void UPFClientProxyLibrary::BreakBPClientLinkPSNAccountRequest(
-		const FBPClientLinkPSNAccountRequest& In
-        ,FString& OutAuthCode
-        ,FString& OutRedirectUri
-        ,int32& OutIssuerId
-	)
-{
-    OutAuthCode = In.Data.AuthCode;
-	OutRedirectUri = In.Data.RedirectUri;
-	OutIssuerId = In.Data.IssuerId;
-	
-}
-
-void UPFClientProxyLibrary::BreakBPClientLinkPSNAccountResult(
-		const FBPClientLinkPSNAccountResult& In
-	)
-{
-    
-}
-
 void UPFClientProxyLibrary::BreakBPClientLinkSteamAccountRequest(
 		const FBPClientLinkSteamAccountRequest& In
         ,FString& OutSteamTicket
@@ -1723,22 +1683,6 @@ void UPFClientProxyLibrary::BreakBPClientLinkSteamAccountRequest(
 
 void UPFClientProxyLibrary::BreakBPClientLinkSteamAccountResult(
 		const FBPClientLinkSteamAccountResult& In
-	)
-{
-    
-}
-
-void UPFClientProxyLibrary::BreakBPClientLinkXboxAccountRequest(
-		const FBPClientLinkXboxAccountRequest& In
-        ,FString& OutXboxToken
-	)
-{
-    OutXboxToken = In.Data.XboxToken;
-	
-}
-
-void UPFClientProxyLibrary::BreakBPClientLinkXboxAccountResult(
-		const FBPClientLinkXboxAccountResult& In
 	)
 {
     
@@ -1935,23 +1879,6 @@ void UPFClientProxyLibrary::BreakBPClientLoginWithPlayFabRequest(
 	
 }
 
-void UPFClientProxyLibrary::BreakBPClientLoginWithPSNRequest(
-		const FBPClientLoginWithPSNRequest& In
-        ,FString& OutTitleId
-        ,FString& OutAuthCode
-        ,FString& OutRedirectUri
-        ,int32& OutIssuerId
-        ,bool& OutCreateAccount
-	)
-{
-    OutTitleId = In.Data.TitleId;
-	OutAuthCode = In.Data.AuthCode;
-	OutRedirectUri = In.Data.RedirectUri;
-	OutIssuerId = In.Data.IssuerId;
-	OutCreateAccount = In.Data.CreateAccount;
-	
-}
-
 void UPFClientProxyLibrary::BreakBPClientLoginWithSteamRequest(
 		const FBPClientLoginWithSteamRequest& In
         ,FString& OutTitleId
@@ -1961,19 +1888,6 @@ void UPFClientProxyLibrary::BreakBPClientLoginWithSteamRequest(
 {
     OutTitleId = In.Data.TitleId;
 	OutSteamTicket = In.Data.SteamTicket;
-	OutCreateAccount = In.Data.CreateAccount;
-	
-}
-
-void UPFClientProxyLibrary::BreakBPClientLoginWithXboxRequest(
-		const FBPClientLoginWithXboxRequest& In
-        ,FString& OutTitleId
-        ,FString& OutXboxToken
-        ,bool& OutCreateAccount
-	)
-{
-    OutTitleId = In.Data.TitleId;
-	OutXboxToken = In.Data.XboxToken;
 	OutCreateAccount = In.Data.CreateAccount;
 	
 }
@@ -2129,14 +2043,22 @@ void UPFClientProxyLibrary::BreakBPClientPlayerLeaderboardEntry(
 	
 }
 
-void UPFClientProxyLibrary::BreakBPClientPSNAccountPlayFabIdPair(
-		const FBPClientPSNAccountPlayFabIdPair& In
-        ,FString& OutPSNAccountId
-        ,FString& OutPlayFabId
+void UPFClientProxyLibrary::BreakBPClientPlayerStatisticVersion(
+		const FBPClientPlayerStatisticVersion& In
+        ,FString& OutStatisticName
+        ,int32& OutVersion
+        ,FDateTime& OutScheduledActivationTime
+        ,FDateTime& OutActivationTime
+        ,FDateTime& OutScheduledDeactivationTime
+        ,FDateTime& OutDeactivationTime
 	)
 {
-    OutPSNAccountId = In.Data.PSNAccountId;
-	OutPlayFabId = In.Data.PlayFabId;
+    OutStatisticName = In.Data.StatisticName;
+	OutVersion = In.Data.Version;
+	
+	
+	
+	
 	
 }
 
@@ -2197,19 +2119,6 @@ void UPFClientProxyLibrary::BreakBPClientRedeemCouponResult(
         OutGrantedItems.Add(result);
     }
 
-	
-}
-
-void UPFClientProxyLibrary::BreakBPClientRefreshPSNAuthTokenRequest(
-		const FBPClientRefreshPSNAuthTokenRequest& In
-        ,FString& OutAuthCode
-        ,FString& OutRedirectUri
-        ,int32& OutIssuerId
-	)
-{
-    OutAuthCode = In.Data.AuthCode;
-	OutRedirectUri = In.Data.RedirectUri;
-	OutIssuerId = In.Data.IssuerId;
 	
 }
 
@@ -2528,6 +2437,17 @@ void UPFClientProxyLibrary::BreakBPClientStartPurchaseResult(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientStatisticNameVersion(
+		const FBPClientStatisticNameVersion& In
+        ,FString& OutStatisticName
+        ,int32& OutVersion
+	)
+{
+    OutStatisticName = In.Data.StatisticName;
+	OutVersion = In.Data.Version;
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientStatisticUpdate(
 		const FBPClientStatisticUpdate& In
         ,FString& OutStatisticName
@@ -2545,7 +2465,7 @@ void UPFClientProxyLibrary::BreakBPClientStatisticValue(
 		const FBPClientStatisticValue& In
         ,FString& OutStatisticName
         ,int32& OutValue
-        ,FString& OutVersion
+        ,int32& OutVersion
 	)
 {
     OutStatisticName = In.Data.StatisticName;
@@ -2761,20 +2681,6 @@ void UPFClientProxyLibrary::BreakBPClientUnlinkKongregateAccountResult(
     
 }
 
-void UPFClientProxyLibrary::BreakBPClientUnlinkPSNAccountRequest(
-		const FBPClientUnlinkPSNAccountRequest& In
-	)
-{
-    
-}
-
-void UPFClientProxyLibrary::BreakBPClientUnlinkPSNAccountResult(
-		const FBPClientUnlinkPSNAccountResult& In
-	)
-{
-    
-}
-
 void UPFClientProxyLibrary::BreakBPClientUnlinkSteamAccountRequest(
 		const FBPClientUnlinkSteamAccountRequest& In
 	)
@@ -2784,22 +2690,6 @@ void UPFClientProxyLibrary::BreakBPClientUnlinkSteamAccountRequest(
 
 void UPFClientProxyLibrary::BreakBPClientUnlinkSteamAccountResult(
 		const FBPClientUnlinkSteamAccountResult& In
-	)
-{
-    
-}
-
-void UPFClientProxyLibrary::BreakBPClientUnlinkXboxAccountRequest(
-		const FBPClientUnlinkXboxAccountRequest& In
-        ,FString& OutXboxToken
-	)
-{
-    OutXboxToken = In.Data.XboxToken;
-	
-}
-
-void UPFClientProxyLibrary::BreakBPClientUnlinkXboxAccountResult(
-		const FBPClientUnlinkXboxAccountResult& In
 	)
 {
     

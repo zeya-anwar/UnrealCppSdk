@@ -21,9 +21,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FLoginWithIOSDeviceIDDelegate, const ClientModels::FLoginResult&);
         DECLARE_DELEGATE_OneParam(FLoginWithKongregateDelegate, const ClientModels::FLoginResult&);
         DECLARE_DELEGATE_OneParam(FLoginWithPlayFabDelegate, const ClientModels::FLoginResult&);
-        DECLARE_DELEGATE_OneParam(FLoginWithPSNDelegate, const ClientModels::FLoginResult&);
         DECLARE_DELEGATE_OneParam(FLoginWithSteamDelegate, const ClientModels::FLoginResult&);
-        DECLARE_DELEGATE_OneParam(FLoginWithXboxDelegate, const ClientModels::FLoginResult&);
         DECLARE_DELEGATE_OneParam(FRegisterPlayFabUserDelegate, const ClientModels::FRegisterPlayFabUserResult&);
         DECLARE_DELEGATE_OneParam(FAddUsernamePasswordDelegate, const ClientModels::FAddUsernamePasswordResult&);
         DECLARE_DELEGATE_OneParam(FGetAccountInfoDelegate, const ClientModels::FGetAccountInfoResult&);
@@ -31,7 +29,6 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FGetPlayFabIDsFromGameCenterIDsDelegate, const ClientModels::FGetPlayFabIDsFromGameCenterIDsResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayFabIDsFromGoogleIDsDelegate, const ClientModels::FGetPlayFabIDsFromGoogleIDsResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayFabIDsFromKongregateIDsDelegate, const ClientModels::FGetPlayFabIDsFromKongregateIDsResult&);
-        DECLARE_DELEGATE_OneParam(FGetPlayFabIDsFromPSNAccountIDsDelegate, const ClientModels::FGetPlayFabIDsFromPSNAccountIDsResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayFabIDsFromSteamIDsDelegate, const ClientModels::FGetPlayFabIDsFromSteamIDsResult&);
         DECLARE_DELEGATE_OneParam(FGetUserCombinedInfoDelegate, const ClientModels::FGetUserCombinedInfoResult&);
         DECLARE_DELEGATE_OneParam(FLinkAndroidDeviceIDDelegate, const ClientModels::FLinkAndroidDeviceIDResult&);
@@ -41,9 +38,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FLinkGoogleAccountDelegate, const ClientModels::FLinkGoogleAccountResult&);
         DECLARE_DELEGATE_OneParam(FLinkIOSDeviceIDDelegate, const ClientModels::FLinkIOSDeviceIDResult&);
         DECLARE_DELEGATE_OneParam(FLinkKongregateDelegate, const ClientModels::FLinkKongregateAccountResult&);
-        DECLARE_DELEGATE_OneParam(FLinkPSNAccountDelegate, const ClientModels::FLinkPSNAccountResult&);
         DECLARE_DELEGATE_OneParam(FLinkSteamAccountDelegate, const ClientModels::FLinkSteamAccountResult&);
-        DECLARE_DELEGATE_OneParam(FLinkXboxAccountDelegate, const ClientModels::FLinkXboxAccountResult&);
         DECLARE_DELEGATE_OneParam(FSendAccountRecoveryEmailDelegate, const ClientModels::FSendAccountRecoveryEmailResult&);
         DECLARE_DELEGATE_OneParam(FUnlinkAndroidDeviceIDDelegate, const ClientModels::FUnlinkAndroidDeviceIDResult&);
         DECLARE_DELEGATE_OneParam(FUnlinkCustomIDDelegate, const ClientModels::FUnlinkCustomIDResult&);
@@ -52,9 +47,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FUnlinkGoogleAccountDelegate, const ClientModels::FUnlinkGoogleAccountResult&);
         DECLARE_DELEGATE_OneParam(FUnlinkIOSDeviceIDDelegate, const ClientModels::FUnlinkIOSDeviceIDResult&);
         DECLARE_DELEGATE_OneParam(FUnlinkKongregateDelegate, const ClientModels::FUnlinkKongregateAccountResult&);
-        DECLARE_DELEGATE_OneParam(FUnlinkPSNAccountDelegate, const ClientModels::FUnlinkPSNAccountResult&);
         DECLARE_DELEGATE_OneParam(FUnlinkSteamAccountDelegate, const ClientModels::FUnlinkSteamAccountResult&);
-        DECLARE_DELEGATE_OneParam(FUnlinkXboxAccountDelegate, const ClientModels::FUnlinkXboxAccountResult&);
         DECLARE_DELEGATE_OneParam(FUpdateUserTitleDisplayNameDelegate, const ClientModels::FUpdateUserTitleDisplayNameResult&);
         DECLARE_DELEGATE_OneParam(FGetFriendLeaderboardDelegate, const ClientModels::FGetLeaderboardResult&);
         DECLARE_DELEGATE_OneParam(FGetFriendLeaderboardAroundCurrentUserDelegate, const ClientModels::FGetFriendLeaderboardAroundCurrentUserResult&);
@@ -63,6 +56,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FGetLeaderboardAroundCurrentUserDelegate, const ClientModels::FGetLeaderboardAroundCurrentUserResult&);
         DECLARE_DELEGATE_OneParam(FGetLeaderboardAroundPlayerDelegate, const ClientModels::FGetLeaderboardAroundPlayerResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayerStatisticsDelegate, const ClientModels::FGetPlayerStatisticsResult&);
+        DECLARE_DELEGATE_OneParam(FGetPlayerStatisticVersionsDelegate, const ClientModels::FGetPlayerStatisticVersionsResult&);
         DECLARE_DELEGATE_OneParam(FGetUserDataDelegate, const ClientModels::FGetUserDataResult&);
         DECLARE_DELEGATE_OneParam(FGetUserPublisherDataDelegate, const ClientModels::FGetUserDataResult&);
         DECLARE_DELEGATE_OneParam(FGetUserPublisherReadOnlyDataDelegate, const ClientModels::FGetUserDataResult&);
@@ -110,8 +104,6 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FGetSharedGroupDataDelegate, const ClientModels::FGetSharedGroupDataResult&);
         DECLARE_DELEGATE_OneParam(FRemoveSharedGroupMembersDelegate, const ClientModels::FRemoveSharedGroupMembersResult&);
         DECLARE_DELEGATE_OneParam(FUpdateSharedGroupDataDelegate, const ClientModels::FUpdateSharedGroupDataResult&);
-        DECLARE_DELEGATE_OneParam(FConsumePSNEntitlementsDelegate, const ClientModels::FConsumePSNEntitlementsResult&);
-        DECLARE_DELEGATE_OneParam(FRefreshPSNAuthTokenDelegate, const ClientModels::FEmptyResult&);
         DECLARE_DELEGATE_OneParam(FGetCloudScriptUrlDelegate, const ClientModels::FGetCloudScriptUrlResult&);
         DECLARE_DELEGATE_OneParam(FRunCloudScriptDelegate, const ClientModels::FRunCloudScriptResult&);
         DECLARE_DELEGATE_OneParam(FGetContentDownloadUrlDelegate, const ClientModels::FGetContentDownloadUrlResult&);
@@ -194,20 +186,10 @@ namespace PlayFab
          */
         bool LoginWithPlayFab(ClientModels::FLoginWithPlayFabRequest& request, const FLoginWithPlayFabDelegate& SuccessDelegate = FLoginWithPlayFabDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Signs the user in using a PlayStation Network authentication code, returning a session identifier that can subsequently be used for API calls which require an authenticated user
-         * If this is the first time a user has signed in with the PlayStation Network account and CreateAccount is set to true, a new PlayFab account will be created and linked to the PSN account. In this case, no email or username will be associated with the PlayFab account. Otherwise, if no PlayFab account is linked to the PSN account, an error indicating this will be returned, so that the title can guide the user through creation of a PlayFab account.
-         */
-        bool LoginWithPSN(ClientModels::FLoginWithPSNRequest& request, const FLoginWithPSNDelegate& SuccessDelegate = FLoginWithPSNDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
          * Signs the user in using a Steam authentication ticket, returning a session identifier that can subsequently be used for API calls which require an authenticated user
          * Steam sign-in is accomplished with the Steam Session Ticket. More information on the Ticket can be found in the Steamworks SDK, here: https://partner.steamgames.com/documentation/auth (requires sign-in). NOTE: For Steam authentication to work, the title must be configured with the Steam Application ID and Publisher Key in the PlayFab Game Manager (under Properties). Information on creating a Publisher Key (referred to as the Secret Key in PlayFab) for your title can be found here: https://partner.steamgames.com/documentation/webapi#publisherkey. If this is the first time a user has signed in with the Steam account and CreateAccount is set to true, a new PlayFab account will be created and linked to the provided account's Steam ID. In this case, no email or username will be associated with the PlayFab account. Otherwise, if no PlayFab account is linked to the Steam account, an error indicating this will be returned, so that the title can guide the user through creation of a PlayFab account.
          */
         bool LoginWithSteam(ClientModels::FLoginWithSteamRequest& request, const FLoginWithSteamDelegate& SuccessDelegate = FLoginWithSteamDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Signs the user in using a Xbox Live Token, returning a session identifier that can subsequently be used for API calls which require an authenticated user
-         * If this is the first time a user has signed in with the Xbox Live account and CreateAccount is set to true, a new PlayFab account will be created and linked to the Xbox Live account. In this case, no email or username will be associated with the PlayFab account. Otherwise, if no PlayFab account is linked to the Xbox Live account, an error indicating this will be returned, so that the title can guide the user through creation of a PlayFab account.
-         */
-        bool LoginWithXbox(ClientModels::FLoginWithXboxRequest& request, const FLoginWithXboxDelegate& SuccessDelegate = FLoginWithXboxDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Registers a new Playfab user account, returning a session identifier that can subsequently be used for API calls which require an authenticated user. You must supply either a username or an email address.
          */
@@ -236,10 +218,6 @@ namespace PlayFab
          * Retrieves the unique PlayFab identifiers for the given set of Kongregate identifiers. The Kongregate identifiers are the IDs for the user accounts, available as "user_id" from the Kongregate API methods(ex: http://developers.kongregate.com/docs/client/getUserId).
          */
         bool GetPlayFabIDsFromKongregateIDs(ClientModels::FGetPlayFabIDsFromKongregateIDsRequest& request, const FGetPlayFabIDsFromKongregateIDsDelegate& SuccessDelegate = FGetPlayFabIDsFromKongregateIDsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Retrieves the unique PlayFab identifiers for the given set of PlayStation Network identifiers.
-         */
-        bool GetPlayFabIDsFromPSNAccountIDs(ClientModels::FGetPlayFabIDsFromPSNAccountIDsRequest& request, const FGetPlayFabIDsFromPSNAccountIDsDelegate& SuccessDelegate = FGetPlayFabIDsFromPSNAccountIDsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves the unique PlayFab identifiers for the given set of Steam identifiers. The Steam identifiers  are the profile IDs for the user accounts, available as SteamId in the Steamworks Community API calls.
          */
@@ -278,18 +256,10 @@ namespace PlayFab
          */
         bool LinkKongregate(ClientModels::FLinkKongregateAccountRequest& request, const FLinkKongregateDelegate& SuccessDelegate = FLinkKongregateDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Links the PlayStation Network account associated with the provided access code to the user's PlayFab account
-         */
-        bool LinkPSNAccount(ClientModels::FLinkPSNAccountRequest& request, const FLinkPSNAccountDelegate& SuccessDelegate = FLinkPSNAccountDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
          * Links the Steam account associated with the provided Steam authentication ticket to the user's PlayFab account
          * Steam authentication is accomplished with the Steam Session Ticket. More information on the Ticket can be found in the Steamworks SDK, here: https://partner.steamgames.com/documentation/auth (requires sign-in). NOTE: For Steam authentication to work, the title must be configured with the Steam Application ID and Publisher Key in the PlayFab Game Manager (under Properties). Information on creating a Publisher Key (referred to as the Secret Key in PlayFab) for your title can be found here: https://partner.steamgames.com/documentation/webapi#publisherkey.
          */
         bool LinkSteamAccount(ClientModels::FLinkSteamAccountRequest& request, const FLinkSteamAccountDelegate& SuccessDelegate = FLinkSteamAccountDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Links the Xbox Live account associated with the provided access code to the user's PlayFab account
-         */
-        bool LinkXboxAccount(ClientModels::FLinkXboxAccountRequest& request, const FLinkXboxAccountDelegate& SuccessDelegate = FLinkXboxAccountDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Forces an email to be sent to the registered email address for the user's account, with a link allowing the user to change the password
          * If the account in question is a "temporary" account (for example, one that was created via a call to LoginFromIOSDeviceID), thisfunction will have no effect. Only PlayFab accounts which have valid email addresses will be able to receive a password reset email using this API.
@@ -324,17 +294,9 @@ namespace PlayFab
          */
         bool UnlinkKongregate(const FUnlinkKongregateDelegate& SuccessDelegate = FUnlinkKongregateDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Unlinks the related PSN account from the user's PlayFab account
-         */
-        bool UnlinkPSNAccount(const FUnlinkPSNAccountDelegate& SuccessDelegate = FUnlinkPSNAccountDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
          * Unlinks the related Steam account from the user's PlayFab account
          */
         bool UnlinkSteamAccount(const FUnlinkSteamAccountDelegate& SuccessDelegate = FUnlinkSteamAccountDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Unlinks the related Xbox Live account from the user's PlayFab account
-         */
-        bool UnlinkXboxAccount(ClientModels::FUnlinkXboxAccountRequest& request, const FUnlinkXboxAccountDelegate& SuccessDelegate = FUnlinkXboxAccountDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Updates the title specific display name for the user
          * In addition to the PlayFab username, titles can make use of a DisplayName which is also a unique identifier, but specific to the title. This allows for unique names which more closely match the theme or genre of a title, for example.
@@ -365,9 +327,13 @@ namespace PlayFab
          */
         bool GetLeaderboardAroundPlayer(ClientModels::FGetLeaderboardAroundPlayerRequest& request, const FGetLeaderboardAroundPlayerDelegate& SuccessDelegate = FGetLeaderboardAroundPlayerDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Retrieves the current version and values for the indicated statistics, for the local player.
+         * Retrieves the indicated statistics (current version and values for all statistics, if none are specified), for the local player.
          */
         bool GetPlayerStatistics(ClientModels::FGetPlayerStatisticsRequest& request, const FGetPlayerStatisticsDelegate& SuccessDelegate = FGetPlayerStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Retrieves the information on the available versions of the specified statistic.
+         */
+        bool GetPlayerStatisticVersions(ClientModels::FGetPlayerStatisticVersionsRequest& request, const FGetPlayerStatisticVersionsDelegate& SuccessDelegate = FGetPlayerStatisticVersionsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves the title-specific custom data for the user which is readable and writable by the client
          * Data is stored as JSON key-value pairs. Every time the data is updated via any source, the version counter is incremented. If the Version parameter is provided, then this call will only return data if the current version on the system is greater than the value provided. If the Keys parameter is provided, the data object returned will only contain the data specific to the indicated Keys. Otherwise, the full set of custom user data will be returned.
@@ -587,14 +553,6 @@ namespace PlayFab
          */
         bool UpdateSharedGroupData(ClientModels::FUpdateSharedGroupDataRequest& request, const FUpdateSharedGroupDataDelegate& SuccessDelegate = FUpdateSharedGroupDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Checks for any new consumable entitlements. If any are found, they are consumed and added as PlayFab items
-         */
-        bool ConsumePSNEntitlements(ClientModels::FConsumePSNEntitlementsRequest& request, const FConsumePSNEntitlementsDelegate& SuccessDelegate = FConsumePSNEntitlementsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Uses the supplied OAuth code to refresh the internally cached player PSN auth token
-         */
-        bool RefreshPSNAuthToken(ClientModels::FRefreshPSNAuthTokenRequest& request, const FRefreshPSNAuthTokenDelegate& SuccessDelegate = FRefreshPSNAuthTokenDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
          * Retrieves the title-specific URL for Cloud Script servers. This must be queried once, prior  to making any calls to RunCloudScript.
          * Cloud Scripts in PlayFab have both Versions and Revisions. Each time a new script is  uploaded against a Version, this creates a new Revision. If Testing is set to true, the URL returned will be for the Cloud Script Revision which was most recently uploaded. If Testing is set to false, the URL returned will be for the  Cloud Script Revision which was most recently deployed to live.
          */
@@ -696,9 +654,7 @@ namespace PlayFab
         void OnLoginWithIOSDeviceIDResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLoginWithIOSDeviceIDDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnLoginWithKongregateResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLoginWithKongregateDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnLoginWithPlayFabResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLoginWithPlayFabDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnLoginWithPSNResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLoginWithPSNDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnLoginWithSteamResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLoginWithSteamDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnLoginWithXboxResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLoginWithXboxDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRegisterPlayFabUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRegisterPlayFabUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAddUsernamePasswordResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddUsernamePasswordDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetAccountInfoResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetAccountInfoDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -706,7 +662,6 @@ namespace PlayFab
         void OnGetPlayFabIDsFromGameCenterIDsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayFabIDsFromGameCenterIDsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayFabIDsFromGoogleIDsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayFabIDsFromGoogleIDsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayFabIDsFromKongregateIDsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayFabIDsFromKongregateIDsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnGetPlayFabIDsFromPSNAccountIDsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayFabIDsFromPSNAccountIDsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayFabIDsFromSteamIDsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayFabIDsFromSteamIDsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserCombinedInfoResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserCombinedInfoDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnLinkAndroidDeviceIDResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLinkAndroidDeviceIDDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -716,9 +671,7 @@ namespace PlayFab
         void OnLinkGoogleAccountResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLinkGoogleAccountDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnLinkIOSDeviceIDResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLinkIOSDeviceIDDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnLinkKongregateResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLinkKongregateDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnLinkPSNAccountResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLinkPSNAccountDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnLinkSteamAccountResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLinkSteamAccountDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnLinkXboxAccountResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLinkXboxAccountDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSendAccountRecoveryEmailResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSendAccountRecoveryEmailDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUnlinkAndroidDeviceIDResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlinkAndroidDeviceIDDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUnlinkCustomIDResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlinkCustomIDDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -727,9 +680,7 @@ namespace PlayFab
         void OnUnlinkGoogleAccountResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlinkGoogleAccountDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUnlinkIOSDeviceIDResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlinkIOSDeviceIDDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUnlinkKongregateResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlinkKongregateDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnUnlinkPSNAccountResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlinkPSNAccountDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUnlinkSteamAccountResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlinkSteamAccountDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnUnlinkXboxAccountResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlinkXboxAccountDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateUserTitleDisplayNameResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserTitleDisplayNameDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetFriendLeaderboardResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetFriendLeaderboardDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetFriendLeaderboardAroundCurrentUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetFriendLeaderboardAroundCurrentUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -738,6 +689,7 @@ namespace PlayFab
         void OnGetLeaderboardAroundCurrentUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardAroundCurrentUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetLeaderboardAroundPlayerResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardAroundPlayerDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayerStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetPlayerStatisticVersionsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerStatisticVersionsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserPublisherReadOnlyDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserPublisherReadOnlyDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -785,8 +737,6 @@ namespace PlayFab
         void OnGetSharedGroupDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetSharedGroupDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRemoveSharedGroupMembersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemoveSharedGroupMembersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateSharedGroupDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateSharedGroupDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnConsumePSNEntitlementsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FConsumePSNEntitlementsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnRefreshPSNAuthTokenResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRefreshPSNAuthTokenDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetCloudScriptUrlResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCloudScriptUrlDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRunCloudScriptResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRunCloudScriptDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetContentDownloadUrlResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetContentDownloadUrlDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
