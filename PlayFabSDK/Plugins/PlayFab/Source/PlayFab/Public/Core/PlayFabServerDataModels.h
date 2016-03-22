@@ -4365,6 +4365,41 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FPlayStreamEventHistory : public FPlayFabBaseModel
+    {
+		
+		// [optional] The ID of the trigger that caused this event to be created.
+		FString ParentTriggerId;
+		// [optional] The ID of the previous event that caused this event to be created by hitting a trigger.
+		FString ParentEventId;
+		// If true, then this event was allowed to trigger subsequent events in a trigger.
+		bool TriggeredEvents;
+	
+        FPlayStreamEventHistory() :
+			FPlayFabBaseModel(),
+			ParentTriggerId(),
+			ParentEventId(),
+			TriggeredEvents(false)
+			{}
+		
+		FPlayStreamEventHistory(const FPlayStreamEventHistory& src) :
+			FPlayFabBaseModel(),
+			ParentTriggerId(src.ParentTriggerId),
+			ParentEventId(src.ParentEventId),
+			TriggeredEvents(src.TriggeredEvents)
+			{}
+			
+		FPlayStreamEventHistory(const TSharedPtr<FJsonObject>& obj) : FPlayStreamEventHistory()
+        {
+            readFromValue(obj);
+        }
+		
+		~FPlayStreamEventHistory();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FRedeemCouponRequest : public FPlayFabBaseModel
     {
 		
@@ -4891,6 +4926,20 @@ namespace ServerModels
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
+	
+	enum SourceType
+	{
+		SourceTypeAdmin,
+		SourceTypeBackEnd,
+		SourceTypeGameClient,
+		SourceTypeGameServer,
+		SourceTypePartner,
+		SourceTypeStream
+	};
+	
+	void writeSourceTypeEnumJSON(SourceType enumVal, JsonWriter& writer);
+	SourceType readSourceTypeFromValue(const TSharedPtr<FJsonValue>& value);
+	
 	
 	struct PLAYFAB_API FStatisticUpdate : public FPlayFabBaseModel
     {

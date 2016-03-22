@@ -1409,6 +1409,41 @@ bool PlayFab::ClientModels::FCharacterResult::readFromValue(const TSharedPtr<FJs
 }
 
 
+void PlayFab::ClientModels::writeCloudScriptRevisionOptionEnumJSON(CloudScriptRevisionOption enumVal, JsonWriter& writer)
+{
+    switch(enumVal)
+    {
+        
+        case CloudScriptRevisionOptionLive: writer->WriteValue(TEXT("Live")); break;
+        case CloudScriptRevisionOptionLatest: writer->WriteValue(TEXT("Latest")); break;
+        case CloudScriptRevisionOptionSpecific: writer->WriteValue(TEXT("Specific")); break;
+    }
+}
+
+ClientModels::CloudScriptRevisionOption PlayFab::ClientModels::readCloudScriptRevisionOptionFromValue(const TSharedPtr<FJsonValue>& value)
+{
+    static TMap<FString, CloudScriptRevisionOption> _CloudScriptRevisionOptionMap;
+    if (_CloudScriptRevisionOptionMap.Num() == 0)
+    {
+        // Auto-generate the map on the first use
+        _CloudScriptRevisionOptionMap.Add(TEXT("Live"), CloudScriptRevisionOptionLive);
+        _CloudScriptRevisionOptionMap.Add(TEXT("Latest"), CloudScriptRevisionOptionLatest);
+        _CloudScriptRevisionOptionMap.Add(TEXT("Specific"), CloudScriptRevisionOptionSpecific);
+
+    } 
+
+	if(value.IsValid())
+	{
+	    auto output = _CloudScriptRevisionOptionMap.Find(value->AsString());
+		if (output != nullptr)
+			return *output;
+	}
+
+
+    return CloudScriptRevisionOptionLive; // Basically critical fail
+}
+
+
 PlayFab::ClientModels::FConfirmPurchaseRequest::~FConfirmPurchaseRequest()
 {
     
@@ -2453,6 +2488,279 @@ bool PlayFab::ClientModels::FEmptyResult::readFromValue(const TSharedPtr<FJsonOb
 {
 	bool HasSucceeded = true; 
 	
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FExecuteCloudScriptRequest::~FExecuteCloudScriptRequest()
+{
+    
+}
+
+void PlayFab::ClientModels::FExecuteCloudScriptRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("FunctionName")); writer->WriteValue(FunctionName);
+	
+    if(FunctionParameter.notNull()) { writer->WriteIdentifierPrefix(TEXT("FunctionParameter")); FunctionParameter.writeJSON(writer); }
+	
+    if(RevisionSelection.notNull()) { writer->WriteIdentifierPrefix(TEXT("RevisionSelection")); writeCloudScriptRevisionOptionEnumJSON(RevisionSelection, writer); }
+	
+    if(SpecificRevision.notNull()) { writer->WriteIdentifierPrefix(TEXT("SpecificRevision")); writer->WriteValue(SpecificRevision); }
+	
+    writer->WriteIdentifierPrefix(TEXT("GeneratePlayStreamEvent")); writer->WriteValue(GeneratePlayStreamEvent);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FExecuteCloudScriptRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> FunctionNameValue = obj->TryGetField(TEXT("FunctionName"));
+    if (FunctionNameValue.IsValid()&& !FunctionNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(FunctionNameValue->TryGetString(TmpValue)) {FunctionName = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> FunctionParameterValue = obj->TryGetField(TEXT("FunctionParameter"));
+    if (FunctionParameterValue.IsValid()&& !FunctionParameterValue->IsNull())
+    {
+        FunctionParameter = FMultitypeVar(FunctionParameterValue->AsObject());
+    }
+    
+    RevisionSelection = readCloudScriptRevisionOptionFromValue(obj->TryGetField(TEXT("RevisionSelection")));
+    
+    const TSharedPtr<FJsonValue> SpecificRevisionValue = obj->TryGetField(TEXT("SpecificRevision"));
+    if (SpecificRevisionValue.IsValid()&& !SpecificRevisionValue->IsNull())
+    {
+        int32 TmpValue;
+        if(SpecificRevisionValue->TryGetNumber(TmpValue)) {SpecificRevision = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> GeneratePlayStreamEventValue = obj->TryGetField(TEXT("GeneratePlayStreamEvent"));
+    if (GeneratePlayStreamEventValue.IsValid()&& !GeneratePlayStreamEventValue->IsNull())
+    {
+        bool TmpValue;
+        if(GeneratePlayStreamEventValue->TryGetBool(TmpValue)) {GeneratePlayStreamEvent = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FLogStatement::~FLogStatement()
+{
+    
+}
+
+void PlayFab::ClientModels::FLogStatement::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Level.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Level")); writer->WriteValue(Level); }
+	
+    if(Message.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Message")); writer->WriteValue(Message); }
+	
+    if(Data.notNull()) { writer->WriteIdentifierPrefix(TEXT("Data")); Data.writeJSON(writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FLogStatement::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> LevelValue = obj->TryGetField(TEXT("Level"));
+    if (LevelValue.IsValid()&& !LevelValue->IsNull())
+    {
+        FString TmpValue;
+        if(LevelValue->TryGetString(TmpValue)) {Level = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> MessageValue = obj->TryGetField(TEXT("Message"));
+    if (MessageValue.IsValid()&& !MessageValue->IsNull())
+    {
+        FString TmpValue;
+        if(MessageValue->TryGetString(TmpValue)) {Message = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> DataValue = obj->TryGetField(TEXT("Data"));
+    if (DataValue.IsValid()&& !DataValue->IsNull())
+    {
+        Data = FMultitypeVar(DataValue->AsObject());
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FScriptExecutionError::~FScriptExecutionError()
+{
+    
+}
+
+void PlayFab::ClientModels::FScriptExecutionError::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Error.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Error")); writer->WriteValue(Error); }
+	
+    if(Message.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Message")); writer->WriteValue(Message); }
+	
+    if(StackTrace.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("StackTrace")); writer->WriteValue(StackTrace); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FScriptExecutionError::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> ErrorValue = obj->TryGetField(TEXT("Error"));
+    if (ErrorValue.IsValid()&& !ErrorValue->IsNull())
+    {
+        FString TmpValue;
+        if(ErrorValue->TryGetString(TmpValue)) {Error = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> MessageValue = obj->TryGetField(TEXT("Message"));
+    if (MessageValue.IsValid()&& !MessageValue->IsNull())
+    {
+        FString TmpValue;
+        if(MessageValue->TryGetString(TmpValue)) {Message = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> StackTraceValue = obj->TryGetField(TEXT("StackTrace"));
+    if (StackTraceValue.IsValid()&& !StackTraceValue->IsNull())
+    {
+        FString TmpValue;
+        if(StackTraceValue->TryGetString(TmpValue)) {StackTrace = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FExecuteCloudScriptResult::~FExecuteCloudScriptResult()
+{
+    //if(Error != NULL) delete Error;
+    
+}
+
+void PlayFab::ClientModels::FExecuteCloudScriptResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(FunctionName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("FunctionName")); writer->WriteValue(FunctionName); }
+	
+    writer->WriteIdentifierPrefix(TEXT("Revision")); writer->WriteValue(Revision);
+	
+    if(FunctionResult.notNull()) { writer->WriteIdentifierPrefix(TEXT("FunctionResult")); FunctionResult.writeJSON(writer); }
+	
+    if(Logs.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("Logs"));
+    
+        for (const FLogStatement& item : Logs)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    writer->WriteIdentifierPrefix(TEXT("ExecutionTimeSeconds")); writer->WriteValue(ExecutionTimeSeconds);
+	
+    writer->WriteIdentifierPrefix(TEXT("MemoryConsumedBytes")); writer->WriteValue(static_cast<int64>(MemoryConsumedBytes));
+	
+    writer->WriteIdentifierPrefix(TEXT("APIRequestsIssued")); writer->WriteValue(APIRequestsIssued);
+	
+    writer->WriteIdentifierPrefix(TEXT("HttpRequestsIssued")); writer->WriteValue(HttpRequestsIssued);
+	
+    if(Error.IsValid()) { writer->WriteIdentifierPrefix(TEXT("Error")); Error->writeJSON(writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FExecuteCloudScriptResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> FunctionNameValue = obj->TryGetField(TEXT("FunctionName"));
+    if (FunctionNameValue.IsValid()&& !FunctionNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(FunctionNameValue->TryGetString(TmpValue)) {FunctionName = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> RevisionValue = obj->TryGetField(TEXT("Revision"));
+    if (RevisionValue.IsValid()&& !RevisionValue->IsNull())
+    {
+        int32 TmpValue;
+        if(RevisionValue->TryGetNumber(TmpValue)) {Revision = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> FunctionResultValue = obj->TryGetField(TEXT("FunctionResult"));
+    if (FunctionResultValue.IsValid()&& !FunctionResultValue->IsNull())
+    {
+        FunctionResult = FMultitypeVar(FunctionResultValue->AsObject());
+    }
+    
+    {
+        const TArray< TSharedPtr<FJsonValue> >&LogsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Logs"));
+        for (int32 Idx = 0; Idx < LogsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = LogsArray[Idx];
+            
+            Logs.Add(FLogStatement(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    const TSharedPtr<FJsonValue> ExecutionTimeSecondsValue = obj->TryGetField(TEXT("ExecutionTimeSeconds"));
+    if (ExecutionTimeSecondsValue.IsValid()&& !ExecutionTimeSecondsValue->IsNull())
+    {
+        double TmpValue;
+        if(ExecutionTimeSecondsValue->TryGetNumber(TmpValue)) {ExecutionTimeSeconds = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> MemoryConsumedBytesValue = obj->TryGetField(TEXT("MemoryConsumedBytes"));
+    if (MemoryConsumedBytesValue.IsValid()&& !MemoryConsumedBytesValue->IsNull())
+    {
+        uint32 TmpValue;
+        if(MemoryConsumedBytesValue->TryGetNumber(TmpValue)) {MemoryConsumedBytes = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> APIRequestsIssuedValue = obj->TryGetField(TEXT("APIRequestsIssued"));
+    if (APIRequestsIssuedValue.IsValid()&& !APIRequestsIssuedValue->IsNull())
+    {
+        int32 TmpValue;
+        if(APIRequestsIssuedValue->TryGetNumber(TmpValue)) {APIRequestsIssued = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> HttpRequestsIssuedValue = obj->TryGetField(TEXT("HttpRequestsIssued"));
+    if (HttpRequestsIssuedValue.IsValid()&& !HttpRequestsIssuedValue->IsNull())
+    {
+        int32 TmpValue;
+        if(HttpRequestsIssuedValue->TryGetNumber(TmpValue)) {HttpRequestsIssued = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ErrorValue = obj->TryGetField(TEXT("Error"));
+    if (ErrorValue.IsValid()&& !ErrorValue->IsNull())
+    {
+        Error = MakeShareable(new FScriptExecutionError(ErrorValue->AsObject()));
+    }
+    
     
     return HasSucceeded;
 }
@@ -9776,6 +10084,55 @@ bool PlayFab::ClientModels::FPaymentOption::readFromValue(const TSharedPtr<FJson
 }
 
 
+PlayFab::ClientModels::FPlayStreamEventHistory::~FPlayStreamEventHistory()
+{
+    
+}
+
+void PlayFab::ClientModels::FPlayStreamEventHistory::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(ParentTriggerId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ParentTriggerId")); writer->WriteValue(ParentTriggerId); }
+	
+    if(ParentEventId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ParentEventId")); writer->WriteValue(ParentEventId); }
+	
+    writer->WriteIdentifierPrefix(TEXT("TriggeredEvents")); writer->WriteValue(TriggeredEvents);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FPlayStreamEventHistory::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> ParentTriggerIdValue = obj->TryGetField(TEXT("ParentTriggerId"));
+    if (ParentTriggerIdValue.IsValid()&& !ParentTriggerIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ParentTriggerIdValue->TryGetString(TmpValue)) {ParentTriggerId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ParentEventIdValue = obj->TryGetField(TEXT("ParentEventId"));
+    if (ParentEventIdValue.IsValid()&& !ParentEventIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ParentEventIdValue->TryGetString(TmpValue)) {ParentEventId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TriggeredEventsValue = obj->TryGetField(TEXT("TriggeredEvents"));
+    if (TriggeredEventsValue.IsValid()&& !TriggeredEventsValue->IsNull())
+    {
+        bool TmpValue;
+        if(TriggeredEventsValue->TryGetBool(TmpValue)) {TriggeredEvents = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ClientModels::FPurchaseItemRequest::~FPurchaseItemRequest()
 {
     
@@ -10710,6 +11067,47 @@ bool PlayFab::ClientModels::FSetFriendTagsResult::readFromValue(const TSharedPtr
 	
     
     return HasSucceeded;
+}
+
+
+void PlayFab::ClientModels::writeSourceTypeEnumJSON(SourceType enumVal, JsonWriter& writer)
+{
+    switch(enumVal)
+    {
+        
+        case SourceTypeAdmin: writer->WriteValue(TEXT("Admin")); break;
+        case SourceTypeBackEnd: writer->WriteValue(TEXT("BackEnd")); break;
+        case SourceTypeGameClient: writer->WriteValue(TEXT("GameClient")); break;
+        case SourceTypeGameServer: writer->WriteValue(TEXT("GameServer")); break;
+        case SourceTypePartner: writer->WriteValue(TEXT("Partner")); break;
+        case SourceTypeStream: writer->WriteValue(TEXT("Stream")); break;
+    }
+}
+
+ClientModels::SourceType PlayFab::ClientModels::readSourceTypeFromValue(const TSharedPtr<FJsonValue>& value)
+{
+    static TMap<FString, SourceType> _SourceTypeMap;
+    if (_SourceTypeMap.Num() == 0)
+    {
+        // Auto-generate the map on the first use
+        _SourceTypeMap.Add(TEXT("Admin"), SourceTypeAdmin);
+        _SourceTypeMap.Add(TEXT("BackEnd"), SourceTypeBackEnd);
+        _SourceTypeMap.Add(TEXT("GameClient"), SourceTypeGameClient);
+        _SourceTypeMap.Add(TEXT("GameServer"), SourceTypeGameServer);
+        _SourceTypeMap.Add(TEXT("Partner"), SourceTypePartner);
+        _SourceTypeMap.Add(TEXT("Stream"), SourceTypeStream);
+
+    } 
+
+	if(value.IsValid())
+	{
+	    auto output = _SourceTypeMap.Find(value->AsString());
+		if (output != nullptr)
+			return *output;
+	}
+
+
+    return SourceTypeAdmin; // Basically critical fail
 }
 
 

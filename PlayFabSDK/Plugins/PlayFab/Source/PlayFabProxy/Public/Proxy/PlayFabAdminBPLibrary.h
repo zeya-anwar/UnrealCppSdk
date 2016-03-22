@@ -751,6 +751,11 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminStatisticAggregationMethod(
+		const FBPAdminStatisticAggregationMethod& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminStatisticResetIntervalOption(
 		const FBPAdminStatisticResetIntervalOption& In
 	);
@@ -796,6 +801,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPAdminUpdateCloudScriptRequest& In
         ,int32& OutVersion
         ,TArray<FBPAdminCloudScriptFile>& OutFiles
+        ,bool& OutPublish
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))

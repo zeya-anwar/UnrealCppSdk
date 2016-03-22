@@ -286,6 +286,13 @@ void UPFClientProxyLibrary::BreakBPClientCharacterResult(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientCloudScriptRevisionOption(
+		const FBPClientCloudScriptRevisionOption& In
+	)
+{
+    
+}
+
 void UPFClientProxyLibrary::BreakBPClientConfirmPurchaseRequest(
 		const FBPClientConfirmPurchaseRequest& In
         ,FString& OutOrderId
@@ -401,6 +408,51 @@ void UPFClientProxyLibrary::BreakBPClientEmptyResult(
 	)
 {
     
+}
+
+void UPFClientProxyLibrary::BreakBPClientExecuteCloudScriptRequest(
+		const FBPClientExecuteCloudScriptRequest& In
+        ,FString& OutFunctionName
+        ,int32& OutSpecificRevision
+        ,bool& OutGeneratePlayStreamEvent
+	)
+{
+    OutFunctionName = In.Data.FunctionName;
+	
+	
+	OutSpecificRevision = In.Data.SpecificRevision;
+	OutGeneratePlayStreamEvent = In.Data.GeneratePlayStreamEvent;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientExecuteCloudScriptResult(
+		const FBPClientExecuteCloudScriptResult& In
+        ,FString& OutFunctionName
+        ,int32& OutRevision
+        ,TArray<FBPClientLogStatement>& OutLogs
+        ,float& OutExecutionTimeSeconds
+        ,int32& OutMemoryConsumedBytes
+        ,int32& OutAPIRequestsIssued
+        ,int32& OutHttpRequestsIssued
+        ,FBPClientScriptExecutionError& OutError
+	)
+{
+    OutFunctionName = In.Data.FunctionName;
+	OutRevision = In.Data.Revision;
+	
+	for (const PlayFab::ClientModels::FLogStatement& elem : In.Data.Logs)
+    {
+        FBPClientLogStatement result;
+        result.Data = elem;
+        OutLogs.Add(result);
+    }
+
+	OutExecutionTimeSeconds = In.Data.ExecutionTimeSeconds;
+	OutMemoryConsumedBytes = In.Data.MemoryConsumedBytes;
+	OutAPIRequestsIssued = In.Data.APIRequestsIssued;
+	OutHttpRequestsIssued = In.Data.HttpRequestsIssued;
+	if (In.Data.Error.IsValid()) {    OutError.Data = *In.Data.Error;}
+	
 }
 
 void UPFClientProxyLibrary::BreakBPClientFacebookPlayFabIdPair(
@@ -1892,6 +1944,18 @@ void UPFClientProxyLibrary::BreakBPClientLoginWithSteamRequest(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientLogStatement(
+		const FBPClientLogStatement& In
+        ,FString& OutLevel
+        ,FString& OutMessage
+	)
+{
+    OutLevel = In.Data.Level;
+	OutMessage = In.Data.Message;
+	
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientMatchmakeRequest(
 		const FBPClientMatchmakeRequest& In
         ,FString& OutBuildVersion
@@ -2059,6 +2123,19 @@ void UPFClientProxyLibrary::BreakBPClientPlayerStatisticVersion(
 	
 	
 	
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientPlayStreamEventHistory(
+		const FBPClientPlayStreamEventHistory& In
+        ,FString& OutParentTriggerId
+        ,FString& OutParentEventId
+        ,bool& OutTriggeredEvents
+	)
+{
+    OutParentTriggerId = In.Data.ParentTriggerId;
+	OutParentEventId = In.Data.ParentEventId;
+	OutTriggeredEvents = In.Data.TriggeredEvents;
 	
 }
 
@@ -2303,6 +2380,19 @@ void UPFClientProxyLibrary::BreakBPClientRunCloudScriptResult(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientScriptExecutionError(
+		const FBPClientScriptExecutionError& In
+        ,FString& OutError
+        ,FString& OutMessage
+        ,FString& OutStackTrace
+	)
+{
+    OutError = In.Data.Error;
+	OutMessage = In.Data.Message;
+	OutStackTrace = In.Data.StackTrace;
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientSendAccountRecoveryEmailRequest(
 		const FBPClientSendAccountRecoveryEmailRequest& In
         ,FString& OutEmail
@@ -2353,6 +2443,13 @@ void UPFClientProxyLibrary::BreakBPClientSharedGroupDataRecord(
 	
 	
 	
+}
+
+void UPFClientProxyLibrary::BreakBPClientSourceType(
+		const FBPClientSourceType& In
+	)
+{
+    
 }
 
 void UPFClientProxyLibrary::BreakBPClientStartGameRequest(

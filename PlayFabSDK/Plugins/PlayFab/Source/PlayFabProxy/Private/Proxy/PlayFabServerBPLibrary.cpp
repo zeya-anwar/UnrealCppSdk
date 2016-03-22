@@ -1376,6 +1376,19 @@ void UPFServerProxyLibrary::BreakBPServerPlayerStatisticVersion(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerPlayStreamEventHistory(
+		const FBPServerPlayStreamEventHistory& In
+        ,FString& OutParentTriggerId
+        ,FString& OutParentEventId
+        ,bool& OutTriggeredEvents
+	)
+{
+    OutParentTriggerId = In.Data.ParentTriggerId;
+	OutParentEventId = In.Data.ParentEventId;
+	OutTriggeredEvents = In.Data.TriggeredEvents;
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerRedeemCouponRequest(
 		const FBPServerRedeemCouponRequest& In
         ,FString& OutCouponCode
@@ -1580,6 +1593,13 @@ void UPFServerProxyLibrary::BreakBPServerSharedGroupDataRecord(
 	
 	
 	
+}
+
+void UPFServerProxyLibrary::BreakBPServerSourceType(
+		const FBPServerSourceType& In
+	)
+{
+    
 }
 
 void UPFServerProxyLibrary::BreakBPServerStatisticNameVersion(

@@ -1026,6 +1026,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminSetupPushNotificationResultDelegate, const FBPAdminSetupPushNotificationResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminStatisticAggregationMethod"))
+struct FBPAdminStatisticAggregationMethod
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::StatisticAggregationMethod Data;	
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminStatisticAggregationMethodDelegate, const FBPAdminStatisticAggregationMethod&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminStatisticResetIntervalOption"))
 struct FBPAdminStatisticResetIntervalOption
 {

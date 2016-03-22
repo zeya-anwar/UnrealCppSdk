@@ -651,6 +651,18 @@ namespace AdminModels
 	StatisticResetIntervalOption readStatisticResetIntervalOptionFromValue(const TSharedPtr<FJsonValue>& value);
 	
 	
+	enum StatisticAggregationMethod
+	{
+		StatisticAggregationMethodLast,
+		StatisticAggregationMethodMin,
+		StatisticAggregationMethodMax,
+		StatisticAggregationMethodSum
+	};
+	
+	void writeStatisticAggregationMethodEnumJSON(StatisticAggregationMethod enumVal, JsonWriter& writer);
+	StatisticAggregationMethod readStatisticAggregationMethodFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
 	struct PLAYFAB_API FCreatePlayerStatisticDefinitionRequest : public FPlayFabBaseModel
     {
 		
@@ -658,17 +670,21 @@ namespace AdminModels
 		FString StatisticName;
 		// [optional] interval at which the values of the statistic for all players are reset (resets begin at the next interval boundary)
 		Boxed<StatisticResetIntervalOption> VersionChangeInterval;
+		// [optional] the aggregation method to use in updating the statistic (defaults to last)
+		Boxed<StatisticAggregationMethod> AggregationMethod;
 	
         FCreatePlayerStatisticDefinitionRequest() :
 			FPlayFabBaseModel(),
 			StatisticName(),
-			VersionChangeInterval()
+			VersionChangeInterval(),
+			AggregationMethod()
 			{}
 		
 		FCreatePlayerStatisticDefinitionRequest(const FCreatePlayerStatisticDefinitionRequest& src) :
 			FPlayFabBaseModel(),
 			StatisticName(src.StatisticName),
-			VersionChangeInterval(src.VersionChangeInterval)
+			VersionChangeInterval(src.VersionChangeInterval),
+			AggregationMethod(src.AggregationMethod)
 			{}
 			
 		FCreatePlayerStatisticDefinitionRequest(const TSharedPtr<FJsonObject>& obj) : FCreatePlayerStatisticDefinitionRequest()
@@ -691,19 +707,23 @@ namespace AdminModels
 		uint32 CurrentVersion;
 		// [optional] interval at which the values of the statistic for all players are reset automatically
 		Boxed<StatisticResetIntervalOption> VersionChangeInterval;
+		// [optional] the aggregation method to use in updating the statistic (defaults to last)
+		Boxed<StatisticAggregationMethod> AggregationMethod;
 	
         FPlayerStatisticDefinition() :
 			FPlayFabBaseModel(),
 			StatisticName(),
 			CurrentVersion(0),
-			VersionChangeInterval()
+			VersionChangeInterval(),
+			AggregationMethod()
 			{}
 		
 		FPlayerStatisticDefinition(const FPlayerStatisticDefinition& src) :
 			FPlayFabBaseModel(),
 			StatisticName(src.StatisticName),
 			CurrentVersion(src.CurrentVersion),
-			VersionChangeInterval(src.VersionChangeInterval)
+			VersionChangeInterval(src.VersionChangeInterval),
+			AggregationMethod(src.AggregationMethod)
 			{}
 			
 		FPlayerStatisticDefinition(const TSharedPtr<FJsonObject>& obj) : FPlayerStatisticDefinition()
@@ -4282,21 +4302,25 @@ namespace AdminModels
 	struct PLAYFAB_API FUpdateCloudScriptRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] Cloud Script version to update. If null, defaults to most recent version
+		// [optional] Deprecated - unused
 		OptionalInt32 Version;
 		// List of Cloud Script files to upload to create the new revision. Must have at least one file.
 		TArray<FCloudScriptFile> Files;
+		// Immediately publish the new revision
+		bool Publish;
 	
         FUpdateCloudScriptRequest() :
 			FPlayFabBaseModel(),
 			Version(),
-			Files()
+			Files(),
+			Publish(false)
 			{}
 		
 		FUpdateCloudScriptRequest(const FUpdateCloudScriptRequest& src) :
 			FPlayFabBaseModel(),
 			Version(src.Version),
-			Files(src.Files)
+			Files(src.Files),
+			Publish(src.Publish)
 			{}
 			
 		FUpdateCloudScriptRequest(const TSharedPtr<FJsonObject>& obj) : FUpdateCloudScriptRequest()
@@ -4348,17 +4372,21 @@ namespace AdminModels
 		FString StatisticName;
 		// [optional] interval at which the values of the statistic for all players are reset (changes are effective at the next occurance of the new interval boundary)
 		Boxed<StatisticResetIntervalOption> VersionChangeInterval;
+		// [optional] the aggregation method to use in updating the statistic (defaults to last)
+		Boxed<StatisticAggregationMethod> AggregationMethod;
 	
         FUpdatePlayerStatisticDefinitionRequest() :
 			FPlayFabBaseModel(),
 			StatisticName(),
-			VersionChangeInterval()
+			VersionChangeInterval(),
+			AggregationMethod()
 			{}
 		
 		FUpdatePlayerStatisticDefinitionRequest(const FUpdatePlayerStatisticDefinitionRequest& src) :
 			FPlayFabBaseModel(),
 			StatisticName(src.StatisticName),
-			VersionChangeInterval(src.VersionChangeInterval)
+			VersionChangeInterval(src.VersionChangeInterval),
+			AggregationMethod(src.AggregationMethod)
 			{}
 			
 		FUpdatePlayerStatisticDefinitionRequest(const TSharedPtr<FJsonObject>& obj) : FUpdatePlayerStatisticDefinitionRequest()

@@ -226,6 +226,7 @@ void UPFAdminProxyLibrary::BreakBPAdminCreatePlayerStatisticDefinitionRequest(
     OutStatisticName = In.Data.StatisticName;
 	
 	
+	
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminCreatePlayerStatisticDefinitionResult(
@@ -1035,6 +1036,7 @@ void UPFAdminProxyLibrary::BreakBPAdminPlayerStatisticDefinition(
 	OutCurrentVersion = In.Data.CurrentVersion;
 	
 	
+	
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminPlayerStatisticVersion(
@@ -1302,6 +1304,13 @@ void UPFAdminProxyLibrary::BreakBPAdminSetupPushNotificationResult(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminStatisticAggregationMethod(
+		const FBPAdminStatisticAggregationMethod& In
+	)
+{
+    
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminStatisticResetIntervalOption(
 		const FBPAdminStatisticResetIntervalOption& In
 	)
@@ -1375,6 +1384,7 @@ void UPFAdminProxyLibrary::BreakBPAdminUpdateCloudScriptRequest(
 		const FBPAdminUpdateCloudScriptRequest& In
         ,int32& OutVersion
         ,TArray<FBPAdminCloudScriptFile>& OutFiles
+        ,bool& OutPublish
 	)
 {
     OutVersion = In.Data.Version;
@@ -1385,6 +1395,7 @@ void UPFAdminProxyLibrary::BreakBPAdminUpdateCloudScriptRequest(
         OutFiles.Add(result);
     }
 
+	OutPublish = In.Data.Publish;
 	
 }
 
@@ -1405,6 +1416,7 @@ void UPFAdminProxyLibrary::BreakBPAdminUpdatePlayerStatisticDefinitionRequest(
 	)
 {
     OutStatisticName = In.Data.StatisticName;
+	
 	
 	
 }
