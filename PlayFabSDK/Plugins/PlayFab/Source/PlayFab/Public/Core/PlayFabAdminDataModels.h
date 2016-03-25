@@ -2468,7 +2468,7 @@ namespace AdminModels
 	struct PLAYFAB_API FGetUserInventoryResult : public FPlayFabBaseModel
     {
 		
-		// [optional] PlayFab unique identifier of the user whose inventory is being returned.
+		// [optional] Unique PlayFab assigned ID of the user on whom the operation will be performed.
 		FString PlayFabId;
 		// [optional] Array of inventory items belonging to the user.
 		TArray<FItemInstance> Inventory;

@@ -627,26 +627,22 @@ void UPFClientProxyLibrary::BreakBPClientGetCharacterDataResult(
 
 void UPFClientProxyLibrary::BreakBPClientGetCharacterInventoryRequest(
 		const FBPClientGetCharacterInventoryRequest& In
-        ,FString& OutPlayFabId
         ,FString& OutCharacterId
         ,FString& OutCatalogVersion
 	)
 {
-    OutPlayFabId = In.Data.PlayFabId;
-	OutCharacterId = In.Data.CharacterId;
+    OutCharacterId = In.Data.CharacterId;
 	OutCatalogVersion = In.Data.CatalogVersion;
 	
 }
 
 void UPFClientProxyLibrary::BreakBPClientGetCharacterInventoryResult(
 		const FBPClientGetCharacterInventoryResult& In
-        ,FString& OutPlayFabId
         ,FString& OutCharacterId
         ,TArray<FBPClientItemInstance>& OutInventory
 	)
 {
-    OutPlayFabId = In.Data.PlayFabId;
-	OutCharacterId = In.Data.CharacterId;
+    OutCharacterId = In.Data.CharacterId;
 	for (const PlayFab::ClientModels::FItemInstance& elem : In.Data.Inventory)
     {
         FBPClientItemInstance result;
@@ -1298,12 +1294,12 @@ void UPFClientProxyLibrary::BreakBPClientGetSharedGroupDataResult(
 
 void UPFClientProxyLibrary::BreakBPClientGetStoreItemsRequest(
 		const FBPClientGetStoreItemsRequest& In
-        ,FString& OutStoreId
         ,FString& OutCatalogVersion
+        ,FString& OutStoreId
 	)
 {
-    OutStoreId = In.Data.StoreId;
-	OutCatalogVersion = In.Data.CatalogVersion;
+    OutCatalogVersion = In.Data.CatalogVersion;
+	OutStoreId = In.Data.StoreId;
 	
 }
 

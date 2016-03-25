@@ -1877,25 +1877,18 @@ void UPFServerProxyLibrary::BreakBPServerUpdateUserInternalDataRequest(
 
 void UPFServerProxyLibrary::BreakBPServerUpdateUserInventoryItemDataRequest(
 		const FBPServerUpdateUserInventoryItemDataRequest& In
-        ,FString& OutCharacterId
         ,FString& OutPlayFabId
+        ,FString& OutCharacterId
         ,FString& OutItemInstanceId
         ,TArray<FString>& OutKeysToRemove
 	)
 {
-    OutCharacterId = In.Data.CharacterId;
-	OutPlayFabId = In.Data.PlayFabId;
+    OutPlayFabId = In.Data.PlayFabId;
+	OutCharacterId = In.Data.CharacterId;
 	OutItemInstanceId = In.Data.ItemInstanceId;
 	
 	OutKeysToRemove = In.Data.KeysToRemove;
 	
-}
-
-void UPFServerProxyLibrary::BreakBPServerUpdateUserInventoryItemDataResult(
-		const FBPServerUpdateUserInventoryItemDataResult& In
-	)
-{
-    
 }
 
 void UPFServerProxyLibrary::BreakBPServerUpdateUserStatisticsRequest(

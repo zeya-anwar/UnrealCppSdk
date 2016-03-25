@@ -12,11 +12,11 @@ namespace ClientModels
 	struct PLAYFAB_API FAcceptTradeRequest : public FPlayFabBaseModel
     {
 		
-		// Player who opened trade.
+		// Player who opened the trade.
 		FString OfferingPlayerId;
 		// Trade identifier.
 		FString TradeId;
-		// [optional] Items from the accepting player's inventory in exchange for the offered items in the trade. In the case of a gift, this will be null.
+		// [optional] Items from the accepting player's or guild's inventory in exchange for the offered items in the trade. In the case of a gift, this will be null.
 		TArray<FString> AcceptedInventoryInstanceIds;
 	
         FAcceptTradeRequest() :
@@ -2476,7 +2476,7 @@ namespace ClientModels
 	struct PLAYFAB_API FGetCatalogItemsResult : public FPlayFabBaseModel
     {
 		
-		// [optional] Array of inventory objects.
+		// [optional] Array of items which can be purchased.
 		TArray<FCatalogItem> Catalog;
 	
         FGetCatalogItemsResult() :
@@ -2622,8 +2622,6 @@ namespace ClientModels
 	struct PLAYFAB_API FGetCharacterInventoryRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] Unique PlayFab assigned ID of the user on whom the operation will be performed.
-		FString PlayFabId;
 		// Unique PlayFab assigned ID for a specific character owned by a user
 		FString CharacterId;
 		// [optional] Used to limit results to only those from a specific catalog version.
@@ -2631,14 +2629,12 @@ namespace ClientModels
 	
         FGetCharacterInventoryRequest() :
 			FPlayFabBaseModel(),
-			PlayFabId(),
 			CharacterId(),
 			CatalogVersion()
 			{}
 		
 		FGetCharacterInventoryRequest(const FGetCharacterInventoryRequest& src) :
 			FPlayFabBaseModel(),
-			PlayFabId(src.PlayFabId),
 			CharacterId(src.CharacterId),
 			CatalogVersion(src.CatalogVersion)
 			{}
@@ -2692,8 +2688,6 @@ namespace ClientModels
 	struct PLAYFAB_API FGetCharacterInventoryResult : public FPlayFabBaseModel
     {
 		
-		// [optional] PlayFab unique identifier of the user whose character inventory is being returned.
-		FString PlayFabId;
 		// [optional] Unique identifier of the character for this inventory.
 		FString CharacterId;
 		// [optional] Array of inventory items belonging to the character.
@@ -2705,7 +2699,6 @@ namespace ClientModels
 	
         FGetCharacterInventoryResult() :
 			FPlayFabBaseModel(),
-			PlayFabId(),
 			CharacterId(),
 			Inventory(),
 			VirtualCurrency(),
@@ -2714,7 +2707,6 @@ namespace ClientModels
 		
 		FGetCharacterInventoryResult(const FGetCharacterInventoryResult& src) :
 			FPlayFabBaseModel(),
-			PlayFabId(src.PlayFabId),
 			CharacterId(src.CharacterId),
 			Inventory(src.Inventory),
 			VirtualCurrency(src.VirtualCurrency),
@@ -4498,21 +4490,21 @@ namespace ClientModels
 	struct PLAYFAB_API FGetStoreItemsRequest : public FPlayFabBaseModel
     {
 		
+		// [optional] catalog version to store items from. Use default catalog version if null
+		FString CatalogVersion;
 		// Unqiue identifier for the store which is being requested.
 		FString StoreId;
-		// [optional] Catalog version for the requested store items. If null, defaults to most recent catalog.
-		FString CatalogVersion;
 	
         FGetStoreItemsRequest() :
 			FPlayFabBaseModel(),
-			StoreId(),
-			CatalogVersion()
+			CatalogVersion(),
+			StoreId()
 			{}
 		
 		FGetStoreItemsRequest(const FGetStoreItemsRequest& src) :
 			FPlayFabBaseModel(),
-			StoreId(src.StoreId),
-			CatalogVersion(src.CatalogVersion)
+			CatalogVersion(src.CatalogVersion),
+			StoreId(src.StoreId)
 			{}
 			
 		FGetStoreItemsRequest(const TSharedPtr<FJsonObject>& obj) : FGetStoreItemsRequest()
@@ -4564,7 +4556,7 @@ namespace ClientModels
 	struct PLAYFAB_API FGetStoreItemsResult : public FPlayFabBaseModel
     {
 		
-		// [optional] Array of store items.
+		// [optional] Array of items which can be purchased from this store.
 		TArray<FStoreItem> Store;
 	
         FGetStoreItemsResult() :
@@ -5011,7 +5003,7 @@ namespace ClientModels
 	struct PLAYFAB_API FGetUserInventoryResult : public FPlayFabBaseModel
     {
 		
-		// [optional] Array of inventory items in the user's current inventory.
+		// [optional] Array of inventory items belonging to the user.
 		TArray<FItemInstance> Inventory;
 		// [optional] Array of virtual currency balance(s) belonging to the user.
 		TMap<FString, int32> VirtualCurrency;
@@ -6345,7 +6337,7 @@ namespace ClientModels
 		TArray<FString> OfferedInventoryInstanceIds;
 		// [optional] Catalog items accepted for the trade. If not set, the trade is effectively a gift.
 		TArray<FString> RequestedCatalogItemIds;
-		// [optional] Players who are allowed to accept the trade. If null, the trade may be accepted by any player.
+		// [optional] Players who are allowed to accept the trade. If null, the trade may be accepted by any player. If empty, the trade may not be accepted by any player.
 		TArray<FString> AllowedPlayerIds;
 	
         FOpenTradeRequest() :

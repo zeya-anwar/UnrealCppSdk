@@ -21,7 +21,7 @@ public:
 	
 	// Updates the key-value pair data tagged to the specified item, which is read-only from the client.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Player Item Management")
-	static UPFServerUpdateUserInventoryItemCustomData* UpdateUserInventoryItemCustomData(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InCharacterId, const FString& InPlayFabId, const FString& InItemInstanceId, const FString& InData, const TArray<FString>& InKeysToRemove);
+	static UPFServerUpdateUserInventoryItemCustomData* UpdateUserInventoryItemCustomData(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InPlayFabId, const FString& InCharacterId, const FString& InItemInstanceId, const FString& InData, const TArray<FString>& InKeysToRemove);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;
@@ -34,6 +34,6 @@ private:
 	PlayFab::UPlayFabServerAPI::FUpdateUserInventoryItemCustomDataDelegate	SuccessDelegate;
 	PlayFab::FPlayFabErrorDelegate							ErrorDelegate;
 
-	void OnSuccessCallback(const PlayFab::ServerModels::FUpdateUserInventoryItemDataResult& Result);
+	void OnSuccessCallback(const PlayFab::ServerModels::FEmptyResult& Result);
 	void OnErrorCallback(const PlayFab::FPlayFabError& Error);
 };

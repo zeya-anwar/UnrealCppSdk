@@ -2772,7 +2772,7 @@ void PlayFab::ServerModels::FGetCharacterInventoryRequest::writeJSON(JsonWriter&
 {
     writer->WriteObjectStart();
     
-    if(PlayFabId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId); }
+    writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
 	
     writer->WriteIdentifierPrefix(TEXT("CharacterId")); writer->WriteValue(CharacterId);
 	
@@ -8405,9 +8405,9 @@ void PlayFab::ServerModels::FUpdateUserInventoryItemDataRequest::writeJSON(JsonW
 {
     writer->WriteObjectStart();
     
-    if(CharacterId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CharacterId")); writer->WriteValue(CharacterId); }
-	
     writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
+	
+    if(CharacterId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CharacterId")); writer->WriteValue(CharacterId); }
 	
     writer->WriteIdentifierPrefix(TEXT("ItemInstanceId")); writer->WriteValue(ItemInstanceId);
 	
@@ -8441,18 +8441,18 @@ bool PlayFab::ServerModels::FUpdateUserInventoryItemDataRequest::readFromValue(c
 {
 	bool HasSucceeded = true; 
 	
-    const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
-    if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
-    {
-        FString TmpValue;
-        if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
-    }
-    
     const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
     if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
     {
         FString TmpValue;
         if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
+    if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> ItemInstanceIdValue = obj->TryGetField(TEXT("ItemInstanceId"));
@@ -8474,28 +8474,6 @@ bool PlayFab::ServerModels::FUpdateUserInventoryItemDataRequest::readFromValue(c
     
     obj->TryGetStringArrayField(TEXT("KeysToRemove"),KeysToRemove);
     
-    
-    return HasSucceeded;
-}
-
-
-PlayFab::ServerModels::FUpdateUserInventoryItemDataResult::~FUpdateUserInventoryItemDataResult()
-{
-    
-}
-
-void PlayFab::ServerModels::FUpdateUserInventoryItemDataResult::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-    
-    
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::ServerModels::FUpdateUserInventoryItemDataResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-	bool HasSucceeded = true; 
-	
     
     return HasSucceeded;
 }

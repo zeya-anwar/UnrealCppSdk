@@ -1476,16 +1476,6 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUpdateUserInventoryItemDataRequestDelegate, const FBPServerUpdateUserInventoryItemDataRequest&, Result);
 
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUpdateUserInventoryItemDataResult"))
-struct FBPServerUpdateUserInventoryItemDataResult
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ServerModels::FUpdateUserInventoryItemDataResult Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUpdateUserInventoryItemDataResultDelegate, const FBPServerUpdateUserInventoryItemDataResult&, Result);
-
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUpdateUserStatisticsRequest"))
 struct FBPServerUpdateUserStatisticsRequest
 {

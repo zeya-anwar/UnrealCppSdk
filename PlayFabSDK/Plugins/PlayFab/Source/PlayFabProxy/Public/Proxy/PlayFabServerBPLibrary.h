@@ -1083,15 +1083,10 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerUpdateUserInventoryItemDataRequest(
 		const FBPServerUpdateUserInventoryItemDataRequest& In
-        ,FString& OutCharacterId
         ,FString& OutPlayFabId
+        ,FString& OutCharacterId
         ,FString& OutItemInstanceId
         ,TArray<FString>& OutKeysToRemove
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
-	static void BreakBPServerUpdateUserInventoryItemDataResult(
-		const FBPServerUpdateUserInventoryItemDataResult& In
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))

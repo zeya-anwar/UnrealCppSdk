@@ -377,7 +377,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientGetCharacterInventoryRequest(
 		const FBPClientGetCharacterInventoryRequest& In
-        ,FString& OutPlayFabId
         ,FString& OutCharacterId
         ,FString& OutCatalogVersion
 	);
@@ -385,7 +384,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientGetCharacterInventoryResult(
 		const FBPClientGetCharacterInventoryResult& In
-        ,FString& OutPlayFabId
         ,FString& OutCharacterId
         ,TArray<FBPClientItemInstance>& OutInventory
 	);
@@ -721,8 +719,8 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientGetStoreItemsRequest(
 		const FBPClientGetStoreItemsRequest& In
-        ,FString& OutStoreId
         ,FString& OutCatalogVersion
+        ,FString& OutStoreId
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))

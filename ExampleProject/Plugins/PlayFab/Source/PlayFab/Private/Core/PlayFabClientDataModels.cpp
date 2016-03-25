@@ -4189,8 +4189,6 @@ void PlayFab::ClientModels::FGetCharacterInventoryRequest::writeJSON(JsonWriter&
 {
     writer->WriteObjectStart();
     
-    if(PlayFabId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId); }
-	
     writer->WriteIdentifierPrefix(TEXT("CharacterId")); writer->WriteValue(CharacterId);
 	
     if(CatalogVersion.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CatalogVersion")); writer->WriteValue(CatalogVersion); }
@@ -4203,13 +4201,6 @@ bool PlayFab::ClientModels::FGetCharacterInventoryRequest::readFromValue(const T
 {
 	bool HasSucceeded = true; 
 	
-    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
-    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
-    {
-        FString TmpValue;
-        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
-    }
-    
     const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
     if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
     {
@@ -4286,8 +4277,6 @@ void PlayFab::ClientModels::FGetCharacterInventoryResult::writeJSON(JsonWriter& 
 {
     writer->WriteObjectStart();
     
-    if(PlayFabId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId); }
-	
     if(CharacterId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CharacterId")); writer->WriteValue(CharacterId); }
 	
     if(Inventory.Num() != 0) 
@@ -4331,13 +4320,6 @@ bool PlayFab::ClientModels::FGetCharacterInventoryResult::readFromValue(const TS
 {
 	bool HasSucceeded = true; 
 	
-    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
-    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
-    {
-        FString TmpValue;
-        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
-    }
-    
     const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
     if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
     {
@@ -6987,9 +6969,9 @@ void PlayFab::ClientModels::FGetStoreItemsRequest::writeJSON(JsonWriter& writer)
 {
     writer->WriteObjectStart();
     
-    writer->WriteIdentifierPrefix(TEXT("StoreId")); writer->WriteValue(StoreId);
-	
     if(CatalogVersion.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CatalogVersion")); writer->WriteValue(CatalogVersion); }
+	
+    writer->WriteIdentifierPrefix(TEXT("StoreId")); writer->WriteValue(StoreId);
 	
     
     writer->WriteObjectEnd();
@@ -6999,18 +6981,18 @@ bool PlayFab::ClientModels::FGetStoreItemsRequest::readFromValue(const TSharedPt
 {
 	bool HasSucceeded = true; 
 	
-    const TSharedPtr<FJsonValue> StoreIdValue = obj->TryGetField(TEXT("StoreId"));
-    if (StoreIdValue.IsValid()&& !StoreIdValue->IsNull())
-    {
-        FString TmpValue;
-        if(StoreIdValue->TryGetString(TmpValue)) {StoreId = TmpValue; }
-    }
-    
     const TSharedPtr<FJsonValue> CatalogVersionValue = obj->TryGetField(TEXT("CatalogVersion"));
     if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
     {
         FString TmpValue;
         if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> StoreIdValue = obj->TryGetField(TEXT("StoreId"));
+    if (StoreIdValue.IsValid()&& !StoreIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(StoreIdValue->TryGetString(TmpValue)) {StoreId = TmpValue; }
     }
     
     
