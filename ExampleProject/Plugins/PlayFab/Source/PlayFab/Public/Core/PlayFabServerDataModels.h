@@ -1784,7 +1784,7 @@ namespace ServerModels
 	struct PLAYFAB_API FGetCharacterInventoryRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
 		FString PlayFabId;
 		// Unique PlayFab assigned ID for a specific character owned by a user
 		FString CharacterId;
@@ -1937,7 +1937,7 @@ namespace ServerModels
 	struct PLAYFAB_API FGetCharacterInventoryResult : public FPlayFabBaseModel
     {
 		
-		// [optional] PlayFab unique identifier of the user whose character inventory is being returned.
+		// [optional] Unique PlayFab assigned ID of the user on whom the operation will be performed.
 		FString PlayFabId;
 		// [optional] Unique identifier of the character for this inventory.
 		FString CharacterId;
@@ -3368,7 +3368,7 @@ namespace ServerModels
 	struct PLAYFAB_API FGetUserInventoryResult : public FPlayFabBaseModel
     {
 		
-		// [optional] PlayFab unique identifier of the user whose inventory is being returned.
+		// [optional] Unique PlayFab assigned ID of the user on whom the operation will be performed.
 		FString PlayFabId;
 		// [optional] Array of inventory items belonging to the user.
 		TArray<FItemInstance> Inventory;
@@ -4365,6 +4365,41 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FPlayStreamEventHistory : public FPlayFabBaseModel
+    {
+		
+		// [optional] The ID of the trigger that caused this event to be created.
+		FString ParentTriggerId;
+		// [optional] The ID of the previous event that caused this event to be created by hitting a trigger.
+		FString ParentEventId;
+		// If true, then this event was allowed to trigger subsequent events in a trigger.
+		bool TriggeredEvents;
+	
+        FPlayStreamEventHistory() :
+			FPlayFabBaseModel(),
+			ParentTriggerId(),
+			ParentEventId(),
+			TriggeredEvents(false)
+			{}
+		
+		FPlayStreamEventHistory(const FPlayStreamEventHistory& src) :
+			FPlayFabBaseModel(),
+			ParentTriggerId(src.ParentTriggerId),
+			ParentEventId(src.ParentEventId),
+			TriggeredEvents(src.TriggeredEvents)
+			{}
+			
+		FPlayStreamEventHistory(const TSharedPtr<FJsonObject>& obj) : FPlayStreamEventHistory()
+        {
+            readFromValue(obj);
+        }
+		
+		~FPlayStreamEventHistory();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FRedeemCouponRequest : public FPlayFabBaseModel
     {
 		
@@ -4891,6 +4926,20 @@ namespace ServerModels
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
+	
+	enum SourceType
+	{
+		SourceTypeAdmin,
+		SourceTypeBackEnd,
+		SourceTypeGameClient,
+		SourceTypeGameServer,
+		SourceTypePartner,
+		SourceTypeStream
+	};
+	
+	void writeSourceTypeEnumJSON(SourceType enumVal, JsonWriter& writer);
+	SourceType readSourceTypeFromValue(const TSharedPtr<FJsonValue>& value);
+	
 	
 	struct PLAYFAB_API FStatisticUpdate : public FPlayFabBaseModel
     {
@@ -5470,10 +5519,10 @@ namespace ServerModels
 	struct PLAYFAB_API FUpdateUserInventoryItemDataRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] Unique PlayFab assigned ID for a specific character owned by a user
-		FString CharacterId;
 		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
 		FString PlayFabId;
+		// [optional] Unique PlayFab assigned ID for a specific character owned by a user
+		FString CharacterId;
 		// Unique PlayFab assigned instance identifier of the item
 		FString ItemInstanceId;
 		// [optional] Key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may not begin with a '!' character.
@@ -5483,8 +5532,8 @@ namespace ServerModels
 	
         FUpdateUserInventoryItemDataRequest() :
 			FPlayFabBaseModel(),
-			CharacterId(),
 			PlayFabId(),
+			CharacterId(),
 			ItemInstanceId(),
 			Data(),
 			KeysToRemove()
@@ -5492,8 +5541,8 @@ namespace ServerModels
 		
 		FUpdateUserInventoryItemDataRequest(const FUpdateUserInventoryItemDataRequest& src) :
 			FPlayFabBaseModel(),
-			CharacterId(src.CharacterId),
 			PlayFabId(src.PlayFabId),
+			CharacterId(src.CharacterId),
 			ItemInstanceId(src.ItemInstanceId),
 			Data(src.Data),
 			KeysToRemove(src.KeysToRemove)
@@ -5505,29 +5554,6 @@ namespace ServerModels
         }
 		
 		~FUpdateUserInventoryItemDataRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FUpdateUserInventoryItemDataResult : public FPlayFabBaseModel
-    {
-		
-	
-        FUpdateUserInventoryItemDataResult() :
-			FPlayFabBaseModel()
-			{}
-		
-		FUpdateUserInventoryItemDataResult(const FUpdateUserInventoryItemDataResult& src) :
-			FPlayFabBaseModel()
-			{}
-			
-		FUpdateUserInventoryItemDataResult(const TSharedPtr<FJsonObject>& obj) : FUpdateUserInventoryItemDataResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FUpdateUserInventoryItemDataResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

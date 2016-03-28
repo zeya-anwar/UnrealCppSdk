@@ -9,12 +9,12 @@ UPFClientGetStoreItems::UPFClientGetStoreItems(const FObjectInitializer& ObjectI
 {
 }
 
-UPFClientGetStoreItems* UPFClientGetStoreItems::GetStoreItems(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InStoreId, const FString& InCatalogVersion)
+UPFClientGetStoreItems* UPFClientGetStoreItems::GetStoreItems(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InCatalogVersion, const FString& InStoreId)
 {
 	UPFClientGetStoreItems* Proxy = NewObject<UPFClientGetStoreItems>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
-	Proxy->Request.StoreId = InStoreId;
 	Proxy->Request.CatalogVersion = InCatalogVersion;
+	Proxy->Request.StoreId = InStoreId;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

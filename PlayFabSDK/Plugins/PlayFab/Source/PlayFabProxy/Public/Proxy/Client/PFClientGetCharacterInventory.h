@@ -21,7 +21,7 @@ public:
 	
 	// Retrieves the specified character's current inventory of virtual goods
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Player Item Management")
-	static UPFClientGetCharacterInventory* GetCharacterInventory(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InPlayFabId, const FString& InCharacterId, const FString& InCatalogVersion);
+	static UPFClientGetCharacterInventory* GetCharacterInventory(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InCharacterId, const FString& InCatalogVersion);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

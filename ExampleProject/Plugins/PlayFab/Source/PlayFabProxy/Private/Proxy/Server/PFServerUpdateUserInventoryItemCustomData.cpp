@@ -9,12 +9,12 @@ UPFServerUpdateUserInventoryItemCustomData::UPFServerUpdateUserInventoryItemCust
 {
 }
 
-UPFServerUpdateUserInventoryItemCustomData* UPFServerUpdateUserInventoryItemCustomData::UpdateUserInventoryItemCustomData(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InCharacterId, const FString& InPlayFabId, const FString& InItemInstanceId, const FString& InData, const TArray<FString>& InKeysToRemove)
+UPFServerUpdateUserInventoryItemCustomData* UPFServerUpdateUserInventoryItemCustomData::UpdateUserInventoryItemCustomData(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InPlayFabId, const FString& InCharacterId, const FString& InItemInstanceId, const FString& InData, const TArray<FString>& InKeysToRemove)
 {
 	UPFServerUpdateUserInventoryItemCustomData* Proxy = NewObject<UPFServerUpdateUserInventoryItemCustomData>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
-	Proxy->Request.CharacterId = InCharacterId;
 	Proxy->Request.PlayFabId = InPlayFabId;
+	Proxy->Request.CharacterId = InCharacterId;
 	Proxy->Request.ItemInstanceId = InItemInstanceId;
 	
 	Proxy->Request.KeysToRemove = InKeysToRemove;
@@ -45,7 +45,7 @@ void UPFServerUpdateUserInventoryItemCustomData::Activate()
 
 //////////////////////////////////////////////////////////////////////////
 // Delegate handles
-void UPFServerUpdateUserInventoryItemCustomData::OnSuccessCallback(const PlayFab::ServerModels::FUpdateUserInventoryItemDataResult& Result)
+void UPFServerUpdateUserInventoryItemCustomData::OnSuccessCallback(const PlayFab::ServerModels::FEmptyResult& Result)
 {
 	OnSuccess.Broadcast();
 }

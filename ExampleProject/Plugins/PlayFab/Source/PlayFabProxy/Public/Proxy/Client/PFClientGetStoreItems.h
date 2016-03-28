@@ -21,7 +21,7 @@ public:
 	
 	// Retrieves the set of items defined for the specified store, including all prices defined
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Title-Wide Data Management")
-	static UPFClientGetStoreItems* GetStoreItems(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InStoreId, const FString& InCatalogVersion);
+	static UPFClientGetStoreItems* GetStoreItems(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InCatalogVersion, const FString& InStoreId);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

@@ -226,6 +226,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientCharacterResultDelegate, const FBPClientCharacterResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientCloudScriptRevisionOption"))
+struct FBPClientCloudScriptRevisionOption
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::CloudScriptRevisionOption Data;	
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientCloudScriptRevisionOptionDelegate, const FBPClientCloudScriptRevisionOption&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientConfirmPurchaseRequest"))
 struct FBPClientConfirmPurchaseRequest
 {
@@ -325,6 +335,26 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientEmptyResultDelegate, const FBPClientEmptyResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientExecuteCloudScriptRequest"))
+struct FBPClientExecuteCloudScriptRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FExecuteCloudScriptRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientExecuteCloudScriptRequestDelegate, const FBPClientExecuteCloudScriptRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientExecuteCloudScriptResult"))
+struct FBPClientExecuteCloudScriptResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FExecuteCloudScriptResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientExecuteCloudScriptResultDelegate, const FBPClientExecuteCloudScriptResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientFacebookPlayFabIdPair"))
 struct FBPClientFacebookPlayFabIdPair
@@ -1486,6 +1516,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientLoginWithSteamRequestDelegate, const FBPClientLoginWithSteamRequest&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientLogStatement"))
+struct FBPClientLogStatement
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FLogStatement Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientLogStatementDelegate, const FBPClientLogStatement&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientMatchmakeRequest"))
 struct FBPClientMatchmakeRequest
 {
@@ -1595,6 +1635,16 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientPlayerStatisticVersionDelegate, const FBPClientPlayerStatisticVersion&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientPlayStreamEventHistory"))
+struct FBPClientPlayStreamEventHistory
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FPlayStreamEventHistory Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientPlayStreamEventHistoryDelegate, const FBPClientPlayStreamEventHistory&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientPurchaseItemRequest"))
 struct FBPClientPurchaseItemRequest
@@ -1796,6 +1846,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientRunCloudScriptResultDelegate, const FBPClientRunCloudScriptResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientScriptExecutionError"))
+struct FBPClientScriptExecutionError
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FScriptExecutionError Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientScriptExecutionErrorDelegate, const FBPClientScriptExecutionError&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientSendAccountRecoveryEmailRequest"))
 struct FBPClientSendAccountRecoveryEmailRequest
 {
@@ -1845,6 +1905,16 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientSharedGroupDataRecordDelegate, const FBPClientSharedGroupDataRecord&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientSourceType"))
+struct FBPClientSourceType
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::SourceType Data;	
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientSourceTypeDelegate, const FBPClientSourceType&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientStartGameRequest"))
 struct FBPClientStartGameRequest

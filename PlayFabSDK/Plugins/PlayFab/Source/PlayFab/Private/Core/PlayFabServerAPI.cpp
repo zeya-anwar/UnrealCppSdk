@@ -1391,7 +1391,7 @@ bool UPlayFabServerAPI::UpdateUserInventoryItemCustomData(
 
 void UPlayFabServerAPI::OnUpdateUserInventoryItemCustomDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserInventoryItemCustomDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
 {
-    ServerModels::FUpdateUserInventoryItemDataResult outResult;
+    ServerModels::FEmptyResult outResult;
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {

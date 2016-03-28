@@ -12,11 +12,11 @@ namespace ClientModels
 	struct PLAYFAB_API FAcceptTradeRequest : public FPlayFabBaseModel
     {
 		
-		// Player who opened trade.
+		// Player who opened the trade.
 		FString OfferingPlayerId;
 		// Trade identifier.
 		FString TradeId;
-		// [optional] Items from the accepting player's inventory in exchange for the offered items in the trade. In the case of a gift, this will be null.
+		// [optional] Items from the accepting player's or guild's inventory in exchange for the offered items in the trade. In the case of a gift, this will be null.
 		TArray<FString> AcceptedInventoryInstanceIds;
 	
         FAcceptTradeRequest() :
@@ -877,6 +877,17 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	enum CloudScriptRevisionOption
+	{
+		CloudScriptRevisionOptionLive,
+		CloudScriptRevisionOptionLatest,
+		CloudScriptRevisionOptionSpecific
+	};
+	
+	void writeCloudScriptRevisionOptionEnumJSON(CloudScriptRevisionOption enumVal, JsonWriter& writer);
+	CloudScriptRevisionOption readCloudScriptRevisionOptionFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
 	struct PLAYFAB_API FConfirmPurchaseRequest : public FPlayFabBaseModel
     {
 		
@@ -1478,6 +1489,178 @@ namespace ClientModels
         }
 		
 		~FEmptyResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FExecuteCloudScriptRequest : public FPlayFabBaseModel
+    {
+		
+		// The name of the CloudScript function to execute
+		FString FunctionName;
+		// [optional] Object that is passed in to the function as the first argument
+		FMultitypeVar FunctionParameter;
+		// [optional] Option for which revision of the CloudScript to execute. 'Latest' executes the most recently created revision, 'Live' executes the current live, published revision, and 'Specific' executes the specified revision.
+		Boxed<CloudScriptRevisionOption> RevisionSelection;
+		// [optional] The specivic revision to execute, when RevisionSelection is set to 'Specific'
+		OptionalInt32 SpecificRevision;
+		// Generate a 'player_executed_cloudscript' PlayStream event containing the results of the function execution and other contextual information. This event will show up in the PlayStream debugger console for the player in Game Manager.
+		bool GeneratePlayStreamEvent;
+	
+        FExecuteCloudScriptRequest() :
+			FPlayFabBaseModel(),
+			FunctionName(),
+			FunctionParameter(),
+			RevisionSelection(),
+			SpecificRevision(),
+			GeneratePlayStreamEvent(false)
+			{}
+		
+		FExecuteCloudScriptRequest(const FExecuteCloudScriptRequest& src) :
+			FPlayFabBaseModel(),
+			FunctionName(src.FunctionName),
+			FunctionParameter(src.FunctionParameter),
+			RevisionSelection(src.RevisionSelection),
+			SpecificRevision(src.SpecificRevision),
+			GeneratePlayStreamEvent(src.GeneratePlayStreamEvent)
+			{}
+			
+		FExecuteCloudScriptRequest(const TSharedPtr<FJsonObject>& obj) : FExecuteCloudScriptRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FExecuteCloudScriptRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FLogStatement : public FPlayFabBaseModel
+    {
+		
+		// [optional] 'Debug', 'Info', or 'Error'
+		FString Level;
+		// [optional] undefined
+		FString Message;
+		// [optional] Optional object accompanying the message as contextual information
+		FMultitypeVar Data;
+	
+        FLogStatement() :
+			FPlayFabBaseModel(),
+			Level(),
+			Message(),
+			Data()
+			{}
+		
+		FLogStatement(const FLogStatement& src) :
+			FPlayFabBaseModel(),
+			Level(src.Level),
+			Message(src.Message),
+			Data(src.Data)
+			{}
+			
+		FLogStatement(const TSharedPtr<FJsonObject>& obj) : FLogStatement()
+        {
+            readFromValue(obj);
+        }
+		
+		~FLogStatement();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FScriptExecutionError : public FPlayFabBaseModel
+    {
+		
+		// [optional] Error code, such as CloudScriptNotFound, JavascriptException, CloudScriptFunctionArgumentSizeExceeded, CloudScriptAPIRequestCountExceeded, CloudScriptAPIRequestError, or CloudScriptHTTPRequestError
+		FString Error;
+		// [optional] Details about the error
+		FString Message;
+		// [optional] Point during the execution of the script at which the error occurred, if any
+		FString StackTrace;
+	
+        FScriptExecutionError() :
+			FPlayFabBaseModel(),
+			Error(),
+			Message(),
+			StackTrace()
+			{}
+		
+		FScriptExecutionError(const FScriptExecutionError& src) :
+			FPlayFabBaseModel(),
+			Error(src.Error),
+			Message(src.Message),
+			StackTrace(src.StackTrace)
+			{}
+			
+		FScriptExecutionError(const TSharedPtr<FJsonObject>& obj) : FScriptExecutionError()
+        {
+            readFromValue(obj);
+        }
+		
+		~FScriptExecutionError();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FExecuteCloudScriptResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] The name of the function that executed
+		FString FunctionName;
+		// The revision of the CloudScript that executed
+		int32 Revision;
+		// [optional] The object returned from the CloudScript function, if any
+		FMultitypeVar FunctionResult;
+		// [optional] Entries logged during the function execution. These include both entries logged in the function code using log.info() and log.error() and error entries for API and HTTP request failures.
+		TArray<FLogStatement> Logs;
+		// undefined
+		double ExecutionTimeSeconds;
+		// undefined
+		uint32 MemoryConsumedBytes;
+		// Number of PlayFab API requests issued by the CloudScript function
+		int32 APIRequestsIssued;
+		// Number of external HTTP requests issued by the CloudScript function
+		int32 HttpRequestsIssued;
+		// [optional] Information about the error, if any, that occured during execution
+		TSharedPtr<FScriptExecutionError> Error;
+	
+        FExecuteCloudScriptResult() :
+			FPlayFabBaseModel(),
+			FunctionName(),
+			Revision(0),
+			FunctionResult(),
+			Logs(),
+			ExecutionTimeSeconds(0),
+			MemoryConsumedBytes(0),
+			APIRequestsIssued(0),
+			HttpRequestsIssued(0),
+			Error(nullptr)
+			{}
+		
+		FExecuteCloudScriptResult(const FExecuteCloudScriptResult& src) :
+			FPlayFabBaseModel(),
+			FunctionName(src.FunctionName),
+			Revision(src.Revision),
+			FunctionResult(src.FunctionResult),
+			Logs(src.Logs),
+			ExecutionTimeSeconds(src.ExecutionTimeSeconds),
+			MemoryConsumedBytes(src.MemoryConsumedBytes),
+			APIRequestsIssued(src.APIRequestsIssued),
+			HttpRequestsIssued(src.HttpRequestsIssued),
+			Error(src.Error.IsValid() ? MakeShareable(new FScriptExecutionError(*src.Error)) : nullptr)
+			{}
+			
+		FExecuteCloudScriptResult(const TSharedPtr<FJsonObject>& obj) : FExecuteCloudScriptResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FExecuteCloudScriptResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -2293,7 +2476,7 @@ namespace ClientModels
 	struct PLAYFAB_API FGetCatalogItemsResult : public FPlayFabBaseModel
     {
 		
-		// [optional] Array of inventory objects.
+		// [optional] Array of items which can be purchased.
 		TArray<FCatalogItem> Catalog;
 	
         FGetCatalogItemsResult() :
@@ -2439,8 +2622,6 @@ namespace ClientModels
 	struct PLAYFAB_API FGetCharacterInventoryRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] Unique PlayFab assigned ID of the user on whom the operation will be performed.
-		FString PlayFabId;
 		// Unique PlayFab assigned ID for a specific character owned by a user
 		FString CharacterId;
 		// [optional] Used to limit results to only those from a specific catalog version.
@@ -2448,14 +2629,12 @@ namespace ClientModels
 	
         FGetCharacterInventoryRequest() :
 			FPlayFabBaseModel(),
-			PlayFabId(),
 			CharacterId(),
 			CatalogVersion()
 			{}
 		
 		FGetCharacterInventoryRequest(const FGetCharacterInventoryRequest& src) :
 			FPlayFabBaseModel(),
-			PlayFabId(src.PlayFabId),
 			CharacterId(src.CharacterId),
 			CatalogVersion(src.CatalogVersion)
 			{}
@@ -2509,8 +2688,6 @@ namespace ClientModels
 	struct PLAYFAB_API FGetCharacterInventoryResult : public FPlayFabBaseModel
     {
 		
-		// [optional] PlayFab unique identifier of the user whose character inventory is being returned.
-		FString PlayFabId;
 		// [optional] Unique identifier of the character for this inventory.
 		FString CharacterId;
 		// [optional] Array of inventory items belonging to the character.
@@ -2522,7 +2699,6 @@ namespace ClientModels
 	
         FGetCharacterInventoryResult() :
 			FPlayFabBaseModel(),
-			PlayFabId(),
 			CharacterId(),
 			Inventory(),
 			VirtualCurrency(),
@@ -2531,7 +2707,6 @@ namespace ClientModels
 		
 		FGetCharacterInventoryResult(const FGetCharacterInventoryResult& src) :
 			FPlayFabBaseModel(),
-			PlayFabId(src.PlayFabId),
 			CharacterId(src.CharacterId),
 			Inventory(src.Inventory),
 			VirtualCurrency(src.VirtualCurrency),
@@ -4315,21 +4490,21 @@ namespace ClientModels
 	struct PLAYFAB_API FGetStoreItemsRequest : public FPlayFabBaseModel
     {
 		
+		// [optional] catalog version to store items from. Use default catalog version if null
+		FString CatalogVersion;
 		// Unqiue identifier for the store which is being requested.
 		FString StoreId;
-		// [optional] Catalog version for the requested store items. If null, defaults to most recent catalog.
-		FString CatalogVersion;
 	
         FGetStoreItemsRequest() :
 			FPlayFabBaseModel(),
-			StoreId(),
-			CatalogVersion()
+			CatalogVersion(),
+			StoreId()
 			{}
 		
 		FGetStoreItemsRequest(const FGetStoreItemsRequest& src) :
 			FPlayFabBaseModel(),
-			StoreId(src.StoreId),
-			CatalogVersion(src.CatalogVersion)
+			CatalogVersion(src.CatalogVersion),
+			StoreId(src.StoreId)
 			{}
 			
 		FGetStoreItemsRequest(const TSharedPtr<FJsonObject>& obj) : FGetStoreItemsRequest()
@@ -4381,7 +4556,7 @@ namespace ClientModels
 	struct PLAYFAB_API FGetStoreItemsResult : public FPlayFabBaseModel
     {
 		
-		// [optional] Array of store items.
+		// [optional] Array of items which can be purchased from this store.
 		TArray<FStoreItem> Store;
 	
         FGetStoreItemsResult() :
@@ -4828,7 +5003,7 @@ namespace ClientModels
 	struct PLAYFAB_API FGetUserInventoryResult : public FPlayFabBaseModel
     {
 		
-		// [optional] Array of inventory items in the user's current inventory.
+		// [optional] Array of inventory items belonging to the user.
 		TArray<FItemInstance> Inventory;
 		// [optional] Array of virtual currency balance(s) belonging to the user.
 		TMap<FString, int32> VirtualCurrency;
@@ -5132,7 +5307,7 @@ namespace ClientModels
 		
 		// Unique identifier from Facebook for the user.
 		FString AccessToken;
-		// [optional] If this Facebook account is already linked to a Playfab account, this will unlink the old account before linking the new one. Be careful when using this call, as it may orphan the old account. Defaults to false.
+		// [optional] If another user is already linked to the account, unlink the other user and re-link.
 		OptionalBool ForceLink;
 	
         FLinkFacebookAccountRequest() :
@@ -6162,7 +6337,7 @@ namespace ClientModels
 		TArray<FString> OfferedInventoryInstanceIds;
 		// [optional] Catalog items accepted for the trade. If not set, the trade is effectively a gift.
 		TArray<FString> RequestedCatalogItemIds;
-		// [optional] Players who are allowed to accept the trade. If null, the trade may be accepted by any player.
+		// [optional] Players who are allowed to accept the trade. If null, the trade may be accepted by any player. If empty, the trade may not be accepted by any player.
 		TArray<FString> AllowedPlayerIds;
 	
         FOpenTradeRequest() :
@@ -6377,6 +6552,41 @@ namespace ClientModels
         }
 		
 		~FPaymentOption();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FPlayStreamEventHistory : public FPlayFabBaseModel
+    {
+		
+		// [optional] The ID of the trigger that caused this event to be created.
+		FString ParentTriggerId;
+		// [optional] The ID of the previous event that caused this event to be created by hitting a trigger.
+		FString ParentEventId;
+		// If true, then this event was allowed to trigger subsequent events in a trigger.
+		bool TriggeredEvents;
+	
+        FPlayStreamEventHistory() :
+			FPlayFabBaseModel(),
+			ParentTriggerId(),
+			ParentEventId(),
+			TriggeredEvents(false)
+			{}
+		
+		FPlayStreamEventHistory(const FPlayStreamEventHistory& src) :
+			FPlayFabBaseModel(),
+			ParentTriggerId(src.ParentTriggerId),
+			ParentEventId(src.ParentEventId),
+			TriggeredEvents(src.TriggeredEvents)
+			{}
+			
+		FPlayStreamEventHistory(const TSharedPtr<FJsonObject>& obj) : FPlayStreamEventHistory()
+        {
+            readFromValue(obj);
+        }
+		
+		~FPlayStreamEventHistory();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -7075,6 +7285,20 @@ namespace ClientModels
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
+	
+	enum SourceType
+	{
+		SourceTypeAdmin,
+		SourceTypeBackEnd,
+		SourceTypeGameClient,
+		SourceTypeGameServer,
+		SourceTypePartner,
+		SourceTypeStream
+	};
+	
+	void writeSourceTypeEnumJSON(SourceType enumVal, JsonWriter& writer);
+	SourceType readSourceTypeFromValue(const TSharedPtr<FJsonValue>& value);
+	
 	
 	struct PLAYFAB_API FStartGameRequest : public FPlayFabBaseModel
     {

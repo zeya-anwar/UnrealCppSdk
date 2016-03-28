@@ -9,11 +9,10 @@ UPFClientGetCharacterInventory::UPFClientGetCharacterInventory(const FObjectInit
 {
 }
 
-UPFClientGetCharacterInventory* UPFClientGetCharacterInventory::GetCharacterInventory(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InPlayFabId, const FString& InCharacterId, const FString& InCatalogVersion)
+UPFClientGetCharacterInventory* UPFClientGetCharacterInventory::GetCharacterInventory(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InCharacterId, const FString& InCatalogVersion)
 {
 	UPFClientGetCharacterInventory* Proxy = NewObject<UPFClientGetCharacterInventory>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
-	Proxy->Request.PlayFabId = InPlayFabId;
 	Proxy->Request.CharacterId = InCharacterId;
 	Proxy->Request.CatalogVersion = InCatalogVersion;
 	

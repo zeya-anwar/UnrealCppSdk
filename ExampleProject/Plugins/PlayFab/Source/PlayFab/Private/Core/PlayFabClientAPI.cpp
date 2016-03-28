@@ -2625,6 +2625,33 @@ void UPlayFabClientAPI::OnUpdateSharedGroupDataResult(FHttpRequestPtr HttpReques
     }
 }
 
+bool UPlayFabClientAPI::ExecuteCloudScript(
+    ClientModels::FExecuteCloudScriptRequest& request,
+    const FExecuteCloudScriptDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Client/ExecuteCloudScript")), request.toJSONString(),
+        TEXT("X-Authorization"), mUserSessionTicket);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabClientAPI::OnExecuteCloudScriptResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabClientAPI::OnExecuteCloudScriptResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FExecuteCloudScriptDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ClientModels::FExecuteCloudScriptResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
 bool UPlayFabClientAPI::GetCloudScriptUrl(
     ClientModels::FGetCloudScriptUrlRequest& request,
     const FGetCloudScriptUrlDelegate& SuccessDelegate,

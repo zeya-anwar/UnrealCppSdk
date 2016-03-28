@@ -1134,6 +1134,43 @@ AdminModels::StatisticResetIntervalOption PlayFab::AdminModels::readStatisticRes
 }
 
 
+void PlayFab::AdminModels::writeStatisticAggregationMethodEnumJSON(StatisticAggregationMethod enumVal, JsonWriter& writer)
+{
+    switch(enumVal)
+    {
+        
+        case StatisticAggregationMethodLast: writer->WriteValue(TEXT("Last")); break;
+        case StatisticAggregationMethodMin: writer->WriteValue(TEXT("Min")); break;
+        case StatisticAggregationMethodMax: writer->WriteValue(TEXT("Max")); break;
+        case StatisticAggregationMethodSum: writer->WriteValue(TEXT("Sum")); break;
+    }
+}
+
+AdminModels::StatisticAggregationMethod PlayFab::AdminModels::readStatisticAggregationMethodFromValue(const TSharedPtr<FJsonValue>& value)
+{
+    static TMap<FString, StatisticAggregationMethod> _StatisticAggregationMethodMap;
+    if (_StatisticAggregationMethodMap.Num() == 0)
+    {
+        // Auto-generate the map on the first use
+        _StatisticAggregationMethodMap.Add(TEXT("Last"), StatisticAggregationMethodLast);
+        _StatisticAggregationMethodMap.Add(TEXT("Min"), StatisticAggregationMethodMin);
+        _StatisticAggregationMethodMap.Add(TEXT("Max"), StatisticAggregationMethodMax);
+        _StatisticAggregationMethodMap.Add(TEXT("Sum"), StatisticAggregationMethodSum);
+
+    } 
+
+	if(value.IsValid())
+	{
+	    auto output = _StatisticAggregationMethodMap.Find(value->AsString());
+		if (output != nullptr)
+			return *output;
+	}
+
+
+    return StatisticAggregationMethodLast; // Basically critical fail
+}
+
+
 PlayFab::AdminModels::FCreatePlayerStatisticDefinitionRequest::~FCreatePlayerStatisticDefinitionRequest()
 {
     
@@ -1146,6 +1183,8 @@ void PlayFab::AdminModels::FCreatePlayerStatisticDefinitionRequest::writeJSON(Js
     writer->WriteIdentifierPrefix(TEXT("StatisticName")); writer->WriteValue(StatisticName);
 	
     if(VersionChangeInterval.notNull()) { writer->WriteIdentifierPrefix(TEXT("VersionChangeInterval")); writeStatisticResetIntervalOptionEnumJSON(VersionChangeInterval, writer); }
+	
+    if(AggregationMethod.notNull()) { writer->WriteIdentifierPrefix(TEXT("AggregationMethod")); writeStatisticAggregationMethodEnumJSON(AggregationMethod, writer); }
 	
     
     writer->WriteObjectEnd();
@@ -1163,6 +1202,8 @@ bool PlayFab::AdminModels::FCreatePlayerStatisticDefinitionRequest::readFromValu
     }
     
     VersionChangeInterval = readStatisticResetIntervalOptionFromValue(obj->TryGetField(TEXT("VersionChangeInterval")));
+    
+    AggregationMethod = readStatisticAggregationMethodFromValue(obj->TryGetField(TEXT("AggregationMethod")));
     
     
     return HasSucceeded;
@@ -1183,6 +1224,8 @@ void PlayFab::AdminModels::FPlayerStatisticDefinition::writeJSON(JsonWriter& wri
     writer->WriteIdentifierPrefix(TEXT("CurrentVersion")); writer->WriteValue(static_cast<int64>(CurrentVersion));
 	
     if(VersionChangeInterval.notNull()) { writer->WriteIdentifierPrefix(TEXT("VersionChangeInterval")); writeStatisticResetIntervalOptionEnumJSON(VersionChangeInterval, writer); }
+	
+    if(AggregationMethod.notNull()) { writer->WriteIdentifierPrefix(TEXT("AggregationMethod")); writeStatisticAggregationMethodEnumJSON(AggregationMethod, writer); }
 	
     
     writer->WriteObjectEnd();
@@ -1207,6 +1250,8 @@ bool PlayFab::AdminModels::FPlayerStatisticDefinition::readFromValue(const TShar
     }
     
     VersionChangeInterval = readStatisticResetIntervalOptionFromValue(obj->TryGetField(TEXT("VersionChangeInterval")));
+    
+    AggregationMethod = readStatisticAggregationMethodFromValue(obj->TryGetField(TEXT("AggregationMethod")));
     
     
     return HasSucceeded;
@@ -6581,6 +6626,8 @@ void PlayFab::AdminModels::FUpdateCloudScriptRequest::writeJSON(JsonWriter& writ
         writer->WriteArrayEnd();
     
 	
+    writer->WriteIdentifierPrefix(TEXT("Publish")); writer->WriteValue(Publish);
+	
     
     writer->WriteObjectEnd();
 }
@@ -6606,6 +6653,13 @@ bool PlayFab::AdminModels::FUpdateCloudScriptRequest::readFromValue(const TShare
         }
     }
 
+    
+    const TSharedPtr<FJsonValue> PublishValue = obj->TryGetField(TEXT("Publish"));
+    if (PublishValue.IsValid()&& !PublishValue->IsNull())
+    {
+        bool TmpValue;
+        if(PublishValue->TryGetBool(TmpValue)) {Publish = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -6665,6 +6719,8 @@ void PlayFab::AdminModels::FUpdatePlayerStatisticDefinitionRequest::writeJSON(Js
 	
     if(VersionChangeInterval.notNull()) { writer->WriteIdentifierPrefix(TEXT("VersionChangeInterval")); writeStatisticResetIntervalOptionEnumJSON(VersionChangeInterval, writer); }
 	
+    if(AggregationMethod.notNull()) { writer->WriteIdentifierPrefix(TEXT("AggregationMethod")); writeStatisticAggregationMethodEnumJSON(AggregationMethod, writer); }
+	
     
     writer->WriteObjectEnd();
 }
@@ -6681,6 +6737,8 @@ bool PlayFab::AdminModels::FUpdatePlayerStatisticDefinitionRequest::readFromValu
     }
     
     VersionChangeInterval = readStatisticResetIntervalOptionFromValue(obj->TryGetField(TEXT("VersionChangeInterval")));
+    
+    AggregationMethod = readStatisticAggregationMethodFromValue(obj->TryGetField(TEXT("AggregationMethod")));
     
     
     return HasSucceeded;

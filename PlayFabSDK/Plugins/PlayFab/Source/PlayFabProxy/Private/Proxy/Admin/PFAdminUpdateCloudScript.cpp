@@ -9,7 +9,7 @@ UPFAdminUpdateCloudScript::UPFAdminUpdateCloudScript(const FObjectInitializer& O
 {
 }
 
-UPFAdminUpdateCloudScript* UPFAdminUpdateCloudScript::UpdateCloudScript(UObject* WorldContextObject, class APlayerController* PlayerController , const int32& InVersion, const TArray<FBPAdminCloudScriptFile>& InFiles)
+UPFAdminUpdateCloudScript* UPFAdminUpdateCloudScript::UpdateCloudScript(UObject* WorldContextObject, class APlayerController* PlayerController , const int32& InVersion, const TArray<FBPAdminCloudScriptFile>& InFiles, const bool& InPublish)
 {
 	UPFAdminUpdateCloudScript* Proxy = NewObject<UPFAdminUpdateCloudScript>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
@@ -19,6 +19,7 @@ UPFAdminUpdateCloudScript* UPFAdminUpdateCloudScript::UpdateCloudScript(UObject*
         Proxy->Request.Files.Add(elem.Data);
     }
 
+	Proxy->Request.Publish = InPublish;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

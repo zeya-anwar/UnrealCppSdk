@@ -104,6 +104,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FGetSharedGroupDataDelegate, const ClientModels::FGetSharedGroupDataResult&);
         DECLARE_DELEGATE_OneParam(FRemoveSharedGroupMembersDelegate, const ClientModels::FRemoveSharedGroupMembersResult&);
         DECLARE_DELEGATE_OneParam(FUpdateSharedGroupDataDelegate, const ClientModels::FUpdateSharedGroupDataResult&);
+        DECLARE_DELEGATE_OneParam(FExecuteCloudScriptDelegate, const ClientModels::FExecuteCloudScriptResult&);
         DECLARE_DELEGATE_OneParam(FGetCloudScriptUrlDelegate, const ClientModels::FGetCloudScriptUrlResult&);
         DECLARE_DELEGATE_OneParam(FRunCloudScriptDelegate, const ClientModels::FRunCloudScriptResult&);
         DECLARE_DELEGATE_OneParam(FGetContentDownloadUrlDelegate, const ClientModels::FGetContentDownloadUrlResult&);
@@ -553,6 +554,10 @@ namespace PlayFab
          */
         bool UpdateSharedGroupData(ClientModels::FUpdateSharedGroupDataRequest& request, const FUpdateSharedGroupDataDelegate& SuccessDelegate = FUpdateSharedGroupDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Executes a CloudScript function, with the 'currentPlayerId' set to the PlayFab ID of the authenticated player.
+         */
+        bool ExecuteCloudScript(ClientModels::FExecuteCloudScriptRequest& request, const FExecuteCloudScriptDelegate& SuccessDelegate = FExecuteCloudScriptDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Retrieves the title-specific URL for Cloud Script servers. This must be queried once, prior  to making any calls to RunCloudScript.
          * Cloud Scripts in PlayFab have both Versions and Revisions. Each time a new script is  uploaded against a Version, this creates a new Revision. If Testing is set to true, the URL returned will be for the Cloud Script Revision which was most recently uploaded. If Testing is set to false, the URL returned will be for the  Cloud Script Revision which was most recently deployed to live.
          */
@@ -737,6 +742,7 @@ namespace PlayFab
         void OnGetSharedGroupDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetSharedGroupDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRemoveSharedGroupMembersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemoveSharedGroupMembersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateSharedGroupDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateSharedGroupDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnExecuteCloudScriptResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FExecuteCloudScriptDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetCloudScriptUrlResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCloudScriptUrlDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRunCloudScriptResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRunCloudScriptDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetContentDownloadUrlResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetContentDownloadUrlDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

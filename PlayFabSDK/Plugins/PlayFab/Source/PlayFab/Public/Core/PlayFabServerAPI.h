@@ -61,7 +61,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FSubtractUserVirtualCurrencyDelegate, const ServerModels::FModifyUserVirtualCurrencyResult&);
         DECLARE_DELEGATE_OneParam(FUnlockContainerInstanceDelegate, const ServerModels::FUnlockContainerItemResult&);
         DECLARE_DELEGATE_OneParam(FUnlockContainerItemDelegate, const ServerModels::FUnlockContainerItemResult&);
-        DECLARE_DELEGATE_OneParam(FUpdateUserInventoryItemCustomDataDelegate, const ServerModels::FUpdateUserInventoryItemDataResult&);
+        DECLARE_DELEGATE_OneParam(FUpdateUserInventoryItemCustomDataDelegate, const ServerModels::FEmptyResult&);
         DECLARE_DELEGATE_OneParam(FNotifyMatchmakerPlayerLeftDelegate, const ServerModels::FNotifyMatchmakerPlayerLeftResult&);
         DECLARE_DELEGATE_OneParam(FRedeemMatchmakerTicketDelegate, const ServerModels::FRedeemMatchmakerTicketResult&);
         DECLARE_DELEGATE_OneParam(FAwardSteamAchievementDelegate, const ServerModels::FAwardSteamAchievementResult&);

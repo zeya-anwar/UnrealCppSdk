@@ -1376,6 +1376,19 @@ void UPFServerProxyLibrary::BreakBPServerPlayerStatisticVersion(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerPlayStreamEventHistory(
+		const FBPServerPlayStreamEventHistory& In
+        ,FString& OutParentTriggerId
+        ,FString& OutParentEventId
+        ,bool& OutTriggeredEvents
+	)
+{
+    OutParentTriggerId = In.Data.ParentTriggerId;
+	OutParentEventId = In.Data.ParentEventId;
+	OutTriggeredEvents = In.Data.TriggeredEvents;
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerRedeemCouponRequest(
 		const FBPServerRedeemCouponRequest& In
         ,FString& OutCouponCode
@@ -1580,6 +1593,13 @@ void UPFServerProxyLibrary::BreakBPServerSharedGroupDataRecord(
 	
 	
 	
+}
+
+void UPFServerProxyLibrary::BreakBPServerSourceType(
+		const FBPServerSourceType& In
+	)
+{
+    
 }
 
 void UPFServerProxyLibrary::BreakBPServerStatisticNameVersion(
@@ -1857,25 +1877,18 @@ void UPFServerProxyLibrary::BreakBPServerUpdateUserInternalDataRequest(
 
 void UPFServerProxyLibrary::BreakBPServerUpdateUserInventoryItemDataRequest(
 		const FBPServerUpdateUserInventoryItemDataRequest& In
-        ,FString& OutCharacterId
         ,FString& OutPlayFabId
+        ,FString& OutCharacterId
         ,FString& OutItemInstanceId
         ,TArray<FString>& OutKeysToRemove
 	)
 {
-    OutCharacterId = In.Data.CharacterId;
-	OutPlayFabId = In.Data.PlayFabId;
+    OutPlayFabId = In.Data.PlayFabId;
+	OutCharacterId = In.Data.CharacterId;
 	OutItemInstanceId = In.Data.ItemInstanceId;
 	
 	OutKeysToRemove = In.Data.KeysToRemove;
 	
-}
-
-void UPFServerProxyLibrary::BreakBPServerUpdateUserInventoryItemDataResult(
-		const FBPServerUpdateUserInventoryItemDataResult& In
-	)
-{
-    
 }
 
 void UPFServerProxyLibrary::BreakBPServerUpdateUserStatisticsRequest(

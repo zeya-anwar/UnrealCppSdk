@@ -16,6 +16,7 @@ UPFAdminCreatePlayerStatisticDefinition* UPFAdminCreatePlayerStatisticDefinition
 	Proxy->Request.StatisticName = InStatisticName;
 	
 	
+	
 
  	//Proxy->WorldContextObject = WorldContextObject;
 	return Proxy;

@@ -2772,7 +2772,7 @@ void PlayFab::ServerModels::FGetCharacterInventoryRequest::writeJSON(JsonWriter&
 {
     writer->WriteObjectStart();
     
-    if(PlayFabId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId); }
+    writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
 	
     writer->WriteIdentifierPrefix(TEXT("CharacterId")); writer->WriteValue(CharacterId);
 	
@@ -6723,6 +6723,55 @@ bool PlayFab::ServerModels::FNotifyMatchmakerPlayerLeftResult::readFromValue(con
 }
 
 
+PlayFab::ServerModels::FPlayStreamEventHistory::~FPlayStreamEventHistory()
+{
+    
+}
+
+void PlayFab::ServerModels::FPlayStreamEventHistory::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(ParentTriggerId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ParentTriggerId")); writer->WriteValue(ParentTriggerId); }
+	
+    if(ParentEventId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ParentEventId")); writer->WriteValue(ParentEventId); }
+	
+    writer->WriteIdentifierPrefix(TEXT("TriggeredEvents")); writer->WriteValue(TriggeredEvents);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FPlayStreamEventHistory::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> ParentTriggerIdValue = obj->TryGetField(TEXT("ParentTriggerId"));
+    if (ParentTriggerIdValue.IsValid()&& !ParentTriggerIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ParentTriggerIdValue->TryGetString(TmpValue)) {ParentTriggerId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ParentEventIdValue = obj->TryGetField(TEXT("ParentEventId"));
+    if (ParentEventIdValue.IsValid()&& !ParentEventIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ParentEventIdValue->TryGetString(TmpValue)) {ParentEventId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TriggeredEventsValue = obj->TryGetField(TEXT("TriggeredEvents"));
+    if (TriggeredEventsValue.IsValid()&& !TriggeredEventsValue->IsNull())
+    {
+        bool TmpValue;
+        if(TriggeredEventsValue->TryGetBool(TmpValue)) {TriggeredEvents = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ServerModels::FRedeemCouponRequest::~FRedeemCouponRequest()
 {
     
@@ -7416,6 +7465,47 @@ bool PlayFab::ServerModels::FSetTitleDataResult::readFromValue(const TSharedPtr<
 	
     
     return HasSucceeded;
+}
+
+
+void PlayFab::ServerModels::writeSourceTypeEnumJSON(SourceType enumVal, JsonWriter& writer)
+{
+    switch(enumVal)
+    {
+        
+        case SourceTypeAdmin: writer->WriteValue(TEXT("Admin")); break;
+        case SourceTypeBackEnd: writer->WriteValue(TEXT("BackEnd")); break;
+        case SourceTypeGameClient: writer->WriteValue(TEXT("GameClient")); break;
+        case SourceTypeGameServer: writer->WriteValue(TEXT("GameServer")); break;
+        case SourceTypePartner: writer->WriteValue(TEXT("Partner")); break;
+        case SourceTypeStream: writer->WriteValue(TEXT("Stream")); break;
+    }
+}
+
+ServerModels::SourceType PlayFab::ServerModels::readSourceTypeFromValue(const TSharedPtr<FJsonValue>& value)
+{
+    static TMap<FString, SourceType> _SourceTypeMap;
+    if (_SourceTypeMap.Num() == 0)
+    {
+        // Auto-generate the map on the first use
+        _SourceTypeMap.Add(TEXT("Admin"), SourceTypeAdmin);
+        _SourceTypeMap.Add(TEXT("BackEnd"), SourceTypeBackEnd);
+        _SourceTypeMap.Add(TEXT("GameClient"), SourceTypeGameClient);
+        _SourceTypeMap.Add(TEXT("GameServer"), SourceTypeGameServer);
+        _SourceTypeMap.Add(TEXT("Partner"), SourceTypePartner);
+        _SourceTypeMap.Add(TEXT("Stream"), SourceTypeStream);
+
+    } 
+
+	if(value.IsValid())
+	{
+	    auto output = _SourceTypeMap.Find(value->AsString());
+		if (output != nullptr)
+			return *output;
+	}
+
+
+    return SourceTypeAdmin; // Basically critical fail
 }
 
 
@@ -8315,9 +8405,9 @@ void PlayFab::ServerModels::FUpdateUserInventoryItemDataRequest::writeJSON(JsonW
 {
     writer->WriteObjectStart();
     
-    if(CharacterId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CharacterId")); writer->WriteValue(CharacterId); }
-	
     writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
+	
+    if(CharacterId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CharacterId")); writer->WriteValue(CharacterId); }
 	
     writer->WriteIdentifierPrefix(TEXT("ItemInstanceId")); writer->WriteValue(ItemInstanceId);
 	
@@ -8351,18 +8441,18 @@ bool PlayFab::ServerModels::FUpdateUserInventoryItemDataRequest::readFromValue(c
 {
 	bool HasSucceeded = true; 
 	
-    const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
-    if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
-    {
-        FString TmpValue;
-        if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
-    }
-    
     const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
     if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
     {
         FString TmpValue;
         if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
+    if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> ItemInstanceIdValue = obj->TryGetField(TEXT("ItemInstanceId"));
@@ -8384,28 +8474,6 @@ bool PlayFab::ServerModels::FUpdateUserInventoryItemDataRequest::readFromValue(c
     
     obj->TryGetStringArrayField(TEXT("KeysToRemove"),KeysToRemove);
     
-    
-    return HasSucceeded;
-}
-
-
-PlayFab::ServerModels::FUpdateUserInventoryItemDataResult::~FUpdateUserInventoryItemDataResult()
-{
-    
-}
-
-void PlayFab::ServerModels::FUpdateUserInventoryItemDataResult::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-    
-    
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::ServerModels::FUpdateUserInventoryItemDataResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-	bool HasSucceeded = true; 
-	
     
     return HasSucceeded;
 }
