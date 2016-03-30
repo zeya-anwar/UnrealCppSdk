@@ -1505,8 +1505,8 @@ namespace ClientModels
 		Boxed<CloudScriptRevisionOption> RevisionSelection;
 		// [optional] The specivic revision to execute, when RevisionSelection is set to 'Specific'
 		OptionalInt32 SpecificRevision;
-		// Generate a 'player_executed_cloudscript' PlayStream event containing the results of the function execution and other contextual information. This event will show up in the PlayStream debugger console for the player in Game Manager.
-		bool GeneratePlayStreamEvent;
+		// [optional] Generate a 'player_executed_cloudscript' PlayStream event containing the results of the function execution and other contextual information. This event will show up in the PlayStream debugger console for the player in Game Manager.
+		OptionalBool GeneratePlayStreamEvent;
 	
         FExecuteCloudScriptRequest() :
 			FPlayFabBaseModel(),
@@ -1514,7 +1514,7 @@ namespace ClientModels
 			FunctionParameter(),
 			RevisionSelection(),
 			SpecificRevision(),
-			GeneratePlayStreamEvent(false)
+			GeneratePlayStreamEvent()
 			{}
 		
 		FExecuteCloudScriptRequest(const FExecuteCloudScriptRequest& src) :

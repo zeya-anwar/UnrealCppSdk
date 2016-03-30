@@ -74,6 +74,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FRemoveSharedGroupMembersDelegate, const ServerModels::FRemoveSharedGroupMembersResult&);
         DECLARE_DELEGATE_OneParam(FSetPublisherDataDelegate, const ServerModels::FSetPublisherDataResult&);
         DECLARE_DELEGATE_OneParam(FUpdateSharedGroupDataDelegate, const ServerModels::FUpdateSharedGroupDataResult&);
+        DECLARE_DELEGATE_OneParam(FExecuteCloudScriptDelegate, const ServerModels::FExecuteCloudScriptResult&);
         DECLARE_DELEGATE_OneParam(FGetContentDownloadUrlDelegate, const ServerModels::FGetContentDownloadUrlResult&);
         DECLARE_DELEGATE_OneParam(FDeleteCharacterFromUserDelegate, const ServerModels::FDeleteCharacterFromUserResult&);
         DECLARE_DELEGATE_OneParam(FGetAllUsersCharactersDelegate, const ServerModels::FListUsersCharactersResult&);
@@ -392,6 +393,10 @@ namespace PlayFab
          */
         bool UpdateSharedGroupData(ServerModels::FUpdateSharedGroupDataRequest& request, const FUpdateSharedGroupDataDelegate& SuccessDelegate = FUpdateSharedGroupDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Executes a CloudScript function, with the 'currentPlayerId' variable set to the specified PlayFabId parameter value.
+         */
+        bool ExecuteCloudScript(ServerModels::FExecuteCloudScriptServerRequest& request, const FExecuteCloudScriptDelegate& SuccessDelegate = FExecuteCloudScriptDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * This API retrieves a pre-signed URL for accessing a content file for the title. A subsequent  HTTP GET to the returned URL will attempt to download the content. A HEAD query to the returned URL will attempt to  retrieve the metadata of the content. Note that a successful result does not guarantee the existence of this content -  if it has not been uploaded, the query to retrieve the data will fail. See this post for more information:  https://community.playfab.com/hc/en-us/community/posts/205469488-How-to-upload-files-to-PlayFab-s-Content-Service
          */
         bool GetContentDownloadUrl(ServerModels::FGetContentDownloadUrlRequest& request, const FGetContentDownloadUrlDelegate& SuccessDelegate = FGetContentDownloadUrlDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -528,6 +533,7 @@ namespace PlayFab
         void OnRemoveSharedGroupMembersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemoveSharedGroupMembersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateSharedGroupDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateSharedGroupDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnExecuteCloudScriptResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FExecuteCloudScriptDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetContentDownloadUrlResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetContentDownloadUrlDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnDeleteCharacterFromUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteCharacterFromUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetAllUsersCharactersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetAllUsersCharactersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

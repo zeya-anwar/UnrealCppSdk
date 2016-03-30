@@ -220,6 +220,13 @@ void UPFServerProxyLibrary::BreakBPServerCharacterResult(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerCloudScriptRevisionOption(
+		const FBPServerCloudScriptRevisionOption& In
+	)
+{
+    
+}
+
 void UPFServerProxyLibrary::BreakBPServerConsumeItemRequest(
 		const FBPServerConsumeItemRequest& In
         ,FString& OutPlayFabId
@@ -323,6 +330,53 @@ void UPFServerProxyLibrary::BreakBPServerEmptyResult(
 	)
 {
     
+}
+
+void UPFServerProxyLibrary::BreakBPServerExecuteCloudScriptResult(
+		const FBPServerExecuteCloudScriptResult& In
+        ,FString& OutFunctionName
+        ,int32& OutRevision
+        ,TArray<FBPServerLogStatement>& OutLogs
+        ,float& OutExecutionTimeSeconds
+        ,int32& OutMemoryConsumedBytes
+        ,int32& OutAPIRequestsIssued
+        ,int32& OutHttpRequestsIssued
+        ,FBPServerScriptExecutionError& OutError
+	)
+{
+    OutFunctionName = In.Data.FunctionName;
+	OutRevision = In.Data.Revision;
+	
+	for (const PlayFab::ServerModels::FLogStatement& elem : In.Data.Logs)
+    {
+        FBPServerLogStatement result;
+        result.Data = elem;
+        OutLogs.Add(result);
+    }
+
+	OutExecutionTimeSeconds = In.Data.ExecutionTimeSeconds;
+	OutMemoryConsumedBytes = In.Data.MemoryConsumedBytes;
+	OutAPIRequestsIssued = In.Data.APIRequestsIssued;
+	OutHttpRequestsIssued = In.Data.HttpRequestsIssued;
+	if (In.Data.Error.IsValid()) {    OutError.Data = *In.Data.Error;}
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerExecuteCloudScriptServerRequest(
+		const FBPServerExecuteCloudScriptServerRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutFunctionName
+        ,int32& OutSpecificRevision
+        ,bool& OutGeneratePlayStreamEvent
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutFunctionName = In.Data.FunctionName;
+	
+	
+	OutSpecificRevision = In.Data.SpecificRevision;
+	OutGeneratePlayStreamEvent = In.Data.GeneratePlayStreamEvent;
+	
 }
 
 void UPFServerProxyLibrary::BreakBPServerFacebookPlayFabIdPair(
@@ -498,26 +552,6 @@ void UPFServerProxyLibrary::BreakBPServerGetCharacterStatisticsResult(
     OutPlayFabId = In.Data.PlayFabId;
 	OutCharacterId = In.Data.CharacterId;
 	
-	
-}
-
-void UPFServerProxyLibrary::BreakBPServerGetCloudScriptUrlRequest(
-		const FBPServerGetCloudScriptUrlRequest& In
-        ,int32& OutVersion
-        ,bool& OutTesting
-	)
-{
-    OutVersion = In.Data.Version;
-	OutTesting = In.Data.Testing;
-	
-}
-
-void UPFServerProxyLibrary::BreakBPServerGetCloudScriptUrlResult(
-		const FBPServerGetCloudScriptUrlResult& In
-        ,FString& OutUrl
-	)
-{
-    OutUrl = In.Data.Url;
 	
 }
 
@@ -1204,6 +1238,18 @@ void UPFServerProxyLibrary::BreakBPServerLogEventResult(
     
 }
 
+void UPFServerProxyLibrary::BreakBPServerLogStatement(
+		const FBPServerLogStatement& In
+        ,FString& OutLevel
+        ,FString& OutMessage
+	)
+{
+    OutLevel = In.Data.Level;
+	OutMessage = In.Data.Message;
+	
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerModifyCharacterVirtualCurrencyResult(
 		const FBPServerModifyCharacterVirtualCurrencyResult& In
         ,FString& OutVirtualCurrency
@@ -1505,23 +1551,16 @@ void UPFServerProxyLibrary::BreakBPServerRevokeInventoryResult(
     
 }
 
-void UPFServerProxyLibrary::BreakBPServerRunCloudScriptResult(
-		const FBPServerRunCloudScriptResult& In
-        ,FString& OutActionId
-        ,int32& OutVersion
-        ,int32& OutRevision
-        ,FString& OutResultsEncoded
-        ,FString& OutActionLog
-        ,float& OutExecutionTime
+void UPFServerProxyLibrary::BreakBPServerScriptExecutionError(
+		const FBPServerScriptExecutionError& In
+        ,FString& OutError
+        ,FString& OutMessage
+        ,FString& OutStackTrace
 	)
 {
-    OutActionId = In.Data.ActionId;
-	OutVersion = In.Data.Version;
-	OutRevision = In.Data.Revision;
-	
-	OutResultsEncoded = In.Data.ResultsEncoded;
-	OutActionLog = In.Data.ActionLog;
-	OutExecutionTime = In.Data.ExecutionTime;
+    OutError = In.Data.Error;
+	OutMessage = In.Data.Message;
+	OutStackTrace = In.Data.StackTrace;
 	
 }
 

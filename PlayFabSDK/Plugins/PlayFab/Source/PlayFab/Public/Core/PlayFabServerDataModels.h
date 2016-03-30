@@ -1232,6 +1232,17 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	enum CloudScriptRevisionOption
+	{
+		CloudScriptRevisionOptionLive,
+		CloudScriptRevisionOptionLatest,
+		CloudScriptRevisionOptionSpecific
+	};
+	
+	void writeCloudScriptRevisionOptionEnumJSON(CloudScriptRevisionOption enumVal, JsonWriter& writer);
+	CloudScriptRevisionOption readCloudScriptRevisionOptionFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
 	struct PLAYFAB_API FConsumeItemRequest : public FPlayFabBaseModel
     {
 		
@@ -1513,6 +1524,182 @@ namespace ServerModels
         }
 		
 		~FEmptyResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FLogStatement : public FPlayFabBaseModel
+    {
+		
+		// [optional] 'Debug', 'Info', or 'Error'
+		FString Level;
+		// [optional] undefined
+		FString Message;
+		// [optional] Optional object accompanying the message as contextual information
+		FMultitypeVar Data;
+	
+        FLogStatement() :
+			FPlayFabBaseModel(),
+			Level(),
+			Message(),
+			Data()
+			{}
+		
+		FLogStatement(const FLogStatement& src) :
+			FPlayFabBaseModel(),
+			Level(src.Level),
+			Message(src.Message),
+			Data(src.Data)
+			{}
+			
+		FLogStatement(const TSharedPtr<FJsonObject>& obj) : FLogStatement()
+        {
+            readFromValue(obj);
+        }
+		
+		~FLogStatement();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FScriptExecutionError : public FPlayFabBaseModel
+    {
+		
+		// [optional] Error code, such as CloudScriptNotFound, JavascriptException, CloudScriptFunctionArgumentSizeExceeded, CloudScriptAPIRequestCountExceeded, CloudScriptAPIRequestError, or CloudScriptHTTPRequestError
+		FString Error;
+		// [optional] Details about the error
+		FString Message;
+		// [optional] Point during the execution of the script at which the error occurred, if any
+		FString StackTrace;
+	
+        FScriptExecutionError() :
+			FPlayFabBaseModel(),
+			Error(),
+			Message(),
+			StackTrace()
+			{}
+		
+		FScriptExecutionError(const FScriptExecutionError& src) :
+			FPlayFabBaseModel(),
+			Error(src.Error),
+			Message(src.Message),
+			StackTrace(src.StackTrace)
+			{}
+			
+		FScriptExecutionError(const TSharedPtr<FJsonObject>& obj) : FScriptExecutionError()
+        {
+            readFromValue(obj);
+        }
+		
+		~FScriptExecutionError();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FExecuteCloudScriptResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] The name of the function that executed
+		FString FunctionName;
+		// The revision of the CloudScript that executed
+		int32 Revision;
+		// [optional] The object returned from the CloudScript function, if any
+		FMultitypeVar FunctionResult;
+		// [optional] Entries logged during the function execution. These include both entries logged in the function code using log.info() and log.error() and error entries for API and HTTP request failures.
+		TArray<FLogStatement> Logs;
+		// undefined
+		double ExecutionTimeSeconds;
+		// undefined
+		uint32 MemoryConsumedBytes;
+		// Number of PlayFab API requests issued by the CloudScript function
+		int32 APIRequestsIssued;
+		// Number of external HTTP requests issued by the CloudScript function
+		int32 HttpRequestsIssued;
+		// [optional] Information about the error, if any, that occured during execution
+		TSharedPtr<FScriptExecutionError> Error;
+	
+        FExecuteCloudScriptResult() :
+			FPlayFabBaseModel(),
+			FunctionName(),
+			Revision(0),
+			FunctionResult(),
+			Logs(),
+			ExecutionTimeSeconds(0),
+			MemoryConsumedBytes(0),
+			APIRequestsIssued(0),
+			HttpRequestsIssued(0),
+			Error(nullptr)
+			{}
+		
+		FExecuteCloudScriptResult(const FExecuteCloudScriptResult& src) :
+			FPlayFabBaseModel(),
+			FunctionName(src.FunctionName),
+			Revision(src.Revision),
+			FunctionResult(src.FunctionResult),
+			Logs(src.Logs),
+			ExecutionTimeSeconds(src.ExecutionTimeSeconds),
+			MemoryConsumedBytes(src.MemoryConsumedBytes),
+			APIRequestsIssued(src.APIRequestsIssued),
+			HttpRequestsIssued(src.HttpRequestsIssued),
+			Error(src.Error.IsValid() ? MakeShareable(new FScriptExecutionError(*src.Error)) : nullptr)
+			{}
+			
+		FExecuteCloudScriptResult(const TSharedPtr<FJsonObject>& obj) : FExecuteCloudScriptResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FExecuteCloudScriptResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FExecuteCloudScriptServerRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+		// The name of the CloudScript function to execute
+		FString FunctionName;
+		// [optional] Object that is passed in to the function as the first argument
+		FMultitypeVar FunctionParameter;
+		// [optional] Option for which revision of the CloudScript to execute. 'Latest' executes the most recently created revision, 'Live' executes the current live, published revision, and 'Specific' executes the specified revision.
+		Boxed<CloudScriptRevisionOption> RevisionSelection;
+		// [optional] The specivic revision to execute, when RevisionSelection is set to 'Specific'
+		OptionalInt32 SpecificRevision;
+		// [optional] Generate a 'player_executed_cloudscript' PlayStream event containing the results of the function execution and other contextual information. This event will show up in the PlayStream debugger console for the player in Game Manager.
+		OptionalBool GeneratePlayStreamEvent;
+	
+        FExecuteCloudScriptServerRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			FunctionName(),
+			FunctionParameter(),
+			RevisionSelection(),
+			SpecificRevision(),
+			GeneratePlayStreamEvent()
+			{}
+		
+		FExecuteCloudScriptServerRequest(const FExecuteCloudScriptServerRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			FunctionName(src.FunctionName),
+			FunctionParameter(src.FunctionParameter),
+			RevisionSelection(src.RevisionSelection),
+			SpecificRevision(src.SpecificRevision),
+			GeneratePlayStreamEvent(src.GeneratePlayStreamEvent)
+			{}
+			
+		FExecuteCloudScriptServerRequest(const TSharedPtr<FJsonObject>& obj) : FExecuteCloudScriptServerRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FExecuteCloudScriptServerRequest();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -2108,64 +2295,6 @@ namespace ServerModels
         }
 		
 		~FGetCharacterStatisticsResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FGetCloudScriptUrlRequest : public FPlayFabBaseModel
-    {
-		
-		// [optional] Cloud Script Version to use. Defaults to 1.
-		OptionalInt32 Version;
-		// [optional] Specifies whether the URL returned should be the one for the most recently uploaded Revision of the Cloud Script (true), or the Revision most recently set to live (false). Defaults to false.
-		OptionalBool Testing;
-	
-        FGetCloudScriptUrlRequest() :
-			FPlayFabBaseModel(),
-			Version(),
-			Testing()
-			{}
-		
-		FGetCloudScriptUrlRequest(const FGetCloudScriptUrlRequest& src) :
-			FPlayFabBaseModel(),
-			Version(src.Version),
-			Testing(src.Testing)
-			{}
-			
-		FGetCloudScriptUrlRequest(const TSharedPtr<FJsonObject>& obj) : FGetCloudScriptUrlRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FGetCloudScriptUrlRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FGetCloudScriptUrlResult : public FPlayFabBaseModel
-    {
-		
-		// [optional] URL of the Cloud Script logic server.
-		FString Url;
-	
-        FGetCloudScriptUrlResult() :
-			FPlayFabBaseModel(),
-			Url()
-			{}
-		
-		FGetCloudScriptUrlResult(const FGetCloudScriptUrlResult& src) :
-			FPlayFabBaseModel(),
-			Url(src.Url)
-			{}
-			
-		FGetCloudScriptUrlResult(const TSharedPtr<FJsonObject>& obj) : FGetCloudScriptUrlResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FGetCloudScriptUrlResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -4705,57 +4834,6 @@ namespace ServerModels
         }
 		
 		~FRevokeInventoryResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FRunCloudScriptResult : public FPlayFabBaseModel
-    {
-		
-		// [optional] id of Cloud Script run
-		FString ActionId;
-		// version of Cloud Script run
-		int32 Version;
-		// revision of Cloud Script run
-		int32 Revision;
-		// [optional] return values from the server action as a dynamic object
-		FMultitypeVar Results;
-		// [optional] return values from the server action as a JSON encoded string
-		FString ResultsEncoded;
-		// [optional] any log statements generated during the run of this action
-		FString ActionLog;
-		// time this script took to run, in seconds
-		double ExecutionTime;
-	
-        FRunCloudScriptResult() :
-			FPlayFabBaseModel(),
-			ActionId(),
-			Version(0),
-			Revision(0),
-			Results(),
-			ResultsEncoded(),
-			ActionLog(),
-			ExecutionTime(0)
-			{}
-		
-		FRunCloudScriptResult(const FRunCloudScriptResult& src) :
-			FPlayFabBaseModel(),
-			ActionId(src.ActionId),
-			Version(src.Version),
-			Revision(src.Revision),
-			Results(src.Results),
-			ResultsEncoded(src.ResultsEncoded),
-			ActionLog(src.ActionLog),
-			ExecutionTime(src.ExecutionTime)
-			{}
-			
-		FRunCloudScriptResult(const TSharedPtr<FJsonObject>& obj) : FRunCloudScriptResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FRunCloudScriptResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

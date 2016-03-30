@@ -2510,7 +2510,7 @@ void PlayFab::ClientModels::FExecuteCloudScriptRequest::writeJSON(JsonWriter& wr
 	
     if(SpecificRevision.notNull()) { writer->WriteIdentifierPrefix(TEXT("SpecificRevision")); writer->WriteValue(SpecificRevision); }
 	
-    writer->WriteIdentifierPrefix(TEXT("GeneratePlayStreamEvent")); writer->WriteValue(GeneratePlayStreamEvent);
+    if(GeneratePlayStreamEvent.notNull()) { writer->WriteIdentifierPrefix(TEXT("GeneratePlayStreamEvent")); writer->WriteValue(GeneratePlayStreamEvent); }
 	
     
     writer->WriteObjectEnd();

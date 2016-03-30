@@ -1728,6 +1728,33 @@ void UPlayFabServerAPI::OnUpdateSharedGroupDataResult(FHttpRequestPtr HttpReques
     }
 }
 
+bool UPlayFabServerAPI::ExecuteCloudScript(
+    ServerModels::FExecuteCloudScriptServerRequest& request,
+    const FExecuteCloudScriptDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Server/ExecuteCloudScript")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabServerAPI::OnExecuteCloudScriptResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabServerAPI::OnExecuteCloudScriptResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FExecuteCloudScriptDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ServerModels::FExecuteCloudScriptResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
 bool UPlayFabServerAPI::GetContentDownloadUrl(
     ServerModels::FGetContentDownloadUrlRequest& request,
     const FGetContentDownloadUrlDelegate& SuccessDelegate,
