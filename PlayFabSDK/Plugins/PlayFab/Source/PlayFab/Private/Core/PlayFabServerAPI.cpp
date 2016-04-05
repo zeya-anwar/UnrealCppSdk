@@ -729,6 +729,33 @@ void UPlayFabServerAPI::OnGetCatalogItemsResult(FHttpRequestPtr HttpRequest, FHt
     }
 }
 
+bool UPlayFabServerAPI::GetPublisherData(
+    ServerModels::FGetPublisherDataRequest& request,
+    const FGetPublisherDataDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Server/GetPublisherData")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabServerAPI::OnGetPublisherDataResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabServerAPI::OnGetPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ServerModels::FGetPublisherDataResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
 bool UPlayFabServerAPI::GetTitleData(
     ServerModels::FGetTitleDataRequest& request,
     const FGetTitleDataDelegate& SuccessDelegate,
@@ -798,6 +825,33 @@ bool UPlayFabServerAPI::GetTitleNews(
 void UPlayFabServerAPI::OnGetTitleNewsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetTitleNewsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
 {
     ServerModels::FGetTitleNewsResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
+bool UPlayFabServerAPI::SetPublisherData(
+    ServerModels::FSetPublisherDataRequest& request,
+    const FSetPublisherDataDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Server/SetPublisherData")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabServerAPI::OnSetPublisherDataResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabServerAPI::OnSetPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ServerModels::FSetPublisherDataResult outResult;
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
@@ -1593,33 +1647,6 @@ void UPlayFabServerAPI::OnDeleteSharedGroupResult(FHttpRequestPtr HttpRequest, F
     }
 }
 
-bool UPlayFabServerAPI::GetPublisherData(
-    ServerModels::FGetPublisherDataRequest& request,
-    const FGetPublisherDataDelegate& SuccessDelegate,
-    const FPlayFabErrorDelegate& ErrorDelegate)
-{
-    
-    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Server/GetPublisherData")), request.toJSONString(),
-        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
-    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabServerAPI::OnGetPublisherDataResult, SuccessDelegate, ErrorDelegate);
-    return HttpRequest->ProcessRequest();
-}
-
-void UPlayFabServerAPI::OnGetPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
-{
-    ServerModels::FGetPublisherDataResult outResult;
-    FPlayFabError errorResult;
-    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-    {
-
-        SuccessDelegate.ExecuteIfBound(outResult);
-    }
-    else
-    {
-        ErrorDelegate.ExecuteIfBound(errorResult);
-    }
-}
-
 bool UPlayFabServerAPI::GetSharedGroupData(
     ServerModels::FGetSharedGroupDataRequest& request,
     const FGetSharedGroupDataDelegate& SuccessDelegate,
@@ -1662,33 +1689,6 @@ bool UPlayFabServerAPI::RemoveSharedGroupMembers(
 void UPlayFabServerAPI::OnRemoveSharedGroupMembersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemoveSharedGroupMembersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
 {
     ServerModels::FRemoveSharedGroupMembersResult outResult;
-    FPlayFabError errorResult;
-    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
-    {
-
-        SuccessDelegate.ExecuteIfBound(outResult);
-    }
-    else
-    {
-        ErrorDelegate.ExecuteIfBound(errorResult);
-    }
-}
-
-bool UPlayFabServerAPI::SetPublisherData(
-    ServerModels::FSetPublisherDataRequest& request,
-    const FSetPublisherDataDelegate& SuccessDelegate,
-    const FPlayFabErrorDelegate& ErrorDelegate)
-{
-    
-    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Server/SetPublisherData")), request.toJSONString(),
-        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
-    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabServerAPI::OnSetPublisherDataResult, SuccessDelegate, ErrorDelegate);
-    return HttpRequest->ProcessRequest();
-}
-
-void UPlayFabServerAPI::OnSetPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
-{
-    ServerModels::FSetPublisherDataResult outResult;
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {

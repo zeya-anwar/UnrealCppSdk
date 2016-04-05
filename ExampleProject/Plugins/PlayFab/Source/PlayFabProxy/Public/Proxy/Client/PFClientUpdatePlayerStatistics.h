@@ -19,7 +19,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FEmptyOnlineDelegate OnFailure; 
 	
-	// Updates the values of the specified title-specific statistics for the user
+	// Updates the values of the specified title-specific statistics for the user. By default, clients are not permitted to update statistics. Developers may override this setting in the Game Manager > Settings > API Features.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Player Data Management")
 	static UPFClientUpdatePlayerStatistics* UpdatePlayerStatistics(UObject* WorldContextObject, class APlayerController* PlayerController, const TArray<FBPClientStatisticUpdate>& InStatistics);
 

@@ -20,7 +20,7 @@ public:
 	FBPAdminGetPublisherDataResultDelegate OnFailure;
 	
 	// Retrieves the key-value store of custom publisher settings
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Admin|Shared Group Data")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Admin|Title-Wide Data Management")
 	static UPFAdminGetPublisherData* GetPublisherData(UObject* WorldContextObject, class APlayerController* PlayerController, const TArray<FString>& InKeys);
 
 	// UOnlineBlueprintCallProxyBase interface

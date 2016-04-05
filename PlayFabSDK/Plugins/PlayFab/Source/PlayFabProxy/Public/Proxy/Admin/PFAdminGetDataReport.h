@@ -19,7 +19,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FBPAdminGetDataReportResultDelegate OnFailure;
 	
-	// Retrieves a download URL for the requested report
+	// Retrieves a download URL for the requested report. Currently available reports: Daily / Monthly API Usage, Daily / Monthly Overview, Monthly Real Money Purchase History, Monthly Top Items, Monthly Top Spenders, Monthly VC Purcahse History, Sevan Day Retention
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Admin|Player Data Management")
 	static UPFAdminGetDataReport* GetDataReport(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InReportName, const int32& InYear, const int32& InMonth, const int32& InDay);
 

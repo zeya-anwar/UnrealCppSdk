@@ -8324,7 +8324,7 @@ namespace ClientModels
 	struct PLAYFAB_API FUpdateUserStatisticsRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] Statistics to be updated with the provided values.
+		// [optional] Statistics to be updated with the provided values. UserStatistics object must follow the Key(string), Value(int) pattern.
 		TMap<FString, int32> UserStatistics;
 	
         FUpdateUserStatisticsRequest() :

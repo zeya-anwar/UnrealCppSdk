@@ -38,6 +38,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FAddNewsDelegate, const AdminModels::FAddNewsResult&);
         DECLARE_DELEGATE_OneParam(FAddVirtualCurrencyTypesDelegate, const AdminModels::FBlankResult&);
         DECLARE_DELEGATE_OneParam(FGetCatalogItemsDelegate, const AdminModels::FGetCatalogItemsResult&);
+        DECLARE_DELEGATE_OneParam(FGetPublisherDataDelegate, const AdminModels::FGetPublisherDataResult&);
         DECLARE_DELEGATE_OneParam(FGetRandomResultTablesDelegate, const AdminModels::FGetRandomResultTablesResult&);
         DECLARE_DELEGATE_OneParam(FGetStoreItemsDelegate, const AdminModels::FGetStoreItemsResult&);
         DECLARE_DELEGATE_OneParam(FGetTitleDataDelegate, const AdminModels::FGetTitleDataResult&);
@@ -63,7 +64,6 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FListServerBuildsDelegate, const AdminModels::FListBuildsResult&);
         DECLARE_DELEGATE_OneParam(FModifyServerBuildDelegate, const AdminModels::FModifyServerBuildResult&);
         DECLARE_DELEGATE_OneParam(FRemoveServerBuildDelegate, const AdminModels::FRemoveServerBuildResult&);
-        DECLARE_DELEGATE_OneParam(FGetPublisherDataDelegate, const AdminModels::FGetPublisherDataResult&);
         DECLARE_DELEGATE_OneParam(FSetPublisherDataDelegate, const AdminModels::FSetPublisherDataResult&);
         DECLARE_DELEGATE_OneParam(FGetCloudScriptRevisionDelegate, const AdminModels::FGetCloudScriptRevisionResult&);
         DECLARE_DELEGATE_OneParam(FGetCloudScriptVersionsDelegate, const AdminModels::FGetCloudScriptVersionsResult&);
@@ -113,8 +113,8 @@ namespace PlayFab
          */
         bool DeleteUsers(AdminModels::FDeleteUsersRequest& request, const FDeleteUsersDelegate& SuccessDelegate = FDeleteUsersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Retrieves a download URL for the requested report
-         * An HTTP GET request to the returned report download URL returns the report data in line delimited JSON format. Each line contains a JSON object representing details of a single item in the report. Currently available reports: PurchaseDataReport, TitleNewUserReport, TitleActiveUsersReport, BannedUsersReport.
+         * Retrieves a download URL for the requested report. Currently available reports: Daily / Monthly API Usage, Daily / Monthly Overview, Monthly Real Money Purchase History, Monthly Top Items, Monthly Top Spenders, Monthly VC Purcahse History, Sevan Day Retention
+         * An HTTP GET request to the returned report download URL returns the report data in line delimited JSON format. Each line contains a JSON object representing details of a single item in the report.
          */
         bool GetDataReport(AdminModels::FGetDataReportRequest& request, const FGetDataReportDelegate& SuccessDelegate = FGetDataReportDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
@@ -214,6 +214,11 @@ namespace PlayFab
          * Retrieves the specified version of the title's catalog of virtual goods, including all defined properties
          */
         bool GetCatalogItems(AdminModels::FGetCatalogItemsRequest& request, const FGetCatalogItemsDelegate& SuccessDelegate = FGetCatalogItemsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Retrieves the key-value store of custom publisher settings
+         * This API is designed to return publisher-specific values which can be read, but not written to, by the client. This data is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a publisher can use this API.  For more information email devrel@playfab.com.  This AdminAPI call for getting title data guarantees no delay in between update and retrieval of newly set data.
+         */
+        bool GetPublisherData(AdminModels::FGetPublisherDataRequest& request, const FGetPublisherDataDelegate& SuccessDelegate = FGetPublisherDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves the random drop table configuration for the title
          */
@@ -329,11 +334,6 @@ namespace PlayFab
          */
         bool RemoveServerBuild(AdminModels::FRemoveServerBuildRequest& request, const FRemoveServerBuildDelegate& SuccessDelegate = FRemoveServerBuildDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Retrieves the key-value store of custom publisher settings
-         * This API is designed to return publisher-specific values which can be read, but not written to, by the client. This data is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a publisher can use this API.  For more information email devrel@playfab.com.  This AdminAPI call for getting title data guarantees no delay in between update and retrieval of newly set data.
-         */
-        bool GetPublisherData(AdminModels::FGetPublisherDataRequest& request, const FGetPublisherDataDelegate& SuccessDelegate = FGetPublisherDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
          * Updates the key-value store of custom publisher settings
          * This API is designed to store publisher-specific values which can be read, but not written to, by the client. This data is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a publisher can use this API. This operation is additive.  If a Key does not exist in the current dataset, it will be added with the specified Value. If it already exists, the Value for that key will be overwritten with the new Value. For more information email devrel@playfab.com
          */
@@ -401,6 +401,7 @@ namespace PlayFab
         void OnAddNewsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddNewsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAddVirtualCurrencyTypesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddVirtualCurrencyTypesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetCatalogItemsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCatalogItemsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetRandomResultTablesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetRandomResultTablesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetStoreItemsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetStoreItemsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetTitleDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetTitleDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -426,7 +427,6 @@ namespace PlayFab
         void OnListServerBuildsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FListServerBuildsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnModifyServerBuildResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FModifyServerBuildDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRemoveServerBuildResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemoveServerBuildDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnGetPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetCloudScriptRevisionResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCloudScriptRevisionDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetCloudScriptVersionsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCloudScriptVersionsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
