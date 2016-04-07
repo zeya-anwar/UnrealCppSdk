@@ -19,7 +19,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FEmptyOnlineDelegate OnFailure; 
 	
-	// Unlinks the related Google account from the user's PlayFab account
+	// Unlinks the related Google account from the user's PlayFab account (https://developers.google.com/android/reference/com/google/android/gms/auth/GoogleAuthUtil#public-methods).
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Account Management")
 	static UPFClientUnlinkGoogleAccount* UnlinkGoogleAccount(UObject* WorldContextObject, class APlayerController* PlayerController);
 

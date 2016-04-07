@@ -113,8 +113,8 @@ namespace PlayFab
          */
         bool DeleteUsers(AdminModels::FDeleteUsersRequest& request, const FDeleteUsersDelegate& SuccessDelegate = FDeleteUsersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Retrieves a download URL for the requested report. Currently available reports: Daily / Monthly API Usage, Daily / Monthly Overview, Monthly Real Money Purchase History, Monthly Top Items, Monthly Top Spenders, Monthly VC Purcahse History, Sevan Day Retention
-         * An HTTP GET request to the returned report download URL returns the report data in line delimited JSON format. Each line contains a JSON object representing details of a single item in the report.
+         * Retrieves a download URL for the requested report
+         * Gets the download URL for the requested report data as csv. The reports available through this api are those available in Game Manager.
          */
         bool GetDataReport(AdminModels::FGetDataReportRequest& request, const FGetDataReportDelegate& SuccessDelegate = FGetDataReportDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**

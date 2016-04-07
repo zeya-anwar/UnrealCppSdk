@@ -167,7 +167,7 @@ namespace PlayFab
          */
         bool LoginWithGameCenter(ClientModels::FLoginWithGameCenterRequest& request, const FLoginWithGameCenterDelegate& SuccessDelegate = FLoginWithGameCenterDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Signs the user in using a Google account access token, returning a session identifier that can subsequently be used for API calls which require an authenticated user
+         * Signs the user in using a Google account access token(https://developers.google.com/android/reference/com/google/android/gms/auth/GoogleAuthUtil#public-methods), returning a session identifier that can subsequently be used for API calls which require an authenticated user
          * Google sign-in is accomplished with the Google OAuth 2.0 Access Token. More information on the Token can be  found in the Google developer documentation (https://developers.google.com/accounts/docs/OAuth2) and in the Quick Start sample applications (https://developers.google.com/+/quickstart/). If this is the first time a user has signed in with the Google account and CreateAccount is set to true, a new PlayFab account will be created and linked to the Google account. In this case, no email or username will be associated with the PlayFab account. Otherwise, if no PlayFab account is linked to the Google account, an error indicating this will be returned, so that the title can guide the user through creation of a PlayFab account.
          */
         bool LoginWithGoogleAccount(ClientModels::FLoginWithGoogleAccountRequest& request, const FLoginWithGoogleAccountDelegate& SuccessDelegate = FLoginWithGoogleAccountDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -244,7 +244,7 @@ namespace PlayFab
          */
         bool LinkGameCenterAccount(ClientModels::FLinkGameCenterAccountRequest& request, const FLinkGameCenterAccountDelegate& SuccessDelegate = FLinkGameCenterAccountDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Links the currently signed-in user account to the Google account specified by the Google account access token
+         * Links the currently signed-in user account to the Google account specified by the Google account access token (https://developers.google.com/android/reference/com/google/android/gms/auth/GoogleAuthUtil#public-methods).
          * Google sign-in is accomplished with the Google OAuth 2.0 Access Token. More information on the Token can be  found in the Google developer documentation (https://developers.google.com/accounts/docs/OAuth2) and in the Quick Start sample applications (https://developers.google.com/+/quickstart/).
          */
         bool LinkGoogleAccount(ClientModels::FLinkGoogleAccountRequest& request, const FLinkGoogleAccountDelegate& SuccessDelegate = FLinkGoogleAccountDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -287,7 +287,7 @@ namespace PlayFab
          */
         bool UnlinkGameCenterAccount(const FUnlinkGameCenterAccountDelegate& SuccessDelegate = FUnlinkGameCenterAccountDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Unlinks the related Google account from the user's PlayFab account
+         * Unlinks the related Google account from the user's PlayFab account (https://developers.google.com/android/reference/com/google/android/gms/auth/GoogleAuthUtil#public-methods).
          */
         bool UnlinkGoogleAccount(const FUnlinkGoogleAccountDelegate& SuccessDelegate = FUnlinkGoogleAccountDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**

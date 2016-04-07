@@ -5409,7 +5409,7 @@ namespace ClientModels
 	struct PLAYFAB_API FLinkGoogleAccountRequest : public FPlayFabBaseModel
     {
 		
-		// Unique token from Google Play for the user.
+		// Unique token (https://developers.google.com/android/reference/com/google/android/gms/auth/GoogleAuthUtil#public-methods) from Google Play for the user.
 		FString AccessToken;
 	
         FLinkGoogleAccountRequest() :
@@ -5992,7 +5992,7 @@ namespace ClientModels
 		
 		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
 		FString TitleId;
-		// Unique token from Google Play for the user.
+		// Unique token (https://developers.google.com/android/reference/com/google/android/gms/auth/GoogleAuthUtil#public-methods) from Google Play for the user.
 		FString AccessToken;
 		// [optional] Automatically create a PlayFab account if one is not currently linked to this Google account.
 		OptionalBool CreateAccount;
@@ -6552,41 +6552,6 @@ namespace ClientModels
         }
 		
 		~FPaymentOption();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FPlayStreamEventHistory : public FPlayFabBaseModel
-    {
-		
-		// [optional] The ID of the trigger that caused this event to be created.
-		FString ParentTriggerId;
-		// [optional] The ID of the previous event that caused this event to be created by hitting a trigger.
-		FString ParentEventId;
-		// If true, then this event was allowed to trigger subsequent events in a trigger.
-		bool TriggeredEvents;
-	
-        FPlayStreamEventHistory() :
-			FPlayFabBaseModel(),
-			ParentTriggerId(),
-			ParentEventId(),
-			TriggeredEvents(false)
-			{}
-		
-		FPlayStreamEventHistory(const FPlayStreamEventHistory& src) :
-			FPlayFabBaseModel(),
-			ParentTriggerId(src.ParentTriggerId),
-			ParentEventId(src.ParentEventId),
-			TriggeredEvents(src.TriggeredEvents)
-			{}
-			
-		FPlayStreamEventHistory(const TSharedPtr<FJsonObject>& obj) : FPlayStreamEventHistory()
-        {
-            readFromValue(obj);
-        }
-		
-		~FPlayStreamEventHistory();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -7285,20 +7250,6 @@ namespace ClientModels
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
-	
-	enum SourceType
-	{
-		SourceTypeAdmin,
-		SourceTypeBackEnd,
-		SourceTypeGameClient,
-		SourceTypeGameServer,
-		SourceTypePartner,
-		SourceTypeStream
-	};
-	
-	void writeSourceTypeEnumJSON(SourceType enumVal, JsonWriter& writer);
-	SourceType readSourceTypeFromValue(const TSharedPtr<FJsonValue>& value);
-	
 	
 	struct PLAYFAB_API FStartGameRequest : public FPlayFabBaseModel
     {

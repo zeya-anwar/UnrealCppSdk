@@ -1206,14 +1206,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientPlayStreamEventHistory(
-		const FBPClientPlayStreamEventHistory& In
-        ,FString& OutParentTriggerId
-        ,FString& OutParentEventId
-        ,bool& OutTriggeredEvents
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientPurchaseItemRequest(
 		const FBPClientPurchaseItemRequest& In
         ,FString& OutItemId
@@ -1395,11 +1387,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutValue
         ,FString& OutLastUpdatedBy
         ,FDateTime& OutLastUpdated
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
-	static void BreakBPClientSourceType(
-		const FBPClientSourceType& In
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))

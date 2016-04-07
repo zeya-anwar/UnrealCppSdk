@@ -2122,19 +2122,6 @@ void UPFClientProxyLibrary::BreakBPClientPlayerStatisticVersion(
 	
 }
 
-void UPFClientProxyLibrary::BreakBPClientPlayStreamEventHistory(
-		const FBPClientPlayStreamEventHistory& In
-        ,FString& OutParentTriggerId
-        ,FString& OutParentEventId
-        ,bool& OutTriggeredEvents
-	)
-{
-    OutParentTriggerId = In.Data.ParentTriggerId;
-	OutParentEventId = In.Data.ParentEventId;
-	OutTriggeredEvents = In.Data.TriggeredEvents;
-	
-}
-
 void UPFClientProxyLibrary::BreakBPClientPurchaseItemRequest(
 		const FBPClientPurchaseItemRequest& In
         ,FString& OutItemId
@@ -2439,13 +2426,6 @@ void UPFClientProxyLibrary::BreakBPClientSharedGroupDataRecord(
 	
 	
 	
-}
-
-void UPFClientProxyLibrary::BreakBPClientSourceType(
-		const FBPClientSourceType& In
-	)
-{
-    
 }
 
 void UPFClientProxyLibrary::BreakBPClientStartGameRequest(
