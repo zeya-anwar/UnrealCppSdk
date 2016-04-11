@@ -37,9 +37,11 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FUpdateUserReadOnlyDataDelegate, const ServerModels::FUpdateUserDataResult&);
         DECLARE_DELEGATE_OneParam(FUpdateUserStatisticsDelegate, const ServerModels::FUpdateUserStatisticsResult&);
         DECLARE_DELEGATE_OneParam(FGetCatalogItemsDelegate, const ServerModels::FGetCatalogItemsResult&);
+        DECLARE_DELEGATE_OneParam(FGetPublisherDataDelegate, const ServerModels::FGetPublisherDataResult&);
         DECLARE_DELEGATE_OneParam(FGetTitleDataDelegate, const ServerModels::FGetTitleDataResult&);
         DECLARE_DELEGATE_OneParam(FGetTitleInternalDataDelegate, const ServerModels::FGetTitleDataResult&);
         DECLARE_DELEGATE_OneParam(FGetTitleNewsDelegate, const ServerModels::FGetTitleNewsResult&);
+        DECLARE_DELEGATE_OneParam(FSetPublisherDataDelegate, const ServerModels::FSetPublisherDataResult&);
         DECLARE_DELEGATE_OneParam(FSetTitleDataDelegate, const ServerModels::FSetTitleDataResult&);
         DECLARE_DELEGATE_OneParam(FSetTitleInternalDataDelegate, const ServerModels::FSetTitleDataResult&);
         DECLARE_DELEGATE_OneParam(FAddCharacterVirtualCurrencyDelegate, const ServerModels::FModifyCharacterVirtualCurrencyResult&);
@@ -69,11 +71,10 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FAddSharedGroupMembersDelegate, const ServerModels::FAddSharedGroupMembersResult&);
         DECLARE_DELEGATE_OneParam(FCreateSharedGroupDelegate, const ServerModels::FCreateSharedGroupResult&);
         DECLARE_DELEGATE_OneParam(FDeleteSharedGroupDelegate, const ServerModels::FEmptyResult&);
-        DECLARE_DELEGATE_OneParam(FGetPublisherDataDelegate, const ServerModels::FGetPublisherDataResult&);
         DECLARE_DELEGATE_OneParam(FGetSharedGroupDataDelegate, const ServerModels::FGetSharedGroupDataResult&);
         DECLARE_DELEGATE_OneParam(FRemoveSharedGroupMembersDelegate, const ServerModels::FRemoveSharedGroupMembersResult&);
-        DECLARE_DELEGATE_OneParam(FSetPublisherDataDelegate, const ServerModels::FSetPublisherDataResult&);
         DECLARE_DELEGATE_OneParam(FUpdateSharedGroupDataDelegate, const ServerModels::FUpdateSharedGroupDataResult&);
+        DECLARE_DELEGATE_OneParam(FExecuteCloudScriptDelegate, const ServerModels::FExecuteCloudScriptResult&);
         DECLARE_DELEGATE_OneParam(FGetContentDownloadUrlDelegate, const ServerModels::FGetContentDownloadUrlResult&);
         DECLARE_DELEGATE_OneParam(FDeleteCharacterFromUserDelegate, const ServerModels::FDeleteCharacterFromUserResult&);
         DECLARE_DELEGATE_OneParam(FGetAllUsersCharactersDelegate, const ServerModels::FListUsersCharactersResult&);
@@ -211,7 +212,7 @@ namespace PlayFab
          */
         bool UpdateUserReadOnlyData(ServerModels::FUpdateUserDataRequest& request, const FUpdateUserReadOnlyDataDelegate& SuccessDelegate = FUpdateUserReadOnlyDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Updates the values of the specified title-specific statistics for the user
+         * Updates the values of the specified title-specific statistics for the user. By default, clients are not permitted to update statistics. Developers may override this setting in the Game Manager > Settings > API Features.
          * This operation is additive. Statistics not currently defined will be added, while those already defined will be updated with the given values. All other user statistics will remain unchanged.  Note: For statistics configured to reset on an interval, this API call updates the current (latest) version of the player's statistic.  Titles using statistic versioning for resettable leaderboards should make use of the UpdatePlayerStatistics call instead, to ensure that the proper version is updated.
          */
         bool UpdateUserStatistics(ServerModels::FUpdateUserStatisticsRequest& request, const FUpdateUserStatisticsDelegate& SuccessDelegate = FUpdateUserStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -219,6 +220,11 @@ namespace PlayFab
          * Retrieves the specified version of the title's catalog of virtual goods, including all defined properties
          */
         bool GetCatalogItems(ServerModels::FGetCatalogItemsRequest& request, const FGetCatalogItemsDelegate& SuccessDelegate = FGetCatalogItemsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Retrieves the key-value store of custom publisher settings
+         * This API is designed to return publisher-specific values which can be read, but not written to, by the client. This data is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a publisher can use this API.  For more information email devrel@playfab.com. Note that there may up to a minute delay in between updating title data and this API call returning the newest value.
+         */
+        bool GetPublisherData(ServerModels::FGetPublisherDataRequest& request, const FGetPublisherDataDelegate& SuccessDelegate = FGetPublisherDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves the key-value store of custom title settings
          * This API is designed to return title specific values which can be read, but not written to, by the client. For example, a developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new build. Note that there may up to a minute delay in between updating title data and this API call returning the newest value.
@@ -233,6 +239,11 @@ namespace PlayFab
          * Retrieves the title news feed, as configured in the developer portal
          */
         bool GetTitleNews(ServerModels::FGetTitleNewsRequest& request, const FGetTitleNewsDelegate& SuccessDelegate = FGetTitleNewsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Updates the key-value store of custom publisher settings
+         * This API is designed to store publisher-specific values which can be read, but not written to, by the client. This data is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a publisher can use this API. This operation is additive.  If a Key does not exist in the current dataset, it will be added with the specified Value. If it already exists, the Value for that key will be overwritten with the new Value. For more information email devrel@playfab.com
+         */
+        bool SetPublisherData(ServerModels::FSetPublisherDataRequest& request, const FSetPublisherDataDelegate& SuccessDelegate = FSetPublisherDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Updates the key-value store of custom title settings
          * This API is designed to store title specific values which can be read, but not written to, by the client. For example, a developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new build. This operation is additive. If a Key does not exist in the current dataset, it will be added with the specified Value. If it already exists, the Value for that key will be overwritten with the new Value.
@@ -369,11 +380,6 @@ namespace PlayFab
          */
         bool DeleteSharedGroup(ServerModels::FDeleteSharedGroupRequest& request, const FDeleteSharedGroupDelegate& SuccessDelegate = FDeleteSharedGroupDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Retrieves the key-value store of custom publisher settings
-         * This API is designed to return publisher-specific values which can be read, but not written to, by the client. This data is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a publisher can use this API.  For more information email devrel@playfab.com. Note that there may up to a minute delay in between updating title data and this API call returning the newest value.
-         */
-        bool GetPublisherData(ServerModels::FGetPublisherDataRequest& request, const FGetPublisherDataDelegate& SuccessDelegate = FGetPublisherDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
          * Retrieves data stored in a shared group object, as well as the list of members in the group. The server can access all public and private group data.
          */
         bool GetSharedGroupData(ServerModels::FGetSharedGroupDataRequest& request, const FGetSharedGroupDataDelegate& SuccessDelegate = FGetSharedGroupDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -382,15 +388,14 @@ namespace PlayFab
          */
         bool RemoveSharedGroupMembers(ServerModels::FRemoveSharedGroupMembersRequest& request, const FRemoveSharedGroupMembersDelegate& SuccessDelegate = FRemoveSharedGroupMembersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Updates the key-value store of custom publisher settings
-         * This API is designed to store publisher-specific values which can be read, but not written to, by the client. This data is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a publisher can use this API. This operation is additive.  If a Key does not exist in the current dataset, it will be added with the specified Value. If it already exists, the Value for that key will be overwritten with the new Value. For more information email devrel@playfab.com
-         */
-        bool SetPublisherData(ServerModels::FSetPublisherDataRequest& request, const FSetPublisherDataDelegate& SuccessDelegate = FSetPublisherDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
          * Adds, updates, and removes data keys for a shared group object. If the permission is set to Public, all fields updated or added in this call will be readable by users not in the group. By default, data permissions are set to Private. Regardless of the permission setting, only members of the group (and the server) can update the data.
          * Note that in the case of multiple calls to write to the same shared group data keys, the last write received by the PlayFab service will determine the value available to subsequent read operations. For scenarios requiring coordination of data updates, it is recommended that titles make use of user data with read permission set to public, or a combination of user data and shared group data.
          */
         bool UpdateSharedGroupData(ServerModels::FUpdateSharedGroupDataRequest& request, const FUpdateSharedGroupDataDelegate& SuccessDelegate = FUpdateSharedGroupDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Executes a CloudScript function, with the 'currentPlayerId' variable set to the specified PlayFabId parameter value.
+         */
+        bool ExecuteCloudScript(ServerModels::FExecuteCloudScriptServerRequest& request, const FExecuteCloudScriptDelegate& SuccessDelegate = FExecuteCloudScriptDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * This API retrieves a pre-signed URL for accessing a content file for the title. A subsequent  HTTP GET to the returned URL will attempt to download the content. A HEAD query to the returned URL will attempt to  retrieve the metadata of the content. Note that a successful result does not guarantee the existence of this content -  if it has not been uploaded, the query to retrieve the data will fail. See this post for more information:  https://community.playfab.com/hc/en-us/community/posts/205469488-How-to-upload-files-to-PlayFab-s-Content-Service
          */
@@ -401,7 +406,7 @@ namespace PlayFab
          */
         bool DeleteCharacterFromUser(ServerModels::FDeleteCharacterFromUserRequest& request, const FDeleteCharacterFromUserDelegate& SuccessDelegate = FDeleteCharacterFromUserDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Lists all of the characters that belong to a specific user.
+         * Lists all of the characters that belong to a specific user. CharacterIds are not globally unique; characterId must be evaluated with the parent PlayFabId to guarantee uniqueness.
          * Returns a list of every character that currently belongs to a user.
          */
         bool GetAllUsersCharacters(ServerModels::FListUsersCharactersRequest& request, const FGetAllUsersCharactersDelegate& SuccessDelegate = FGetAllUsersCharactersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -423,7 +428,7 @@ namespace PlayFab
          */
         bool GetLeaderboardForUserCharacters(ServerModels::FGetLeaderboardForUsersCharactersRequest& request, const FGetLeaderboardForUserCharactersDelegate& SuccessDelegate = FGetLeaderboardForUserCharactersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Grants the specified character type to the user.
+         * Grants the specified character type to the user. CharacterIds are not globally unique; characterId must be evaluated with the parent PlayFabId to guarantee uniqueness.
          * Grants a character to the user of the type and name specified in the request.
          */
         bool GrantCharacterToUser(ServerModels::FGrantCharacterToUserRequest& request, const FGrantCharacterToUserDelegate& SuccessDelegate = FGrantCharacterToUserDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -491,9 +496,11 @@ namespace PlayFab
         void OnUpdateUserReadOnlyDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserReadOnlyDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateUserStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetCatalogItemsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCatalogItemsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetTitleDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetTitleDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetTitleInternalDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetTitleInternalDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetTitleNewsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetTitleNewsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnSetPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetTitleDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetTitleDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetTitleInternalDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetTitleInternalDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAddCharacterVirtualCurrencyResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddCharacterVirtualCurrencyDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -523,11 +530,10 @@ namespace PlayFab
         void OnAddSharedGroupMembersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddSharedGroupMembersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnCreateSharedGroupResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FCreateSharedGroupDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnDeleteSharedGroupResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteSharedGroupDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnGetPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetSharedGroupDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetSharedGroupDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRemoveSharedGroupMembersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemoveSharedGroupMembersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnSetPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateSharedGroupDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateSharedGroupDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnExecuteCloudScriptResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FExecuteCloudScriptDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetContentDownloadUrlResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetContentDownloadUrlDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnDeleteCharacterFromUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteCharacterFromUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetAllUsersCharactersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetAllUsersCharactersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

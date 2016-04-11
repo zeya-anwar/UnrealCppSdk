@@ -20,7 +20,7 @@ public:
 	FBPClientReportPlayerClientResultDelegate OnFailure;
 	
 	// Submit a report for another player (due to bad bahavior, etc.), so that customer service representatives for the title can take action concerning potentially toxic players.
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Player Item Management")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Account Management")
 	static UPFClientReportPlayer* ReportPlayer(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InReporteeId, const FString& InComment);
 
 	// UOnlineBlueprintCallProxyBase interface

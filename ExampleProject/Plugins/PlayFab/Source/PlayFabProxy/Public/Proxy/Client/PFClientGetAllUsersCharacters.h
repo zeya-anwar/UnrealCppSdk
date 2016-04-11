@@ -19,7 +19,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FBPClientListUsersCharactersResultDelegate OnFailure;
 	
-	// Lists all of the characters that belong to a specific user.
+	// Lists all of the characters that belong to a specific user. CharacterIds are not globally unique; characterId must be evaluated with the parent PlayFabId to guarantee uniqueness.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Characters")
 	static UPFClientGetAllUsersCharacters* GetAllUsersCharacters(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InPlayFabId);
 

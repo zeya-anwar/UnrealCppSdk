@@ -19,7 +19,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FBPClientLoginResultDelegate OnFailure;
 	
-	// Signs the user in using a Google account access token, returning a session identifier that can subsequently be used for API calls which require an authenticated user
+	// Signs the user in using a Google account access token(https://developers.google.com/android/reference/com/google/android/gms/auth/GoogleAuthUtil#public-methods), returning a session identifier that can subsequently be used for API calls which require an authenticated user
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Authentication")
 	static UPFClientLoginWithGoogleAccount* LoginWithGoogleAccount(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InTitleId, const FString& InAccessToken, const bool& InCreateAccount, const FString& InPublisherId);
 

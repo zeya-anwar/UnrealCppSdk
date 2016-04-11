@@ -39,6 +39,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FLinkIOSDeviceIDDelegate, const ClientModels::FLinkIOSDeviceIDResult&);
         DECLARE_DELEGATE_OneParam(FLinkKongregateDelegate, const ClientModels::FLinkKongregateAccountResult&);
         DECLARE_DELEGATE_OneParam(FLinkSteamAccountDelegate, const ClientModels::FLinkSteamAccountResult&);
+        DECLARE_DELEGATE_OneParam(FReportPlayerDelegate, const ClientModels::FReportPlayerClientResult&);
         DECLARE_DELEGATE_OneParam(FSendAccountRecoveryEmailDelegate, const ClientModels::FSendAccountRecoveryEmailResult&);
         DECLARE_DELEGATE_OneParam(FUnlinkAndroidDeviceIDDelegate, const ClientModels::FUnlinkAndroidDeviceIDResult&);
         DECLARE_DELEGATE_OneParam(FUnlinkCustomIDDelegate, const ClientModels::FUnlinkCustomIDResult&);
@@ -67,6 +68,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FUpdateUserPublisherDataDelegate, const ClientModels::FUpdateUserDataResult&);
         DECLARE_DELEGATE_OneParam(FUpdateUserStatisticsDelegate, const ClientModels::FUpdateUserStatisticsResult&);
         DECLARE_DELEGATE_OneParam(FGetCatalogItemsDelegate, const ClientModels::FGetCatalogItemsResult&);
+        DECLARE_DELEGATE_OneParam(FGetPublisherDataDelegate, const ClientModels::FGetPublisherDataResult&);
         DECLARE_DELEGATE_OneParam(FGetStoreItemsDelegate, const ClientModels::FGetStoreItemsResult&);
         DECLARE_DELEGATE_OneParam(FGetTitleDataDelegate, const ClientModels::FGetTitleDataResult&);
         DECLARE_DELEGATE_OneParam(FGetTitleNewsDelegate, const ClientModels::FGetTitleNewsResult&);
@@ -79,7 +81,6 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FPayForPurchaseDelegate, const ClientModels::FPayForPurchaseResult&);
         DECLARE_DELEGATE_OneParam(FPurchaseItemDelegate, const ClientModels::FPurchaseItemResult&);
         DECLARE_DELEGATE_OneParam(FRedeemCouponDelegate, const ClientModels::FRedeemCouponResult&);
-        DECLARE_DELEGATE_OneParam(FReportPlayerDelegate, const ClientModels::FReportPlayerClientResult&);
         DECLARE_DELEGATE_OneParam(FStartPurchaseDelegate, const ClientModels::FStartPurchaseResult&);
         DECLARE_DELEGATE_OneParam(FSubtractUserVirtualCurrencyDelegate, const ClientModels::FModifyUserVirtualCurrencyResult&);
         DECLARE_DELEGATE_OneParam(FUnlockContainerInstanceDelegate, const ClientModels::FUnlockContainerItemResult&);
@@ -100,7 +101,6 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FLogEventDelegate, const ClientModels::FLogEventResult&);
         DECLARE_DELEGATE_OneParam(FAddSharedGroupMembersDelegate, const ClientModels::FAddSharedGroupMembersResult&);
         DECLARE_DELEGATE_OneParam(FCreateSharedGroupDelegate, const ClientModels::FCreateSharedGroupResult&);
-        DECLARE_DELEGATE_OneParam(FGetPublisherDataDelegate, const ClientModels::FGetPublisherDataResult&);
         DECLARE_DELEGATE_OneParam(FGetSharedGroupDataDelegate, const ClientModels::FGetSharedGroupDataResult&);
         DECLARE_DELEGATE_OneParam(FRemoveSharedGroupMembersDelegate, const ClientModels::FRemoveSharedGroupMembersResult&);
         DECLARE_DELEGATE_OneParam(FUpdateSharedGroupDataDelegate, const ClientModels::FUpdateSharedGroupDataResult&);
@@ -167,7 +167,7 @@ namespace PlayFab
          */
         bool LoginWithGameCenter(ClientModels::FLoginWithGameCenterRequest& request, const FLoginWithGameCenterDelegate& SuccessDelegate = FLoginWithGameCenterDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Signs the user in using a Google account access token, returning a session identifier that can subsequently be used for API calls which require an authenticated user
+         * Signs the user in using a Google account access token(https://developers.google.com/android/reference/com/google/android/gms/auth/GoogleAuthUtil#public-methods), returning a session identifier that can subsequently be used for API calls which require an authenticated user
          * Google sign-in is accomplished with the Google OAuth 2.0 Access Token. More information on the Token can be  found in the Google developer documentation (https://developers.google.com/accounts/docs/OAuth2) and in the Quick Start sample applications (https://developers.google.com/+/quickstart/). If this is the first time a user has signed in with the Google account and CreateAccount is set to true, a new PlayFab account will be created and linked to the Google account. In this case, no email or username will be associated with the PlayFab account. Otherwise, if no PlayFab account is linked to the Google account, an error indicating this will be returned, so that the title can guide the user through creation of a PlayFab account.
          */
         bool LoginWithGoogleAccount(ClientModels::FLoginWithGoogleAccountRequest& request, const FLoginWithGoogleAccountDelegate& SuccessDelegate = FLoginWithGoogleAccountDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -244,7 +244,7 @@ namespace PlayFab
          */
         bool LinkGameCenterAccount(ClientModels::FLinkGameCenterAccountRequest& request, const FLinkGameCenterAccountDelegate& SuccessDelegate = FLinkGameCenterAccountDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Links the currently signed-in user account to the Google account specified by the Google account access token
+         * Links the currently signed-in user account to the Google account specified by the Google account access token (https://developers.google.com/android/reference/com/google/android/gms/auth/GoogleAuthUtil#public-methods).
          * Google sign-in is accomplished with the Google OAuth 2.0 Access Token. More information on the Token can be  found in the Google developer documentation (https://developers.google.com/accounts/docs/OAuth2) and in the Quick Start sample applications (https://developers.google.com/+/quickstart/).
          */
         bool LinkGoogleAccount(ClientModels::FLinkGoogleAccountRequest& request, const FLinkGoogleAccountDelegate& SuccessDelegate = FLinkGoogleAccountDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -261,6 +261,10 @@ namespace PlayFab
          * Steam authentication is accomplished with the Steam Session Ticket. More information on the Ticket can be found in the Steamworks SDK, here: https://partner.steamgames.com/documentation/auth (requires sign-in). NOTE: For Steam authentication to work, the title must be configured with the Steam Application ID and Publisher Key in the PlayFab Game Manager (under Properties). Information on creating a Publisher Key (referred to as the Secret Key in PlayFab) for your title can be found here: https://partner.steamgames.com/documentation/webapi#publisherkey.
          */
         bool LinkSteamAccount(ClientModels::FLinkSteamAccountRequest& request, const FLinkSteamAccountDelegate& SuccessDelegate = FLinkSteamAccountDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Submit a report for another player (due to bad bahavior, etc.), so that customer service representatives for the title can take action concerning potentially toxic players.
+         */
+        bool ReportPlayer(ClientModels::FReportPlayerClientRequest& request, const FReportPlayerDelegate& SuccessDelegate = FReportPlayerDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Forces an email to be sent to the registered email address for the user's account, with a link allowing the user to change the password
          * If the account in question is a "temporary" account (for example, one that was created via a call to LoginFromIOSDeviceID), thisfunction will have no effect. Only PlayFab accounts which have valid email addresses will be able to receive a password reset email using this API.
@@ -283,7 +287,7 @@ namespace PlayFab
          */
         bool UnlinkGameCenterAccount(const FUnlinkGameCenterAccountDelegate& SuccessDelegate = FUnlinkGameCenterAccountDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Unlinks the related Google account from the user's PlayFab account
+         * Unlinks the related Google account from the user's PlayFab account (https://developers.google.com/android/reference/com/google/android/gms/auth/GoogleAuthUtil#public-methods).
          */
         bool UnlinkGoogleAccount(const FUnlinkGoogleAccountDelegate& SuccessDelegate = FUnlinkGoogleAccountDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
@@ -360,7 +364,7 @@ namespace PlayFab
          */
         bool GetUserStatistics(const FGetUserStatisticsDelegate& SuccessDelegate = FGetUserStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Updates the values of the specified title-specific statistics for the user
+         * Updates the values of the specified title-specific statistics for the user. By default, clients are not permitted to update statistics. Developers may override this setting in the Game Manager > Settings > API Features.
          * Enable this option with the 'Allow Client to Post Player Statistics' option in PlayFab GameManager for your title. However, this is not best practice, as this data will no longer be safely controlled by the server. This operation is additive.  Statistics not currently defined will be added, while those already defined will be updated with the given values. All other user statistics will remain unchanged.  Note that if the statistic is intended to have a reset period, the UpdatePlayerStatisticDefinition API call can be used to define that reset period. Once a statistic has been versioned (reset), the now-previous version can still be written to for up a short, pre-defined period (currently 10 seconds), using the Version parameter in this call.
          */
         bool UpdatePlayerStatistics(ClientModels::FUpdatePlayerStatisticsRequest& request, const FUpdatePlayerStatisticsDelegate& SuccessDelegate = FUpdatePlayerStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -375,7 +379,7 @@ namespace PlayFab
          */
         bool UpdateUserPublisherData(ClientModels::FUpdateUserDataRequest& request, const FUpdateUserPublisherDataDelegate& SuccessDelegate = FUpdateUserPublisherDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Updates the values of the specified title-specific statistics for the user
+         * Updates the values of the specified title-specific statistics for the user. By default, clients are not permitted to update statistics. Developers may override this setting in the Game Manager > Settings > API Features.
          * Enable this option with the 'Allow Client to Post Player Statistics' option in PlayFab GameManager for your title. However, this is not best practice, as this data will no longer be safely controlled by the server. This operation is additive.  Statistics not currently defined will be added, while those already defined will be updated with the given values. All other user statistics will remain unchanged.  Statistics are used by the leaderboard apis, and accessible for custom game-logic.  Note: For statistics configured to reset on an interval, this API call updates the current (latest) version of the player's statistic.  Titles using statistic versioning for resettable leaderboards should make use of the UpdatePlayerStatistics call instead, to ensure that the proper version is updated.
          */
         bool UpdateUserStatistics(ClientModels::FUpdateUserStatisticsRequest& request, const FUpdateUserStatisticsDelegate& SuccessDelegate = FUpdateUserStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -383,6 +387,11 @@ namespace PlayFab
          * Retrieves the specified version of the title's catalog of virtual goods, including all defined properties
          */
         bool GetCatalogItems(ClientModels::FGetCatalogItemsRequest& request, const FGetCatalogItemsDelegate& SuccessDelegate = FGetCatalogItemsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Retrieves the key-value store of custom publisher settings
+         * This API is designed to return publisher-specific values which can be read, but not written to, by the client. This data is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a publisher can use this API.  For more information email devrel@playfab.com. Note that there may up to a minute delay in between updating title data and this API call returning the newest value.
+         */
+        bool GetPublisherData(ClientModels::FGetPublisherDataRequest& request, const FGetPublisherDataDelegate& SuccessDelegate = FGetPublisherDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves the set of items defined for the specified store, including all prices defined
          * A store contains an array of references to items defined in one or more catalog versions of the game, along with the prices for the item, in both real world and virtual currencies. These prices act as an override to any prices defined in the catalog. In this way, the base definitions of the items may be defined in the catalog, with all associated properties, while the pricing can be set for each store, as needed. This allows for subsets of goods to be defined for different purposes (in order to simplify showing some, but not all catalog items to users, based upon different characteristics), along with unique prices. Note that all prices defined in the catalog and store definitions for the item are considered valid, and that a compromised client can be made to send a request for an item based upon any of these definitions. If no price is specified in the store for an item, the price set in the catalog should be displayed to the user.
@@ -438,10 +447,6 @@ namespace PlayFab
          * Coupon codes can be created for any item, or set of items, in the catalog for the title. This operation causes the coupon to be consumed, and the specific items to be awarded to the user. Attempting to re-use an already consumed code, or a code which has not yet been created in the service, will result in an error.
          */
         bool RedeemCoupon(ClientModels::FRedeemCouponRequest& request, const FRedeemCouponDelegate& SuccessDelegate = FRedeemCouponDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Submit a report for another player (due to bad bahavior, etc.), so that customer service representatives for the title can take action concerning potentially toxic players.
-         */
-        bool ReportPlayer(ClientModels::FReportPlayerClientRequest& request, const FReportPlayerDelegate& SuccessDelegate = FReportPlayerDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Creates an order for a list of items from the title catalog
          * This is the first step in the purchasing process. For security purposes, once the order (or "cart") has been created, additional inventory objects may no longer be added. In addition, inventory objects will be locked to the current prices, regardless of any subsequent changes at the catalog level which may occur during the next two steps.
@@ -536,11 +541,6 @@ namespace PlayFab
          */
         bool CreateSharedGroup(ClientModels::FCreateSharedGroupRequest& request, const FCreateSharedGroupDelegate& SuccessDelegate = FCreateSharedGroupDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Retrieves the key-value store of custom publisher settings
-         * This API is designed to return publisher-specific values which can be read, but not written to, by the client. This data is shared across all titles assigned to a particular publisher, and can be used for cross-game coordination. Only titles assigned to a publisher can use this API.  For more information email devrel@playfab.com. Note that there may up to a minute delay in between updating title data and this API call returning the newest value.
-         */
-        bool GetPublisherData(ClientModels::FGetPublisherDataRequest& request, const FGetPublisherDataDelegate& SuccessDelegate = FGetPublisherDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
          * Retrieves data stored in a shared group object, as well as the list of members in the group. Non-members of the group may use this to retrieve group data, including membership, but they will not receive data for keys marked as private.
          */
         bool GetSharedGroupData(ClientModels::FGetSharedGroupDataRequest& request, const FGetSharedGroupDataDelegate& SuccessDelegate = FGetSharedGroupDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -572,7 +572,7 @@ namespace PlayFab
          */
         bool GetContentDownloadUrl(ClientModels::FGetContentDownloadUrlRequest& request, const FGetContentDownloadUrlDelegate& SuccessDelegate = FGetContentDownloadUrlDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Lists all of the characters that belong to a specific user.
+         * Lists all of the characters that belong to a specific user. CharacterIds are not globally unique; characterId must be evaluated with the parent PlayFabId to guarantee uniqueness.
          * Returns a list of every character that currently belongs to a user.
          */
         bool GetAllUsersCharacters(ClientModels::FListUsersCharactersRequest& request, const FGetAllUsersCharactersDelegate& SuccessDelegate = FGetAllUsersCharactersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -593,12 +593,12 @@ namespace PlayFab
          */
         bool GetLeaderboardForUserCharacters(ClientModels::FGetLeaderboardForUsersCharactersRequest& request, const FGetLeaderboardForUserCharactersDelegate& SuccessDelegate = FGetLeaderboardForUserCharactersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Grants the specified character type to the user.
+         * Grants the specified character type to the user. CharacterIds are not globally unique; characterId must be evaluated with the parent PlayFabId to guarantee uniqueness.
          * Grants a character to the user of the type specified by the item ID. The user must  already have an instance of this item in their inventory in order to allow character creation. This item can come from a purchase or grant, which must be done before calling to create the character.
          */
         bool GrantCharacterToUser(ClientModels::FGrantCharacterToUserRequest& request, const FGrantCharacterToUserDelegate& SuccessDelegate = FGrantCharacterToUserDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Updates the values of the specified title-specific statistics for the specific character
+         * Updates the values of the specified title-specific statistics for the specific character. By default, clients are not permitted to update statistics. Developers may override this setting in the Game Manager > Settings > API Features.
          * Enable this option with the 'Allow Client to Post Player Statistics' option in PlayFab GameManager for your title. However, this is not best practice, as this data will no longer be safely controlled by the server. This operation is additive.  Character Statistics not currently defined will be added, while those already defined will be updated with the given values. All other user statistics will remain unchanged.  Character statistics are used by the character-leaderboard apis, and accessible for custom game-logic.
          */
         bool UpdateCharacterStatistics(ClientModels::FUpdateCharacterStatisticsRequest& request, const FUpdateCharacterStatisticsDelegate& SuccessDelegate = FUpdateCharacterStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -677,6 +677,7 @@ namespace PlayFab
         void OnLinkIOSDeviceIDResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLinkIOSDeviceIDDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnLinkKongregateResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLinkKongregateDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnLinkSteamAccountResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLinkSteamAccountDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnReportPlayerResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FReportPlayerDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSendAccountRecoveryEmailResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSendAccountRecoveryEmailDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUnlinkAndroidDeviceIDResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlinkAndroidDeviceIDDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUnlinkCustomIDResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlinkCustomIDDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -705,6 +706,7 @@ namespace PlayFab
         void OnUpdateUserPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateUserStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetCatalogItemsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCatalogItemsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetStoreItemsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetStoreItemsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetTitleDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetTitleDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetTitleNewsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetTitleNewsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -717,7 +719,6 @@ namespace PlayFab
         void OnPayForPurchaseResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FPayForPurchaseDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnPurchaseItemResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FPurchaseItemDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRedeemCouponResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRedeemCouponDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnReportPlayerResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FReportPlayerDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnStartPurchaseResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FStartPurchaseDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSubtractUserVirtualCurrencyResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSubtractUserVirtualCurrencyDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUnlockContainerInstanceResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlockContainerInstanceDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -738,7 +739,6 @@ namespace PlayFab
         void OnLogEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLogEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAddSharedGroupMembersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddSharedGroupMembersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnCreateSharedGroupResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FCreateSharedGroupDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnGetPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetSharedGroupDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetSharedGroupDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRemoveSharedGroupMembersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemoveSharedGroupMembersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateSharedGroupDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateSharedGroupDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

@@ -19,7 +19,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FBPServerGrantCharacterToUserResultDelegate OnFailure;
 	
-	// Grants the specified character type to the user.
+	// Grants the specified character type to the user. CharacterIds are not globally unique; characterId must be evaluated with the parent PlayFabId to guarantee uniqueness.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Characters")
 	static UPFServerGrantCharacterToUser* GrantCharacterToUser(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InPlayFabId, const FString& InCharacterName, const FString& InCharacterType);
 

@@ -20,7 +20,7 @@ public:
 	FEmptyOnlineDelegate OnFailure; 
 	
 	// Updates the key-value store of custom publisher settings
-	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Shared Group Data")
+	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Title-Wide Data Management")
 	static UPFServerSetPublisherData* SetPublisherData(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InKey, const FString& InValue);
 
 	// UOnlineBlueprintCallProxyBase interface

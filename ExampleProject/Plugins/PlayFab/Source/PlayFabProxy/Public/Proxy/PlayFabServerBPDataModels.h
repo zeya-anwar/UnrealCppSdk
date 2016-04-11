@@ -156,6 +156,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerCharacterResultDelegate, const FBPServerCharacterResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerCloudScriptRevisionOption"))
+struct FBPServerCloudScriptRevisionOption
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::CloudScriptRevisionOption Data;	
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerCloudScriptRevisionOptionDelegate, const FBPServerCloudScriptRevisionOption&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerConsumeItemRequest"))
 struct FBPServerConsumeItemRequest
 {
@@ -265,6 +275,26 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerEmptyResultDelegate, const FBPServerEmptyResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerExecuteCloudScriptResult"))
+struct FBPServerExecuteCloudScriptResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FExecuteCloudScriptResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerExecuteCloudScriptResultDelegate, const FBPServerExecuteCloudScriptResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerExecuteCloudScriptServerRequest"))
+struct FBPServerExecuteCloudScriptServerRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FExecuteCloudScriptServerRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerExecuteCloudScriptServerRequestDelegate, const FBPServerExecuteCloudScriptServerRequest&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerFacebookPlayFabIdPair"))
 struct FBPServerFacebookPlayFabIdPair
@@ -385,26 +415,6 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetCharacterStatisticsResultDelegate, const FBPServerGetCharacterStatisticsResult&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetCloudScriptUrlRequest"))
-struct FBPServerGetCloudScriptUrlRequest
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ServerModels::FGetCloudScriptUrlRequest Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetCloudScriptUrlRequestDelegate, const FBPServerGetCloudScriptUrlRequest&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetCloudScriptUrlResult"))
-struct FBPServerGetCloudScriptUrlResult
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ServerModels::FGetCloudScriptUrlResult Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetCloudScriptUrlResultDelegate, const FBPServerGetCloudScriptUrlResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetContentDownloadUrlRequest"))
 struct FBPServerGetContentDownloadUrlRequest
@@ -896,6 +906,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerLogEventResultDelegate, const FBPServerLogEventResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerLogStatement"))
+struct FBPServerLogStatement
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FLogStatement Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerLogStatementDelegate, const FBPServerLogStatement&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerModifyCharacterVirtualCurrencyResult"))
 struct FBPServerModifyCharacterVirtualCurrencyResult
 {
@@ -1046,16 +1066,6 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerPlayerStatisticVersionDelegate, const FBPServerPlayerStatisticVersion&, Result);
 
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerPlayStreamEventHistory"))
-struct FBPServerPlayStreamEventHistory
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ServerModels::FPlayStreamEventHistory Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerPlayStreamEventHistoryDelegate, const FBPServerPlayStreamEventHistory&, Result);
-
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRedeemCouponRequest"))
 struct FBPServerRedeemCouponRequest
 {
@@ -1156,15 +1166,15 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRevokeInventoryResultDelegate, const FBPServerRevokeInventoryResult&, Result);
 
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRunCloudScriptResult"))
-struct FBPServerRunCloudScriptResult
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerScriptExecutionError"))
+struct FBPServerScriptExecutionError
 {
 	GENERATED_USTRUCT_BODY()
 public:
-	 PlayFab::ServerModels::FRunCloudScriptResult Data; 
+	 PlayFab::ServerModels::FScriptExecutionError Data; 
 };
 
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRunCloudScriptResultDelegate, const FBPServerRunCloudScriptResult&, Result);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerScriptExecutionErrorDelegate, const FBPServerScriptExecutionError&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerSendPushNotificationRequest"))
 struct FBPServerSendPushNotificationRequest
@@ -1235,16 +1245,6 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerSharedGroupDataRecordDelegate, const FBPServerSharedGroupDataRecord&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerSourceType"))
-struct FBPServerSourceType
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ServerModels::SourceType Data;	
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerSourceTypeDelegate, const FBPServerSourceType&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerStatisticNameVersion"))
 struct FBPServerStatisticNameVersion
