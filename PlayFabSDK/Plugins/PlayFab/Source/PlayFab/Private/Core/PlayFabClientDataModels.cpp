@@ -12754,5 +12754,162 @@ bool PlayFab::ClientModels::FValidateIOSReceiptResult::readFromValue(const TShar
 }
 
 
+PlayFab::ClientModels::FWriteClientCharacterEventRequest::~FWriteClientCharacterEventRequest()
+{
+    
+}
+
+void PlayFab::ClientModels::FWriteClientCharacterEventRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("CharacterId")); writer->WriteValue(CharacterId);
+	
+    writer->WriteIdentifierPrefix(TEXT("EventName")); writer->WriteValue(EventName);
+	
+    if(Timestamp.notNull()) { writer->WriteIdentifierPrefix(TEXT("Timestamp")); writeDatetime(Timestamp, writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FWriteClientCharacterEventRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
+    if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> EventNameValue = obj->TryGetField(TEXT("EventName"));
+    if (EventNameValue.IsValid()&& !EventNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(EventNameValue->TryGetString(TmpValue)) {EventName = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TimestampValue = obj->TryGetField(TEXT("Timestamp"));
+    if(TimestampValue.IsValid())
+    {
+        Timestamp = readDatetime(TimestampValue);
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FWriteClientPlayerEventRequest::~FWriteClientPlayerEventRequest()
+{
+    
+}
+
+void PlayFab::ClientModels::FWriteClientPlayerEventRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("EventName")); writer->WriteValue(EventName);
+	
+    if(Timestamp.notNull()) { writer->WriteIdentifierPrefix(TEXT("Timestamp")); writeDatetime(Timestamp, writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FWriteClientPlayerEventRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> EventNameValue = obj->TryGetField(TEXT("EventName"));
+    if (EventNameValue.IsValid()&& !EventNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(EventNameValue->TryGetString(TmpValue)) {EventName = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TimestampValue = obj->TryGetField(TEXT("Timestamp"));
+    if(TimestampValue.IsValid())
+    {
+        Timestamp = readDatetime(TimestampValue);
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FWriteEventResponse::~FWriteEventResponse()
+{
+    
+}
+
+void PlayFab::ClientModels::FWriteEventResponse::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(EventId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("EventId")); writer->WriteValue(EventId); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FWriteEventResponse::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> EventIdValue = obj->TryGetField(TEXT("EventId"));
+    if (EventIdValue.IsValid()&& !EventIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(EventIdValue->TryGetString(TmpValue)) {EventId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FWriteTitleEventRequest::~FWriteTitleEventRequest()
+{
+    
+}
+
+void PlayFab::ClientModels::FWriteTitleEventRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("EventName")); writer->WriteValue(EventName);
+	
+    if(Timestamp.notNull()) { writer->WriteIdentifierPrefix(TEXT("Timestamp")); writeDatetime(Timestamp, writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FWriteTitleEventRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> EventNameValue = obj->TryGetField(TEXT("EventName"));
+    if (EventNameValue.IsValid()&& !EventNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(EventNameValue->TryGetString(TmpValue)) {EventName = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TimestampValue = obj->TryGetField(TEXT("Timestamp"));
+    if(TimestampValue.IsValid())
+    {
+        Timestamp = readDatetime(TimestampValue);
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
 
 

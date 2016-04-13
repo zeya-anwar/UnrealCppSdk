@@ -3234,3 +3234,47 @@ void UPFClientProxyLibrary::BreakBPClientVirtualCurrencyRechargeTime(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientWriteClientCharacterEventRequest(
+		const FBPClientWriteClientCharacterEventRequest& In
+        ,FString& OutCharacterId
+        ,FString& OutEventName
+        ,FDateTime& OutTimestamp
+	)
+{
+    OutCharacterId = In.Data.CharacterId;
+	OutEventName = In.Data.EventName;
+	
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientWriteClientPlayerEventRequest(
+		const FBPClientWriteClientPlayerEventRequest& In
+        ,FString& OutEventName
+        ,FDateTime& OutTimestamp
+	)
+{
+    OutEventName = In.Data.EventName;
+	
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientWriteEventResponse(
+		const FBPClientWriteEventResponse& In
+        ,FString& OutEventId
+	)
+{
+    OutEventId = In.Data.EventId;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientWriteTitleEventRequest(
+		const FBPClientWriteTitleEventRequest& In
+        ,FString& OutEventName
+        ,FDateTime& OutTimestamp
+	)
+{
+    OutEventName = In.Data.EventName;
+	
+	
+}
+

@@ -5642,6 +5642,138 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FWriteEventResponse : public FPlayFabBaseModel
+    {
+		
+		// [optional] The ID of the event as it was written to PlayStream. This is an alphanumeric GUID.
+		FString EventId;
+	
+        FWriteEventResponse() :
+			FPlayFabBaseModel(),
+			EventId()
+			{}
+		
+		FWriteEventResponse(const FWriteEventResponse& src) :
+			FPlayFabBaseModel(),
+			EventId(src.EventId)
+			{}
+			
+		FWriteEventResponse(const TSharedPtr<FJsonObject>& obj) : FWriteEventResponse()
+        {
+            readFromValue(obj);
+        }
+		
+		~FWriteEventResponse();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FWriteServerCharacterEventRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+		// Unique PlayFab assigned ID for a specific character owned by a user
+		FString CharacterId;
+		// The name of this event. This field is alphanumeric and at most 64 characters long. It is internally namespaced down onto the calling title.
+		FString EventName;
+		// [optional] The time (in UTC) associated with this event. If omitted, a timestamp of now in UTC will be applied.
+		OptionalTime Timestamp;
+	
+        FWriteServerCharacterEventRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			CharacterId(),
+			EventName(),
+			Timestamp()
+			{}
+		
+		FWriteServerCharacterEventRequest(const FWriteServerCharacterEventRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			CharacterId(src.CharacterId),
+			EventName(src.EventName),
+			Timestamp(src.Timestamp)
+			{}
+			
+		FWriteServerCharacterEventRequest(const TSharedPtr<FJsonObject>& obj) : FWriteServerCharacterEventRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FWriteServerCharacterEventRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FWriteServerPlayerEventRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+		// The name of this event. This field is alphanumeric and at most 64 characters long. It is internally namespaced down onto the calling title.
+		FString EventName;
+		// [optional] The time (in UTC) associated with this event. If omitted, a timestamp of 'now' in UTC will be applied.
+		OptionalTime Timestamp;
+	
+        FWriteServerPlayerEventRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			EventName(),
+			Timestamp()
+			{}
+		
+		FWriteServerPlayerEventRequest(const FWriteServerPlayerEventRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			EventName(src.EventName),
+			Timestamp(src.Timestamp)
+			{}
+			
+		FWriteServerPlayerEventRequest(const TSharedPtr<FJsonObject>& obj) : FWriteServerPlayerEventRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FWriteServerPlayerEventRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FWriteTitleEventRequest : public FPlayFabBaseModel
+    {
+		
+		// The name of this event. This field is alphanumeric and at most 64 characters long. It is internally namespaced down onto the calling title.
+		FString EventName;
+		// [optional] The time (in UTC) associated with this event. If omitted, a timestamp of now in UTC will be applied.
+		OptionalTime Timestamp;
+	
+        FWriteTitleEventRequest() :
+			FPlayFabBaseModel(),
+			EventName(),
+			Timestamp()
+			{}
+		
+		FWriteTitleEventRequest(const FWriteTitleEventRequest& src) :
+			FPlayFabBaseModel(),
+			EventName(src.EventName),
+			Timestamp(src.Timestamp)
+			{}
+			
+		FWriteTitleEventRequest(const TSharedPtr<FJsonObject>& obj) : FWriteTitleEventRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FWriteTitleEventRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 
 }
 }

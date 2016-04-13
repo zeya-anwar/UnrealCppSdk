@@ -2136,3 +2136,51 @@ void UPFServerProxyLibrary::BreakBPServerVirtualCurrencyRechargeTime(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerWriteEventResponse(
+		const FBPServerWriteEventResponse& In
+        ,FString& OutEventId
+	)
+{
+    OutEventId = In.Data.EventId;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerWriteServerCharacterEventRequest(
+		const FBPServerWriteServerCharacterEventRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutCharacterId
+        ,FString& OutEventName
+        ,FDateTime& OutTimestamp
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutCharacterId = In.Data.CharacterId;
+	OutEventName = In.Data.EventName;
+	
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerWriteServerPlayerEventRequest(
+		const FBPServerWriteServerPlayerEventRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutEventName
+        ,FDateTime& OutTimestamp
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutEventName = In.Data.EventName;
+	
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerWriteTitleEventRequest(
+		const FBPServerWriteTitleEventRequest& In
+        ,FString& OutEventName
+        ,FDateTime& OutTimestamp
+	)
+{
+    OutEventName = In.Data.EventName;
+	
+	
+}
+
