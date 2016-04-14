@@ -99,6 +99,9 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FAndroidDevicePushNotificationRegistrationDelegate, const ClientModels::FAndroidDevicePushNotificationRegistrationResult&);
         DECLARE_DELEGATE_OneParam(FValidateGooglePlayPurchaseDelegate, const ClientModels::FValidateGooglePlayPurchaseResult&);
         DECLARE_DELEGATE_OneParam(FLogEventDelegate, const ClientModels::FLogEventResult&);
+        DECLARE_DELEGATE_OneParam(FWriteCharacterEventDelegate, const ClientModels::FWriteEventResponse&);
+        DECLARE_DELEGATE_OneParam(FWritePlayerEventDelegate, const ClientModels::FWriteEventResponse&);
+        DECLARE_DELEGATE_OneParam(FWriteTitleEventDelegate, const ClientModels::FWriteEventResponse&);
         DECLARE_DELEGATE_OneParam(FAddSharedGroupMembersDelegate, const ClientModels::FAddSharedGroupMembersResult&);
         DECLARE_DELEGATE_OneParam(FCreateSharedGroupDelegate, const ClientModels::FCreateSharedGroupResult&);
         DECLARE_DELEGATE_OneParam(FGetSharedGroupDataDelegate, const ClientModels::FGetSharedGroupDataResult&);
@@ -532,6 +535,21 @@ namespace PlayFab
          */
         bool LogEvent(ClientModels::FLogEventRequest& request, const FLogEventDelegate& SuccessDelegate = FLogEventDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Writes a character-based event into PlayStream.
+         * This API is designed to write a multitude of different client-defined events into PlayStream. It supports a flexible JSON schema, which allowsfor arbitrary key-value pairs to describe any character-based event. The created event will be locked to the authenticated title and player. 
+         */
+        bool WriteCharacterEvent(ClientModels::FWriteClientCharacterEventRequest& request, const FWriteCharacterEventDelegate& SuccessDelegate = FWriteCharacterEventDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Writes a player-based event into PlayStream.
+         * This API is designed to write a multitude of different event types into PlayStream. It supports a flexible JSON schema, which allowsfor arbitrary key-value pairs to describe any player-based event. The created event will be locked to the authenticated title and player. 
+         */
+        bool WritePlayerEvent(ClientModels::FWriteClientPlayerEventRequest& request, const FWritePlayerEventDelegate& SuccessDelegate = FWritePlayerEventDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Writes a title-based event into PlayStream.
+         * This API is designed to write a multitude of different client-defined events into PlayStream. It supports a flexible JSON schema, which allowsfor arbitrary key-value pairs to describe any title-based event. The created event will be locked to the authenticated title. 
+         */
+        bool WriteTitleEvent(ClientModels::FWriteTitleEventRequest& request, const FWriteTitleEventDelegate& SuccessDelegate = FWriteTitleEventDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Adds users to the set of those able to update both the shared data, as well as the set of users in the group. Only users in the group can add new members.
          */
         bool AddSharedGroupMembers(ClientModels::FAddSharedGroupMembersRequest& request, const FAddSharedGroupMembersDelegate& SuccessDelegate = FAddSharedGroupMembersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -737,6 +755,9 @@ namespace PlayFab
         void OnAndroidDevicePushNotificationRegistrationResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAndroidDevicePushNotificationRegistrationDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnValidateGooglePlayPurchaseResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FValidateGooglePlayPurchaseDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnLogEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLogEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnWriteCharacterEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FWriteCharacterEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnWritePlayerEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FWritePlayerEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnWriteTitleEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FWriteTitleEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAddSharedGroupMembersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddSharedGroupMembersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnCreateSharedGroupResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FCreateSharedGroupDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetSharedGroupDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetSharedGroupDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

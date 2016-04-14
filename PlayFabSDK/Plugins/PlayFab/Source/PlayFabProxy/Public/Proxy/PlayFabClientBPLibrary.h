@@ -1876,6 +1876,34 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,int32& OutRechargeMax
 	);
 	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientWriteClientCharacterEventRequest(
+		const FBPClientWriteClientCharacterEventRequest& In
+        ,FString& OutCharacterId
+        ,FString& OutEventName
+        ,FDateTime& OutTimestamp
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientWriteClientPlayerEventRequest(
+		const FBPClientWriteClientPlayerEventRequest& In
+        ,FString& OutEventName
+        ,FDateTime& OutTimestamp
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientWriteEventResponse(
+		const FBPClientWriteEventResponse& In
+        ,FString& OutEventId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientWriteTitleEventRequest(
+		const FBPClientWriteTitleEventRequest& In
+        ,FString& OutEventName
+        ,FDateTime& OutTimestamp
+	);
+	
 
 
 };

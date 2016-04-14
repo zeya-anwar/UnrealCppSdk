@@ -1666,5 +1666,45 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerVirtualCurrencyRechargeTimeDelegate, const FBPServerVirtualCurrencyRechargeTime&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerWriteEventResponse"))
+struct FBPServerWriteEventResponse
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FWriteEventResponse Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerWriteEventResponseDelegate, const FBPServerWriteEventResponse&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerWriteServerCharacterEventRequest"))
+struct FBPServerWriteServerCharacterEventRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FWriteServerCharacterEventRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerWriteServerCharacterEventRequestDelegate, const FBPServerWriteServerCharacterEventRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerWriteServerPlayerEventRequest"))
+struct FBPServerWriteServerPlayerEventRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FWriteServerPlayerEventRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerWriteServerPlayerEventRequestDelegate, const FBPServerWriteServerPlayerEventRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerWriteTitleEventRequest"))
+struct FBPServerWriteTitleEventRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FWriteTitleEventRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerWriteTitleEventRequestDelegate, const FBPServerWriteTitleEventRequest&, Result);
+
 
 

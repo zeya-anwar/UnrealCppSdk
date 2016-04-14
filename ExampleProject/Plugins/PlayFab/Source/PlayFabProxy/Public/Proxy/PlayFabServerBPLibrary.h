@@ -1233,6 +1233,36 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,int32& OutRechargeMax
 	);
 	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerWriteEventResponse(
+		const FBPServerWriteEventResponse& In
+        ,FString& OutEventId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerWriteServerCharacterEventRequest(
+		const FBPServerWriteServerCharacterEventRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutCharacterId
+        ,FString& OutEventName
+        ,FDateTime& OutTimestamp
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerWriteServerPlayerEventRequest(
+		const FBPServerWriteServerPlayerEventRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutEventName
+        ,FDateTime& OutTimestamp
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerWriteTitleEventRequest(
+		const FBPServerWriteTitleEventRequest& In
+        ,FString& OutEventName
+        ,FDateTime& OutTimestamp
+	);
+	
 
 
 };

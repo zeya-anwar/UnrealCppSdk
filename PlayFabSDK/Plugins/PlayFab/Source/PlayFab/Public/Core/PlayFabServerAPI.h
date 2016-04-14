@@ -68,6 +68,9 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FRedeemMatchmakerTicketDelegate, const ServerModels::FRedeemMatchmakerTicketResult&);
         DECLARE_DELEGATE_OneParam(FAwardSteamAchievementDelegate, const ServerModels::FAwardSteamAchievementResult&);
         DECLARE_DELEGATE_OneParam(FLogEventDelegate, const ServerModels::FLogEventResult&);
+        DECLARE_DELEGATE_OneParam(FWriteCharacterEventDelegate, const ServerModels::FWriteEventResponse&);
+        DECLARE_DELEGATE_OneParam(FWritePlayerEventDelegate, const ServerModels::FWriteEventResponse&);
+        DECLARE_DELEGATE_OneParam(FWriteTitleEventDelegate, const ServerModels::FWriteEventResponse&);
         DECLARE_DELEGATE_OneParam(FAddSharedGroupMembersDelegate, const ServerModels::FAddSharedGroupMembersResult&);
         DECLARE_DELEGATE_OneParam(FCreateSharedGroupDelegate, const ServerModels::FCreateSharedGroupResult&);
         DECLARE_DELEGATE_OneParam(FDeleteSharedGroupDelegate, const ServerModels::FEmptyResult&);
@@ -367,6 +370,21 @@ namespace PlayFab
          */
         bool LogEvent(ServerModels::FLogEventRequest& request, const FLogEventDelegate& SuccessDelegate = FLogEventDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Writes a character-based event into PlayStream.
+         * This API is designed to write a multitude of different event types into PlayStream. It supports a flexible JSON schema, which allowsfor arbitrary key-value pairs to describe any character-based event. The created event will be locked to the authenticated title. 
+         */
+        bool WriteCharacterEvent(ServerModels::FWriteServerCharacterEventRequest& request, const FWriteCharacterEventDelegate& SuccessDelegate = FWriteCharacterEventDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Writes a player-based event into PlayStream.
+         * This API is designed to write a multitude of different event types into PlayStream. It supports a flexible JSON schema, which allowsfor arbitrary key-value pairs to describe any player-based event. The created event will be locked to the authenticated title. 
+         */
+        bool WritePlayerEvent(ServerModels::FWriteServerPlayerEventRequest& request, const FWritePlayerEventDelegate& SuccessDelegate = FWritePlayerEventDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Writes a title-based event into PlayStream.
+         * This API is designed to write a multitude of different event types into PlayStream. It supports a flexible JSON schema, which allowsfor arbitrary key-value pairs to describe any title-based event. The created event will be locked to the authenticated title. 
+         */
+        bool WriteTitleEvent(ServerModels::FWriteTitleEventRequest& request, const FWriteTitleEventDelegate& SuccessDelegate = FWriteTitleEventDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Adds users to the set of those able to update both the shared data, as well as the set of users in the group. Only users in the group (and the server) can add new members.
          */
         bool AddSharedGroupMembers(ServerModels::FAddSharedGroupMembersRequest& request, const FAddSharedGroupMembersDelegate& SuccessDelegate = FAddSharedGroupMembersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -527,6 +545,9 @@ namespace PlayFab
         void OnRedeemMatchmakerTicketResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRedeemMatchmakerTicketDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAwardSteamAchievementResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAwardSteamAchievementDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnLogEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLogEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnWriteCharacterEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FWriteCharacterEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnWritePlayerEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FWritePlayerEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnWriteTitleEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FWriteTitleEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAddSharedGroupMembersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddSharedGroupMembersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnCreateSharedGroupResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FCreateSharedGroupDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnDeleteSharedGroupResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteSharedGroupDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
