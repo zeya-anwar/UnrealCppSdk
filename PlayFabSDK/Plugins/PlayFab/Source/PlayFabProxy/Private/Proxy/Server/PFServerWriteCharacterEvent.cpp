@@ -18,6 +18,7 @@ UPFServerWriteCharacterEvent* UPFServerWriteCharacterEvent::WriteCharacterEvent(
 	Proxy->Request.EventName = InEventName;
 	
 	
+	
 
  	//Proxy->WorldContextObject = WorldContextObject;
 	return Proxy;

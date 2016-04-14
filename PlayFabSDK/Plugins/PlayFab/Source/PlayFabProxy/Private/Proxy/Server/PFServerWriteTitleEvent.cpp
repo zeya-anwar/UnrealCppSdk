@@ -16,6 +16,7 @@ UPFServerWriteTitleEvent* UPFServerWriteTitleEvent::WriteTitleEvent(UObject* Wor
 	Proxy->Request.EventName = InEventName;
 	
 	
+	
 
  	//Proxy->WorldContextObject = WorldContextObject;
 	return Proxy;

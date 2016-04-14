@@ -12769,6 +12769,17 @@ void PlayFab::ClientModels::FWriteClientCharacterEventRequest::writeJSON(JsonWri
 	
     if(Timestamp.notNull()) { writer->WriteIdentifierPrefix(TEXT("Timestamp")); writeDatetime(Timestamp, writer); }
 	
+    if(Body.Num() != 0) 
+    {
+        writer->WriteObjectStart(TEXT("Body"));
+        for (TMap<FString, FMultitypeVar>::TConstIterator It(Body); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            (*It).Value.writeJSON(writer);
+        }
+        writer->WriteObjectEnd();
+     }
+	
     
     writer->WriteObjectEnd();
 }
@@ -12797,6 +12808,16 @@ bool PlayFab::ClientModels::FWriteClientCharacterEventRequest::readFromValue(con
         Timestamp = readDatetime(TimestampValue);
     }
     
+    const TSharedPtr<FJsonObject>* BodyObject;
+    if (obj->TryGetObjectField(TEXT("Body"), BodyObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*BodyObject)->Values); It; ++It)
+        {
+            
+            Body.Add(It.Key(), FMultitypeVar(It.Value()->AsObject()));
+        }
+    }
+    
     
     return HasSucceeded;
 }
@@ -12814,6 +12835,17 @@ void PlayFab::ClientModels::FWriteClientPlayerEventRequest::writeJSON(JsonWriter
     writer->WriteIdentifierPrefix(TEXT("EventName")); writer->WriteValue(EventName);
 	
     if(Timestamp.notNull()) { writer->WriteIdentifierPrefix(TEXT("Timestamp")); writeDatetime(Timestamp, writer); }
+	
+    if(Body.Num() != 0) 
+    {
+        writer->WriteObjectStart(TEXT("Body"));
+        for (TMap<FString, FMultitypeVar>::TConstIterator It(Body); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            (*It).Value.writeJSON(writer);
+        }
+        writer->WriteObjectEnd();
+     }
 	
     
     writer->WriteObjectEnd();
@@ -12834,6 +12866,16 @@ bool PlayFab::ClientModels::FWriteClientPlayerEventRequest::readFromValue(const 
     if(TimestampValue.IsValid())
     {
         Timestamp = readDatetime(TimestampValue);
+    }
+    
+    const TSharedPtr<FJsonObject>* BodyObject;
+    if (obj->TryGetObjectField(TEXT("Body"), BodyObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*BodyObject)->Values); It; ++It)
+        {
+            
+            Body.Add(It.Key(), FMultitypeVar(It.Value()->AsObject()));
+        }
     }
     
     
@@ -12885,6 +12927,17 @@ void PlayFab::ClientModels::FWriteTitleEventRequest::writeJSON(JsonWriter& write
 	
     if(Timestamp.notNull()) { writer->WriteIdentifierPrefix(TEXT("Timestamp")); writeDatetime(Timestamp, writer); }
 	
+    if(Body.Num() != 0) 
+    {
+        writer->WriteObjectStart(TEXT("Body"));
+        for (TMap<FString, FMultitypeVar>::TConstIterator It(Body); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            (*It).Value.writeJSON(writer);
+        }
+        writer->WriteObjectEnd();
+     }
+	
     
     writer->WriteObjectEnd();
 }
@@ -12904,6 +12957,16 @@ bool PlayFab::ClientModels::FWriteTitleEventRequest::readFromValue(const TShared
     if(TimestampValue.IsValid())
     {
         Timestamp = readDatetime(TimestampValue);
+    }
+    
+    const TSharedPtr<FJsonObject>* BodyObject;
+    if (obj->TryGetObjectField(TEXT("Body"), BodyObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*BodyObject)->Values); It; ++It)
+        {
+            
+            Body.Add(It.Key(), FMultitypeVar(It.Value()->AsObject()));
+        }
     }
     
     

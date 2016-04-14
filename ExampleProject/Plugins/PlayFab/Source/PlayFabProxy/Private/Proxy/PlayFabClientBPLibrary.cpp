@@ -3245,6 +3245,7 @@ void UPFClientProxyLibrary::BreakBPClientWriteClientCharacterEventRequest(
 	OutEventName = In.Data.EventName;
 	
 	
+	
 }
 
 void UPFClientProxyLibrary::BreakBPClientWriteClientPlayerEventRequest(
@@ -3254,6 +3255,7 @@ void UPFClientProxyLibrary::BreakBPClientWriteClientPlayerEventRequest(
 	)
 {
     OutEventName = In.Data.EventName;
+	
 	
 	
 }
@@ -3274,6 +3276,7 @@ void UPFClientProxyLibrary::BreakBPClientWriteTitleEventRequest(
 	)
 {
     OutEventName = In.Data.EventName;
+	
 	
 	
 }

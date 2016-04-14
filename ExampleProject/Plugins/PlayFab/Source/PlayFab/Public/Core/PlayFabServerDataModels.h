@@ -5676,17 +5676,20 @@ namespace ServerModels
 		FString PlayFabId;
 		// Unique PlayFab assigned ID for a specific character owned by a user
 		FString CharacterId;
-		// The name of this event. This field is alphanumeric and at most 64 characters long. It is internally namespaced down onto the calling title.
+		// The name of this event. This field is alphanumeric and at most 64 characters long. It is internally namespaced down onto the calling title. Best practices are to name in subject_verb_object format (player_logged_in).
 		FString EventName;
 		// [optional] The time (in UTC) associated with this event. If omitted, a timestamp of now in UTC will be applied.
 		OptionalTime Timestamp;
+		// [optional] Arbitrary json values that represent the custom body of this event.
+		TMap<FString, FMultitypeVar> Body;
 	
         FWriteServerCharacterEventRequest() :
 			FPlayFabBaseModel(),
 			PlayFabId(),
 			CharacterId(),
 			EventName(),
-			Timestamp()
+			Timestamp(),
+			Body()
 			{}
 		
 		FWriteServerCharacterEventRequest(const FWriteServerCharacterEventRequest& src) :
@@ -5694,7 +5697,8 @@ namespace ServerModels
 			PlayFabId(src.PlayFabId),
 			CharacterId(src.CharacterId),
 			EventName(src.EventName),
-			Timestamp(src.Timestamp)
+			Timestamp(src.Timestamp),
+			Body(src.Body)
 			{}
 			
 		FWriteServerCharacterEventRequest(const TSharedPtr<FJsonObject>& obj) : FWriteServerCharacterEventRequest()
@@ -5713,23 +5717,27 @@ namespace ServerModels
 		
 		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
 		FString PlayFabId;
-		// The name of this event. This field is alphanumeric and at most 64 characters long. It is internally namespaced down onto the calling title.
+		// The name of this event. This field is alphanumeric and at most 64 characters long. It is internally namespaced down onto the calling title. Best practices are to name in subject_verb_object format (player_logged_in).
 		FString EventName;
 		// [optional] The time (in UTC) associated with this event. If omitted, a timestamp of 'now' in UTC will be applied.
 		OptionalTime Timestamp;
+		// [optional] Arbitrary json values that represent the custom body of this event.
+		TMap<FString, FMultitypeVar> Body;
 	
         FWriteServerPlayerEventRequest() :
 			FPlayFabBaseModel(),
 			PlayFabId(),
 			EventName(),
-			Timestamp()
+			Timestamp(),
+			Body()
 			{}
 		
 		FWriteServerPlayerEventRequest(const FWriteServerPlayerEventRequest& src) :
 			FPlayFabBaseModel(),
 			PlayFabId(src.PlayFabId),
 			EventName(src.EventName),
-			Timestamp(src.Timestamp)
+			Timestamp(src.Timestamp),
+			Body(src.Body)
 			{}
 			
 		FWriteServerPlayerEventRequest(const TSharedPtr<FJsonObject>& obj) : FWriteServerPlayerEventRequest()
@@ -5746,21 +5754,25 @@ namespace ServerModels
 	struct PLAYFAB_API FWriteTitleEventRequest : public FPlayFabBaseModel
     {
 		
-		// The name of this event. This field is alphanumeric and at most 64 characters long. It is internally namespaced down onto the calling title.
+		// The name of this event. This field is alphanumeric and at most 64 characters long. It is internally namespaced down onto the calling title. Best practices are to name in subject_verb_object format (player_logged_in).
 		FString EventName;
 		// [optional] The time (in UTC) associated with this event. If omitted, a timestamp of now in UTC will be applied.
 		OptionalTime Timestamp;
+		// [optional] Arbitrary json values that represent the custom body of this event.
+		TMap<FString, FMultitypeVar> Body;
 	
         FWriteTitleEventRequest() :
 			FPlayFabBaseModel(),
 			EventName(),
-			Timestamp()
+			Timestamp(),
+			Body()
 			{}
 		
 		FWriteTitleEventRequest(const FWriteTitleEventRequest& src) :
 			FPlayFabBaseModel(),
 			EventName(src.EventName),
-			Timestamp(src.Timestamp)
+			Timestamp(src.Timestamp),
+			Body(src.Body)
 			{}
 			
 		FWriteTitleEventRequest(const TSharedPtr<FJsonObject>& obj) : FWriteTitleEventRequest()

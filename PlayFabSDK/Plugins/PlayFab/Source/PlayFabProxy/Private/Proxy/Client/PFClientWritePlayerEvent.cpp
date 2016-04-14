@@ -16,6 +16,7 @@ UPFClientWritePlayerEvent* UPFClientWritePlayerEvent::WritePlayerEvent(UObject* 
 	Proxy->Request.EventName = InEventName;
 	
 	
+	
 
  	//Proxy->WorldContextObject = WorldContextObject;
 	return Proxy;

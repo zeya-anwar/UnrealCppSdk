@@ -17,6 +17,7 @@ UPFServerWritePlayerEvent* UPFServerWritePlayerEvent::WritePlayerEvent(UObject* 
 	Proxy->Request.EventName = InEventName;
 	
 	
+	
 
  	//Proxy->WorldContextObject = WorldContextObject;
 	return Proxy;

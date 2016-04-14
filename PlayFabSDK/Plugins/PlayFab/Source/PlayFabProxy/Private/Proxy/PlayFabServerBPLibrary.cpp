@@ -2158,6 +2158,7 @@ void UPFServerProxyLibrary::BreakBPServerWriteServerCharacterEventRequest(
 	OutEventName = In.Data.EventName;
 	
 	
+	
 }
 
 void UPFServerProxyLibrary::BreakBPServerWriteServerPlayerEventRequest(
@@ -2171,6 +2172,7 @@ void UPFServerProxyLibrary::BreakBPServerWriteServerPlayerEventRequest(
 	OutEventName = In.Data.EventName;
 	
 	
+	
 }
 
 void UPFServerProxyLibrary::BreakBPServerWriteTitleEventRequest(
@@ -2180,6 +2182,7 @@ void UPFServerProxyLibrary::BreakBPServerWriteTitleEventRequest(
 	)
 {
     OutEventName = In.Data.EventName;
+	
 	
 	
 }
