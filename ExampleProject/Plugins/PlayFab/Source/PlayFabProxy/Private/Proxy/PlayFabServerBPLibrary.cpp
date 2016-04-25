@@ -332,6 +332,26 @@ void UPFServerProxyLibrary::BreakBPServerEmptyResult(
     
 }
 
+void UPFServerProxyLibrary::BreakBPServerEvaluateRandomResultTableRequest(
+		const FBPServerEvaluateRandomResultTableRequest& In
+        ,FString& OutTableId
+        ,FString& OutCatalogVersion
+	)
+{
+    OutTableId = In.Data.TableId;
+	OutCatalogVersion = In.Data.CatalogVersion;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerEvaluateRandomResultTableResult(
+		const FBPServerEvaluateRandomResultTableResult& In
+        ,FString& OutResultItemId
+	)
+{
+    OutResultItemId = In.Data.ResultItemId;
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerExecuteCloudScriptResult(
 		const FBPServerExecuteCloudScriptResult& In
         ,FString& OutFunctionName

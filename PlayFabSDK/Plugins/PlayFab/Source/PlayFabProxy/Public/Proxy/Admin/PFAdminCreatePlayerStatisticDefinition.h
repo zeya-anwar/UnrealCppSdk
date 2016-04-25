@@ -19,7 +19,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FBPAdminCreatePlayerStatisticDefinitionResultDelegate OnFailure;
 	
-	// Adds a new player statistic configuration to the title, optionally allowing the developer to specify a reset interval.
+	// Adds a new player statistic configuration to the title, optionally allowing the developer to specify a reset interval and an aggregation method.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Admin|Player Data Management")
 	static UPFAdminCreatePlayerStatisticDefinition* CreatePlayerStatisticDefinition(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InStatisticName);
 

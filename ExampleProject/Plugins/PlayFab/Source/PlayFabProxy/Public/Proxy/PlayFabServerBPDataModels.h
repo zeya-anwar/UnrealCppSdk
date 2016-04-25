@@ -276,6 +276,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerEmptyResultDelegate, const FBPServerEmptyResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerEvaluateRandomResultTableRequest"))
+struct FBPServerEvaluateRandomResultTableRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FEvaluateRandomResultTableRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerEvaluateRandomResultTableRequestDelegate, const FBPServerEvaluateRandomResultTableRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerEvaluateRandomResultTableResult"))
+struct FBPServerEvaluateRandomResultTableResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FEvaluateRandomResultTableResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerEvaluateRandomResultTableResultDelegate, const FBPServerEvaluateRandomResultTableResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerExecuteCloudScriptResult"))
 struct FBPServerExecuteCloudScriptResult
 {

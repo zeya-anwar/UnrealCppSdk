@@ -9,13 +9,14 @@ UPFClientAndroidDevicePushNotificationRegistration::UPFClientAndroidDevicePushNo
 {
 }
 
-UPFClientAndroidDevicePushNotificationRegistration* UPFClientAndroidDevicePushNotificationRegistration::AndroidDevicePushNotificationRegistration(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InDeviceToken, const bool& InSendPushNotificationConfirmation, const FString& InConfirmationMessege)
+UPFClientAndroidDevicePushNotificationRegistration* UPFClientAndroidDevicePushNotificationRegistration::AndroidDevicePushNotificationRegistration(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InDeviceToken, const bool& InSendPushNotificationConfirmation, const FString& InConfirmationMessege, const FString& InConfirmationMessage)
 {
 	UPFClientAndroidDevicePushNotificationRegistration* Proxy = NewObject<UPFClientAndroidDevicePushNotificationRegistration>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.DeviceToken = InDeviceToken;
 	Proxy->Request.SendPushNotificationConfirmation = InSendPushNotificationConfirmation;
 	Proxy->Request.ConfirmationMessege = InConfirmationMessege;
+	Proxy->Request.ConfirmationMessage = InConfirmationMessage;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

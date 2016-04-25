@@ -47,6 +47,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FAddCharacterVirtualCurrencyDelegate, const ServerModels::FModifyCharacterVirtualCurrencyResult&);
         DECLARE_DELEGATE_OneParam(FAddUserVirtualCurrencyDelegate, const ServerModels::FModifyUserVirtualCurrencyResult&);
         DECLARE_DELEGATE_OneParam(FConsumeItemDelegate, const ServerModels::FConsumeItemResult&);
+        DECLARE_DELEGATE_OneParam(FEvaluateRandomResultTableDelegate, const ServerModels::FEvaluateRandomResultTableResult&);
         DECLARE_DELEGATE_OneParam(FGetCharacterInventoryDelegate, const ServerModels::FGetCharacterInventoryResult&);
         DECLARE_DELEGATE_OneParam(FGetUserInventoryDelegate, const ServerModels::FGetUserInventoryResult&);
         DECLARE_DELEGATE_OneParam(FGrantItemsToCharacterDelegate, const ServerModels::FGrantItemsToCharacterResult&);
@@ -269,6 +270,10 @@ namespace PlayFab
          * Consume uses of a consumable item. When all uses are consumed, it will be removed from the player's inventory.
          */
         bool ConsumeItem(ServerModels::FConsumeItemRequest& request, const FConsumeItemDelegate& SuccessDelegate = FConsumeItemDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Returns the result of an evaluation of a Random Result Table - the ItemId from the game Catalog which would have been added to the player inventory, if the Random Result Table were added via a Bundle or a call to UnlockContainer.
+         */
+        bool EvaluateRandomResultTable(ServerModels::FEvaluateRandomResultTableRequest& request, const FEvaluateRandomResultTableDelegate& SuccessDelegate = FEvaluateRandomResultTableDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves the specified character's current inventory of virtual goods
          * All items currently in the character inventory will be returned, irrespective of how they were acquired (via purchasing, grants, coupons, etc.). Items that are expired, fully consumed, or are no longer valid are not considered to be in the user's current inventory, and so will not be not included. Also returns their virtual currency balances.
@@ -524,6 +529,7 @@ namespace PlayFab
         void OnAddCharacterVirtualCurrencyResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddCharacterVirtualCurrencyDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAddUserVirtualCurrencyResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddUserVirtualCurrencyDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnConsumeItemResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FConsumeItemDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnEvaluateRandomResultTableResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FEvaluateRandomResultTableDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetCharacterInventoryResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCharacterInventoryDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserInventoryResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserInventoryDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGrantItemsToCharacterResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGrantItemsToCharacterDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

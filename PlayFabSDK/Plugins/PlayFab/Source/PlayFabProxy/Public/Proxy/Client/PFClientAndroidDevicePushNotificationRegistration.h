@@ -21,7 +21,7 @@ public:
 	
 	// Registers the Android device to receive push notifications
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Android-Specific APIs")
-	static UPFClientAndroidDevicePushNotificationRegistration* AndroidDevicePushNotificationRegistration(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InDeviceToken, const bool& InSendPushNotificationConfirmation, const FString& InConfirmationMessege);
+	static UPFClientAndroidDevicePushNotificationRegistration* AndroidDevicePushNotificationRegistration(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InDeviceToken, const bool& InSendPushNotificationConfirmation, const FString& InConfirmationMessege, const FString& InConfirmationMessage);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

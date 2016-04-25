@@ -383,19 +383,23 @@ namespace ClientModels
 		OptionalBool SendPushNotificationConfirmation;
 		// [optional] Message to display when confirming push notification.
 		FString ConfirmationMessege;
+		// [optional] Message to display when confirming push notification.
+		FString ConfirmationMessage;
 	
         FAndroidDevicePushNotificationRegistrationRequest() :
 			FPlayFabBaseModel(),
 			DeviceToken(),
 			SendPushNotificationConfirmation(),
-			ConfirmationMessege()
+			ConfirmationMessege(),
+			ConfirmationMessage()
 			{}
 		
 		FAndroidDevicePushNotificationRegistrationRequest(const FAndroidDevicePushNotificationRegistrationRequest& src) :
 			FPlayFabBaseModel(),
 			DeviceToken(src.DeviceToken),
 			SendPushNotificationConfirmation(src.SendPushNotificationConfirmation),
-			ConfirmationMessege(src.ConfirmationMessege)
+			ConfirmationMessege(src.ConfirmationMessege),
+			ConfirmationMessage(src.ConfirmationMessage)
 			{}
 			
 		FAndroidDevicePushNotificationRegistrationRequest(const TSharedPtr<FJsonObject>& obj) : FAndroidDevicePushNotificationRegistrationRequest()
@@ -1501,7 +1505,7 @@ namespace ClientModels
 		FString FunctionName;
 		// [optional] Object that is passed in to the function as the first argument
 		FMultitypeVar FunctionParameter;
-		// [optional] Option for which revision of the CloudScript to execute. 'Latest' executes the most recently created revision, 'Live' executes the current live, published revision, and 'Specific' executes the specified revision.
+		// [optional] Option for which revision of the CloudScript to execute. 'Latest' executes the most recently created revision, 'Live' executes the current live, published revision, and 'Specific' executes the specified revision. The default value is 'Specific', if the SpeificRevision parameter is specified, otherwise it is 'Live'.
 		Boxed<CloudScriptRevisionOption> RevisionSelection;
 		// [optional] The specivic revision to execute, when RevisionSelection is set to 'Specific'
 		OptionalInt32 SpecificRevision;

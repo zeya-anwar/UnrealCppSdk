@@ -82,6 +82,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutDeviceToken
         ,bool& OutSendPushNotificationConfirmation
         ,FString& OutConfirmationMessege
+        ,FString& OutConfirmationMessage
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))

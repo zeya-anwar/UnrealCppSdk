@@ -2377,6 +2377,77 @@ bool PlayFab::ServerModels::FEmptyResult::readFromValue(const TSharedPtr<FJsonOb
 }
 
 
+PlayFab::ServerModels::FEvaluateRandomResultTableRequest::~FEvaluateRandomResultTableRequest()
+{
+    
+}
+
+void PlayFab::ServerModels::FEvaluateRandomResultTableRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("TableId")); writer->WriteValue(TableId);
+	
+    if(CatalogVersion.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CatalogVersion")); writer->WriteValue(CatalogVersion); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FEvaluateRandomResultTableRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> TableIdValue = obj->TryGetField(TEXT("TableId"));
+    if (TableIdValue.IsValid()&& !TableIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TableIdValue->TryGetString(TmpValue)) {TableId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> CatalogVersionValue = obj->TryGetField(TEXT("CatalogVersion"));
+    if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FEvaluateRandomResultTableResult::~FEvaluateRandomResultTableResult()
+{
+    
+}
+
+void PlayFab::ServerModels::FEvaluateRandomResultTableResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(ResultItemId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ResultItemId")); writer->WriteValue(ResultItemId); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FEvaluateRandomResultTableResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> ResultItemIdValue = obj->TryGetField(TEXT("ResultItemId"));
+    if (ResultItemIdValue.IsValid()&& !ResultItemIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ResultItemIdValue->TryGetString(TmpValue)) {ResultItemId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ServerModels::FLogStatement::~FLogStatement()
 {
     

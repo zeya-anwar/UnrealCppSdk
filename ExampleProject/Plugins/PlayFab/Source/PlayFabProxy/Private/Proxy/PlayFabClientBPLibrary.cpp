@@ -105,11 +105,13 @@ void UPFClientProxyLibrary::BreakBPClientAndroidDevicePushNotificationRegistrati
         ,FString& OutDeviceToken
         ,bool& OutSendPushNotificationConfirmation
         ,FString& OutConfirmationMessege
+        ,FString& OutConfirmationMessage
 	)
 {
     OutDeviceToken = In.Data.DeviceToken;
 	OutSendPushNotificationConfirmation = In.Data.SendPushNotificationConfirmation;
 	OutConfirmationMessege = In.Data.ConfirmationMessege;
+	OutConfirmationMessage = In.Data.ConfirmationMessage;
 	
 }
 

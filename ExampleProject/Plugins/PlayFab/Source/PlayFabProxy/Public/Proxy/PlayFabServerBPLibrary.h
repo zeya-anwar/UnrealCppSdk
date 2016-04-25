@@ -212,6 +212,19 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerEvaluateRandomResultTableRequest(
+		const FBPServerEvaluateRandomResultTableRequest& In
+        ,FString& OutTableId
+        ,FString& OutCatalogVersion
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerEvaluateRandomResultTableResult(
+		const FBPServerEvaluateRandomResultTableResult& In
+        ,FString& OutResultItemId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerExecuteCloudScriptResult(
 		const FBPServerExecuteCloudScriptResult& In
         ,FString& OutFunctionName

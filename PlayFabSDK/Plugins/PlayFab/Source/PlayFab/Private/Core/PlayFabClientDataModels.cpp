@@ -575,6 +575,8 @@ void PlayFab::ClientModels::FAndroidDevicePushNotificationRegistrationRequest::w
 	
     if(ConfirmationMessege.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ConfirmationMessege")); writer->WriteValue(ConfirmationMessege); }
 	
+    if(ConfirmationMessage.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ConfirmationMessage")); writer->WriteValue(ConfirmationMessage); }
+	
     
     writer->WriteObjectEnd();
 }
@@ -602,6 +604,13 @@ bool PlayFab::ClientModels::FAndroidDevicePushNotificationRegistrationRequest::r
     {
         FString TmpValue;
         if(ConfirmationMessegeValue->TryGetString(TmpValue)) {ConfirmationMessege = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ConfirmationMessageValue = obj->TryGetField(TEXT("ConfirmationMessage"));
+    if (ConfirmationMessageValue.IsValid()&& !ConfirmationMessageValue->IsNull())
+    {
+        FString TmpValue;
+        if(ConfirmationMessageValue->TryGetString(TmpValue)) {ConfirmationMessage = TmpValue; }
     }
     
     

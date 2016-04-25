@@ -1529,6 +1529,64 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FEvaluateRandomResultTableRequest : public FPlayFabBaseModel
+    {
+		
+		// The unique identifier of the Random Result Table to use.
+		FString TableId;
+		// [optional] Specifies the catalog version that should be used to evaluate the Random Result Table.  If unspecified, uses default/primary catalog.
+		FString CatalogVersion;
+	
+        FEvaluateRandomResultTableRequest() :
+			FPlayFabBaseModel(),
+			TableId(),
+			CatalogVersion()
+			{}
+		
+		FEvaluateRandomResultTableRequest(const FEvaluateRandomResultTableRequest& src) :
+			FPlayFabBaseModel(),
+			TableId(src.TableId),
+			CatalogVersion(src.CatalogVersion)
+			{}
+			
+		FEvaluateRandomResultTableRequest(const TSharedPtr<FJsonObject>& obj) : FEvaluateRandomResultTableRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FEvaluateRandomResultTableRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FEvaluateRandomResultTableResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Unique identifier for the item returned from the Random Result Table evaluation, for the given catalog.
+		FString ResultItemId;
+	
+        FEvaluateRandomResultTableResult() :
+			FPlayFabBaseModel(),
+			ResultItemId()
+			{}
+		
+		FEvaluateRandomResultTableResult(const FEvaluateRandomResultTableResult& src) :
+			FPlayFabBaseModel(),
+			ResultItemId(src.ResultItemId)
+			{}
+			
+		FEvaluateRandomResultTableResult(const TSharedPtr<FJsonObject>& obj) : FEvaluateRandomResultTableResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FEvaluateRandomResultTableResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FLogStatement : public FPlayFabBaseModel
     {
 		
@@ -1667,7 +1725,7 @@ namespace ServerModels
 		FString FunctionName;
 		// [optional] Object that is passed in to the function as the first argument
 		FMultitypeVar FunctionParameter;
-		// [optional] Option for which revision of the CloudScript to execute. 'Latest' executes the most recently created revision, 'Live' executes the current live, published revision, and 'Specific' executes the specified revision.
+		// [optional] Option for which revision of the CloudScript to execute. 'Latest' executes the most recently created revision, 'Live' executes the current live, published revision, and 'Specific' executes the specified revision. The default value is 'Specific', if the SpeificRevision parameter is specified, otherwise it is 'Live'.
 		Boxed<CloudScriptRevisionOption> RevisionSelection;
 		// [optional] The specivic revision to execute, when RevisionSelection is set to 'Specific'
 		OptionalInt32 SpecificRevision;
