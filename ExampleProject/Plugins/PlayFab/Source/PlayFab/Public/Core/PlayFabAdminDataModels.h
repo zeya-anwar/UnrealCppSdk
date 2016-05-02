@@ -4086,6 +4086,95 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FSetStoreSegemntOverridesResult : public FPlayFabBaseModel
+    {
+		
+	
+        FSetStoreSegemntOverridesResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FSetStoreSegemntOverridesResult(const FSetStoreSegemntOverridesResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FSetStoreSegemntOverridesResult(const TSharedPtr<FJsonObject>& obj) : FSetStoreSegemntOverridesResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FSetStoreSegemntOverridesResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FStoreSegmentNamePair : public FPlayFabBaseModel
+    {
+		
+		// The id of the store being referenced
+		FString StoreId;
+		// The name of the segment being referenced
+		FString SegmentName;
+	
+        FStoreSegmentNamePair() :
+			FPlayFabBaseModel(),
+			StoreId(),
+			SegmentName()
+			{}
+		
+		FStoreSegmentNamePair(const FStoreSegmentNamePair& src) :
+			FPlayFabBaseModel(),
+			StoreId(src.StoreId),
+			SegmentName(src.SegmentName)
+			{}
+			
+		FStoreSegmentNamePair(const TSharedPtr<FJsonObject>& obj) : FStoreSegmentNamePair()
+        {
+            readFromValue(obj);
+        }
+		
+		~FStoreSegmentNamePair();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FSetStoreSegmentOverridesRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] Catalog version to use for the request. Defaults to most recent catalog if null.
+		FString CatalogVersion;
+		// The id of the store being overridden. Requests from the client api to store will return the store associated with the override
+		FString BaseStoreId;
+		// [optional] The list of overrides in order of evaluation.
+		TArray<FStoreSegmentNamePair> Overrides;
+	
+        FSetStoreSegmentOverridesRequest() :
+			FPlayFabBaseModel(),
+			CatalogVersion(),
+			BaseStoreId(),
+			Overrides()
+			{}
+		
+		FSetStoreSegmentOverridesRequest(const FSetStoreSegmentOverridesRequest& src) :
+			FPlayFabBaseModel(),
+			CatalogVersion(src.CatalogVersion),
+			BaseStoreId(src.BaseStoreId),
+			Overrides(src.Overrides)
+			{}
+			
+		FSetStoreSegmentOverridesRequest(const TSharedPtr<FJsonObject>& obj) : FSetStoreSegmentOverridesRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FSetStoreSegmentOverridesRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FSetTitleDataRequest : public FPlayFabBaseModel
     {
 		

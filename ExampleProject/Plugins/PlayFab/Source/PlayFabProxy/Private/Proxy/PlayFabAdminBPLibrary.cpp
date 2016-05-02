@@ -1260,6 +1260,32 @@ void UPFAdminProxyLibrary::BreakBPAdminSetPublisherDataResult(
     
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminSetStoreSegemntOverridesResult(
+		const FBPAdminSetStoreSegemntOverridesResult& In
+	)
+{
+    
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminSetStoreSegmentOverridesRequest(
+		const FBPAdminSetStoreSegmentOverridesRequest& In
+        ,FString& OutCatalogVersion
+        ,FString& OutBaseStoreId
+        ,TArray<FBPAdminStoreSegmentNamePair>& OutOverrides
+	)
+{
+    OutCatalogVersion = In.Data.CatalogVersion;
+	OutBaseStoreId = In.Data.BaseStoreId;
+	for (const PlayFab::AdminModels::FStoreSegmentNamePair& elem : In.Data.Overrides)
+    {
+        FBPAdminStoreSegmentNamePair result;
+        result.Data = elem;
+        OutOverrides.Add(result);
+    }
+
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminSetTitleDataRequest(
 		const FBPAdminSetTitleDataRequest& In
         ,FString& OutKey
@@ -1333,6 +1359,17 @@ void UPFAdminProxyLibrary::BreakBPAdminStoreItem(
     OutItemId = In.Data.ItemId;
 	
 	
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminStoreSegmentNamePair(
+		const FBPAdminStoreSegmentNamePair& In
+        ,FString& OutStoreId
+        ,FString& OutSegmentName
+	)
+{
+    OutStoreId = In.Data.StoreId;
+	OutSegmentName = In.Data.SegmentName;
 	
 }
 

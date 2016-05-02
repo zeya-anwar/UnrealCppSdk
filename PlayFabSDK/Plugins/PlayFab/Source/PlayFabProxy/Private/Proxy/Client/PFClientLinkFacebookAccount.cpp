@@ -9,12 +9,11 @@ UPFClientLinkFacebookAccount::UPFClientLinkFacebookAccount(const FObjectInitiali
 {
 }
 
-UPFClientLinkFacebookAccount* UPFClientLinkFacebookAccount::LinkFacebookAccount(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InAccessToken, const bool& InForceLink)
+UPFClientLinkFacebookAccount* UPFClientLinkFacebookAccount::LinkFacebookAccount(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InAccessToken)
 {
 	UPFClientLinkFacebookAccount* Proxy = NewObject<UPFClientLinkFacebookAccount>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.AccessToken = InAccessToken;
-	Proxy->Request.ForceLink = InForceLink;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

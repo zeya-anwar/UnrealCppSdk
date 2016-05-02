@@ -723,6 +723,19 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminSetStoreSegemntOverridesResult(
+		const FBPAdminSetStoreSegemntOverridesResult& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminSetStoreSegmentOverridesRequest(
+		const FBPAdminSetStoreSegmentOverridesRequest& In
+        ,FString& OutCatalogVersion
+        ,FString& OutBaseStoreId
+        ,TArray<FBPAdminStoreSegmentNamePair>& OutOverrides
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminSetTitleDataRequest(
 		const FBPAdminSetTitleDataRequest& In
         ,FString& OutKey
@@ -769,6 +782,13 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPAdminStoreItem(
 		const FBPAdminStoreItem& In
         ,FString& OutItemId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminStoreSegmentNamePair(
+		const FBPAdminStoreSegmentNamePair& In
+        ,FString& OutStoreId
+        ,FString& OutSegmentName
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))

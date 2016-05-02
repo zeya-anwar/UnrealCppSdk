@@ -382,15 +382,12 @@ namespace ClientModels
 		// [optional] If true, send a test push message immediately after sucessful registration. Defaults to false.
 		OptionalBool SendPushNotificationConfirmation;
 		// [optional] Message to display when confirming push notification.
-		FString ConfirmationMessege;
-		// [optional] Message to display when confirming push notification.
 		FString ConfirmationMessage;
 	
         FAndroidDevicePushNotificationRegistrationRequest() :
 			FPlayFabBaseModel(),
 			DeviceToken(),
 			SendPushNotificationConfirmation(),
-			ConfirmationMessege(),
 			ConfirmationMessage()
 			{}
 		
@@ -398,7 +395,6 @@ namespace ClientModels
 			FPlayFabBaseModel(),
 			DeviceToken(src.DeviceToken),
 			SendPushNotificationConfirmation(src.SendPushNotificationConfirmation),
-			ConfirmationMessege(src.ConfirmationMessege),
 			ConfirmationMessage(src.ConfirmationMessage)
 			{}
 			
@@ -5311,19 +5307,15 @@ namespace ClientModels
 		
 		// Unique identifier from Facebook for the user.
 		FString AccessToken;
-		// [optional] If another user is already linked to the account, unlink the other user and re-link.
-		OptionalBool ForceLink;
 	
         FLinkFacebookAccountRequest() :
 			FPlayFabBaseModel(),
-			AccessToken(),
-			ForceLink()
+			AccessToken()
 			{}
 		
 		FLinkFacebookAccountRequest(const FLinkFacebookAccountRequest& src) :
 			FPlayFabBaseModel(),
-			AccessToken(src.AccessToken),
-			ForceLink(src.ForceLink)
+			AccessToken(src.AccessToken)
 			{}
 			
 		FLinkFacebookAccountRequest(const TSharedPtr<FJsonObject>& obj) : FLinkFacebookAccountRequest()

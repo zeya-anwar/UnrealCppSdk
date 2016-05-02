@@ -45,6 +45,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FListVirtualCurrencyTypesDelegate, const AdminModels::FListVirtualCurrencyTypesResult&);
         DECLARE_DELEGATE_OneParam(FSetCatalogItemsDelegate, const AdminModels::FUpdateCatalogItemsResult&);
         DECLARE_DELEGATE_OneParam(FSetStoreItemsDelegate, const AdminModels::FUpdateStoreItemsResult&);
+        DECLARE_DELEGATE_OneParam(FSetStoreSegmentOverridesDelegate, const AdminModels::FSetStoreSegemntOverridesResult&);
         DECLARE_DELEGATE_OneParam(FSetTitleDataDelegate, const AdminModels::FSetTitleDataResult&);
         DECLARE_DELEGATE_OneParam(FSetupPushNotificationDelegate, const AdminModels::FSetupPushNotificationResult&);
         DECLARE_DELEGATE_OneParam(FUpdateCatalogItemsDelegate, const AdminModels::FUpdateCatalogItemsResult&);
@@ -247,6 +248,11 @@ namespace PlayFab
          */
         bool SetStoreItems(AdminModels::FUpdateStoreItemsRequest& request, const FSetStoreItemsDelegate& SuccessDelegate = FSetStoreItemsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Sets up a store to be used in an AB test using segments
+         * When a user calls GetStoreItems from the Client API for the DefaultStore, we return the store perscribed by this configuration. We take the first match of that user's segment to the list of given overrides. We default to the base store. Note that there can each store can only be the base store for one override at a time. Calling this api for an existing base store will overwrite the old configuration. Also note that this only affects requests from the client API.  For example, let say a developer calls SetStoreSegmentOverrides with SpringEventStore as the default, and sets the overrides in order {SegmentA -> SpringStoreA, SegmentB -> SpringStoreB}.  Later, a user calls Client/GetStoreItems with SpringEventStore as the  storeId. Playfab looks up if there are any overrides where SpringEventStore is the default. It finds the override,  and first checks if the user is in SegmentA. If yes, then returns SpringStoreA. If not, it checks if the user is in SegmentB. If so, it returns SpringStoreB. If not, it returns the default SpringEventStore
+         */
+        bool SetStoreSegmentOverrides(AdminModels::FSetStoreSegmentOverridesRequest& request, const FSetStoreSegmentOverridesDelegate& SuccessDelegate = FSetStoreSegmentOverridesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Creates and updates the key-value store of custom title settings
          * This API is designed to store title specific values which can be read, but not written to, by the client. For example, a developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new build. This operation is additive. If a Key does not exist in the current dataset, it will be added with the specified Value. If it already exists, the Value for that key will be overwritten with the new Value.
          */
@@ -407,6 +413,7 @@ namespace PlayFab
         void OnListVirtualCurrencyTypesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FListVirtualCurrencyTypesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetCatalogItemsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetCatalogItemsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetStoreItemsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetStoreItemsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnSetStoreSegmentOverridesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetStoreSegmentOverridesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetTitleDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetTitleDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetupPushNotificationResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetupPushNotificationDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateCatalogItemsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateCatalogItemsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

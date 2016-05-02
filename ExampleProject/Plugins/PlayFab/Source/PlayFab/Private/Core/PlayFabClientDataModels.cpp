@@ -573,8 +573,6 @@ void PlayFab::ClientModels::FAndroidDevicePushNotificationRegistrationRequest::w
 	
     if(SendPushNotificationConfirmation.notNull()) { writer->WriteIdentifierPrefix(TEXT("SendPushNotificationConfirmation")); writer->WriteValue(SendPushNotificationConfirmation); }
 	
-    if(ConfirmationMessege.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ConfirmationMessege")); writer->WriteValue(ConfirmationMessege); }
-	
     if(ConfirmationMessage.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ConfirmationMessage")); writer->WriteValue(ConfirmationMessage); }
 	
     
@@ -597,13 +595,6 @@ bool PlayFab::ClientModels::FAndroidDevicePushNotificationRegistrationRequest::r
     {
         bool TmpValue;
         if(SendPushNotificationConfirmationValue->TryGetBool(TmpValue)) {SendPushNotificationConfirmation = TmpValue; }
-    }
-    
-    const TSharedPtr<FJsonValue> ConfirmationMessegeValue = obj->TryGetField(TEXT("ConfirmationMessege"));
-    if (ConfirmationMessegeValue.IsValid()&& !ConfirmationMessegeValue->IsNull())
-    {
-        FString TmpValue;
-        if(ConfirmationMessegeValue->TryGetString(TmpValue)) {ConfirmationMessege = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> ConfirmationMessageValue = obj->TryGetField(TEXT("ConfirmationMessage"));
@@ -8273,8 +8264,6 @@ void PlayFab::ClientModels::FLinkFacebookAccountRequest::writeJSON(JsonWriter& w
     
     writer->WriteIdentifierPrefix(TEXT("AccessToken")); writer->WriteValue(AccessToken);
 	
-    if(ForceLink.notNull()) { writer->WriteIdentifierPrefix(TEXT("ForceLink")); writer->WriteValue(ForceLink); }
-	
     
     writer->WriteObjectEnd();
 }
@@ -8288,13 +8277,6 @@ bool PlayFab::ClientModels::FLinkFacebookAccountRequest::readFromValue(const TSh
     {
         FString TmpValue;
         if(AccessTokenValue->TryGetString(TmpValue)) {AccessToken = TmpValue; }
-    }
-    
-    const TSharedPtr<FJsonValue> ForceLinkValue = obj->TryGetField(TEXT("ForceLink"));
-    if (ForceLinkValue.IsValid()&& !ForceLinkValue->IsNull())
-    {
-        bool TmpValue;
-        if(ForceLinkValue->TryGetBool(TmpValue)) {ForceLink = TmpValue; }
     }
     
     

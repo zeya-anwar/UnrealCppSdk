@@ -6321,6 +6321,130 @@ bool PlayFab::AdminModels::FSetPublisherDataResult::readFromValue(const TSharedP
 }
 
 
+PlayFab::AdminModels::FSetStoreSegemntOverridesResult::~FSetStoreSegemntOverridesResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FSetStoreSegemntOverridesResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FSetStoreSegemntOverridesResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FStoreSegmentNamePair::~FStoreSegmentNamePair()
+{
+    
+}
+
+void PlayFab::AdminModels::FStoreSegmentNamePair::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("StoreId")); writer->WriteValue(StoreId);
+	
+    writer->WriteIdentifierPrefix(TEXT("SegmentName")); writer->WriteValue(SegmentName);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FStoreSegmentNamePair::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> StoreIdValue = obj->TryGetField(TEXT("StoreId"));
+    if (StoreIdValue.IsValid()&& !StoreIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(StoreIdValue->TryGetString(TmpValue)) {StoreId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> SegmentNameValue = obj->TryGetField(TEXT("SegmentName"));
+    if (SegmentNameValue.IsValid()&& !SegmentNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(SegmentNameValue->TryGetString(TmpValue)) {SegmentName = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FSetStoreSegmentOverridesRequest::~FSetStoreSegmentOverridesRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FSetStoreSegmentOverridesRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(CatalogVersion.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CatalogVersion")); writer->WriteValue(CatalogVersion); }
+	
+    writer->WriteIdentifierPrefix(TEXT("BaseStoreId")); writer->WriteValue(BaseStoreId);
+	
+    if(Overrides.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("Overrides"));
+    
+        for (const FStoreSegmentNamePair& item : Overrides)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FSetStoreSegmentOverridesRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> CatalogVersionValue = obj->TryGetField(TEXT("CatalogVersion"));
+    if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> BaseStoreIdValue = obj->TryGetField(TEXT("BaseStoreId"));
+    if (BaseStoreIdValue.IsValid()&& !BaseStoreIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(BaseStoreIdValue->TryGetString(TmpValue)) {BaseStoreId = TmpValue; }
+    }
+    
+    {
+        const TArray< TSharedPtr<FJsonValue> >&OverridesArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Overrides"));
+        for (int32 Idx = 0; Idx < OverridesArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = OverridesArray[Idx];
+            
+            Overrides.Add(FStoreSegmentNamePair(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::AdminModels::FSetTitleDataRequest::~FSetTitleDataRequest()
 {
     

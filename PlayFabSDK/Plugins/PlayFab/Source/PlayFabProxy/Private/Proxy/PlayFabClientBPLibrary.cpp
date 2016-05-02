@@ -104,13 +104,11 @@ void UPFClientProxyLibrary::BreakBPClientAndroidDevicePushNotificationRegistrati
 		const FBPClientAndroidDevicePushNotificationRegistrationRequest& In
         ,FString& OutDeviceToken
         ,bool& OutSendPushNotificationConfirmation
-        ,FString& OutConfirmationMessege
         ,FString& OutConfirmationMessage
 	)
 {
     OutDeviceToken = In.Data.DeviceToken;
 	OutSendPushNotificationConfirmation = In.Data.SendPushNotificationConfirmation;
-	OutConfirmationMessege = In.Data.ConfirmationMessege;
 	OutConfirmationMessage = In.Data.ConfirmationMessage;
 	
 }
@@ -1637,11 +1635,9 @@ void UPFClientProxyLibrary::BreakBPClientLinkCustomIDResult(
 void UPFClientProxyLibrary::BreakBPClientLinkFacebookAccountRequest(
 		const FBPClientLinkFacebookAccountRequest& In
         ,FString& OutAccessToken
-        ,bool& OutForceLink
 	)
 {
     OutAccessToken = In.Data.AccessToken;
-	OutForceLink = In.Data.ForceLink;
 	
 }
 

@@ -81,7 +81,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPClientAndroidDevicePushNotificationRegistrationRequest& In
         ,FString& OutDeviceToken
         ,bool& OutSendPushNotificationConfirmation
-        ,FString& OutConfirmationMessege
         ,FString& OutConfirmationMessage
 	);
 	
@@ -913,7 +912,6 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPClientLinkFacebookAccountRequest(
 		const FBPClientLinkFacebookAccountRequest& In
         ,FString& OutAccessToken
-        ,bool& OutForceLink
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
