@@ -1,17 +1,17 @@
-Unreal 4.9 C++ SDK for PlayFab README
+Unreal 4.9 and 4.11 C++ SDK for PlayFab README
 ========
 
 
 1. Overview:
 ----
-Unreal 4.9 C++ SDKs for PlayFab - BETA
+Unreal 4.9 and 4.11 C++ SDKs for PlayFab
 
 The Unreal C++ SDK includes:
 
 * PlayFabSDK Folder: Unreal SDK-Plugin - Put this plugin in your new or existing project to utilize PlayFab
 * ExampleProject Folder: Unreal SDK ExampleProject - Use this project to start your new game, or demo/test the PlayFab system.
 
-The C++ sdk contains a settings option to set developerSecretKey.  For the security of your title, this must be blank for client builds.
+This sdk contains a settings option to set developerSecretKey.  For the security of your title, this must be blank for client builds.
 
 2. Prerequisites:
 ----
@@ -63,7 +63,7 @@ If this is a server process, you can also fill in the developerSecretKey.  For t
 If you experience this error:
 Plugin 'PlayFab' failed to load because module 'PlayFab' could not be found.  Please ensure the plugin is properly installed, otherwise consider disabling the plugin for this project.
 
-Your Unreal project is not set up to be a C++ project.  Here is a tutorial that will fix this problem.
+Your Unreal project is not set up to be a C++ project.  Here is a tutorial that will help fix this problem.
 http://idkudk.blogspot.com/2015/02/how-to-get-plugins-to-package-correctly.html
 
 
