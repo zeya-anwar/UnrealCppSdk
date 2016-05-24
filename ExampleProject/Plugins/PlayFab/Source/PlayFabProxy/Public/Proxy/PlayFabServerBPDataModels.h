@@ -336,6 +336,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerFriendInfoDelegate, const FBPServerFriendInfo&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGameInstanceState"))
+struct FBPServerGameInstanceState
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::GameInstanceState Data;	
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGameInstanceStateDelegate, const FBPServerGameInstanceState&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetCatalogItemsRequest"))
 struct FBPServerGetCatalogItemsRequest
 {
@@ -1215,6 +1225,26 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerSendPushNotificationResultDelegate, const FBPServerSendPushNotificationResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerSetGameServerInstanceStateRequest"))
+struct FBPServerSetGameServerInstanceStateRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FSetGameServerInstanceStateRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerSetGameServerInstanceStateRequestDelegate, const FBPServerSetGameServerInstanceStateRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerSetGameServerInstanceStateResult"))
+struct FBPServerSetGameServerInstanceStateResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FSetGameServerInstanceStateResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerSetGameServerInstanceStateResultDelegate, const FBPServerSetGameServerInstanceStateResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerSetPublisherDataRequest"))
 struct FBPServerSetPublisherDataRequest

@@ -1024,19 +1024,23 @@ namespace AdminModels
 		uint32 MinPlayerCount;
 		// maximum user count a specific Game Server Instance can support
 		uint32 MaxPlayerCount;
+		// [optional] whether to start as an open session, meaning that players can matchmake into it (defaults to true)
+		OptionalBool StartOpen;
 	
         FGameModeInfo() :
 			FPlayFabBaseModel(),
 			Gamemode(),
 			MinPlayerCount(0),
-			MaxPlayerCount(0)
+			MaxPlayerCount(0),
+			StartOpen()
 			{}
 		
 		FGameModeInfo(const FGameModeInfo& src) :
 			FPlayFabBaseModel(),
 			Gamemode(src.Gamemode),
 			MinPlayerCount(src.MinPlayerCount),
-			MaxPlayerCount(src.MaxPlayerCount)
+			MaxPlayerCount(src.MaxPlayerCount),
+			StartOpen(src.StartOpen)
 			{}
 			
 		FGameModeInfo(const TSharedPtr<FJsonObject>& obj) : FGameModeInfo()
@@ -2213,7 +2217,7 @@ namespace AdminModels
 		// [optional] Specific keys to search for in the custom user data.
 		TArray<FString> Keys;
 		// [optional] The version that currently exists according to the caller. The call will return the data for all of the keys if the version in the system is greater than this.
-		OptionalInt32 IfChangedFromDataVersion;
+		OptionalUint32 IfChangedFromDataVersion;
 	
         FGetUserDataRequest() :
 			FPlayFabBaseModel(),
@@ -3767,7 +3771,7 @@ namespace AdminModels
 		
 		// Username of user to reset
 		FString Username;
-		// Password for the PlayFab account (6-30 characters)
+		// Password for the PlayFab account (6-100 characters)
 		FString Password;
 	
         FUserCredentials() :
@@ -4086,95 +4090,6 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
-	struct PLAYFAB_API FSetStoreSegemntOverridesResult : public FPlayFabBaseModel
-    {
-		
-	
-        FSetStoreSegemntOverridesResult() :
-			FPlayFabBaseModel()
-			{}
-		
-		FSetStoreSegemntOverridesResult(const FSetStoreSegemntOverridesResult& src) :
-			FPlayFabBaseModel()
-			{}
-			
-		FSetStoreSegemntOverridesResult(const TSharedPtr<FJsonObject>& obj) : FSetStoreSegemntOverridesResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FSetStoreSegemntOverridesResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FStoreSegmentNamePair : public FPlayFabBaseModel
-    {
-		
-		// The id of the store being referenced
-		FString StoreId;
-		// The name of the segment being referenced
-		FString SegmentName;
-	
-        FStoreSegmentNamePair() :
-			FPlayFabBaseModel(),
-			StoreId(),
-			SegmentName()
-			{}
-		
-		FStoreSegmentNamePair(const FStoreSegmentNamePair& src) :
-			FPlayFabBaseModel(),
-			StoreId(src.StoreId),
-			SegmentName(src.SegmentName)
-			{}
-			
-		FStoreSegmentNamePair(const TSharedPtr<FJsonObject>& obj) : FStoreSegmentNamePair()
-        {
-            readFromValue(obj);
-        }
-		
-		~FStoreSegmentNamePair();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FSetStoreSegmentOverridesRequest : public FPlayFabBaseModel
-    {
-		
-		// [optional] Catalog version to use for the request. Defaults to most recent catalog if null.
-		FString CatalogVersion;
-		// The id of the store being overridden. Requests from the client api to store will return the store associated with the override
-		FString BaseStoreId;
-		// [optional] The list of overrides in order of evaluation.
-		TArray<FStoreSegmentNamePair> Overrides;
-	
-        FSetStoreSegmentOverridesRequest() :
-			FPlayFabBaseModel(),
-			CatalogVersion(),
-			BaseStoreId(),
-			Overrides()
-			{}
-		
-		FSetStoreSegmentOverridesRequest(const FSetStoreSegmentOverridesRequest& src) :
-			FPlayFabBaseModel(),
-			CatalogVersion(src.CatalogVersion),
-			BaseStoreId(src.BaseStoreId),
-			Overrides(src.Overrides)
-			{}
-			
-		FSetStoreSegmentOverridesRequest(const TSharedPtr<FJsonObject>& obj) : FSetStoreSegmentOverridesRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FSetStoreSegmentOverridesRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
 	struct PLAYFAB_API FSetTitleDataRequest : public FPlayFabBaseModel
     {
 		
@@ -4397,19 +4312,23 @@ namespace AdminModels
 		TArray<FCloudScriptFile> Files;
 		// Immediately publish the new revision
 		bool Publish;
+		// [optional] PlayFab user ID of the developer initiating the request.
+		FString DeveloperPlayFabId;
 	
         FUpdateCloudScriptRequest() :
 			FPlayFabBaseModel(),
 			Version(),
 			Files(),
-			Publish(false)
+			Publish(false),
+			DeveloperPlayFabId()
 			{}
 		
 		FUpdateCloudScriptRequest(const FUpdateCloudScriptRequest& src) :
 			FPlayFabBaseModel(),
 			Version(src.Version),
 			Files(src.Files),
-			Publish(src.Publish)
+			Publish(src.Publish),
+			DeveloperPlayFabId(src.DeveloperPlayFabId)
 			{}
 			
 		FUpdateCloudScriptRequest(const TSharedPtr<FJsonObject>& obj) : FUpdateCloudScriptRequest()

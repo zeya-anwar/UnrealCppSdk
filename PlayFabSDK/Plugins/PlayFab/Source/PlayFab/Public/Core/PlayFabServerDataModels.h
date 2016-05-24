@@ -1849,6 +1849,16 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	enum GameInstanceState
+	{
+		GameInstanceStateOpen,
+		GameInstanceStateClosed
+	};
+	
+	void writeGameInstanceStateEnumJSON(GameInstanceState enumVal, JsonWriter& writer);
+	GameInstanceState readGameInstanceStateFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
 	struct PLAYFAB_API FGetCatalogItemsRequest : public FPlayFabBaseModel
     {
 		
@@ -1913,7 +1923,7 @@ namespace ServerModels
 		// [optional] Specific keys to search for in the custom user data.
 		TArray<FString> Keys;
 		// [optional] The version that currently exists according to the caller. The call will return the data for all of the keys if the version in the system is greater than this.
-		OptionalInt32 IfChangedFromDataVersion;
+		OptionalUint32 IfChangedFromDataVersion;
 	
         FGetCharacterDataRequest() :
 			FPlayFabBaseModel(),
@@ -3463,7 +3473,7 @@ namespace ServerModels
 		// [optional] Specific keys to search for in the custom user data.
 		TArray<FString> Keys;
 		// [optional] The version that currently exists according to the caller. The call will return the data for all of the keys if the version in the system is greater than this.
-		OptionalInt32 IfChangedFromDataVersion;
+		OptionalUint32 IfChangedFromDataVersion;
 	
         FGetUserDataRequest() :
 			FPlayFabBaseModel(),
@@ -4920,6 +4930,60 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FSetGameServerInstanceStateRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique identifier of the Game Instance to be updated.
+		FString LobbyId;
+		// State to set for the specified game server instance.
+		GameInstanceState State;
+	
+        FSetGameServerInstanceStateRequest() :
+			FPlayFabBaseModel(),
+			LobbyId(),
+			State()
+			{}
+		
+		FSetGameServerInstanceStateRequest(const FSetGameServerInstanceStateRequest& src) :
+			FPlayFabBaseModel(),
+			LobbyId(src.LobbyId),
+			State(src.State)
+			{}
+			
+		FSetGameServerInstanceStateRequest(const TSharedPtr<FJsonObject>& obj) : FSetGameServerInstanceStateRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FSetGameServerInstanceStateRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FSetGameServerInstanceStateResult : public FPlayFabBaseModel
+    {
+		
+	
+        FSetGameServerInstanceStateResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FSetGameServerInstanceStateResult(const FSetGameServerInstanceStateResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FSetGameServerInstanceStateResult(const TSharedPtr<FJsonObject>& obj) : FSetGameServerInstanceStateResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FSetGameServerInstanceStateResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FSetPublisherDataRequest : public FPlayFabBaseModel
     {
 		
@@ -5391,7 +5455,7 @@ namespace ServerModels
 		
 		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
 		FString PlayFabId;
-		// [optional] Statistics to be updated with the provided values
+		// Statistics to be updated with the provided values
 		TArray<FStatisticUpdate> Statistics;
 	
         FUpdatePlayerStatisticsRequest() :

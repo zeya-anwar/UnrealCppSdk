@@ -1539,6 +1539,33 @@ void UPlayFabServerAPI::OnRedeemMatchmakerTicketResult(FHttpRequestPtr HttpReque
     }
 }
 
+bool UPlayFabServerAPI::SetGameServerInstanceState(
+    ServerModels::FSetGameServerInstanceStateRequest& request,
+    const FSetGameServerInstanceStateDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Server/SetGameServerInstanceState")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabServerAPI::OnSetGameServerInstanceStateResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabServerAPI::OnSetGameServerInstanceStateResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetGameServerInstanceStateDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ServerModels::FSetGameServerInstanceStateResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
 bool UPlayFabServerAPI::AwardSteamAchievement(
     ServerModels::FAwardSteamAchievementRequest& request,
     const FAwardSteamAchievementDelegate& SuccessDelegate,

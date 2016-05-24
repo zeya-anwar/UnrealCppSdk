@@ -766,9 +766,9 @@ bool PlayFab::AdminModels::FCatalogItemBundleInfo::readFromValue(const TSharedPt
 
 PlayFab::AdminModels::FCatalogItem::~FCatalogItem()
 {
-    //if(Consumable != NULL) delete Consumable;
-    //if(Container != NULL) delete Container;
-    //if(Bundle != NULL) delete Bundle;
+    //if(Consumable != nullptr) delete Consumable;
+    //if(Container != nullptr) delete Container;
+    //if(Bundle != nullptr) delete Bundle;
     
 }
 
@@ -1260,7 +1260,7 @@ bool PlayFab::AdminModels::FPlayerStatisticDefinition::readFromValue(const TShar
 
 PlayFab::AdminModels::FCreatePlayerStatisticDefinitionResult::~FCreatePlayerStatisticDefinitionResult()
 {
-    //if(Statistic != NULL) delete Statistic;
+    //if(Statistic != nullptr) delete Statistic;
     
 }
 
@@ -1753,6 +1753,8 @@ void PlayFab::AdminModels::FGameModeInfo::writeJSON(JsonWriter& writer) const
 	
     writer->WriteIdentifierPrefix(TEXT("MaxPlayerCount")); writer->WriteValue(static_cast<int64>(MaxPlayerCount));
 	
+    if(StartOpen.notNull()) { writer->WriteIdentifierPrefix(TEXT("StartOpen")); writer->WriteValue(StartOpen); }
+	
     
     writer->WriteObjectEnd();
 }
@@ -1780,6 +1782,13 @@ bool PlayFab::AdminModels::FGameModeInfo::readFromValue(const TSharedPtr<FJsonOb
     {
         uint32 TmpValue;
         if(MaxPlayerCountValue->TryGetNumber(TmpValue)) {MaxPlayerCount = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> StartOpenValue = obj->TryGetField(TEXT("StartOpen"));
+    if (StartOpenValue.IsValid()&& !StartOpenValue->IsNull())
+    {
+        bool TmpValue;
+        if(StartOpenValue->TryGetBool(TmpValue)) {StartOpen = TmpValue; }
     }
     
     
@@ -3529,7 +3538,7 @@ void PlayFab::AdminModels::FGetUserDataRequest::writeJSON(JsonWriter& writer) co
         writer->WriteArrayEnd();
      }
 	
-    if(IfChangedFromDataVersion.notNull()) { writer->WriteIdentifierPrefix(TEXT("IfChangedFromDataVersion")); writer->WriteValue(IfChangedFromDataVersion); }
+    if(IfChangedFromDataVersion.notNull()) { writer->WriteIdentifierPrefix(TEXT("IfChangedFromDataVersion")); writer->WriteValue(static_cast<int64>(IfChangedFromDataVersion)); }
 	
     
     writer->WriteObjectEnd();
@@ -3551,7 +3560,7 @@ bool PlayFab::AdminModels::FGetUserDataRequest::readFromValue(const TSharedPtr<F
     const TSharedPtr<FJsonValue> IfChangedFromDataVersionValue = obj->TryGetField(TEXT("IfChangedFromDataVersion"));
     if (IfChangedFromDataVersionValue.IsValid()&& !IfChangedFromDataVersionValue->IsNull())
     {
-        int32 TmpValue;
+        uint32 TmpValue;
         if(IfChangedFromDataVersionValue->TryGetNumber(TmpValue)) {IfChangedFromDataVersion = TmpValue; }
     }
     
@@ -4427,7 +4436,7 @@ bool PlayFab::AdminModels::FIncrementPlayerStatisticVersionRequest::readFromValu
 
 PlayFab::AdminModels::FIncrementPlayerStatisticVersionResult::~FIncrementPlayerStatisticVersionResult()
 {
-    //if(StatisticVersion != NULL) delete StatisticVersion;
+    //if(StatisticVersion != nullptr) delete StatisticVersion;
     
 }
 
@@ -5228,18 +5237,18 @@ bool PlayFab::AdminModels::FUserCustomIdInfo::readFromValue(const TSharedPtr<FJs
 
 PlayFab::AdminModels::FUserAccountInfo::~FUserAccountInfo()
 {
-    //if(TitleInfo != NULL) delete TitleInfo;
-    //if(PrivateInfo != NULL) delete PrivateInfo;
-    //if(FacebookInfo != NULL) delete FacebookInfo;
-    //if(SteamInfo != NULL) delete SteamInfo;
-    //if(GameCenterInfo != NULL) delete GameCenterInfo;
-    //if(IosDeviceInfo != NULL) delete IosDeviceInfo;
-    //if(AndroidDeviceInfo != NULL) delete AndroidDeviceInfo;
-    //if(KongregateInfo != NULL) delete KongregateInfo;
-    //if(PsnInfo != NULL) delete PsnInfo;
-    //if(GoogleInfo != NULL) delete GoogleInfo;
-    //if(XboxInfo != NULL) delete XboxInfo;
-    //if(CustomIdInfo != NULL) delete CustomIdInfo;
+    //if(TitleInfo != nullptr) delete TitleInfo;
+    //if(PrivateInfo != nullptr) delete PrivateInfo;
+    //if(FacebookInfo != nullptr) delete FacebookInfo;
+    //if(SteamInfo != nullptr) delete SteamInfo;
+    //if(GameCenterInfo != nullptr) delete GameCenterInfo;
+    //if(IosDeviceInfo != nullptr) delete IosDeviceInfo;
+    //if(AndroidDeviceInfo != nullptr) delete AndroidDeviceInfo;
+    //if(KongregateInfo != nullptr) delete KongregateInfo;
+    //if(PsnInfo != nullptr) delete PsnInfo;
+    //if(GoogleInfo != nullptr) delete GoogleInfo;
+    //if(XboxInfo != nullptr) delete XboxInfo;
+    //if(CustomIdInfo != nullptr) delete CustomIdInfo;
     
 }
 
@@ -5384,7 +5393,7 @@ bool PlayFab::AdminModels::FUserAccountInfo::readFromValue(const TSharedPtr<FJso
 
 PlayFab::AdminModels::FLookupUserAccountInfoResult::~FLookupUserAccountInfoResult()
 {
-    //if(UserInfo != NULL) delete UserInfo;
+    //if(UserInfo != nullptr) delete UserInfo;
     
 }
 
@@ -6321,130 +6330,6 @@ bool PlayFab::AdminModels::FSetPublisherDataResult::readFromValue(const TSharedP
 }
 
 
-PlayFab::AdminModels::FSetStoreSegemntOverridesResult::~FSetStoreSegemntOverridesResult()
-{
-    
-}
-
-void PlayFab::AdminModels::FSetStoreSegemntOverridesResult::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-    
-    
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::AdminModels::FSetStoreSegemntOverridesResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-	bool HasSucceeded = true; 
-	
-    
-    return HasSucceeded;
-}
-
-
-PlayFab::AdminModels::FStoreSegmentNamePair::~FStoreSegmentNamePair()
-{
-    
-}
-
-void PlayFab::AdminModels::FStoreSegmentNamePair::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-    
-    writer->WriteIdentifierPrefix(TEXT("StoreId")); writer->WriteValue(StoreId);
-	
-    writer->WriteIdentifierPrefix(TEXT("SegmentName")); writer->WriteValue(SegmentName);
-	
-    
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::AdminModels::FStoreSegmentNamePair::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-	bool HasSucceeded = true; 
-	
-    const TSharedPtr<FJsonValue> StoreIdValue = obj->TryGetField(TEXT("StoreId"));
-    if (StoreIdValue.IsValid()&& !StoreIdValue->IsNull())
-    {
-        FString TmpValue;
-        if(StoreIdValue->TryGetString(TmpValue)) {StoreId = TmpValue; }
-    }
-    
-    const TSharedPtr<FJsonValue> SegmentNameValue = obj->TryGetField(TEXT("SegmentName"));
-    if (SegmentNameValue.IsValid()&& !SegmentNameValue->IsNull())
-    {
-        FString TmpValue;
-        if(SegmentNameValue->TryGetString(TmpValue)) {SegmentName = TmpValue; }
-    }
-    
-    
-    return HasSucceeded;
-}
-
-
-PlayFab::AdminModels::FSetStoreSegmentOverridesRequest::~FSetStoreSegmentOverridesRequest()
-{
-    
-}
-
-void PlayFab::AdminModels::FSetStoreSegmentOverridesRequest::writeJSON(JsonWriter& writer) const
-{
-    writer->WriteObjectStart();
-    
-    if(CatalogVersion.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CatalogVersion")); writer->WriteValue(CatalogVersion); }
-	
-    writer->WriteIdentifierPrefix(TEXT("BaseStoreId")); writer->WriteValue(BaseStoreId);
-	
-    if(Overrides.Num() != 0) 
-    {
-        writer->WriteArrayStart(TEXT("Overrides"));
-    
-        for (const FStoreSegmentNamePair& item : Overrides)
-        {
-            item.writeJSON(writer);
-        }
-        writer->WriteArrayEnd();
-     }
-	
-    
-    writer->WriteObjectEnd();
-}
-
-bool PlayFab::AdminModels::FSetStoreSegmentOverridesRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
-{
-	bool HasSucceeded = true; 
-	
-    const TSharedPtr<FJsonValue> CatalogVersionValue = obj->TryGetField(TEXT("CatalogVersion"));
-    if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
-    {
-        FString TmpValue;
-        if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
-    }
-    
-    const TSharedPtr<FJsonValue> BaseStoreIdValue = obj->TryGetField(TEXT("BaseStoreId"));
-    if (BaseStoreIdValue.IsValid()&& !BaseStoreIdValue->IsNull())
-    {
-        FString TmpValue;
-        if(BaseStoreIdValue->TryGetString(TmpValue)) {BaseStoreId = TmpValue; }
-    }
-    
-    {
-        const TArray< TSharedPtr<FJsonValue> >&OverridesArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Overrides"));
-        for (int32 Idx = 0; Idx < OverridesArray.Num(); Idx++)
-        {
-            TSharedPtr<FJsonValue> CurrentItem = OverridesArray[Idx];
-            
-            Overrides.Add(FStoreSegmentNamePair(CurrentItem->AsObject()));
-        }
-    }
-
-    
-    
-    return HasSucceeded;
-}
-
-
 PlayFab::AdminModels::FSetTitleDataRequest::~FSetTitleDataRequest()
 {
     
@@ -6752,6 +6637,8 @@ void PlayFab::AdminModels::FUpdateCloudScriptRequest::writeJSON(JsonWriter& writ
 	
     writer->WriteIdentifierPrefix(TEXT("Publish")); writer->WriteValue(Publish);
 	
+    if(DeveloperPlayFabId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("DeveloperPlayFabId")); writer->WriteValue(DeveloperPlayFabId); }
+	
     
     writer->WriteObjectEnd();
 }
@@ -6783,6 +6670,13 @@ bool PlayFab::AdminModels::FUpdateCloudScriptRequest::readFromValue(const TShare
     {
         bool TmpValue;
         if(PublishValue->TryGetBool(TmpValue)) {Publish = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> DeveloperPlayFabIdValue = obj->TryGetField(TEXT("DeveloperPlayFabId"));
+    if (DeveloperPlayFabIdValue.IsValid()&& !DeveloperPlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(DeveloperPlayFabIdValue->TryGetString(TmpValue)) {DeveloperPlayFabId = TmpValue; }
     }
     
     
@@ -6871,7 +6765,7 @@ bool PlayFab::AdminModels::FUpdatePlayerStatisticDefinitionRequest::readFromValu
 
 PlayFab::AdminModels::FUpdatePlayerStatisticDefinitionResult::~FUpdatePlayerStatisticDefinitionResult()
 {
-    //if(Statistic != NULL) delete Statistic;
+    //if(Statistic != nullptr) delete Statistic;
     
 }
 

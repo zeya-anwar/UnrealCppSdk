@@ -986,26 +986,6 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminSetPublisherDataResultDelegate, const FBPAdminSetPublisherDataResult&, Result);
 
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminSetStoreSegemntOverridesResult"))
-struct FBPAdminSetStoreSegemntOverridesResult
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::AdminModels::FSetStoreSegemntOverridesResult Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminSetStoreSegemntOverridesResultDelegate, const FBPAdminSetStoreSegemntOverridesResult&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminSetStoreSegmentOverridesRequest"))
-struct FBPAdminSetStoreSegmentOverridesRequest
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::AdminModels::FSetStoreSegmentOverridesRequest Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminSetStoreSegmentOverridesRequestDelegate, const FBPAdminSetStoreSegmentOverridesRequest&, Result);
-
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminSetTitleDataRequest"))
 struct FBPAdminSetTitleDataRequest
 {
@@ -1085,16 +1065,6 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminStoreItemDelegate, const FBPAdminStoreItem&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminStoreSegmentNamePair"))
-struct FBPAdminStoreSegmentNamePair
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::AdminModels::FStoreSegmentNamePair Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminStoreSegmentNamePairDelegate, const FBPAdminStoreSegmentNamePair&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminSubtractUserVirtualCurrencyRequest"))
 struct FBPAdminSubtractUserVirtualCurrencyRequest

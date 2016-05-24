@@ -288,7 +288,7 @@ namespace ClientModels
 		FString Username;
 		// User email address attached to their account
 		FString Email;
-		// Password for the PlayFab account (6-30 characters)
+		// Password for the PlayFab account (6-100 characters)
 		FString Password;
 	
         FAddUsernamePasswordRequest() :
@@ -2510,7 +2510,7 @@ namespace ClientModels
 		// [optional] Specific keys to search for in the custom user data.
 		TArray<FString> Keys;
 		// [optional] The version that currently exists according to the caller. The call will return the data for all of the keys if the version in the system is greater than this.
-		OptionalInt32 IfChangedFromDataVersion;
+		OptionalUint32 IfChangedFromDataVersion;
 	
         FGetCharacterDataRequest() :
 			FPlayFabBaseModel(),
@@ -4919,7 +4919,7 @@ namespace ClientModels
 		// [optional] Unique PlayFab identifier of the user to load data for. Optional, defaults to yourself if not set.
 		FString PlayFabId;
 		// [optional] The version that currently exists according to the caller. The call will return the data for all of the keys if the version in the system is greater than this.
-		OptionalInt32 IfChangedFromDataVersion;
+		OptionalUint32 IfChangedFromDataVersion;
 	
         FGetUserDataRequest() :
 			FPlayFabBaseModel(),
@@ -5885,7 +5885,7 @@ namespace ClientModels
 		FString TitleId;
 		// Email address for the account.
 		FString Email;
-		// Password for the PlayFab account (6-30 characters)
+		// Password for the PlayFab account (6-100 characters)
 		FString Password;
 	
         FLoginWithEmailAddressRequest() :
@@ -6111,7 +6111,7 @@ namespace ClientModels
 		FString TitleId;
 		// PlayFab username for the account.
 		FString Username;
-		// Password for the PlayFab account (6-30 characters)
+		// Password for the PlayFab account (6-100 characters)
 		FString Password;
 	
         FLoginWithPlayFabRequest() :
@@ -6189,6 +6189,8 @@ namespace ClientModels
 		FString StatisticName;
 		// [optional] character to use for stats based matching. Leave null to use account stats
 		FString CharacterId;
+		// [optional] start a game session if one with an open slot is not found. Defaults to true
+		OptionalBool StartNewIfNoneFound;
 		// [optional] [deprecated]
 		OptionalBool EnableQueue;
 	
@@ -6200,6 +6202,7 @@ namespace ClientModels
 			LobbyId(),
 			StatisticName(),
 			CharacterId(),
+			StartNewIfNoneFound(),
 			EnableQueue()
 			{}
 		
@@ -6211,6 +6214,7 @@ namespace ClientModels
 			LobbyId(src.LobbyId),
 			StatisticName(src.StatisticName),
 			CharacterId(src.CharacterId),
+			StartNewIfNoneFound(src.StartNewIfNoneFound),
 			EnableQueue(src.EnableQueue)
 			{}
 			
@@ -6229,7 +6233,9 @@ namespace ClientModels
 	{
 		MatchmakeStatusComplete,
 		MatchmakeStatusWaiting,
-		MatchmakeStatusGameNotFound
+		MatchmakeStatusGameNotFound,
+		MatchmakeStatusNoAvailableSlots,
+		MatchmakeStatusSessionClosed
 	};
 	
 	void writeMatchmakeStatusEnumJSON(MatchmakeStatus enumVal, JsonWriter& writer);
@@ -6752,7 +6758,7 @@ namespace ClientModels
 		FString Username;
 		// [optional] User email address attached to their account
 		FString Email;
-		// Password for the PlayFab account (6-30 characters)
+		// Password for the PlayFab account (6-100 characters)
 		FString Password;
 		// [optional] An optional parameter that specifies whether both the username and email parameters are required. If true, both parameters are required; if false, the user must supply either the username or email parameter. The default value is true.
 		OptionalBool RequireBothUsernameAndEmail;
@@ -8097,7 +8103,7 @@ namespace ClientModels
 	struct PLAYFAB_API FUpdatePlayerStatisticsRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] Statistics to be updated with the provided values
+		// Statistics to be updated with the provided values
 		TArray<FStatisticUpdate> Statistics;
 	
         FUpdatePlayerStatisticsRequest() :

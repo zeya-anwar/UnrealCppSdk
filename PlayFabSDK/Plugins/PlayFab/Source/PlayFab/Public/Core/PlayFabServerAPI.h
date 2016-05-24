@@ -67,6 +67,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FUpdateUserInventoryItemCustomDataDelegate, const ServerModels::FEmptyResult&);
         DECLARE_DELEGATE_OneParam(FNotifyMatchmakerPlayerLeftDelegate, const ServerModels::FNotifyMatchmakerPlayerLeftResult&);
         DECLARE_DELEGATE_OneParam(FRedeemMatchmakerTicketDelegate, const ServerModels::FRedeemMatchmakerTicketResult&);
+        DECLARE_DELEGATE_OneParam(FSetGameServerInstanceStateDelegate, const ServerModels::FSetGameServerInstanceStateResult&);
         DECLARE_DELEGATE_OneParam(FAwardSteamAchievementDelegate, const ServerModels::FAwardSteamAchievementResult&);
         DECLARE_DELEGATE_OneParam(FLogEventDelegate, const ServerModels::FLogEventResult&);
         DECLARE_DELEGATE_OneParam(FWriteCharacterEventDelegate, const ServerModels::FWriteEventResponse&);
@@ -366,6 +367,10 @@ namespace PlayFab
          */
         bool RedeemMatchmakerTicket(ServerModels::FRedeemMatchmakerTicketRequest& request, const FRedeemMatchmakerTicketDelegate& SuccessDelegate = FRedeemMatchmakerTicketDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Sets the state of the indicated Game Server Instance
+         */
+        bool SetGameServerInstanceState(ServerModels::FSetGameServerInstanceStateRequest& request, const FSetGameServerInstanceStateDelegate& SuccessDelegate = FSetGameServerInstanceStateDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Awards the specified users the specified Steam achievements
          */
         bool AwardSteamAchievement(ServerModels::FAwardSteamAchievementRequest& request, const FAwardSteamAchievementDelegate& SuccessDelegate = FAwardSteamAchievementDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -549,6 +554,7 @@ namespace PlayFab
         void OnUpdateUserInventoryItemCustomDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserInventoryItemCustomDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnNotifyMatchmakerPlayerLeftResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FNotifyMatchmakerPlayerLeftDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRedeemMatchmakerTicketResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRedeemMatchmakerTicketDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnSetGameServerInstanceStateResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetGameServerInstanceStateDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAwardSteamAchievementResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAwardSteamAchievementDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnLogEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLogEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnWriteCharacterEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FWriteCharacterEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

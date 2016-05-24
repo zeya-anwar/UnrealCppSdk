@@ -1957,6 +1957,7 @@ void UPFClientProxyLibrary::BreakBPClientMatchmakeRequest(
         ,FString& OutLobbyId
         ,FString& OutStatisticName
         ,FString& OutCharacterId
+        ,bool& OutStartNewIfNoneFound
         ,bool& OutEnableQueue
 	)
 {
@@ -1966,6 +1967,7 @@ void UPFClientProxyLibrary::BreakBPClientMatchmakeRequest(
 	OutLobbyId = In.Data.LobbyId;
 	OutStatisticName = In.Data.StatisticName;
 	OutCharacterId = In.Data.CharacterId;
+	OutStartNewIfNoneFound = In.Data.StartNewIfNoneFound;
 	OutEnableQueue = In.Data.EnableQueue;
 	
 }

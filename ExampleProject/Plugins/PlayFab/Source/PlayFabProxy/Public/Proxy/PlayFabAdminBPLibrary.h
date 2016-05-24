@@ -182,6 +182,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutGamemode
         ,int32& OutMinPlayerCount
         ,int32& OutMaxPlayerCount
+        ,bool& OutStartOpen
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -723,19 +724,6 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
-	static void BreakBPAdminSetStoreSegemntOverridesResult(
-		const FBPAdminSetStoreSegemntOverridesResult& In
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
-	static void BreakBPAdminSetStoreSegmentOverridesRequest(
-		const FBPAdminSetStoreSegmentOverridesRequest& In
-        ,FString& OutCatalogVersion
-        ,FString& OutBaseStoreId
-        ,TArray<FBPAdminStoreSegmentNamePair>& OutOverrides
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminSetTitleDataRequest(
 		const FBPAdminSetTitleDataRequest& In
         ,FString& OutKey
@@ -785,13 +773,6 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
-	static void BreakBPAdminStoreSegmentNamePair(
-		const FBPAdminStoreSegmentNamePair& In
-        ,FString& OutStoreId
-        ,FString& OutSegmentName
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminSubtractUserVirtualCurrencyRequest(
 		const FBPAdminSubtractUserVirtualCurrencyRequest& In
         ,FString& OutPlayFabId
@@ -822,6 +803,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
         ,int32& OutVersion
         ,TArray<FBPAdminCloudScriptFile>& OutFiles
         ,bool& OutPublish
+        ,FString& OutDeveloperPlayFabId
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))

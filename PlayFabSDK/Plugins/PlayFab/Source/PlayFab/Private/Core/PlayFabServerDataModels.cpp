@@ -1148,18 +1148,18 @@ bool PlayFab::ServerModels::FUserCustomIdInfo::readFromValue(const TSharedPtr<FJ
 
 PlayFab::ServerModels::FUserAccountInfo::~FUserAccountInfo()
 {
-    //if(TitleInfo != NULL) delete TitleInfo;
-    //if(PrivateInfo != NULL) delete PrivateInfo;
-    //if(FacebookInfo != NULL) delete FacebookInfo;
-    //if(SteamInfo != NULL) delete SteamInfo;
-    //if(GameCenterInfo != NULL) delete GameCenterInfo;
-    //if(IosDeviceInfo != NULL) delete IosDeviceInfo;
-    //if(AndroidDeviceInfo != NULL) delete AndroidDeviceInfo;
-    //if(KongregateInfo != NULL) delete KongregateInfo;
-    //if(PsnInfo != NULL) delete PsnInfo;
-    //if(GoogleInfo != NULL) delete GoogleInfo;
-    //if(XboxInfo != NULL) delete XboxInfo;
-    //if(CustomIdInfo != NULL) delete CustomIdInfo;
+    //if(TitleInfo != nullptr) delete TitleInfo;
+    //if(PrivateInfo != nullptr) delete PrivateInfo;
+    //if(FacebookInfo != nullptr) delete FacebookInfo;
+    //if(SteamInfo != nullptr) delete SteamInfo;
+    //if(GameCenterInfo != nullptr) delete GameCenterInfo;
+    //if(IosDeviceInfo != nullptr) delete IosDeviceInfo;
+    //if(AndroidDeviceInfo != nullptr) delete AndroidDeviceInfo;
+    //if(KongregateInfo != nullptr) delete KongregateInfo;
+    //if(PsnInfo != nullptr) delete PsnInfo;
+    //if(GoogleInfo != nullptr) delete GoogleInfo;
+    //if(XboxInfo != nullptr) delete XboxInfo;
+    //if(CustomIdInfo != nullptr) delete CustomIdInfo;
     
 }
 
@@ -1304,7 +1304,7 @@ bool PlayFab::ServerModels::FUserAccountInfo::readFromValue(const TSharedPtr<FJs
 
 PlayFab::ServerModels::FAuthenticateSessionTicketResult::~FAuthenticateSessionTicketResult()
 {
-    //if(UserInfo != NULL) delete UserInfo;
+    //if(UserInfo != nullptr) delete UserInfo;
     
 }
 
@@ -1667,9 +1667,9 @@ bool PlayFab::ServerModels::FCatalogItemBundleInfo::readFromValue(const TSharedP
 
 PlayFab::ServerModels::FCatalogItem::~FCatalogItem()
 {
-    //if(Consumable != NULL) delete Consumable;
-    //if(Container != NULL) delete Container;
-    //if(Bundle != NULL) delete Bundle;
+    //if(Consumable != nullptr) delete Consumable;
+    //if(Container != nullptr) delete Container;
+    //if(Bundle != nullptr) delete Bundle;
     
 }
 
@@ -2547,7 +2547,7 @@ bool PlayFab::ServerModels::FScriptExecutionError::readFromValue(const TSharedPt
 
 PlayFab::ServerModels::FExecuteCloudScriptResult::~FExecuteCloudScriptResult()
 {
-    //if(Error != NULL) delete Error;
+    //if(Error != nullptr) delete Error;
     
 }
 
@@ -2772,9 +2772,9 @@ bool PlayFab::ServerModels::FFacebookPlayFabIdPair::readFromValue(const TSharedP
 
 PlayFab::ServerModels::FFriendInfo::~FFriendInfo()
 {
-    //if(FacebookInfo != NULL) delete FacebookInfo;
-    //if(SteamInfo != NULL) delete SteamInfo;
-    //if(GameCenterInfo != NULL) delete GameCenterInfo;
+    //if(FacebookInfo != nullptr) delete FacebookInfo;
+    //if(SteamInfo != nullptr) delete SteamInfo;
+    //if(GameCenterInfo != nullptr) delete GameCenterInfo;
     
 }
 
@@ -2865,6 +2865,39 @@ bool PlayFab::ServerModels::FFriendInfo::readFromValue(const TSharedPtr<FJsonObj
     
     
     return HasSucceeded;
+}
+
+
+void PlayFab::ServerModels::writeGameInstanceStateEnumJSON(GameInstanceState enumVal, JsonWriter& writer)
+{
+    switch(enumVal)
+    {
+        
+        case GameInstanceStateOpen: writer->WriteValue(TEXT("Open")); break;
+        case GameInstanceStateClosed: writer->WriteValue(TEXT("Closed")); break;
+    }
+}
+
+ServerModels::GameInstanceState PlayFab::ServerModels::readGameInstanceStateFromValue(const TSharedPtr<FJsonValue>& value)
+{
+    static TMap<FString, GameInstanceState> _GameInstanceStateMap;
+    if (_GameInstanceStateMap.Num() == 0)
+    {
+        // Auto-generate the map on the first use
+        _GameInstanceStateMap.Add(TEXT("Open"), GameInstanceStateOpen);
+        _GameInstanceStateMap.Add(TEXT("Closed"), GameInstanceStateClosed);
+
+    } 
+
+	if(value.IsValid())
+	{
+	    auto output = _GameInstanceStateMap.Find(value->AsString());
+		if (output != nullptr)
+			return *output;
+	}
+
+
+    return GameInstanceStateOpen; // Basically critical fail
 }
 
 
@@ -2967,7 +3000,7 @@ void PlayFab::ServerModels::FGetCharacterDataRequest::writeJSON(JsonWriter& writ
         writer->WriteArrayEnd();
      }
 	
-    if(IfChangedFromDataVersion.notNull()) { writer->WriteIdentifierPrefix(TEXT("IfChangedFromDataVersion")); writer->WriteValue(IfChangedFromDataVersion); }
+    if(IfChangedFromDataVersion.notNull()) { writer->WriteIdentifierPrefix(TEXT("IfChangedFromDataVersion")); writer->WriteValue(static_cast<int64>(IfChangedFromDataVersion)); }
 	
     
     writer->WriteObjectEnd();
@@ -2996,7 +3029,7 @@ bool PlayFab::ServerModels::FGetCharacterDataRequest::readFromValue(const TShare
     const TSharedPtr<FJsonValue> IfChangedFromDataVersionValue = obj->TryGetField(TEXT("IfChangedFromDataVersion"));
     if (IfChangedFromDataVersionValue.IsValid()&& !IfChangedFromDataVersionValue->IsNull())
     {
-        int32 TmpValue;
+        uint32 TmpValue;
         if(IfChangedFromDataVersionValue->TryGetNumber(TmpValue)) {IfChangedFromDataVersion = TmpValue; }
     }
     
@@ -5329,7 +5362,7 @@ bool PlayFab::ServerModels::FGetUserAccountInfoRequest::readFromValue(const TSha
 
 PlayFab::ServerModels::FGetUserAccountInfoResult::~FGetUserAccountInfoResult()
 {
-    //if(UserInfo != NULL) delete UserInfo;
+    //if(UserInfo != nullptr) delete UserInfo;
     
 }
 
@@ -5380,7 +5413,7 @@ void PlayFab::ServerModels::FGetUserDataRequest::writeJSON(JsonWriter& writer) c
         writer->WriteArrayEnd();
      }
 	
-    if(IfChangedFromDataVersion.notNull()) { writer->WriteIdentifierPrefix(TEXT("IfChangedFromDataVersion")); writer->WriteValue(IfChangedFromDataVersion); }
+    if(IfChangedFromDataVersion.notNull()) { writer->WriteIdentifierPrefix(TEXT("IfChangedFromDataVersion")); writer->WriteValue(static_cast<int64>(IfChangedFromDataVersion)); }
 	
     
     writer->WriteObjectEnd();
@@ -5402,7 +5435,7 @@ bool PlayFab::ServerModels::FGetUserDataRequest::readFromValue(const TSharedPtr<
     const TSharedPtr<FJsonValue> IfChangedFromDataVersionValue = obj->TryGetField(TEXT("IfChangedFromDataVersion"));
     if (IfChangedFromDataVersionValue.IsValid()&& !IfChangedFromDataVersionValue->IsNull())
     {
-        int32 TmpValue;
+        uint32 TmpValue;
         if(IfChangedFromDataVersionValue->TryGetNumber(TmpValue)) {IfChangedFromDataVersion = TmpValue; }
     }
     
@@ -7175,7 +7208,7 @@ bool PlayFab::ServerModels::FRedeemMatchmakerTicketRequest::readFromValue(const 
 
 PlayFab::ServerModels::FRedeemMatchmakerTicketResult::~FRedeemMatchmakerTicketResult()
 {
-    //if(UserInfo != NULL) delete UserInfo;
+    //if(UserInfo != nullptr) delete UserInfo;
     
 }
 
@@ -7520,6 +7553,63 @@ void PlayFab::ServerModels::FSendPushNotificationResult::writeJSON(JsonWriter& w
 }
 
 bool PlayFab::ServerModels::FSendPushNotificationResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FSetGameServerInstanceStateRequest::~FSetGameServerInstanceStateRequest()
+{
+    
+}
+
+void PlayFab::ServerModels::FSetGameServerInstanceStateRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("LobbyId")); writer->WriteValue(LobbyId);
+	
+    writer->WriteIdentifierPrefix(TEXT("State")); writeGameInstanceStateEnumJSON(State, writer);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FSetGameServerInstanceStateRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> LobbyIdValue = obj->TryGetField(TEXT("LobbyId"));
+    if (LobbyIdValue.IsValid()&& !LobbyIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(LobbyIdValue->TryGetString(TmpValue)) {LobbyId = TmpValue; }
+    }
+    
+    State = readGameInstanceStateFromValue(obj->TryGetField(TEXT("State")));
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FSetGameServerInstanceStateResult::~FSetGameServerInstanceStateResult()
+{
+    
+}
+
+void PlayFab::ServerModels::FSetGameServerInstanceStateResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FSetGameServerInstanceStateResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
 {
 	bool HasSucceeded = true; 
 	
@@ -8219,8 +8309,7 @@ void PlayFab::ServerModels::FUpdatePlayerStatisticsRequest::writeJSON(JsonWriter
     
     writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
 	
-    if(Statistics.Num() != 0) 
-    {
+    
         writer->WriteArrayStart(TEXT("Statistics"));
     
         for (const FStatisticUpdate& item : Statistics)
@@ -8228,7 +8317,7 @@ void PlayFab::ServerModels::FUpdatePlayerStatisticsRequest::writeJSON(JsonWriter
             item.writeJSON(writer);
         }
         writer->WriteArrayEnd();
-     }
+    
 	
     
     writer->WriteObjectEnd();

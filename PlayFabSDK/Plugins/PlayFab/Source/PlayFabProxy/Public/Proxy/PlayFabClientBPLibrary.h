@@ -1113,6 +1113,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutLobbyId
         ,FString& OutStatisticName
         ,FString& OutCharacterId
+        ,bool& OutStartNewIfNoneFound
         ,bool& OutEnableQueue
 	);
 	

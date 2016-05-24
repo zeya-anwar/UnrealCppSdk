@@ -284,11 +284,13 @@ void UPFAdminProxyLibrary::BreakBPAdminGameModeInfo(
         ,FString& OutGamemode
         ,int32& OutMinPlayerCount
         ,int32& OutMaxPlayerCount
+        ,bool& OutStartOpen
 	)
 {
     OutGamemode = In.Data.Gamemode;
 	OutMinPlayerCount = In.Data.MinPlayerCount;
 	OutMaxPlayerCount = In.Data.MaxPlayerCount;
+	OutStartOpen = In.Data.StartOpen;
 	
 }
 
@@ -1260,32 +1262,6 @@ void UPFAdminProxyLibrary::BreakBPAdminSetPublisherDataResult(
     
 }
 
-void UPFAdminProxyLibrary::BreakBPAdminSetStoreSegemntOverridesResult(
-		const FBPAdminSetStoreSegemntOverridesResult& In
-	)
-{
-    
-}
-
-void UPFAdminProxyLibrary::BreakBPAdminSetStoreSegmentOverridesRequest(
-		const FBPAdminSetStoreSegmentOverridesRequest& In
-        ,FString& OutCatalogVersion
-        ,FString& OutBaseStoreId
-        ,TArray<FBPAdminStoreSegmentNamePair>& OutOverrides
-	)
-{
-    OutCatalogVersion = In.Data.CatalogVersion;
-	OutBaseStoreId = In.Data.BaseStoreId;
-	for (const PlayFab::AdminModels::FStoreSegmentNamePair& elem : In.Data.Overrides)
-    {
-        FBPAdminStoreSegmentNamePair result;
-        result.Data = elem;
-        OutOverrides.Add(result);
-    }
-
-	
-}
-
 void UPFAdminProxyLibrary::BreakBPAdminSetTitleDataRequest(
 		const FBPAdminSetTitleDataRequest& In
         ,FString& OutKey
@@ -1362,17 +1338,6 @@ void UPFAdminProxyLibrary::BreakBPAdminStoreItem(
 	
 }
 
-void UPFAdminProxyLibrary::BreakBPAdminStoreSegmentNamePair(
-		const FBPAdminStoreSegmentNamePair& In
-        ,FString& OutStoreId
-        ,FString& OutSegmentName
-	)
-{
-    OutStoreId = In.Data.StoreId;
-	OutSegmentName = In.Data.SegmentName;
-	
-}
-
 void UPFAdminProxyLibrary::BreakBPAdminSubtractUserVirtualCurrencyRequest(
 		const FBPAdminSubtractUserVirtualCurrencyRequest& In
         ,FString& OutPlayFabId
@@ -1422,6 +1387,7 @@ void UPFAdminProxyLibrary::BreakBPAdminUpdateCloudScriptRequest(
         ,int32& OutVersion
         ,TArray<FBPAdminCloudScriptFile>& OutFiles
         ,bool& OutPublish
+        ,FString& OutDeveloperPlayFabId
 	)
 {
     OutVersion = In.Data.Version;
@@ -1433,6 +1399,7 @@ void UPFAdminProxyLibrary::BreakBPAdminUpdateCloudScriptRequest(
     }
 
 	OutPublish = In.Data.Publish;
+	OutDeveloperPlayFabId = In.Data.DeveloperPlayFabId;
 	
 }
 

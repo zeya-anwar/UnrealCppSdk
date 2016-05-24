@@ -433,6 +433,13 @@ void UPFServerProxyLibrary::BreakBPServerFriendInfo(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerGameInstanceState(
+		const FBPServerGameInstanceState& In
+	)
+{
+    
+}
+
 void UPFServerProxyLibrary::BreakBPServerGetCatalogItemsRequest(
 		const FBPServerGetCatalogItemsRequest& In
         ,FString& OutCatalogVersion
@@ -1586,6 +1593,23 @@ void UPFServerProxyLibrary::BreakBPServerSendPushNotificationRequest(
 
 void UPFServerProxyLibrary::BreakBPServerSendPushNotificationResult(
 		const FBPServerSendPushNotificationResult& In
+	)
+{
+    
+}
+
+void UPFServerProxyLibrary::BreakBPServerSetGameServerInstanceStateRequest(
+		const FBPServerSetGameServerInstanceStateRequest& In
+        ,FString& OutLobbyId
+	)
+{
+    OutLobbyId = In.Data.LobbyId;
+	
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerSetGameServerInstanceStateResult(
+		const FBPServerSetGameServerInstanceStateResult& In
 	)
 {
     

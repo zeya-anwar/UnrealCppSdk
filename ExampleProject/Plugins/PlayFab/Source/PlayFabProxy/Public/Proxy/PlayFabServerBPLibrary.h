@@ -267,6 +267,11 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerGameInstanceState(
+		const FBPServerGameInstanceState& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerGetCatalogItemsRequest(
 		const FBPServerGetCatalogItemsRequest& In
         ,FString& OutCatalogVersion
@@ -905,6 +910,17 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerSendPushNotificationResult(
 		const FBPServerSendPushNotificationResult& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerSetGameServerInstanceStateRequest(
+		const FBPServerSetGameServerInstanceStateRequest& In
+        ,FString& OutLobbyId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerSetGameServerInstanceStateResult(
+		const FBPServerSetGameServerInstanceStateResult& In
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))

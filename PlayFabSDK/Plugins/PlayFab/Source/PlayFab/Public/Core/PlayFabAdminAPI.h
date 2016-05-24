@@ -45,7 +45,6 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FListVirtualCurrencyTypesDelegate, const AdminModels::FListVirtualCurrencyTypesResult&);
         DECLARE_DELEGATE_OneParam(FSetCatalogItemsDelegate, const AdminModels::FUpdateCatalogItemsResult&);
         DECLARE_DELEGATE_OneParam(FSetStoreItemsDelegate, const AdminModels::FUpdateStoreItemsResult&);
-        DECLARE_DELEGATE_OneParam(FSetStoreSegmentOverridesDelegate, const AdminModels::FSetStoreSegemntOverridesResult&);
         DECLARE_DELEGATE_OneParam(FSetTitleDataDelegate, const AdminModels::FSetTitleDataResult&);
         DECLARE_DELEGATE_OneParam(FSetupPushNotificationDelegate, const AdminModels::FSetupPushNotificationResult&);
         DECLARE_DELEGATE_OneParam(FUpdateCatalogItemsDelegate, const AdminModels::FUpdateCatalogItemsResult&);
@@ -115,7 +114,7 @@ namespace PlayFab
         bool DeleteUsers(AdminModels::FDeleteUsersRequest& request, const FDeleteUsersDelegate& SuccessDelegate = FDeleteUsersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves a download URL for the requested report
-         * Gets the download URL for the requested report data as csv. The reports available through this api are those available in Game Manager.
+         * Gets the download URL for the requested report data as csv. The reports available through this api are those available in Game Manager. Current ReportName values include: Daily Api Usage Details Report, Daily New User History Report, Daily Overview Report, Daily Real Money Purchase History Report, Daily Top Items Report, Daily Top Spender Report, Daily VC Purchase History Report, Monthly New User History Report, Monthly Overview Report, Monthly Real Money Purchase History Report, Monthly Top Items Report, Monthly Top Spender Report, Monthly Totals Report, Monthly VC Purchase History Report, Seven Day Retention Report.
          */
         bool GetDataReport(AdminModels::FGetDataReportRequest& request, const FGetDataReportDelegate& SuccessDelegate = FGetDataReportDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
@@ -247,11 +246,6 @@ namespace PlayFab
          * This operation is not additive. Using it will cause the indicated virtual store to be created from scratch. If there is an existing store with the same storeId, it will be deleted and replaced with only the items specified in this call. A store contains an array of references to items defined inthe catalog, along with the prices for the item, in both real world and virtual currencies. These prices act as an override to any prices defined in the catalog. In this way, the base definitions of the items may be defined in the catalog, with all associated properties, while the pricing can be set for each store, as needed. This allows for subsets of goods to be defined for different purposes (in order to simplify showing some, but not all catalog items to users, based upon different characteristics), along with unique prices. Note that all prices defined in the catalog and store definitions for the item are considered valid, and that a compromised client can be made to send a request for an item based upon any of these definitions. If no price is specified in the store for an item, the price set in the catalog should be displayed to the user.
          */
         bool SetStoreItems(AdminModels::FUpdateStoreItemsRequest& request, const FSetStoreItemsDelegate& SuccessDelegate = FSetStoreItemsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Sets up a store to be used in an AB test using segments
-         * When a user calls GetStoreItems from the Client API for the DefaultStore, we return the store perscribed by this configuration. We take the first match of that user's segment to the list of given overrides. We default to the base store. Note that there can each store can only be the base store for one override at a time. Calling this api for an existing base store will overwrite the old configuration. Also note that this only affects requests from the client API.  For example, let say a developer calls SetStoreSegmentOverrides with SpringEventStore as the default, and sets the overrides in order {SegmentA -> SpringStoreA, SegmentB -> SpringStoreB}.  Later, a user calls Client/GetStoreItems with SpringEventStore as the  storeId. Playfab looks up if there are any overrides where SpringEventStore is the default. It finds the override,  and first checks if the user is in SegmentA. If yes, then returns SpringStoreA. If not, it checks if the user is in SegmentB. If so, it returns SpringStoreB. If not, it returns the default SpringEventStore
-         */
-        bool SetStoreSegmentOverrides(AdminModels::FSetStoreSegmentOverridesRequest& request, const FSetStoreSegmentOverridesDelegate& SuccessDelegate = FSetStoreSegmentOverridesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Creates and updates the key-value store of custom title settings
          * This API is designed to store title specific values which can be read, but not written to, by the client. For example, a developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new build. This operation is additive. If a Key does not exist in the current dataset, it will be added with the specified Value. If it already exists, the Value for that key will be overwritten with the new Value.
@@ -413,7 +407,6 @@ namespace PlayFab
         void OnListVirtualCurrencyTypesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FListVirtualCurrencyTypesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetCatalogItemsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetCatalogItemsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetStoreItemsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetStoreItemsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnSetStoreSegmentOverridesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetStoreSegmentOverridesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetTitleDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetTitleDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetupPushNotificationResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetupPushNotificationDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateCatalogItemsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateCatalogItemsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
