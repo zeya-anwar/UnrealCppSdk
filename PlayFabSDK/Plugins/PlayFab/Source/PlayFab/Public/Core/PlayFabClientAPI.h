@@ -133,6 +133,7 @@ namespace PlayFab
         ~UPlayFabClientAPI();
 
         int GetPendingCalls() const;
+        FString GetBuildIdentifier() const;
         void SetTitleId(const FString& titleId);
         bool SetAdvertId(const FString& typeId, const FString& advertisingIdValue);
         bool AdvertIdSuccessful();

@@ -7,11 +7,15 @@ namespace PlayFab
     class PlayFabSettings
     {
     public:
+        static const FString sdkVersion;
+        static const FString buildIdentifier;
+        static const FString versionString;
+
         static bool useDevelopmentEnvironment;
         static FString serverURL;
         static FString developmentEnvironmentURL;
         static FString productionEnvironmentURL;
-        static FString logicServerURL; // Assigned by GetCloudScriptUrl, used by RunCloudScript
+        static FString logicServerURL; // Deprecated
         static FString titleId; // You must set this value for PlayFabSdk to work properly (Found in the Game Manager for your title, at the PlayFab Website)
         static FString developerSecretKey; // You must set this value for PlayFabSdk to work properly (Found in the Game Manager for your title, at the PlayFab Website)
         static FString advertisingIdType; // Set this to the appropriate AD_TYPE_X constant below

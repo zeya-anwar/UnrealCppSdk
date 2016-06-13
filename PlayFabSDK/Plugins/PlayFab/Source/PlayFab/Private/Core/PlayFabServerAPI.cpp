@@ -3,7 +3,6 @@
 #include "Core/PlayFabServerAPI.h"
 #include "Core/PlayFabSettings.h"
 #include "Core/PlayFabResultHandler.h"
-#include "Core/PlayFabVersion.h"
 
 using namespace PlayFab;
 using namespace PlayFab::ServerModels;
@@ -15,6 +14,11 @@ UPlayFabServerAPI::~UPlayFabServerAPI() {}
 int UPlayFabServerAPI::GetPendingCalls() const
 {
     return PlayFabRequestHandler::GetPendingCalls();
+}
+
+FString UPlayFabServerAPI::GetBuildIdentifier() const
+{
+    return PlayFabSettings::buildIdentifier;
 }
 
 void UPlayFabServerAPI::SetTitleId(const FString& titleId)
@@ -1527,6 +1531,33 @@ bool UPlayFabServerAPI::RedeemMatchmakerTicket(
 void UPlayFabServerAPI::OnRedeemMatchmakerTicketResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRedeemMatchmakerTicketDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
 {
     ServerModels::FRedeemMatchmakerTicketResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
+bool UPlayFabServerAPI::SetGameServerInstanceData(
+    ServerModels::FSetGameServerInstanceDataRequest& request,
+    const FSetGameServerInstanceDataDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Server/SetGameServerInstanceData")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabServerAPI::OnSetGameServerInstanceDataResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabServerAPI::OnSetGameServerInstanceDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetGameServerInstanceDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    ServerModels::FSetGameServerInstanceDataResult outResult;
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {

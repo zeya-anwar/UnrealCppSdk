@@ -1377,6 +1377,16 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	enum GameInstanceState
+	{
+		GameInstanceStateOpen,
+		GameInstanceStateClosed
+	};
+	
+	void writeGameInstanceStateEnumJSON(GameInstanceState enumVal, JsonWriter& writer);
+	GameInstanceState readGameInstanceStateFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
 	struct PLAYFAB_API FGameInfo : public FPlayFabBaseModel
     {
 		
@@ -1397,7 +1407,9 @@ namespace ClientModels
 		// duration in seconds this server has been running
 		uint32 RunTime;
 		// [optional] game specific string denoting server configuration
-		FString GameServerState;
+		Boxed<GameInstanceState> GameServerState;
+		// [optional] game session custom data
+		FString GameServerData;
 	
         FGameInfo() :
 			FPlayFabBaseModel(),
@@ -1409,7 +1421,8 @@ namespace ClientModels
 			MaxPlayers(),
 			PlayerUserIds(),
 			RunTime(0),
-			GameServerState()
+			GameServerState(),
+			GameServerData()
 			{}
 		
 		FGameInfo(const FGameInfo& src) :
@@ -1422,7 +1435,8 @@ namespace ClientModels
 			MaxPlayers(src.MaxPlayers),
 			PlayerUserIds(src.PlayerUserIds),
 			RunTime(src.RunTime),
-			GameServerState(src.GameServerState)
+			GameServerState(src.GameServerState),
+			GameServerData(src.GameServerData)
 			{}
 			
 		FGameInfo(const TSharedPtr<FJsonObject>& obj) : FGameInfo()

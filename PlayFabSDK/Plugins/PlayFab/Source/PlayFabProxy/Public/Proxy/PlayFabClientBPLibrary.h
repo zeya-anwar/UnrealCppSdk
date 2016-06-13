@@ -315,7 +315,12 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,int32& OutMaxPlayers
         ,TArray<FString>& OutPlayerUserIds
         ,int32& OutRunTime
-        ,FString& OutGameServerState
+        ,FString& OutGameServerData
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientGameInstanceState(
+		const FBPClientGameInstanceState& In
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))

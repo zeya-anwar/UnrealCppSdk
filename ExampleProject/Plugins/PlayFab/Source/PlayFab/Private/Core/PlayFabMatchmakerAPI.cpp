@@ -3,7 +3,6 @@
 #include "Core/PlayFabMatchmakerAPI.h"
 #include "Core/PlayFabSettings.h"
 #include "Core/PlayFabResultHandler.h"
-#include "Core/PlayFabVersion.h"
 
 using namespace PlayFab;
 using namespace PlayFab::MatchmakerModels;
@@ -15,6 +14,11 @@ UPlayFabMatchmakerAPI::~UPlayFabMatchmakerAPI() {}
 int UPlayFabMatchmakerAPI::GetPendingCalls() const
 {
     return PlayFabRequestHandler::GetPendingCalls();
+}
+
+FString UPlayFabMatchmakerAPI::GetBuildIdentifier() const
+{
+    return PlayFabSettings::buildIdentifier;
 }
 
 void UPlayFabMatchmakerAPI::SetTitleId(const FString& titleId)

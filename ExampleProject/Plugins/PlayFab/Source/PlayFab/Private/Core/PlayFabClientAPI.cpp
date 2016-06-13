@@ -3,7 +3,6 @@
 #include "Core/PlayFabClientAPI.h"
 #include "Core/PlayFabSettings.h"
 #include "Core/PlayFabResultHandler.h"
-#include "Core/PlayFabVersion.h"
 
 using namespace PlayFab;
 using namespace PlayFab::ClientModels;
@@ -15,6 +14,11 @@ UPlayFabClientAPI::~UPlayFabClientAPI() {}
 int UPlayFabClientAPI::GetPendingCalls() const
 {
     return PlayFabRequestHandler::GetPendingCalls();
+}
+
+FString UPlayFabClientAPI::GetBuildIdentifier() const
+{
+    return PlayFabSettings::buildIdentifier;
 }
 
 void UPlayFabClientAPI::SetTitleId(const FString& titleId)

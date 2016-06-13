@@ -4930,6 +4930,60 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FSetGameServerInstanceDataRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique identifier of the Game Instance to be updated.
+		FString LobbyId;
+		// Custom data to set for the specified game server instance.
+		FString GameServerData;
+	
+        FSetGameServerInstanceDataRequest() :
+			FPlayFabBaseModel(),
+			LobbyId(),
+			GameServerData()
+			{}
+		
+		FSetGameServerInstanceDataRequest(const FSetGameServerInstanceDataRequest& src) :
+			FPlayFabBaseModel(),
+			LobbyId(src.LobbyId),
+			GameServerData(src.GameServerData)
+			{}
+			
+		FSetGameServerInstanceDataRequest(const TSharedPtr<FJsonObject>& obj) : FSetGameServerInstanceDataRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FSetGameServerInstanceDataRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FSetGameServerInstanceDataResult : public FPlayFabBaseModel
+    {
+		
+	
+        FSetGameServerInstanceDataResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FSetGameServerInstanceDataResult(const FSetGameServerInstanceDataResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FSetGameServerInstanceDataResult(const TSharedPtr<FJsonObject>& obj) : FSetGameServerInstanceDataResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FSetGameServerInstanceDataResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FSetGameServerInstanceStateRequest : public FPlayFabBaseModel
     {
 		

@@ -3,7 +3,6 @@
 #include "Core/PlayFabAdminAPI.h"
 #include "Core/PlayFabSettings.h"
 #include "Core/PlayFabResultHandler.h"
-#include "Core/PlayFabVersion.h"
 
 using namespace PlayFab;
 using namespace PlayFab::AdminModels;
@@ -15,6 +14,11 @@ UPlayFabAdminAPI::~UPlayFabAdminAPI() {}
 int UPlayFabAdminAPI::GetPendingCalls() const
 {
     return PlayFabRequestHandler::GetPendingCalls();
+}
+
+FString UPlayFabAdminAPI::GetBuildIdentifier() const
+{
+    return PlayFabSettings::buildIdentifier;
 }
 
 void UPlayFabAdminAPI::SetTitleId(const FString& titleId)

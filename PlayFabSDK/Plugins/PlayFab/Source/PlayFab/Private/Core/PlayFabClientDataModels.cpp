@@ -2307,6 +2307,39 @@ bool PlayFab::ClientModels::FCurrentGamesRequest::readFromValue(const TSharedPtr
 }
 
 
+void PlayFab::ClientModels::writeGameInstanceStateEnumJSON(GameInstanceState enumVal, JsonWriter& writer)
+{
+    switch(enumVal)
+    {
+        
+        case GameInstanceStateOpen: writer->WriteValue(TEXT("Open")); break;
+        case GameInstanceStateClosed: writer->WriteValue(TEXT("Closed")); break;
+    }
+}
+
+ClientModels::GameInstanceState PlayFab::ClientModels::readGameInstanceStateFromValue(const TSharedPtr<FJsonValue>& value)
+{
+    static TMap<FString, GameInstanceState> _GameInstanceStateMap;
+    if (_GameInstanceStateMap.Num() == 0)
+    {
+        // Auto-generate the map on the first use
+        _GameInstanceStateMap.Add(TEXT("Open"), GameInstanceStateOpen);
+        _GameInstanceStateMap.Add(TEXT("Closed"), GameInstanceStateClosed);
+
+    } 
+
+	if(value.IsValid())
+	{
+	    auto output = _GameInstanceStateMap.Find(value->AsString());
+		if (output != nullptr)
+			return *output;
+	}
+
+
+    return GameInstanceStateOpen; // Basically critical fail
+}
+
+
 PlayFab::ClientModels::FGameInfo::~FGameInfo()
 {
     
@@ -2341,7 +2374,9 @@ void PlayFab::ClientModels::FGameInfo::writeJSON(JsonWriter& writer) const
 	
     writer->WriteIdentifierPrefix(TEXT("RunTime")); writer->WriteValue(static_cast<int64>(RunTime));
 	
-    if(GameServerState.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("GameServerState")); writer->WriteValue(GameServerState); }
+    if(GameServerState.notNull()) { writer->WriteIdentifierPrefix(TEXT("GameServerState")); writeGameInstanceStateEnumJSON(GameServerState, writer); }
+	
+    if(GameServerData.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("GameServerData")); writer->WriteValue(GameServerData); }
 	
     
     writer->WriteObjectEnd();
@@ -2397,11 +2432,13 @@ bool PlayFab::ClientModels::FGameInfo::readFromValue(const TSharedPtr<FJsonObjec
         if(RunTimeValue->TryGetNumber(TmpValue)) {RunTime = TmpValue; }
     }
     
-    const TSharedPtr<FJsonValue> GameServerStateValue = obj->TryGetField(TEXT("GameServerState"));
-    if (GameServerStateValue.IsValid()&& !GameServerStateValue->IsNull())
+    GameServerState = readGameInstanceStateFromValue(obj->TryGetField(TEXT("GameServerState")));
+    
+    const TSharedPtr<FJsonValue> GameServerDataValue = obj->TryGetField(TEXT("GameServerData"));
+    if (GameServerDataValue.IsValid()&& !GameServerDataValue->IsNull())
     {
         FString TmpValue;
-        if(GameServerStateValue->TryGetString(TmpValue)) {GameServerState = TmpValue; }
+        if(GameServerDataValue->TryGetString(TmpValue)) {GameServerData = TmpValue; }
     }
     
     

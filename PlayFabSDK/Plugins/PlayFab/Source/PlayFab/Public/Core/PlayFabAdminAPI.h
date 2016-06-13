@@ -78,6 +78,7 @@ namespace PlayFab
         ~UPlayFabAdminAPI();
 
         int GetPendingCalls() const;
+        FString GetBuildIdentifier() const;
         void SetTitleId(const FString& titleId);
         void SetDevSecretKey(const FString& developerSecretKey);
 

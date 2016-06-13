@@ -509,7 +509,7 @@ void UPFClientProxyLibrary::BreakBPClientGameInfo(
         ,int32& OutMaxPlayers
         ,TArray<FString>& OutPlayerUserIds
         ,int32& OutRunTime
-        ,FString& OutGameServerState
+        ,FString& OutGameServerData
 	)
 {
     
@@ -520,8 +520,16 @@ void UPFClientProxyLibrary::BreakBPClientGameInfo(
 	OutMaxPlayers = In.Data.MaxPlayers;
 	OutPlayerUserIds = In.Data.PlayerUserIds;
 	OutRunTime = In.Data.RunTime;
-	OutGameServerState = In.Data.GameServerState;
 	
+	OutGameServerData = In.Data.GameServerData;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGameInstanceState(
+		const FBPClientGameInstanceState& In
+	)
+{
+    
 }
 
 void UPFClientProxyLibrary::BreakBPClientGameServerRegionsRequest(

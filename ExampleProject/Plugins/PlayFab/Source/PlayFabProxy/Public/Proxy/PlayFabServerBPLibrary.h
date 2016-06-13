@@ -913,6 +913,18 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerSetGameServerInstanceDataRequest(
+		const FBPServerSetGameServerInstanceDataRequest& In
+        ,FString& OutLobbyId
+        ,FString& OutGameServerData
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerSetGameServerInstanceDataResult(
+		const FBPServerSetGameServerInstanceDataResult& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerSetGameServerInstanceStateRequest(
 		const FBPServerSetGameServerInstanceStateRequest& In
         ,FString& OutLobbyId

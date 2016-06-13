@@ -396,6 +396,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGameInfoDelegate, const FBPClientGameInfo&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGameInstanceState"))
+struct FBPClientGameInstanceState
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::GameInstanceState Data;	
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGameInstanceStateDelegate, const FBPClientGameInstanceState&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGameServerRegionsRequest"))
 struct FBPClientGameServerRegionsRequest
 {

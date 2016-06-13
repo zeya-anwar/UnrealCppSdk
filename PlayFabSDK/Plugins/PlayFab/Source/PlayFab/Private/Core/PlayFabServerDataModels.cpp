@@ -7561,6 +7561,68 @@ bool PlayFab::ServerModels::FSendPushNotificationResult::readFromValue(const TSh
 }
 
 
+PlayFab::ServerModels::FSetGameServerInstanceDataRequest::~FSetGameServerInstanceDataRequest()
+{
+    
+}
+
+void PlayFab::ServerModels::FSetGameServerInstanceDataRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("LobbyId")); writer->WriteValue(LobbyId);
+	
+    writer->WriteIdentifierPrefix(TEXT("GameServerData")); writer->WriteValue(GameServerData);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FSetGameServerInstanceDataRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> LobbyIdValue = obj->TryGetField(TEXT("LobbyId"));
+    if (LobbyIdValue.IsValid()&& !LobbyIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(LobbyIdValue->TryGetString(TmpValue)) {LobbyId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> GameServerDataValue = obj->TryGetField(TEXT("GameServerData"));
+    if (GameServerDataValue.IsValid()&& !GameServerDataValue->IsNull())
+    {
+        FString TmpValue;
+        if(GameServerDataValue->TryGetString(TmpValue)) {GameServerData = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FSetGameServerInstanceDataResult::~FSetGameServerInstanceDataResult()
+{
+    
+}
+
+void PlayFab::ServerModels::FSetGameServerInstanceDataResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FSetGameServerInstanceDataResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ServerModels::FSetGameServerInstanceStateRequest::~FSetGameServerInstanceStateRequest()
 {
     

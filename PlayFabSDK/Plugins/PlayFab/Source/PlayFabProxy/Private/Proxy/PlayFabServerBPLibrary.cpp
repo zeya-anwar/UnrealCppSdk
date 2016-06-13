@@ -1598,6 +1598,24 @@ void UPFServerProxyLibrary::BreakBPServerSendPushNotificationResult(
     
 }
 
+void UPFServerProxyLibrary::BreakBPServerSetGameServerInstanceDataRequest(
+		const FBPServerSetGameServerInstanceDataRequest& In
+        ,FString& OutLobbyId
+        ,FString& OutGameServerData
+	)
+{
+    OutLobbyId = In.Data.LobbyId;
+	OutGameServerData = In.Data.GameServerData;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerSetGameServerInstanceDataResult(
+		const FBPServerSetGameServerInstanceDataResult& In
+	)
+{
+    
+}
+
 void UPFServerProxyLibrary::BreakBPServerSetGameServerInstanceStateRequest(
 		const FBPServerSetGameServerInstanceStateRequest& In
         ,FString& OutLobbyId
