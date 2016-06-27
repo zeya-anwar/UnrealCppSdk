@@ -19,7 +19,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FEmptyOnlineDelegate OnFailure; 
 	
-	// Creates and updates the key-value store of custom title settings
+	// Creates and updates the key-value store of custom title settings which can be read by the client
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Admin|Title-Wide Data Management")
 	static UPFAdminSetTitleData* SetTitleData(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InKey, const FString& InValue);
 

@@ -42,10 +42,12 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FGetRandomResultTablesDelegate, const AdminModels::FGetRandomResultTablesResult&);
         DECLARE_DELEGATE_OneParam(FGetStoreItemsDelegate, const AdminModels::FGetStoreItemsResult&);
         DECLARE_DELEGATE_OneParam(FGetTitleDataDelegate, const AdminModels::FGetTitleDataResult&);
+        DECLARE_DELEGATE_OneParam(FGetTitleInternalDataDelegate, const AdminModels::FGetTitleDataResult&);
         DECLARE_DELEGATE_OneParam(FListVirtualCurrencyTypesDelegate, const AdminModels::FListVirtualCurrencyTypesResult&);
         DECLARE_DELEGATE_OneParam(FSetCatalogItemsDelegate, const AdminModels::FUpdateCatalogItemsResult&);
         DECLARE_DELEGATE_OneParam(FSetStoreItemsDelegate, const AdminModels::FUpdateStoreItemsResult&);
         DECLARE_DELEGATE_OneParam(FSetTitleDataDelegate, const AdminModels::FSetTitleDataResult&);
+        DECLARE_DELEGATE_OneParam(FSetTitleInternalDataDelegate, const AdminModels::FSetTitleDataResult&);
         DECLARE_DELEGATE_OneParam(FSetupPushNotificationDelegate, const AdminModels::FSetupPushNotificationResult&);
         DECLARE_DELEGATE_OneParam(FUpdateCatalogItemsDelegate, const AdminModels::FUpdateCatalogItemsResult&);
         DECLARE_DELEGATE_OneParam(FUpdateRandomResultTablesDelegate, const AdminModels::FUpdateRandomResultTablesResult&);
@@ -229,10 +231,15 @@ namespace PlayFab
          */
         bool GetStoreItems(AdminModels::FGetStoreItemsRequest& request, const FGetStoreItemsDelegate& SuccessDelegate = FGetStoreItemsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Retrieves the key-value store of custom title settings
-         * This API is designed to return title specific values which can be read, but not written to, by the client. For example, a developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new build. This AdminAPI call for getting title data guarantees no delay in between update and retrieval of newly set data.
+         * Retrieves the key-value store of custom title settings which can be read by the client
+         * This API method is designed to return title specific values which can be read by the client. For example, a developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement speeds, etc. This allows a developer to update the title without the need to create,test, and ship a new build. Note that due to caching, there may up to a minute delay in between updating title data and a query returning the newest value.
          */
         bool GetTitleData(AdminModels::FGetTitleDataRequest& request, const FGetTitleDataDelegate& SuccessDelegate = FGetTitleDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Retrieves the key-value store of custom title settings which cannot be read by the client
+         * This API method is designed to return title specific values which are accessible only by the server. These values can be used to tweak settings used by game servers and Cloud Scripts without the need to update and re-deploy. Note that due to caching, there may up to a minute delay in between updating title data and this query returning the newest value.
+         */
+        bool GetTitleInternalData(AdminModels::FGetTitleDataRequest& request, const FGetTitleInternalDataDelegate& SuccessDelegate = FGetTitleInternalDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retuns the list of all defined virtual currencies for the title
          */
@@ -248,10 +255,15 @@ namespace PlayFab
          */
         bool SetStoreItems(AdminModels::FUpdateStoreItemsRequest& request, const FSetStoreItemsDelegate& SuccessDelegate = FSetStoreItemsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Creates and updates the key-value store of custom title settings
-         * This API is designed to store title specific values which can be read, but not written to, by the client. For example, a developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new build. This operation is additive. If a Key does not exist in the current dataset, it will be added with the specified Value. If it already exists, the Value for that key will be overwritten with the new Value.
+         * Creates and updates the key-value store of custom title settings which can be read by the client
+         * This API method is designed to store title specific values which can be read by the client. For example, a developer could choose to store values which modify the user experience, such as enemy spawn rates, weapon strengths, movement speeds, etc. This allows a developer to update the title without the need to create, test, and ship a new build. This operation is additive. If a Key does not exist in the current dataset, it will be added with the specified Value. If it already exists, the Value for that key will be overwritten with the new Value.
          */
         bool SetTitleData(AdminModels::FSetTitleDataRequest& request, const FSetTitleDataDelegate& SuccessDelegate = FSetTitleDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Updates the key-value store of custom title settings which cannot be read by the client
+         * This API method is designed to store title specific values which are accessible only by the server. These values can be used to tweak settings used by game servers and Cloud Scripts without the need to update and re-deploy. This operation is additive. If a Key does not exist in the current dataset, it will be added with the specified Value. If it already exists, the Value for that key will be overwritten with the new Value.
+         */
+        bool SetTitleInternalData(AdminModels::FSetTitleDataRequest& request, const FSetTitleInternalDataDelegate& SuccessDelegate = FSetTitleInternalDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Sets the Amazon Resource Name (ARN) for iOS and Android push notifications. Documentation on the exact restrictions can be found at: http://docs.aws.amazon.com/sns/latest/api/API_CreatePlatformApplication.html. Currently, Amazon device Messaging is not supported.
          * When using the Apple Push Notification service (APNS) or the development version (APNS_SANDBOX), the APNS Private Key should be used as the Credential in this call. With Google Cloud Messaging (GCM), the Android API Key should be used. The current ARN (if one exists) can be overwritten by setting the OverwriteOldARN boolean to true.
@@ -405,10 +417,12 @@ namespace PlayFab
         void OnGetRandomResultTablesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetRandomResultTablesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetStoreItemsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetStoreItemsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetTitleDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetTitleDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetTitleInternalDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetTitleInternalDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnListVirtualCurrencyTypesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FListVirtualCurrencyTypesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetCatalogItemsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetCatalogItemsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetStoreItemsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetStoreItemsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetTitleDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetTitleDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnSetTitleInternalDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetTitleInternalDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetupPushNotificationResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetupPushNotificationDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateCatalogItemsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateCatalogItemsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateRandomResultTablesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateRandomResultTablesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

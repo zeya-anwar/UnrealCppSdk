@@ -5,23 +5,23 @@
 #include "Core/PlayFabAdminAPI.h"
 #include "Core/PlayFabAdminDataModels.h"
 #include "Proxy/PlayFabAdminBPDataModels.h"
-#include "PFAdminGetTitleData.generated.h"
+#include "PFAdminSetTitleInternalData.generated.h"
 
 UCLASS()
-class PLAYFABPROXY_API UPFAdminGetTitleData : public UOnlineBlueprintCallProxyBase
+class PLAYFABPROXY_API UPFAdminSetTitleInternalData : public UOnlineBlueprintCallProxyBase
 {
 	GENERATED_UCLASS_BODY()
 public:
 
 	UPROPERTY(BlueprintAssignable)
-	FBPAdminGetTitleDataResultDelegate OnSuccess;
+	FEmptyOnlineDelegate OnSuccess; 
 
 	UPROPERTY(BlueprintAssignable)
-	FBPAdminGetTitleDataResultDelegate OnFailure;
+	FEmptyOnlineDelegate OnFailure; 
 	
-	// Retrieves the key-value store of custom title settings which can be read by the client
+	// Updates the key-value store of custom title settings which cannot be read by the client
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Admin|Title-Wide Data Management")
-	static UPFAdminGetTitleData* GetTitleData(UObject* WorldContextObject, class APlayerController* PlayerController, const TArray<FString>& InKeys);
+	static UPFAdminSetTitleInternalData* SetTitleInternalData(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InKey, const FString& InValue);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;
@@ -29,11 +29,11 @@ public:
 
 private:
 
-	PlayFab::AdminModels::FGetTitleDataRequest Request;
+	PlayFab::AdminModels::FSetTitleDataRequest Request;
 
-	PlayFab::UPlayFabAdminAPI::FGetTitleDataDelegate	SuccessDelegate;
+	PlayFab::UPlayFabAdminAPI::FSetTitleInternalDataDelegate	SuccessDelegate;
 	PlayFab::FPlayFabErrorDelegate							ErrorDelegate;
 
-	void OnSuccessCallback(const PlayFab::AdminModels::FGetTitleDataResult& Result);
+	void OnSuccessCallback(const PlayFab::AdminModels::FSetTitleDataResult& Result);
 	void OnErrorCallback(const PlayFab::FPlayFabError& Error);
 };

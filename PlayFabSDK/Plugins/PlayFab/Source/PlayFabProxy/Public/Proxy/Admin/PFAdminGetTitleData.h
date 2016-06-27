@@ -19,7 +19,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FBPAdminGetTitleDataResultDelegate OnFailure;
 	
-	// Retrieves the key-value store of custom title settings
+	// Retrieves the key-value store of custom title settings which can be read by the client
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Admin|Title-Wide Data Management")
 	static UPFAdminGetTitleData* GetTitleData(UObject* WorldContextObject, class APlayerController* PlayerController, const TArray<FString>& InKeys);
 

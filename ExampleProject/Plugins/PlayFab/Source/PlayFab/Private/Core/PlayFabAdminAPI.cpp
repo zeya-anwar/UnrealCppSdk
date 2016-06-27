@@ -868,6 +868,33 @@ void UPlayFabAdminAPI::OnGetTitleDataResult(FHttpRequestPtr HttpRequest, FHttpRe
     }
 }
 
+bool UPlayFabAdminAPI::GetTitleInternalData(
+    AdminModels::FGetTitleDataRequest& request,
+    const FGetTitleInternalDataDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Admin/GetTitleInternalData")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabAdminAPI::OnGetTitleInternalDataResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabAdminAPI::OnGetTitleInternalDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetTitleInternalDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    AdminModels::FGetTitleDataResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
 bool UPlayFabAdminAPI::ListVirtualCurrencyTypes(
     
     const FListVirtualCurrencyTypesDelegate& SuccessDelegate,
@@ -962,6 +989,33 @@ bool UPlayFabAdminAPI::SetTitleData(
 }
 
 void UPlayFabAdminAPI::OnSetTitleDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetTitleDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    AdminModels::FSetTitleDataResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
+bool UPlayFabAdminAPI::SetTitleInternalData(
+    AdminModels::FSetTitleDataRequest& request,
+    const FSetTitleInternalDataDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Admin/SetTitleInternalData")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabAdminAPI::OnSetTitleInternalDataResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabAdminAPI::OnSetTitleInternalDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetTitleInternalDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
 {
     AdminModels::FSetTitleDataResult outResult;
     FPlayFabError errorResult;
