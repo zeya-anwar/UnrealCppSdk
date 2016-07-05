@@ -21,7 +21,7 @@ public:
 	
 	// Signs the user in using the Android device identifier, returning a session identifier that can subsequently be used for API calls which require an authenticated user
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Authentication")
-	static UPFClientLoginWithAndroidDeviceID* LoginWithAndroidDeviceID(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InTitleId, const FString& InAndroidDeviceId, const FString& InOS, const FString& InAndroidDevice, const bool& InCreateAccount);
+	static UPFClientLoginWithAndroidDeviceID* LoginWithAndroidDeviceID(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InTitleId, const FString& InAndroidDeviceId, const FString& InOS, const FString& InAndroidDevice, const bool& InCreateAccount, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

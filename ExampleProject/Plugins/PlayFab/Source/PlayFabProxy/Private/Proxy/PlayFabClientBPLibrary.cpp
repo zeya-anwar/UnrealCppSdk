@@ -252,6 +252,23 @@ void UPFClientProxyLibrary::BreakBPClientCatalogItemContainerInfo(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientCharacterInventory(
+		const FBPClientCharacterInventory& In
+        ,FString& OutCharacterId
+        ,TArray<FBPClientItemInstance>& OutInventory
+	)
+{
+    OutCharacterId = In.Data.CharacterId;
+	for (const PlayFab::ClientModels::FItemInstance& elem : In.Data.Inventory)
+    {
+        FBPClientItemInstance result;
+        result.Data = elem;
+        OutInventory.Add(result);
+    }
+
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientCharacterLeaderboardEntry(
 		const FBPClientCharacterLeaderboardEntry& In
         ,FString& OutPlayFabId
@@ -1010,6 +1027,111 @@ void UPFClientProxyLibrary::BreakBPClientGetPhotonAuthenticationTokenResult(
 	)
 {
     OutPhotonCustomAuthenticationToken = In.Data.PhotonCustomAuthenticationToken;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetPlayerCombinedInfoRequest(
+		const FBPClientGetPlayerCombinedInfoRequest& In
+        ,FString& OutPlayFabId
+        ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutInfoRequestParameters = In.Data.InfoRequestParameters;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetPlayerCombinedInfoRequestParams(
+		const FBPClientGetPlayerCombinedInfoRequestParams& In
+        ,bool& OutGetUserAccountInfo
+        ,bool& OutGetUserInventory
+        ,bool& OutGetUserVirtualCurrency
+        ,bool& OutGetUserData
+        ,TArray<FString>& OutUserDataKeys
+        ,bool& OutGetUserReadOnlyData
+        ,TArray<FString>& OutUserReadOnlyDataKeys
+        ,bool& OutGetCharacterInventories
+        ,bool& OutGetCharacterList
+        ,bool& OutGetTitleData
+        ,TArray<FString>& OutTitleDataKeys
+        ,bool& OutGetPlayerStatistics
+        ,TArray<FString>& OutPlayerStatisticNames
+	)
+{
+    OutGetUserAccountInfo = In.Data.GetUserAccountInfo;
+	OutGetUserInventory = In.Data.GetUserInventory;
+	OutGetUserVirtualCurrency = In.Data.GetUserVirtualCurrency;
+	OutGetUserData = In.Data.GetUserData;
+	OutUserDataKeys = In.Data.UserDataKeys;
+	OutGetUserReadOnlyData = In.Data.GetUserReadOnlyData;
+	OutUserReadOnlyDataKeys = In.Data.UserReadOnlyDataKeys;
+	OutGetCharacterInventories = In.Data.GetCharacterInventories;
+	OutGetCharacterList = In.Data.GetCharacterList;
+	OutGetTitleData = In.Data.GetTitleData;
+	OutTitleDataKeys = In.Data.TitleDataKeys;
+	OutGetPlayerStatistics = In.Data.GetPlayerStatistics;
+	OutPlayerStatisticNames = In.Data.PlayerStatisticNames;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetPlayerCombinedInfoResult(
+		const FBPClientGetPlayerCombinedInfoResult& In
+        ,FString& OutPlayFabId
+        ,FBPClientGetPlayerCombinedInfoResultPayload& OutInfoResultPayload
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	if (In.Data.InfoResultPayload.IsValid()) {    OutInfoResultPayload.Data = *In.Data.InfoResultPayload;}
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetPlayerCombinedInfoResultPayload(
+		const FBPClientGetPlayerCombinedInfoResultPayload& In
+        ,FBPClientUserAccountInfo& OutAccountInfo
+        ,TArray<FBPClientItemInstance>& OutUserInventory
+        ,int32& OutUserDataVersion
+        ,int32& OutUserReadOnlyDataVersion
+        ,TArray<FBPClientCharacterResult>& OutCharacterList
+        ,TArray<FBPClientCharacterInventory>& OutCharacterInventories
+        ,TArray<FBPClientStatisticValue>& OutPlayerStatistics
+	)
+{
+    if (In.Data.AccountInfo.IsValid()) {    OutAccountInfo.Data = *In.Data.AccountInfo;}
+	for (const PlayFab::ClientModels::FItemInstance& elem : In.Data.UserInventory)
+    {
+        FBPClientItemInstance result;
+        result.Data = elem;
+        OutUserInventory.Add(result);
+    }
+
+	
+	
+	
+	OutUserDataVersion = In.Data.UserDataVersion;
+	
+	OutUserReadOnlyDataVersion = In.Data.UserReadOnlyDataVersion;
+	for (const PlayFab::ClientModels::FCharacterResult& elem : In.Data.CharacterList)
+    {
+        FBPClientCharacterResult result;
+        result.Data = elem;
+        OutCharacterList.Add(result);
+    }
+
+	for (const PlayFab::ClientModels::FCharacterInventory& elem : In.Data.CharacterInventories)
+    {
+        FBPClientCharacterInventory result;
+        result.Data = elem;
+        OutCharacterInventories.Add(result);
+    }
+
+	
+	for (const PlayFab::ClientModels::FStatisticValue& elem : In.Data.PlayerStatistics)
+    {
+        FBPClientStatisticValue result;
+        result.Data = elem;
+        OutPlayerStatistics.Add(result);
+    }
+
 	
 }
 
@@ -1794,6 +1916,7 @@ void UPFClientProxyLibrary::BreakBPClientLoginResult(
         ,bool& OutNewlyCreated
         ,FBPClientUserSettings& OutSettingsForUser
         ,FDateTime& OutLastLoginTime
+        ,FBPClientGetPlayerCombinedInfoResultPayload& OutInfoResultPayload
 	)
 {
     OutSessionTicket = In.Data.SessionTicket;
@@ -1801,6 +1924,7 @@ void UPFClientProxyLibrary::BreakBPClientLoginResult(
 	OutNewlyCreated = In.Data.NewlyCreated;
 	if (In.Data.SettingsForUser.IsValid()) {    OutSettingsForUser.Data = *In.Data.SettingsForUser;}
 	
+	if (In.Data.InfoResultPayload.IsValid()) {    OutInfoResultPayload.Data = *In.Data.InfoResultPayload;}
 	
 }
 
@@ -1811,6 +1935,7 @@ void UPFClientProxyLibrary::BreakBPClientLoginWithAndroidDeviceIDRequest(
         ,FString& OutOS
         ,FString& OutAndroidDevice
         ,bool& OutCreateAccount
+        ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	)
 {
     OutTitleId = In.Data.TitleId;
@@ -1818,6 +1943,7 @@ void UPFClientProxyLibrary::BreakBPClientLoginWithAndroidDeviceIDRequest(
 	OutOS = In.Data.OS;
 	OutAndroidDevice = In.Data.AndroidDevice;
 	OutCreateAccount = In.Data.CreateAccount;
+	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
 	
 }
 
@@ -1826,11 +1952,13 @@ void UPFClientProxyLibrary::BreakBPClientLoginWithCustomIDRequest(
         ,FString& OutTitleId
         ,FString& OutCustomId
         ,bool& OutCreateAccount
+        ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	)
 {
     OutTitleId = In.Data.TitleId;
 	OutCustomId = In.Data.CustomId;
 	OutCreateAccount = In.Data.CreateAccount;
+	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
 	
 }
 
@@ -1839,11 +1967,13 @@ void UPFClientProxyLibrary::BreakBPClientLoginWithEmailAddressRequest(
         ,FString& OutTitleId
         ,FString& OutEmail
         ,FString& OutPassword
+        ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	)
 {
     OutTitleId = In.Data.TitleId;
 	OutEmail = In.Data.Email;
 	OutPassword = In.Data.Password;
+	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
 	
 }
 
@@ -1852,11 +1982,13 @@ void UPFClientProxyLibrary::BreakBPClientLoginWithFacebookRequest(
         ,FString& OutTitleId
         ,FString& OutAccessToken
         ,bool& OutCreateAccount
+        ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	)
 {
     OutTitleId = In.Data.TitleId;
 	OutAccessToken = In.Data.AccessToken;
 	OutCreateAccount = In.Data.CreateAccount;
+	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
 	
 }
 
@@ -1865,11 +1997,13 @@ void UPFClientProxyLibrary::BreakBPClientLoginWithGameCenterRequest(
         ,FString& OutTitleId
         ,FString& OutPlayerId
         ,bool& OutCreateAccount
+        ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	)
 {
     OutTitleId = In.Data.TitleId;
 	OutPlayerId = In.Data.PlayerId;
 	OutCreateAccount = In.Data.CreateAccount;
+	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
 	
 }
 
@@ -1879,12 +2013,14 @@ void UPFClientProxyLibrary::BreakBPClientLoginWithGoogleAccountRequest(
         ,FString& OutAccessToken
         ,bool& OutCreateAccount
         ,FString& OutPublisherId
+        ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	)
 {
     OutTitleId = In.Data.TitleId;
 	OutAccessToken = In.Data.AccessToken;
 	OutCreateAccount = In.Data.CreateAccount;
 	OutPublisherId = In.Data.PublisherId;
+	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
 	
 }
 
@@ -1894,6 +2030,7 @@ void UPFClientProxyLibrary::BreakBPClientLoginWithIOSDeviceIDRequest(
         ,FString& OutDeviceId
         ,FString& OutOS
         ,FString& OutDeviceModel
+        ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
         ,bool& OutCreateAccount
 	)
 {
@@ -1901,6 +2038,7 @@ void UPFClientProxyLibrary::BreakBPClientLoginWithIOSDeviceIDRequest(
 	OutDeviceId = In.Data.DeviceId;
 	OutOS = In.Data.OS;
 	OutDeviceModel = In.Data.DeviceModel;
+	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
 	OutCreateAccount = In.Data.CreateAccount;
 	
 }
@@ -1911,12 +2049,14 @@ void UPFClientProxyLibrary::BreakBPClientLoginWithKongregateRequest(
         ,FString& OutKongregateId
         ,FString& OutAuthTicket
         ,bool& OutCreateAccount
+        ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	)
 {
     OutTitleId = In.Data.TitleId;
 	OutKongregateId = In.Data.KongregateId;
 	OutAuthTicket = In.Data.AuthTicket;
 	OutCreateAccount = In.Data.CreateAccount;
+	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
 	
 }
 
@@ -1925,11 +2065,13 @@ void UPFClientProxyLibrary::BreakBPClientLoginWithPlayFabRequest(
         ,FString& OutTitleId
         ,FString& OutUsername
         ,FString& OutPassword
+        ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	)
 {
     OutTitleId = In.Data.TitleId;
 	OutUsername = In.Data.Username;
 	OutPassword = In.Data.Password;
+	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
 	
 }
 
@@ -1938,11 +2080,13 @@ void UPFClientProxyLibrary::BreakBPClientLoginWithSteamRequest(
         ,FString& OutTitleId
         ,FString& OutSteamTicket
         ,bool& OutCreateAccount
+        ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	)
 {
     OutTitleId = In.Data.TitleId;
 	OutSteamTicket = In.Data.SteamTicket;
 	OutCreateAccount = In.Data.CreateAccount;
+	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
 	
 }
 

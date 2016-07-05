@@ -21,7 +21,7 @@ public:
 	
 	// Signs the user in using the vendor-specific iOS device identifier, returning a session identifier that can subsequently be used for API calls which require an authenticated user
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Authentication")
-	static UPFClientLoginWithIOSDeviceID* LoginWithIOSDeviceID(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InTitleId, const FString& InDeviceId, const FString& InOS, const FString& InDeviceModel, const bool& InCreateAccount);
+	static UPFClientLoginWithIOSDeviceID* LoginWithIOSDeviceID(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InTitleId, const FString& InDeviceId, const FString& InOS, const FString& InDeviceModel, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters, const bool& InCreateAccount);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

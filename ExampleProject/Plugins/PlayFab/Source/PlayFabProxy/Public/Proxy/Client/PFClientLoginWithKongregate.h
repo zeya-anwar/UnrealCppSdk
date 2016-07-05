@@ -21,7 +21,7 @@ public:
 	
 	// Signs the user in using a Kongregate player account.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Authentication")
-	static UPFClientLoginWithKongregate* LoginWithKongregate(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InTitleId, const FString& InKongregateId, const FString& InAuthTicket, const bool& InCreateAccount);
+	static UPFClientLoginWithKongregate* LoginWithKongregate(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InTitleId, const FString& InKongregateId, const FString& InAuthTicket, const bool& InCreateAccount, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

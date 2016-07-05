@@ -21,7 +21,7 @@ public:
 	
 	// Signs the user into the PlayFab account, returning a session identifier that can subsequently be used for API calls which require an authenticated user
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Authentication")
-	static UPFClientLoginWithEmailAddress* LoginWithEmailAddress(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InTitleId, const FString& InEmail, const FString& InPassword);
+	static UPFClientLoginWithEmailAddress* LoginWithEmailAddress(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InTitleId, const FString& InEmail, const FString& InPassword, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

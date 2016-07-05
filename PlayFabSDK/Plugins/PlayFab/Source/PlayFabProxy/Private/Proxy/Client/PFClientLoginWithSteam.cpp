@@ -10,13 +10,14 @@ UPFClientLoginWithSteam::UPFClientLoginWithSteam(const FObjectInitializer& Objec
 {
 }
 
-UPFClientLoginWithSteam* UPFClientLoginWithSteam::LoginWithSteam(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InTitleId, const FString& InSteamTicket, const bool& InCreateAccount)
+UPFClientLoginWithSteam* UPFClientLoginWithSteam::LoginWithSteam(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InTitleId, const FString& InSteamTicket, const bool& InCreateAccount, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters)
 {
 	UPFClientLoginWithSteam* Proxy = NewObject<UPFClientLoginWithSteam>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.TitleId = InTitleId;
 	Proxy->Request.SteamTicket = InSteamTicket;
 	Proxy->Request.CreateAccount = InCreateAccount;
+	Proxy->Request.InfoRequestParameters = InInfoRequestParameters;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

@@ -10,13 +10,14 @@ UPFClientLoginWithFacebook::UPFClientLoginWithFacebook(const FObjectInitializer&
 {
 }
 
-UPFClientLoginWithFacebook* UPFClientLoginWithFacebook::LoginWithFacebook(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InTitleId, const FString& InAccessToken, const bool& InCreateAccount)
+UPFClientLoginWithFacebook* UPFClientLoginWithFacebook::LoginWithFacebook(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InTitleId, const FString& InAccessToken, const bool& InCreateAccount, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters)
 {
 	UPFClientLoginWithFacebook* Proxy = NewObject<UPFClientLoginWithFacebook>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.TitleId = InTitleId;
 	Proxy->Request.AccessToken = InAccessToken;
 	Proxy->Request.CreateAccount = InCreateAccount;
+	Proxy->Request.InfoRequestParameters = InInfoRequestParameters;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

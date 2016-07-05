@@ -791,6 +791,120 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FItemInstance : public FPlayFabBaseModel
+    {
+		
+		// [optional] Unique identifier for the inventory item, as defined in the catalog.
+		FString ItemId;
+		// [optional] Unique item identifier for this specific instance of the item.
+		FString ItemInstanceId;
+		// [optional] Class name for the inventory item, as defined in the catalog.
+		FString ItemClass;
+		// [optional] Timestamp for when this instance was purchased.
+		OptionalTime PurchaseDate;
+		// [optional] Timestamp for when this instance will expire.
+		OptionalTime Expiration;
+		// [optional] Total number of remaining uses, if this is a consumable item.
+		OptionalInt32 RemainingUses;
+		// [optional] The number of uses that were added or removed to this item in this call.
+		OptionalInt32 UsesIncrementedBy;
+		// [optional] Game specific comment associated with this instance when it was added to the user inventory.
+		FString Annotation;
+		// [optional] Catalog version for the inventory item, when this instance was created.
+		FString CatalogVersion;
+		// [optional] Unique identifier for the parent inventory item, as defined in the catalog, for object which were added from a bundle or container.
+		FString BundleParent;
+		// [optional] CatalogItem.DisplayName at the time this item was purchased.
+		FString DisplayName;
+		// [optional] Currency type for the cost of the catalog item.
+		FString UnitCurrency;
+		// Cost of the catalog item in the given currency.
+		uint32 UnitPrice;
+		// [optional] Array of unique items that were awarded when this catalog item was purchased.
+		TArray<FString> BundleContents;
+		// [optional] A set of custom key-value pairs on the inventory item.
+		TMap<FString, FString> CustomData;
+	
+        FItemInstance() :
+			FPlayFabBaseModel(),
+			ItemId(),
+			ItemInstanceId(),
+			ItemClass(),
+			PurchaseDate(),
+			Expiration(),
+			RemainingUses(),
+			UsesIncrementedBy(),
+			Annotation(),
+			CatalogVersion(),
+			BundleParent(),
+			DisplayName(),
+			UnitCurrency(),
+			UnitPrice(0),
+			BundleContents(),
+			CustomData()
+			{}
+		
+		FItemInstance(const FItemInstance& src) :
+			FPlayFabBaseModel(),
+			ItemId(src.ItemId),
+			ItemInstanceId(src.ItemInstanceId),
+			ItemClass(src.ItemClass),
+			PurchaseDate(src.PurchaseDate),
+			Expiration(src.Expiration),
+			RemainingUses(src.RemainingUses),
+			UsesIncrementedBy(src.UsesIncrementedBy),
+			Annotation(src.Annotation),
+			CatalogVersion(src.CatalogVersion),
+			BundleParent(src.BundleParent),
+			DisplayName(src.DisplayName),
+			UnitCurrency(src.UnitCurrency),
+			UnitPrice(src.UnitPrice),
+			BundleContents(src.BundleContents),
+			CustomData(src.CustomData)
+			{}
+			
+		FItemInstance(const TSharedPtr<FJsonObject>& obj) : FItemInstance()
+        {
+            readFromValue(obj);
+        }
+		
+		~FItemInstance();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FCharacterInventory : public FPlayFabBaseModel
+    {
+		
+		// [optional] The id of this character.
+		FString CharacterId;
+		// [optional] The inventory of this character.
+		TArray<FItemInstance> Inventory;
+	
+        FCharacterInventory() :
+			FPlayFabBaseModel(),
+			CharacterId(),
+			Inventory()
+			{}
+		
+		FCharacterInventory(const FCharacterInventory& src) :
+			FPlayFabBaseModel(),
+			CharacterId(src.CharacterId),
+			Inventory(src.Inventory)
+			{}
+			
+		FCharacterInventory(const TSharedPtr<FJsonObject>& obj) : FCharacterInventory()
+        {
+            readFromValue(obj);
+        }
+		
+		~FCharacterInventory();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FCharacterLeaderboardEntry : public FPlayFabBaseModel
     {
 		
@@ -910,89 +1024,6 @@ namespace ClientModels
         }
 		
 		~FConfirmPurchaseRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FItemInstance : public FPlayFabBaseModel
-    {
-		
-		// [optional] Unique identifier for the inventory item, as defined in the catalog.
-		FString ItemId;
-		// [optional] Unique item identifier for this specific instance of the item.
-		FString ItemInstanceId;
-		// [optional] Class name for the inventory item, as defined in the catalog.
-		FString ItemClass;
-		// [optional] Timestamp for when this instance was purchased.
-		OptionalTime PurchaseDate;
-		// [optional] Timestamp for when this instance will expire.
-		OptionalTime Expiration;
-		// [optional] Total number of remaining uses, if this is a consumable item.
-		OptionalInt32 RemainingUses;
-		// [optional] The number of uses that were added or removed to this item in this call.
-		OptionalInt32 UsesIncrementedBy;
-		// [optional] Game specific comment associated with this instance when it was added to the user inventory.
-		FString Annotation;
-		// [optional] Catalog version for the inventory item, when this instance was created.
-		FString CatalogVersion;
-		// [optional] Unique identifier for the parent inventory item, as defined in the catalog, for object which were added from a bundle or container.
-		FString BundleParent;
-		// [optional] CatalogItem.DisplayName at the time this item was purchased.
-		FString DisplayName;
-		// [optional] Currency type for the cost of the catalog item.
-		FString UnitCurrency;
-		// Cost of the catalog item in the given currency.
-		uint32 UnitPrice;
-		// [optional] Array of unique items that were awarded when this catalog item was purchased.
-		TArray<FString> BundleContents;
-		// [optional] A set of custom key-value pairs on the inventory item.
-		TMap<FString, FString> CustomData;
-	
-        FItemInstance() :
-			FPlayFabBaseModel(),
-			ItemId(),
-			ItemInstanceId(),
-			ItemClass(),
-			PurchaseDate(),
-			Expiration(),
-			RemainingUses(),
-			UsesIncrementedBy(),
-			Annotation(),
-			CatalogVersion(),
-			BundleParent(),
-			DisplayName(),
-			UnitCurrency(),
-			UnitPrice(0),
-			BundleContents(),
-			CustomData()
-			{}
-		
-		FItemInstance(const FItemInstance& src) :
-			FPlayFabBaseModel(),
-			ItemId(src.ItemId),
-			ItemInstanceId(src.ItemInstanceId),
-			ItemClass(src.ItemClass),
-			PurchaseDate(src.PurchaseDate),
-			Expiration(src.Expiration),
-			RemainingUses(src.RemainingUses),
-			UsesIncrementedBy(src.UsesIncrementedBy),
-			Annotation(src.Annotation),
-			CatalogVersion(src.CatalogVersion),
-			BundleParent(src.BundleParent),
-			DisplayName(src.DisplayName),
-			UnitCurrency(src.UnitCurrency),
-			UnitPrice(src.UnitPrice),
-			BundleContents(src.BundleContents),
-			CustomData(src.CustomData)
-			{}
-			
-		FItemInstance(const TSharedPtr<FJsonObject>& obj) : FItemInstance()
-        {
-            readFromValue(obj);
-        }
-		
-		~FItemInstance();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -2570,7 +2601,7 @@ namespace ClientModels
 		FString Value;
 		// Timestamp for when this data was last updated.
 		FDateTime LastUpdated;
-		// [optional] Indicates whether this data can be read by all users (public) or only the user (private).
+		// [optional] Indicates whether this data can be read by all users (public) or only the user (private). This is used for GetUserData requests being made by one player about another player.
 		Boxed<UserDataPermission> Permission;
 	
         FUserDataRecord() :
@@ -3614,6 +3645,249 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FGetPlayerCombinedInfoRequestParams : public FPlayFabBaseModel
+    {
+		
+		// Whether to get the player's account Info. Defaults to false
+		bool GetUserAccountInfo;
+		// Whether to get the player's inventory. Defaults to false
+		bool GetUserInventory;
+		// Whether to get the player's virtual currency balances. Defaults to false
+		bool GetUserVirtualCurrency;
+		// Whether to get the player's custom data. Defaults to false
+		bool GetUserData;
+		// [optional] Specific keys to search for in the custom data. Leave null to get all keys. Has no effect if UserDataKeys is false
+		TArray<FString> UserDataKeys;
+		// Whether to get the player's read only data. Defaults to false
+		bool GetUserReadOnlyData;
+		// [optional] Specific keys to search for in the custom data. Leave null to get all keys. Has no effect if GetUserReadOnlyData is false
+		TArray<FString> UserReadOnlyDataKeys;
+		// Whether to get character inventories. Defaults to false.
+		bool GetCharacterInventories;
+		// Whether to get the list of characters. Defaults to false.
+		bool GetCharacterList;
+		// Whether to get title data. Defaults to false.
+		bool GetTitleData;
+		// [optional] Specific keys to search for in the custom data. Leave null to get all keys. Has no effect if GetTitleData is false
+		TArray<FString> TitleDataKeys;
+		// Whether to get player statistics. Defaults to false.
+		bool GetPlayerStatistics;
+		// [optional] Specific statistics to retrieve. Leave null to get all keys. Has no effect if GetPlayerStatistics is false
+		TArray<FString> PlayerStatisticNames;
+	
+        FGetPlayerCombinedInfoRequestParams() :
+			FPlayFabBaseModel(),
+			GetUserAccountInfo(false),
+			GetUserInventory(false),
+			GetUserVirtualCurrency(false),
+			GetUserData(false),
+			UserDataKeys(),
+			GetUserReadOnlyData(false),
+			UserReadOnlyDataKeys(),
+			GetCharacterInventories(false),
+			GetCharacterList(false),
+			GetTitleData(false),
+			TitleDataKeys(),
+			GetPlayerStatistics(false),
+			PlayerStatisticNames()
+			{}
+		
+		FGetPlayerCombinedInfoRequestParams(const FGetPlayerCombinedInfoRequestParams& src) :
+			FPlayFabBaseModel(),
+			GetUserAccountInfo(src.GetUserAccountInfo),
+			GetUserInventory(src.GetUserInventory),
+			GetUserVirtualCurrency(src.GetUserVirtualCurrency),
+			GetUserData(src.GetUserData),
+			UserDataKeys(src.UserDataKeys),
+			GetUserReadOnlyData(src.GetUserReadOnlyData),
+			UserReadOnlyDataKeys(src.UserReadOnlyDataKeys),
+			GetCharacterInventories(src.GetCharacterInventories),
+			GetCharacterList(src.GetCharacterList),
+			GetTitleData(src.GetTitleData),
+			TitleDataKeys(src.TitleDataKeys),
+			GetPlayerStatistics(src.GetPlayerStatistics),
+			PlayerStatisticNames(src.PlayerStatisticNames)
+			{}
+			
+		FGetPlayerCombinedInfoRequestParams(const TSharedPtr<FJsonObject>& obj) : FGetPlayerCombinedInfoRequestParams()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerCombinedInfoRequestParams();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerCombinedInfoRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] PlayFabId of the user whose data will be returned. If not filled included, we return the data for the calling player. 
+		FString PlayFabId;
+		// Flags for which pieces of info to return for the user.
+		FGetPlayerCombinedInfoRequestParams InfoRequestParameters;
+	
+        FGetPlayerCombinedInfoRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			InfoRequestParameters()
+			{}
+		
+		FGetPlayerCombinedInfoRequest(const FGetPlayerCombinedInfoRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			InfoRequestParameters(src.InfoRequestParameters)
+			{}
+			
+		FGetPlayerCombinedInfoRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayerCombinedInfoRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerCombinedInfoRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FStatisticValue : public FPlayFabBaseModel
+    {
+		
+		// [optional] unique name of the statistic
+		FString StatisticName;
+		// statistic value for the player
+		int32 Value;
+		// for updates to an existing statistic value for a player, the version of the statistic when it was loaded
+		uint32 Version;
+	
+        FStatisticValue() :
+			FPlayFabBaseModel(),
+			StatisticName(),
+			Value(0),
+			Version(0)
+			{}
+		
+		FStatisticValue(const FStatisticValue& src) :
+			FPlayFabBaseModel(),
+			StatisticName(src.StatisticName),
+			Value(src.Value),
+			Version(src.Version)
+			{}
+			
+		FStatisticValue(const TSharedPtr<FJsonObject>& obj) : FStatisticValue()
+        {
+            readFromValue(obj);
+        }
+		
+		~FStatisticValue();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerCombinedInfoResultPayload : public FPlayFabBaseModel
+    {
+		
+		// [optional] Account information for the user. This is always retrieved.
+		TSharedPtr<FUserAccountInfo> AccountInfo;
+		// [optional] Array of inventory items in the user's current inventory.
+		TArray<FItemInstance> UserInventory;
+		// [optional] Dictionary of virtual currency balance(s) belonging to the user.
+		TMap<FString, int32> UserVirtualCurrency;
+		// [optional] Dictionary of remaining times and timestamps for virtual currencies.
+		TMap<FString, FVirtualCurrencyRechargeTime> UserVirtualCurrencyRechargeTimes;
+		// [optional] User specific custom data.
+		TMap<FString, FUserDataRecord> UserData;
+		// The version of the UserData that was returned.
+		uint32 UserDataVersion;
+		// [optional] User specific read-only data.
+		TMap<FString, FUserDataRecord> UserReadOnlyData;
+		// The version of the Read-Only UserData that was returned.
+		uint32 UserReadOnlyDataVersion;
+		// [optional] List of characters for the user.
+		TArray<FCharacterResult> CharacterList;
+		// [optional] Inventories for each character for the user.
+		TArray<FCharacterInventory> CharacterInventories;
+		// [optional] Title data for this title.
+		TMap<FString, FString> TitleData;
+		// [optional] List of statistics for this player.
+		TArray<FStatisticValue> PlayerStatistics;
+	
+        FGetPlayerCombinedInfoResultPayload() :
+			FPlayFabBaseModel(),
+			AccountInfo(nullptr),
+			UserInventory(),
+			UserVirtualCurrency(),
+			UserVirtualCurrencyRechargeTimes(),
+			UserData(),
+			UserDataVersion(0),
+			UserReadOnlyData(),
+			UserReadOnlyDataVersion(0),
+			CharacterList(),
+			CharacterInventories(),
+			TitleData(),
+			PlayerStatistics()
+			{}
+		
+		FGetPlayerCombinedInfoResultPayload(const FGetPlayerCombinedInfoResultPayload& src) :
+			FPlayFabBaseModel(),
+			AccountInfo(src.AccountInfo.IsValid() ? MakeShareable(new FUserAccountInfo(*src.AccountInfo)) : nullptr),
+			UserInventory(src.UserInventory),
+			UserVirtualCurrency(src.UserVirtualCurrency),
+			UserVirtualCurrencyRechargeTimes(src.UserVirtualCurrencyRechargeTimes),
+			UserData(src.UserData),
+			UserDataVersion(src.UserDataVersion),
+			UserReadOnlyData(src.UserReadOnlyData),
+			UserReadOnlyDataVersion(src.UserReadOnlyDataVersion),
+			CharacterList(src.CharacterList),
+			CharacterInventories(src.CharacterInventories),
+			TitleData(src.TitleData),
+			PlayerStatistics(src.PlayerStatistics)
+			{}
+			
+		FGetPlayerCombinedInfoResultPayload(const TSharedPtr<FJsonObject>& obj) : FGetPlayerCombinedInfoResultPayload()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerCombinedInfoResultPayload();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerCombinedInfoResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+		// [optional] Results for requested info.
+		TSharedPtr<FGetPlayerCombinedInfoResultPayload> InfoResultPayload;
+	
+        FGetPlayerCombinedInfoResult() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			InfoResultPayload(nullptr)
+			{}
+		
+		FGetPlayerCombinedInfoResult(const FGetPlayerCombinedInfoResult& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			InfoResultPayload(src.InfoResultPayload.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoResultPayload(*src.InfoResultPayload)) : nullptr)
+			{}
+			
+		FGetPlayerCombinedInfoResult(const TSharedPtr<FJsonObject>& obj) : FGetPlayerCombinedInfoResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerCombinedInfoResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FStatisticNameVersion : public FPlayFabBaseModel
     {
 		
@@ -3671,41 +3945,6 @@ namespace ClientModels
         }
 		
 		~FGetPlayerStatisticsRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FStatisticValue : public FPlayFabBaseModel
-    {
-		
-		// [optional] unique name of the statistic
-		FString StatisticName;
-		// statistic value for the player
-		int32 Value;
-		// for updates to an existing statistic value for a player, the version of the statistic when it was loaded
-		uint32 Version;
-	
-        FStatisticValue() :
-			FPlayFabBaseModel(),
-			StatisticName(),
-			Value(0),
-			Version(0)
-			{}
-		
-		FStatisticValue(const FStatisticValue& src) :
-			FPlayFabBaseModel(),
-			StatisticName(src.StatisticName),
-			Value(src.Value),
-			Version(src.Version)
-			{}
-			
-		FStatisticValue(const TSharedPtr<FJsonObject>& obj) : FStatisticValue()
-        {
-            readFromValue(obj);
-        }
-		
-		~FStatisticValue();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -4930,7 +5169,7 @@ namespace ClientModels
 		
 		// [optional] Specific keys to search for in the custom data. Leave null to get all keys.
 		TArray<FString> Keys;
-		// [optional] Unique PlayFab identifier of the user to load data for. Optional, defaults to yourself if not set.
+		// [optional] Unique PlayFab identifier of the user to load data for. Optional, defaults to yourself if not set. When specified to a PlayFab id of another player, then this will only return public keys for that account.
 		FString PlayFabId;
 		// [optional] The version that currently exists according to the caller. The call will return the data for all of the keys if the version in the system is greater than this.
 		OptionalUint32 IfChangedFromDataVersion;
@@ -5784,6 +6023,8 @@ namespace ClientModels
 		TSharedPtr<FUserSettings> SettingsForUser;
 		// [optional] The time of this user's previous login. If there was no previous login, then it's DateTime.MinValue
 		OptionalTime LastLoginTime;
+		// [optional] Results for requested info.
+		TSharedPtr<FGetPlayerCombinedInfoResultPayload> InfoResultPayload;
 	
         FLoginResult() :
 			FPlayFabBaseModel(),
@@ -5791,7 +6032,8 @@ namespace ClientModels
 			PlayFabId(),
 			NewlyCreated(false),
 			SettingsForUser(nullptr),
-			LastLoginTime()
+			LastLoginTime(),
+			InfoResultPayload(nullptr)
 			{}
 		
 		FLoginResult(const FLoginResult& src) :
@@ -5800,7 +6042,8 @@ namespace ClientModels
 			PlayFabId(src.PlayFabId),
 			NewlyCreated(src.NewlyCreated),
 			SettingsForUser(src.SettingsForUser.IsValid() ? MakeShareable(new FUserSettings(*src.SettingsForUser)) : nullptr),
-			LastLoginTime(src.LastLoginTime)
+			LastLoginTime(src.LastLoginTime),
+			InfoResultPayload(src.InfoResultPayload.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoResultPayload(*src.InfoResultPayload)) : nullptr)
 			{}
 			
 		FLoginResult(const TSharedPtr<FJsonObject>& obj) : FLoginResult()
@@ -5827,6 +6070,8 @@ namespace ClientModels
 		FString AndroidDevice;
 		// [optional] Automatically create a PlayFab account if one is not currently linked to this Android device.
 		OptionalBool CreateAccount;
+		// [optional] Flags for which pieces of info to return for the user.
+		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
 	
         FLoginWithAndroidDeviceIDRequest() :
 			FPlayFabBaseModel(),
@@ -5834,7 +6079,8 @@ namespace ClientModels
 			AndroidDeviceId(),
 			OS(),
 			AndroidDevice(),
-			CreateAccount()
+			CreateAccount(),
+			InfoRequestParameters(nullptr)
 			{}
 		
 		FLoginWithAndroidDeviceIDRequest(const FLoginWithAndroidDeviceIDRequest& src) :
@@ -5843,7 +6089,8 @@ namespace ClientModels
 			AndroidDeviceId(src.AndroidDeviceId),
 			OS(src.OS),
 			AndroidDevice(src.AndroidDevice),
-			CreateAccount(src.CreateAccount)
+			CreateAccount(src.CreateAccount),
+			InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr)
 			{}
 			
 		FLoginWithAndroidDeviceIDRequest(const TSharedPtr<FJsonObject>& obj) : FLoginWithAndroidDeviceIDRequest()
@@ -5866,19 +6113,23 @@ namespace ClientModels
 		FString CustomId;
 		// [optional] Automatically create a PlayFab account if one is not currently linked to this Custom ID.
 		OptionalBool CreateAccount;
+		// [optional] Flags for which pieces of info to return for the user.
+		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
 	
         FLoginWithCustomIDRequest() :
 			FPlayFabBaseModel(),
 			TitleId(),
 			CustomId(),
-			CreateAccount()
+			CreateAccount(),
+			InfoRequestParameters(nullptr)
 			{}
 		
 		FLoginWithCustomIDRequest(const FLoginWithCustomIDRequest& src) :
 			FPlayFabBaseModel(),
 			TitleId(src.TitleId),
 			CustomId(src.CustomId),
-			CreateAccount(src.CreateAccount)
+			CreateAccount(src.CreateAccount),
+			InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr)
 			{}
 			
 		FLoginWithCustomIDRequest(const TSharedPtr<FJsonObject>& obj) : FLoginWithCustomIDRequest()
@@ -5901,19 +6152,23 @@ namespace ClientModels
 		FString Email;
 		// Password for the PlayFab account (6-100 characters)
 		FString Password;
+		// [optional] Flags for which pieces of info to return for the user.
+		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
 	
         FLoginWithEmailAddressRequest() :
 			FPlayFabBaseModel(),
 			TitleId(),
 			Email(),
-			Password()
+			Password(),
+			InfoRequestParameters(nullptr)
 			{}
 		
 		FLoginWithEmailAddressRequest(const FLoginWithEmailAddressRequest& src) :
 			FPlayFabBaseModel(),
 			TitleId(src.TitleId),
 			Email(src.Email),
-			Password(src.Password)
+			Password(src.Password),
+			InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr)
 			{}
 			
 		FLoginWithEmailAddressRequest(const TSharedPtr<FJsonObject>& obj) : FLoginWithEmailAddressRequest()
@@ -5936,19 +6191,23 @@ namespace ClientModels
 		FString AccessToken;
 		// [optional] Automatically create a PlayFab account if one is not currently linked to this Facebook account.
 		OptionalBool CreateAccount;
+		// [optional] Flags for which pieces of info to return for the user.
+		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
 	
         FLoginWithFacebookRequest() :
 			FPlayFabBaseModel(),
 			TitleId(),
 			AccessToken(),
-			CreateAccount()
+			CreateAccount(),
+			InfoRequestParameters(nullptr)
 			{}
 		
 		FLoginWithFacebookRequest(const FLoginWithFacebookRequest& src) :
 			FPlayFabBaseModel(),
 			TitleId(src.TitleId),
 			AccessToken(src.AccessToken),
-			CreateAccount(src.CreateAccount)
+			CreateAccount(src.CreateAccount),
+			InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr)
 			{}
 			
 		FLoginWithFacebookRequest(const TSharedPtr<FJsonObject>& obj) : FLoginWithFacebookRequest()
@@ -5971,19 +6230,23 @@ namespace ClientModels
 		FString PlayerId;
 		// [optional] Automatically create a PlayFab account if one is not currently linked to this Game Center id.
 		OptionalBool CreateAccount;
+		// [optional] Flags for which pieces of info to return for the user.
+		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
 	
         FLoginWithGameCenterRequest() :
 			FPlayFabBaseModel(),
 			TitleId(),
 			PlayerId(),
-			CreateAccount()
+			CreateAccount(),
+			InfoRequestParameters(nullptr)
 			{}
 		
 		FLoginWithGameCenterRequest(const FLoginWithGameCenterRequest& src) :
 			FPlayFabBaseModel(),
 			TitleId(src.TitleId),
 			PlayerId(src.PlayerId),
-			CreateAccount(src.CreateAccount)
+			CreateAccount(src.CreateAccount),
+			InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr)
 			{}
 			
 		FLoginWithGameCenterRequest(const TSharedPtr<FJsonObject>& obj) : FLoginWithGameCenterRequest()
@@ -6008,13 +6271,16 @@ namespace ClientModels
 		OptionalBool CreateAccount;
 		// [optional] Deprecated - unused
 		FString PublisherId;
+		// [optional] Flags for which pieces of info to return for the user.
+		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
 	
         FLoginWithGoogleAccountRequest() :
 			FPlayFabBaseModel(),
 			TitleId(),
 			AccessToken(),
 			CreateAccount(),
-			PublisherId()
+			PublisherId(),
+			InfoRequestParameters(nullptr)
 			{}
 		
 		FLoginWithGoogleAccountRequest(const FLoginWithGoogleAccountRequest& src) :
@@ -6022,7 +6288,8 @@ namespace ClientModels
 			TitleId(src.TitleId),
 			AccessToken(src.AccessToken),
 			CreateAccount(src.CreateAccount),
-			PublisherId(src.PublisherId)
+			PublisherId(src.PublisherId),
+			InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr)
 			{}
 			
 		FLoginWithGoogleAccountRequest(const TSharedPtr<FJsonObject>& obj) : FLoginWithGoogleAccountRequest()
@@ -6047,6 +6314,8 @@ namespace ClientModels
 		FString OS;
 		// [optional] Specific model of the user's device.
 		FString DeviceModel;
+		// [optional] Flags for which pieces of info to return for the user.
+		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
 		// [optional] Automatically create a PlayFab account if one is not currently linked to this iOS device.
 		OptionalBool CreateAccount;
 	
@@ -6056,6 +6325,7 @@ namespace ClientModels
 			DeviceId(),
 			OS(),
 			DeviceModel(),
+			InfoRequestParameters(nullptr),
 			CreateAccount()
 			{}
 		
@@ -6065,6 +6335,7 @@ namespace ClientModels
 			DeviceId(src.DeviceId),
 			OS(src.OS),
 			DeviceModel(src.DeviceModel),
+			InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr),
 			CreateAccount(src.CreateAccount)
 			{}
 			
@@ -6090,13 +6361,16 @@ namespace ClientModels
 		FString AuthTicket;
 		// [optional] Automatically create a PlayFab account if one is not currently linked to this Kongregate account.
 		OptionalBool CreateAccount;
+		// [optional] Flags for which pieces of info to return for the user.
+		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
 	
         FLoginWithKongregateRequest() :
 			FPlayFabBaseModel(),
 			TitleId(),
 			KongregateId(),
 			AuthTicket(),
-			CreateAccount()
+			CreateAccount(),
+			InfoRequestParameters(nullptr)
 			{}
 		
 		FLoginWithKongregateRequest(const FLoginWithKongregateRequest& src) :
@@ -6104,7 +6378,8 @@ namespace ClientModels
 			TitleId(src.TitleId),
 			KongregateId(src.KongregateId),
 			AuthTicket(src.AuthTicket),
-			CreateAccount(src.CreateAccount)
+			CreateAccount(src.CreateAccount),
+			InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr)
 			{}
 			
 		FLoginWithKongregateRequest(const TSharedPtr<FJsonObject>& obj) : FLoginWithKongregateRequest()
@@ -6127,19 +6402,23 @@ namespace ClientModels
 		FString Username;
 		// Password for the PlayFab account (6-100 characters)
 		FString Password;
+		// [optional] Flags for which pieces of info to return for the user.
+		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
 	
         FLoginWithPlayFabRequest() :
 			FPlayFabBaseModel(),
 			TitleId(),
 			Username(),
-			Password()
+			Password(),
+			InfoRequestParameters(nullptr)
 			{}
 		
 		FLoginWithPlayFabRequest(const FLoginWithPlayFabRequest& src) :
 			FPlayFabBaseModel(),
 			TitleId(src.TitleId),
 			Username(src.Username),
-			Password(src.Password)
+			Password(src.Password),
+			InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr)
 			{}
 			
 		FLoginWithPlayFabRequest(const TSharedPtr<FJsonObject>& obj) : FLoginWithPlayFabRequest()
@@ -6162,19 +6441,23 @@ namespace ClientModels
 		FString SteamTicket;
 		// [optional] Automatically create a PlayFab account if one is not currently linked to this Steam account.
 		OptionalBool CreateAccount;
+		// [optional] Flags for which pieces of info to return for the user.
+		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
 	
         FLoginWithSteamRequest() :
 			FPlayFabBaseModel(),
 			TitleId(),
 			SteamTicket(),
-			CreateAccount()
+			CreateAccount(),
+			InfoRequestParameters(nullptr)
 			{}
 		
 		FLoginWithSteamRequest(const FLoginWithSteamRequest& src) :
 			FPlayFabBaseModel(),
 			TitleId(src.TitleId),
 			SteamTicket(src.SteamTicket),
-			CreateAccount(src.CreateAccount)
+			CreateAccount(src.CreateAccount),
+			InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr)
 			{}
 			
 		FLoginWithSteamRequest(const TSharedPtr<FJsonObject>& obj) : FLoginWithSteamRequest()
@@ -8233,7 +8516,7 @@ namespace ClientModels
 		TMap<FString, FString> Data;
 		// [optional] Optional list of Data-keys to remove from UserData.  Some SDKs cannot insert null-values into Data due to language constraints.  Use this to delete the keys directly.
 		TArray<FString> KeysToRemove;
-		// [optional] Permission to be applied to all user data keys written in this request. Defaults to "private" if not set.
+		// [optional] Permission to be applied to all user data keys written in this request. Defaults to "private" if not set. This is used for requests by one player for information about another player; those requests will only return Public keys.
 		Boxed<UserDataPermission> Permission;
 	
         FUpdateUserDataRequest() :

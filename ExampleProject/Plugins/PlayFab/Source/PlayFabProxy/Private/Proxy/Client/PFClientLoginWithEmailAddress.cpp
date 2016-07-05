@@ -10,13 +10,14 @@ UPFClientLoginWithEmailAddress::UPFClientLoginWithEmailAddress(const FObjectInit
 {
 }
 
-UPFClientLoginWithEmailAddress* UPFClientLoginWithEmailAddress::LoginWithEmailAddress(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InTitleId, const FString& InEmail, const FString& InPassword)
+UPFClientLoginWithEmailAddress* UPFClientLoginWithEmailAddress::LoginWithEmailAddress(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InTitleId, const FString& InEmail, const FString& InPassword, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters)
 {
 	UPFClientLoginWithEmailAddress* Proxy = NewObject<UPFClientLoginWithEmailAddress>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.TitleId = InTitleId;
 	Proxy->Request.Email = InEmail;
 	Proxy->Request.Password = InPassword;
+	Proxy->Request.InfoRequestParameters = InInfoRequestParameters;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

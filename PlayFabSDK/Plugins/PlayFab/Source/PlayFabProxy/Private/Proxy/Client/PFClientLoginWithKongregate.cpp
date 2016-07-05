@@ -10,7 +10,7 @@ UPFClientLoginWithKongregate::UPFClientLoginWithKongregate(const FObjectInitiali
 {
 }
 
-UPFClientLoginWithKongregate* UPFClientLoginWithKongregate::LoginWithKongregate(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InTitleId, const FString& InKongregateId, const FString& InAuthTicket, const bool& InCreateAccount)
+UPFClientLoginWithKongregate* UPFClientLoginWithKongregate::LoginWithKongregate(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InTitleId, const FString& InKongregateId, const FString& InAuthTicket, const bool& InCreateAccount, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters)
 {
 	UPFClientLoginWithKongregate* Proxy = NewObject<UPFClientLoginWithKongregate>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
@@ -18,6 +18,7 @@ UPFClientLoginWithKongregate* UPFClientLoginWithKongregate::LoginWithKongregate(
 	Proxy->Request.KongregateId = InKongregateId;
 	Proxy->Request.AuthTicket = InAuthTicket;
 	Proxy->Request.CreateAccount = InCreateAccount;
+	Proxy->Request.InfoRequestParameters = InInfoRequestParameters;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

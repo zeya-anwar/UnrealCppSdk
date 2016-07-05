@@ -10,13 +10,14 @@ UPFClientLoginWithPlayFab::UPFClientLoginWithPlayFab(const FObjectInitializer& O
 {
 }
 
-UPFClientLoginWithPlayFab* UPFClientLoginWithPlayFab::LoginWithPlayFab(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InTitleId, const FString& InUsername, const FString& InPassword)
+UPFClientLoginWithPlayFab* UPFClientLoginWithPlayFab::LoginWithPlayFab(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InTitleId, const FString& InUsername, const FString& InPassword, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters)
 {
 	UPFClientLoginWithPlayFab* Proxy = NewObject<UPFClientLoginWithPlayFab>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.TitleId = InTitleId;
 	Proxy->Request.Username = InUsername;
 	Proxy->Request.Password = InPassword;
+	Proxy->Request.InfoRequestParameters = InInfoRequestParameters;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

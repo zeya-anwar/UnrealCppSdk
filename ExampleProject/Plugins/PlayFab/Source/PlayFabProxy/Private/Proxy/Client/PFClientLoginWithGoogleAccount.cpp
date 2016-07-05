@@ -10,7 +10,7 @@ UPFClientLoginWithGoogleAccount::UPFClientLoginWithGoogleAccount(const FObjectIn
 {
 }
 
-UPFClientLoginWithGoogleAccount* UPFClientLoginWithGoogleAccount::LoginWithGoogleAccount(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InTitleId, const FString& InAccessToken, const bool& InCreateAccount, const FString& InPublisherId)
+UPFClientLoginWithGoogleAccount* UPFClientLoginWithGoogleAccount::LoginWithGoogleAccount(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InTitleId, const FString& InAccessToken, const bool& InCreateAccount, const FString& InPublisherId, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters)
 {
 	UPFClientLoginWithGoogleAccount* Proxy = NewObject<UPFClientLoginWithGoogleAccount>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
@@ -18,6 +18,7 @@ UPFClientLoginWithGoogleAccount* UPFClientLoginWithGoogleAccount::LoginWithGoogl
 	Proxy->Request.AccessToken = InAccessToken;
 	Proxy->Request.CreateAccount = InCreateAccount;
 	Proxy->Request.PublisherId = InPublisherId;
+	Proxy->Request.InfoRequestParameters = InInfoRequestParameters;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

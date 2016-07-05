@@ -10,7 +10,7 @@ UPFClientLoginWithAndroidDeviceID::UPFClientLoginWithAndroidDeviceID(const FObje
 {
 }
 
-UPFClientLoginWithAndroidDeviceID* UPFClientLoginWithAndroidDeviceID::LoginWithAndroidDeviceID(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InTitleId, const FString& InAndroidDeviceId, const FString& InOS, const FString& InAndroidDevice, const bool& InCreateAccount)
+UPFClientLoginWithAndroidDeviceID* UPFClientLoginWithAndroidDeviceID::LoginWithAndroidDeviceID(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InTitleId, const FString& InAndroidDeviceId, const FString& InOS, const FString& InAndroidDevice, const bool& InCreateAccount, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters)
 {
 	UPFClientLoginWithAndroidDeviceID* Proxy = NewObject<UPFClientLoginWithAndroidDeviceID>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
@@ -19,6 +19,7 @@ UPFClientLoginWithAndroidDeviceID* UPFClientLoginWithAndroidDeviceID::LoginWithA
 	Proxy->Request.OS = InOS;
 	Proxy->Request.AndroidDevice = InAndroidDevice;
 	Proxy->Request.CreateAccount = InCreateAccount;
+	Proxy->Request.InfoRequestParameters = InInfoRequestParameters;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

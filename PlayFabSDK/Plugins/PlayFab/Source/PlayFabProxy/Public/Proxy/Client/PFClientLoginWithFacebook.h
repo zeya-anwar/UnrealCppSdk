@@ -21,7 +21,7 @@ public:
 	
 	// Signs the user in using a Facebook access token, returning a session identifier that can subsequently be used for API calls which require an authenticated user
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Authentication")
-	static UPFClientLoginWithFacebook* LoginWithFacebook(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InTitleId, const FString& InAccessToken, const bool& InCreateAccount);
+	static UPFClientLoginWithFacebook* LoginWithFacebook(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InTitleId, const FString& InAccessToken, const bool& InCreateAccount, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

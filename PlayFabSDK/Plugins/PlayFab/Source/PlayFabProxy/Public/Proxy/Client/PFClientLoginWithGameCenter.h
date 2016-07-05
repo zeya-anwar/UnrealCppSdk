@@ -21,7 +21,7 @@ public:
 	
 	// Signs the user in using an iOS Game Center player identifier, returning a session identifier that can subsequently be used for API calls which require an authenticated user
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Authentication")
-	static UPFClientLoginWithGameCenter* LoginWithGameCenter(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InTitleId, const FString& InPlayerId, const bool& InCreateAccount);
+	static UPFClientLoginWithGameCenter* LoginWithGameCenter(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InTitleId, const FString& InPlayerId, const bool& InCreateAccount, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

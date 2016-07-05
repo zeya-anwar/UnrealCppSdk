@@ -10,13 +10,14 @@ UPFClientLoginWithGameCenter::UPFClientLoginWithGameCenter(const FObjectInitiali
 {
 }
 
-UPFClientLoginWithGameCenter* UPFClientLoginWithGameCenter::LoginWithGameCenter(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InTitleId, const FString& InPlayerId, const bool& InCreateAccount)
+UPFClientLoginWithGameCenter* UPFClientLoginWithGameCenter::LoginWithGameCenter(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InTitleId, const FString& InPlayerId, const bool& InCreateAccount, const FBPClientGetPlayerCombinedInfoRequestParams& InInfoRequestParameters)
 {
 	UPFClientLoginWithGameCenter* Proxy = NewObject<UPFClientLoginWithGameCenter>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.TitleId = InTitleId;
 	Proxy->Request.PlayerId = InPlayerId;
 	Proxy->Request.CreateAccount = InCreateAccount;
+	Proxy->Request.InfoRequestParameters = InInfoRequestParameters;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

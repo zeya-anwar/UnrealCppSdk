@@ -206,6 +206,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientCatalogItemContainerInfoDelegate, const FBPClientCatalogItemContainerInfo&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientCharacterInventory"))
+struct FBPClientCharacterInventory
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FCharacterInventory Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientCharacterInventoryDelegate, const FBPClientCharacterInventory&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientCharacterLeaderboardEntry"))
 struct FBPClientCharacterLeaderboardEntry
 {
@@ -775,6 +785,46 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetPhotonAuthenticationTokenResultDelegate, const FBPClientGetPhotonAuthenticationTokenResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetPlayerCombinedInfoRequest"))
+struct FBPClientGetPlayerCombinedInfoRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FGetPlayerCombinedInfoRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetPlayerCombinedInfoRequestDelegate, const FBPClientGetPlayerCombinedInfoRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetPlayerCombinedInfoRequestParams"))
+struct FBPClientGetPlayerCombinedInfoRequestParams
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FGetPlayerCombinedInfoRequestParams Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetPlayerCombinedInfoRequestParamsDelegate, const FBPClientGetPlayerCombinedInfoRequestParams&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetPlayerCombinedInfoResult"))
+struct FBPClientGetPlayerCombinedInfoResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FGetPlayerCombinedInfoResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetPlayerCombinedInfoResultDelegate, const FBPClientGetPlayerCombinedInfoResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetPlayerCombinedInfoResultPayload"))
+struct FBPClientGetPlayerCombinedInfoResultPayload
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FGetPlayerCombinedInfoResultPayload Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientGetPlayerCombinedInfoResultPayloadDelegate, const FBPClientGetPlayerCombinedInfoResultPayload&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientGetPlayerStatisticsRequest"))
 struct FBPClientGetPlayerStatisticsRequest
