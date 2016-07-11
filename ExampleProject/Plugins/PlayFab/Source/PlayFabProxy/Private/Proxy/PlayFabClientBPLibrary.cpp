@@ -1348,6 +1348,30 @@ void UPFClientProxyLibrary::BreakBPClientGetPlayFabIDsFromSteamIDsResult(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientGetPlayFabIDsFromTwitchIDsRequest(
+		const FBPClientGetPlayFabIDsFromTwitchIDsRequest& In
+        ,TArray<FString>& OutTwitchIds
+	)
+{
+    OutTwitchIds = In.Data.TwitchIds;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetPlayFabIDsFromTwitchIDsResult(
+		const FBPClientGetPlayFabIDsFromTwitchIDsResult& In
+        ,TArray<FBPClientTwitchPlayFabIdPair>& OutData
+	)
+{
+    for (const PlayFab::ClientModels::FTwitchPlayFabIdPair& elem : In.Data.Data)
+    {
+        FBPClientTwitchPlayFabIdPair result;
+        result.Data = elem;
+        OutData.Add(result);
+    }
+
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientGetPublisherDataRequest(
 		const FBPClientGetPublisherDataRequest& In
         ,TArray<FString>& OutKeys
@@ -1864,6 +1888,22 @@ void UPFClientProxyLibrary::BreakBPClientLinkSteamAccountResult(
     
 }
 
+void UPFClientProxyLibrary::BreakBPClientLinkTwitchAccountRequest(
+		const FBPClientLinkTwitchAccountRequest& In
+        ,FString& OutAccessToken
+	)
+{
+    OutAccessToken = In.Data.AccessToken;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientLinkTwitchAccountResult(
+		const FBPClientLinkTwitchAccountResult& In
+	)
+{
+    
+}
+
 void UPFClientProxyLibrary::BreakBPClientListUsersCharactersRequest(
 		const FBPClientListUsersCharactersRequest& In
         ,FString& OutPlayFabId
@@ -2085,6 +2125,21 @@ void UPFClientProxyLibrary::BreakBPClientLoginWithSteamRequest(
 {
     OutTitleId = In.Data.TitleId;
 	OutSteamTicket = In.Data.SteamTicket;
+	OutCreateAccount = In.Data.CreateAccount;
+	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientLoginWithTwitchRequest(
+		const FBPClientLoginWithTwitchRequest& In
+        ,FString& OutTitleId
+        ,FString& OutAccessToken
+        ,bool& OutCreateAccount
+        ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
+	)
+{
+    OutTitleId = In.Data.TitleId;
+	OutAccessToken = In.Data.AccessToken;
 	OutCreateAccount = In.Data.CreateAccount;
 	if (In.Data.InfoRequestParameters.IsValid()) {    OutInfoRequestParameters.Data = *In.Data.InfoRequestParameters;}
 	
@@ -2802,6 +2857,17 @@ void UPFClientProxyLibrary::BreakBPClientTransactionStatus(
     
 }
 
+void UPFClientProxyLibrary::BreakBPClientTwitchPlayFabIdPair(
+		const FBPClientTwitchPlayFabIdPair& In
+        ,FString& OutTwitchId
+        ,FString& OutPlayFabId
+	)
+{
+    OutTwitchId = In.Data.TwitchId;
+	OutPlayFabId = In.Data.PlayFabId;
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientUnlinkAndroidDeviceIDRequest(
 		const FBPClientUnlinkAndroidDeviceIDRequest& In
         ,FString& OutAndroidDeviceId
@@ -2915,6 +2981,20 @@ void UPFClientProxyLibrary::BreakBPClientUnlinkSteamAccountRequest(
 
 void UPFClientProxyLibrary::BreakBPClientUnlinkSteamAccountResult(
 		const FBPClientUnlinkSteamAccountResult& In
+	)
+{
+    
+}
+
+void UPFClientProxyLibrary::BreakBPClientUnlinkTwitchAccountRequest(
+		const FBPClientUnlinkTwitchAccountRequest& In
+	)
+{
+    
+}
+
+void UPFClientProxyLibrary::BreakBPClientUnlinkTwitchAccountResult(
+		const FBPClientUnlinkTwitchAccountResult& In
 	)
 {
     
@@ -3115,6 +3195,7 @@ void UPFClientProxyLibrary::BreakBPClientUserAccountInfo(
         ,FBPClientUserIosDeviceInfo& OutIosDeviceInfo
         ,FBPClientUserAndroidDeviceInfo& OutAndroidDeviceInfo
         ,FBPClientUserKongregateInfo& OutKongregateInfo
+        ,FBPClientUserTwitchInfo& OutTwitchInfo
         ,FBPClientUserPsnInfo& OutPsnInfo
         ,FBPClientUserGoogleInfo& OutGoogleInfo
         ,FBPClientUserXboxInfo& OutXboxInfo
@@ -3132,6 +3213,7 @@ void UPFClientProxyLibrary::BreakBPClientUserAccountInfo(
 	if (In.Data.IosDeviceInfo.IsValid()) {    OutIosDeviceInfo.Data = *In.Data.IosDeviceInfo;}
 	if (In.Data.AndroidDeviceInfo.IsValid()) {    OutAndroidDeviceInfo.Data = *In.Data.AndroidDeviceInfo;}
 	if (In.Data.KongregateInfo.IsValid()) {    OutKongregateInfo.Data = *In.Data.KongregateInfo;}
+	if (In.Data.TwitchInfo.IsValid()) {    OutTwitchInfo.Data = *In.Data.TwitchInfo;}
 	if (In.Data.PsnInfo.IsValid()) {    OutPsnInfo.Data = *In.Data.PsnInfo;}
 	if (In.Data.GoogleInfo.IsValid()) {    OutGoogleInfo.Data = *In.Data.GoogleInfo;}
 	if (In.Data.XboxInfo.IsValid()) {    OutXboxInfo.Data = *In.Data.XboxInfo;}
@@ -3295,6 +3377,17 @@ void UPFClientProxyLibrary::BreakBPClientUserTitleInfo(
 	
 	
 	OutisBanned = In.Data.isBanned;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientUserTwitchInfo(
+		const FBPClientUserTwitchInfo& In
+        ,FString& OutTwitchId
+        ,FString& OutTwitchUserName
+	)
+{
+    OutTwitchId = In.Data.TwitchId;
+	OutTwitchUserName = In.Data.TwitchUserName;
 	
 }
 

@@ -234,6 +234,7 @@ void PlayFab::ServerModels::writeUserOriginationEnumJSON(UserOrigination enumVal
         case UserOriginationCustomId: writer->WriteValue(TEXT("CustomId")); break;
         case UserOriginationXboxLive: writer->WriteValue(TEXT("XboxLive")); break;
         case UserOriginationParse: writer->WriteValue(TEXT("Parse")); break;
+        case UserOriginationTwitch: writer->WriteValue(TEXT("Twitch")); break;
     }
 }
 
@@ -259,6 +260,7 @@ ServerModels::UserOrigination PlayFab::ServerModels::readUserOriginationFromValu
         _UserOriginationMap.Add(TEXT("CustomId"), UserOriginationCustomId);
         _UserOriginationMap.Add(TEXT("XboxLive"), UserOriginationXboxLive);
         _UserOriginationMap.Add(TEXT("Parse"), UserOriginationParse);
+        _UserOriginationMap.Add(TEXT("Twitch"), UserOriginationTwitch);
 
     } 
 
@@ -986,6 +988,46 @@ bool PlayFab::ServerModels::FUserKongregateInfo::readFromValue(const TSharedPtr<
 }
 
 
+PlayFab::ServerModels::FUserTwitchInfo::~FUserTwitchInfo()
+{
+    
+}
+
+void PlayFab::ServerModels::FUserTwitchInfo::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(TwitchId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("TwitchId")); writer->WriteValue(TwitchId); }
+	
+    if(TwitchUserName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("TwitchUserName")); writer->WriteValue(TwitchUserName); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FUserTwitchInfo::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> TwitchIdValue = obj->TryGetField(TEXT("TwitchId"));
+    if (TwitchIdValue.IsValid()&& !TwitchIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TwitchIdValue->TryGetString(TmpValue)) {TwitchId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TwitchUserNameValue = obj->TryGetField(TEXT("TwitchUserName"));
+    if (TwitchUserNameValue.IsValid()&& !TwitchUserNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(TwitchUserNameValue->TryGetString(TmpValue)) {TwitchUserName = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ServerModels::FUserPsnInfo::~FUserPsnInfo()
 {
     
@@ -1156,6 +1198,7 @@ PlayFab::ServerModels::FUserAccountInfo::~FUserAccountInfo()
     //if(IosDeviceInfo != nullptr) delete IosDeviceInfo;
     //if(AndroidDeviceInfo != nullptr) delete AndroidDeviceInfo;
     //if(KongregateInfo != nullptr) delete KongregateInfo;
+    //if(TwitchInfo != nullptr) delete TwitchInfo;
     //if(PsnInfo != nullptr) delete PsnInfo;
     //if(GoogleInfo != nullptr) delete GoogleInfo;
     //if(XboxInfo != nullptr) delete XboxInfo;
@@ -1188,6 +1231,8 @@ void PlayFab::ServerModels::FUserAccountInfo::writeJSON(JsonWriter& writer) cons
     if(AndroidDeviceInfo.IsValid()) { writer->WriteIdentifierPrefix(TEXT("AndroidDeviceInfo")); AndroidDeviceInfo->writeJSON(writer); }
 	
     if(KongregateInfo.IsValid()) { writer->WriteIdentifierPrefix(TEXT("KongregateInfo")); KongregateInfo->writeJSON(writer); }
+	
+    if(TwitchInfo.IsValid()) { writer->WriteIdentifierPrefix(TEXT("TwitchInfo")); TwitchInfo->writeJSON(writer); }
 	
     if(PsnInfo.IsValid()) { writer->WriteIdentifierPrefix(TEXT("PsnInfo")); PsnInfo->writeJSON(writer); }
 	
@@ -1271,6 +1316,12 @@ bool PlayFab::ServerModels::FUserAccountInfo::readFromValue(const TSharedPtr<FJs
     if (KongregateInfoValue.IsValid()&& !KongregateInfoValue->IsNull())
     {
         KongregateInfo = MakeShareable(new FUserKongregateInfo(KongregateInfoValue->AsObject()));
+    }
+    
+    const TSharedPtr<FJsonValue> TwitchInfoValue = obj->TryGetField(TEXT("TwitchInfo"));
+    if (TwitchInfoValue.IsValid()&& !TwitchInfoValue->IsNull())
+    {
+        TwitchInfo = MakeShareable(new FUserTwitchInfo(TwitchInfoValue->AsObject()));
     }
     
     const TSharedPtr<FJsonValue> PsnInfoValue = obj->TryGetField(TEXT("PsnInfo"));

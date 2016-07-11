@@ -1396,6 +1396,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUserTitleInfoDelegate, const FBPAdminUserTitleInfo&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUserTwitchInfo"))
+struct FBPAdminUserTwitchInfo
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FUserTwitchInfo Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUserTwitchInfoDelegate, const FBPAdminUserTwitchInfo&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUserXboxInfo"))
 struct FBPAdminUserXboxInfo
 {

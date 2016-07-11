@@ -3408,6 +3408,7 @@ void PlayFab::ClientModels::writeUserOriginationEnumJSON(UserOrigination enumVal
         case UserOriginationCustomId: writer->WriteValue(TEXT("CustomId")); break;
         case UserOriginationXboxLive: writer->WriteValue(TEXT("XboxLive")); break;
         case UserOriginationParse: writer->WriteValue(TEXT("Parse")); break;
+        case UserOriginationTwitch: writer->WriteValue(TEXT("Twitch")); break;
     }
 }
 
@@ -3433,6 +3434,7 @@ ClientModels::UserOrigination PlayFab::ClientModels::readUserOriginationFromValu
         _UserOriginationMap.Add(TEXT("CustomId"), UserOriginationCustomId);
         _UserOriginationMap.Add(TEXT("XboxLive"), UserOriginationXboxLive);
         _UserOriginationMap.Add(TEXT("Parse"), UserOriginationParse);
+        _UserOriginationMap.Add(TEXT("Twitch"), UserOriginationTwitch);
 
     } 
 
@@ -3649,6 +3651,46 @@ bool PlayFab::ClientModels::FUserKongregateInfo::readFromValue(const TSharedPtr<
 }
 
 
+PlayFab::ClientModels::FUserTwitchInfo::~FUserTwitchInfo()
+{
+    
+}
+
+void PlayFab::ClientModels::FUserTwitchInfo::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(TwitchId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("TwitchId")); writer->WriteValue(TwitchId); }
+	
+    if(TwitchUserName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("TwitchUserName")); writer->WriteValue(TwitchUserName); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FUserTwitchInfo::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> TwitchIdValue = obj->TryGetField(TEXT("TwitchId"));
+    if (TwitchIdValue.IsValid()&& !TwitchIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TwitchIdValue->TryGetString(TmpValue)) {TwitchId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TwitchUserNameValue = obj->TryGetField(TEXT("TwitchUserName"));
+    if (TwitchUserNameValue.IsValid()&& !TwitchUserNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(TwitchUserNameValue->TryGetString(TmpValue)) {TwitchUserName = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ClientModels::FUserPsnInfo::~FUserPsnInfo()
 {
     
@@ -3819,6 +3861,7 @@ PlayFab::ClientModels::FUserAccountInfo::~FUserAccountInfo()
     //if(IosDeviceInfo != nullptr) delete IosDeviceInfo;
     //if(AndroidDeviceInfo != nullptr) delete AndroidDeviceInfo;
     //if(KongregateInfo != nullptr) delete KongregateInfo;
+    //if(TwitchInfo != nullptr) delete TwitchInfo;
     //if(PsnInfo != nullptr) delete PsnInfo;
     //if(GoogleInfo != nullptr) delete GoogleInfo;
     //if(XboxInfo != nullptr) delete XboxInfo;
@@ -3851,6 +3894,8 @@ void PlayFab::ClientModels::FUserAccountInfo::writeJSON(JsonWriter& writer) cons
     if(AndroidDeviceInfo.IsValid()) { writer->WriteIdentifierPrefix(TEXT("AndroidDeviceInfo")); AndroidDeviceInfo->writeJSON(writer); }
 	
     if(KongregateInfo.IsValid()) { writer->WriteIdentifierPrefix(TEXT("KongregateInfo")); KongregateInfo->writeJSON(writer); }
+	
+    if(TwitchInfo.IsValid()) { writer->WriteIdentifierPrefix(TEXT("TwitchInfo")); TwitchInfo->writeJSON(writer); }
 	
     if(PsnInfo.IsValid()) { writer->WriteIdentifierPrefix(TEXT("PsnInfo")); PsnInfo->writeJSON(writer); }
 	
@@ -3934,6 +3979,12 @@ bool PlayFab::ClientModels::FUserAccountInfo::readFromValue(const TSharedPtr<FJs
     if (KongregateInfoValue.IsValid()&& !KongregateInfoValue->IsNull())
     {
         KongregateInfo = MakeShareable(new FUserKongregateInfo(KongregateInfoValue->AsObject()));
+    }
+    
+    const TSharedPtr<FJsonValue> TwitchInfoValue = obj->TryGetField(TEXT("TwitchInfo"));
+    if (TwitchInfoValue.IsValid()&& !TwitchInfoValue->IsNull())
+    {
+        TwitchInfo = MakeShareable(new FUserTwitchInfo(TwitchInfoValue->AsObject()));
     }
     
     const TSharedPtr<FJsonValue> PsnInfoValue = obj->TryGetField(TEXT("PsnInfo"));
@@ -7169,6 +7220,124 @@ bool PlayFab::ClientModels::FGetPlayFabIDsFromSteamIDsResult::readFromValue(cons
 }
 
 
+PlayFab::ClientModels::FGetPlayFabIDsFromTwitchIDsRequest::~FGetPlayFabIDsFromTwitchIDsRequest()
+{
+    
+}
+
+void PlayFab::ClientModels::FGetPlayFabIDsFromTwitchIDsRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+        writer->WriteArrayStart(TEXT("TwitchIds"));
+    
+        for (const FString& item : TwitchIds)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+    
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FGetPlayFabIDsFromTwitchIDsRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    HasSucceeded &= obj->TryGetStringArrayField(TEXT("TwitchIds"),TwitchIds);
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FTwitchPlayFabIdPair::~FTwitchPlayFabIdPair()
+{
+    
+}
+
+void PlayFab::ClientModels::FTwitchPlayFabIdPair::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(TwitchId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("TwitchId")); writer->WriteValue(TwitchId); }
+	
+    if(PlayFabId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FTwitchPlayFabIdPair::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> TwitchIdValue = obj->TryGetField(TEXT("TwitchId"));
+    if (TwitchIdValue.IsValid()&& !TwitchIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TwitchIdValue->TryGetString(TmpValue)) {TwitchId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FGetPlayFabIDsFromTwitchIDsResult::~FGetPlayFabIDsFromTwitchIDsResult()
+{
+    
+}
+
+void PlayFab::ClientModels::FGetPlayFabIDsFromTwitchIDsResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Data.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("Data"));
+    
+        for (const FTwitchPlayFabIdPair& item : Data)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FGetPlayFabIDsFromTwitchIDsResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&DataArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Data"));
+        for (int32 Idx = 0; Idx < DataArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = DataArray[Idx];
+            
+            Data.Add(FTwitchPlayFabIdPair(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ClientModels::FGetPublisherDataRequest::~FGetPublisherDataRequest()
 {
     
@@ -9164,6 +9333,59 @@ bool PlayFab::ClientModels::FLinkSteamAccountResult::readFromValue(const TShared
 }
 
 
+PlayFab::ClientModels::FLinkTwitchAccountRequest::~FLinkTwitchAccountRequest()
+{
+    
+}
+
+void PlayFab::ClientModels::FLinkTwitchAccountRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("AccessToken")); writer->WriteValue(AccessToken);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FLinkTwitchAccountRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> AccessTokenValue = obj->TryGetField(TEXT("AccessToken"));
+    if (AccessTokenValue.IsValid()&& !AccessTokenValue->IsNull())
+    {
+        FString TmpValue;
+        if(AccessTokenValue->TryGetString(TmpValue)) {AccessToken = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FLinkTwitchAccountResult::~FLinkTwitchAccountResult()
+{
+    
+}
+
+void PlayFab::ClientModels::FLinkTwitchAccountResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FLinkTwitchAccountResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ClientModels::FListUsersCharactersRequest::~FListUsersCharactersRequest()
 {
     
@@ -10050,6 +10272,64 @@ bool PlayFab::ClientModels::FLoginWithSteamRequest::readFromValue(const TSharedP
     {
         FString TmpValue;
         if(SteamTicketValue->TryGetString(TmpValue)) {SteamTicket = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> CreateAccountValue = obj->TryGetField(TEXT("CreateAccount"));
+    if (CreateAccountValue.IsValid()&& !CreateAccountValue->IsNull())
+    {
+        bool TmpValue;
+        if(CreateAccountValue->TryGetBool(TmpValue)) {CreateAccount = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> InfoRequestParametersValue = obj->TryGetField(TEXT("InfoRequestParameters"));
+    if (InfoRequestParametersValue.IsValid()&& !InfoRequestParametersValue->IsNull())
+    {
+        InfoRequestParameters = MakeShareable(new FGetPlayerCombinedInfoRequestParams(InfoRequestParametersValue->AsObject()));
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FLoginWithTwitchRequest::~FLoginWithTwitchRequest()
+{
+    //if(InfoRequestParameters != nullptr) delete InfoRequestParameters;
+    
+}
+
+void PlayFab::ClientModels::FLoginWithTwitchRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId);
+	
+    writer->WriteIdentifierPrefix(TEXT("AccessToken")); writer->WriteValue(AccessToken);
+	
+    if(CreateAccount.notNull()) { writer->WriteIdentifierPrefix(TEXT("CreateAccount")); writer->WriteValue(CreateAccount); }
+	
+    if(InfoRequestParameters.IsValid()) { writer->WriteIdentifierPrefix(TEXT("InfoRequestParameters")); InfoRequestParameters->writeJSON(writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FLoginWithTwitchRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> AccessTokenValue = obj->TryGetField(TEXT("AccessToken"));
+    if (AccessTokenValue.IsValid()&& !AccessTokenValue->IsNull())
+    {
+        FString TmpValue;
+        if(AccessTokenValue->TryGetString(TmpValue)) {AccessToken = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> CreateAccountValue = obj->TryGetField(TEXT("CreateAccount"));
@@ -12436,6 +12716,50 @@ void PlayFab::ClientModels::FUnlinkSteamAccountResult::writeJSON(JsonWriter& wri
 }
 
 bool PlayFab::ClientModels::FUnlinkSteamAccountResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FUnlinkTwitchAccountRequest::~FUnlinkTwitchAccountRequest()
+{
+    
+}
+
+void PlayFab::ClientModels::FUnlinkTwitchAccountRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FUnlinkTwitchAccountRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FUnlinkTwitchAccountResult::~FUnlinkTwitchAccountResult()
+{
+    
+}
+
+void PlayFab::ClientModels::FUnlinkTwitchAccountResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FUnlinkTwitchAccountResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
 {
 	bool HasSucceeded = true; 
 	

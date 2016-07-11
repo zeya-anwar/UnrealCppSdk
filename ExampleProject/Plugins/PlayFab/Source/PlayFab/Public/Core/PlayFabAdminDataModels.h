@@ -2910,7 +2910,8 @@ namespace AdminModels
 		UserOriginationGameCenter,
 		UserOriginationCustomId,
 		UserOriginationXboxLive,
-		UserOriginationParse
+		UserOriginationParse,
+		UserOriginationTwitch
 	};
 	
 	void writeUserOriginationEnumJSON(UserOrigination enumVal, JsonWriter& writer);
@@ -3186,6 +3187,37 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FUserTwitchInfo : public FPlayFabBaseModel
+    {
+		
+		// [optional] Twitch ID
+		FString TwitchId;
+		// [optional] Twitch Username
+		FString TwitchUserName;
+	
+        FUserTwitchInfo() :
+			FPlayFabBaseModel(),
+			TwitchId(),
+			TwitchUserName()
+			{}
+		
+		FUserTwitchInfo(const FUserTwitchInfo& src) :
+			FPlayFabBaseModel(),
+			TwitchId(src.TwitchId),
+			TwitchUserName(src.TwitchUserName)
+			{}
+			
+		FUserTwitchInfo(const TSharedPtr<FJsonObject>& obj) : FUserTwitchInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUserTwitchInfo();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FUserPsnInfo : public FPlayFabBaseModel
     {
 		
@@ -3335,6 +3367,8 @@ namespace AdminModels
 		TSharedPtr<FUserAndroidDeviceInfo> AndroidDeviceInfo;
 		// [optional] User Kongregate account information, if a Kongregate account has been linked
 		TSharedPtr<FUserKongregateInfo> KongregateInfo;
+		// [optional] User Twitch account information, if a Twitch account has been linked
+		TSharedPtr<FUserTwitchInfo> TwitchInfo;
 		// [optional] User PSN account information, if a PSN account has been linked
 		TSharedPtr<FUserPsnInfo> PsnInfo;
 		// [optional] User Google account information, if a Google account has been linked
@@ -3357,6 +3391,7 @@ namespace AdminModels
 			IosDeviceInfo(nullptr),
 			AndroidDeviceInfo(nullptr),
 			KongregateInfo(nullptr),
+			TwitchInfo(nullptr),
 			PsnInfo(nullptr),
 			GoogleInfo(nullptr),
 			XboxInfo(nullptr),
@@ -3376,6 +3411,7 @@ namespace AdminModels
 			IosDeviceInfo(src.IosDeviceInfo.IsValid() ? MakeShareable(new FUserIosDeviceInfo(*src.IosDeviceInfo)) : nullptr),
 			AndroidDeviceInfo(src.AndroidDeviceInfo.IsValid() ? MakeShareable(new FUserAndroidDeviceInfo(*src.AndroidDeviceInfo)) : nullptr),
 			KongregateInfo(src.KongregateInfo.IsValid() ? MakeShareable(new FUserKongregateInfo(*src.KongregateInfo)) : nullptr),
+			TwitchInfo(src.TwitchInfo.IsValid() ? MakeShareable(new FUserTwitchInfo(*src.TwitchInfo)) : nullptr),
 			PsnInfo(src.PsnInfo.IsValid() ? MakeShareable(new FUserPsnInfo(*src.PsnInfo)) : nullptr),
 			GoogleInfo(src.GoogleInfo.IsValid() ? MakeShareable(new FUserGoogleInfo(*src.GoogleInfo)) : nullptr),
 			XboxInfo(src.XboxInfo.IsValid() ? MakeShareable(new FUserXboxInfo(*src.XboxInfo)) : nullptr),

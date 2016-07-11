@@ -897,6 +897,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
         ,FBPAdminUserIosDeviceInfo& OutIosDeviceInfo
         ,FBPAdminUserAndroidDeviceInfo& OutAndroidDeviceInfo
         ,FBPAdminUserKongregateInfo& OutKongregateInfo
+        ,FBPAdminUserTwitchInfo& OutTwitchInfo
         ,FBPAdminUserPsnInfo& OutPsnInfo
         ,FBPAdminUserGoogleInfo& OutGoogleInfo
         ,FBPAdminUserXboxInfo& OutXboxInfo
@@ -1002,6 +1003,13 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
         ,FDateTime& OutLastLogin
         ,FDateTime& OutFirstLogin
         ,bool& OutisBanned
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminUserTwitchInfo(
+		const FBPAdminUserTwitchInfo& In
+        ,FString& OutTwitchId
+        ,FString& OutTwitchUserName
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))

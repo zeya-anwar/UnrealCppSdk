@@ -2091,7 +2091,8 @@ namespace ClientModels
 		UserOriginationGameCenter,
 		UserOriginationCustomId,
 		UserOriginationXboxLive,
-		UserOriginationParse
+		UserOriginationParse,
+		UserOriginationTwitch
 	};
 	
 	void writeUserOriginationEnumJSON(UserOrigination enumVal, JsonWriter& writer);
@@ -2257,6 +2258,37 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FUserTwitchInfo : public FPlayFabBaseModel
+    {
+		
+		// [optional] Twitch ID
+		FString TwitchId;
+		// [optional] Twitch Username
+		FString TwitchUserName;
+	
+        FUserTwitchInfo() :
+			FPlayFabBaseModel(),
+			TwitchId(),
+			TwitchUserName()
+			{}
+		
+		FUserTwitchInfo(const FUserTwitchInfo& src) :
+			FPlayFabBaseModel(),
+			TwitchId(src.TwitchId),
+			TwitchUserName(src.TwitchUserName)
+			{}
+			
+		FUserTwitchInfo(const TSharedPtr<FJsonObject>& obj) : FUserTwitchInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUserTwitchInfo();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FUserPsnInfo : public FPlayFabBaseModel
     {
 		
@@ -2406,6 +2438,8 @@ namespace ClientModels
 		TSharedPtr<FUserAndroidDeviceInfo> AndroidDeviceInfo;
 		// [optional] User Kongregate account information, if a Kongregate account has been linked
 		TSharedPtr<FUserKongregateInfo> KongregateInfo;
+		// [optional] User Twitch account information, if a Twitch account has been linked
+		TSharedPtr<FUserTwitchInfo> TwitchInfo;
 		// [optional] User PSN account information, if a PSN account has been linked
 		TSharedPtr<FUserPsnInfo> PsnInfo;
 		// [optional] User Google account information, if a Google account has been linked
@@ -2428,6 +2462,7 @@ namespace ClientModels
 			IosDeviceInfo(nullptr),
 			AndroidDeviceInfo(nullptr),
 			KongregateInfo(nullptr),
+			TwitchInfo(nullptr),
 			PsnInfo(nullptr),
 			GoogleInfo(nullptr),
 			XboxInfo(nullptr),
@@ -2447,6 +2482,7 @@ namespace ClientModels
 			IosDeviceInfo(src.IosDeviceInfo.IsValid() ? MakeShareable(new FUserIosDeviceInfo(*src.IosDeviceInfo)) : nullptr),
 			AndroidDeviceInfo(src.AndroidDeviceInfo.IsValid() ? MakeShareable(new FUserAndroidDeviceInfo(*src.AndroidDeviceInfo)) : nullptr),
 			KongregateInfo(src.KongregateInfo.IsValid() ? MakeShareable(new FUserKongregateInfo(*src.KongregateInfo)) : nullptr),
+			TwitchInfo(src.TwitchInfo.IsValid() ? MakeShareable(new FUserTwitchInfo(*src.TwitchInfo)) : nullptr),
 			PsnInfo(src.PsnInfo.IsValid() ? MakeShareable(new FUserPsnInfo(*src.PsnInfo)) : nullptr),
 			GoogleInfo(src.GoogleInfo.IsValid() ? MakeShareable(new FUserGoogleInfo(*src.GoogleInfo)) : nullptr),
 			XboxInfo(src.XboxInfo.IsValid() ? MakeShareable(new FUserXboxInfo(*src.XboxInfo)) : nullptr),
@@ -4507,6 +4543,91 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FGetPlayFabIDsFromTwitchIDsRequest : public FPlayFabBaseModel
+    {
+		
+		// Array of unique Twitch identifiers (Twitch's _id) for which the title needs to get PlayFab identifiers.
+		TArray<FString> TwitchIds;
+	
+        FGetPlayFabIDsFromTwitchIDsRequest() :
+			FPlayFabBaseModel(),
+			TwitchIds()
+			{}
+		
+		FGetPlayFabIDsFromTwitchIDsRequest(const FGetPlayFabIDsFromTwitchIDsRequest& src) :
+			FPlayFabBaseModel(),
+			TwitchIds(src.TwitchIds)
+			{}
+			
+		FGetPlayFabIDsFromTwitchIDsRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayFabIDsFromTwitchIDsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayFabIDsFromTwitchIDsRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FTwitchPlayFabIdPair : public FPlayFabBaseModel
+    {
+		
+		// [optional] Unique Twitch identifier for a user.
+		FString TwitchId;
+		// [optional] Unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Twitch identifier.
+		FString PlayFabId;
+	
+        FTwitchPlayFabIdPair() :
+			FPlayFabBaseModel(),
+			TwitchId(),
+			PlayFabId()
+			{}
+		
+		FTwitchPlayFabIdPair(const FTwitchPlayFabIdPair& src) :
+			FPlayFabBaseModel(),
+			TwitchId(src.TwitchId),
+			PlayFabId(src.PlayFabId)
+			{}
+			
+		FTwitchPlayFabIdPair(const TSharedPtr<FJsonObject>& obj) : FTwitchPlayFabIdPair()
+        {
+            readFromValue(obj);
+        }
+		
+		~FTwitchPlayFabIdPair();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayFabIDsFromTwitchIDsResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Mapping of Twitch identifiers to PlayFab identifiers.
+		TArray<FTwitchPlayFabIdPair> Data;
+	
+        FGetPlayFabIDsFromTwitchIDsResult() :
+			FPlayFabBaseModel(),
+			Data()
+			{}
+		
+		FGetPlayFabIDsFromTwitchIDsResult(const FGetPlayFabIDsFromTwitchIDsResult& src) :
+			FPlayFabBaseModel(),
+			Data(src.Data)
+			{}
+			
+		FGetPlayFabIDsFromTwitchIDsResult(const TSharedPtr<FJsonObject>& obj) : FGetPlayFabIDsFromTwitchIDsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayFabIDsFromTwitchIDsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FGetPublisherDataRequest : public FPlayFabBaseModel
     {
 		
@@ -5867,6 +5988,56 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FLinkTwitchAccountRequest : public FPlayFabBaseModel
+    {
+		
+		// Valid token issued by Twitch
+		FString AccessToken;
+	
+        FLinkTwitchAccountRequest() :
+			FPlayFabBaseModel(),
+			AccessToken()
+			{}
+		
+		FLinkTwitchAccountRequest(const FLinkTwitchAccountRequest& src) :
+			FPlayFabBaseModel(),
+			AccessToken(src.AccessToken)
+			{}
+			
+		FLinkTwitchAccountRequest(const TSharedPtr<FJsonObject>& obj) : FLinkTwitchAccountRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FLinkTwitchAccountRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FLinkTwitchAccountResult : public FPlayFabBaseModel
+    {
+		
+	
+        FLinkTwitchAccountResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FLinkTwitchAccountResult(const FLinkTwitchAccountResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FLinkTwitchAccountResult(const TSharedPtr<FJsonObject>& obj) : FLinkTwitchAccountResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FLinkTwitchAccountResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FListUsersCharactersRequest : public FPlayFabBaseModel
     {
 		
@@ -6466,6 +6637,45 @@ namespace ClientModels
         }
 		
 		~FLoginWithSteamRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FLoginWithTwitchRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
+		FString TitleId;
+		// Token issued by Twitch's API for the user.
+		FString AccessToken;
+		// [optional] Automatically create a PlayFab account if one is not currently linked to this Twitch account.
+		OptionalBool CreateAccount;
+		// [optional] Flags for which pieces of info to return for the user.
+		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
+	
+        FLoginWithTwitchRequest() :
+			FPlayFabBaseModel(),
+			TitleId(),
+			AccessToken(),
+			CreateAccount(),
+			InfoRequestParameters(nullptr)
+			{}
+		
+		FLoginWithTwitchRequest(const FLoginWithTwitchRequest& src) :
+			FPlayFabBaseModel(),
+			TitleId(src.TitleId),
+			AccessToken(src.AccessToken),
+			CreateAccount(src.CreateAccount),
+			InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr)
+			{}
+			
+		FLoginWithTwitchRequest(const TSharedPtr<FJsonObject>& obj) : FLoginWithTwitchRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FLoginWithTwitchRequest();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -8159,6 +8369,52 @@ namespace ClientModels
         }
 		
 		~FUnlinkSteamAccountResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUnlinkTwitchAccountRequest : public FPlayFabBaseModel
+    {
+		
+	
+        FUnlinkTwitchAccountRequest() :
+			FPlayFabBaseModel()
+			{}
+		
+		FUnlinkTwitchAccountRequest(const FUnlinkTwitchAccountRequest& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FUnlinkTwitchAccountRequest(const TSharedPtr<FJsonObject>& obj) : FUnlinkTwitchAccountRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUnlinkTwitchAccountRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUnlinkTwitchAccountResult : public FPlayFabBaseModel
+    {
+		
+	
+        FUnlinkTwitchAccountResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FUnlinkTwitchAccountResult(const FUnlinkTwitchAccountResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FUnlinkTwitchAccountResult(const TSharedPtr<FJsonObject>& obj) : FUnlinkTwitchAccountResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUnlinkTwitchAccountResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

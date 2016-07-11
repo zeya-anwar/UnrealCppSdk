@@ -2002,6 +2002,7 @@ void UPFServerProxyLibrary::BreakBPServerUserAccountInfo(
         ,FBPServerUserIosDeviceInfo& OutIosDeviceInfo
         ,FBPServerUserAndroidDeviceInfo& OutAndroidDeviceInfo
         ,FBPServerUserKongregateInfo& OutKongregateInfo
+        ,FBPServerUserTwitchInfo& OutTwitchInfo
         ,FBPServerUserPsnInfo& OutPsnInfo
         ,FBPServerUserGoogleInfo& OutGoogleInfo
         ,FBPServerUserXboxInfo& OutXboxInfo
@@ -2019,6 +2020,7 @@ void UPFServerProxyLibrary::BreakBPServerUserAccountInfo(
 	if (In.Data.IosDeviceInfo.IsValid()) {    OutIosDeviceInfo.Data = *In.Data.IosDeviceInfo;}
 	if (In.Data.AndroidDeviceInfo.IsValid()) {    OutAndroidDeviceInfo.Data = *In.Data.AndroidDeviceInfo;}
 	if (In.Data.KongregateInfo.IsValid()) {    OutKongregateInfo.Data = *In.Data.KongregateInfo;}
+	if (In.Data.TwitchInfo.IsValid()) {    OutTwitchInfo.Data = *In.Data.TwitchInfo;}
 	if (In.Data.PsnInfo.IsValid()) {    OutPsnInfo.Data = *In.Data.PsnInfo;}
 	if (In.Data.GoogleInfo.IsValid()) {    OutGoogleInfo.Data = *In.Data.GoogleInfo;}
 	if (In.Data.XboxInfo.IsValid()) {    OutXboxInfo.Data = *In.Data.XboxInfo;}
@@ -2173,6 +2175,17 @@ void UPFServerProxyLibrary::BreakBPServerUserTitleInfo(
 	
 	
 	OutisBanned = In.Data.isBanned;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerUserTwitchInfo(
+		const FBPServerUserTwitchInfo& In
+        ,FString& OutTwitchId
+        ,FString& OutTwitchUserName
+	)
+{
+    OutTwitchId = In.Data.TwitchId;
+	OutTwitchUserName = In.Data.TwitchUserName;
 	
 }
 

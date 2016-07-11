@@ -1160,6 +1160,7 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,FBPServerUserIosDeviceInfo& OutIosDeviceInfo
         ,FBPServerUserAndroidDeviceInfo& OutAndroidDeviceInfo
         ,FBPServerUserKongregateInfo& OutKongregateInfo
+        ,FBPServerUserTwitchInfo& OutTwitchInfo
         ,FBPServerUserPsnInfo& OutPsnInfo
         ,FBPServerUserGoogleInfo& OutGoogleInfo
         ,FBPServerUserXboxInfo& OutXboxInfo
@@ -1258,6 +1259,13 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,FDateTime& OutLastLogin
         ,FDateTime& OutFirstLogin
         ,bool& OutisBanned
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerUserTwitchInfo(
+		const FBPServerUserTwitchInfo& In
+        ,FString& OutTwitchId
+        ,FString& OutTwitchUserName
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))

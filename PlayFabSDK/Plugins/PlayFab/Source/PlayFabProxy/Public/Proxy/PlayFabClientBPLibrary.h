@@ -731,6 +731,18 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientGetPlayFabIDsFromTwitchIDsRequest(
+		const FBPClientGetPlayFabIDsFromTwitchIDsRequest& In
+        ,TArray<FString>& OutTwitchIds
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientGetPlayFabIDsFromTwitchIDsResult(
+		const FBPClientGetPlayFabIDsFromTwitchIDsResult& In
+        ,TArray<FBPClientTwitchPlayFabIdPair>& OutData
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientGetPublisherDataRequest(
 		const FBPClientGetPublisherDataRequest& In
         ,TArray<FString>& OutKeys
@@ -1034,6 +1046,17 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientLinkTwitchAccountRequest(
+		const FBPClientLinkTwitchAccountRequest& In
+        ,FString& OutAccessToken
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientLinkTwitchAccountResult(
+		const FBPClientLinkTwitchAccountResult& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientListUsersCharactersRequest(
 		const FBPClientListUsersCharactersRequest& In
         ,FString& OutPlayFabId
@@ -1161,6 +1184,15 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPClientLoginWithSteamRequest& In
         ,FString& OutTitleId
         ,FString& OutSteamTicket
+        ,bool& OutCreateAccount
+        ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientLoginWithTwitchRequest(
+		const FBPClientLoginWithTwitchRequest& In
+        ,FString& OutTitleId
+        ,FString& OutAccessToken
         ,bool& OutCreateAccount
         ,FBPClientGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
 	);
@@ -1579,6 +1611,13 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientTwitchPlayFabIdPair(
+		const FBPClientTwitchPlayFabIdPair& In
+        ,FString& OutTwitchId
+        ,FString& OutPlayFabId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientUnlinkAndroidDeviceIDRequest(
 		const FBPClientUnlinkAndroidDeviceIDRequest& In
         ,FString& OutAndroidDeviceId
@@ -1659,6 +1698,16 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientUnlinkSteamAccountResult(
 		const FBPClientUnlinkSteamAccountResult& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientUnlinkTwitchAccountRequest(
+		const FBPClientUnlinkTwitchAccountRequest& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientUnlinkTwitchAccountResult(
+		const FBPClientUnlinkTwitchAccountResult& In
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1781,6 +1830,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,FBPClientUserIosDeviceInfo& OutIosDeviceInfo
         ,FBPClientUserAndroidDeviceInfo& OutAndroidDeviceInfo
         ,FBPClientUserKongregateInfo& OutKongregateInfo
+        ,FBPClientUserTwitchInfo& OutTwitchInfo
         ,FBPClientUserPsnInfo& OutPsnInfo
         ,FBPClientUserGoogleInfo& OutGoogleInfo
         ,FBPClientUserXboxInfo& OutXboxInfo
@@ -1885,6 +1935,13 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,FDateTime& OutLastLogin
         ,FDateTime& OutFirstLogin
         ,bool& OutisBanned
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientUserTwitchInfo(
+		const FBPClientUserTwitchInfo& In
+        ,FString& OutTwitchId
+        ,FString& OutTwitchUserName
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
