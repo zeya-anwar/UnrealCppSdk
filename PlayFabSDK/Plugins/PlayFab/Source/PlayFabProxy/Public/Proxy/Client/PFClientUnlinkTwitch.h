@@ -19,7 +19,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FEmptyOnlineDelegate OnFailure; 
 	
-	// Unlinks the related Twitch account from the user's PlayFab account
+	// Unlinks the related Twitch account from the user's PlayFab account.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Account Management")
 	static UPFClientUnlinkTwitch* UnlinkTwitch(UObject* WorldContextObject, class APlayerController* PlayerController);
 

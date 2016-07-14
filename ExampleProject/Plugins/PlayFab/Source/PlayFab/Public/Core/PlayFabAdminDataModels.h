@@ -169,7 +169,7 @@ namespace AdminModels
 		FString Comment;
 		// time this build was last modified (or uploaded, if this build has never been modified)
 		FDateTime Timestamp;
-		// [optional] Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
+		// [optional] Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
 		FString TitleId;
 		// [optional] the current status of the build validation and processing steps
 		Boxed<GameBuildStatus> Status;
@@ -966,7 +966,7 @@ namespace AdminModels
 		
 		// An array of unique PlayFab assigned ID of the user on whom the operation will be performed.
 		TArray<FString> PlayFabIds;
-		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
+		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
 		FString TitleId;
 	
         FDeleteUsersRequest() :
@@ -1964,7 +1964,7 @@ namespace AdminModels
 		FString Comment;
 		// time this build was last modified (or uploaded, if this build has never been modified)
 		FDateTime Timestamp;
-		// [optional] Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
+		// [optional] Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
 		FString TitleId;
 		// [optional] the current status of the build validation and processing steps
 		Boxed<GameBuildStatus> Status;
@@ -2614,13 +2614,19 @@ namespace AdminModels
 		FString Annotation;
 		// [optional] Unique PlayFab assigned ID for a specific character owned by a user
 		FString CharacterId;
+		// [optional] Key-value pairs to be written to the custom data. Note that keys are trimmed of whitespace, are limited in size, and may not begin with a '!' character.
+		TMap<FString, FString> Data;
+		// [optional] Optional list of Data-keys to remove from UserData.  Some SDKs cannot insert null-values into Data due to language constraints.  Use this to delete the keys directly.
+		TArray<FString> KeysToRemove;
 	
         FItemGrant() :
 			FPlayFabBaseModel(),
 			PlayFabId(),
 			ItemId(),
 			Annotation(),
-			CharacterId()
+			CharacterId(),
+			Data(),
+			KeysToRemove()
 			{}
 		
 		FItemGrant(const FItemGrant& src) :
@@ -2628,7 +2634,9 @@ namespace AdminModels
 			PlayFabId(src.PlayFabId),
 			ItemId(src.ItemId),
 			Annotation(src.Annotation),
-			CharacterId(src.CharacterId)
+			CharacterId(src.CharacterId),
+			Data(src.Data),
+			KeysToRemove(src.KeysToRemove)
 			{}
 			
 		FItemGrant(const TSharedPtr<FJsonObject>& obj) : FItemGrant()
@@ -3584,7 +3592,7 @@ namespace AdminModels
 		FString Comment;
 		// time this build was last modified (or uploaded, if this build has never been modified)
 		FDateTime Timestamp;
-		// [optional] Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected
+		// [optional] Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
 		FString TitleId;
 		// [optional] the current status of the build validation and processing steps
 		Boxed<GameBuildStatus> Status;

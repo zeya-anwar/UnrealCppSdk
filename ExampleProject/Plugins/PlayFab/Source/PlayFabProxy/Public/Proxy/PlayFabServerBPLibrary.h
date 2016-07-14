@@ -657,6 +657,7 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutItemId
         ,FString& OutAnnotation
         ,FString& OutCharacterId
+        ,TArray<FString>& OutKeysToRemove
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))

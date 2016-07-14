@@ -6280,6 +6280,28 @@ void PlayFab::ServerModels::FItemGrant::writeJSON(JsonWriter& writer) const
 	
     if(CharacterId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CharacterId")); writer->WriteValue(CharacterId); }
 	
+    if(Data.Num() != 0) 
+    {
+        writer->WriteObjectStart(TEXT("Data"));
+        for (TMap<FString, FString>::TConstIterator It(Data); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue((*It).Value);
+        }
+        writer->WriteObjectEnd();
+     }
+	
+    if(KeysToRemove.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("KeysToRemove"));
+    
+        for (const FString& item : KeysToRemove)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+     }
+	
     
     writer->WriteObjectEnd();
 }
@@ -6315,6 +6337,18 @@ bool PlayFab::ServerModels::FItemGrant::readFromValue(const TSharedPtr<FJsonObje
         FString TmpValue;
         if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
     }
+    
+    const TSharedPtr<FJsonObject>* DataObject;
+    if (obj->TryGetObjectField(TEXT("Data"), DataObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*DataObject)->Values); It; ++It)
+        {
+            
+            Data.Add(It.Key(), It.Value()->AsString());
+        }
+    }
+    
+    obj->TryGetStringArrayField(TEXT("KeysToRemove"),KeysToRemove);
     
     
     return HasSucceeded;

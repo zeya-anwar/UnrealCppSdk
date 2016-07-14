@@ -829,12 +829,15 @@ void UPFAdminProxyLibrary::BreakBPAdminItemGrant(
         ,FString& OutItemId
         ,FString& OutAnnotation
         ,FString& OutCharacterId
+        ,TArray<FString>& OutKeysToRemove
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
 	OutItemId = In.Data.ItemId;
 	OutAnnotation = In.Data.Annotation;
 	OutCharacterId = In.Data.CharacterId;
+	
+	OutKeysToRemove = In.Data.KeysToRemove;
 	
 }
 

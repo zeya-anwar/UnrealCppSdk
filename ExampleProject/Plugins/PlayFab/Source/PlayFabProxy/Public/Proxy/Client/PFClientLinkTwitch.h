@@ -19,7 +19,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FEmptyOnlineDelegate OnFailure; 
 	
-	// Links the Twitch account associated with the token to the user's PlayFab account
+	// Links the Twitch account associated with the token to the user's PlayFab account.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Account Management")
 	static UPFClientLinkTwitch* LinkTwitch(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InAccessToken);
 

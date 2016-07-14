@@ -480,6 +480,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutItemId
         ,FString& OutAnnotation
         ,FString& OutCharacterId
+        ,TArray<FString>& OutKeysToRemove
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
