@@ -10,7 +10,7 @@ UPFClientGetCurrentGames::UPFClientGetCurrentGames(const FObjectInitializer& Obj
 {
 }
 
-UPFClientGetCurrentGames* UPFClientGetCurrentGames::GetCurrentGames(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InBuildVersion, const FString& InGameMode, const FString& InStatisticName)
+UPFClientGetCurrentGames* UPFClientGetCurrentGames::GetCurrentGames(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InBuildVersion, const FString& InGameMode, const FString& InStatisticName, const FBPClientCollectionFilter& InTagFilter)
 {
 	UPFClientGetCurrentGames* Proxy = NewObject<UPFClientGetCurrentGames>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
@@ -18,6 +18,7 @@ UPFClientGetCurrentGames* UPFClientGetCurrentGames::GetCurrentGames(UObject* Wor
 	Proxy->Request.BuildVersion = InBuildVersion;
 	Proxy->Request.GameMode = InGameMode;
 	Proxy->Request.StatisticName = InStatisticName;
+	Proxy->Request.TagFilter = InTagFilter;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

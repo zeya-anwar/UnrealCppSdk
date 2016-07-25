@@ -251,7 +251,7 @@ namespace AdminModels
 	struct PLAYFAB_API FVirtualCurrencyData : public FPlayFabBaseModel
     {
 		
-		// unique two-character identifier for this currency type (e.g.: "CC", "GC")
+		// unique one- or two-character identifier for this currency type (e.g.: "CC", "G")
 		FString CurrencyCode;
 		// [optional] friendly name to show in the developer portal, reports, etc.
 		FString DisplayName;

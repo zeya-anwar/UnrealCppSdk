@@ -198,6 +198,13 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientCollectionFilter(
+		const FBPClientCollectionFilter& In
+        ,TArray<FBPClientContainer_Dictionary_String_String>& OutIncludes
+        ,TArray<FBPClientContainer_Dictionary_String_String>& OutExcludes
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientConfirmPurchaseRequest(
 		const FBPClientConfirmPurchaseRequest& In
         ,FString& OutOrderId
@@ -227,6 +234,11 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientContainer_Dictionary_String_String(
+		const FBPClientContainer_Dictionary_String_String& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientCreateSharedGroupRequest(
 		const FBPClientCreateSharedGroupRequest& In
         ,FString& OutSharedGroupId
@@ -249,6 +261,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutBuildVersion
         ,FString& OutGameMode
         ,FString& OutStatisticName
+        ,FBPClientCollectionFilter& OutTagFilter
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -323,6 +336,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,TArray<FString>& OutPlayerUserIds
         ,int32& OutRunTime
         ,FString& OutGameServerData
+        ,FDateTime& OutLastHeartbeat
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1213,6 +1227,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutStatisticName
         ,FString& OutCharacterId
         ,bool& OutStartNewIfNoneFound
+        ,FBPClientCollectionFilter& OutTagFilter
         ,bool& OutEnableQueue
 	);
 	

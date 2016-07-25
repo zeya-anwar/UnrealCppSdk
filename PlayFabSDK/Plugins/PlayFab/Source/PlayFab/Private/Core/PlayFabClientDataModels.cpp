@@ -1668,6 +1668,115 @@ ClientModels::CloudScriptRevisionOption PlayFab::ClientModels::readCloudScriptRe
 }
 
 
+PlayFab::ClientModels::FContainer_Dictionary_String_String::~FContainer_Dictionary_String_String()
+{
+    
+}
+
+void PlayFab::ClientModels::FContainer_Dictionary_String_String::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Data.Num() != 0) 
+    {
+        writer->WriteObjectStart(TEXT("Data"));
+        for (TMap<FString, FString>::TConstIterator It(Data); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue((*It).Value);
+        }
+        writer->WriteObjectEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FContainer_Dictionary_String_String::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonObject>* DataObject;
+    if (obj->TryGetObjectField(TEXT("Data"), DataObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*DataObject)->Values); It; ++It)
+        {
+            
+            Data.Add(It.Key(), It.Value()->AsString());
+        }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FCollectionFilter::~FCollectionFilter()
+{
+    
+}
+
+void PlayFab::ClientModels::FCollectionFilter::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Includes.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("Includes"));
+    
+        for (const FContainer_Dictionary_String_String& item : Includes)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    if(Excludes.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("Excludes"));
+    
+        for (const FContainer_Dictionary_String_String& item : Excludes)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FCollectionFilter::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&IncludesArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Includes"));
+        for (int32 Idx = 0; Idx < IncludesArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = IncludesArray[Idx];
+            
+            Includes.Add(FContainer_Dictionary_String_String(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    {
+        const TArray< TSharedPtr<FJsonValue> >&ExcludesArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Excludes"));
+        for (int32 Idx = 0; Idx < ExcludesArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = ExcludesArray[Idx];
+            
+            Excludes.Add(FContainer_Dictionary_String_String(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ClientModels::FConfirmPurchaseRequest::~FConfirmPurchaseRequest()
 {
     
@@ -2309,6 +2418,7 @@ ClientModels::Region PlayFab::ClientModels::readRegionFromValue(const TSharedPtr
 
 PlayFab::ClientModels::FCurrentGamesRequest::~FCurrentGamesRequest()
 {
+    //if(TagFilter != nullptr) delete TagFilter;
     
 }
 
@@ -2323,6 +2433,8 @@ void PlayFab::ClientModels::FCurrentGamesRequest::writeJSON(JsonWriter& writer) 
     if(GameMode.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("GameMode")); writer->WriteValue(GameMode); }
 	
     if(StatisticName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("StatisticName")); writer->WriteValue(StatisticName); }
+	
+    if(TagFilter.IsValid()) { writer->WriteIdentifierPrefix(TEXT("TagFilter")); TagFilter->writeJSON(writer); }
 	
     
     writer->WriteObjectEnd();
@@ -2353,6 +2465,12 @@ bool PlayFab::ClientModels::FCurrentGamesRequest::readFromValue(const TSharedPtr
     {
         FString TmpValue;
         if(StatisticNameValue->TryGetString(TmpValue)) {StatisticName = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TagFilterValue = obj->TryGetField(TEXT("TagFilter"));
+    if (TagFilterValue.IsValid()&& !TagFilterValue->IsNull())
+    {
+        TagFilter = MakeShareable(new FCollectionFilter(TagFilterValue->AsObject()));
     }
     
     
@@ -2431,6 +2549,19 @@ void PlayFab::ClientModels::FGameInfo::writeJSON(JsonWriter& writer) const
 	
     if(GameServerData.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("GameServerData")); writer->WriteValue(GameServerData); }
 	
+    if(Tags.Num() != 0) 
+    {
+        writer->WriteObjectStart(TEXT("Tags"));
+        for (TMap<FString, FString>::TConstIterator It(Tags); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue((*It).Value);
+        }
+        writer->WriteObjectEnd();
+     }
+	
+    if(LastHeartbeat.notNull()) { writer->WriteIdentifierPrefix(TEXT("LastHeartbeat")); writeDatetime(LastHeartbeat, writer); }
+	
     
     writer->WriteObjectEnd();
 }
@@ -2492,6 +2623,22 @@ bool PlayFab::ClientModels::FGameInfo::readFromValue(const TSharedPtr<FJsonObjec
     {
         FString TmpValue;
         if(GameServerDataValue->TryGetString(TmpValue)) {GameServerData = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonObject>* TagsObject;
+    if (obj->TryGetObjectField(TEXT("Tags"), TagsObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*TagsObject)->Values); It; ++It)
+        {
+            
+            Tags.Add(It.Key(), It.Value()->AsString());
+        }
+    }
+    
+    const TSharedPtr<FJsonValue> LastHeartbeatValue = obj->TryGetField(TEXT("LastHeartbeat"));
+    if(LastHeartbeatValue.IsValid())
+    {
+        LastHeartbeat = readDatetime(LastHeartbeatValue);
     }
     
     
@@ -10352,6 +10499,7 @@ bool PlayFab::ClientModels::FLoginWithTwitchRequest::readFromValue(const TShared
 
 PlayFab::ClientModels::FMatchmakeRequest::~FMatchmakeRequest()
 {
+    //if(TagFilter != nullptr) delete TagFilter;
     
 }
 
@@ -10372,6 +10520,8 @@ void PlayFab::ClientModels::FMatchmakeRequest::writeJSON(JsonWriter& writer) con
     if(CharacterId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CharacterId")); writer->WriteValue(CharacterId); }
 	
     if(StartNewIfNoneFound.notNull()) { writer->WriteIdentifierPrefix(TEXT("StartNewIfNoneFound")); writer->WriteValue(StartNewIfNoneFound); }
+	
+    if(TagFilter.IsValid()) { writer->WriteIdentifierPrefix(TEXT("TagFilter")); TagFilter->writeJSON(writer); }
 	
     if(EnableQueue.notNull()) { writer->WriteIdentifierPrefix(TEXT("EnableQueue")); writer->WriteValue(EnableQueue); }
 	
@@ -10425,6 +10575,12 @@ bool PlayFab::ClientModels::FMatchmakeRequest::readFromValue(const TSharedPtr<FJ
     {
         bool TmpValue;
         if(StartNewIfNoneFoundValue->TryGetBool(TmpValue)) {StartNewIfNoneFound = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TagFilterValue = obj->TryGetField(TEXT("TagFilter"));
+    if (TagFilterValue.IsValid()&& !TagFilterValue->IsNull())
+    {
+        TagFilter = MakeShareable(new FCollectionFilter(TagFilterValue->AsObject()));
     }
     
     const TSharedPtr<FJsonValue> EnableQueueValue = obj->TryGetField(TEXT("EnableQueue"));

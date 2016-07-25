@@ -1002,6 +1002,64 @@ namespace ClientModels
 	CloudScriptRevisionOption readCloudScriptRevisionOptionFromValue(const TSharedPtr<FJsonValue>& value);
 	
 	
+	struct PLAYFAB_API FContainer_Dictionary_String_String : public FPlayFabBaseModel
+    {
+		
+		// [optional] Content of data
+		TMap<FString, FString> Data;
+	
+        FContainer_Dictionary_String_String() :
+			FPlayFabBaseModel(),
+			Data()
+			{}
+		
+		FContainer_Dictionary_String_String(const FContainer_Dictionary_String_String& src) :
+			FPlayFabBaseModel(),
+			Data(src.Data)
+			{}
+			
+		FContainer_Dictionary_String_String(const TSharedPtr<FJsonObject>& obj) : FContainer_Dictionary_String_String()
+        {
+            readFromValue(obj);
+        }
+		
+		~FContainer_Dictionary_String_String();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FCollectionFilter : public FPlayFabBaseModel
+    {
+		
+		// [optional] List of Include rules, with any of which if a collection matches, it is included by the filter, unless it is excluded by one of the Exclude rule
+		TArray<FContainer_Dictionary_String_String> Includes;
+		// [optional] List of Exclude rules, with any of which if a collection matches, it is excluded by the filter.
+		TArray<FContainer_Dictionary_String_String> Excludes;
+	
+        FCollectionFilter() :
+			FPlayFabBaseModel(),
+			Includes(),
+			Excludes()
+			{}
+		
+		FCollectionFilter(const FCollectionFilter& src) :
+			FPlayFabBaseModel(),
+			Includes(src.Includes),
+			Excludes(src.Excludes)
+			{}
+			
+		FCollectionFilter(const TSharedPtr<FJsonObject>& obj) : FCollectionFilter()
+        {
+            readFromValue(obj);
+        }
+		
+		~FCollectionFilter();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FConfirmPurchaseRequest : public FPlayFabBaseModel
     {
 		
@@ -1372,21 +1430,24 @@ namespace ClientModels
 	struct PLAYFAB_API FCurrentGamesRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] region to check for game instances
+		// [optional] Region to check for Game Server Instances.
 		Boxed<Region> pfRegion;
-		// [optional] version of build to match against
+		// [optional] Build to match against.
 		FString BuildVersion;
-		// [optional] game mode to look for (optional)
+		// [optional] Game mode to look for.
 		FString GameMode;
-		// [optional] statistic name to find statistic-based matches (optional)
+		// [optional] Statistic name to find statistic-based matches.
 		FString StatisticName;
+		// [optional] Filter to include and/or exclude Game Server Instances associated with certain tags.
+		TSharedPtr<FCollectionFilter> TagFilter;
 	
         FCurrentGamesRequest() :
 			FPlayFabBaseModel(),
 			pfRegion(),
 			BuildVersion(),
 			GameMode(),
-			StatisticName()
+			StatisticName(),
+			TagFilter(nullptr)
 			{}
 		
 		FCurrentGamesRequest(const FCurrentGamesRequest& src) :
@@ -1394,7 +1455,8 @@ namespace ClientModels
 			pfRegion(src.pfRegion),
 			BuildVersion(src.BuildVersion),
 			GameMode(src.GameMode),
-			StatisticName(src.StatisticName)
+			StatisticName(src.StatisticName),
+			TagFilter(src.TagFilter.IsValid() ? MakeShareable(new FCollectionFilter(*src.TagFilter)) : nullptr)
 			{}
 			
 		FCurrentGamesRequest(const TSharedPtr<FJsonObject>& obj) : FCurrentGamesRequest()
@@ -1433,7 +1495,7 @@ namespace ClientModels
 		FString StatisticName;
 		// [optional] maximum players this server can support
 		OptionalInt32 MaxPlayers;
-		// [optional] array of strings of current player names on this server (note that these are PlayFab usernames, as opposed to title display names)
+		// [optional] array of current player IDs on this server
 		TArray<FString> PlayerUserIds;
 		// duration in seconds this server has been running
 		uint32 RunTime;
@@ -1441,6 +1503,10 @@ namespace ClientModels
 		Boxed<GameInstanceState> GameServerState;
 		// [optional] game session custom data
 		FString GameServerData;
+		// [optional] game session tags
+		TMap<FString, FString> Tags;
+		// [optional] last heartbeat of the game server instance, used in external game server provider mode
+		OptionalTime LastHeartbeat;
 	
         FGameInfo() :
 			FPlayFabBaseModel(),
@@ -1453,7 +1519,9 @@ namespace ClientModels
 			PlayerUserIds(),
 			RunTime(0),
 			GameServerState(),
-			GameServerData()
+			GameServerData(),
+			Tags(),
+			LastHeartbeat()
 			{}
 		
 		FGameInfo(const FGameInfo& src) :
@@ -1467,7 +1535,9 @@ namespace ClientModels
 			PlayerUserIds(src.PlayerUserIds),
 			RunTime(src.RunTime),
 			GameServerState(src.GameServerState),
-			GameServerData(src.GameServerData)
+			GameServerData(src.GameServerData),
+			Tags(src.Tags),
+			LastHeartbeat(src.LastHeartbeat)
 			{}
 			
 		FGameInfo(const TSharedPtr<FJsonObject>& obj) : FGameInfo()
@@ -6684,20 +6754,22 @@ namespace ClientModels
 	struct PLAYFAB_API FMatchmakeRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] build version to match against [Note: Required if LobbyId is not specified]
+		// [optional] Build version to match against. [Note: Required if LobbyId is not specified]
 		FString BuildVersion;
-		// [optional] region to match make against [Note: Required if LobbyId is not specified]
+		// [optional] Region to match make against. [Note: Required if LobbyId is not specified]
 		Boxed<Region> pfRegion;
-		// [optional] game mode to match make against [Note: Required if LobbyId is not specified]
+		// [optional] Game mode to match make against. [Note: Required if LobbyId is not specified]
 		FString GameMode;
-		// [optional] lobby identifier to match make against (used to select a specific server)
+		// [optional] Lobby identifier to match make against. This is used to select a specific Game Server Instance.
 		FString LobbyId;
-		// [optional] player statistic to use in finding a match. May be null for no stat-based matching
+		// [optional] Player statistic to use in finding a match. May be null for no stat-based matching.
 		FString StatisticName;
-		// [optional] character to use for stats based matching. Leave null to use account stats
+		// [optional] Character to use for stats based matching. Leave null to use account stats.
 		FString CharacterId;
-		// [optional] start a game session if one with an open slot is not found. Defaults to true
+		// [optional] Start a game session if one with an open slot is not found. Defaults to true.
 		OptionalBool StartNewIfNoneFound;
+		// [optional] Filter to include and/or exclude Game Server Instances associated with certain Tags
+		TSharedPtr<FCollectionFilter> TagFilter;
 		// [optional] [deprecated]
 		OptionalBool EnableQueue;
 	
@@ -6710,6 +6782,7 @@ namespace ClientModels
 			StatisticName(),
 			CharacterId(),
 			StartNewIfNoneFound(),
+			TagFilter(nullptr),
 			EnableQueue()
 			{}
 		
@@ -6722,6 +6795,7 @@ namespace ClientModels
 			StatisticName(src.StatisticName),
 			CharacterId(src.CharacterId),
 			StartNewIfNoneFound(src.StartNewIfNoneFound),
+			TagFilter(src.TagFilter.IsValid() ? MakeShareable(new FCollectionFilter(*src.TagFilter)) : nullptr),
 			EnableQueue(src.EnableQueue)
 			{}
 			

@@ -246,6 +246,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientCloudScriptRevisionOptionDelegate, const FBPClientCloudScriptRevisionOption&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientCollectionFilter"))
+struct FBPClientCollectionFilter
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FCollectionFilter Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientCollectionFilterDelegate, const FBPClientCollectionFilter&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientConfirmPurchaseRequest"))
 struct FBPClientConfirmPurchaseRequest
 {
@@ -285,6 +295,16 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientConsumeItemResultDelegate, const FBPClientConsumeItemResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientContainer_Dictionary_String_String"))
+struct FBPClientContainer_Dictionary_String_String
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ClientModels::FContainer_Dictionary_String_String Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPClientContainer_Dictionary_String_StringDelegate, const FBPClientContainer_Dictionary_String_String&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFClientProxyLibrary.BreakBPClientCreateSharedGroupRequest"))
 struct FBPClientCreateSharedGroupRequest

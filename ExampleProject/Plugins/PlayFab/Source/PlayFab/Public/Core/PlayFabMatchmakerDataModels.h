@@ -319,7 +319,7 @@ namespace MatchmakerModels
 	struct PLAYFAB_API FStartGameResponse : public FPlayFabBaseModel
     {
 		
-		// [optional] Unique identifier for the lobby in the new Game Server Instance.
+		// [optional] Unique identifier for the game/lobby in the new Game Server Instance.
 		FString GameID;
 		// [optional] IP address of the new Game Server Instance.
 		FString ServerHostname;

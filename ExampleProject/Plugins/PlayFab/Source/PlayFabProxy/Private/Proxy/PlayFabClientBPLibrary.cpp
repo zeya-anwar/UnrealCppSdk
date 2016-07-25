@@ -310,6 +310,29 @@ void UPFClientProxyLibrary::BreakBPClientCloudScriptRevisionOption(
     
 }
 
+void UPFClientProxyLibrary::BreakBPClientCollectionFilter(
+		const FBPClientCollectionFilter& In
+        ,TArray<FBPClientContainer_Dictionary_String_String>& OutIncludes
+        ,TArray<FBPClientContainer_Dictionary_String_String>& OutExcludes
+	)
+{
+    for (const PlayFab::ClientModels::FContainer_Dictionary_String_String& elem : In.Data.Includes)
+    {
+        FBPClientContainer_Dictionary_String_String result;
+        result.Data = elem;
+        OutIncludes.Add(result);
+    }
+
+	for (const PlayFab::ClientModels::FContainer_Dictionary_String_String& elem : In.Data.Excludes)
+    {
+        FBPClientContainer_Dictionary_String_String result;
+        result.Data = elem;
+        OutExcludes.Add(result);
+    }
+
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientConfirmPurchaseRequest(
 		const FBPClientConfirmPurchaseRequest& In
         ,FString& OutOrderId
@@ -362,6 +385,14 @@ void UPFClientProxyLibrary::BreakBPClientConsumeItemResult(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientContainer_Dictionary_String_String(
+		const FBPClientContainer_Dictionary_String_String& In
+	)
+{
+    
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientCreateSharedGroupRequest(
 		const FBPClientCreateSharedGroupRequest& In
         ,FString& OutSharedGroupId
@@ -392,12 +423,14 @@ void UPFClientProxyLibrary::BreakBPClientCurrentGamesRequest(
         ,FString& OutBuildVersion
         ,FString& OutGameMode
         ,FString& OutStatisticName
+        ,FBPClientCollectionFilter& OutTagFilter
 	)
 {
     
 	OutBuildVersion = In.Data.BuildVersion;
 	OutGameMode = In.Data.GameMode;
 	OutStatisticName = In.Data.StatisticName;
+	if (In.Data.TagFilter.IsValid()) {    OutTagFilter.Data = *In.Data.TagFilter;}
 	
 }
 
@@ -527,6 +560,7 @@ void UPFClientProxyLibrary::BreakBPClientGameInfo(
         ,TArray<FString>& OutPlayerUserIds
         ,int32& OutRunTime
         ,FString& OutGameServerData
+        ,FDateTime& OutLastHeartbeat
 	)
 {
     
@@ -539,6 +573,8 @@ void UPFClientProxyLibrary::BreakBPClientGameInfo(
 	OutRunTime = In.Data.RunTime;
 	
 	OutGameServerData = In.Data.GameServerData;
+	
+	
 	
 }
 
@@ -2165,6 +2201,7 @@ void UPFClientProxyLibrary::BreakBPClientMatchmakeRequest(
         ,FString& OutStatisticName
         ,FString& OutCharacterId
         ,bool& OutStartNewIfNoneFound
+        ,FBPClientCollectionFilter& OutTagFilter
         ,bool& OutEnableQueue
 	)
 {
@@ -2175,6 +2212,7 @@ void UPFClientProxyLibrary::BreakBPClientMatchmakeRequest(
 	OutStatisticName = In.Data.StatisticName;
 	OutCharacterId = In.Data.CharacterId;
 	OutStartNewIfNoneFound = In.Data.StartNewIfNoneFound;
+	if (In.Data.TagFilter.IsValid()) {    OutTagFilter.Data = *In.Data.TagFilter;}
 	OutEnableQueue = In.Data.EnableQueue;
 	
 }
