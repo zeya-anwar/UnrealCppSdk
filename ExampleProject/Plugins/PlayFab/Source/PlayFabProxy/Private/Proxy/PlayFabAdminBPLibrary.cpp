@@ -3,6 +3,19 @@
 #include "PlayFabAdminBPLibrary.h"
 
 
+void UPFAdminProxyLibrary::BreakBPAdminAdCampaignAttribution(
+		const FBPAdminAdCampaignAttribution& In
+        ,FString& OutPlatform
+        ,FString& OutCampaignId
+        ,FDateTime& OutAttributedAt
+	)
+{
+    OutPlatform = In.Data.Platform;
+	OutCampaignId = In.Data.CampaignId;
+	
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminAddNewsRequest(
 		const FBPAdminAddNewsRequest& In
         ,FDateTime& OutTimestamp
@@ -294,6 +307,28 @@ void UPFAdminProxyLibrary::BreakBPAdminGameModeInfo(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminGetAllSegmentsRequest(
+		const FBPAdminGetAllSegmentsRequest& In
+	)
+{
+    
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetAllSegmentsResult(
+		const FBPAdminGetAllSegmentsResult& In
+        ,TArray<FBPAdminGetSegmentResult>& OutSegments
+	)
+{
+    for (const PlayFab::AdminModels::FGetSegmentResult& elem : In.Data.Segments)
+    {
+        FBPAdminGetSegmentResult result;
+        result.Data = elem;
+        OutSegments.Add(result);
+    }
+
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminGetCatalogItemsRequest(
 		const FBPAdminGetCatalogItemsRequest& In
         ,FString& OutCatalogVersion
@@ -505,6 +540,64 @@ void UPFAdminProxyLibrary::BreakBPAdminGetMatchmakerGameModesResult(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminGetPlayerSegmentsResult(
+		const FBPAdminGetPlayerSegmentsResult& In
+        ,TArray<FBPAdminGetSegmentResult>& OutSegments
+	)
+{
+    for (const PlayFab::AdminModels::FGetSegmentResult& elem : In.Data.Segments)
+    {
+        FBPAdminGetSegmentResult result;
+        result.Data = elem;
+        OutSegments.Add(result);
+    }
+
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetPlayersInSegmentRequest(
+		const FBPAdminGetPlayersInSegmentRequest& In
+        ,FString& OutSegmentId
+        ,int32& OutSecondsToLive
+        ,int32& OutMaxBatchSize
+        ,FString& OutContinuationToken
+	)
+{
+    OutSegmentId = In.Data.SegmentId;
+	OutSecondsToLive = In.Data.SecondsToLive;
+	OutMaxBatchSize = In.Data.MaxBatchSize;
+	OutContinuationToken = In.Data.ContinuationToken;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetPlayersInSegmentResult(
+		const FBPAdminGetPlayersInSegmentResult& In
+        ,int32& OutProfilesInSegment
+        ,FString& OutContinuationToken
+        ,TArray<FBPAdminPlayerProfile>& OutPlayerProfiles
+	)
+{
+    OutProfilesInSegment = In.Data.ProfilesInSegment;
+	OutContinuationToken = In.Data.ContinuationToken;
+	for (const PlayFab::AdminModels::FPlayerProfile& elem : In.Data.PlayerProfiles)
+    {
+        FBPAdminPlayerProfile result;
+        result.Data = elem;
+        OutPlayerProfiles.Add(result);
+    }
+
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetPlayersSegmentsRequest(
+		const FBPAdminGetPlayersSegmentsRequest& In
+        ,FString& OutPlayFabId
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminGetPlayerStatisticDefinitionsRequest(
 		const FBPAdminGetPlayerStatisticDefinitionsRequest& In
 	)
@@ -582,6 +675,19 @@ void UPFAdminProxyLibrary::BreakBPAdminGetRandomResultTablesResult(
 	)
 {
     
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetSegmentResult(
+		const FBPAdminGetSegmentResult& In
+        ,FString& OutId
+        ,FString& OutName
+        ,FString& OutABTestParent
+	)
+{
+    OutId = In.Data.Id;
+	OutName = In.Data.Name;
+	OutABTestParent = In.Data.ABTestParent;
 	
 }
 
@@ -921,6 +1027,13 @@ void UPFAdminProxyLibrary::BreakBPAdminListVirtualCurrencyTypesResult(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminLoginIdentityProvider(
+		const FBPAdminLoginIdentityProvider& In
+	)
+{
+    
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminLookupUserAccountInfoRequest(
 		const FBPAdminLookupUserAccountInfoRequest& In
         ,FString& OutPlayFabId
@@ -1031,6 +1144,89 @@ void UPFAdminProxyLibrary::BreakBPAdminModifyUserVirtualCurrencyResult(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminPlayerLinkedAccount(
+		const FBPAdminPlayerLinkedAccount& In
+        ,FString& OutPlatformUserId
+        ,FString& OutUsername
+        ,FString& OutEmail
+	)
+{
+    
+	OutPlatformUserId = In.Data.PlatformUserId;
+	OutUsername = In.Data.Username;
+	OutEmail = In.Data.Email;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminPlayerProfile(
+		const FBPAdminPlayerProfile& In
+        ,FString& OutPlayerId
+        ,FString& OutTitleId
+        ,FString& OutDisplayName
+        ,FDateTime& OutCreated
+        ,FDateTime& OutLastLogin
+        ,FDateTime& OutBannedUntil
+        ,TArray<FBPAdminAdCampaignAttribution>& OutAdCampaignAttributions
+        ,TArray<FBPAdminPushNotificationRegistration>& OutPushNotificationRegistrations
+        ,TArray<FBPAdminPlayerLinkedAccount>& OutLinkedAccounts
+        ,TArray<FBPAdminPlayerStatistic>& OutPlayerStatistics
+	)
+{
+    OutPlayerId = In.Data.PlayerId;
+	OutTitleId = In.Data.TitleId;
+	OutDisplayName = In.Data.DisplayName;
+	
+	
+	
+	
+	
+	
+	for (const PlayFab::AdminModels::FAdCampaignAttribution& elem : In.Data.AdCampaignAttributions)
+    {
+        FBPAdminAdCampaignAttribution result;
+        result.Data = elem;
+        OutAdCampaignAttributions.Add(result);
+    }
+
+	for (const PlayFab::AdminModels::FPushNotificationRegistration& elem : In.Data.PushNotificationRegistrations)
+    {
+        FBPAdminPushNotificationRegistration result;
+        result.Data = elem;
+        OutPushNotificationRegistrations.Add(result);
+    }
+
+	for (const PlayFab::AdminModels::FPlayerLinkedAccount& elem : In.Data.LinkedAccounts)
+    {
+        FBPAdminPlayerLinkedAccount result;
+        result.Data = elem;
+        OutLinkedAccounts.Add(result);
+    }
+
+	for (const PlayFab::AdminModels::FPlayerStatistic& elem : In.Data.PlayerStatistics)
+    {
+        FBPAdminPlayerStatistic result;
+        result.Data = elem;
+        OutPlayerStatistics.Add(result);
+    }
+
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminPlayerStatistic(
+		const FBPAdminPlayerStatistic& In
+        ,FString& OutId
+        ,int32& OutStatisticVersion
+        ,int32& OutStatisticValue
+        ,FString& OutName
+	)
+{
+    OutId = In.Data.Id;
+	OutStatisticVersion = In.Data.StatisticVersion;
+	OutStatisticValue = In.Data.StatisticValue;
+	OutName = In.Data.Name;
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminPlayerStatisticDefinition(
 		const FBPAdminPlayerStatisticDefinition& In
         ,FString& OutStatisticName
@@ -1063,6 +1259,23 @@ void UPFAdminProxyLibrary::BreakBPAdminPlayerStatisticVersion(
 	
 	
 	OutArchiveDownloadUrl = In.Data.ArchiveDownloadUrl;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminPushNotificationPlatform(
+		const FBPAdminPushNotificationPlatform& In
+	)
+{
+    
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminPushNotificationRegistration(
+		const FBPAdminPushNotificationRegistration& In
+        ,FString& OutNotificationEndpointARN
+	)
+{
+    
+	OutNotificationEndpointARN = In.Data.NotificationEndpointARN;
 	
 }
 
@@ -1123,6 +1336,21 @@ void UPFAdminProxyLibrary::BreakBPAdminRemoveServerBuildResult(
 	)
 {
     
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminRemoveVirtualCurrencyTypesRequest(
+		const FBPAdminRemoveVirtualCurrencyTypesRequest& In
+        ,TArray<FBPAdminVirtualCurrencyData>& OutVirtualCurrencies
+	)
+{
+    for (const PlayFab::AdminModels::FVirtualCurrencyData& elem : In.Data.VirtualCurrencies)
+    {
+        FBPAdminVirtualCurrencyData result;
+        result.Data = elem;
+        OutVirtualCurrencies.Add(result);
+    }
+
+	
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminResetCharacterStatisticsRequest(

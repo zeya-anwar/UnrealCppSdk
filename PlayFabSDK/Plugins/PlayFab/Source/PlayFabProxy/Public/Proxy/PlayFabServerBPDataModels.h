@@ -6,6 +6,16 @@
 #include "PlayFabServerBPDataModels.generated.h"
 
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerAdCampaignAttribution"))
+struct FBPServerAdCampaignAttribution
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FAdCampaignAttribution Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerAdCampaignAttributionDelegate, const FBPServerAdCampaignAttribution&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerAddCharacterVirtualCurrencyRequest"))
 struct FBPServerAddCharacterVirtualCurrencyRequest
 {
@@ -135,6 +145,16 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerCatalogItemContainerInfoDelegate, const FBPServerCatalogItemContainerInfo&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerCharacterInventory"))
+struct FBPServerCharacterInventory
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FCharacterInventory Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerCharacterInventoryDelegate, const FBPServerCharacterInventory&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerCharacterLeaderboardEntry"))
 struct FBPServerCharacterLeaderboardEntry
@@ -346,6 +366,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGameInstanceStateDelegate, const FBPServerGameInstanceState&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetAllSegmentsRequest"))
+struct FBPServerGetAllSegmentsRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetAllSegmentsRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetAllSegmentsRequestDelegate, const FBPServerGetAllSegmentsRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetAllSegmentsResult"))
+struct FBPServerGetAllSegmentsResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetAllSegmentsResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetAllSegmentsResultDelegate, const FBPServerGetAllSegmentsResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetCatalogItemsRequest"))
 struct FBPServerGetCatalogItemsRequest
 {
@@ -546,6 +586,86 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetLeaderboardResultDelegate, const FBPServerGetLeaderboardResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetPlayerCombinedInfoRequest"))
+struct FBPServerGetPlayerCombinedInfoRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetPlayerCombinedInfoRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetPlayerCombinedInfoRequestDelegate, const FBPServerGetPlayerCombinedInfoRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetPlayerCombinedInfoRequestParams"))
+struct FBPServerGetPlayerCombinedInfoRequestParams
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetPlayerCombinedInfoRequestParams Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetPlayerCombinedInfoRequestParamsDelegate, const FBPServerGetPlayerCombinedInfoRequestParams&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetPlayerCombinedInfoResult"))
+struct FBPServerGetPlayerCombinedInfoResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetPlayerCombinedInfoResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetPlayerCombinedInfoResultDelegate, const FBPServerGetPlayerCombinedInfoResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetPlayerCombinedInfoResultPayload"))
+struct FBPServerGetPlayerCombinedInfoResultPayload
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetPlayerCombinedInfoResultPayload Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetPlayerCombinedInfoResultPayloadDelegate, const FBPServerGetPlayerCombinedInfoResultPayload&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetPlayerSegmentsResult"))
+struct FBPServerGetPlayerSegmentsResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetPlayerSegmentsResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetPlayerSegmentsResultDelegate, const FBPServerGetPlayerSegmentsResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetPlayersInSegmentRequest"))
+struct FBPServerGetPlayersInSegmentRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetPlayersInSegmentRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetPlayersInSegmentRequestDelegate, const FBPServerGetPlayersInSegmentRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetPlayersInSegmentResult"))
+struct FBPServerGetPlayersInSegmentResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetPlayersInSegmentResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetPlayersInSegmentResultDelegate, const FBPServerGetPlayersInSegmentResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetPlayersSegmentsRequest"))
+struct FBPServerGetPlayersSegmentsRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetPlayersSegmentsRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetPlayersSegmentsRequestDelegate, const FBPServerGetPlayersSegmentsRequest&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetPlayerStatisticsRequest"))
 struct FBPServerGetPlayerStatisticsRequest
 {
@@ -645,6 +765,16 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetPublisherDataResultDelegate, const FBPServerGetPublisherDataResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetSegmentResult"))
+struct FBPServerGetSegmentResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetSegmentResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetSegmentResultDelegate, const FBPServerGetSegmentResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetSharedGroupDataRequest"))
 struct FBPServerGetSharedGroupDataRequest
@@ -936,6 +1066,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerLogEventResultDelegate, const FBPServerLogEventResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerLoginIdentityProvider"))
+struct FBPServerLoginIdentityProvider
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::LoginIdentityProvider Data;	
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerLoginIdentityProviderDelegate, const FBPServerLoginIdentityProvider&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerLogStatement"))
 struct FBPServerLogStatement
 {
@@ -1086,6 +1226,36 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerPlayerLeaderboardEntryDelegate, const FBPServerPlayerLeaderboardEntry&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerPlayerLinkedAccount"))
+struct FBPServerPlayerLinkedAccount
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FPlayerLinkedAccount Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerPlayerLinkedAccountDelegate, const FBPServerPlayerLinkedAccount&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerPlayerProfile"))
+struct FBPServerPlayerProfile
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FPlayerProfile Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerPlayerProfileDelegate, const FBPServerPlayerProfile&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerPlayerStatistic"))
+struct FBPServerPlayerStatistic
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FPlayerStatistic Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerPlayerStatisticDelegate, const FBPServerPlayerStatistic&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerPlayerStatisticVersion"))
 struct FBPServerPlayerStatisticVersion
 {
@@ -1095,6 +1265,26 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerPlayerStatisticVersionDelegate, const FBPServerPlayerStatisticVersion&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerPushNotificationPlatform"))
+struct FBPServerPushNotificationPlatform
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::PushNotificationPlatform Data;	
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerPushNotificationPlatformDelegate, const FBPServerPushNotificationPlatform&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerPushNotificationRegistration"))
+struct FBPServerPushNotificationRegistration
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FPushNotificationRegistration Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerPushNotificationRegistrationDelegate, const FBPServerPushNotificationRegistration&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRedeemCouponRequest"))
 struct FBPServerRedeemCouponRequest

@@ -227,6 +227,87 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FGenericServiceId : public FPlayFabBaseModel
+    {
+		
+		// Name of the service for which the player has a unique identifier.
+		FString ServiceName;
+		// Unique identifier of the player in that service.
+		FString UserId;
+	
+        FGenericServiceId() :
+			FPlayFabBaseModel(),
+			ServiceName(),
+			UserId()
+			{}
+		
+		FGenericServiceId(const FGenericServiceId& src) :
+			FPlayFabBaseModel(),
+			ServiceName(src.ServiceName),
+			UserId(src.UserId)
+			{}
+			
+		FGenericServiceId(const TSharedPtr<FJsonObject>& obj) : FGenericServiceId()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGenericServiceId();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FAddGenericIDRequest : public FPlayFabBaseModel
+    {
+		
+		// Generic service identifier to add to the player account.
+		FGenericServiceId GenericId;
+	
+        FAddGenericIDRequest() :
+			FPlayFabBaseModel(),
+			GenericId()
+			{}
+		
+		FAddGenericIDRequest(const FAddGenericIDRequest& src) :
+			FPlayFabBaseModel(),
+			GenericId(src.GenericId)
+			{}
+			
+		FAddGenericIDRequest(const TSharedPtr<FJsonObject>& obj) : FAddGenericIDRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FAddGenericIDRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FAddGenericIDResult : public FPlayFabBaseModel
+    {
+		
+	
+        FAddGenericIDResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FAddGenericIDResult(const FAddGenericIDResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FAddGenericIDResult(const TSharedPtr<FJsonObject>& obj) : FAddGenericIDResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FAddGenericIDResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FAddSharedGroupMembersRequest : public FPlayFabBaseModel
     {
 		
@@ -2100,6 +2181,37 @@ namespace ClientModels
         }
 		
 		~FGameServerRegionsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGenericPlayFabIdPair : public FPlayFabBaseModel
+    {
+		
+		// [optional] Unique generic service identifier for a user.
+		TSharedPtr<FGenericServiceId> GenericId;
+		// [optional] Unique PlayFab identifier for a user, or null if no PlayFab account is linked to the given generic identifier.
+		FString PlayFabId;
+	
+        FGenericPlayFabIdPair() :
+			FPlayFabBaseModel(),
+			GenericId(nullptr),
+			PlayFabId()
+			{}
+		
+		FGenericPlayFabIdPair(const FGenericPlayFabIdPair& src) :
+			FPlayFabBaseModel(),
+			GenericId(src.GenericId.IsValid() ? MakeShareable(new FGenericServiceId(*src.GenericId)) : nullptr),
+			PlayFabId(src.PlayFabId)
+			{}
+			
+		FGenericPlayFabIdPair(const TSharedPtr<FJsonObject>& obj) : FGenericPlayFabIdPair()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGenericPlayFabIdPair();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -3994,6 +4106,91 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FGetPlayerSegmentsRequest : public FPlayFabBaseModel
+    {
+		
+	
+        FGetPlayerSegmentsRequest() :
+			FPlayFabBaseModel()
+			{}
+		
+		FGetPlayerSegmentsRequest(const FGetPlayerSegmentsRequest& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FGetPlayerSegmentsRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayerSegmentsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerSegmentsRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetSegmentResult : public FPlayFabBaseModel
+    {
+		
+		// Unique identifier for this segment.
+		FString Id;
+		// [optional] Segment name.
+		FString Name;
+		// [optional] Identifier of the segments AB Test, if it is attached to one.
+		FString ABTestParent;
+	
+        FGetSegmentResult() :
+			FPlayFabBaseModel(),
+			Id(),
+			Name(),
+			ABTestParent()
+			{}
+		
+		FGetSegmentResult(const FGetSegmentResult& src) :
+			FPlayFabBaseModel(),
+			Id(src.Id),
+			Name(src.Name),
+			ABTestParent(src.ABTestParent)
+			{}
+			
+		FGetSegmentResult(const TSharedPtr<FJsonObject>& obj) : FGetSegmentResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetSegmentResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerSegmentsResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Array of segments the requested player currently belongs to.
+		TArray<FGetSegmentResult> Segments;
+	
+        FGetPlayerSegmentsResult() :
+			FPlayFabBaseModel(),
+			Segments()
+			{}
+		
+		FGetPlayerSegmentsResult(const FGetPlayerSegmentsResult& src) :
+			FPlayFabBaseModel(),
+			Segments(src.Segments)
+			{}
+			
+		FGetPlayerSegmentsResult(const TSharedPtr<FJsonObject>& obj) : FGetPlayerSegmentsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerSegmentsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FStatisticNameVersion : public FPlayFabBaseModel
     {
 		
@@ -4345,6 +4542,60 @@ namespace ClientModels
         }
 		
 		~FGetPlayFabIDsFromGameCenterIDsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayFabIDsFromGenericIDsRequest : public FPlayFabBaseModel
+    {
+		
+		// Array of unique generic service identifiers for which the title needs to get PlayFab identifiers. Currently limited to a maximum of 10 in a single request.
+		TArray<FGenericServiceId> GenericIDs;
+	
+        FGetPlayFabIDsFromGenericIDsRequest() :
+			FPlayFabBaseModel(),
+			GenericIDs()
+			{}
+		
+		FGetPlayFabIDsFromGenericIDsRequest(const FGetPlayFabIDsFromGenericIDsRequest& src) :
+			FPlayFabBaseModel(),
+			GenericIDs(src.GenericIDs)
+			{}
+			
+		FGetPlayFabIDsFromGenericIDsRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayFabIDsFromGenericIDsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayFabIDsFromGenericIDsRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayFabIDsFromGenericIDsResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Mapping of generic service identifiers to PlayFab identifiers.
+		TArray<FGenericPlayFabIdPair> Data;
+	
+        FGetPlayFabIDsFromGenericIDsResult() :
+			FPlayFabBaseModel(),
+			Data()
+			{}
+		
+		FGetPlayFabIDsFromGenericIDsResult(const FGetPlayFabIDsFromGenericIDsResult& src) :
+			FPlayFabBaseModel(),
+			Data(src.Data)
+			{}
+			
+		FGetPlayFabIDsFromGenericIDsResult(const TSharedPtr<FJsonObject>& obj) : FGetPlayFabIDsFromGenericIDsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayFabIDsFromGenericIDsResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -7465,6 +7716,56 @@ namespace ClientModels
         }
 		
 		~FRemoveFriendResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FRemoveGenericIDRequest : public FPlayFabBaseModel
+    {
+		
+		// Generic service identifier to be removed from the player.
+		FGenericServiceId GenericId;
+	
+        FRemoveGenericIDRequest() :
+			FPlayFabBaseModel(),
+			GenericId()
+			{}
+		
+		FRemoveGenericIDRequest(const FRemoveGenericIDRequest& src) :
+			FPlayFabBaseModel(),
+			GenericId(src.GenericId)
+			{}
+			
+		FRemoveGenericIDRequest(const TSharedPtr<FJsonObject>& obj) : FRemoveGenericIDRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRemoveGenericIDRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FRemoveGenericIDResult : public FPlayFabBaseModel
+    {
+		
+	
+        FRemoveGenericIDResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FRemoveGenericIDResult(const FRemoveGenericIDResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FRemoveGenericIDResult(const TSharedPtr<FJsonObject>& obj) : FRemoveGenericIDResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRemoveGenericIDResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

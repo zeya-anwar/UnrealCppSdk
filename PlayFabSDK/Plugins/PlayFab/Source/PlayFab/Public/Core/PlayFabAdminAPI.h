@@ -44,6 +44,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FGetTitleDataDelegate, const AdminModels::FGetTitleDataResult&);
         DECLARE_DELEGATE_OneParam(FGetTitleInternalDataDelegate, const AdminModels::FGetTitleDataResult&);
         DECLARE_DELEGATE_OneParam(FListVirtualCurrencyTypesDelegate, const AdminModels::FListVirtualCurrencyTypesResult&);
+        DECLARE_DELEGATE_OneParam(FRemoveVirtualCurrencyTypesDelegate, const AdminModels::FBlankResult&);
         DECLARE_DELEGATE_OneParam(FSetCatalogItemsDelegate, const AdminModels::FUpdateCatalogItemsResult&);
         DECLARE_DELEGATE_OneParam(FSetStoreItemsDelegate, const AdminModels::FUpdateStoreItemsResult&);
         DECLARE_DELEGATE_OneParam(FSetTitleDataDelegate, const AdminModels::FSetTitleDataResult&);
@@ -75,6 +76,9 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FGetContentListDelegate, const AdminModels::FGetContentListResult&);
         DECLARE_DELEGATE_OneParam(FGetContentUploadUrlDelegate, const AdminModels::FGetContentUploadUrlResult&);
         DECLARE_DELEGATE_OneParam(FResetCharacterStatisticsDelegate, const AdminModels::FResetCharacterStatisticsResult&);
+        DECLARE_DELEGATE_OneParam(FGetAllSegmentsDelegate, const AdminModels::FGetAllSegmentsResult&);
+        DECLARE_DELEGATE_OneParam(FGetPlayerSegmentsDelegate, const AdminModels::FGetPlayerSegmentsResult&);
+        DECLARE_DELEGATE_OneParam(FGetPlayersInSegmentDelegate, const AdminModels::FGetPlayersInSegmentResult&);
 
         UPlayFabAdminAPI();
         ~UPlayFabAdminAPI();
@@ -245,6 +249,11 @@ namespace PlayFab
          */
         bool ListVirtualCurrencyTypes(const FListVirtualCurrencyTypesDelegate& SuccessDelegate = FListVirtualCurrencyTypesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Removes one or more virtual currencies from the set defined for the title.
+         * Virtual currencies to be removed cannot have entries in any catalog nor store for the title. This operation will also remove all player balances for the removed currencies.
+         */
+        bool RemoveVirtualCurrencyTypes(AdminModels::FRemoveVirtualCurrencyTypesRequest& request, const FRemoveVirtualCurrencyTypesDelegate& SuccessDelegate = FRemoveVirtualCurrencyTypesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Creates the catalog configuration of all virtual goods for the specified catalog version
          * This operation is not additive. Using it will cause the indicated catalog version to be created from scratch. If there is an existing catalog with the version number in question, it will be deleted and replaced with only the items specified in this call.
          */
@@ -383,6 +392,20 @@ namespace PlayFab
          * Note that this action cannot be un-done. All statistics for this  character will be deleted, removing the user from all leaderboards for the game.
          */
         bool ResetCharacterStatistics(AdminModels::FResetCharacterStatisticsRequest& request, const FResetCharacterStatisticsDelegate& SuccessDelegate = FResetCharacterStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Retrieves an array of player segment definitions. Results from this can be used in subsequent API calls such as GetPlayersInSegment which requires a Segment ID. While segment names can change the ID for that segment will not change.
+         * Request has no paramaters.
+         */
+        bool GetAllSegments(const FGetAllSegmentsDelegate& SuccessDelegate = FGetAllSegmentsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * List all segments that a player currently belongs to at this moment in time.
+         */
+        bool GetPlayerSegments(AdminModels::FGetPlayersSegmentsRequest& request, const FGetPlayerSegmentsDelegate& SuccessDelegate = FGetPlayerSegmentsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Allows for paging through all players in a given segment. This API creates a snapshot of all player profiles that match the segment definition at the time of its creation and lives through the Total Seconds to Live, refreshing its life span on each subsequent use of the Continuation Token. Profiles that change during the course of paging will not be reflected in the results. AB Test segments are currently not supported by this operation.
+         * Initial request must contain at least a Segment ID. Subsequent requests must contain the Segment ID as well as the Continuation Token. Failure to send the Continuation Token will result in a new player segment list being generated. Each time the Continuation Token is passed in the length of the Total Seconds to Live is refreshed. If too much time passes between requests to the point that a subsequent request is past the Total Seconds to Live an error will be returned and paging will be terminated. 
+         */
+        bool GetPlayersInSegment(AdminModels::FGetPlayersInSegmentRequest& request, const FGetPlayersInSegmentDelegate& SuccessDelegate = FGetPlayersInSegmentDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
     private:
         // ------------ Generated result handlers
@@ -419,6 +442,7 @@ namespace PlayFab
         void OnGetTitleDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetTitleDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetTitleInternalDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetTitleInternalDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnListVirtualCurrencyTypesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FListVirtualCurrencyTypesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnRemoveVirtualCurrencyTypesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemoveVirtualCurrencyTypesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetCatalogItemsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetCatalogItemsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetStoreItemsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetStoreItemsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetTitleDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetTitleDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -450,6 +474,9 @@ namespace PlayFab
         void OnGetContentListResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetContentListDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetContentUploadUrlResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetContentUploadUrlDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnResetCharacterStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FResetCharacterStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetAllSegmentsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetAllSegmentsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetPlayerSegmentsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerSegmentsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetPlayersInSegmentResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayersInSegmentDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 
     };
 };

@@ -24,11 +24,13 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FLoginWithSteamDelegate, const ClientModels::FLoginResult&);
         DECLARE_DELEGATE_OneParam(FLoginWithTwitchDelegate, const ClientModels::FLoginResult&);
         DECLARE_DELEGATE_OneParam(FRegisterPlayFabUserDelegate, const ClientModels::FRegisterPlayFabUserResult&);
+        DECLARE_DELEGATE_OneParam(FAddGenericIDDelegate, const ClientModels::FAddGenericIDResult&);
         DECLARE_DELEGATE_OneParam(FAddUsernamePasswordDelegate, const ClientModels::FAddUsernamePasswordResult&);
         DECLARE_DELEGATE_OneParam(FGetAccountInfoDelegate, const ClientModels::FGetAccountInfoResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayerCombinedInfoDelegate, const ClientModels::FGetPlayerCombinedInfoResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayFabIDsFromFacebookIDsDelegate, const ClientModels::FGetPlayFabIDsFromFacebookIDsResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayFabIDsFromGameCenterIDsDelegate, const ClientModels::FGetPlayFabIDsFromGameCenterIDsResult&);
+        DECLARE_DELEGATE_OneParam(FGetPlayFabIDsFromGenericIDsDelegate, const ClientModels::FGetPlayFabIDsFromGenericIDsResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayFabIDsFromGoogleIDsDelegate, const ClientModels::FGetPlayFabIDsFromGoogleIDsResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayFabIDsFromKongregateIDsDelegate, const ClientModels::FGetPlayFabIDsFromKongregateIDsResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayFabIDsFromSteamIDsDelegate, const ClientModels::FGetPlayFabIDsFromSteamIDsResult&);
@@ -43,6 +45,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FLinkKongregateDelegate, const ClientModels::FLinkKongregateAccountResult&);
         DECLARE_DELEGATE_OneParam(FLinkSteamAccountDelegate, const ClientModels::FLinkSteamAccountResult&);
         DECLARE_DELEGATE_OneParam(FLinkTwitchDelegate, const ClientModels::FLinkTwitchAccountResult&);
+        DECLARE_DELEGATE_OneParam(FRemoveGenericIDDelegate, const ClientModels::FRemoveGenericIDResult&);
         DECLARE_DELEGATE_OneParam(FReportPlayerDelegate, const ClientModels::FReportPlayerClientResult&);
         DECLARE_DELEGATE_OneParam(FSendAccountRecoveryEmailDelegate, const ClientModels::FSendAccountRecoveryEmailResult&);
         DECLARE_DELEGATE_OneParam(FUnlinkAndroidDeviceIDDelegate, const ClientModels::FUnlinkAndroidDeviceIDResult&);
@@ -133,6 +136,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FGetTradeStatusDelegate, const ClientModels::FGetTradeStatusResponse&);
         DECLARE_DELEGATE_OneParam(FOpenTradeDelegate, const ClientModels::FOpenTradeResponse&);
         DECLARE_DELEGATE_OneParam(FAttributeInstallDelegate, const ClientModels::FAttributeInstallResult&);
+        DECLARE_DELEGATE_OneParam(FGetPlayerSegmentsDelegate, const ClientModels::FGetPlayerSegmentsResult&);
 
         UPlayFabClientAPI();
         ~UPlayFabClientAPI();
@@ -210,6 +214,10 @@ namespace PlayFab
          */
         bool RegisterPlayFabUser(ClientModels::FRegisterPlayFabUserRequest& request, const FRegisterPlayFabUserDelegate& SuccessDelegate = FRegisterPlayFabUserDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Adds the specified generic service identifier to the player's PlayFab account. This is designed to allow for a PlayFab ID lookup of any arbitrary service identifier a title wants to add. This identifier should never be used as authentication credentials, as the intent is that it is easily accessible by other players.
+         */
+        bool AddGenericID(ClientModels::FAddGenericIDRequest& request, const FAddGenericIDDelegate& SuccessDelegate = FAddGenericIDDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Adds playfab username/password auth to an existing semi-anonymous account created via a 3rd party auth method.
          */
         bool AddUsernamePassword(ClientModels::FAddUsernamePasswordRequest& request, const FAddUsernamePasswordDelegate& SuccessDelegate = FAddUsernamePasswordDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -229,6 +237,10 @@ namespace PlayFab
          * Retrieves the unique PlayFab identifiers for the given set of Game Center identifiers (referenced in the Game Center Programming Guide as the Player Identifier).
          */
         bool GetPlayFabIDsFromGameCenterIDs(ClientModels::FGetPlayFabIDsFromGameCenterIDsRequest& request, const FGetPlayFabIDsFromGameCenterIDsDelegate& SuccessDelegate = FGetPlayFabIDsFromGameCenterIDsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Retrieves the unique PlayFab identifiers for the given set of generic service identifiers. A generic identifier is the service name plus the service-specific ID for the player, as specified by the title when the generic identifier was added to the player account.
+         */
+        bool GetPlayFabIDsFromGenericIDs(ClientModels::FGetPlayFabIDsFromGenericIDsRequest& request, const FGetPlayFabIDsFromGenericIDsDelegate& SuccessDelegate = FGetPlayFabIDsFromGenericIDsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves the unique PlayFab identifiers for the given set of Google identifiers. The Google identifiers are the IDs for the user accounts, available as "id" in the Google+ People API calls.
          */
@@ -287,6 +299,10 @@ namespace PlayFab
          * Links the Twitch account associated with the token to the user's PlayFab account.
          */
         bool LinkTwitch(ClientModels::FLinkTwitchAccountRequest& request, const FLinkTwitchDelegate& SuccessDelegate = FLinkTwitchDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Removes the specified generic service identifier from the player's PlayFab account.
+         */
+        bool RemoveGenericID(ClientModels::FRemoveGenericIDRequest& request, const FRemoveGenericIDDelegate& SuccessDelegate = FRemoveGenericIDDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Submit a report for another player (due to bad bahavior, etc.), so that customer service representatives for the title can take action concerning potentially toxic players.
          */
@@ -691,6 +707,10 @@ namespace PlayFab
          * If you have an ad attribution partner enabled, this will post an install to their service  to track the device. It uses the given device id to match based on clicks on ads.
          */
         bool AttributeInstall(ClientModels::FAttributeInstallRequest& request, const FAttributeInstallDelegate& SuccessDelegate = FAttributeInstallDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * List all segments that a player currently belongs to at this moment in time.
+         */
+        bool GetPlayerSegments(const FGetPlayerSegmentsDelegate& SuccessDelegate = FGetPlayerSegmentsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
     private:
         // ------------ Generated result handlers
@@ -707,11 +727,13 @@ namespace PlayFab
         void OnLoginWithSteamResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLoginWithSteamDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnLoginWithTwitchResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLoginWithTwitchDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRegisterPlayFabUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRegisterPlayFabUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnAddGenericIDResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddGenericIDDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAddUsernamePasswordResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddUsernamePasswordDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetAccountInfoResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetAccountInfoDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayerCombinedInfoResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerCombinedInfoDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayFabIDsFromFacebookIDsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayFabIDsFromFacebookIDsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayFabIDsFromGameCenterIDsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayFabIDsFromGameCenterIDsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetPlayFabIDsFromGenericIDsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayFabIDsFromGenericIDsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayFabIDsFromGoogleIDsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayFabIDsFromGoogleIDsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayFabIDsFromKongregateIDsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayFabIDsFromKongregateIDsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayFabIDsFromSteamIDsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayFabIDsFromSteamIDsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -726,6 +748,7 @@ namespace PlayFab
         void OnLinkKongregateResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLinkKongregateDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnLinkSteamAccountResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLinkSteamAccountDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnLinkTwitchResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLinkTwitchDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnRemoveGenericIDResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemoveGenericIDDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnReportPlayerResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FReportPlayerDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSendAccountRecoveryEmailResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSendAccountRecoveryEmailDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUnlinkAndroidDeviceIDResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlinkAndroidDeviceIDDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -816,6 +839,7 @@ namespace PlayFab
         void OnGetTradeStatusResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetTradeStatusDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnOpenTradeResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FOpenTradeDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAttributeInstallResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAttributeInstallDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetPlayerSegmentsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerSegmentsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 
         FString mUserSessionTicket;
     };

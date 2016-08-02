@@ -19,6 +19,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FDeleteUsersDelegate, const ServerModels::FDeleteUsersResult&);
         DECLARE_DELEGATE_OneParam(FGetLeaderboardDelegate, const ServerModels::FGetLeaderboardResult&);
         DECLARE_DELEGATE_OneParam(FGetLeaderboardAroundUserDelegate, const ServerModels::FGetLeaderboardAroundUserResult&);
+        DECLARE_DELEGATE_OneParam(FGetPlayerCombinedInfoDelegate, const ServerModels::FGetPlayerCombinedInfoResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayerStatisticsDelegate, const ServerModels::FGetPlayerStatisticsResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayerStatisticVersionsDelegate, const ServerModels::FGetPlayerStatisticVersionsResult&);
         DECLARE_DELEGATE_OneParam(FGetUserDataDelegate, const ServerModels::FGetUserDataResult&);
@@ -96,6 +97,9 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FUpdateCharacterDataDelegate, const ServerModels::FUpdateCharacterDataResult&);
         DECLARE_DELEGATE_OneParam(FUpdateCharacterInternalDataDelegate, const ServerModels::FUpdateCharacterDataResult&);
         DECLARE_DELEGATE_OneParam(FUpdateCharacterReadOnlyDataDelegate, const ServerModels::FUpdateCharacterDataResult&);
+        DECLARE_DELEGATE_OneParam(FGetAllSegmentsDelegate, const ServerModels::FGetAllSegmentsResult&);
+        DECLARE_DELEGATE_OneParam(FGetPlayerSegmentsDelegate, const ServerModels::FGetPlayerSegmentsResult&);
+        DECLARE_DELEGATE_OneParam(FGetPlayersInSegmentDelegate, const ServerModels::FGetPlayersInSegmentResult&);
 
         UPlayFabServerAPI();
         ~UPlayFabServerAPI();
@@ -141,6 +145,10 @@ namespace PlayFab
          * Retrieves a list of ranked users for the given statistic, centered on the currently signed-in user
          */
         bool GetLeaderboardAroundUser(ServerModels::FGetLeaderboardAroundUserRequest& request, const FGetLeaderboardAroundUserDelegate& SuccessDelegate = FGetLeaderboardAroundUserDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Returns whatever info is requested in the response for the user. Note that PII (like email address, facebook id)             may be returned. All parameters default to false.
+         */
+        bool GetPlayerCombinedInfo(ServerModels::FGetPlayerCombinedInfoRequest& request, const FGetPlayerCombinedInfoDelegate& SuccessDelegate = FGetPlayerCombinedInfoDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves the current version and values for the indicated statistics, for the local player.
          */
@@ -501,6 +509,20 @@ namespace PlayFab
          * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
          */
         bool UpdateCharacterReadOnlyData(ServerModels::FUpdateCharacterDataRequest& request, const FUpdateCharacterReadOnlyDataDelegate& SuccessDelegate = FUpdateCharacterReadOnlyDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Retrieves an array of player segment definitions. Results from this can be used in subsequent API calls such as GetPlayersInSegment which requires a Segment ID. While segment names can change the ID for that segment will not change.
+         * Request has no paramaters.
+         */
+        bool GetAllSegments(const FGetAllSegmentsDelegate& SuccessDelegate = FGetAllSegmentsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * List all segments that a player currently belongs to at this moment in time.
+         */
+        bool GetPlayerSegments(ServerModels::FGetPlayersSegmentsRequest& request, const FGetPlayerSegmentsDelegate& SuccessDelegate = FGetPlayerSegmentsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Allows for paging through all players in a given segment. This API creates a snapshot of all player profiles that match the segment definition at the time of its creation and lives through the Total Seconds to Live, refreshing its life span on each subsequent use of the Continuation Token. Profiles that change during the course of paging will not be reflected in the results. AB Test segments are currently not supported by this operation.
+         * Initial request must contain at least a Segment ID. Subsequent requests must contain the Segment ID as well as the Continuation Token. Failure to send the Continuation Token will result in a new player segment list being generated. Each time the Continuation Token is passed in the length of the Total Seconds to Live is refreshed. If too much time passes between requests to the point that a subsequent request is past the Total Seconds to Live an error will be returned and paging will be terminated. 
+         */
+        bool GetPlayersInSegment(ServerModels::FGetPlayersInSegmentRequest& request, const FGetPlayersInSegmentDelegate& SuccessDelegate = FGetPlayersInSegmentDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
     private:
         // ------------ Generated result handlers
@@ -512,6 +534,7 @@ namespace PlayFab
         void OnDeleteUsersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteUsersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetLeaderboardResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetLeaderboardAroundUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardAroundUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetPlayerCombinedInfoResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerCombinedInfoDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayerStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayerStatisticVersionsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerStatisticVersionsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -589,6 +612,9 @@ namespace PlayFab
         void OnUpdateCharacterDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateCharacterDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateCharacterInternalDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateCharacterInternalDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateCharacterReadOnlyDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateCharacterReadOnlyDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetAllSegmentsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetAllSegmentsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetPlayerSegmentsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerSegmentsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetPlayersInSegmentResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayersInSegmentDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 
     };
 };

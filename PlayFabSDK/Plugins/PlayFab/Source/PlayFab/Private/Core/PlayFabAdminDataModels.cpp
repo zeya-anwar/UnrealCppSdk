@@ -9,6 +9,54 @@ using namespace PlayFab::AdminModels;
 
 
 
+PlayFab::AdminModels::FAdCampaignAttribution::~FAdCampaignAttribution()
+{
+    
+}
+
+void PlayFab::AdminModels::FAdCampaignAttribution::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Platform.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Platform")); writer->WriteValue(Platform); }
+	
+    if(CampaignId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CampaignId")); writer->WriteValue(CampaignId); }
+	
+    writer->WriteIdentifierPrefix(TEXT("AttributedAt")); writeDatetime(AttributedAt, writer);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FAdCampaignAttribution::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PlatformValue = obj->TryGetField(TEXT("Platform"));
+    if (PlatformValue.IsValid()&& !PlatformValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlatformValue->TryGetString(TmpValue)) {Platform = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> CampaignIdValue = obj->TryGetField(TEXT("CampaignId"));
+    if (CampaignIdValue.IsValid()&& !CampaignIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CampaignIdValue->TryGetString(TmpValue)) {CampaignId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> AttributedAtValue = obj->TryGetField(TEXT("AttributedAt"));
+    if(AttributedAtValue.IsValid())
+    {
+        AttributedAt = readDatetime(AttributedAtValue);
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::AdminModels::FAddNewsRequest::~FAddNewsRequest()
 {
     
@@ -1796,6 +1844,121 @@ bool PlayFab::AdminModels::FGameModeInfo::readFromValue(const TSharedPtr<FJsonOb
 }
 
 
+PlayFab::AdminModels::FGetAllSegmentsRequest::~FGetAllSegmentsRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetAllSegmentsRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetAllSegmentsRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetSegmentResult::~FGetSegmentResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetSegmentResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("Id")); writer->WriteValue(Id);
+	
+    if(Name.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Name")); writer->WriteValue(Name); }
+	
+    if(ABTestParent.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ABTestParent")); writer->WriteValue(ABTestParent); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetSegmentResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> IdValue = obj->TryGetField(TEXT("Id"));
+    if (IdValue.IsValid()&& !IdValue->IsNull())
+    {
+        FString TmpValue;
+        if(IdValue->TryGetString(TmpValue)) {Id = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> NameValue = obj->TryGetField(TEXT("Name"));
+    if (NameValue.IsValid()&& !NameValue->IsNull())
+    {
+        FString TmpValue;
+        if(NameValue->TryGetString(TmpValue)) {Name = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ABTestParentValue = obj->TryGetField(TEXT("ABTestParent"));
+    if (ABTestParentValue.IsValid()&& !ABTestParentValue->IsNull())
+    {
+        FString TmpValue;
+        if(ABTestParentValue->TryGetString(TmpValue)) {ABTestParent = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetAllSegmentsResult::~FGetAllSegmentsResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetAllSegmentsResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Segments.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("Segments"));
+    
+        for (const FGetSegmentResult& item : Segments)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetAllSegmentsResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&SegmentsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Segments"));
+        for (int32 Idx = 0; Idx < SegmentsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = SegmentsArray[Idx];
+            
+            Segments.Add(FGetSegmentResult(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::AdminModels::FGetCatalogItemsRequest::~FGetCatalogItemsRequest()
 {
     
@@ -2518,6 +2681,642 @@ bool PlayFab::AdminModels::FGetMatchmakerGameModesResult::readFromValue(const TS
         }
     }
 
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetPlayerSegmentsResult::~FGetPlayerSegmentsResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetPlayerSegmentsResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Segments.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("Segments"));
+    
+        for (const FGetSegmentResult& item : Segments)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetPlayerSegmentsResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&SegmentsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Segments"));
+        for (int32 Idx = 0; Idx < SegmentsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = SegmentsArray[Idx];
+            
+            Segments.Add(FGetSegmentResult(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetPlayersInSegmentRequest::~FGetPlayersInSegmentRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetPlayersInSegmentRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("SegmentId")); writer->WriteValue(SegmentId);
+	
+    if(SecondsToLive.notNull()) { writer->WriteIdentifierPrefix(TEXT("SecondsToLive")); writer->WriteValue(static_cast<int64>(SecondsToLive)); }
+	
+    if(MaxBatchSize.notNull()) { writer->WriteIdentifierPrefix(TEXT("MaxBatchSize")); writer->WriteValue(static_cast<int64>(MaxBatchSize)); }
+	
+    if(ContinuationToken.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ContinuationToken")); writer->WriteValue(ContinuationToken); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetPlayersInSegmentRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> SegmentIdValue = obj->TryGetField(TEXT("SegmentId"));
+    if (SegmentIdValue.IsValid()&& !SegmentIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(SegmentIdValue->TryGetString(TmpValue)) {SegmentId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> SecondsToLiveValue = obj->TryGetField(TEXT("SecondsToLive"));
+    if (SecondsToLiveValue.IsValid()&& !SecondsToLiveValue->IsNull())
+    {
+        uint32 TmpValue;
+        if(SecondsToLiveValue->TryGetNumber(TmpValue)) {SecondsToLive = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> MaxBatchSizeValue = obj->TryGetField(TEXT("MaxBatchSize"));
+    if (MaxBatchSizeValue.IsValid()&& !MaxBatchSizeValue->IsNull())
+    {
+        uint32 TmpValue;
+        if(MaxBatchSizeValue->TryGetNumber(TmpValue)) {MaxBatchSize = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ContinuationTokenValue = obj->TryGetField(TEXT("ContinuationToken"));
+    if (ContinuationTokenValue.IsValid()&& !ContinuationTokenValue->IsNull())
+    {
+        FString TmpValue;
+        if(ContinuationTokenValue->TryGetString(TmpValue)) {ContinuationToken = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+void PlayFab::AdminModels::writeLoginIdentityProviderEnumJSON(LoginIdentityProvider enumVal, JsonWriter& writer)
+{
+    switch(enumVal)
+    {
+        
+        case LoginIdentityProviderUnknown: writer->WriteValue(TEXT("Unknown")); break;
+        case LoginIdentityProviderPlayFab: writer->WriteValue(TEXT("PlayFab")); break;
+        case LoginIdentityProviderCustom: writer->WriteValue(TEXT("Custom")); break;
+        case LoginIdentityProviderGameCenter: writer->WriteValue(TEXT("GameCenter")); break;
+        case LoginIdentityProviderGooglePlay: writer->WriteValue(TEXT("GooglePlay")); break;
+        case LoginIdentityProviderSteam: writer->WriteValue(TEXT("Steam")); break;
+        case LoginIdentityProviderXBoxLive: writer->WriteValue(TEXT("XBoxLive")); break;
+        case LoginIdentityProviderPSN: writer->WriteValue(TEXT("PSN")); break;
+        case LoginIdentityProviderKongregate: writer->WriteValue(TEXT("Kongregate")); break;
+        case LoginIdentityProviderFacebook: writer->WriteValue(TEXT("Facebook")); break;
+        case LoginIdentityProviderIOSDevice: writer->WriteValue(TEXT("IOSDevice")); break;
+        case LoginIdentityProviderAndroidDevice: writer->WriteValue(TEXT("AndroidDevice")); break;
+        case LoginIdentityProviderTwitch: writer->WriteValue(TEXT("Twitch")); break;
+    }
+}
+
+AdminModels::LoginIdentityProvider PlayFab::AdminModels::readLoginIdentityProviderFromValue(const TSharedPtr<FJsonValue>& value)
+{
+    static TMap<FString, LoginIdentityProvider> _LoginIdentityProviderMap;
+    if (_LoginIdentityProviderMap.Num() == 0)
+    {
+        // Auto-generate the map on the first use
+        _LoginIdentityProviderMap.Add(TEXT("Unknown"), LoginIdentityProviderUnknown);
+        _LoginIdentityProviderMap.Add(TEXT("PlayFab"), LoginIdentityProviderPlayFab);
+        _LoginIdentityProviderMap.Add(TEXT("Custom"), LoginIdentityProviderCustom);
+        _LoginIdentityProviderMap.Add(TEXT("GameCenter"), LoginIdentityProviderGameCenter);
+        _LoginIdentityProviderMap.Add(TEXT("GooglePlay"), LoginIdentityProviderGooglePlay);
+        _LoginIdentityProviderMap.Add(TEXT("Steam"), LoginIdentityProviderSteam);
+        _LoginIdentityProviderMap.Add(TEXT("XBoxLive"), LoginIdentityProviderXBoxLive);
+        _LoginIdentityProviderMap.Add(TEXT("PSN"), LoginIdentityProviderPSN);
+        _LoginIdentityProviderMap.Add(TEXT("Kongregate"), LoginIdentityProviderKongregate);
+        _LoginIdentityProviderMap.Add(TEXT("Facebook"), LoginIdentityProviderFacebook);
+        _LoginIdentityProviderMap.Add(TEXT("IOSDevice"), LoginIdentityProviderIOSDevice);
+        _LoginIdentityProviderMap.Add(TEXT("AndroidDevice"), LoginIdentityProviderAndroidDevice);
+        _LoginIdentityProviderMap.Add(TEXT("Twitch"), LoginIdentityProviderTwitch);
+
+    } 
+
+	if(value.IsValid())
+	{
+	    auto output = _LoginIdentityProviderMap.Find(value->AsString());
+		if (output != nullptr)
+			return *output;
+	}
+
+
+    return LoginIdentityProviderUnknown; // Basically critical fail
+}
+
+
+void PlayFab::AdminModels::writePushNotificationPlatformEnumJSON(PushNotificationPlatform enumVal, JsonWriter& writer)
+{
+    switch(enumVal)
+    {
+        
+        case PushNotificationPlatformApplePushNotificationService: writer->WriteValue(TEXT("ApplePushNotificationService")); break;
+        case PushNotificationPlatformGoogleCloudMessaging: writer->WriteValue(TEXT("GoogleCloudMessaging")); break;
+    }
+}
+
+AdminModels::PushNotificationPlatform PlayFab::AdminModels::readPushNotificationPlatformFromValue(const TSharedPtr<FJsonValue>& value)
+{
+    static TMap<FString, PushNotificationPlatform> _PushNotificationPlatformMap;
+    if (_PushNotificationPlatformMap.Num() == 0)
+    {
+        // Auto-generate the map on the first use
+        _PushNotificationPlatformMap.Add(TEXT("ApplePushNotificationService"), PushNotificationPlatformApplePushNotificationService);
+        _PushNotificationPlatformMap.Add(TEXT("GoogleCloudMessaging"), PushNotificationPlatformGoogleCloudMessaging);
+
+    } 
+
+	if(value.IsValid())
+	{
+	    auto output = _PushNotificationPlatformMap.Find(value->AsString());
+		if (output != nullptr)
+			return *output;
+	}
+
+
+    return PushNotificationPlatformApplePushNotificationService; // Basically critical fail
+}
+
+
+PlayFab::AdminModels::FPushNotificationRegistration::~FPushNotificationRegistration()
+{
+    
+}
+
+void PlayFab::AdminModels::FPushNotificationRegistration::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Platform.notNull()) { writer->WriteIdentifierPrefix(TEXT("Platform")); writePushNotificationPlatformEnumJSON(Platform, writer); }
+	
+    if(NotificationEndpointARN.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("NotificationEndpointARN")); writer->WriteValue(NotificationEndpointARN); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FPushNotificationRegistration::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    Platform = readPushNotificationPlatformFromValue(obj->TryGetField(TEXT("Platform")));
+    
+    const TSharedPtr<FJsonValue> NotificationEndpointARNValue = obj->TryGetField(TEXT("NotificationEndpointARN"));
+    if (NotificationEndpointARNValue.IsValid()&& !NotificationEndpointARNValue->IsNull())
+    {
+        FString TmpValue;
+        if(NotificationEndpointARNValue->TryGetString(TmpValue)) {NotificationEndpointARN = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FPlayerLinkedAccount::~FPlayerLinkedAccount()
+{
+    
+}
+
+void PlayFab::AdminModels::FPlayerLinkedAccount::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Platform.notNull()) { writer->WriteIdentifierPrefix(TEXT("Platform")); writeLoginIdentityProviderEnumJSON(Platform, writer); }
+	
+    if(PlatformUserId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlatformUserId")); writer->WriteValue(PlatformUserId); }
+	
+    if(Username.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Username")); writer->WriteValue(Username); }
+	
+    if(Email.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Email")); writer->WriteValue(Email); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FPlayerLinkedAccount::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    Platform = readLoginIdentityProviderFromValue(obj->TryGetField(TEXT("Platform")));
+    
+    const TSharedPtr<FJsonValue> PlatformUserIdValue = obj->TryGetField(TEXT("PlatformUserId"));
+    if (PlatformUserIdValue.IsValid()&& !PlatformUserIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlatformUserIdValue->TryGetString(TmpValue)) {PlatformUserId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> UsernameValue = obj->TryGetField(TEXT("Username"));
+    if (UsernameValue.IsValid()&& !UsernameValue->IsNull())
+    {
+        FString TmpValue;
+        if(UsernameValue->TryGetString(TmpValue)) {Username = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> EmailValue = obj->TryGetField(TEXT("Email"));
+    if (EmailValue.IsValid()&& !EmailValue->IsNull())
+    {
+        FString TmpValue;
+        if(EmailValue->TryGetString(TmpValue)) {Email = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FPlayerStatistic::~FPlayerStatistic()
+{
+    
+}
+
+void PlayFab::AdminModels::FPlayerStatistic::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Id.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Id")); writer->WriteValue(Id); }
+	
+    writer->WriteIdentifierPrefix(TEXT("StatisticVersion")); writer->WriteValue(StatisticVersion);
+	
+    writer->WriteIdentifierPrefix(TEXT("StatisticValue")); writer->WriteValue(StatisticValue);
+	
+    if(Name.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Name")); writer->WriteValue(Name); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FPlayerStatistic::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> IdValue = obj->TryGetField(TEXT("Id"));
+    if (IdValue.IsValid()&& !IdValue->IsNull())
+    {
+        FString TmpValue;
+        if(IdValue->TryGetString(TmpValue)) {Id = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> StatisticVersionValue = obj->TryGetField(TEXT("StatisticVersion"));
+    if (StatisticVersionValue.IsValid()&& !StatisticVersionValue->IsNull())
+    {
+        int32 TmpValue;
+        if(StatisticVersionValue->TryGetNumber(TmpValue)) {StatisticVersion = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> StatisticValueValue = obj->TryGetField(TEXT("StatisticValue"));
+    if (StatisticValueValue.IsValid()&& !StatisticValueValue->IsNull())
+    {
+        int32 TmpValue;
+        if(StatisticValueValue->TryGetNumber(TmpValue)) {StatisticValue = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> NameValue = obj->TryGetField(TEXT("Name"));
+    if (NameValue.IsValid()&& !NameValue->IsNull())
+    {
+        FString TmpValue;
+        if(NameValue->TryGetString(TmpValue)) {Name = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FPlayerProfile::~FPlayerProfile()
+{
+    
+}
+
+void PlayFab::AdminModels::FPlayerProfile::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(PlayerId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayerId")); writer->WriteValue(PlayerId); }
+	
+    if(TitleId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("TitleId")); writer->WriteValue(TitleId); }
+	
+    if(DisplayName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("DisplayName")); writer->WriteValue(DisplayName); }
+	
+    if(Origination.notNull()) { writer->WriteIdentifierPrefix(TEXT("Origination")); writeLoginIdentityProviderEnumJSON(Origination, writer); }
+	
+    if(Created.notNull()) { writer->WriteIdentifierPrefix(TEXT("Created")); writeDatetime(Created, writer); }
+	
+    if(LastLogin.notNull()) { writer->WriteIdentifierPrefix(TEXT("LastLogin")); writeDatetime(LastLogin, writer); }
+	
+    if(BannedUntil.notNull()) { writer->WriteIdentifierPrefix(TEXT("BannedUntil")); writeDatetime(BannedUntil, writer); }
+	
+    if(Statistics.Num() != 0) 
+    {
+        writer->WriteObjectStart(TEXT("Statistics"));
+        for (TMap<FString, int32>::TConstIterator It(Statistics); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue((*It).Value);
+        }
+        writer->WriteObjectEnd();
+     }
+	
+    if(VirtualCurrencyBalances.Num() != 0) 
+    {
+        writer->WriteObjectStart(TEXT("VirtualCurrencyBalances"));
+        for (TMap<FString, int32>::TConstIterator It(VirtualCurrencyBalances); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue((*It).Value);
+        }
+        writer->WriteObjectEnd();
+     }
+	
+    if(AdCampaignAttributions.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("AdCampaignAttributions"));
+    
+        for (const FAdCampaignAttribution& item : AdCampaignAttributions)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    if(PushNotificationRegistrations.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("PushNotificationRegistrations"));
+    
+        for (const FPushNotificationRegistration& item : PushNotificationRegistrations)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    if(LinkedAccounts.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("LinkedAccounts"));
+    
+        for (const FPlayerLinkedAccount& item : LinkedAccounts)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    if(PlayerStatistics.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("PlayerStatistics"));
+    
+        for (const FPlayerStatistic& item : PlayerStatistics)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FPlayerProfile::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PlayerIdValue = obj->TryGetField(TEXT("PlayerId"));
+    if (PlayerIdValue.IsValid()&& !PlayerIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayerIdValue->TryGetString(TmpValue)) {PlayerId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TitleIdValue = obj->TryGetField(TEXT("TitleId"));
+    if (TitleIdValue.IsValid()&& !TitleIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TitleIdValue->TryGetString(TmpValue)) {TitleId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> DisplayNameValue = obj->TryGetField(TEXT("DisplayName"));
+    if (DisplayNameValue.IsValid()&& !DisplayNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(DisplayNameValue->TryGetString(TmpValue)) {DisplayName = TmpValue; }
+    }
+    
+    Origination = readLoginIdentityProviderFromValue(obj->TryGetField(TEXT("Origination")));
+    
+    const TSharedPtr<FJsonValue> CreatedValue = obj->TryGetField(TEXT("Created"));
+    if(CreatedValue.IsValid())
+    {
+        Created = readDatetime(CreatedValue);
+    }
+    
+    const TSharedPtr<FJsonValue> LastLoginValue = obj->TryGetField(TEXT("LastLogin"));
+    if(LastLoginValue.IsValid())
+    {
+        LastLogin = readDatetime(LastLoginValue);
+    }
+    
+    const TSharedPtr<FJsonValue> BannedUntilValue = obj->TryGetField(TEXT("BannedUntil"));
+    if(BannedUntilValue.IsValid())
+    {
+        BannedUntil = readDatetime(BannedUntilValue);
+    }
+    
+    const TSharedPtr<FJsonObject>* StatisticsObject;
+    if (obj->TryGetObjectField(TEXT("Statistics"), StatisticsObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*StatisticsObject)->Values); It; ++It)
+        {
+            int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
+            Statistics.Add(It.Key(), TmpValue);
+        }
+    }
+    
+    const TSharedPtr<FJsonObject>* VirtualCurrencyBalancesObject;
+    if (obj->TryGetObjectField(TEXT("VirtualCurrencyBalances"), VirtualCurrencyBalancesObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*VirtualCurrencyBalancesObject)->Values); It; ++It)
+        {
+            int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
+            VirtualCurrencyBalances.Add(It.Key(), TmpValue);
+        }
+    }
+    
+    {
+        const TArray< TSharedPtr<FJsonValue> >&AdCampaignAttributionsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("AdCampaignAttributions"));
+        for (int32 Idx = 0; Idx < AdCampaignAttributionsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = AdCampaignAttributionsArray[Idx];
+            
+            AdCampaignAttributions.Add(FAdCampaignAttribution(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    {
+        const TArray< TSharedPtr<FJsonValue> >&PushNotificationRegistrationsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("PushNotificationRegistrations"));
+        for (int32 Idx = 0; Idx < PushNotificationRegistrationsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = PushNotificationRegistrationsArray[Idx];
+            
+            PushNotificationRegistrations.Add(FPushNotificationRegistration(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    {
+        const TArray< TSharedPtr<FJsonValue> >&LinkedAccountsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("LinkedAccounts"));
+        for (int32 Idx = 0; Idx < LinkedAccountsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = LinkedAccountsArray[Idx];
+            
+            LinkedAccounts.Add(FPlayerLinkedAccount(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    {
+        const TArray< TSharedPtr<FJsonValue> >&PlayerStatisticsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("PlayerStatistics"));
+        for (int32 Idx = 0; Idx < PlayerStatisticsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = PlayerStatisticsArray[Idx];
+            
+            PlayerStatistics.Add(FPlayerStatistic(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetPlayersInSegmentResult::~FGetPlayersInSegmentResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetPlayersInSegmentResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("ProfilesInSegment")); writer->WriteValue(ProfilesInSegment);
+	
+    if(ContinuationToken.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ContinuationToken")); writer->WriteValue(ContinuationToken); }
+	
+    if(PlayerProfiles.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("PlayerProfiles"));
+    
+        for (const FPlayerProfile& item : PlayerProfiles)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetPlayersInSegmentResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> ProfilesInSegmentValue = obj->TryGetField(TEXT("ProfilesInSegment"));
+    if (ProfilesInSegmentValue.IsValid()&& !ProfilesInSegmentValue->IsNull())
+    {
+        int32 TmpValue;
+        if(ProfilesInSegmentValue->TryGetNumber(TmpValue)) {ProfilesInSegment = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ContinuationTokenValue = obj->TryGetField(TEXT("ContinuationToken"));
+    if (ContinuationTokenValue.IsValid()&& !ContinuationTokenValue->IsNull())
+    {
+        FString TmpValue;
+        if(ContinuationTokenValue->TryGetString(TmpValue)) {ContinuationToken = TmpValue; }
+    }
+    
+    {
+        const TArray< TSharedPtr<FJsonValue> >&PlayerProfilesArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("PlayerProfiles"));
+        for (int32 Idx = 0; Idx < PlayerProfilesArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = PlayerProfilesArray[Idx];
+            
+            PlayerProfiles.Add(FPlayerProfile(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetPlayersSegmentsRequest::~FGetPlayersSegmentsRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetPlayersSegmentsRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetPlayersSegmentsRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
     
     
     return HasSucceeded;
@@ -5964,6 +6763,49 @@ bool PlayFab::AdminModels::FRemoveServerBuildResult::readFromValue(const TShared
 {
 	bool HasSucceeded = true; 
 	
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FRemoveVirtualCurrencyTypesRequest::~FRemoveVirtualCurrencyTypesRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FRemoveVirtualCurrencyTypesRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+        writer->WriteArrayStart(TEXT("VirtualCurrencies"));
+    
+        for (const FVirtualCurrencyData& item : VirtualCurrencies)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+    
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FRemoveVirtualCurrencyTypesRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&VirtualCurrenciesArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("VirtualCurrencies"));
+        for (int32 Idx = 0; Idx < VirtualCurrenciesArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = VirtualCurrenciesArray[Idx];
+            
+            VirtualCurrencies.Add(FVirtualCurrencyData(CurrentItem->AsObject()));
+        }
+    }
+
+    
     
     return HasSucceeded;
 }

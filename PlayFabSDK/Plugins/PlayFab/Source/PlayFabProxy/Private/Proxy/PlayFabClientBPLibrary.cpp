@@ -49,6 +49,22 @@ void UPFClientProxyLibrary::BreakBPClientAddFriendResult(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientAddGenericIDRequest(
+		const FBPClientAddGenericIDRequest& In
+        ,FBPClientGenericServiceId& OutGenericId
+	)
+{
+    OutGenericId = In.Data.GenericId;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientAddGenericIDResult(
+		const FBPClientAddGenericIDResult& In
+	)
+{
+    
+}
+
 void UPFClientProxyLibrary::BreakBPClientAddSharedGroupMembersRequest(
 		const FBPClientAddSharedGroupMembersRequest& In
         ,FString& OutSharedGroupId
@@ -608,6 +624,28 @@ void UPFClientProxyLibrary::BreakBPClientGameServerRegionsResult(
         OutRegions.Add(result);
     }
 
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGenericPlayFabIdPair(
+		const FBPClientGenericPlayFabIdPair& In
+        ,FBPClientGenericServiceId& OutGenericId
+        ,FString& OutPlayFabId
+	)
+{
+    if (In.Data.GenericId.IsValid()) {    OutGenericId.Data = *In.Data.GenericId;}
+	OutPlayFabId = In.Data.PlayFabId;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGenericServiceId(
+		const FBPClientGenericServiceId& In
+        ,FString& OutServiceName
+        ,FString& OutUserId
+	)
+{
+    OutServiceName = In.Data.ServiceName;
+	OutUserId = In.Data.UserId;
 	
 }
 
@@ -1171,6 +1209,28 @@ void UPFClientProxyLibrary::BreakBPClientGetPlayerCombinedInfoResultPayload(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientGetPlayerSegmentsRequest(
+		const FBPClientGetPlayerSegmentsRequest& In
+	)
+{
+    
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetPlayerSegmentsResult(
+		const FBPClientGetPlayerSegmentsResult& In
+        ,TArray<FBPClientGetSegmentResult>& OutSegments
+	)
+{
+    for (const PlayFab::ClientModels::FGetSegmentResult& elem : In.Data.Segments)
+    {
+        FBPClientGetSegmentResult result;
+        result.Data = elem;
+        OutSegments.Add(result);
+    }
+
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientGetPlayerStatisticsRequest(
 		const FBPClientGetPlayerStatisticsRequest& In
         ,TArray<FString>& OutStatisticNames
@@ -1299,6 +1359,36 @@ void UPFClientProxyLibrary::BreakBPClientGetPlayFabIDsFromGameCenterIDsResult(
     for (const PlayFab::ClientModels::FGameCenterPlayFabIdPair& elem : In.Data.Data)
     {
         FBPClientGameCenterPlayFabIdPair result;
+        result.Data = elem;
+        OutData.Add(result);
+    }
+
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetPlayFabIDsFromGenericIDsRequest(
+		const FBPClientGetPlayFabIDsFromGenericIDsRequest& In
+        ,TArray<FBPClientGenericServiceId>& OutGenericIDs
+	)
+{
+    for (const PlayFab::ClientModels::FGenericServiceId& elem : In.Data.GenericIDs)
+    {
+        FBPClientGenericServiceId result;
+        result.Data = elem;
+        OutGenericIDs.Add(result);
+    }
+
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetPlayFabIDsFromGenericIDsResult(
+		const FBPClientGetPlayFabIDsFromGenericIDsResult& In
+        ,TArray<FBPClientGenericPlayFabIdPair>& OutData
+	)
+{
+    for (const PlayFab::ClientModels::FGenericPlayFabIdPair& elem : In.Data.Data)
+    {
+        FBPClientGenericPlayFabIdPair result;
         result.Data = elem;
         OutData.Add(result);
     }
@@ -1456,6 +1546,19 @@ void UPFClientProxyLibrary::BreakBPClientGetPurchaseResult(
         OutItems.Add(result);
     }
 
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetSegmentResult(
+		const FBPClientGetSegmentResult& In
+        ,FString& OutId
+        ,FString& OutName
+        ,FString& OutABTestParent
+	)
+{
+    OutId = In.Data.Id;
+	OutName = In.Data.Name;
+	OutABTestParent = In.Data.ABTestParent;
 	
 }
 
@@ -2515,6 +2618,22 @@ void UPFClientProxyLibrary::BreakBPClientRemoveFriendRequest(
 
 void UPFClientProxyLibrary::BreakBPClientRemoveFriendResult(
 		const FBPClientRemoveFriendResult& In
+	)
+{
+    
+}
+
+void UPFClientProxyLibrary::BreakBPClientRemoveGenericIDRequest(
+		const FBPClientRemoveGenericIDRequest& In
+        ,FBPClientGenericServiceId& OutGenericId
+	)
+{
+    OutGenericId = In.Data.GenericId;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientRemoveGenericIDResult(
+		const FBPClientRemoveGenericIDResult& In
 	)
 {
     

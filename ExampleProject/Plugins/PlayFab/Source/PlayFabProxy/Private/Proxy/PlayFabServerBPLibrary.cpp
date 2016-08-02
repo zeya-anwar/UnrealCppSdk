@@ -3,6 +3,19 @@
 #include "PlayFabServerBPLibrary.h"
 
 
+void UPFServerProxyLibrary::BreakBPServerAdCampaignAttribution(
+		const FBPServerAdCampaignAttribution& In
+        ,FString& OutPlatform
+        ,FString& OutCampaignId
+        ,FDateTime& OutAttributedAt
+	)
+{
+    OutPlatform = In.Data.Platform;
+	OutCampaignId = In.Data.CampaignId;
+	
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerAddCharacterVirtualCurrencyRequest(
 		const FBPServerAddCharacterVirtualCurrencyRequest& In
         ,FString& OutPlayFabId
@@ -183,6 +196,23 @@ void UPFServerProxyLibrary::BreakBPServerCatalogItemContainerInfo(
 	OutItemContents = In.Data.ItemContents;
 	OutResultTableContents = In.Data.ResultTableContents;
 	
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerCharacterInventory(
+		const FBPServerCharacterInventory& In
+        ,FString& OutCharacterId
+        ,TArray<FBPServerItemInstance>& OutInventory
+	)
+{
+    OutCharacterId = In.Data.CharacterId;
+	for (const PlayFab::ServerModels::FItemInstance& elem : In.Data.Inventory)
+    {
+        FBPServerItemInstance result;
+        result.Data = elem;
+        OutInventory.Add(result);
+    }
+
 	
 }
 
@@ -438,6 +468,28 @@ void UPFServerProxyLibrary::BreakBPServerGameInstanceState(
 	)
 {
     
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetAllSegmentsRequest(
+		const FBPServerGetAllSegmentsRequest& In
+	)
+{
+    
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetAllSegmentsResult(
+		const FBPServerGetAllSegmentsResult& In
+        ,TArray<FBPServerGetSegmentResult>& OutSegments
+	)
+{
+    for (const PlayFab::ServerModels::FGetSegmentResult& elem : In.Data.Segments)
+    {
+        FBPServerGetSegmentResult result;
+        result.Data = elem;
+        OutSegments.Add(result);
+    }
+
+	
 }
 
 void UPFServerProxyLibrary::BreakBPServerGetCatalogItemsRequest(
@@ -720,6 +772,169 @@ void UPFServerProxyLibrary::BreakBPServerGetLeaderboardResult(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerGetPlayerCombinedInfoRequest(
+		const FBPServerGetPlayerCombinedInfoRequest& In
+        ,FString& OutPlayFabId
+        ,FBPServerGetPlayerCombinedInfoRequestParams& OutInfoRequestParameters
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutInfoRequestParameters = In.Data.InfoRequestParameters;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetPlayerCombinedInfoRequestParams(
+		const FBPServerGetPlayerCombinedInfoRequestParams& In
+        ,bool& OutGetUserAccountInfo
+        ,bool& OutGetUserInventory
+        ,bool& OutGetUserVirtualCurrency
+        ,bool& OutGetUserData
+        ,TArray<FString>& OutUserDataKeys
+        ,bool& OutGetUserReadOnlyData
+        ,TArray<FString>& OutUserReadOnlyDataKeys
+        ,bool& OutGetCharacterInventories
+        ,bool& OutGetCharacterList
+        ,bool& OutGetTitleData
+        ,TArray<FString>& OutTitleDataKeys
+        ,bool& OutGetPlayerStatistics
+        ,TArray<FString>& OutPlayerStatisticNames
+	)
+{
+    OutGetUserAccountInfo = In.Data.GetUserAccountInfo;
+	OutGetUserInventory = In.Data.GetUserInventory;
+	OutGetUserVirtualCurrency = In.Data.GetUserVirtualCurrency;
+	OutGetUserData = In.Data.GetUserData;
+	OutUserDataKeys = In.Data.UserDataKeys;
+	OutGetUserReadOnlyData = In.Data.GetUserReadOnlyData;
+	OutUserReadOnlyDataKeys = In.Data.UserReadOnlyDataKeys;
+	OutGetCharacterInventories = In.Data.GetCharacterInventories;
+	OutGetCharacterList = In.Data.GetCharacterList;
+	OutGetTitleData = In.Data.GetTitleData;
+	OutTitleDataKeys = In.Data.TitleDataKeys;
+	OutGetPlayerStatistics = In.Data.GetPlayerStatistics;
+	OutPlayerStatisticNames = In.Data.PlayerStatisticNames;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetPlayerCombinedInfoResult(
+		const FBPServerGetPlayerCombinedInfoResult& In
+        ,FString& OutPlayFabId
+        ,FBPServerGetPlayerCombinedInfoResultPayload& OutInfoResultPayload
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	if (In.Data.InfoResultPayload.IsValid()) {    OutInfoResultPayload.Data = *In.Data.InfoResultPayload;}
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetPlayerCombinedInfoResultPayload(
+		const FBPServerGetPlayerCombinedInfoResultPayload& In
+        ,FBPServerUserAccountInfo& OutAccountInfo
+        ,TArray<FBPServerItemInstance>& OutUserInventory
+        ,int32& OutUserDataVersion
+        ,int32& OutUserReadOnlyDataVersion
+        ,TArray<FBPServerCharacterResult>& OutCharacterList
+        ,TArray<FBPServerCharacterInventory>& OutCharacterInventories
+        ,TArray<FBPServerStatisticValue>& OutPlayerStatistics
+	)
+{
+    if (In.Data.AccountInfo.IsValid()) {    OutAccountInfo.Data = *In.Data.AccountInfo;}
+	for (const PlayFab::ServerModels::FItemInstance& elem : In.Data.UserInventory)
+    {
+        FBPServerItemInstance result;
+        result.Data = elem;
+        OutUserInventory.Add(result);
+    }
+
+	
+	
+	
+	OutUserDataVersion = In.Data.UserDataVersion;
+	
+	OutUserReadOnlyDataVersion = In.Data.UserReadOnlyDataVersion;
+	for (const PlayFab::ServerModels::FCharacterResult& elem : In.Data.CharacterList)
+    {
+        FBPServerCharacterResult result;
+        result.Data = elem;
+        OutCharacterList.Add(result);
+    }
+
+	for (const PlayFab::ServerModels::FCharacterInventory& elem : In.Data.CharacterInventories)
+    {
+        FBPServerCharacterInventory result;
+        result.Data = elem;
+        OutCharacterInventories.Add(result);
+    }
+
+	
+	for (const PlayFab::ServerModels::FStatisticValue& elem : In.Data.PlayerStatistics)
+    {
+        FBPServerStatisticValue result;
+        result.Data = elem;
+        OutPlayerStatistics.Add(result);
+    }
+
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetPlayerSegmentsResult(
+		const FBPServerGetPlayerSegmentsResult& In
+        ,TArray<FBPServerGetSegmentResult>& OutSegments
+	)
+{
+    for (const PlayFab::ServerModels::FGetSegmentResult& elem : In.Data.Segments)
+    {
+        FBPServerGetSegmentResult result;
+        result.Data = elem;
+        OutSegments.Add(result);
+    }
+
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetPlayersInSegmentRequest(
+		const FBPServerGetPlayersInSegmentRequest& In
+        ,FString& OutSegmentId
+        ,int32& OutSecondsToLive
+        ,int32& OutMaxBatchSize
+        ,FString& OutContinuationToken
+	)
+{
+    OutSegmentId = In.Data.SegmentId;
+	OutSecondsToLive = In.Data.SecondsToLive;
+	OutMaxBatchSize = In.Data.MaxBatchSize;
+	OutContinuationToken = In.Data.ContinuationToken;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetPlayersInSegmentResult(
+		const FBPServerGetPlayersInSegmentResult& In
+        ,int32& OutProfilesInSegment
+        ,FString& OutContinuationToken
+        ,TArray<FBPServerPlayerProfile>& OutPlayerProfiles
+	)
+{
+    OutProfilesInSegment = In.Data.ProfilesInSegment;
+	OutContinuationToken = In.Data.ContinuationToken;
+	for (const PlayFab::ServerModels::FPlayerProfile& elem : In.Data.PlayerProfiles)
+    {
+        FBPServerPlayerProfile result;
+        result.Data = elem;
+        OutPlayerProfiles.Add(result);
+    }
+
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetPlayersSegmentsRequest(
+		const FBPServerGetPlayersSegmentsRequest& In
+        ,FString& OutPlayFabId
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerGetPlayerStatisticsRequest(
 		const FBPServerGetPlayerStatisticsRequest& In
         ,FString& OutPlayFabId
@@ -848,6 +1063,19 @@ void UPFServerProxyLibrary::BreakBPServerGetPublisherDataResult(
 	)
 {
     
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetSegmentResult(
+		const FBPServerGetSegmentResult& In
+        ,FString& OutId
+        ,FString& OutName
+        ,FString& OutABTestParent
+	)
+{
+    OutId = In.Data.Id;
+	OutName = In.Data.Name;
+	OutABTestParent = In.Data.ABTestParent;
 	
 }
 
@@ -1268,6 +1496,13 @@ void UPFServerProxyLibrary::BreakBPServerLogEventResult(
     
 }
 
+void UPFServerProxyLibrary::BreakBPServerLoginIdentityProvider(
+		const FBPServerLoginIdentityProvider& In
+	)
+{
+    
+}
+
 void UPFServerProxyLibrary::BreakBPServerLogStatement(
 		const FBPServerLogStatement& In
         ,FString& OutLevel
@@ -1433,6 +1668,89 @@ void UPFServerProxyLibrary::BreakBPServerPlayerLeaderboardEntry(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerPlayerLinkedAccount(
+		const FBPServerPlayerLinkedAccount& In
+        ,FString& OutPlatformUserId
+        ,FString& OutUsername
+        ,FString& OutEmail
+	)
+{
+    
+	OutPlatformUserId = In.Data.PlatformUserId;
+	OutUsername = In.Data.Username;
+	OutEmail = In.Data.Email;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerPlayerProfile(
+		const FBPServerPlayerProfile& In
+        ,FString& OutPlayerId
+        ,FString& OutTitleId
+        ,FString& OutDisplayName
+        ,FDateTime& OutCreated
+        ,FDateTime& OutLastLogin
+        ,FDateTime& OutBannedUntil
+        ,TArray<FBPServerAdCampaignAttribution>& OutAdCampaignAttributions
+        ,TArray<FBPServerPushNotificationRegistration>& OutPushNotificationRegistrations
+        ,TArray<FBPServerPlayerLinkedAccount>& OutLinkedAccounts
+        ,TArray<FBPServerPlayerStatistic>& OutPlayerStatistics
+	)
+{
+    OutPlayerId = In.Data.PlayerId;
+	OutTitleId = In.Data.TitleId;
+	OutDisplayName = In.Data.DisplayName;
+	
+	
+	
+	
+	
+	
+	for (const PlayFab::ServerModels::FAdCampaignAttribution& elem : In.Data.AdCampaignAttributions)
+    {
+        FBPServerAdCampaignAttribution result;
+        result.Data = elem;
+        OutAdCampaignAttributions.Add(result);
+    }
+
+	for (const PlayFab::ServerModels::FPushNotificationRegistration& elem : In.Data.PushNotificationRegistrations)
+    {
+        FBPServerPushNotificationRegistration result;
+        result.Data = elem;
+        OutPushNotificationRegistrations.Add(result);
+    }
+
+	for (const PlayFab::ServerModels::FPlayerLinkedAccount& elem : In.Data.LinkedAccounts)
+    {
+        FBPServerPlayerLinkedAccount result;
+        result.Data = elem;
+        OutLinkedAccounts.Add(result);
+    }
+
+	for (const PlayFab::ServerModels::FPlayerStatistic& elem : In.Data.PlayerStatistics)
+    {
+        FBPServerPlayerStatistic result;
+        result.Data = elem;
+        OutPlayerStatistics.Add(result);
+    }
+
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerPlayerStatistic(
+		const FBPServerPlayerStatistic& In
+        ,FString& OutId
+        ,int32& OutStatisticVersion
+        ,int32& OutStatisticValue
+        ,FString& OutName
+	)
+{
+    OutId = In.Data.Id;
+	OutStatisticVersion = In.Data.StatisticVersion;
+	OutStatisticValue = In.Data.StatisticValue;
+	OutName = In.Data.Name;
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerPlayerStatisticVersion(
 		const FBPServerPlayerStatisticVersion& In
         ,FString& OutStatisticName
@@ -1449,6 +1767,23 @@ void UPFServerProxyLibrary::BreakBPServerPlayerStatisticVersion(
 	
 	
 	
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerPushNotificationPlatform(
+		const FBPServerPushNotificationPlatform& In
+	)
+{
+    
+}
+
+void UPFServerProxyLibrary::BreakBPServerPushNotificationRegistration(
+		const FBPServerPushNotificationRegistration& In
+        ,FString& OutNotificationEndpointARN
+	)
+{
+    
+	OutNotificationEndpointARN = In.Data.NotificationEndpointARN;
 	
 }
 

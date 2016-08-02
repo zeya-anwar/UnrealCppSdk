@@ -9,6 +9,41 @@ namespace ServerModels
 {
 
 	
+	struct PLAYFAB_API FAdCampaignAttribution : public FPlayFabBaseModel
+    {
+		
+		// [optional] Attribution network name
+		FString Platform;
+		// [optional] Attribution campaign identifier
+		FString CampaignId;
+		// UTC time stamp of attribution
+		FDateTime AttributedAt;
+	
+        FAdCampaignAttribution() :
+			FPlayFabBaseModel(),
+			Platform(),
+			CampaignId(),
+			AttributedAt(0)
+			{}
+		
+		FAdCampaignAttribution(const FAdCampaignAttribution& src) :
+			FPlayFabBaseModel(),
+			Platform(src.Platform),
+			CampaignId(src.CampaignId),
+			AttributedAt(src.AttributedAt)
+			{}
+			
+		FAdCampaignAttribution(const TSharedPtr<FJsonObject>& obj) : FAdCampaignAttribution()
+        {
+            readFromValue(obj);
+        }
+		
+		~FAdCampaignAttribution();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FAddCharacterVirtualCurrencyRequest : public FPlayFabBaseModel
     {
 		
@@ -1182,6 +1217,120 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FItemInstance : public FPlayFabBaseModel
+    {
+		
+		// [optional] Unique identifier for the inventory item, as defined in the catalog.
+		FString ItemId;
+		// [optional] Unique item identifier for this specific instance of the item.
+		FString ItemInstanceId;
+		// [optional] Class name for the inventory item, as defined in the catalog.
+		FString ItemClass;
+		// [optional] Timestamp for when this instance was purchased.
+		OptionalTime PurchaseDate;
+		// [optional] Timestamp for when this instance will expire.
+		OptionalTime Expiration;
+		// [optional] Total number of remaining uses, if this is a consumable item.
+		OptionalInt32 RemainingUses;
+		// [optional] The number of uses that were added or removed to this item in this call.
+		OptionalInt32 UsesIncrementedBy;
+		// [optional] Game specific comment associated with this instance when it was added to the user inventory.
+		FString Annotation;
+		// [optional] Catalog version for the inventory item, when this instance was created.
+		FString CatalogVersion;
+		// [optional] Unique identifier for the parent inventory item, as defined in the catalog, for object which were added from a bundle or container.
+		FString BundleParent;
+		// [optional] CatalogItem.DisplayName at the time this item was purchased.
+		FString DisplayName;
+		// [optional] Currency type for the cost of the catalog item.
+		FString UnitCurrency;
+		// Cost of the catalog item in the given currency.
+		uint32 UnitPrice;
+		// [optional] Array of unique items that were awarded when this catalog item was purchased.
+		TArray<FString> BundleContents;
+		// [optional] A set of custom key-value pairs on the inventory item.
+		TMap<FString, FString> CustomData;
+	
+        FItemInstance() :
+			FPlayFabBaseModel(),
+			ItemId(),
+			ItemInstanceId(),
+			ItemClass(),
+			PurchaseDate(),
+			Expiration(),
+			RemainingUses(),
+			UsesIncrementedBy(),
+			Annotation(),
+			CatalogVersion(),
+			BundleParent(),
+			DisplayName(),
+			UnitCurrency(),
+			UnitPrice(0),
+			BundleContents(),
+			CustomData()
+			{}
+		
+		FItemInstance(const FItemInstance& src) :
+			FPlayFabBaseModel(),
+			ItemId(src.ItemId),
+			ItemInstanceId(src.ItemInstanceId),
+			ItemClass(src.ItemClass),
+			PurchaseDate(src.PurchaseDate),
+			Expiration(src.Expiration),
+			RemainingUses(src.RemainingUses),
+			UsesIncrementedBy(src.UsesIncrementedBy),
+			Annotation(src.Annotation),
+			CatalogVersion(src.CatalogVersion),
+			BundleParent(src.BundleParent),
+			DisplayName(src.DisplayName),
+			UnitCurrency(src.UnitCurrency),
+			UnitPrice(src.UnitPrice),
+			BundleContents(src.BundleContents),
+			CustomData(src.CustomData)
+			{}
+			
+		FItemInstance(const TSharedPtr<FJsonObject>& obj) : FItemInstance()
+        {
+            readFromValue(obj);
+        }
+		
+		~FItemInstance();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FCharacterInventory : public FPlayFabBaseModel
+    {
+		
+		// [optional] The id of this character.
+		FString CharacterId;
+		// [optional] The inventory of this character.
+		TArray<FItemInstance> Inventory;
+	
+        FCharacterInventory() :
+			FPlayFabBaseModel(),
+			CharacterId(),
+			Inventory()
+			{}
+		
+		FCharacterInventory(const FCharacterInventory& src) :
+			FPlayFabBaseModel(),
+			CharacterId(src.CharacterId),
+			Inventory(src.Inventory)
+			{}
+			
+		FCharacterInventory(const TSharedPtr<FJsonObject>& obj) : FCharacterInventory()
+        {
+            readFromValue(obj);
+        }
+		
+		~FCharacterInventory();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FCharacterLeaderboardEntry : public FPlayFabBaseModel
     {
 		
@@ -1895,6 +2044,91 @@ namespace ServerModels
 	GameInstanceState readGameInstanceStateFromValue(const TSharedPtr<FJsonValue>& value);
 	
 	
+	struct PLAYFAB_API FGetAllSegmentsRequest : public FPlayFabBaseModel
+    {
+		
+	
+        FGetAllSegmentsRequest() :
+			FPlayFabBaseModel()
+			{}
+		
+		FGetAllSegmentsRequest(const FGetAllSegmentsRequest& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FGetAllSegmentsRequest(const TSharedPtr<FJsonObject>& obj) : FGetAllSegmentsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetAllSegmentsRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetSegmentResult : public FPlayFabBaseModel
+    {
+		
+		// Unique identifier for this segment.
+		FString Id;
+		// [optional] Segment name.
+		FString Name;
+		// [optional] Identifier of the segments AB Test, if it is attached to one.
+		FString ABTestParent;
+	
+        FGetSegmentResult() :
+			FPlayFabBaseModel(),
+			Id(),
+			Name(),
+			ABTestParent()
+			{}
+		
+		FGetSegmentResult(const FGetSegmentResult& src) :
+			FPlayFabBaseModel(),
+			Id(src.Id),
+			Name(src.Name),
+			ABTestParent(src.ABTestParent)
+			{}
+			
+		FGetSegmentResult(const TSharedPtr<FJsonObject>& obj) : FGetSegmentResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetSegmentResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetAllSegmentsResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Array of segments for this title.
+		TArray<FGetSegmentResult> Segments;
+	
+        FGetAllSegmentsResult() :
+			FPlayFabBaseModel(),
+			Segments()
+			{}
+		
+		FGetAllSegmentsResult(const FGetAllSegmentsResult& src) :
+			FPlayFabBaseModel(),
+			Segments(src.Segments)
+			{}
+			
+		FGetAllSegmentsResult(const TSharedPtr<FJsonObject>& obj) : FGetAllSegmentsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetAllSegmentsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FGetCatalogItemsRequest : public FPlayFabBaseModel
     {
 		
@@ -2001,11 +2235,11 @@ namespace ServerModels
 	struct PLAYFAB_API FUserDataRecord : public FPlayFabBaseModel
     {
 		
-		// [optional] User-supplied data for this user data key.
+		// [optional] Data stored for the specified user data key.
 		FString Value;
-		// Timestamp indicating when this data was last updated.
+		// Timestamp for when this data was last updated.
 		FDateTime LastUpdated;
-		// [optional] Permissions on this data key.
+		// [optional] Indicates whether this data can be read by all users (public) or only the user (private). This is used for GetUserData requests being made by one player about another player.
 		Boxed<UserDataPermission> Permission;
 	
         FUserDataRecord() :
@@ -2102,89 +2336,6 @@ namespace ServerModels
         }
 		
 		~FGetCharacterInventoryRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FItemInstance : public FPlayFabBaseModel
-    {
-		
-		// [optional] Unique identifier for the inventory item, as defined in the catalog.
-		FString ItemId;
-		// [optional] Unique item identifier for this specific instance of the item.
-		FString ItemInstanceId;
-		// [optional] Class name for the inventory item, as defined in the catalog.
-		FString ItemClass;
-		// [optional] Timestamp for when this instance was purchased.
-		OptionalTime PurchaseDate;
-		// [optional] Timestamp for when this instance will expire.
-		OptionalTime Expiration;
-		// [optional] Total number of remaining uses, if this is a consumable item.
-		OptionalInt32 RemainingUses;
-		// [optional] The number of uses that were added or removed to this item in this call.
-		OptionalInt32 UsesIncrementedBy;
-		// [optional] Game specific comment associated with this instance when it was added to the user inventory.
-		FString Annotation;
-		// [optional] Catalog version for the inventory item, when this instance was created.
-		FString CatalogVersion;
-		// [optional] Unique identifier for the parent inventory item, as defined in the catalog, for object which were added from a bundle or container.
-		FString BundleParent;
-		// [optional] CatalogItem.DisplayName at the time this item was purchased.
-		FString DisplayName;
-		// [optional] Currency type for the cost of the catalog item.
-		FString UnitCurrency;
-		// Cost of the catalog item in the given currency.
-		uint32 UnitPrice;
-		// [optional] Array of unique items that were awarded when this catalog item was purchased.
-		TArray<FString> BundleContents;
-		// [optional] A set of custom key-value pairs on the inventory item.
-		TMap<FString, FString> CustomData;
-	
-        FItemInstance() :
-			FPlayFabBaseModel(),
-			ItemId(),
-			ItemInstanceId(),
-			ItemClass(),
-			PurchaseDate(),
-			Expiration(),
-			RemainingUses(),
-			UsesIncrementedBy(),
-			Annotation(),
-			CatalogVersion(),
-			BundleParent(),
-			DisplayName(),
-			UnitCurrency(),
-			UnitPrice(0),
-			BundleContents(),
-			CustomData()
-			{}
-		
-		FItemInstance(const FItemInstance& src) :
-			FPlayFabBaseModel(),
-			ItemId(src.ItemId),
-			ItemInstanceId(src.ItemInstanceId),
-			ItemClass(src.ItemClass),
-			PurchaseDate(src.PurchaseDate),
-			Expiration(src.Expiration),
-			RemainingUses(src.RemainingUses),
-			UsesIncrementedBy(src.UsesIncrementedBy),
-			Annotation(src.Annotation),
-			CatalogVersion(src.CatalogVersion),
-			BundleParent(src.BundleParent),
-			DisplayName(src.DisplayName),
-			UnitCurrency(src.UnitCurrency),
-			UnitPrice(src.UnitPrice),
-			BundleContents(src.BundleContents),
-			CustomData(src.CustomData)
-			{}
-			
-		FItemInstance(const TSharedPtr<FJsonObject>& obj) : FItemInstance()
-        {
-            readFromValue(obj);
-        }
-		
-		~FItemInstance();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -2761,6 +2912,592 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FGetPlayerCombinedInfoRequestParams : public FPlayFabBaseModel
+    {
+		
+		// Whether to get the player's account Info. Defaults to false
+		bool GetUserAccountInfo;
+		// Whether to get the player's inventory. Defaults to false
+		bool GetUserInventory;
+		// Whether to get the player's virtual currency balances. Defaults to false
+		bool GetUserVirtualCurrency;
+		// Whether to get the player's custom data. Defaults to false
+		bool GetUserData;
+		// [optional] Specific keys to search for in the custom data. Leave null to get all keys. Has no effect if UserDataKeys is false
+		TArray<FString> UserDataKeys;
+		// Whether to get the player's read only data. Defaults to false
+		bool GetUserReadOnlyData;
+		// [optional] Specific keys to search for in the custom data. Leave null to get all keys. Has no effect if GetUserReadOnlyData is false
+		TArray<FString> UserReadOnlyDataKeys;
+		// Whether to get character inventories. Defaults to false.
+		bool GetCharacterInventories;
+		// Whether to get the list of characters. Defaults to false.
+		bool GetCharacterList;
+		// Whether to get title data. Defaults to false.
+		bool GetTitleData;
+		// [optional] Specific keys to search for in the custom data. Leave null to get all keys. Has no effect if GetTitleData is false
+		TArray<FString> TitleDataKeys;
+		// Whether to get player statistics. Defaults to false.
+		bool GetPlayerStatistics;
+		// [optional] Specific statistics to retrieve. Leave null to get all keys. Has no effect if GetPlayerStatistics is false
+		TArray<FString> PlayerStatisticNames;
+	
+        FGetPlayerCombinedInfoRequestParams() :
+			FPlayFabBaseModel(),
+			GetUserAccountInfo(false),
+			GetUserInventory(false),
+			GetUserVirtualCurrency(false),
+			GetUserData(false),
+			UserDataKeys(),
+			GetUserReadOnlyData(false),
+			UserReadOnlyDataKeys(),
+			GetCharacterInventories(false),
+			GetCharacterList(false),
+			GetTitleData(false),
+			TitleDataKeys(),
+			GetPlayerStatistics(false),
+			PlayerStatisticNames()
+			{}
+		
+		FGetPlayerCombinedInfoRequestParams(const FGetPlayerCombinedInfoRequestParams& src) :
+			FPlayFabBaseModel(),
+			GetUserAccountInfo(src.GetUserAccountInfo),
+			GetUserInventory(src.GetUserInventory),
+			GetUserVirtualCurrency(src.GetUserVirtualCurrency),
+			GetUserData(src.GetUserData),
+			UserDataKeys(src.UserDataKeys),
+			GetUserReadOnlyData(src.GetUserReadOnlyData),
+			UserReadOnlyDataKeys(src.UserReadOnlyDataKeys),
+			GetCharacterInventories(src.GetCharacterInventories),
+			GetCharacterList(src.GetCharacterList),
+			GetTitleData(src.GetTitleData),
+			TitleDataKeys(src.TitleDataKeys),
+			GetPlayerStatistics(src.GetPlayerStatistics),
+			PlayerStatisticNames(src.PlayerStatisticNames)
+			{}
+			
+		FGetPlayerCombinedInfoRequestParams(const TSharedPtr<FJsonObject>& obj) : FGetPlayerCombinedInfoRequestParams()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerCombinedInfoRequestParams();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerCombinedInfoRequest : public FPlayFabBaseModel
+    {
+		
+		// PlayFabId of the user whose data will be returned
+		FString PlayFabId;
+		// Flags for which pieces of info to return for the user.
+		FGetPlayerCombinedInfoRequestParams InfoRequestParameters;
+	
+        FGetPlayerCombinedInfoRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			InfoRequestParameters()
+			{}
+		
+		FGetPlayerCombinedInfoRequest(const FGetPlayerCombinedInfoRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			InfoRequestParameters(src.InfoRequestParameters)
+			{}
+			
+		FGetPlayerCombinedInfoRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayerCombinedInfoRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerCombinedInfoRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FStatisticValue : public FPlayFabBaseModel
+    {
+		
+		// [optional] unique name of the statistic
+		FString StatisticName;
+		// statistic value for the player
+		int32 Value;
+		// for updates to an existing statistic value for a player, the version of the statistic when it was loaded
+		uint32 Version;
+	
+        FStatisticValue() :
+			FPlayFabBaseModel(),
+			StatisticName(),
+			Value(0),
+			Version(0)
+			{}
+		
+		FStatisticValue(const FStatisticValue& src) :
+			FPlayFabBaseModel(),
+			StatisticName(src.StatisticName),
+			Value(src.Value),
+			Version(src.Version)
+			{}
+			
+		FStatisticValue(const TSharedPtr<FJsonObject>& obj) : FStatisticValue()
+        {
+            readFromValue(obj);
+        }
+		
+		~FStatisticValue();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerCombinedInfoResultPayload : public FPlayFabBaseModel
+    {
+		
+		// [optional] Account information for the user. This is always retrieved.
+		TSharedPtr<FUserAccountInfo> AccountInfo;
+		// [optional] Array of inventory items in the user's current inventory.
+		TArray<FItemInstance> UserInventory;
+		// [optional] Dictionary of virtual currency balance(s) belonging to the user.
+		TMap<FString, int32> UserVirtualCurrency;
+		// [optional] Dictionary of remaining times and timestamps for virtual currencies.
+		TMap<FString, FVirtualCurrencyRechargeTime> UserVirtualCurrencyRechargeTimes;
+		// [optional] User specific custom data.
+		TMap<FString, FUserDataRecord> UserData;
+		// The version of the UserData that was returned.
+		uint32 UserDataVersion;
+		// [optional] User specific read-only data.
+		TMap<FString, FUserDataRecord> UserReadOnlyData;
+		// The version of the Read-Only UserData that was returned.
+		uint32 UserReadOnlyDataVersion;
+		// [optional] List of characters for the user.
+		TArray<FCharacterResult> CharacterList;
+		// [optional] Inventories for each character for the user.
+		TArray<FCharacterInventory> CharacterInventories;
+		// [optional] Title data for this title.
+		TMap<FString, FString> TitleData;
+		// [optional] List of statistics for this player.
+		TArray<FStatisticValue> PlayerStatistics;
+	
+        FGetPlayerCombinedInfoResultPayload() :
+			FPlayFabBaseModel(),
+			AccountInfo(nullptr),
+			UserInventory(),
+			UserVirtualCurrency(),
+			UserVirtualCurrencyRechargeTimes(),
+			UserData(),
+			UserDataVersion(0),
+			UserReadOnlyData(),
+			UserReadOnlyDataVersion(0),
+			CharacterList(),
+			CharacterInventories(),
+			TitleData(),
+			PlayerStatistics()
+			{}
+		
+		FGetPlayerCombinedInfoResultPayload(const FGetPlayerCombinedInfoResultPayload& src) :
+			FPlayFabBaseModel(),
+			AccountInfo(src.AccountInfo.IsValid() ? MakeShareable(new FUserAccountInfo(*src.AccountInfo)) : nullptr),
+			UserInventory(src.UserInventory),
+			UserVirtualCurrency(src.UserVirtualCurrency),
+			UserVirtualCurrencyRechargeTimes(src.UserVirtualCurrencyRechargeTimes),
+			UserData(src.UserData),
+			UserDataVersion(src.UserDataVersion),
+			UserReadOnlyData(src.UserReadOnlyData),
+			UserReadOnlyDataVersion(src.UserReadOnlyDataVersion),
+			CharacterList(src.CharacterList),
+			CharacterInventories(src.CharacterInventories),
+			TitleData(src.TitleData),
+			PlayerStatistics(src.PlayerStatistics)
+			{}
+			
+		FGetPlayerCombinedInfoResultPayload(const TSharedPtr<FJsonObject>& obj) : FGetPlayerCombinedInfoResultPayload()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerCombinedInfoResultPayload();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerCombinedInfoResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+		// [optional] Results for requested info.
+		TSharedPtr<FGetPlayerCombinedInfoResultPayload> InfoResultPayload;
+	
+        FGetPlayerCombinedInfoResult() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			InfoResultPayload(nullptr)
+			{}
+		
+		FGetPlayerCombinedInfoResult(const FGetPlayerCombinedInfoResult& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			InfoResultPayload(src.InfoResultPayload.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoResultPayload(*src.InfoResultPayload)) : nullptr)
+			{}
+			
+		FGetPlayerCombinedInfoResult(const TSharedPtr<FJsonObject>& obj) : FGetPlayerCombinedInfoResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerCombinedInfoResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerSegmentsResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Array of segments the requested player currently belongs to.
+		TArray<FGetSegmentResult> Segments;
+	
+        FGetPlayerSegmentsResult() :
+			FPlayFabBaseModel(),
+			Segments()
+			{}
+		
+		FGetPlayerSegmentsResult(const FGetPlayerSegmentsResult& src) :
+			FPlayFabBaseModel(),
+			Segments(src.Segments)
+			{}
+			
+		FGetPlayerSegmentsResult(const TSharedPtr<FJsonObject>& obj) : FGetPlayerSegmentsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerSegmentsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayersInSegmentRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique identifier for this segment.
+		FString SegmentId;
+		// [optional] Number of seconds to keep the continuation token active. After token expiration it is not possible to continue paging results. Default is 300 (5 minutes). Maximum is 1,800 (30 minutes).
+		OptionalUint32 SecondsToLive;
+		// [optional] Maximum number of profiles to load. Default is 1,000. Maximum is 10,000.
+		OptionalUint32 MaxBatchSize;
+		// [optional] Continuation token if retrieving subsequent pages of results.
+		FString ContinuationToken;
+	
+        FGetPlayersInSegmentRequest() :
+			FPlayFabBaseModel(),
+			SegmentId(),
+			SecondsToLive(),
+			MaxBatchSize(),
+			ContinuationToken()
+			{}
+		
+		FGetPlayersInSegmentRequest(const FGetPlayersInSegmentRequest& src) :
+			FPlayFabBaseModel(),
+			SegmentId(src.SegmentId),
+			SecondsToLive(src.SecondsToLive),
+			MaxBatchSize(src.MaxBatchSize),
+			ContinuationToken(src.ContinuationToken)
+			{}
+			
+		FGetPlayersInSegmentRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayersInSegmentRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayersInSegmentRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	enum LoginIdentityProvider
+	{
+		LoginIdentityProviderUnknown,
+		LoginIdentityProviderPlayFab,
+		LoginIdentityProviderCustom,
+		LoginIdentityProviderGameCenter,
+		LoginIdentityProviderGooglePlay,
+		LoginIdentityProviderSteam,
+		LoginIdentityProviderXBoxLive,
+		LoginIdentityProviderPSN,
+		LoginIdentityProviderKongregate,
+		LoginIdentityProviderFacebook,
+		LoginIdentityProviderIOSDevice,
+		LoginIdentityProviderAndroidDevice,
+		LoginIdentityProviderTwitch
+	};
+	
+	void writeLoginIdentityProviderEnumJSON(LoginIdentityProvider enumVal, JsonWriter& writer);
+	LoginIdentityProvider readLoginIdentityProviderFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
+	enum PushNotificationPlatform
+	{
+		PushNotificationPlatformApplePushNotificationService,
+		PushNotificationPlatformGoogleCloudMessaging
+	};
+	
+	void writePushNotificationPlatformEnumJSON(PushNotificationPlatform enumVal, JsonWriter& writer);
+	PushNotificationPlatform readPushNotificationPlatformFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
+	struct PLAYFAB_API FPushNotificationRegistration : public FPlayFabBaseModel
+    {
+		
+		// [optional] Push notification platform
+		Boxed<PushNotificationPlatform> Platform;
+		// [optional] Notification configured endpoint
+		FString NotificationEndpointARN;
+	
+        FPushNotificationRegistration() :
+			FPlayFabBaseModel(),
+			Platform(),
+			NotificationEndpointARN()
+			{}
+		
+		FPushNotificationRegistration(const FPushNotificationRegistration& src) :
+			FPlayFabBaseModel(),
+			Platform(src.Platform),
+			NotificationEndpointARN(src.NotificationEndpointARN)
+			{}
+			
+		FPushNotificationRegistration(const TSharedPtr<FJsonObject>& obj) : FPushNotificationRegistration()
+        {
+            readFromValue(obj);
+        }
+		
+		~FPushNotificationRegistration();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FPlayerLinkedAccount : public FPlayFabBaseModel
+    {
+		
+		// [optional] Authentication platform
+		Boxed<LoginIdentityProvider> Platform;
+		// [optional] Platform user identifier
+		FString PlatformUserId;
+		// [optional] Linked account's username
+		FString Username;
+		// [optional] Linked account's email
+		FString Email;
+	
+        FPlayerLinkedAccount() :
+			FPlayFabBaseModel(),
+			Platform(),
+			PlatformUserId(),
+			Username(),
+			Email()
+			{}
+		
+		FPlayerLinkedAccount(const FPlayerLinkedAccount& src) :
+			FPlayFabBaseModel(),
+			Platform(src.Platform),
+			PlatformUserId(src.PlatformUserId),
+			Username(src.Username),
+			Email(src.Email)
+			{}
+			
+		FPlayerLinkedAccount(const TSharedPtr<FJsonObject>& obj) : FPlayerLinkedAccount()
+        {
+            readFromValue(obj);
+        }
+		
+		~FPlayerLinkedAccount();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FPlayerStatistic : public FPlayFabBaseModel
+    {
+		
+		// [optional] Statistic ID
+		FString Id;
+		// Statistic version (0 if not a versioned statistic)
+		int32 StatisticVersion;
+		// Current statistic value
+		int32 StatisticValue;
+		// [optional] Statistic name
+		FString Name;
+	
+        FPlayerStatistic() :
+			FPlayFabBaseModel(),
+			Id(),
+			StatisticVersion(0),
+			StatisticValue(0),
+			Name()
+			{}
+		
+		FPlayerStatistic(const FPlayerStatistic& src) :
+			FPlayFabBaseModel(),
+			Id(src.Id),
+			StatisticVersion(src.StatisticVersion),
+			StatisticValue(src.StatisticValue),
+			Name(src.Name)
+			{}
+			
+		FPlayerStatistic(const TSharedPtr<FJsonObject>& obj) : FPlayerStatistic()
+        {
+            readFromValue(obj);
+        }
+		
+		~FPlayerStatistic();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FPlayerProfile : public FPlayFabBaseModel
+    {
+		
+		// [optional] PlayFab Player ID
+		FString PlayerId;
+		// [optional] Title ID this profile applies to
+		FString TitleId;
+		// [optional] Player Display Name
+		FString DisplayName;
+		// [optional] Player account origination
+		Boxed<LoginIdentityProvider> Origination;
+		// [optional] Player record created
+		OptionalTime Created;
+		// [optional] Last login
+		OptionalTime LastLogin;
+		// [optional] Banned until UTC Date. If permanent ban this is set for 20 years after the original ban date.
+		OptionalTime BannedUntil;
+		// [optional] Dictionary of player's statistics using only the latest version's value
+		TMap<FString, int32> Statistics;
+		// [optional] Dictionary of player's virtual currency balances
+		TMap<FString, int32> VirtualCurrencyBalances;
+		// [optional] Array of ad campaigns player has been attributed to
+		TArray<FAdCampaignAttribution> AdCampaignAttributions;
+		// [optional] Array of configured push notification end points
+		TArray<FPushNotificationRegistration> PushNotificationRegistrations;
+		// [optional] Array of third party accounts linked to this player
+		TArray<FPlayerLinkedAccount> LinkedAccounts;
+		// [optional] Array of player statistics
+		TArray<FPlayerStatistic> PlayerStatistics;
+	
+        FPlayerProfile() :
+			FPlayFabBaseModel(),
+			PlayerId(),
+			TitleId(),
+			DisplayName(),
+			Origination(),
+			Created(),
+			LastLogin(),
+			BannedUntil(),
+			Statistics(),
+			VirtualCurrencyBalances(),
+			AdCampaignAttributions(),
+			PushNotificationRegistrations(),
+			LinkedAccounts(),
+			PlayerStatistics()
+			{}
+		
+		FPlayerProfile(const FPlayerProfile& src) :
+			FPlayFabBaseModel(),
+			PlayerId(src.PlayerId),
+			TitleId(src.TitleId),
+			DisplayName(src.DisplayName),
+			Origination(src.Origination),
+			Created(src.Created),
+			LastLogin(src.LastLogin),
+			BannedUntil(src.BannedUntil),
+			Statistics(src.Statistics),
+			VirtualCurrencyBalances(src.VirtualCurrencyBalances),
+			AdCampaignAttributions(src.AdCampaignAttributions),
+			PushNotificationRegistrations(src.PushNotificationRegistrations),
+			LinkedAccounts(src.LinkedAccounts),
+			PlayerStatistics(src.PlayerStatistics)
+			{}
+			
+		FPlayerProfile(const TSharedPtr<FJsonObject>& obj) : FPlayerProfile()
+        {
+            readFromValue(obj);
+        }
+		
+		~FPlayerProfile();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayersInSegmentResult : public FPlayFabBaseModel
+    {
+		
+		// Count of profiles matching this segment.
+		int32 ProfilesInSegment;
+		// [optional] Continuation token to use to retrieve subsequent pages of results. If token returns null there are no more results.
+		FString ContinuationToken;
+		// [optional] Array of player profiles in this segment.
+		TArray<FPlayerProfile> PlayerProfiles;
+	
+        FGetPlayersInSegmentResult() :
+			FPlayFabBaseModel(),
+			ProfilesInSegment(0),
+			ContinuationToken(),
+			PlayerProfiles()
+			{}
+		
+		FGetPlayersInSegmentResult(const FGetPlayersInSegmentResult& src) :
+			FPlayFabBaseModel(),
+			ProfilesInSegment(src.ProfilesInSegment),
+			ContinuationToken(src.ContinuationToken),
+			PlayerProfiles(src.PlayerProfiles)
+			{}
+			
+		FGetPlayersInSegmentResult(const TSharedPtr<FJsonObject>& obj) : FGetPlayersInSegmentResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayersInSegmentResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayersSegmentsRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+	
+        FGetPlayersSegmentsRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId()
+			{}
+		
+		FGetPlayersSegmentsRequest(const FGetPlayersSegmentsRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId)
+			{}
+			
+		FGetPlayersSegmentsRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayersSegmentsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayersSegmentsRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FStatisticNameVersion : public FPlayFabBaseModel
     {
 		
@@ -2822,41 +3559,6 @@ namespace ServerModels
         }
 		
 		~FGetPlayerStatisticsRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FStatisticValue : public FPlayFabBaseModel
-    {
-		
-		// [optional] unique name of the statistic
-		FString StatisticName;
-		// statistic value for the player
-		int32 Value;
-		// for updates to an existing statistic value for a player, the version of the statistic when it was loaded
-		uint32 Version;
-	
-        FStatisticValue() :
-			FPlayFabBaseModel(),
-			StatisticName(),
-			Value(0),
-			Version(0)
-			{}
-		
-		FStatisticValue(const FStatisticValue& src) :
-			FPlayFabBaseModel(),
-			StatisticName(src.StatisticName),
-			Value(src.Value),
-			Version(src.Version)
-			{}
-			
-		FStatisticValue(const TSharedPtr<FJsonObject>& obj) : FStatisticValue()
-        {
-            readFromValue(obj);
-        }
-		
-		~FStatisticValue();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
