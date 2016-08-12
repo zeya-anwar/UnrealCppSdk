@@ -1,10 +1,10 @@
-Unreal 4.9 and 4.11 C++ SDK for PlayFab README
+Unreal 4.9 and 4.12 C++ SDK for PlayFab README
 ========
 
 
 1. Overview:
 ----
-Unreal 4.9 and 4.11 C++ SDKs for PlayFab
+Unreal 4.9 and 4.12 C++ SDKs for PlayFab
 
 The Unreal C++ SDK includes:
 
