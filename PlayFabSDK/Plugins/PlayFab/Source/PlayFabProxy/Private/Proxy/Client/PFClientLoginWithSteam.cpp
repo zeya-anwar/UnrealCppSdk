@@ -17,7 +17,7 @@ UPFClientLoginWithSteam* UPFClientLoginWithSteam::LoginWithSteam(UObject* WorldC
 	Proxy->Request.TitleId = InTitleId;
 	Proxy->Request.SteamTicket = InSteamTicket;
 	Proxy->Request.CreateAccount = InCreateAccount;
-	Proxy->Request.InfoRequestParameters = InInfoRequestParameters;
+	*Proxy->Request.InfoRequestParameters = InInfoRequestParameters.Data;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

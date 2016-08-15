@@ -5458,6 +5458,17 @@ void PlayFab::ServerModels::FPlayerProfile::writeJSON(JsonWriter& writer) const
         writer->WriteObjectEnd();
      }
 	
+    if(ValuesToDate.Num() != 0) 
+    {
+        writer->WriteObjectStart(TEXT("ValuesToDate"));
+        for (TMap<FString, uint32>::TConstIterator It(ValuesToDate); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue(static_cast<int64>((*It).Value));
+        }
+        writer->WriteObjectEnd();
+     }
+	
     if(VirtualCurrencyBalances.Num() != 0) 
     {
         writer->WriteObjectStart(TEXT("VirtualCurrencyBalances"));
@@ -5569,6 +5580,16 @@ bool PlayFab::ServerModels::FPlayerProfile::readFromValue(const TSharedPtr<FJson
         {
             int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
             Statistics.Add(It.Key(), TmpValue);
+        }
+    }
+    
+    const TSharedPtr<FJsonObject>* ValuesToDateObject;
+    if (obj->TryGetObjectField(TEXT("ValuesToDate"), ValuesToDateObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*ValuesToDateObject)->Values); It; ++It)
+        {
+            uint32 TmpValue; It.Value()->TryGetNumber(TmpValue);
+            ValuesToDate.Add(It.Key(), TmpValue);
         }
     }
     

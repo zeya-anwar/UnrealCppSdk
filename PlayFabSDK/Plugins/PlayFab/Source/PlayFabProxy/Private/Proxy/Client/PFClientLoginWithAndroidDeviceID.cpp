@@ -19,7 +19,7 @@ UPFClientLoginWithAndroidDeviceID* UPFClientLoginWithAndroidDeviceID::LoginWithA
 	Proxy->Request.OS = InOS;
 	Proxy->Request.AndroidDevice = InAndroidDevice;
 	Proxy->Request.CreateAccount = InCreateAccount;
-	Proxy->Request.InfoRequestParameters = InInfoRequestParameters;
+	*Proxy->Request.InfoRequestParameters = InInfoRequestParameters.Data;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

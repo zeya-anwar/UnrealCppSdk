@@ -17,7 +17,7 @@ UPFClientLoginWithEmailAddress* UPFClientLoginWithEmailAddress::LoginWithEmailAd
 	Proxy->Request.TitleId = InTitleId;
 	Proxy->Request.Email = InEmail;
 	Proxy->Request.Password = InPassword;
-	Proxy->Request.InfoRequestParameters = InInfoRequestParameters;
+	*Proxy->Request.InfoRequestParameters = InInfoRequestParameters.Data;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

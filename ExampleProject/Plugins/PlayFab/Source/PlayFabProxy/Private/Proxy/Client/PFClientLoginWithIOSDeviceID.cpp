@@ -18,7 +18,7 @@ UPFClientLoginWithIOSDeviceID* UPFClientLoginWithIOSDeviceID::LoginWithIOSDevice
 	Proxy->Request.DeviceId = InDeviceId;
 	Proxy->Request.OS = InOS;
 	Proxy->Request.DeviceModel = InDeviceModel;
-	Proxy->Request.InfoRequestParameters = InInfoRequestParameters;
+	*Proxy->Request.InfoRequestParameters = InInfoRequestParameters.Data;
 	Proxy->Request.CreateAccount = InCreateAccount;
 	
 

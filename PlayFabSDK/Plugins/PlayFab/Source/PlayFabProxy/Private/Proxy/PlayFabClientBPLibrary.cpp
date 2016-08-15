@@ -54,7 +54,7 @@ void UPFClientProxyLibrary::BreakBPClientAddGenericIDRequest(
         ,FBPClientGenericServiceId& OutGenericId
 	)
 {
-    OutGenericId = In.Data.GenericId;
+    OutGenericId.Data = In.Data.GenericId;
 	
 }
 
@@ -1111,7 +1111,7 @@ void UPFClientProxyLibrary::BreakBPClientGetPlayerCombinedInfoRequest(
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
-	OutInfoRequestParameters = In.Data.InfoRequestParameters;
+	OutInfoRequestParameters.Data = In.Data.InfoRequestParameters;
 	
 }
 
@@ -2628,7 +2628,7 @@ void UPFClientProxyLibrary::BreakBPClientRemoveGenericIDRequest(
         ,FBPClientGenericServiceId& OutGenericId
 	)
 {
-    OutGenericId = In.Data.GenericId;
+    OutGenericId.Data = In.Data.GenericId;
 	
 }
 

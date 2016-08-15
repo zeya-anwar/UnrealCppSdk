@@ -15,7 +15,7 @@ UPFClientGetPlayerCombinedInfo* UPFClientGetPlayerCombinedInfo::GetPlayerCombine
 	UPFClientGetPlayerCombinedInfo* Proxy = NewObject<UPFClientGetPlayerCombinedInfo>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.PlayFabId = InPlayFabId;
-	Proxy->Request.InfoRequestParameters = InInfoRequestParameters;
+	Proxy->Request.InfoRequestParameters = InInfoRequestParameters.Data;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

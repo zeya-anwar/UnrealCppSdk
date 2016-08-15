@@ -250,7 +250,7 @@ namespace PlayFab
         bool ListVirtualCurrencyTypes(const FListVirtualCurrencyTypesDelegate& SuccessDelegate = FListVirtualCurrencyTypesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Removes one or more virtual currencies from the set defined for the title.
-         * Virtual currencies to be removed cannot have entries in any catalog nor store for the title. This operation will also remove all player balances for the removed currencies.
+         * Virtual currencies to be removed cannot have entries in any catalog nor store for the title. Note that this operation will not remove player balances for the removed currencies; if a deleted currency is recreated at any point, user balances will be in an undefined state.
          */
         bool RemoveVirtualCurrencyTypes(AdminModels::FRemoveVirtualCurrencyTypesRequest& request, const FRemoveVirtualCurrencyTypesDelegate& SuccessDelegate = FRemoveVirtualCurrencyTypesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**

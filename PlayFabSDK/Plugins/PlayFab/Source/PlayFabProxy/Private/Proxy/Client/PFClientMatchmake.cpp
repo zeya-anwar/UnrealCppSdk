@@ -21,7 +21,7 @@ UPFClientMatchmake* UPFClientMatchmake::Matchmake(UObject* WorldContextObject, c
 	Proxy->Request.StatisticName = InStatisticName;
 	Proxy->Request.CharacterId = InCharacterId;
 	Proxy->Request.StartNewIfNoneFound = InStartNewIfNoneFound;
-	Proxy->Request.TagFilter = InTagFilter;
+	*Proxy->Request.TagFilter = InTagFilter.Data;
 	Proxy->Request.EnableQueue = InEnableQueue;
 	
 

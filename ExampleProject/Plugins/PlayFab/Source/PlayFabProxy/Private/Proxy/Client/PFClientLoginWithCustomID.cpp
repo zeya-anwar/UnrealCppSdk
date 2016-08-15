@@ -17,7 +17,7 @@ UPFClientLoginWithCustomID* UPFClientLoginWithCustomID::LoginWithCustomID(UObjec
 	Proxy->Request.TitleId = InTitleId;
 	Proxy->Request.CustomId = InCustomId;
 	Proxy->Request.CreateAccount = InCreateAccount;
-	Proxy->Request.InfoRequestParameters = InInfoRequestParameters;
+	*Proxy->Request.InfoRequestParameters = InInfoRequestParameters.Data;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

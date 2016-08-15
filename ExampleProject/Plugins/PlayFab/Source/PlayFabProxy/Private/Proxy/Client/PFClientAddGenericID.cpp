@@ -14,7 +14,7 @@ UPFClientAddGenericID* UPFClientAddGenericID::AddGenericID(UObject* WorldContext
 {
 	UPFClientAddGenericID* Proxy = NewObject<UPFClientAddGenericID>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
-	Proxy->Request.GenericId = InGenericId;
+	Proxy->Request.GenericId = InGenericId.Data;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

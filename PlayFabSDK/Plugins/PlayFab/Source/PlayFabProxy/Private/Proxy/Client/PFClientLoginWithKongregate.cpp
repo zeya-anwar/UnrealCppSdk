@@ -18,7 +18,7 @@ UPFClientLoginWithKongregate* UPFClientLoginWithKongregate::LoginWithKongregate(
 	Proxy->Request.KongregateId = InKongregateId;
 	Proxy->Request.AuthTicket = InAuthTicket;
 	Proxy->Request.CreateAccount = InCreateAccount;
-	Proxy->Request.InfoRequestParameters = InInfoRequestParameters;
+	*Proxy->Request.InfoRequestParameters = InInfoRequestParameters.Data;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

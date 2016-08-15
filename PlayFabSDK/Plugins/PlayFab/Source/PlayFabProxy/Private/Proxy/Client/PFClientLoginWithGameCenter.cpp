@@ -17,7 +17,7 @@ UPFClientLoginWithGameCenter* UPFClientLoginWithGameCenter::LoginWithGameCenter(
 	Proxy->Request.TitleId = InTitleId;
 	Proxy->Request.PlayerId = InPlayerId;
 	Proxy->Request.CreateAccount = InCreateAccount;
-	Proxy->Request.InfoRequestParameters = InInfoRequestParameters;
+	*Proxy->Request.InfoRequestParameters = InInfoRequestParameters.Data;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

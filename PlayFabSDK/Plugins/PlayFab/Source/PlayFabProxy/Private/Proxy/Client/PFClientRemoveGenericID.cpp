@@ -14,7 +14,7 @@ UPFClientRemoveGenericID* UPFClientRemoveGenericID::RemoveGenericID(UObject* Wor
 {
 	UPFClientRemoveGenericID* Proxy = NewObject<UPFClientRemoveGenericID>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
-	Proxy->Request.GenericId = InGenericId;
+	Proxy->Request.GenericId = InGenericId.Data;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

@@ -2712,7 +2712,7 @@ namespace ClientModels
 	struct PLAYFAB_API FGetCatalogItemsRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] Which catalog is being requested.
+		// [optional] Which catalog is being requested. If null, uses the default catalog.
 		FString CatalogVersion;
 	
         FGetCatalogItemsRequest() :

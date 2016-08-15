@@ -17,7 +17,7 @@ UPFClientLoginWithFacebook* UPFClientLoginWithFacebook::LoginWithFacebook(UObjec
 	Proxy->Request.TitleId = InTitleId;
 	Proxy->Request.AccessToken = InAccessToken;
 	Proxy->Request.CreateAccount = InCreateAccount;
-	Proxy->Request.InfoRequestParameters = InInfoRequestParameters;
+	*Proxy->Request.InfoRequestParameters = InInfoRequestParameters.Data;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

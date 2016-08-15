@@ -18,7 +18,7 @@ UPFClientGetCurrentGames* UPFClientGetCurrentGames::GetCurrentGames(UObject* Wor
 	Proxy->Request.BuildVersion = InBuildVersion;
 	Proxy->Request.GameMode = InGameMode;
 	Proxy->Request.StatisticName = InStatisticName;
-	Proxy->Request.TagFilter = InTagFilter;
+	*Proxy->Request.TagFilter = InTagFilter.Data;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

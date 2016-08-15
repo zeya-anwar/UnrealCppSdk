@@ -171,7 +171,7 @@ namespace PlayFab
         bool LoginWithEmailAddress(ClientModels::FLoginWithEmailAddressRequest& request, const FLoginWithEmailAddressDelegate& SuccessDelegate = FLoginWithEmailAddressDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Signs the user in using a Facebook access token, returning a session identifier that can subsequently be used for API calls which require an authenticated user
-         * Facebook sign-in is accomplished using the Facebook User Access Token. More information on the Token can be found in the Facebook developer documentation (https://developers.facebook.com/docs/facebook-login/access-tokens/). In Unity, for example, the Token is available as AccessToken in the Facebook SDK ScriptableObject FB. If this is the first time a user has signed in with the Facebook account and CreateAccount is set to true, a new PlayFab account will be created and linked to the provided account's Facebook ID. In this case, no email or username will be associated with the PlayFab account. Otherwise, if no PlayFab account is linked to the Facebook account, an error indicating this will be returned, so that the title can guide the user through creation of a PlayFab account.
+         * Facebook sign-in is accomplished using the Facebook User Access Token. More information on the Token can be found in the Facebook developer documentation (https://developers.facebook.com/docs/facebook-login/access-tokens/). In Unity, for example, the Token is available as AccessToken in the Facebook SDK ScriptableObject FB. If this is the first time a user has signed in with the Facebook account and CreateAccount is set to true, a new PlayFab account will be created and linked to the provided account's Facebook ID. In this case, no email or username will be associated with the PlayFab account. Otherwise, if no PlayFab account is linked to the Facebook account, an error indicating this will be returned, so that the title can guide the user through creation of a PlayFab account. Note that titles should never re-use the same Facebook applications between PlayFab Title IDs, as Facebook provides unique user IDs per application and doing so can result in issues with the Facebook ID for the user in their PlayFab account information. If you must re-use an application in a new PlayFab Title ID, please be sure to first unlink all accounts from Facebook, or delete all users in the first Title ID.
          */
         bool LoginWithFacebook(ClientModels::FLoginWithFacebookRequest& request, const FLoginWithFacebookDelegate& SuccessDelegate = FLoginWithFacebookDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
@@ -218,7 +218,7 @@ namespace PlayFab
          */
         bool AddGenericID(ClientModels::FAddGenericIDRequest& request, const FAddGenericIDDelegate& SuccessDelegate = FAddGenericIDDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Adds playfab username/password auth to an existing semi-anonymous account created via a 3rd party auth method.
+         * Adds playfab username/password auth to an existing account created via an anonymous auth method, e.g. automatic device ID login.
          */
         bool AddUsernamePassword(ClientModels::FAddUsernamePasswordRequest& request, const FAddUsernamePasswordDelegate& SuccessDelegate = FAddUsernamePasswordDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
@@ -271,6 +271,7 @@ namespace PlayFab
         bool LinkCustomID(ClientModels::FLinkCustomIDRequest& request, const FLinkCustomIDDelegate& SuccessDelegate = FLinkCustomIDDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Links the Facebook account associated with the provided Facebook access token to the user's PlayFab account
+         * Facebook sign-in is accomplished using the Facebook User Access Token. More information on the Token can be found in the Facebook developer documentation (https://developers.facebook.com/docs/facebook-login/access-tokens/). In Unity, for example, the Token is available as AccessToken in the Facebook SDK ScriptableObject FB. Note that titles should never re-use the same Facebook applications between PlayFab Title IDs, as Facebook provides unique user IDs per application and doing so can result in issues with the Facebook ID for the user in their PlayFab account information. If you must re-use an application in a new PlayFab Title ID, please be sure to first unlink all accounts from Facebook, or delete all users in the first Title ID.
          */
         bool LinkFacebookAccount(ClientModels::FLinkFacebookAccountRequest& request, const FLinkFacebookAccountDelegate& SuccessDelegate = FLinkFacebookAccountDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**

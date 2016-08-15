@@ -779,7 +779,7 @@ void UPFServerProxyLibrary::BreakBPServerGetPlayerCombinedInfoRequest(
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
-	OutInfoRequestParameters = In.Data.InfoRequestParameters;
+	OutInfoRequestParameters.Data = In.Data.InfoRequestParameters;
 	
 }
 
@@ -1699,6 +1699,7 @@ void UPFServerProxyLibrary::BreakBPServerPlayerProfile(
     OutPlayerId = In.Data.PlayerId;
 	OutTitleId = In.Data.TitleId;
 	OutDisplayName = In.Data.DisplayName;
+	
 	
 	
 	

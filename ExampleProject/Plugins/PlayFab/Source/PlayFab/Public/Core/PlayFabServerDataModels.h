@@ -2132,7 +2132,7 @@ namespace ServerModels
 	struct PLAYFAB_API FGetCatalogItemsRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] Which catalog is being requested.
+		// [optional] Which catalog is being requested. If null, uses the default catalog.
 		FString CatalogVersion;
 	
         FGetCatalogItemsRequest() :
@@ -3380,6 +3380,8 @@ namespace ServerModels
 		OptionalTime BannedUntil;
 		// [optional] Dictionary of player's statistics using only the latest version's value
 		TMap<FString, int32> Statistics;
+		// [optional] Dictionary of player's total currency purchases. The key VTD is a sum of all player_realmoney_purchase events OrderTotals.
+		TMap<FString, uint32> ValuesToDate;
 		// [optional] Dictionary of player's virtual currency balances
 		TMap<FString, int32> VirtualCurrencyBalances;
 		// [optional] Array of ad campaigns player has been attributed to
@@ -3401,6 +3403,7 @@ namespace ServerModels
 			LastLogin(),
 			BannedUntil(),
 			Statistics(),
+			ValuesToDate(),
 			VirtualCurrencyBalances(),
 			AdCampaignAttributions(),
 			PushNotificationRegistrations(),
@@ -3418,6 +3421,7 @@ namespace ServerModels
 			LastLogin(src.LastLogin),
 			BannedUntil(src.BannedUntil),
 			Statistics(src.Statistics),
+			ValuesToDate(src.ValuesToDate),
 			VirtualCurrencyBalances(src.VirtualCurrencyBalances),
 			AdCampaignAttributions(src.AdCampaignAttributions),
 			PushNotificationRegistrations(src.PushNotificationRegistrations),
