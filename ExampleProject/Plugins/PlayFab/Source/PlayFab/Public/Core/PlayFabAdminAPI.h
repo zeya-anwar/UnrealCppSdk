@@ -11,9 +11,14 @@ namespace PlayFab
     class PLAYFAB_API UPlayFabAdminAPI
     {
     public:
+        DECLARE_DELEGATE_OneParam(FBanUsersDelegate, const AdminModels::FBanUsersResult&);
         DECLARE_DELEGATE_OneParam(FGetUserAccountInfoDelegate, const AdminModels::FLookupUserAccountInfoResult&);
+        DECLARE_DELEGATE_OneParam(FGetUserBansDelegate, const AdminModels::FGetUserBansResult&);
         DECLARE_DELEGATE_OneParam(FResetUsersDelegate, const AdminModels::FBlankResult&);
+        DECLARE_DELEGATE_OneParam(FRevokeAllBansForUserDelegate, const AdminModels::FRevokeAllBansForUserResult&);
+        DECLARE_DELEGATE_OneParam(FRevokeBansDelegate, const AdminModels::FRevokeBansResult&);
         DECLARE_DELEGATE_OneParam(FSendAccountRecoveryEmailDelegate, const AdminModels::FSendAccountRecoveryEmailResult&);
+        DECLARE_DELEGATE_OneParam(FUpdateBansDelegate, const AdminModels::FUpdateBansResult&);
         DECLARE_DELEGATE_OneParam(FUpdateUserTitleDisplayNameDelegate, const AdminModels::FUpdateUserTitleDisplayNameResult&);
         DECLARE_DELEGATE_OneParam(FCreatePlayerStatisticDefinitionDelegate, const AdminModels::FCreatePlayerStatisticDefinitionResult&);
         DECLARE_DELEGATE_OneParam(FDeleteUsersDelegate, const AdminModels::FDeleteUsersResult&);
@@ -37,6 +42,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FUpdateUserReadOnlyDataDelegate, const AdminModels::FUpdateUserDataResult&);
         DECLARE_DELEGATE_OneParam(FAddNewsDelegate, const AdminModels::FAddNewsResult&);
         DECLARE_DELEGATE_OneParam(FAddVirtualCurrencyTypesDelegate, const AdminModels::FBlankResult&);
+        DECLARE_DELEGATE_OneParam(FDeleteStoreDelegate, const AdminModels::FDeleteStoreResult&);
         DECLARE_DELEGATE_OneParam(FGetCatalogItemsDelegate, const AdminModels::FGetCatalogItemsResult&);
         DECLARE_DELEGATE_OneParam(FGetPublisherDataDelegate, const AdminModels::FGetPublisherDataResult&);
         DECLARE_DELEGATE_OneParam(FGetRandomResultTablesDelegate, const AdminModels::FGetRandomResultTablesResult&);
@@ -90,20 +96,45 @@ namespace PlayFab
 
         // ------------ Generated API calls
         /**
+         * Bans users by PlayFab ID with optional IP address, or MAC address for the provided game.
+         * The existence of each user will not be verified. When banning by IP or MAC address, multiple players may be affected, so use this feature with caution. Returns information about the new bans.
+         */
+        bool BanUsers(AdminModels::FBanUsersRequest& request, const FBanUsersDelegate& SuccessDelegate = FBanUsersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Retrieves the relevant details for a specified user, based upon a match against a supplied unique identifier
          * This API allows for access to details regarding a user in the PlayFab service, usually for purposes of customer support. Note that data returned may be Personally Identifying Information (PII), such as email address, and so care should be taken in how this data is stored and managed. Since this call will always return the relevant information for users who have accessed the title, the recommendation is to not store this data locally.
          */
         bool GetUserAccountInfo(AdminModels::FLookupUserAccountInfoRequest& request, const FGetUserAccountInfoDelegate& SuccessDelegate = FGetUserAccountInfoDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Gets all bans for a user.
+         * Get all bans for a user, including inactive and expired bans. 
+         */
+        bool GetUserBans(AdminModels::FGetUserBansRequest& request, const FGetUserBansDelegate& SuccessDelegate = FGetUserBansDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Resets all title-specific information about a particular account, including user data, virtual currency balances, inventory, purchase history, and statistics
          * This method is intended for use with test accounts, to allow a developer to reset and test a game experience from the start. Note that in order to reset an account, you must know the username and password. If the account does not have a username and password, you must add one with AddUsernamePassword in the client API prior to calling this method.
          */
         bool ResetUsers(AdminModels::FResetUsersRequest& request, const FResetUsersDelegate& SuccessDelegate = FResetUsersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Revoke all active bans for a user.
+         * Setting the active state of all non-expired bans for a user to Inactive. Expired bans with an Active state will be ignored, however. Returns information about applied updates only.
+         */
+        bool RevokeAllBansForUser(AdminModels::FRevokeAllBansForUserRequest& request, const FRevokeAllBansForUserDelegate& SuccessDelegate = FRevokeAllBansForUserDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Revoke all active bans specified with BanId.
+         * Setting the active state of all bans requested to Inactive regardless of whether that ban has already expired. BanIds that do not exist will be skipped. Returns information about applied updates only. 
+         */
+        bool RevokeBans(AdminModels::FRevokeBansRequest& request, const FRevokeBansDelegate& SuccessDelegate = FRevokeBansDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Forces an email to be sent to the registered email address for the specified account, with a link allowing the user to change the password
          * If the account in question is a "temporary" account (for example, one that was created via a call to LoginFromIOSDeviceID), thisfunction will have no effect. Only PlayFab accounts which have valid email addresses will be able to receive a password reset email using this API.
          */
         bool SendAccountRecoveryEmail(AdminModels::FSendAccountRecoveryEmailRequest& request, const FSendAccountRecoveryEmailDelegate& SuccessDelegate = FSendAccountRecoveryEmailDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Updates information of a list of existing bans specified with Ban Ids.
+         * For each ban, only updates the values that are set. Leave any value to null for no change. If a ban could not be found, the rest are still applied. Returns information about applied updates only.
+         */
+        bool UpdateBans(AdminModels::FUpdateBansRequest& request, const FUpdateBansDelegate& SuccessDelegate = FUpdateBansDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Updates the title specific display name for a user
          * In addition to the PlayFab username, titles can make use of a DisplayName which is also a unique identifier, but specific to the title. This allows for unique names which more closely match the theme or genre of a title, for example. This API enables changing that name, whether due to a customer request, an offensive name choice, etc.
@@ -216,6 +247,11 @@ namespace PlayFab
          * This operation is additive. Any new currencies defined in the array will be added to the set of those available for the title, while any CurrencyCode identifiers matching existing ones in the game will be overwritten with the new values.
          */
         bool AddVirtualCurrencyTypes(AdminModels::FAddVirtualCurrencyTypesRequest& request, const FAddVirtualCurrencyTypesDelegate& SuccessDelegate = FAddVirtualCurrencyTypesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Deletes an existing virtual item store
+         * This non-reversible operation will permanently delete the requested store.
+         */
+        bool DeleteStore(AdminModels::FDeleteStoreRequest& request, const FDeleteStoreDelegate& SuccessDelegate = FDeleteStoreDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves the specified version of the title's catalog of virtual goods, including all defined properties
          */
@@ -409,9 +445,14 @@ namespace PlayFab
 
     private:
         // ------------ Generated result handlers
+        void OnBanUsersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FBanUsersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserAccountInfoResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserAccountInfoDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetUserBansResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserBansDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnResetUsersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FResetUsersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnRevokeAllBansForUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRevokeAllBansForUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnRevokeBansResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRevokeBansDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSendAccountRecoveryEmailResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSendAccountRecoveryEmailDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnUpdateBansResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateBansDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateUserTitleDisplayNameResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserTitleDisplayNameDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnCreatePlayerStatisticDefinitionResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FCreatePlayerStatisticDefinitionDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnDeleteUsersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteUsersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -435,6 +476,7 @@ namespace PlayFab
         void OnUpdateUserReadOnlyDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserReadOnlyDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAddNewsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddNewsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAddVirtualCurrencyTypesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddVirtualCurrencyTypesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnDeleteStoreResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteStoreDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetCatalogItemsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCatalogItemsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetRandomResultTablesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetRandomResultTablesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

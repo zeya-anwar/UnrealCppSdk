@@ -21,7 +21,7 @@ public:
 	
 	// Updates the catalog configuration for virtual goods in the specified catalog version
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Admin|Title-Wide Data Management")
-	static UPFAdminUpdateCatalogItems* UpdateCatalogItems(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InCatalogVersion, const TArray<FBPAdminCatalogItem>& InCatalog);
+	static UPFAdminUpdateCatalogItems* UpdateCatalogItems(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InCatalogVersion, const bool& InSetAsDefaultCatalog, const TArray<FBPAdminCatalogItem>& InCatalog);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

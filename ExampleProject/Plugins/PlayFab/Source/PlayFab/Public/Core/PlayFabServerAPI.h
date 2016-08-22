@@ -12,10 +12,15 @@ namespace PlayFab
     {
     public:
         DECLARE_DELEGATE_OneParam(FAuthenticateSessionTicketDelegate, const ServerModels::FAuthenticateSessionTicketResult&);
+        DECLARE_DELEGATE_OneParam(FBanUsersDelegate, const ServerModels::FBanUsersResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayFabIDsFromFacebookIDsDelegate, const ServerModels::FGetPlayFabIDsFromFacebookIDsResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayFabIDsFromSteamIDsDelegate, const ServerModels::FGetPlayFabIDsFromSteamIDsResult&);
         DECLARE_DELEGATE_OneParam(FGetUserAccountInfoDelegate, const ServerModels::FGetUserAccountInfoResult&);
+        DECLARE_DELEGATE_OneParam(FGetUserBansDelegate, const ServerModels::FGetUserBansResult&);
+        DECLARE_DELEGATE_OneParam(FRevokeAllBansForUserDelegate, const ServerModels::FRevokeAllBansForUserResult&);
+        DECLARE_DELEGATE_OneParam(FRevokeBansDelegate, const ServerModels::FRevokeBansResult&);
         DECLARE_DELEGATE_OneParam(FSendPushNotificationDelegate, const ServerModels::FSendPushNotificationResult&);
+        DECLARE_DELEGATE_OneParam(FUpdateBansDelegate, const ServerModels::FUpdateBansResult&);
         DECLARE_DELEGATE_OneParam(FDeleteUsersDelegate, const ServerModels::FDeleteUsersResult&);
         DECLARE_DELEGATE_OneParam(FGetLeaderboardDelegate, const ServerModels::FGetLeaderboardResult&);
         DECLARE_DELEGATE_OneParam(FGetLeaderboardAroundUserDelegate, const ServerModels::FGetLeaderboardAroundUserResult&);
@@ -50,6 +55,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FConsumeItemDelegate, const ServerModels::FConsumeItemResult&);
         DECLARE_DELEGATE_OneParam(FEvaluateRandomResultTableDelegate, const ServerModels::FEvaluateRandomResultTableResult&);
         DECLARE_DELEGATE_OneParam(FGetCharacterInventoryDelegate, const ServerModels::FGetCharacterInventoryResult&);
+        DECLARE_DELEGATE_OneParam(FGetRandomResultTablesDelegate, const ServerModels::FGetRandomResultTablesResult&);
         DECLARE_DELEGATE_OneParam(FGetUserInventoryDelegate, const ServerModels::FGetUserInventoryResult&);
         DECLARE_DELEGATE_OneParam(FGrantItemsToCharacterDelegate, const ServerModels::FGrantItemsToCharacterResult&);
         DECLARE_DELEGATE_OneParam(FGrantItemsToUserDelegate, const ServerModels::FGrantItemsToUserResult&);
@@ -116,6 +122,11 @@ namespace PlayFab
          */
         bool AuthenticateSessionTicket(ServerModels::FAuthenticateSessionTicketRequest& request, const FAuthenticateSessionTicketDelegate& SuccessDelegate = FAuthenticateSessionTicketDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Bans users by PlayFab ID with optional IP address, or MAC address for the provided game.
+         * The existence of each user will not be verified. When banning by IP or MAC address, multiple players may be affected, so use this feature with caution. Returns information about the new bans.
+         */
+        bool BanUsers(ServerModels::FBanUsersRequest& request, const FBanUsersDelegate& SuccessDelegate = FBanUsersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Retrieves the unique PlayFab identifiers for the given set of Facebook identifiers.
          */
         bool GetPlayFabIDsFromFacebookIDs(ServerModels::FGetPlayFabIDsFromFacebookIDsRequest& request, const FGetPlayFabIDsFromFacebookIDsDelegate& SuccessDelegate = FGetPlayFabIDsFromFacebookIDsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -129,9 +140,29 @@ namespace PlayFab
          */
         bool GetUserAccountInfo(ServerModels::FGetUserAccountInfoRequest& request, const FGetUserAccountInfoDelegate& SuccessDelegate = FGetUserAccountInfoDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Gets all bans for a user.
+         * Get all bans for a user, including inactive and expired bans. 
+         */
+        bool GetUserBans(ServerModels::FGetUserBansRequest& request, const FGetUserBansDelegate& SuccessDelegate = FGetUserBansDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Revoke all active bans for a user.
+         * Setting the active state of all non-expired bans for a user to Inactive. Expired bans with an Active state will be ignored, however. Returns information about applied updates only.
+         */
+        bool RevokeAllBansForUser(ServerModels::FRevokeAllBansForUserRequest& request, const FRevokeAllBansForUserDelegate& SuccessDelegate = FRevokeAllBansForUserDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Revoke all active bans specified with BanId.
+         * Setting the active state of all bans requested to Inactive regardless of whether that ban has already expired. BanIds that do not exist will be skipped. Returns information about applied updates only. 
+         */
+        bool RevokeBans(ServerModels::FRevokeBansRequest& request, const FRevokeBansDelegate& SuccessDelegate = FRevokeBansDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Sends an iOS/Android Push Notification to a specific user, if that user's device has been configured for Push Notifications in PlayFab. If a user has linked both Android and iOS devices, both will be notified.
          */
         bool SendPushNotification(ServerModels::FSendPushNotificationRequest& request, const FSendPushNotificationDelegate& SuccessDelegate = FSendPushNotificationDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Updates information of a list of existing bans specified with Ban Ids.
+         * For each ban, only updates the values that are set. Leave any value to null for no change. If a ban could not be found, the rest are still applied. Returns information about applied updates only.
+         */
+        bool UpdateBans(ServerModels::FUpdateBansRequest& request, const FUpdateBansDelegate& SuccessDelegate = FUpdateBansDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Deletes the users for the provided game. Deletes custom data, all account linkages, and statistics.
          * Note that this action cannot be undone. It will unlink all accounts and remove all PII information, as well as reset any statistics and leaderboards and clear out any stored custom data for the user.  This API must be enabled for use as an option in the game manager website. It is disabled by default.
@@ -291,6 +322,10 @@ namespace PlayFab
          */
         bool GetCharacterInventory(ServerModels::FGetCharacterInventoryRequest& request, const FGetCharacterInventoryDelegate& SuccessDelegate = FGetCharacterInventoryDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Retrieves the configuration information for the specified random results tables for the title, including all ItemId values and weights
+         */
+        bool GetRandomResultTables(ServerModels::FGetRandomResultTablesRequest& request, const FGetRandomResultTablesDelegate& SuccessDelegate = FGetRandomResultTablesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Retrieves the specified user's current inventory of virtual goods
          * All items currently in the user inventory will be returned, irrespective of how they were acquired (via purchasing, grants, coupons, etc.). Items that are expired, fully consumed, or are no longer valid are not considered to be in the user's current inventory, and so will not be not included.
          */
@@ -331,7 +366,7 @@ namespace PlayFab
          */
         bool MoveItemToUserFromCharacter(ServerModels::FMoveItemToUserFromCharacterRequest& request, const FMoveItemToUserFromCharacterDelegate& SuccessDelegate = FMoveItemToUserFromCharacterDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Adds the virtual goods associated with the coupon to the user's inventory. Coupons can be generated  via the Promotions->Coupons tab in the PlayFab Game Manager. See this post for more information on coupons:  https://playfab.com/blog/2015/06/18/using-stores-and-coupons-game-manager
+         * Adds the virtual goods associated with the coupon to the user's inventory. Coupons can be generated  via the Economy->Catalogs tab in the PlayFab Game Manager.
          * Coupon codes can be created for any item, or set of items, in the catalog for the title. This operation causes the coupon to be consumed, and the specific items to be awarded to the user. Attempting to re-use an already consumed code, or a code which has not yet been created in the service, will result in an error.
          */
         bool RedeemCoupon(ServerModels::FRedeemCouponRequest& request, const FRedeemCouponDelegate& SuccessDelegate = FRedeemCouponDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -527,10 +562,15 @@ namespace PlayFab
     private:
         // ------------ Generated result handlers
         void OnAuthenticateSessionTicketResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAuthenticateSessionTicketDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnBanUsersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FBanUsersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayFabIDsFromFacebookIDsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayFabIDsFromFacebookIDsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayFabIDsFromSteamIDsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayFabIDsFromSteamIDsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserAccountInfoResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserAccountInfoDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetUserBansResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserBansDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnRevokeAllBansForUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRevokeAllBansForUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnRevokeBansResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRevokeBansDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSendPushNotificationResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSendPushNotificationDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnUpdateBansResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateBansDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnDeleteUsersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteUsersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetLeaderboardResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetLeaderboardAroundUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardAroundUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -565,6 +605,7 @@ namespace PlayFab
         void OnConsumeItemResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FConsumeItemDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnEvaluateRandomResultTableResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FEvaluateRandomResultTableDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetCharacterInventoryResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCharacterInventoryDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetRandomResultTablesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetRandomResultTablesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserInventoryResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserInventoryDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGrantItemsToCharacterResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGrantItemsToCharacterDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGrantItemsToUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGrantItemsToUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

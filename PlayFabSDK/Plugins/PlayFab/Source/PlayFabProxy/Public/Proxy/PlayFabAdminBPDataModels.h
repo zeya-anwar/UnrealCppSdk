@@ -76,6 +76,46 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminAddVirtualCurrencyTypesRequestDelegate, const FBPAdminAddVirtualCurrencyTypesRequest&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminBanInfo"))
+struct FBPAdminBanInfo
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FBanInfo Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminBanInfoDelegate, const FBPAdminBanInfo&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminBanRequest"))
+struct FBPAdminBanRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FBanRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminBanRequestDelegate, const FBPAdminBanRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminBanUsersRequest"))
+struct FBPAdminBanUsersRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FBanUsersRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminBanUsersRequestDelegate, const FBPAdminBanUsersRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminBanUsersResult"))
+struct FBPAdminBanUsersResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FBanUsersResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminBanUsersResultDelegate, const FBPAdminBanUsersResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminBlankResult"))
 struct FBPAdminBlankResult
 {
@@ -195,6 +235,26 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeleteContentRequestDelegate, const FBPAdminDeleteContentRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminDeleteStoreRequest"))
+struct FBPAdminDeleteStoreRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FDeleteStoreRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeleteStoreRequestDelegate, const FBPAdminDeleteStoreRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminDeleteStoreResult"))
+struct FBPAdminDeleteStoreResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FDeleteStoreResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeleteStoreResultDelegate, const FBPAdminDeleteStoreResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminDeleteUsersRequest"))
 struct FBPAdminDeleteUsersRequest
@@ -626,6 +686,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetTitleDataResultDelegate, const FBPAdminGetTitleDataResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminGetUserBansRequest"))
+struct FBPAdminGetUserBansRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FGetUserBansRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetUserBansRequestDelegate, const FBPAdminGetUserBansRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminGetUserBansResult"))
+struct FBPAdminGetUserBansResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FGetUserBansResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetUserBansResultDelegate, const FBPAdminGetUserBansResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminGetUserDataRequest"))
 struct FBPAdminGetUserDataRequest
 {
@@ -1056,6 +1136,46 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminResultTableNodeTypeDelegate, const FBPAdminResultTableNodeType&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminRevokeAllBansForUserRequest"))
+struct FBPAdminRevokeAllBansForUserRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FRevokeAllBansForUserRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminRevokeAllBansForUserRequestDelegate, const FBPAdminRevokeAllBansForUserRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminRevokeAllBansForUserResult"))
+struct FBPAdminRevokeAllBansForUserResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FRevokeAllBansForUserResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminRevokeAllBansForUserResultDelegate, const FBPAdminRevokeAllBansForUserResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminRevokeBansRequest"))
+struct FBPAdminRevokeBansRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FRevokeBansRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminRevokeBansRequestDelegate, const FBPAdminRevokeBansRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminRevokeBansResult"))
+struct FBPAdminRevokeBansResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FRevokeBansResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminRevokeBansResultDelegate, const FBPAdminRevokeBansResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminRevokeInventoryItemRequest"))
 struct FBPAdminRevokeInventoryItemRequest
 {
@@ -1235,6 +1355,36 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminTitleActivationStatusDelegate, const FBPAdminTitleActivationStatus&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUpdateBanRequest"))
+struct FBPAdminUpdateBanRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FUpdateBanRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUpdateBanRequestDelegate, const FBPAdminUpdateBanRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUpdateBansRequest"))
+struct FBPAdminUpdateBansRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FUpdateBansRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUpdateBansRequestDelegate, const FBPAdminUpdateBansRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUpdateBansResult"))
+struct FBPAdminUpdateBansResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FUpdateBansResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUpdateBansResultDelegate, const FBPAdminUpdateBansResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUpdateCatalogItemsRequest"))
 struct FBPAdminUpdateCatalogItemsRequest

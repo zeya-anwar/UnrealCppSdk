@@ -111,6 +111,76 @@ void UPFAdminProxyLibrary::BreakBPAdminAddVirtualCurrencyTypesRequest(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminBanInfo(
+		const FBPAdminBanInfo& In
+        ,FString& OutPlayFabId
+        ,FString& OutBanId
+        ,FString& OutIPAddress
+        ,FString& OutMACAddress
+        ,FDateTime& OutCreated
+        ,FDateTime& OutExpires
+        ,FString& OutReason
+        ,bool& OutActive
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutBanId = In.Data.BanId;
+	OutIPAddress = In.Data.IPAddress;
+	OutMACAddress = In.Data.MACAddress;
+	
+	
+	OutReason = In.Data.Reason;
+	OutActive = In.Data.Active;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminBanRequest(
+		const FBPAdminBanRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutIPAddress
+        ,FString& OutMACAddress
+        ,FString& OutReason
+        ,int32& OutDurationInHours
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutIPAddress = In.Data.IPAddress;
+	OutMACAddress = In.Data.MACAddress;
+	OutReason = In.Data.Reason;
+	OutDurationInHours = In.Data.DurationInHours;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminBanUsersRequest(
+		const FBPAdminBanUsersRequest& In
+        ,TArray<FBPAdminBanRequest>& OutBans
+	)
+{
+    for (const PlayFab::AdminModels::FBanRequest& elem : In.Data.Bans)
+    {
+        FBPAdminBanRequest result;
+        result.Data = elem;
+        OutBans.Add(result);
+    }
+
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminBanUsersResult(
+		const FBPAdminBanUsersResult& In
+        ,TArray<FBPAdminBanInfo>& OutBanData
+	)
+{
+    for (const PlayFab::AdminModels::FBanInfo& elem : In.Data.BanData)
+    {
+        FBPAdminBanInfo result;
+        result.Data = elem;
+        OutBanData.Add(result);
+    }
+
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminBlankResult(
 		const FBPAdminBlankResult& In
 	)
@@ -265,6 +335,24 @@ void UPFAdminProxyLibrary::BreakBPAdminDeleteContentRequest(
 {
     OutKey = In.Data.Key;
 	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminDeleteStoreRequest(
+		const FBPAdminDeleteStoreRequest& In
+        ,FString& OutCatalogVersion
+        ,FString& OutStoreId
+	)
+{
+    OutCatalogVersion = In.Data.CatalogVersion;
+	OutStoreId = In.Data.StoreId;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminDeleteStoreResult(
+		const FBPAdminDeleteStoreResult& In
+	)
+{
+    
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminDeleteUsersRequest(
@@ -784,6 +872,30 @@ void UPFAdminProxyLibrary::BreakBPAdminGetTitleDataResult(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminGetUserBansRequest(
+		const FBPAdminGetUserBansRequest& In
+        ,FString& OutPlayFabId
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetUserBansResult(
+		const FBPAdminGetUserBansResult& In
+        ,TArray<FBPAdminBanInfo>& OutBanData
+	)
+{
+    for (const PlayFab::AdminModels::FBanInfo& elem : In.Data.BanData)
+    {
+        FBPAdminBanInfo result;
+        result.Data = elem;
+        OutBanData.Add(result);
+    }
+
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminGetUserDataRequest(
 		const FBPAdminGetUserDataRequest& In
         ,FString& OutPlayFabId
@@ -1163,9 +1275,11 @@ void UPFAdminProxyLibrary::BreakBPAdminPlayerProfile(
         ,FString& OutPlayerId
         ,FString& OutTitleId
         ,FString& OutDisplayName
+        ,FString& OutPublisherId
         ,FDateTime& OutCreated
         ,FDateTime& OutLastLogin
         ,FDateTime& OutBannedUntil
+        ,TArray<FString>& OutTags
         ,TArray<FBPAdminAdCampaignAttribution>& OutAdCampaignAttributions
         ,TArray<FBPAdminPushNotificationRegistration>& OutPushNotificationRegistrations
         ,TArray<FBPAdminPlayerLinkedAccount>& OutLinkedAccounts
@@ -1175,12 +1289,14 @@ void UPFAdminProxyLibrary::BreakBPAdminPlayerProfile(
     OutPlayerId = In.Data.PlayerId;
 	OutTitleId = In.Data.TitleId;
 	OutDisplayName = In.Data.DisplayName;
+	OutPublisherId = In.Data.PublisherId;
 	
 	
 	
 	
 	
 	
+	OutTags = In.Data.Tags;
 	
 	for (const PlayFab::AdminModels::FAdCampaignAttribution& elem : In.Data.AdCampaignAttributions)
     {
@@ -1422,6 +1538,54 @@ void UPFAdminProxyLibrary::BreakBPAdminResultTableNodeType(
     
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminRevokeAllBansForUserRequest(
+		const FBPAdminRevokeAllBansForUserRequest& In
+        ,FString& OutPlayFabId
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminRevokeAllBansForUserResult(
+		const FBPAdminRevokeAllBansForUserResult& In
+        ,TArray<FBPAdminBanInfo>& OutBanData
+	)
+{
+    for (const PlayFab::AdminModels::FBanInfo& elem : In.Data.BanData)
+    {
+        FBPAdminBanInfo result;
+        result.Data = elem;
+        OutBanData.Add(result);
+    }
+
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminRevokeBansRequest(
+		const FBPAdminRevokeBansRequest& In
+        ,TArray<FString>& OutBanIds
+	)
+{
+    OutBanIds = In.Data.BanIds;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminRevokeBansResult(
+		const FBPAdminRevokeBansResult& In
+        ,TArray<FBPAdminBanInfo>& OutBanData
+	)
+{
+    for (const PlayFab::AdminModels::FBanInfo& elem : In.Data.BanData)
+    {
+        FBPAdminBanInfo result;
+        result.Data = elem;
+        OutBanData.Add(result);
+    }
+
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminRevokeInventoryItemRequest(
 		const FBPAdminRevokeInventoryItemRequest& In
         ,FString& OutPlayFabId
@@ -1590,13 +1754,66 @@ void UPFAdminProxyLibrary::BreakBPAdminTitleActivationStatus(
     
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminUpdateBanRequest(
+		const FBPAdminUpdateBanRequest& In
+        ,FString& OutBanId
+        ,FString& OutReason
+        ,FDateTime& OutExpires
+        ,FString& OutIPAddress
+        ,FString& OutMACAddress
+        ,bool& OutPermanent
+        ,bool& OutActive
+	)
+{
+    OutBanId = In.Data.BanId;
+	OutReason = In.Data.Reason;
+	
+	OutIPAddress = In.Data.IPAddress;
+	OutMACAddress = In.Data.MACAddress;
+	OutPermanent = In.Data.Permanent;
+	OutActive = In.Data.Active;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminUpdateBansRequest(
+		const FBPAdminUpdateBansRequest& In
+        ,TArray<FBPAdminUpdateBanRequest>& OutBans
+	)
+{
+    for (const PlayFab::AdminModels::FUpdateBanRequest& elem : In.Data.Bans)
+    {
+        FBPAdminUpdateBanRequest result;
+        result.Data = elem;
+        OutBans.Add(result);
+    }
+
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminUpdateBansResult(
+		const FBPAdminUpdateBansResult& In
+        ,TArray<FBPAdminBanInfo>& OutBanData
+	)
+{
+    for (const PlayFab::AdminModels::FBanInfo& elem : In.Data.BanData)
+    {
+        FBPAdminBanInfo result;
+        result.Data = elem;
+        OutBanData.Add(result);
+    }
+
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminUpdateCatalogItemsRequest(
 		const FBPAdminUpdateCatalogItemsRequest& In
         ,FString& OutCatalogVersion
+        ,bool& OutSetAsDefaultCatalog
         ,TArray<FBPAdminCatalogItem>& OutCatalog
 	)
 {
     OutCatalogVersion = In.Data.CatalogVersion;
+	OutSetAsDefaultCatalog = In.Data.SetAsDefaultCatalog;
 	for (const PlayFab::AdminModels::FCatalogItem& elem : In.Data.Catalog)
     {
         FBPAdminCatalogItem result;

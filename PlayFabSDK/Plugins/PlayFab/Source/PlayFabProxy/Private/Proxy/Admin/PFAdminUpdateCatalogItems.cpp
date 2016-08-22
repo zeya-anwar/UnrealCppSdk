@@ -10,11 +10,12 @@ UPFAdminUpdateCatalogItems::UPFAdminUpdateCatalogItems(const FObjectInitializer&
 {
 }
 
-UPFAdminUpdateCatalogItems* UPFAdminUpdateCatalogItems::UpdateCatalogItems(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InCatalogVersion, const TArray<FBPAdminCatalogItem>& InCatalog)
+UPFAdminUpdateCatalogItems* UPFAdminUpdateCatalogItems::UpdateCatalogItems(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InCatalogVersion, const bool& InSetAsDefaultCatalog, const TArray<FBPAdminCatalogItem>& InCatalog)
 {
 	UPFAdminUpdateCatalogItems* Proxy = NewObject<UPFAdminUpdateCatalogItems>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.CatalogVersion = InCatalogVersion;
+	Proxy->Request.SetAsDefaultCatalog = InSetAsDefaultCatalog;
 	for (const FBPAdminCatalogItem& elem : InCatalog)
     {
         Proxy->Request.Catalog.Add(elem.Data);

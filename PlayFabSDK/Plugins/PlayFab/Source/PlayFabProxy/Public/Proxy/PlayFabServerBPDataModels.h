@@ -106,6 +106,46 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerAwardSteamAchievementResultDelegate, const FBPServerAwardSteamAchievementResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerBanInfo"))
+struct FBPServerBanInfo
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FBanInfo Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerBanInfoDelegate, const FBPServerBanInfo&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerBanRequest"))
+struct FBPServerBanRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FBanRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerBanRequestDelegate, const FBPServerBanRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerBanUsersRequest"))
+struct FBPServerBanUsersRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FBanUsersRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerBanUsersRequestDelegate, const FBPServerBanUsersRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerBanUsersResult"))
+struct FBPServerBanUsersResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FBanUsersResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerBanUsersResultDelegate, const FBPServerBanUsersResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerCatalogItem"))
 struct FBPServerCatalogItem
 {
@@ -766,6 +806,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetPublisherDataResultDelegate, const FBPServerGetPublisherDataResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetRandomResultTablesRequest"))
+struct FBPServerGetRandomResultTablesRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetRandomResultTablesRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetRandomResultTablesRequestDelegate, const FBPServerGetRandomResultTablesRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetRandomResultTablesResult"))
+struct FBPServerGetRandomResultTablesResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetRandomResultTablesResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetRandomResultTablesResultDelegate, const FBPServerGetRandomResultTablesResult&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetSegmentResult"))
 struct FBPServerGetSegmentResult
 {
@@ -855,6 +915,26 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetUserAccountInfoResultDelegate, const FBPServerGetUserAccountInfoResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetUserBansRequest"))
+struct FBPServerGetUserBansRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetUserBansRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetUserBansRequestDelegate, const FBPServerGetUserBansRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetUserBansResult"))
+struct FBPServerGetUserBansResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetUserBansResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetUserBansResultDelegate, const FBPServerGetUserBansResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetUserDataRequest"))
 struct FBPServerGetUserDataRequest
@@ -1286,6 +1366,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerPushNotificationRegistrationDelegate, const FBPServerPushNotificationRegistration&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRandomResultTableListing"))
+struct FBPServerRandomResultTableListing
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FRandomResultTableListing Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRandomResultTableListingDelegate, const FBPServerRandomResultTableListing&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRedeemCouponRequest"))
 struct FBPServerRedeemCouponRequest
 {
@@ -1365,6 +1455,66 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerReportPlayerServerResultDelegate, const FBPServerReportPlayerServerResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerResultTableNode"))
+struct FBPServerResultTableNode
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FResultTableNode Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerResultTableNodeDelegate, const FBPServerResultTableNode&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerResultTableNodeType"))
+struct FBPServerResultTableNodeType
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::ResultTableNodeType Data;	
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerResultTableNodeTypeDelegate, const FBPServerResultTableNodeType&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRevokeAllBansForUserRequest"))
+struct FBPServerRevokeAllBansForUserRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FRevokeAllBansForUserRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRevokeAllBansForUserRequestDelegate, const FBPServerRevokeAllBansForUserRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRevokeAllBansForUserResult"))
+struct FBPServerRevokeAllBansForUserResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FRevokeAllBansForUserResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRevokeAllBansForUserResultDelegate, const FBPServerRevokeAllBansForUserResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRevokeBansRequest"))
+struct FBPServerRevokeBansRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FRevokeBansRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRevokeBansRequestDelegate, const FBPServerRevokeBansRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRevokeBansResult"))
+struct FBPServerRevokeBansResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FRevokeBansResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRevokeBansResultDelegate, const FBPServerRevokeBansResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRevokeInventoryItemRequest"))
 struct FBPServerRevokeInventoryItemRequest
@@ -1615,6 +1765,36 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUnlockContainerItemResultDelegate, const FBPServerUnlockContainerItemResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUpdateBanRequest"))
+struct FBPServerUpdateBanRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FUpdateBanRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUpdateBanRequestDelegate, const FBPServerUpdateBanRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUpdateBansRequest"))
+struct FBPServerUpdateBansRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FUpdateBansRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUpdateBansRequestDelegate, const FBPServerUpdateBansRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUpdateBansResult"))
+struct FBPServerUpdateBansResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FUpdateBansResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUpdateBansResultDelegate, const FBPServerUpdateBansResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUpdateCharacterDataRequest"))
 struct FBPServerUpdateCharacterDataRequest

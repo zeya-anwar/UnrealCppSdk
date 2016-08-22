@@ -490,7 +490,7 @@ namespace PlayFab
          */
         bool PurchaseItem(ClientModels::FPurchaseItemRequest& request, const FPurchaseItemDelegate& SuccessDelegate = FPurchaseItemDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Adds the virtual goods associated with the coupon to the user's inventory. Coupons can be generated  via the Promotions->Coupons tab in the PlayFab Game Manager. See this post for more information on coupons:  https://playfab.com/blog/using-stores-and-coupons-game-manager/
+         * Adds the virtual goods associated with the coupon to the user's inventory. Coupons can be generated  via the Economy->Catalogs tab in the PlayFab Game Manager.
          * Coupon codes can be created for any item, or set of items, in the catalog for the title. This operation causes the coupon to be consumed, and the specific items to be awarded to the user. Attempting to re-use an already consumed code, or a code which has not yet been created in the service, will result in an error.
          */
         bool RedeemCoupon(ClientModels::FRedeemCouponRequest& request, const FRedeemCouponDelegate& SuccessDelegate = FRedeemCouponDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());

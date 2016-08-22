@@ -594,6 +594,252 @@ bool PlayFab::AdminModels::FAddVirtualCurrencyTypesRequest::readFromValue(const 
 }
 
 
+PlayFab::AdminModels::FBanInfo::~FBanInfo()
+{
+    
+}
+
+void PlayFab::AdminModels::FBanInfo::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(PlayFabId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId); }
+	
+    if(BanId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("BanId")); writer->WriteValue(BanId); }
+	
+    if(IPAddress.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("IPAddress")); writer->WriteValue(IPAddress); }
+	
+    if(MACAddress.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("MACAddress")); writer->WriteValue(MACAddress); }
+	
+    if(Created.notNull()) { writer->WriteIdentifierPrefix(TEXT("Created")); writeDatetime(Created, writer); }
+	
+    if(Expires.notNull()) { writer->WriteIdentifierPrefix(TEXT("Expires")); writeDatetime(Expires, writer); }
+	
+    if(Reason.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Reason")); writer->WriteValue(Reason); }
+	
+    writer->WriteIdentifierPrefix(TEXT("Active")); writer->WriteValue(Active);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FBanInfo::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> BanIdValue = obj->TryGetField(TEXT("BanId"));
+    if (BanIdValue.IsValid()&& !BanIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(BanIdValue->TryGetString(TmpValue)) {BanId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> IPAddressValue = obj->TryGetField(TEXT("IPAddress"));
+    if (IPAddressValue.IsValid()&& !IPAddressValue->IsNull())
+    {
+        FString TmpValue;
+        if(IPAddressValue->TryGetString(TmpValue)) {IPAddress = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> MACAddressValue = obj->TryGetField(TEXT("MACAddress"));
+    if (MACAddressValue.IsValid()&& !MACAddressValue->IsNull())
+    {
+        FString TmpValue;
+        if(MACAddressValue->TryGetString(TmpValue)) {MACAddress = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> CreatedValue = obj->TryGetField(TEXT("Created"));
+    if(CreatedValue.IsValid())
+    {
+        Created = readDatetime(CreatedValue);
+    }
+    
+    const TSharedPtr<FJsonValue> ExpiresValue = obj->TryGetField(TEXT("Expires"));
+    if(ExpiresValue.IsValid())
+    {
+        Expires = readDatetime(ExpiresValue);
+    }
+    
+    const TSharedPtr<FJsonValue> ReasonValue = obj->TryGetField(TEXT("Reason"));
+    if (ReasonValue.IsValid()&& !ReasonValue->IsNull())
+    {
+        FString TmpValue;
+        if(ReasonValue->TryGetString(TmpValue)) {Reason = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ActiveValue = obj->TryGetField(TEXT("Active"));
+    if (ActiveValue.IsValid()&& !ActiveValue->IsNull())
+    {
+        bool TmpValue;
+        if(ActiveValue->TryGetBool(TmpValue)) {Active = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FBanRequest::~FBanRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FBanRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
+	
+    if(IPAddress.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("IPAddress")); writer->WriteValue(IPAddress); }
+	
+    if(MACAddress.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("MACAddress")); writer->WriteValue(MACAddress); }
+	
+    if(Reason.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Reason")); writer->WriteValue(Reason); }
+	
+    if(DurationInHours.notNull()) { writer->WriteIdentifierPrefix(TEXT("DurationInHours")); writer->WriteValue(static_cast<int64>(DurationInHours)); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FBanRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> IPAddressValue = obj->TryGetField(TEXT("IPAddress"));
+    if (IPAddressValue.IsValid()&& !IPAddressValue->IsNull())
+    {
+        FString TmpValue;
+        if(IPAddressValue->TryGetString(TmpValue)) {IPAddress = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> MACAddressValue = obj->TryGetField(TEXT("MACAddress"));
+    if (MACAddressValue.IsValid()&& !MACAddressValue->IsNull())
+    {
+        FString TmpValue;
+        if(MACAddressValue->TryGetString(TmpValue)) {MACAddress = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ReasonValue = obj->TryGetField(TEXT("Reason"));
+    if (ReasonValue.IsValid()&& !ReasonValue->IsNull())
+    {
+        FString TmpValue;
+        if(ReasonValue->TryGetString(TmpValue)) {Reason = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> DurationInHoursValue = obj->TryGetField(TEXT("DurationInHours"));
+    if (DurationInHoursValue.IsValid()&& !DurationInHoursValue->IsNull())
+    {
+        uint32 TmpValue;
+        if(DurationInHoursValue->TryGetNumber(TmpValue)) {DurationInHours = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FBanUsersRequest::~FBanUsersRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FBanUsersRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+        writer->WriteArrayStart(TEXT("Bans"));
+    
+        for (const FBanRequest& item : Bans)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+    
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FBanUsersRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&BansArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Bans"));
+        for (int32 Idx = 0; Idx < BansArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = BansArray[Idx];
+            
+            Bans.Add(FBanRequest(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FBanUsersResult::~FBanUsersResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FBanUsersResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(BanData.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("BanData"));
+    
+        for (const FBanInfo& item : BanData)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FBanUsersResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&BanDataArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("BanData"));
+        for (int32 Idx = 0; Idx < BanDataArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = BanDataArray[Idx];
+            
+            BanData.Add(FBanInfo(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::AdminModels::FBlankResult::~FBlankResult()
 {
     
@@ -1716,6 +1962,68 @@ bool PlayFab::AdminModels::FDeleteContentRequest::readFromValue(const TSharedPtr
         if(KeyValue->TryGetString(TmpValue)) {Key = TmpValue; }
     }
     
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FDeleteStoreRequest::~FDeleteStoreRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FDeleteStoreRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(CatalogVersion.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CatalogVersion")); writer->WriteValue(CatalogVersion); }
+	
+    writer->WriteIdentifierPrefix(TEXT("StoreId")); writer->WriteValue(StoreId);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FDeleteStoreRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> CatalogVersionValue = obj->TryGetField(TEXT("CatalogVersion"));
+    if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> StoreIdValue = obj->TryGetField(TEXT("StoreId"));
+    if (StoreIdValue.IsValid()&& !StoreIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(StoreIdValue->TryGetString(TmpValue)) {StoreId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FDeleteStoreResult::~FDeleteStoreResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FDeleteStoreResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FDeleteStoreResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
     
     return HasSucceeded;
 }
@@ -3038,6 +3346,8 @@ void PlayFab::AdminModels::FPlayerProfile::writeJSON(JsonWriter& writer) const
 	
     if(DisplayName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("DisplayName")); writer->WriteValue(DisplayName); }
 	
+    if(PublisherId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PublisherId")); writer->WriteValue(PublisherId); }
+	
     if(Origination.notNull()) { writer->WriteIdentifierPrefix(TEXT("Origination")); writeLoginIdentityProviderEnumJSON(Origination, writer); }
 	
     if(Created.notNull()) { writer->WriteIdentifierPrefix(TEXT("Created")); writeDatetime(Created, writer); }
@@ -3066,6 +3376,17 @@ void PlayFab::AdminModels::FPlayerProfile::writeJSON(JsonWriter& writer) const
             writer->WriteValue(static_cast<int64>((*It).Value));
         }
         writer->WriteObjectEnd();
+     }
+	
+    if(Tags.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("Tags"));
+    
+        for (const FString& item : Tags)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
      }
 	
     if(VirtualCurrencyBalances.Num() != 0) 
@@ -3152,6 +3473,13 @@ bool PlayFab::AdminModels::FPlayerProfile::readFromValue(const TSharedPtr<FJsonO
         if(DisplayNameValue->TryGetString(TmpValue)) {DisplayName = TmpValue; }
     }
     
+    const TSharedPtr<FJsonValue> PublisherIdValue = obj->TryGetField(TEXT("PublisherId"));
+    if (PublisherIdValue.IsValid()&& !PublisherIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PublisherIdValue->TryGetString(TmpValue)) {PublisherId = TmpValue; }
+    }
+    
     Origination = readLoginIdentityProviderFromValue(obj->TryGetField(TEXT("Origination")));
     
     const TSharedPtr<FJsonValue> CreatedValue = obj->TryGetField(TEXT("Created"));
@@ -3191,6 +3519,8 @@ bool PlayFab::AdminModels::FPlayerProfile::readFromValue(const TSharedPtr<FJsonO
             ValuesToDate.Add(It.Key(), TmpValue);
         }
     }
+    
+    obj->TryGetStringArrayField(TEXT("Tags"),Tags);
     
     const TSharedPtr<FJsonObject>* VirtualCurrencyBalancesObject;
     if (obj->TryGetObjectField(TEXT("VirtualCurrencyBalances"), VirtualCurrencyBalancesObject))
@@ -4330,6 +4660,81 @@ bool PlayFab::AdminModels::FGetTitleDataResult::readFromValue(const TSharedPtr<F
             Data.Add(It.Key(), It.Value()->AsString());
         }
     }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetUserBansRequest::~FGetUserBansRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetUserBansRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetUserBansRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetUserBansResult::~FGetUserBansResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetUserBansResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(BanData.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("BanData"));
+    
+        for (const FBanInfo& item : BanData)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetUserBansResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&BanDataArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("BanData"));
+        for (int32 Idx = 0; Idx < BanDataArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = BanDataArray[Idx];
+            
+            BanData.Add(FBanInfo(CurrentItem->AsObject()));
+        }
+    }
+
     
     
     return HasSucceeded;
@@ -7030,6 +7435,159 @@ bool PlayFab::AdminModels::FResetUserStatisticsResult::readFromValue(const TShar
 }
 
 
+PlayFab::AdminModels::FRevokeAllBansForUserRequest::~FRevokeAllBansForUserRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FRevokeAllBansForUserRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FRevokeAllBansForUserRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FRevokeAllBansForUserResult::~FRevokeAllBansForUserResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FRevokeAllBansForUserResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(BanData.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("BanData"));
+    
+        for (const FBanInfo& item : BanData)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FRevokeAllBansForUserResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&BanDataArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("BanData"));
+        for (int32 Idx = 0; Idx < BanDataArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = BanDataArray[Idx];
+            
+            BanData.Add(FBanInfo(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FRevokeBansRequest::~FRevokeBansRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FRevokeBansRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+        writer->WriteArrayStart(TEXT("BanIds"));
+    
+        for (const FString& item : BanIds)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+    
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FRevokeBansRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    HasSucceeded &= obj->TryGetStringArrayField(TEXT("BanIds"),BanIds);
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FRevokeBansResult::~FRevokeBansResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FRevokeBansResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(BanData.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("BanData"));
+    
+        for (const FBanInfo& item : BanData)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FRevokeBansResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&BanDataArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("BanData"));
+        for (int32 Idx = 0; Idx < BanDataArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = BanDataArray[Idx];
+            
+            BanData.Add(FBanInfo(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::AdminModels::FRevokeInventoryItemRequest::~FRevokeInventoryItemRequest()
 {
     
@@ -7487,6 +8045,177 @@ bool PlayFab::AdminModels::FSubtractUserVirtualCurrencyRequest::readFromValue(co
 }
 
 
+PlayFab::AdminModels::FUpdateBanRequest::~FUpdateBanRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FUpdateBanRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("BanId")); writer->WriteValue(BanId);
+	
+    if(Reason.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Reason")); writer->WriteValue(Reason); }
+	
+    if(Expires.notNull()) { writer->WriteIdentifierPrefix(TEXT("Expires")); writeDatetime(Expires, writer); }
+	
+    if(IPAddress.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("IPAddress")); writer->WriteValue(IPAddress); }
+	
+    if(MACAddress.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("MACAddress")); writer->WriteValue(MACAddress); }
+	
+    if(Permanent.notNull()) { writer->WriteIdentifierPrefix(TEXT("Permanent")); writer->WriteValue(Permanent); }
+	
+    if(Active.notNull()) { writer->WriteIdentifierPrefix(TEXT("Active")); writer->WriteValue(Active); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FUpdateBanRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> BanIdValue = obj->TryGetField(TEXT("BanId"));
+    if (BanIdValue.IsValid()&& !BanIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(BanIdValue->TryGetString(TmpValue)) {BanId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ReasonValue = obj->TryGetField(TEXT("Reason"));
+    if (ReasonValue.IsValid()&& !ReasonValue->IsNull())
+    {
+        FString TmpValue;
+        if(ReasonValue->TryGetString(TmpValue)) {Reason = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ExpiresValue = obj->TryGetField(TEXT("Expires"));
+    if(ExpiresValue.IsValid())
+    {
+        Expires = readDatetime(ExpiresValue);
+    }
+    
+    const TSharedPtr<FJsonValue> IPAddressValue = obj->TryGetField(TEXT("IPAddress"));
+    if (IPAddressValue.IsValid()&& !IPAddressValue->IsNull())
+    {
+        FString TmpValue;
+        if(IPAddressValue->TryGetString(TmpValue)) {IPAddress = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> MACAddressValue = obj->TryGetField(TEXT("MACAddress"));
+    if (MACAddressValue.IsValid()&& !MACAddressValue->IsNull())
+    {
+        FString TmpValue;
+        if(MACAddressValue->TryGetString(TmpValue)) {MACAddress = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> PermanentValue = obj->TryGetField(TEXT("Permanent"));
+    if (PermanentValue.IsValid()&& !PermanentValue->IsNull())
+    {
+        bool TmpValue;
+        if(PermanentValue->TryGetBool(TmpValue)) {Permanent = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ActiveValue = obj->TryGetField(TEXT("Active"));
+    if (ActiveValue.IsValid()&& !ActiveValue->IsNull())
+    {
+        bool TmpValue;
+        if(ActiveValue->TryGetBool(TmpValue)) {Active = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FUpdateBansRequest::~FUpdateBansRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FUpdateBansRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+        writer->WriteArrayStart(TEXT("Bans"));
+    
+        for (const FUpdateBanRequest& item : Bans)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+    
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FUpdateBansRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&BansArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Bans"));
+        for (int32 Idx = 0; Idx < BansArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = BansArray[Idx];
+            
+            Bans.Add(FUpdateBanRequest(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FUpdateBansResult::~FUpdateBansResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FUpdateBansResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(BanData.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("BanData"));
+    
+        for (const FBanInfo& item : BanData)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FUpdateBansResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&BanDataArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("BanData"));
+        for (int32 Idx = 0; Idx < BanDataArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = BanDataArray[Idx];
+            
+            BanData.Add(FBanInfo(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::AdminModels::FUpdateCatalogItemsRequest::~FUpdateCatalogItemsRequest()
 {
     
@@ -7497,6 +8226,8 @@ void PlayFab::AdminModels::FUpdateCatalogItemsRequest::writeJSON(JsonWriter& wri
     writer->WriteObjectStart();
     
     if(CatalogVersion.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CatalogVersion")); writer->WriteValue(CatalogVersion); }
+	
+    if(SetAsDefaultCatalog.notNull()) { writer->WriteIdentifierPrefix(TEXT("SetAsDefaultCatalog")); writer->WriteValue(SetAsDefaultCatalog); }
 	
     if(Catalog.Num() != 0) 
     {
@@ -7522,6 +8253,13 @@ bool PlayFab::AdminModels::FUpdateCatalogItemsRequest::readFromValue(const TShar
     {
         FString TmpValue;
         if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> SetAsDefaultCatalogValue = obj->TryGetField(TEXT("SetAsDefaultCatalog"));
+    if (SetAsDefaultCatalogValue.IsValid()&& !SetAsDefaultCatalogValue->IsNull())
+    {
+        bool TmpValue;
+        if(SetAsDefaultCatalogValue->TryGetBool(TmpValue)) {SetAsDefaultCatalog = TmpValue; }
     }
     
     {

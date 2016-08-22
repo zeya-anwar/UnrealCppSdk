@@ -31,6 +31,33 @@ void UPlayFabAdminAPI::SetDevSecretKey(const FString& developerSecretKey)
     PlayFabSettings::developerSecretKey = developerSecretKey;
 }
 
+bool UPlayFabAdminAPI::BanUsers(
+    AdminModels::FBanUsersRequest& request,
+    const FBanUsersDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Admin/BanUsers")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabAdminAPI::OnBanUsersResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabAdminAPI::OnBanUsersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FBanUsersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    AdminModels::FBanUsersResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
 bool UPlayFabAdminAPI::GetUserAccountInfo(
     AdminModels::FLookupUserAccountInfoRequest& request,
     const FGetUserAccountInfoDelegate& SuccessDelegate,
@@ -46,6 +73,33 @@ bool UPlayFabAdminAPI::GetUserAccountInfo(
 void UPlayFabAdminAPI::OnGetUserAccountInfoResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserAccountInfoDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
 {
     AdminModels::FLookupUserAccountInfoResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
+bool UPlayFabAdminAPI::GetUserBans(
+    AdminModels::FGetUserBansRequest& request,
+    const FGetUserBansDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Admin/GetUserBans")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabAdminAPI::OnGetUserBansResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabAdminAPI::OnGetUserBansResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserBansDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    AdminModels::FGetUserBansResult outResult;
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
@@ -85,6 +139,60 @@ void UPlayFabAdminAPI::OnResetUsersResult(FHttpRequestPtr HttpRequest, FHttpResp
     }
 }
 
+bool UPlayFabAdminAPI::RevokeAllBansForUser(
+    AdminModels::FRevokeAllBansForUserRequest& request,
+    const FRevokeAllBansForUserDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Admin/RevokeAllBansForUser")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabAdminAPI::OnRevokeAllBansForUserResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabAdminAPI::OnRevokeAllBansForUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRevokeAllBansForUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    AdminModels::FRevokeAllBansForUserResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
+bool UPlayFabAdminAPI::RevokeBans(
+    AdminModels::FRevokeBansRequest& request,
+    const FRevokeBansDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Admin/RevokeBans")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabAdminAPI::OnRevokeBansResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabAdminAPI::OnRevokeBansResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRevokeBansDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    AdminModels::FRevokeBansResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
 bool UPlayFabAdminAPI::SendAccountRecoveryEmail(
     AdminModels::FSendAccountRecoveryEmailRequest& request,
     const FSendAccountRecoveryEmailDelegate& SuccessDelegate,
@@ -100,6 +208,33 @@ bool UPlayFabAdminAPI::SendAccountRecoveryEmail(
 void UPlayFabAdminAPI::OnSendAccountRecoveryEmailResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSendAccountRecoveryEmailDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
 {
     AdminModels::FSendAccountRecoveryEmailResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
+bool UPlayFabAdminAPI::UpdateBans(
+    AdminModels::FUpdateBansRequest& request,
+    const FUpdateBansDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Admin/UpdateBans")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabAdminAPI::OnUpdateBansResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabAdminAPI::OnUpdateBansResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateBansDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    AdminModels::FUpdateBansResult outResult;
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {
@@ -721,6 +856,33 @@ bool UPlayFabAdminAPI::AddVirtualCurrencyTypes(
 void UPlayFabAdminAPI::OnAddVirtualCurrencyTypesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddVirtualCurrencyTypesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
 {
     AdminModels::FBlankResult outResult;
+    FPlayFabError errorResult;
+    if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
+    {
+
+        SuccessDelegate.ExecuteIfBound(outResult);
+    }
+    else
+    {
+        ErrorDelegate.ExecuteIfBound(errorResult);
+    }
+}
+
+bool UPlayFabAdminAPI::DeleteStore(
+    AdminModels::FDeleteStoreRequest& request,
+    const FDeleteStoreDelegate& SuccessDelegate,
+    const FPlayFabErrorDelegate& ErrorDelegate)
+{
+    
+    auto HttpRequest = PlayFabRequestHandler::SendRequest(PlayFabSettings::getURL(TEXT("/Admin/DeleteStore")), request.toJSONString(),
+        TEXT("X-SecretKey"), PlayFabSettings::developerSecretKey);
+    HttpRequest->OnProcessRequestComplete().BindRaw(this, &UPlayFabAdminAPI::OnDeleteStoreResult, SuccessDelegate, ErrorDelegate);
+    return HttpRequest->ProcessRequest();
+}
+
+void UPlayFabAdminAPI::OnDeleteStoreResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteStoreDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate)
+{
+    AdminModels::FDeleteStoreResult outResult;
     FPlayFabError errorResult;
     if (PlayFabRequestHandler::DecodeRequest(HttpRequest, HttpResponse, bSucceeded, outResult, errorResult))
     {

@@ -84,6 +84,41 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerBanInfo(
+		const FBPServerBanInfo& In
+        ,FString& OutPlayFabId
+        ,FString& OutBanId
+        ,FString& OutIPAddress
+        ,FString& OutMACAddress
+        ,FDateTime& OutCreated
+        ,FDateTime& OutExpires
+        ,FString& OutReason
+        ,bool& OutActive
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerBanRequest(
+		const FBPServerBanRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutIPAddress
+        ,FString& OutMACAddress
+        ,FString& OutReason
+        ,int32& OutDurationInHours
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerBanUsersRequest(
+		const FBPServerBanUsersRequest& In
+        ,TArray<FBPServerBanRequest>& OutBans
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerBanUsersResult(
+		const FBPServerBanUsersResult& In
+        ,TArray<FBPServerBanInfo>& OutBanData
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerCatalogItem(
 		const FBPServerCatalogItem& In
         ,FString& OutItemId
@@ -581,6 +616,18 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerGetRandomResultTablesRequest(
+		const FBPServerGetRandomResultTablesRequest& In
+        ,FString& OutCatalogVersion
+        ,TArray<FString>& OutTableIDs
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerGetRandomResultTablesResult(
+		const FBPServerGetRandomResultTablesResult& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerGetSegmentResult(
 		const FBPServerGetSegmentResult& In
         ,FString& OutId
@@ -635,6 +682,18 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPServerGetUserAccountInfoResult(
 		const FBPServerGetUserAccountInfoResult& In
         ,FBPServerUserAccountInfo& OutUserInfo
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerGetUserBansRequest(
+		const FBPServerGetUserBansRequest& In
+        ,FString& OutPlayFabId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerGetUserBansResult(
+		const FBPServerGetUserBansResult& In
+        ,TArray<FBPServerBanInfo>& OutBanData
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
@@ -937,9 +996,11 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutPlayerId
         ,FString& OutTitleId
         ,FString& OutDisplayName
+        ,FString& OutPublisherId
         ,FDateTime& OutCreated
         ,FDateTime& OutLastLogin
         ,FDateTime& OutBannedUntil
+        ,TArray<FString>& OutTags
         ,TArray<FBPServerAdCampaignAttribution>& OutAdCampaignAttributions
         ,TArray<FBPServerPushNotificationRegistration>& OutPushNotificationRegistrations
         ,TArray<FBPServerPlayerLinkedAccount>& OutLinkedAccounts
@@ -975,6 +1036,14 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPServerPushNotificationRegistration(
 		const FBPServerPushNotificationRegistration& In
         ,FString& OutNotificationEndpointARN
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerRandomResultTableListing(
+		const FBPServerRandomResultTableListing& In
+        ,FString& OutCatalogVersion
+        ,FString& OutTableId
+        ,TArray<FBPServerResultTableNode>& OutNodes
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
@@ -1032,6 +1101,42 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPServerReportPlayerServerResult& In
         ,bool& OutUpdated
         ,int32& OutSubmissionsRemaining
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerResultTableNode(
+		const FBPServerResultTableNode& In
+        ,FString& OutResultItem
+        ,int32& OutWeight
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerResultTableNodeType(
+		const FBPServerResultTableNodeType& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerRevokeAllBansForUserRequest(
+		const FBPServerRevokeAllBansForUserRequest& In
+        ,FString& OutPlayFabId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerRevokeAllBansForUserResult(
+		const FBPServerRevokeAllBansForUserResult& In
+        ,TArray<FBPServerBanInfo>& OutBanData
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerRevokeBansRequest(
+		const FBPServerRevokeBansRequest& In
+        ,TArray<FString>& OutBanIds
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerRevokeBansResult(
+		const FBPServerRevokeBansResult& In
+        ,TArray<FBPServerBanInfo>& OutBanData
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
@@ -1210,6 +1315,30 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutUnlockedItemInstanceId
         ,FString& OutUnlockedWithItemInstanceId
         ,TArray<FBPServerItemInstance>& OutGrantedItems
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerUpdateBanRequest(
+		const FBPServerUpdateBanRequest& In
+        ,FString& OutBanId
+        ,FString& OutReason
+        ,FDateTime& OutExpires
+        ,FString& OutIPAddress
+        ,FString& OutMACAddress
+        ,bool& OutPermanent
+        ,bool& OutActive
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerUpdateBansRequest(
+		const FBPServerUpdateBansRequest& In
+        ,TArray<FBPServerUpdateBanRequest>& OutBans
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerUpdateBansResult(
+		const FBPServerUpdateBansResult& In
+        ,TArray<FBPServerBanInfo>& OutBanData
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))

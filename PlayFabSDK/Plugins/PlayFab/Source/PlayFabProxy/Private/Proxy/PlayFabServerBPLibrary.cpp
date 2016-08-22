@@ -123,6 +123,76 @@ void UPFServerProxyLibrary::BreakBPServerAwardSteamAchievementResult(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerBanInfo(
+		const FBPServerBanInfo& In
+        ,FString& OutPlayFabId
+        ,FString& OutBanId
+        ,FString& OutIPAddress
+        ,FString& OutMACAddress
+        ,FDateTime& OutCreated
+        ,FDateTime& OutExpires
+        ,FString& OutReason
+        ,bool& OutActive
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutBanId = In.Data.BanId;
+	OutIPAddress = In.Data.IPAddress;
+	OutMACAddress = In.Data.MACAddress;
+	
+	
+	OutReason = In.Data.Reason;
+	OutActive = In.Data.Active;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerBanRequest(
+		const FBPServerBanRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutIPAddress
+        ,FString& OutMACAddress
+        ,FString& OutReason
+        ,int32& OutDurationInHours
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutIPAddress = In.Data.IPAddress;
+	OutMACAddress = In.Data.MACAddress;
+	OutReason = In.Data.Reason;
+	OutDurationInHours = In.Data.DurationInHours;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerBanUsersRequest(
+		const FBPServerBanUsersRequest& In
+        ,TArray<FBPServerBanRequest>& OutBans
+	)
+{
+    for (const PlayFab::ServerModels::FBanRequest& elem : In.Data.Bans)
+    {
+        FBPServerBanRequest result;
+        result.Data = elem;
+        OutBans.Add(result);
+    }
+
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerBanUsersResult(
+		const FBPServerBanUsersResult& In
+        ,TArray<FBPServerBanInfo>& OutBanData
+	)
+{
+    for (const PlayFab::ServerModels::FBanInfo& elem : In.Data.BanData)
+    {
+        FBPServerBanInfo result;
+        result.Data = elem;
+        OutBanData.Add(result);
+    }
+
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerCatalogItem(
 		const FBPServerCatalogItem& In
         ,FString& OutItemId
@@ -1066,6 +1136,25 @@ void UPFServerProxyLibrary::BreakBPServerGetPublisherDataResult(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerGetRandomResultTablesRequest(
+		const FBPServerGetRandomResultTablesRequest& In
+        ,FString& OutCatalogVersion
+        ,TArray<FString>& OutTableIDs
+	)
+{
+    OutCatalogVersion = In.Data.CatalogVersion;
+	OutTableIDs = In.Data.TableIDs;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetRandomResultTablesResult(
+		const FBPServerGetRandomResultTablesResult& In
+	)
+{
+    
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerGetSegmentResult(
 		const FBPServerGetSegmentResult& In
         ,FString& OutId
@@ -1158,6 +1247,30 @@ void UPFServerProxyLibrary::BreakBPServerGetUserAccountInfoResult(
 	)
 {
     if (In.Data.UserInfo.IsValid()) {    OutUserInfo.Data = *In.Data.UserInfo;}
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetUserBansRequest(
+		const FBPServerGetUserBansRequest& In
+        ,FString& OutPlayFabId
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetUserBansResult(
+		const FBPServerGetUserBansResult& In
+        ,TArray<FBPServerBanInfo>& OutBanData
+	)
+{
+    for (const PlayFab::ServerModels::FBanInfo& elem : In.Data.BanData)
+    {
+        FBPServerBanInfo result;
+        result.Data = elem;
+        OutBanData.Add(result);
+    }
+
 	
 }
 
@@ -1687,9 +1800,11 @@ void UPFServerProxyLibrary::BreakBPServerPlayerProfile(
         ,FString& OutPlayerId
         ,FString& OutTitleId
         ,FString& OutDisplayName
+        ,FString& OutPublisherId
         ,FDateTime& OutCreated
         ,FDateTime& OutLastLogin
         ,FDateTime& OutBannedUntil
+        ,TArray<FString>& OutTags
         ,TArray<FBPServerAdCampaignAttribution>& OutAdCampaignAttributions
         ,TArray<FBPServerPushNotificationRegistration>& OutPushNotificationRegistrations
         ,TArray<FBPServerPlayerLinkedAccount>& OutLinkedAccounts
@@ -1699,12 +1814,14 @@ void UPFServerProxyLibrary::BreakBPServerPlayerProfile(
     OutPlayerId = In.Data.PlayerId;
 	OutTitleId = In.Data.TitleId;
 	OutDisplayName = In.Data.DisplayName;
+	OutPublisherId = In.Data.PublisherId;
 	
 	
 	
 	
 	
 	
+	OutTags = In.Data.Tags;
 	
 	for (const PlayFab::ServerModels::FAdCampaignAttribution& elem : In.Data.AdCampaignAttributions)
     {
@@ -1785,6 +1902,25 @@ void UPFServerProxyLibrary::BreakBPServerPushNotificationRegistration(
 {
     
 	OutNotificationEndpointARN = In.Data.NotificationEndpointARN;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerRandomResultTableListing(
+		const FBPServerRandomResultTableListing& In
+        ,FString& OutCatalogVersion
+        ,FString& OutTableId
+        ,TArray<FBPServerResultTableNode>& OutNodes
+	)
+{
+    OutCatalogVersion = In.Data.CatalogVersion;
+	OutTableId = In.Data.TableId;
+	for (const PlayFab::ServerModels::FResultTableNode& elem : In.Data.Nodes)
+    {
+        FBPServerResultTableNode result;
+        result.Data = elem;
+        OutNodes.Add(result);
+    }
+
 	
 }
 
@@ -1881,6 +2017,73 @@ void UPFServerProxyLibrary::BreakBPServerReportPlayerServerResult(
 {
     OutUpdated = In.Data.Updated;
 	OutSubmissionsRemaining = In.Data.SubmissionsRemaining;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerResultTableNode(
+		const FBPServerResultTableNode& In
+        ,FString& OutResultItem
+        ,int32& OutWeight
+	)
+{
+    
+	OutResultItem = In.Data.ResultItem;
+	OutWeight = In.Data.Weight;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerResultTableNodeType(
+		const FBPServerResultTableNodeType& In
+	)
+{
+    
+}
+
+void UPFServerProxyLibrary::BreakBPServerRevokeAllBansForUserRequest(
+		const FBPServerRevokeAllBansForUserRequest& In
+        ,FString& OutPlayFabId
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerRevokeAllBansForUserResult(
+		const FBPServerRevokeAllBansForUserResult& In
+        ,TArray<FBPServerBanInfo>& OutBanData
+	)
+{
+    for (const PlayFab::ServerModels::FBanInfo& elem : In.Data.BanData)
+    {
+        FBPServerBanInfo result;
+        result.Data = elem;
+        OutBanData.Add(result);
+    }
+
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerRevokeBansRequest(
+		const FBPServerRevokeBansRequest& In
+        ,TArray<FString>& OutBanIds
+	)
+{
+    OutBanIds = In.Data.BanIds;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerRevokeBansResult(
+		const FBPServerRevokeBansResult& In
+        ,TArray<FBPServerBanInfo>& OutBanData
+	)
+{
+    for (const PlayFab::ServerModels::FBanInfo& elem : In.Data.BanData)
+    {
+        FBPServerBanInfo result;
+        result.Data = elem;
+        OutBanData.Add(result);
+    }
+
 	
 }
 
@@ -2171,6 +2374,57 @@ void UPFServerProxyLibrary::BreakBPServerUnlockContainerItemResult(
     }
 
 	
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerUpdateBanRequest(
+		const FBPServerUpdateBanRequest& In
+        ,FString& OutBanId
+        ,FString& OutReason
+        ,FDateTime& OutExpires
+        ,FString& OutIPAddress
+        ,FString& OutMACAddress
+        ,bool& OutPermanent
+        ,bool& OutActive
+	)
+{
+    OutBanId = In.Data.BanId;
+	OutReason = In.Data.Reason;
+	
+	OutIPAddress = In.Data.IPAddress;
+	OutMACAddress = In.Data.MACAddress;
+	OutPermanent = In.Data.Permanent;
+	OutActive = In.Data.Active;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerUpdateBansRequest(
+		const FBPServerUpdateBansRequest& In
+        ,TArray<FBPServerUpdateBanRequest>& OutBans
+	)
+{
+    for (const PlayFab::ServerModels::FUpdateBanRequest& elem : In.Data.Bans)
+    {
+        FBPServerUpdateBanRequest result;
+        result.Data = elem;
+        OutBans.Add(result);
+    }
+
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerUpdateBansResult(
+		const FBPServerUpdateBansResult& In
+        ,TArray<FBPServerBanInfo>& OutBanData
+	)
+{
+    for (const PlayFab::ServerModels::FBanInfo& elem : In.Data.BanData)
+    {
+        FBPServerBanInfo result;
+        result.Data = elem;
+        OutBanData.Add(result);
+    }
+
 	
 }
 

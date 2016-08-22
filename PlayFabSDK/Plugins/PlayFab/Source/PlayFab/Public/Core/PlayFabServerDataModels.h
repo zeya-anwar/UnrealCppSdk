@@ -1021,6 +1021,158 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FBanInfo : public FPlayFabBaseModel
+    {
+		
+		// [optional] Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+		// [optional] The unique Ban Id associated with this ban.
+		FString BanId;
+		// [optional] The IP address on which the ban was applied. May affect multiple players.
+		FString IPAddress;
+		// [optional] The MAC address on which the ban was applied. May affect multiple players.
+		FString MACAddress;
+		// [optional] The time when this ban was applied.
+		OptionalTime Created;
+		// [optional] The time when this ban expires. Permanent bans do not have expiration date.
+		OptionalTime Expires;
+		// [optional] The reason why this ban was applied.
+		FString Reason;
+		// The active state of this ban. Expired bans may still have this value set to true but they will have no effect.
+		bool Active;
+	
+        FBanInfo() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			BanId(),
+			IPAddress(),
+			MACAddress(),
+			Created(),
+			Expires(),
+			Reason(),
+			Active(false)
+			{}
+		
+		FBanInfo(const FBanInfo& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			BanId(src.BanId),
+			IPAddress(src.IPAddress),
+			MACAddress(src.MACAddress),
+			Created(src.Created),
+			Expires(src.Expires),
+			Reason(src.Reason),
+			Active(src.Active)
+			{}
+			
+		FBanInfo(const TSharedPtr<FJsonObject>& obj) : FBanInfo()
+        {
+            readFromValue(obj);
+        }
+		
+		~FBanInfo();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FBanRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+		// [optional] IP address to be banned. May affect multiple players.
+		FString IPAddress;
+		// [optional] MAC address to be banned. May affect multiple players.
+		FString MACAddress;
+		// [optional] The reason for this ban. Maximum 140 characters.
+		FString Reason;
+		// [optional] The duration in hours for the ban. Leave this blank for a permanent ban.
+		OptionalUint32 DurationInHours;
+	
+        FBanRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			IPAddress(),
+			MACAddress(),
+			Reason(),
+			DurationInHours()
+			{}
+		
+		FBanRequest(const FBanRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			IPAddress(src.IPAddress),
+			MACAddress(src.MACAddress),
+			Reason(src.Reason),
+			DurationInHours(src.DurationInHours)
+			{}
+			
+		FBanRequest(const TSharedPtr<FJsonObject>& obj) : FBanRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FBanRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FBanUsersRequest : public FPlayFabBaseModel
+    {
+		
+		// List of ban requests to be applied. Maximum 100.
+		TArray<FBanRequest> Bans;
+	
+        FBanUsersRequest() :
+			FPlayFabBaseModel(),
+			Bans()
+			{}
+		
+		FBanUsersRequest(const FBanUsersRequest& src) :
+			FPlayFabBaseModel(),
+			Bans(src.Bans)
+			{}
+			
+		FBanUsersRequest(const TSharedPtr<FJsonObject>& obj) : FBanUsersRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FBanUsersRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FBanUsersResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Information on the bans that were applied
+		TArray<FBanInfo> BanData;
+	
+        FBanUsersResult() :
+			FPlayFabBaseModel(),
+			BanData()
+			{}
+		
+		FBanUsersResult(const FBanUsersResult& src) :
+			FPlayFabBaseModel(),
+			BanData(src.BanData)
+			{}
+			
+		FBanUsersResult(const TSharedPtr<FJsonObject>& obj) : FBanUsersResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FBanUsersResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FCatalogItemConsumableInfo : public FPlayFabBaseModel
     {
 		
@@ -3370,6 +3522,8 @@ namespace ServerModels
 		FString TitleId;
 		// [optional] Player Display Name
 		FString DisplayName;
+		// [optional] Publisher this player belongs to
+		FString PublisherId;
 		// [optional] Player account origination
 		Boxed<LoginIdentityProvider> Origination;
 		// [optional] Player record created
@@ -3382,6 +3536,8 @@ namespace ServerModels
 		TMap<FString, int32> Statistics;
 		// [optional] Dictionary of player's total currency purchases. The key VTD is a sum of all player_realmoney_purchase events OrderTotals.
 		TMap<FString, uint32> ValuesToDate;
+		// [optional] List of player's tags for segmentation.
+		TArray<FString> Tags;
 		// [optional] Dictionary of player's virtual currency balances
 		TMap<FString, int32> VirtualCurrencyBalances;
 		// [optional] Array of ad campaigns player has been attributed to
@@ -3398,12 +3554,14 @@ namespace ServerModels
 			PlayerId(),
 			TitleId(),
 			DisplayName(),
+			PublisherId(),
 			Origination(),
 			Created(),
 			LastLogin(),
 			BannedUntil(),
 			Statistics(),
 			ValuesToDate(),
+			Tags(),
 			VirtualCurrencyBalances(),
 			AdCampaignAttributions(),
 			PushNotificationRegistrations(),
@@ -3416,12 +3574,14 @@ namespace ServerModels
 			PlayerId(src.PlayerId),
 			TitleId(src.TitleId),
 			DisplayName(src.DisplayName),
+			PublisherId(src.PublisherId),
 			Origination(src.Origination),
 			Created(src.Created),
 			LastLogin(src.LastLogin),
 			BannedUntil(src.BannedUntil),
 			Statistics(src.Statistics),
 			ValuesToDate(src.ValuesToDate),
+			Tags(src.Tags),
 			VirtualCurrencyBalances(src.VirtualCurrencyBalances),
 			AdCampaignAttributions(src.AdCampaignAttributions),
 			PushNotificationRegistrations(src.PushNotificationRegistrations),
@@ -3901,6 +4061,144 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FGetRandomResultTablesRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] Specifies the catalog version that should be used to retrieve the Random Result Tables.  If unspecified, uses default/primary catalog.
+		FString CatalogVersion;
+		// The unique identifier of the Random Result Table to use.
+		TArray<FString> TableIDs;
+	
+        FGetRandomResultTablesRequest() :
+			FPlayFabBaseModel(),
+			CatalogVersion(),
+			TableIDs()
+			{}
+		
+		FGetRandomResultTablesRequest(const FGetRandomResultTablesRequest& src) :
+			FPlayFabBaseModel(),
+			CatalogVersion(src.CatalogVersion),
+			TableIDs(src.TableIDs)
+			{}
+			
+		FGetRandomResultTablesRequest(const TSharedPtr<FJsonObject>& obj) : FGetRandomResultTablesRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetRandomResultTablesRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	enum ResultTableNodeType
+	{
+		ResultTableNodeTypeItemId,
+		ResultTableNodeTypeTableId
+	};
+	
+	void writeResultTableNodeTypeEnumJSON(ResultTableNodeType enumVal, JsonWriter& writer);
+	ResultTableNodeType readResultTableNodeTypeFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
+	struct PLAYFAB_API FResultTableNode : public FPlayFabBaseModel
+    {
+		
+		// Whether this entry in the table is an item or a link to another table
+		ResultTableNodeType ResultItemType;
+		// Either an ItemId, or the TableId of another random result table
+		FString ResultItem;
+		// How likely this is to be rolled - larger numbers add more weight
+		int32 Weight;
+	
+        FResultTableNode() :
+			FPlayFabBaseModel(),
+			ResultItemType(),
+			ResultItem(),
+			Weight(0)
+			{}
+		
+		FResultTableNode(const FResultTableNode& src) :
+			FPlayFabBaseModel(),
+			ResultItemType(src.ResultItemType),
+			ResultItem(src.ResultItem),
+			Weight(src.Weight)
+			{}
+			
+		FResultTableNode(const TSharedPtr<FJsonObject>& obj) : FResultTableNode()
+        {
+            readFromValue(obj);
+        }
+		
+		~FResultTableNode();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FRandomResultTableListing : public FPlayFabBaseModel
+    {
+		
+		// [optional] Catalog version this table is associated with
+		FString CatalogVersion;
+		// Unique name for this drop table
+		FString TableId;
+		// Child nodes that indicate what kind of drop table item this actually is.
+		TArray<FResultTableNode> Nodes;
+	
+        FRandomResultTableListing() :
+			FPlayFabBaseModel(),
+			CatalogVersion(),
+			TableId(),
+			Nodes()
+			{}
+		
+		FRandomResultTableListing(const FRandomResultTableListing& src) :
+			FPlayFabBaseModel(),
+			CatalogVersion(src.CatalogVersion),
+			TableId(src.TableId),
+			Nodes(src.Nodes)
+			{}
+			
+		FRandomResultTableListing(const TSharedPtr<FJsonObject>& obj) : FRandomResultTableListing()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRandomResultTableListing();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetRandomResultTablesResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] array of random result tables currently available
+		TMap<FString, FRandomResultTableListing> Tables;
+	
+        FGetRandomResultTablesResult() :
+			FPlayFabBaseModel(),
+			Tables()
+			{}
+		
+		FGetRandomResultTablesResult(const FGetRandomResultTablesResult& src) :
+			FPlayFabBaseModel(),
+			Tables(src.Tables)
+			{}
+			
+		FGetRandomResultTablesResult(const TSharedPtr<FJsonObject>& obj) : FGetRandomResultTablesResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetRandomResultTablesResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FGetSharedGroupDataRequest : public FPlayFabBaseModel
     {
 		
@@ -4202,6 +4500,60 @@ namespace ServerModels
         }
 		
 		~FGetUserAccountInfoResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetUserBansRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+	
+        FGetUserBansRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId()
+			{}
+		
+		FGetUserBansRequest(const FGetUserBansRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId)
+			{}
+			
+		FGetUserBansRequest(const TSharedPtr<FJsonObject>& obj) : FGetUserBansRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetUserBansRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetUserBansResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Information about the bans
+		TArray<FBanInfo> BanData;
+	
+        FGetUserBansResult() :
+			FPlayFabBaseModel(),
+			BanData()
+			{}
+		
+		FGetUserBansResult(const FGetUserBansResult& src) :
+			FPlayFabBaseModel(),
+			BanData(src.BanData)
+			{}
+			
+		FGetUserBansResult(const TSharedPtr<FJsonObject>& obj) : FGetUserBansResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetUserBansResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -5564,6 +5916,114 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FRevokeAllBansForUserRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+	
+        FRevokeAllBansForUserRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId()
+			{}
+		
+		FRevokeAllBansForUserRequest(const FRevokeAllBansForUserRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId)
+			{}
+			
+		FRevokeAllBansForUserRequest(const TSharedPtr<FJsonObject>& obj) : FRevokeAllBansForUserRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRevokeAllBansForUserRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FRevokeAllBansForUserResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Information on the bans that were revoked.
+		TArray<FBanInfo> BanData;
+	
+        FRevokeAllBansForUserResult() :
+			FPlayFabBaseModel(),
+			BanData()
+			{}
+		
+		FRevokeAllBansForUserResult(const FRevokeAllBansForUserResult& src) :
+			FPlayFabBaseModel(),
+			BanData(src.BanData)
+			{}
+			
+		FRevokeAllBansForUserResult(const TSharedPtr<FJsonObject>& obj) : FRevokeAllBansForUserResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRevokeAllBansForUserResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FRevokeBansRequest : public FPlayFabBaseModel
+    {
+		
+		// Ids of the bans to be revoked. Maximum 100.
+		TArray<FString> BanIds;
+	
+        FRevokeBansRequest() :
+			FPlayFabBaseModel(),
+			BanIds()
+			{}
+		
+		FRevokeBansRequest(const FRevokeBansRequest& src) :
+			FPlayFabBaseModel(),
+			BanIds(src.BanIds)
+			{}
+			
+		FRevokeBansRequest(const TSharedPtr<FJsonObject>& obj) : FRevokeBansRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRevokeBansRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FRevokeBansResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Information on the bans that were revoked
+		TArray<FBanInfo> BanData;
+	
+        FRevokeBansResult() :
+			FPlayFabBaseModel(),
+			BanData()
+			{}
+		
+		FRevokeBansResult(const FRevokeBansResult& src) :
+			FPlayFabBaseModel(),
+			BanData(src.BanData)
+			{}
+			
+		FRevokeBansResult(const TSharedPtr<FJsonObject>& obj) : FRevokeBansResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRevokeBansResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FRevokeInventoryItemRequest : public FPlayFabBaseModel
     {
 		
@@ -6121,6 +6581,111 @@ namespace ServerModels
         }
 		
 		~FUnlockContainerItemResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUpdateBanRequest : public FPlayFabBaseModel
+    {
+		
+		// The id of the ban to be updated.
+		FString BanId;
+		// [optional] The updated reason for the ban to be updated. Maximum 140 characters. Null for no change.
+		FString Reason;
+		// [optional] The updated expiration date for the ban. Null for no change.
+		OptionalTime Expires;
+		// [optional] The updated IP address for the ban. Null for no change.
+		FString IPAddress;
+		// [optional] The updated MAC address for the ban. Null for no change.
+		FString MACAddress;
+		// [optional] Whether to make this ban permanent. Set to true to make this ban permanent. This will not modify Active state.
+		OptionalBool Permanent;
+		// [optional] The updated active state for the ban. Null for no change.
+		OptionalBool Active;
+	
+        FUpdateBanRequest() :
+			FPlayFabBaseModel(),
+			BanId(),
+			Reason(),
+			Expires(),
+			IPAddress(),
+			MACAddress(),
+			Permanent(),
+			Active()
+			{}
+		
+		FUpdateBanRequest(const FUpdateBanRequest& src) :
+			FPlayFabBaseModel(),
+			BanId(src.BanId),
+			Reason(src.Reason),
+			Expires(src.Expires),
+			IPAddress(src.IPAddress),
+			MACAddress(src.MACAddress),
+			Permanent(src.Permanent),
+			Active(src.Active)
+			{}
+			
+		FUpdateBanRequest(const TSharedPtr<FJsonObject>& obj) : FUpdateBanRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUpdateBanRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUpdateBansRequest : public FPlayFabBaseModel
+    {
+		
+		// List of bans to be updated. Maximum 100.
+		TArray<FUpdateBanRequest> Bans;
+	
+        FUpdateBansRequest() :
+			FPlayFabBaseModel(),
+			Bans()
+			{}
+		
+		FUpdateBansRequest(const FUpdateBansRequest& src) :
+			FPlayFabBaseModel(),
+			Bans(src.Bans)
+			{}
+			
+		FUpdateBansRequest(const TSharedPtr<FJsonObject>& obj) : FUpdateBansRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUpdateBansRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUpdateBansResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Information on the bans that were updated
+		TArray<FBanInfo> BanData;
+	
+        FUpdateBansResult() :
+			FPlayFabBaseModel(),
+			BanData()
+			{}
+		
+		FUpdateBansResult(const FUpdateBansResult& src) :
+			FPlayFabBaseModel(),
+			BanData(src.BanData)
+			{}
+			
+		FUpdateBansResult(const TSharedPtr<FJsonObject>& obj) : FUpdateBansResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUpdateBansResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

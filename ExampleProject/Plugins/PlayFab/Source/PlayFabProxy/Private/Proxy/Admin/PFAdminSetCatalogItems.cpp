@@ -10,11 +10,12 @@ UPFAdminSetCatalogItems::UPFAdminSetCatalogItems(const FObjectInitializer& Objec
 {
 }
 
-UPFAdminSetCatalogItems* UPFAdminSetCatalogItems::SetCatalogItems(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InCatalogVersion, const TArray<FBPAdminCatalogItem>& InCatalog)
+UPFAdminSetCatalogItems* UPFAdminSetCatalogItems::SetCatalogItems(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InCatalogVersion, const bool& InSetAsDefaultCatalog, const TArray<FBPAdminCatalogItem>& InCatalog)
 {
 	UPFAdminSetCatalogItems* Proxy = NewObject<UPFAdminSetCatalogItems>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.CatalogVersion = InCatalogVersion;
+	Proxy->Request.SetAsDefaultCatalog = InSetAsDefaultCatalog;
 	for (const FBPAdminCatalogItem& elem : InCatalog)
     {
         Proxy->Request.Catalog.Add(elem.Data);

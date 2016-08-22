@@ -6761,7 +6761,7 @@ namespace ClientModels
 		FString AccessToken;
 		// [optional] Automatically create a PlayFab account if one is not currently linked to this Google account.
 		OptionalBool CreateAccount;
-		// [optional] Deprecated - unused
+		// [optional] Deprecated - Do not use
 		FString PublisherId;
 		// [optional] Flags for which pieces of info to return for the user.
 		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
@@ -7021,7 +7021,7 @@ namespace ClientModels
 		OptionalBool StartNewIfNoneFound;
 		// [optional] Filter to include and/or exclude Game Server Instances associated with certain Tags
 		TSharedPtr<FCollectionFilter> TagFilter;
-		// [optional] [deprecated]
+		// [optional] Deprecated - Do not use
 		OptionalBool EnableQueue;
 	
         FMatchmakeRequest() :
@@ -7083,7 +7083,7 @@ namespace ClientModels
 		FString ServerHostname;
 		// [optional] port number to use for non-http communications with the server
 		OptionalInt32 ServerPort;
-		// [optional] server authorization ticket (used by RedeemCoupon to validate user insertion into the game)
+		// [optional] server authorization ticket (used by RedeemMatchmakerTicket to validate user insertion into the game)
 		FString Ticket;
 		// [optional] timestamp for when the server will expire, if applicable
 		FString Expires;
@@ -7470,7 +7470,7 @@ namespace ClientModels
 		
 		// Generated coupon code to redeem.
 		FString CouponCode;
-		// [optional] Catalog version of the coupon.
+		// [optional] Catalog version of the coupon. If null, uses the default catalog
 		FString CatalogVersion;
 	
         FRedeemCouponRequest() :
@@ -7596,7 +7596,7 @@ namespace ClientModels
 		OptionalBool RequireBothUsernameAndEmail;
 		// [optional] An optional parameter for setting the display name for this title.
 		FString DisplayName;
-		// [optional] [Deprecated - The Origination of a user is determined by the API call used to create the account. In the case of RegisterPlayFabUser, it will be Organic.
+		// [optional] The Origination of a user is determined by the API call used to create the account. In the case of RegisterPlayFabUser, it will be Organic.
 		FString Origination;
 	
         FRegisterPlayFabUserRequest() :
@@ -8030,7 +8030,7 @@ namespace ClientModels
 		FString Email;
 		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
 		FString TitleId;
-		// [optional] Deprecated - unused
+		// [optional] Deprecated - Do not use
 		FString PublisherId;
 	
         FSendAccountRecoveryEmailRequest() :
