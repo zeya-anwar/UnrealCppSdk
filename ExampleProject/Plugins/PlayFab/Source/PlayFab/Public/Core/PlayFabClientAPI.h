@@ -137,6 +137,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FOpenTradeDelegate, const ClientModels::FOpenTradeResponse&);
         DECLARE_DELEGATE_OneParam(FAttributeInstallDelegate, const ClientModels::FAttributeInstallResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayerSegmentsDelegate, const ClientModels::FGetPlayerSegmentsResult&);
+        DECLARE_DELEGATE_OneParam(FGetPlayerTagsDelegate, const ClientModels::FGetPlayerTagsResult&);
 
         UPlayFabClientAPI();
         ~UPlayFabClientAPI();
@@ -712,6 +713,11 @@ namespace PlayFab
          * List all segments that a player currently belongs to at this moment in time.
          */
         bool GetPlayerSegments(const FGetPlayerSegmentsDelegate& SuccessDelegate = FGetPlayerSegmentsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Get all tags with a given Namespace (optional) from a player profile.
+         * This API will return a list of canonical tags which includes both namespace and tag's name. If namespace is not provided, the result is a list of all canonical tags. TagName can be used for segmentation and Namespace is limited to 128 characters.
+         */
+        bool GetPlayerTags(ClientModels::FGetPlayerTagsRequest& request, const FGetPlayerTagsDelegate& SuccessDelegate = FGetPlayerTagsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
     private:
         // ------------ Generated result handlers
@@ -841,6 +847,7 @@ namespace PlayFab
         void OnOpenTradeResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FOpenTradeDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAttributeInstallResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAttributeInstallDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayerSegmentsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerSegmentsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetPlayerTagsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerTagsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 
         FString mUserSessionTicket;
     };

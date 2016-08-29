@@ -208,6 +208,7 @@ void UPFClientProxyLibrary::BreakBPClientCatalogItem(
         ,bool& OutIsStackable
         ,bool& OutIsTradable
         ,FString& OutItemImageUrl
+        ,bool& OutIsLimitedEdition
 	)
 {
     OutItemId = In.Data.ItemId;
@@ -226,6 +227,7 @@ void UPFClientProxyLibrary::BreakBPClientCatalogItem(
 	OutIsStackable = In.Data.IsStackable;
 	OutIsTradable = In.Data.IsTradable;
 	OutItemImageUrl = In.Data.ItemImageUrl;
+	OutIsLimitedEdition = In.Data.IsLimitedEdition;
 	
 }
 
@@ -1287,6 +1289,28 @@ void UPFClientProxyLibrary::BreakBPClientGetPlayerStatisticVersionsResult(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientGetPlayerTagsRequest(
+		const FBPClientGetPlayerTagsRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutNamespace
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutNamespace = In.Data.Namespace;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetPlayerTagsResult(
+		const FBPClientGetPlayerTagsResult& In
+        ,FString& OutPlayFabId
+        ,TArray<FString>& OutTags
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutTags = In.Data.Tags;
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientGetPlayerTradesRequest(
 		const FBPClientGetPlayerTradesRequest& In
 	)
@@ -1599,6 +1623,9 @@ void UPFClientProxyLibrary::BreakBPClientGetStoreItemsRequest(
 void UPFClientProxyLibrary::BreakBPClientGetStoreItemsResult(
 		const FBPClientGetStoreItemsResult& In
         ,TArray<FBPClientStoreItem>& OutStore
+        ,FString& OutCatalogVersion
+        ,FString& OutStoreId
+        ,FBPClientStoreMarketingModel& OutMarketingData
 	)
 {
     for (const PlayFab::ClientModels::FStoreItem& elem : In.Data.Store)
@@ -1608,6 +1635,10 @@ void UPFClientProxyLibrary::BreakBPClientGetStoreItemsResult(
         OutStore.Add(result);
     }
 
+	
+	OutCatalogVersion = In.Data.CatalogVersion;
+	OutStoreId = In.Data.StoreId;
+	if (In.Data.MarketingData.IsValid()) {    OutMarketingData.Data = *In.Data.MarketingData;}
 	
 }
 
@@ -2792,6 +2823,13 @@ void UPFClientProxyLibrary::BreakBPClientSharedGroupDataRecord(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientSourceType(
+		const FBPClientSourceType& In
+	)
+{
+    
+}
+
 void UPFClientProxyLibrary::BreakBPClientStartGameRequest(
 		const FBPClientStartGameRequest& In
         ,FString& OutBuildVersion
@@ -2927,10 +2965,25 @@ void UPFClientProxyLibrary::BreakBPClientSteamPlayFabIdPair(
 void UPFClientProxyLibrary::BreakBPClientStoreItem(
 		const FBPClientStoreItem& In
         ,FString& OutItemId
+        ,int32& OutDisplayPosition
 	)
 {
     OutItemId = In.Data.ItemId;
 	
+	
+	
+	OutDisplayPosition = In.Data.DisplayPosition;
+	
+}
+
+void UPFClientProxyLibrary::BreakBPClientStoreMarketingModel(
+		const FBPClientStoreMarketingModel& In
+        ,FString& OutDisplayName
+        ,FString& OutDescription
+	)
+{
+    OutDisplayName = In.Data.DisplayName;
+	OutDescription = In.Data.Description;
 	
 	
 }

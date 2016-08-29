@@ -83,6 +83,60 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FAddPlayerTagRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+		// Unique tag for player profile.
+		FString TagName;
+	
+        FAddPlayerTagRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			TagName()
+			{}
+		
+		FAddPlayerTagRequest(const FAddPlayerTagRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			TagName(src.TagName)
+			{}
+			
+		FAddPlayerTagRequest(const TSharedPtr<FJsonObject>& obj) : FAddPlayerTagRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FAddPlayerTagRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FAddPlayerTagResult : public FPlayFabBaseModel
+    {
+		
+	
+        FAddPlayerTagResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FAddPlayerTagResult(const FAddPlayerTagResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FAddPlayerTagResult(const TSharedPtr<FJsonObject>& obj) : FAddPlayerTagResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FAddPlayerTagResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FAddSharedGroupMembersRequest : public FPlayFabBaseModel
     {
 		
@@ -1317,6 +1371,8 @@ namespace ServerModels
 		bool IsTradable;
 		// [optional] URL to the item image. For Facebook purchase to display the image on the item purchase page, this must be set to an HTTP URL.
 		FString ItemImageUrl;
+		// if true, then only a fixed number can ever be granted.
+		bool IsLimitedEdition;
 	
         FCatalogItem() :
 			FPlayFabBaseModel(),
@@ -1335,7 +1391,8 @@ namespace ServerModels
 			CanBecomeCharacter(false),
 			IsStackable(false),
 			IsTradable(false),
-			ItemImageUrl()
+			ItemImageUrl(),
+			IsLimitedEdition(false)
 			{}
 		
 		FCatalogItem(const FCatalogItem& src) :
@@ -1355,7 +1412,8 @@ namespace ServerModels
 			CanBecomeCharacter(src.CanBecomeCharacter),
 			IsStackable(src.IsStackable),
 			IsTradable(src.IsTradable),
-			ItemImageUrl(src.ItemImageUrl)
+			ItemImageUrl(src.ItemImageUrl),
+			IsLimitedEdition(src.IsLimitedEdition)
 			{}
 			
 		FCatalogItem(const TSharedPtr<FJsonObject>& obj) : FCatalogItem()
@@ -3860,6 +3918,68 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FGetPlayerTagsRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+		// [optional] Optional namespace to filter results by
+		FString Namespace;
+	
+        FGetPlayerTagsRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			Namespace()
+			{}
+		
+		FGetPlayerTagsRequest(const FGetPlayerTagsRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			Namespace(src.Namespace)
+			{}
+			
+		FGetPlayerTagsRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayerTagsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerTagsRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerTagsResult : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+		// Canonical tags (including namespace and tag's name) for the requested user
+		TArray<FString> Tags;
+	
+        FGetPlayerTagsResult() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			Tags()
+			{}
+		
+		FGetPlayerTagsResult(const FGetPlayerTagsResult& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			Tags(src.Tags)
+			{}
+			
+		FGetPlayerTagsResult(const TSharedPtr<FJsonObject>& obj) : FGetPlayerTagsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerTagsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FGetPlayFabIDsFromFacebookIDsRequest : public FPlayFabBaseModel
     {
 		
@@ -5787,6 +5907,60 @@ namespace ServerModels
         }
 		
 		~FRedeemMatchmakerTicketResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FRemovePlayerTagRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+		// Unique tag for player profile.
+		FString TagName;
+	
+        FRemovePlayerTagRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			TagName()
+			{}
+		
+		FRemovePlayerTagRequest(const FRemovePlayerTagRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			TagName(src.TagName)
+			{}
+			
+		FRemovePlayerTagRequest(const TSharedPtr<FJsonObject>& obj) : FRemovePlayerTagRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRemovePlayerTagRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FRemovePlayerTagResult : public FPlayFabBaseModel
+    {
+		
+	
+        FRemovePlayerTagResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FRemovePlayerTagResult(const FRemovePlayerTagResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FRemovePlayerTagResult(const TSharedPtr<FJsonObject>& obj) : FRemovePlayerTagResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRemovePlayerTagResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

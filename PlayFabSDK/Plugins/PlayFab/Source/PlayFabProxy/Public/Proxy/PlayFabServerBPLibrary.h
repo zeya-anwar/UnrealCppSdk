@@ -32,6 +32,18 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerAddPlayerTagRequest(
+		const FBPServerAddPlayerTagRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutTagName
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerAddPlayerTagResult(
+		const FBPServerAddPlayerTagResult& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerAddSharedGroupMembersRequest(
 		const FBPServerAddSharedGroupMembersRequest& In
         ,FString& OutSharedGroupId
@@ -135,6 +147,7 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,bool& OutIsStackable
         ,bool& OutIsTradable
         ,FString& OutItemImageUrl
+        ,bool& OutIsLimitedEdition
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
@@ -577,6 +590,20 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPServerGetPlayerStatisticVersionsResult(
 		const FBPServerGetPlayerStatisticVersionsResult& In
         ,TArray<FBPServerPlayerStatisticVersion>& OutStatisticVersions
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerGetPlayerTagsRequest(
+		const FBPServerGetPlayerTagsRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutNamespace
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerGetPlayerTagsResult(
+		const FBPServerGetPlayerTagsResult& In
+        ,FString& OutPlayFabId
+        ,TArray<FString>& OutTags
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
@@ -1073,6 +1100,18 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,bool& OutTicketIsValid
         ,FString& OutError
         ,FBPServerUserAccountInfo& OutUserInfo
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerRemovePlayerTagRequest(
+		const FBPServerRemovePlayerTagRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutTagName
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerRemovePlayerTagResult(
+		const FBPServerRemovePlayerTagResult& In
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))

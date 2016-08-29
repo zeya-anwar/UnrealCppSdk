@@ -151,6 +151,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,bool& OutIsStackable
         ,bool& OutIsTradable
         ,FString& OutItemImageUrl
+        ,bool& OutIsLimitedEdition
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -708,6 +709,20 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientGetPlayerTagsRequest(
+		const FBPClientGetPlayerTagsRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutNamespace
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientGetPlayerTagsResult(
+		const FBPClientGetPlayerTagsResult& In
+        ,FString& OutPlayFabId
+        ,TArray<FString>& OutTags
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientGetPlayerTradesRequest(
 		const FBPClientGetPlayerTradesRequest& In
 	);
@@ -865,6 +880,9 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPClientGetStoreItemsResult(
 		const FBPClientGetStoreItemsResult& In
         ,TArray<FBPClientStoreItem>& OutStore
+        ,FString& OutCatalogVersion
+        ,FString& OutStoreId
+        ,FBPClientStoreMarketingModel& OutMarketingData
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1571,6 +1589,11 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientSourceType(
+		const FBPClientSourceType& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientStartGameRequest(
 		const FBPClientStartGameRequest& In
         ,FString& OutBuildVersion
@@ -1642,6 +1665,14 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPClientStoreItem(
 		const FBPClientStoreItem& In
         ,FString& OutItemId
+        ,int32& OutDisplayPosition
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientStoreMarketingModel(
+		const FBPClientStoreMarketingModel& In
+        ,FString& OutDisplayName
+        ,FString& OutDescription
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))

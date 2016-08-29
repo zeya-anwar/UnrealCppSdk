@@ -115,6 +115,68 @@ bool PlayFab::ServerModels::FAddCharacterVirtualCurrencyRequest::readFromValue(c
 }
 
 
+PlayFab::ServerModels::FAddPlayerTagRequest::~FAddPlayerTagRequest()
+{
+    
+}
+
+void PlayFab::ServerModels::FAddPlayerTagRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
+	
+    writer->WriteIdentifierPrefix(TEXT("TagName")); writer->WriteValue(TagName);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FAddPlayerTagRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TagNameValue = obj->TryGetField(TEXT("TagName"));
+    if (TagNameValue.IsValid()&& !TagNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(TagNameValue->TryGetString(TmpValue)) {TagName = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FAddPlayerTagResult::~FAddPlayerTagResult()
+{
+    
+}
+
+void PlayFab::ServerModels::FAddPlayerTagResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FAddPlayerTagResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ServerModels::FAddSharedGroupMembersRequest::~FAddSharedGroupMembersRequest()
 {
     
@@ -2081,6 +2143,8 @@ void PlayFab::ServerModels::FCatalogItem::writeJSON(JsonWriter& writer) const
 	
     if(ItemImageUrl.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ItemImageUrl")); writer->WriteValue(ItemImageUrl); }
 	
+    writer->WriteIdentifierPrefix(TEXT("IsLimitedEdition")); writer->WriteValue(IsLimitedEdition);
+	
     
     writer->WriteObjectEnd();
 }
@@ -2197,6 +2261,13 @@ bool PlayFab::ServerModels::FCatalogItem::readFromValue(const TSharedPtr<FJsonOb
     {
         FString TmpValue;
         if(ItemImageUrlValue->TryGetString(TmpValue)) {ItemImageUrl = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> IsLimitedEditionValue = obj->TryGetField(TEXT("IsLimitedEdition"));
+    if (IsLimitedEditionValue.IsValid()&& !IsLimitedEditionValue->IsNull())
+    {
+        bool TmpValue;
+        if(IsLimitedEditionValue->TryGetBool(TmpValue)) {IsLimitedEdition = TmpValue; }
     }
     
     
@@ -6319,6 +6390,89 @@ bool PlayFab::ServerModels::FGetPlayerStatisticVersionsResult::readFromValue(con
 }
 
 
+PlayFab::ServerModels::FGetPlayerTagsRequest::~FGetPlayerTagsRequest()
+{
+    
+}
+
+void PlayFab::ServerModels::FGetPlayerTagsRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
+	
+    if(Namespace.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Namespace")); writer->WriteValue(Namespace); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FGetPlayerTagsRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> NamespaceValue = obj->TryGetField(TEXT("Namespace"));
+    if (NamespaceValue.IsValid()&& !NamespaceValue->IsNull())
+    {
+        FString TmpValue;
+        if(NamespaceValue->TryGetString(TmpValue)) {Namespace = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FGetPlayerTagsResult::~FGetPlayerTagsResult()
+{
+    
+}
+
+void PlayFab::ServerModels::FGetPlayerTagsResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
+	
+    
+        writer->WriteArrayStart(TEXT("Tags"));
+    
+        for (const FString& item : Tags)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+    
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FGetPlayerTagsResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    HasSucceeded &= obj->TryGetStringArrayField(TEXT("Tags"),Tags);
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ServerModels::FGetPlayFabIDsFromFacebookIDsRequest::~FGetPlayFabIDsFromFacebookIDsRequest()
 {
     
@@ -9251,6 +9405,68 @@ bool PlayFab::ServerModels::FRedeemMatchmakerTicketResult::readFromValue(const T
         UserInfo = MakeShareable(new FUserAccountInfo(UserInfoValue->AsObject()));
     }
     
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FRemovePlayerTagRequest::~FRemovePlayerTagRequest()
+{
+    
+}
+
+void PlayFab::ServerModels::FRemovePlayerTagRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
+	
+    writer->WriteIdentifierPrefix(TEXT("TagName")); writer->WriteValue(TagName);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FRemovePlayerTagRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TagNameValue = obj->TryGetField(TEXT("TagName"));
+    if (TagNameValue.IsValid()&& !TagNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(TagNameValue->TryGetString(TmpValue)) {TagName = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FRemovePlayerTagResult::~FRemovePlayerTagResult()
+{
+    
+}
+
+void PlayFab::ServerModels::FRemovePlayerTagResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FRemovePlayerTagResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
     
     return HasSucceeded;
 }

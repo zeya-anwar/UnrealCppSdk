@@ -106,6 +106,60 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FAddPlayerTagRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+		// Unique tag for player profile.
+		FString TagName;
+	
+        FAddPlayerTagRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			TagName()
+			{}
+		
+		FAddPlayerTagRequest(const FAddPlayerTagRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			TagName(src.TagName)
+			{}
+			
+		FAddPlayerTagRequest(const TSharedPtr<FJsonObject>& obj) : FAddPlayerTagRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FAddPlayerTagRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FAddPlayerTagResult : public FPlayFabBaseModel
+    {
+		
+	
+        FAddPlayerTagResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FAddPlayerTagResult(const FAddPlayerTagResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FAddPlayerTagResult(const TSharedPtr<FJsonObject>& obj) : FAddPlayerTagResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FAddPlayerTagResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	enum Region
 	{
 		RegionUSCentral,
@@ -672,6 +726,8 @@ namespace AdminModels
 		bool IsTradable;
 		// [optional] URL to the item image. For Facebook purchase to display the image on the item purchase page, this must be set to an HTTP URL.
 		FString ItemImageUrl;
+		// if true, then only a fixed number can ever be granted.
+		bool IsLimitedEdition;
 	
         FCatalogItem() :
 			FPlayFabBaseModel(),
@@ -690,7 +746,8 @@ namespace AdminModels
 			CanBecomeCharacter(false),
 			IsStackable(false),
 			IsTradable(false),
-			ItemImageUrl()
+			ItemImageUrl(),
+			IsLimitedEdition(false)
 			{}
 		
 		FCatalogItem(const FCatalogItem& src) :
@@ -710,7 +767,8 @@ namespace AdminModels
 			CanBecomeCharacter(src.CanBecomeCharacter),
 			IsStackable(src.IsStackable),
 			IsTradable(src.IsTradable),
-			ItemImageUrl(src.ItemImageUrl)
+			ItemImageUrl(src.ItemImageUrl),
+			IsLimitedEdition(src.IsLimitedEdition)
 			{}
 			
 		FCatalogItem(const TSharedPtr<FJsonObject>& obj) : FCatalogItem()
@@ -2415,6 +2473,68 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FGetPlayerTagsRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+		// [optional] Optional namespace to filter results by
+		FString Namespace;
+	
+        FGetPlayerTagsRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			Namespace()
+			{}
+		
+		FGetPlayerTagsRequest(const FGetPlayerTagsRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			Namespace(src.Namespace)
+			{}
+			
+		FGetPlayerTagsRequest(const TSharedPtr<FJsonObject>& obj) : FGetPlayerTagsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerTagsRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPlayerTagsResult : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+		// Canonical tags (including namespace and tag's name) for the requested user
+		TArray<FString> Tags;
+	
+        FGetPlayerTagsResult() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			Tags()
+			{}
+		
+		FGetPlayerTagsResult(const FGetPlayerTagsResult& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			Tags(src.Tags)
+			{}
+			
+		FGetPlayerTagsResult(const TSharedPtr<FJsonObject>& obj) : FGetPlayerTagsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPlayerTagsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FGetPublisherDataRequest : public FPlayFabBaseModel
     {
 		
@@ -2777,25 +2897,33 @@ namespace AdminModels
 	struct PLAYFAB_API FStoreItem : public FPlayFabBaseModel
     {
 		
-		// unique identifier of the item as it exists in the catalog - note that this must exactly match the ItemId from the catalog
+		// Unique identifier of the item as it exists in the catalog - note that this must exactly match the ItemId from the catalog
 		FString ItemId;
-		// [optional] price of this item in virtual currencies and "RM" (the base Real Money purchase price, in USD pennies)
+		// [optional] Override prices for this item in virtual currencies and "RM" (the base Real Money purchase price, in USD pennies)
 		TMap<FString, uint32> VirtualCurrencyPrices;
-		// [optional] override prices for this item for specific currencies
+		// [optional] Override prices for this item for specific currencies
 		TMap<FString, uint32> RealCurrencyPrices;
+		// [optional] Store specific custom data. The data only exists as part of this store; it is not transferred to item instances
+		FMultitypeVar CustomData;
+		// [optional] Intended display position for this item. Note that 0 is the first position
+		OptionalUint32 DisplayPosition;
 	
         FStoreItem() :
 			FPlayFabBaseModel(),
 			ItemId(),
 			VirtualCurrencyPrices(),
-			RealCurrencyPrices()
+			RealCurrencyPrices(),
+			CustomData(),
+			DisplayPosition()
 			{}
 		
 		FStoreItem(const FStoreItem& src) :
 			FPlayFabBaseModel(),
 			ItemId(src.ItemId),
 			VirtualCurrencyPrices(src.VirtualCurrencyPrices),
-			RealCurrencyPrices(src.RealCurrencyPrices)
+			RealCurrencyPrices(src.RealCurrencyPrices),
+			CustomData(src.CustomData),
+			DisplayPosition(src.DisplayPosition)
 			{}
 			
 		FStoreItem(const TSharedPtr<FJsonObject>& obj) : FStoreItem()
@@ -2809,20 +2937,85 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	enum SourceType
+	{
+		SourceTypeAdmin,
+		SourceTypeBackEnd,
+		SourceTypeGameClient,
+		SourceTypeGameServer,
+		SourceTypePartner,
+		SourceTypeStream
+	};
+	
+	void writeSourceTypeEnumJSON(SourceType enumVal, JsonWriter& writer);
+	SourceType readSourceTypeFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
+	struct PLAYFAB_API FStoreMarketingModel : public FPlayFabBaseModel
+    {
+		
+		// [optional] Display name of a store as it will appear to users.
+		FString DisplayName;
+		// [optional] Tagline for a store.
+		FString Description;
+		// [optional] Custom data about a store.
+		FMultitypeVar Metadata;
+	
+        FStoreMarketingModel() :
+			FPlayFabBaseModel(),
+			DisplayName(),
+			Description(),
+			Metadata()
+			{}
+		
+		FStoreMarketingModel(const FStoreMarketingModel& src) :
+			FPlayFabBaseModel(),
+			DisplayName(src.DisplayName),
+			Description(src.Description),
+			Metadata(src.Metadata)
+			{}
+			
+		FStoreMarketingModel(const TSharedPtr<FJsonObject>& obj) : FStoreMarketingModel()
+        {
+            readFromValue(obj);
+        }
+		
+		~FStoreMarketingModel();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FGetStoreItemsResult : public FPlayFabBaseModel
     {
 		
 		// [optional] Array of items which can be purchased from this store.
 		TArray<FStoreItem> Store;
+		// [optional] How the store was last updated (Admin or a third party).
+		Boxed<SourceType> Source;
+		// [optional] The base catalog that this store is a part of.
+		FString CatalogVersion;
+		// [optional] The ID of this store.
+		FString StoreId;
+		// [optional] Additional data about the store.
+		TSharedPtr<FStoreMarketingModel> MarketingData;
 	
         FGetStoreItemsResult() :
 			FPlayFabBaseModel(),
-			Store()
+			Store(),
+			Source(),
+			CatalogVersion(),
+			StoreId(),
+			MarketingData(nullptr)
 			{}
 		
 		FGetStoreItemsResult(const FGetStoreItemsResult& src) :
 			FPlayFabBaseModel(),
-			Store(src.Store)
+			Store(src.Store),
+			Source(src.Source),
+			CatalogVersion(src.CatalogVersion),
+			StoreId(src.StoreId),
+			MarketingData(src.MarketingData.IsValid() ? MakeShareable(new FStoreMarketingModel(*src.MarketingData)) : nullptr)
 			{}
 			
 		FGetStoreItemsResult(const TSharedPtr<FJsonObject>& obj) : FGetStoreItemsResult()
@@ -4441,6 +4634,60 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FRemovePlayerTagRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+		// Unique tag for player profile.
+		FString TagName;
+	
+        FRemovePlayerTagRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			TagName()
+			{}
+		
+		FRemovePlayerTagRequest(const FRemovePlayerTagRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			TagName(src.TagName)
+			{}
+			
+		FRemovePlayerTagRequest(const TSharedPtr<FJsonObject>& obj) : FRemovePlayerTagRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRemovePlayerTagRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FRemovePlayerTagResult : public FPlayFabBaseModel
+    {
+		
+	
+        FRemovePlayerTagResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FRemovePlayerTagResult(const FRemovePlayerTagResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FRemovePlayerTagResult(const TSharedPtr<FJsonObject>& obj) : FRemovePlayerTagResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRemovePlayerTagResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FRemoveServerBuildRequest : public FPlayFabBaseModel
     {
 		
@@ -5515,17 +5762,20 @@ namespace AdminModels
 	struct PLAYFAB_API FUpdateStoreItemsRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] catalog version of the store to update. If null, uses the default catalog.
+		// [optional] Catalog version of the store to update. If null, uses the default catalog.
 		FString CatalogVersion;
-		// unqiue identifier for the store which is to be updated
+		// Unique identifier for the store which is to be updated
 		FString StoreId;
-		// [optional] array of store items - references to catalog items, with specific pricing - to be added
+		// [optional] Additional data about the store
+		TSharedPtr<FStoreMarketingModel> MarketingData;
+		// [optional] Array of store items - references to catalog items, with specific pricing - to be added
 		TArray<FStoreItem> Store;
 	
         FUpdateStoreItemsRequest() :
 			FPlayFabBaseModel(),
 			CatalogVersion(),
 			StoreId(),
+			MarketingData(nullptr),
 			Store()
 			{}
 		
@@ -5533,6 +5783,7 @@ namespace AdminModels
 			FPlayFabBaseModel(),
 			CatalogVersion(src.CatalogVersion),
 			StoreId(src.StoreId),
+			MarketingData(src.MarketingData.IsValid() ? MakeShareable(new FStoreMarketingModel(*src.MarketingData)) : nullptr),
 			Store(src.Store)
 			{}
 			

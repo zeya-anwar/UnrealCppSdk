@@ -82,9 +82,12 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FGetContentListDelegate, const AdminModels::FGetContentListResult&);
         DECLARE_DELEGATE_OneParam(FGetContentUploadUrlDelegate, const AdminModels::FGetContentUploadUrlResult&);
         DECLARE_DELEGATE_OneParam(FResetCharacterStatisticsDelegate, const AdminModels::FResetCharacterStatisticsResult&);
+        DECLARE_DELEGATE_OneParam(FAddPlayerTagDelegate, const AdminModels::FAddPlayerTagResult&);
         DECLARE_DELEGATE_OneParam(FGetAllSegmentsDelegate, const AdminModels::FGetAllSegmentsResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayerSegmentsDelegate, const AdminModels::FGetPlayerSegmentsResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayersInSegmentDelegate, const AdminModels::FGetPlayersInSegmentResult&);
+        DECLARE_DELEGATE_OneParam(FGetPlayerTagsDelegate, const AdminModels::FGetPlayerTagsResult&);
+        DECLARE_DELEGATE_OneParam(FRemovePlayerTagDelegate, const AdminModels::FRemovePlayerTagResult&);
 
         UPlayFabAdminAPI();
         ~UPlayFabAdminAPI();
@@ -429,6 +432,11 @@ namespace PlayFab
          */
         bool ResetCharacterStatistics(AdminModels::FResetCharacterStatisticsRequest& request, const FResetCharacterStatisticsDelegate& SuccessDelegate = FResetCharacterStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Adds a given tag to a player profile. The tag's namespace is automatically generated based on the source of the tag.
+         * This API will trigger a player_tag_added event and add a tag with the given TagName and PlayFabID to the corresponding player profile. TagName can be used for segmentation and it is limited to 256 characters. Also there is a limit on the number of tags a title can have.
+         */
+        bool AddPlayerTag(AdminModels::FAddPlayerTagRequest& request, const FAddPlayerTagDelegate& SuccessDelegate = FAddPlayerTagDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Retrieves an array of player segment definitions. Results from this can be used in subsequent API calls such as GetPlayersInSegment which requires a Segment ID. While segment names can change the ID for that segment will not change.
          * Request has no paramaters.
          */
@@ -442,6 +450,16 @@ namespace PlayFab
          * Initial request must contain at least a Segment ID. Subsequent requests must contain the Segment ID as well as the Continuation Token. Failure to send the Continuation Token will result in a new player segment list being generated. Each time the Continuation Token is passed in the length of the Total Seconds to Live is refreshed. If too much time passes between requests to the point that a subsequent request is past the Total Seconds to Live an error will be returned and paging will be terminated. 
          */
         bool GetPlayersInSegment(AdminModels::FGetPlayersInSegmentRequest& request, const FGetPlayersInSegmentDelegate& SuccessDelegate = FGetPlayersInSegmentDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Get all tags with a given Namespace (optional) from a player profile.
+         * This API will return a list of canonical tags which includes both namespace and tag's name. If namespace is not provided, the result is a list of all canonical tags. TagName can be used for segmentation and Namespace is limited to 128 characters.
+         */
+        bool GetPlayerTags(AdminModels::FGetPlayerTagsRequest& request, const FGetPlayerTagsDelegate& SuccessDelegate = FGetPlayerTagsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Remove a given tag from a player profile. The tag's namespace is automatically generated based on the source of the tag.
+         * This API will trigger a player_tag_removed event and remove a tag with the given TagName and PlayFabID from the corresponding player profile. TagName can be used for segmentation and it is limited to 256 characters
+         */
+        bool RemovePlayerTag(AdminModels::FRemovePlayerTagRequest& request, const FRemovePlayerTagDelegate& SuccessDelegate = FRemovePlayerTagDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
     private:
         // ------------ Generated result handlers
@@ -516,9 +534,12 @@ namespace PlayFab
         void OnGetContentListResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetContentListDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetContentUploadUrlResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetContentUploadUrlDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnResetCharacterStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FResetCharacterStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnAddPlayerTagResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddPlayerTagDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetAllSegmentsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetAllSegmentsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayerSegmentsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerSegmentsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayersInSegmentResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayersInSegmentDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetPlayerTagsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerTagsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnRemovePlayerTagResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemovePlayerTagDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 
     };
 };

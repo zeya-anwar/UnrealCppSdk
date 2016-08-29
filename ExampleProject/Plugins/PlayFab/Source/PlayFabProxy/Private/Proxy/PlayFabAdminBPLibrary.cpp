@@ -38,6 +38,24 @@ void UPFAdminProxyLibrary::BreakBPAdminAddNewsResult(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminAddPlayerTagRequest(
+		const FBPAdminAddPlayerTagRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutTagName
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutTagName = In.Data.TagName;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminAddPlayerTagResult(
+		const FBPAdminAddPlayerTagResult& In
+	)
+{
+    
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminAddServerBuildRequest(
 		const FBPAdminAddServerBuildRequest& In
         ,FString& OutBuildId
@@ -204,6 +222,7 @@ void UPFAdminProxyLibrary::BreakBPAdminCatalogItem(
         ,bool& OutIsStackable
         ,bool& OutIsTradable
         ,FString& OutItemImageUrl
+        ,bool& OutIsLimitedEdition
 	)
 {
     OutItemId = In.Data.ItemId;
@@ -222,6 +241,7 @@ void UPFAdminProxyLibrary::BreakBPAdminCatalogItem(
 	OutIsStackable = In.Data.IsStackable;
 	OutIsTradable = In.Data.IsTradable;
 	OutItemImageUrl = In.Data.ItemImageUrl;
+	OutIsLimitedEdition = In.Data.IsLimitedEdition;
 	
 }
 
@@ -732,6 +752,28 @@ void UPFAdminProxyLibrary::BreakBPAdminGetPlayerStatisticVersionsResult(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminGetPlayerTagsRequest(
+		const FBPAdminGetPlayerTagsRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutNamespace
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutNamespace = In.Data.Namespace;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetPlayerTagsResult(
+		const FBPAdminGetPlayerTagsResult& In
+        ,FString& OutPlayFabId
+        ,TArray<FString>& OutTags
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutTags = In.Data.Tags;
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminGetPublisherDataRequest(
 		const FBPAdminGetPublisherDataRequest& In
         ,TArray<FString>& OutKeys
@@ -843,6 +885,9 @@ void UPFAdminProxyLibrary::BreakBPAdminGetStoreItemsRequest(
 void UPFAdminProxyLibrary::BreakBPAdminGetStoreItemsResult(
 		const FBPAdminGetStoreItemsResult& In
         ,TArray<FBPAdminStoreItem>& OutStore
+        ,FString& OutCatalogVersion
+        ,FString& OutStoreId
+        ,FBPAdminStoreMarketingModel& OutMarketingData
 	)
 {
     for (const PlayFab::AdminModels::FStoreItem& elem : In.Data.Store)
@@ -852,6 +897,10 @@ void UPFAdminProxyLibrary::BreakBPAdminGetStoreItemsResult(
         OutStore.Add(result);
     }
 
+	
+	OutCatalogVersion = In.Data.CatalogVersion;
+	OutStoreId = In.Data.StoreId;
+	if (In.Data.MarketingData.IsValid()) {    OutMarketingData.Data = *In.Data.MarketingData;}
 	
 }
 
@@ -1439,6 +1488,24 @@ void UPFAdminProxyLibrary::BreakBPAdminRegion(
     
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminRemovePlayerTagRequest(
+		const FBPAdminRemovePlayerTagRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutTagName
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutTagName = In.Data.TagName;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminRemovePlayerTagResult(
+		const FBPAdminRemovePlayerTagResult& In
+	)
+{
+    
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminRemoveServerBuildRequest(
 		const FBPAdminRemoveServerBuildRequest& In
         ,FString& OutBuildId
@@ -1702,6 +1769,13 @@ void UPFAdminProxyLibrary::BreakBPAdminSetupPushNotificationResult(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminSourceType(
+		const FBPAdminSourceType& In
+	)
+{
+    
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminStatisticAggregationMethod(
 		const FBPAdminStatisticAggregationMethod& In
 	)
@@ -1726,10 +1800,25 @@ void UPFAdminProxyLibrary::BreakBPAdminStatisticVersionArchivalStatus(
 void UPFAdminProxyLibrary::BreakBPAdminStoreItem(
 		const FBPAdminStoreItem& In
         ,FString& OutItemId
+        ,int32& OutDisplayPosition
 	)
 {
     OutItemId = In.Data.ItemId;
 	
+	
+	
+	OutDisplayPosition = In.Data.DisplayPosition;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminStoreMarketingModel(
+		const FBPAdminStoreMarketingModel& In
+        ,FString& OutDisplayName
+        ,FString& OutDescription
+	)
+{
+    OutDisplayName = In.Data.DisplayName;
+	OutDescription = In.Data.Description;
 	
 	
 }
@@ -1911,11 +2000,13 @@ void UPFAdminProxyLibrary::BreakBPAdminUpdateStoreItemsRequest(
 		const FBPAdminUpdateStoreItemsRequest& In
         ,FString& OutCatalogVersion
         ,FString& OutStoreId
+        ,FBPAdminStoreMarketingModel& OutMarketingData
         ,TArray<FBPAdminStoreItem>& OutStore
 	)
 {
     OutCatalogVersion = In.Data.CatalogVersion;
 	OutStoreId = In.Data.StoreId;
+	if (In.Data.MarketingData.IsValid()) {    OutMarketingData.Data = *In.Data.MarketingData;}
 	for (const PlayFab::AdminModels::FStoreItem& elem : In.Data.Store)
     {
         FBPAdminStoreItem result;

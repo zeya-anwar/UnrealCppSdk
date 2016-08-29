@@ -37,6 +37,18 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminAddPlayerTagRequest(
+		const FBPAdminAddPlayerTagRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutTagName
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminAddPlayerTagResult(
+		const FBPAdminAddPlayerTagResult& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminAddServerBuildRequest(
 		const FBPAdminAddServerBuildRequest& In
         ,FString& OutBuildId
@@ -131,6 +143,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
         ,bool& OutIsStackable
         ,bool& OutIsTradable
         ,FString& OutItemImageUrl
+        ,bool& OutIsLimitedEdition
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -418,6 +431,20 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminGetPlayerTagsRequest(
+		const FBPAdminGetPlayerTagsRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutNamespace
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminGetPlayerTagsResult(
+		const FBPAdminGetPlayerTagsResult& In
+        ,FString& OutPlayFabId
+        ,TArray<FString>& OutTags
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminGetPublisherDataRequest(
 		const FBPAdminGetPublisherDataRequest& In
         ,TArray<FString>& OutKeys
@@ -488,6 +515,9 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPAdminGetStoreItemsResult(
 		const FBPAdminGetStoreItemsResult& In
         ,TArray<FBPAdminStoreItem>& OutStore
+        ,FString& OutCatalogVersion
+        ,FString& OutStoreId
+        ,FBPAdminStoreMarketingModel& OutMarketingData
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -790,6 +820,18 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminRemovePlayerTagRequest(
+		const FBPAdminRemovePlayerTagRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutTagName
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminRemovePlayerTagResult(
+		const FBPAdminRemovePlayerTagResult& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminRemoveServerBuildRequest(
 		const FBPAdminRemoveServerBuildRequest& In
         ,FString& OutBuildId
@@ -948,6 +990,11 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminSourceType(
+		const FBPAdminSourceType& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminStatisticAggregationMethod(
 		const FBPAdminStatisticAggregationMethod& In
 	);
@@ -966,6 +1013,14 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPAdminStoreItem(
 		const FBPAdminStoreItem& In
         ,FString& OutItemId
+        ,int32& OutDisplayPosition
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminStoreMarketingModel(
+		const FBPAdminStoreMarketingModel& In
+        ,FString& OutDisplayName
+        ,FString& OutDescription
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -1063,6 +1118,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPAdminUpdateStoreItemsRequest& In
         ,FString& OutCatalogVersion
         ,FString& OutStoreId
+        ,FBPAdminStoreMarketingModel& OutMarketingData
         ,TArray<FBPAdminStoreItem>& OutStore
 	);
 	

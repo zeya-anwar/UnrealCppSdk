@@ -21,7 +21,7 @@ public:
 	
 	// Sets all the items in one virtual store
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Admin|Title-Wide Data Management")
-	static UPFAdminSetStoreItems* SetStoreItems(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InCatalogVersion, const FString& InStoreId, const TArray<FBPAdminStoreItem>& InStore);
+	static UPFAdminSetStoreItems* SetStoreItems(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InCatalogVersion, const FString& InStoreId, const FBPAdminStoreMarketingModel& InMarketingData, const TArray<FBPAdminStoreItem>& InStore);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

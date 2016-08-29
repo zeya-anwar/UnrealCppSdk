@@ -10,12 +10,13 @@ UPFAdminUpdateStoreItems::UPFAdminUpdateStoreItems(const FObjectInitializer& Obj
 {
 }
 
-UPFAdminUpdateStoreItems* UPFAdminUpdateStoreItems::UpdateStoreItems(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InCatalogVersion, const FString& InStoreId, const TArray<FBPAdminStoreItem>& InStore)
+UPFAdminUpdateStoreItems* UPFAdminUpdateStoreItems::UpdateStoreItems(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InCatalogVersion, const FString& InStoreId, const FBPAdminStoreMarketingModel& InMarketingData, const TArray<FBPAdminStoreItem>& InStore)
 {
 	UPFAdminUpdateStoreItems* Proxy = NewObject<UPFAdminUpdateStoreItems>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.CatalogVersion = InCatalogVersion;
 	Proxy->Request.StoreId = InStoreId;
+	*Proxy->Request.MarketingData = InMarketingData.Data;
 	for (const FBPAdminStoreItem& elem : InStore)
     {
         Proxy->Request.Store.Add(elem.Data);

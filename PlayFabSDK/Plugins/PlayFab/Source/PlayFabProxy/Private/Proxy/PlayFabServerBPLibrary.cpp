@@ -31,6 +31,24 @@ void UPFServerProxyLibrary::BreakBPServerAddCharacterVirtualCurrencyRequest(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerAddPlayerTagRequest(
+		const FBPServerAddPlayerTagRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutTagName
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutTagName = In.Data.TagName;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerAddPlayerTagResult(
+		const FBPServerAddPlayerTagResult& In
+	)
+{
+    
+}
+
 void UPFServerProxyLibrary::BreakBPServerAddSharedGroupMembersRequest(
 		const FBPServerAddSharedGroupMembersRequest& In
         ,FString& OutSharedGroupId
@@ -209,6 +227,7 @@ void UPFServerProxyLibrary::BreakBPServerCatalogItem(
         ,bool& OutIsStackable
         ,bool& OutIsTradable
         ,FString& OutItemImageUrl
+        ,bool& OutIsLimitedEdition
 	)
 {
     OutItemId = In.Data.ItemId;
@@ -227,6 +246,7 @@ void UPFServerProxyLibrary::BreakBPServerCatalogItem(
 	OutIsStackable = In.Data.IsStackable;
 	OutIsTradable = In.Data.IsTradable;
 	OutItemImageUrl = In.Data.ItemImageUrl;
+	OutIsLimitedEdition = In.Data.IsLimitedEdition;
 	
 }
 
@@ -1062,6 +1082,28 @@ void UPFServerProxyLibrary::BreakBPServerGetPlayerStatisticVersionsResult(
         OutStatisticVersions.Add(result);
     }
 
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetPlayerTagsRequest(
+		const FBPServerGetPlayerTagsRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutNamespace
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutNamespace = In.Data.Namespace;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetPlayerTagsResult(
+		const FBPServerGetPlayerTagsResult& In
+        ,FString& OutPlayFabId
+        ,TArray<FString>& OutTags
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutTags = In.Data.Tags;
 	
 }
 
@@ -1974,6 +2016,24 @@ void UPFServerProxyLibrary::BreakBPServerRedeemMatchmakerTicketResult(
 	OutError = In.Data.Error;
 	if (In.Data.UserInfo.IsValid()) {    OutUserInfo.Data = *In.Data.UserInfo;}
 	
+}
+
+void UPFServerProxyLibrary::BreakBPServerRemovePlayerTagRequest(
+		const FBPServerRemovePlayerTagRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutTagName
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutTagName = In.Data.TagName;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerRemovePlayerTagResult(
+		const FBPServerRemovePlayerTagResult& In
+	)
+{
+    
 }
 
 void UPFServerProxyLibrary::BreakBPServerRemoveSharedGroupMembersRequest(

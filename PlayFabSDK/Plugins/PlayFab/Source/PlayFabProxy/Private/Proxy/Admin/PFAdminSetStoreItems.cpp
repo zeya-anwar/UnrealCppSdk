@@ -10,12 +10,13 @@ UPFAdminSetStoreItems::UPFAdminSetStoreItems(const FObjectInitializer& ObjectIni
 {
 }
 
-UPFAdminSetStoreItems* UPFAdminSetStoreItems::SetStoreItems(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InCatalogVersion, const FString& InStoreId, const TArray<FBPAdminStoreItem>& InStore)
+UPFAdminSetStoreItems* UPFAdminSetStoreItems::SetStoreItems(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InCatalogVersion, const FString& InStoreId, const FBPAdminStoreMarketingModel& InMarketingData, const TArray<FBPAdminStoreItem>& InStore)
 {
 	UPFAdminSetStoreItems* Proxy = NewObject<UPFAdminSetStoreItems>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.CatalogVersion = InCatalogVersion;
 	Proxy->Request.StoreId = InStoreId;
+	*Proxy->Request.MarketingData = InMarketingData.Data;
 	for (const FBPAdminStoreItem& elem : InStore)
     {
         Proxy->Request.Store.Add(elem.Data);

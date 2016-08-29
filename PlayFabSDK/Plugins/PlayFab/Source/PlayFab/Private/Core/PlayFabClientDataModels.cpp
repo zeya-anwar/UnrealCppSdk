@@ -1244,6 +1244,8 @@ void PlayFab::ClientModels::FCatalogItem::writeJSON(JsonWriter& writer) const
 	
     if(ItemImageUrl.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ItemImageUrl")); writer->WriteValue(ItemImageUrl); }
 	
+    writer->WriteIdentifierPrefix(TEXT("IsLimitedEdition")); writer->WriteValue(IsLimitedEdition);
+	
     
     writer->WriteObjectEnd();
 }
@@ -1360,6 +1362,13 @@ bool PlayFab::ClientModels::FCatalogItem::readFromValue(const TSharedPtr<FJsonOb
     {
         FString TmpValue;
         if(ItemImageUrlValue->TryGetString(TmpValue)) {ItemImageUrl = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> IsLimitedEditionValue = obj->TryGetField(TEXT("IsLimitedEdition"));
+    if (IsLimitedEditionValue.IsValid()&& !IsLimitedEditionValue->IsNull())
+    {
+        bool TmpValue;
+        if(IsLimitedEditionValue->TryGetBool(TmpValue)) {IsLimitedEdition = TmpValue; }
     }
     
     
@@ -6978,6 +6987,89 @@ bool PlayFab::ClientModels::FGetPlayerStatisticVersionsResult::readFromValue(con
 }
 
 
+PlayFab::ClientModels::FGetPlayerTagsRequest::~FGetPlayerTagsRequest()
+{
+    
+}
+
+void PlayFab::ClientModels::FGetPlayerTagsRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
+	
+    if(Namespace.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Namespace")); writer->WriteValue(Namespace); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FGetPlayerTagsRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> NamespaceValue = obj->TryGetField(TEXT("Namespace"));
+    if (NamespaceValue.IsValid()&& !NamespaceValue->IsNull())
+    {
+        FString TmpValue;
+        if(NamespaceValue->TryGetString(TmpValue)) {Namespace = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FGetPlayerTagsResult::~FGetPlayerTagsResult()
+{
+    
+}
+
+void PlayFab::ClientModels::FGetPlayerTagsResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("PlayFabId")); writer->WriteValue(PlayFabId);
+	
+    
+        writer->WriteArrayStart(TEXT("Tags"));
+    
+        for (const FString& item : Tags)
+        {
+            writer->WriteValue(item);
+        }
+        writer->WriteArrayEnd();
+    
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FGetPlayerTagsResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PlayFabIdValue = obj->TryGetField(TEXT("PlayFabId"));
+    if (PlayFabIdValue.IsValid()&& !PlayFabIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(PlayFabIdValue->TryGetString(TmpValue)) {PlayFabId = TmpValue; }
+    }
+    
+    HasSucceeded &= obj->TryGetStringArrayField(TEXT("Tags"),Tags);
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ClientModels::FGetPlayerTradesRequest::~FGetPlayerTradesRequest()
 {
     
@@ -8249,6 +8341,10 @@ void PlayFab::ClientModels::FStoreItem::writeJSON(JsonWriter& writer) const
         writer->WriteObjectEnd();
      }
 	
+    if(CustomData.notNull()) { writer->WriteIdentifierPrefix(TEXT("CustomData")); CustomData.writeJSON(writer); }
+	
+    if(DisplayPosition.notNull()) { writer->WriteIdentifierPrefix(TEXT("DisplayPosition")); writer->WriteValue(static_cast<int64>(DisplayPosition)); }
+	
     
     writer->WriteObjectEnd();
 }
@@ -8284,6 +8380,108 @@ bool PlayFab::ClientModels::FStoreItem::readFromValue(const TSharedPtr<FJsonObje
         }
     }
     
+    const TSharedPtr<FJsonValue> CustomDataValue = obj->TryGetField(TEXT("CustomData"));
+    if (CustomDataValue.IsValid()&& !CustomDataValue->IsNull())
+    {
+        CustomData = FMultitypeVar(CustomDataValue->AsObject());
+    }
+    
+    const TSharedPtr<FJsonValue> DisplayPositionValue = obj->TryGetField(TEXT("DisplayPosition"));
+    if (DisplayPositionValue.IsValid()&& !DisplayPositionValue->IsNull())
+    {
+        uint32 TmpValue;
+        if(DisplayPositionValue->TryGetNumber(TmpValue)) {DisplayPosition = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+void PlayFab::ClientModels::writeSourceTypeEnumJSON(SourceType enumVal, JsonWriter& writer)
+{
+    switch(enumVal)
+    {
+        
+        case SourceTypeAdmin: writer->WriteValue(TEXT("Admin")); break;
+        case SourceTypeBackEnd: writer->WriteValue(TEXT("BackEnd")); break;
+        case SourceTypeGameClient: writer->WriteValue(TEXT("GameClient")); break;
+        case SourceTypeGameServer: writer->WriteValue(TEXT("GameServer")); break;
+        case SourceTypePartner: writer->WriteValue(TEXT("Partner")); break;
+        case SourceTypeStream: writer->WriteValue(TEXT("Stream")); break;
+    }
+}
+
+ClientModels::SourceType PlayFab::ClientModels::readSourceTypeFromValue(const TSharedPtr<FJsonValue>& value)
+{
+    static TMap<FString, SourceType> _SourceTypeMap;
+    if (_SourceTypeMap.Num() == 0)
+    {
+        // Auto-generate the map on the first use
+        _SourceTypeMap.Add(TEXT("Admin"), SourceTypeAdmin);
+        _SourceTypeMap.Add(TEXT("BackEnd"), SourceTypeBackEnd);
+        _SourceTypeMap.Add(TEXT("GameClient"), SourceTypeGameClient);
+        _SourceTypeMap.Add(TEXT("GameServer"), SourceTypeGameServer);
+        _SourceTypeMap.Add(TEXT("Partner"), SourceTypePartner);
+        _SourceTypeMap.Add(TEXT("Stream"), SourceTypeStream);
+
+    } 
+
+	if(value.IsValid())
+	{
+	    auto output = _SourceTypeMap.Find(value->AsString());
+		if (output != nullptr)
+			return *output;
+	}
+
+
+    return SourceTypeAdmin; // Basically critical fail
+}
+
+
+PlayFab::ClientModels::FStoreMarketingModel::~FStoreMarketingModel()
+{
+    
+}
+
+void PlayFab::ClientModels::FStoreMarketingModel::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(DisplayName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("DisplayName")); writer->WriteValue(DisplayName); }
+	
+    if(Description.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Description")); writer->WriteValue(Description); }
+	
+    if(Metadata.notNull()) { writer->WriteIdentifierPrefix(TEXT("Metadata")); Metadata.writeJSON(writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FStoreMarketingModel::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> DisplayNameValue = obj->TryGetField(TEXT("DisplayName"));
+    if (DisplayNameValue.IsValid()&& !DisplayNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(DisplayNameValue->TryGetString(TmpValue)) {DisplayName = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> DescriptionValue = obj->TryGetField(TEXT("Description"));
+    if (DescriptionValue.IsValid()&& !DescriptionValue->IsNull())
+    {
+        FString TmpValue;
+        if(DescriptionValue->TryGetString(TmpValue)) {Description = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> MetadataValue = obj->TryGetField(TEXT("Metadata"));
+    if (MetadataValue.IsValid()&& !MetadataValue->IsNull())
+    {
+        Metadata = FMultitypeVar(MetadataValue->AsObject());
+    }
+    
     
     return HasSucceeded;
 }
@@ -8291,6 +8489,7 @@ bool PlayFab::ClientModels::FStoreItem::readFromValue(const TSharedPtr<FJsonObje
 
 PlayFab::ClientModels::FGetStoreItemsResult::~FGetStoreItemsResult()
 {
+    //if(MarketingData != nullptr) delete MarketingData;
     
 }
 
@@ -8308,6 +8507,14 @@ void PlayFab::ClientModels::FGetStoreItemsResult::writeJSON(JsonWriter& writer) 
         }
         writer->WriteArrayEnd();
      }
+	
+    if(Source.notNull()) { writer->WriteIdentifierPrefix(TEXT("Source")); writeSourceTypeEnumJSON(Source, writer); }
+	
+    if(CatalogVersion.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CatalogVersion")); writer->WriteValue(CatalogVersion); }
+	
+    if(StoreId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("StoreId")); writer->WriteValue(StoreId); }
+	
+    if(MarketingData.IsValid()) { writer->WriteIdentifierPrefix(TEXT("MarketingData")); MarketingData->writeJSON(writer); }
 	
     
     writer->WriteObjectEnd();
@@ -8327,6 +8534,28 @@ bool PlayFab::ClientModels::FGetStoreItemsResult::readFromValue(const TSharedPtr
         }
     }
 
+    
+    Source = readSourceTypeFromValue(obj->TryGetField(TEXT("Source")));
+    
+    const TSharedPtr<FJsonValue> CatalogVersionValue = obj->TryGetField(TEXT("CatalogVersion"));
+    if (CatalogVersionValue.IsValid()&& !CatalogVersionValue->IsNull())
+    {
+        FString TmpValue;
+        if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> StoreIdValue = obj->TryGetField(TEXT("StoreId"));
+    if (StoreIdValue.IsValid()&& !StoreIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(StoreIdValue->TryGetString(TmpValue)) {StoreId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> MarketingDataValue = obj->TryGetField(TEXT("MarketingData"));
+    if (MarketingDataValue.IsValid()&& !MarketingDataValue->IsNull())
+    {
+        MarketingData = MakeShareable(new FStoreMarketingModel(MarketingDataValue->AsObject()));
+    }
     
     
     return HasSucceeded;
