@@ -10,11 +10,12 @@ UPFClientLinkCustomID::UPFClientLinkCustomID(const FObjectInitializer& ObjectIni
 {
 }
 
-UPFClientLinkCustomID* UPFClientLinkCustomID::LinkCustomID(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InCustomId)
+UPFClientLinkCustomID* UPFClientLinkCustomID::LinkCustomID(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InCustomId, const bool& InForceLink)
 {
 	UPFClientLinkCustomID* Proxy = NewObject<UPFClientLinkCustomID>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.CustomId = InCustomId;
+	Proxy->Request.ForceLink = InForceLink;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

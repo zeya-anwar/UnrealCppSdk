@@ -209,6 +209,7 @@ void UPFClientProxyLibrary::BreakBPClientCatalogItem(
         ,bool& OutIsTradable
         ,FString& OutItemImageUrl
         ,bool& OutIsLimitedEdition
+        ,int32& OutInitialLimitedEditionCount
 	)
 {
     OutItemId = In.Data.ItemId;
@@ -228,6 +229,7 @@ void UPFClientProxyLibrary::BreakBPClientCatalogItem(
 	OutIsTradable = In.Data.IsTradable;
 	OutItemImageUrl = In.Data.ItemImageUrl;
 	OutIsLimitedEdition = In.Data.IsLimitedEdition;
+	OutInitialLimitedEditionCount = In.Data.InitialLimitedEditionCount;
 	
 }
 
@@ -499,6 +501,7 @@ void UPFClientProxyLibrary::BreakBPClientExecuteCloudScriptResult(
         ,int32& OutRevision
         ,TArray<FBPClientLogStatement>& OutLogs
         ,float& OutExecutionTimeSeconds
+        ,float& OutProcessorTimeSeconds
         ,int32& OutMemoryConsumedBytes
         ,int32& OutAPIRequestsIssued
         ,int32& OutHttpRequestsIssued
@@ -516,6 +519,7 @@ void UPFClientProxyLibrary::BreakBPClientExecuteCloudScriptResult(
     }
 
 	OutExecutionTimeSeconds = In.Data.ExecutionTimeSeconds;
+	OutProcessorTimeSeconds = In.Data.ProcessorTimeSeconds;
 	OutMemoryConsumedBytes = In.Data.MemoryConsumedBytes;
 	OutAPIRequestsIssued = In.Data.APIRequestsIssued;
 	OutHttpRequestsIssued = In.Data.HttpRequestsIssued;
@@ -1925,11 +1929,13 @@ void UPFClientProxyLibrary::BreakBPClientLinkAndroidDeviceIDRequest(
         ,FString& OutAndroidDeviceId
         ,FString& OutOS
         ,FString& OutAndroidDevice
+        ,bool& OutForceLink
 	)
 {
     OutAndroidDeviceId = In.Data.AndroidDeviceId;
 	OutOS = In.Data.OS;
 	OutAndroidDevice = In.Data.AndroidDevice;
+	OutForceLink = In.Data.ForceLink;
 	
 }
 
@@ -1943,9 +1949,11 @@ void UPFClientProxyLibrary::BreakBPClientLinkAndroidDeviceIDResult(
 void UPFClientProxyLibrary::BreakBPClientLinkCustomIDRequest(
 		const FBPClientLinkCustomIDRequest& In
         ,FString& OutCustomId
+        ,bool& OutForceLink
 	)
 {
     OutCustomId = In.Data.CustomId;
+	OutForceLink = In.Data.ForceLink;
 	
 }
 
@@ -1959,9 +1967,11 @@ void UPFClientProxyLibrary::BreakBPClientLinkCustomIDResult(
 void UPFClientProxyLibrary::BreakBPClientLinkFacebookAccountRequest(
 		const FBPClientLinkFacebookAccountRequest& In
         ,FString& OutAccessToken
+        ,bool& OutForceLink
 	)
 {
     OutAccessToken = In.Data.AccessToken;
+	OutForceLink = In.Data.ForceLink;
 	
 }
 
@@ -1975,9 +1985,11 @@ void UPFClientProxyLibrary::BreakBPClientLinkFacebookAccountResult(
 void UPFClientProxyLibrary::BreakBPClientLinkGameCenterAccountRequest(
 		const FBPClientLinkGameCenterAccountRequest& In
         ,FString& OutGameCenterId
+        ,bool& OutForceLink
 	)
 {
     OutGameCenterId = In.Data.GameCenterId;
+	OutForceLink = In.Data.ForceLink;
 	
 }
 
@@ -1991,9 +2003,11 @@ void UPFClientProxyLibrary::BreakBPClientLinkGameCenterAccountResult(
 void UPFClientProxyLibrary::BreakBPClientLinkGoogleAccountRequest(
 		const FBPClientLinkGoogleAccountRequest& In
         ,FString& OutAccessToken
+        ,bool& OutForceLink
 	)
 {
     OutAccessToken = In.Data.AccessToken;
+	OutForceLink = In.Data.ForceLink;
 	
 }
 
@@ -2009,11 +2023,13 @@ void UPFClientProxyLibrary::BreakBPClientLinkIOSDeviceIDRequest(
         ,FString& OutDeviceId
         ,FString& OutOS
         ,FString& OutDeviceModel
+        ,bool& OutForceLink
 	)
 {
     OutDeviceId = In.Data.DeviceId;
 	OutOS = In.Data.OS;
 	OutDeviceModel = In.Data.DeviceModel;
+	OutForceLink = In.Data.ForceLink;
 	
 }
 
@@ -2028,10 +2044,12 @@ void UPFClientProxyLibrary::BreakBPClientLinkKongregateAccountRequest(
 		const FBPClientLinkKongregateAccountRequest& In
         ,FString& OutKongregateId
         ,FString& OutAuthTicket
+        ,bool& OutForceLink
 	)
 {
     OutKongregateId = In.Data.KongregateId;
 	OutAuthTicket = In.Data.AuthTicket;
+	OutForceLink = In.Data.ForceLink;
 	
 }
 
@@ -2045,9 +2063,11 @@ void UPFClientProxyLibrary::BreakBPClientLinkKongregateAccountResult(
 void UPFClientProxyLibrary::BreakBPClientLinkSteamAccountRequest(
 		const FBPClientLinkSteamAccountRequest& In
         ,FString& OutSteamTicket
+        ,bool& OutForceLink
 	)
 {
     OutSteamTicket = In.Data.SteamTicket;
+	OutForceLink = In.Data.ForceLink;
 	
 }
 
@@ -2061,9 +2081,11 @@ void UPFClientProxyLibrary::BreakBPClientLinkSteamAccountResult(
 void UPFClientProxyLibrary::BreakBPClientLinkTwitchAccountRequest(
 		const FBPClientLinkTwitchAccountRequest& In
         ,FString& OutAccessToken
+        ,bool& OutForceLink
 	)
 {
     OutAccessToken = In.Data.AccessToken;
+	OutForceLink = In.Data.ForceLink;
 	
 }
 

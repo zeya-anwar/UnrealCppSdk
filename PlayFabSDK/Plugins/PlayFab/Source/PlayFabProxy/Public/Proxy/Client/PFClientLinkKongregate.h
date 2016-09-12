@@ -21,7 +21,7 @@ public:
 	
 	// Links the Kongregate identifier to the user's PlayFab account
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Account Management")
-	static UPFClientLinkKongregate* LinkKongregate(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InKongregateId, const FString& InAuthTicket);
+	static UPFClientLinkKongregate* LinkKongregate(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InKongregateId, const FString& InAuthTicket, const bool& InForceLink);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

@@ -104,6 +104,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FUpdateCharacterInternalDataDelegate, const ServerModels::FUpdateCharacterDataResult&);
         DECLARE_DELEGATE_OneParam(FUpdateCharacterReadOnlyDataDelegate, const ServerModels::FUpdateCharacterDataResult&);
         DECLARE_DELEGATE_OneParam(FAddPlayerTagDelegate, const ServerModels::FAddPlayerTagResult&);
+        DECLARE_DELEGATE_OneParam(FGetAllActionGroupsDelegate, const ServerModels::FGetAllActionGroupsResult&);
         DECLARE_DELEGATE_OneParam(FGetAllSegmentsDelegate, const ServerModels::FGetAllSegmentsResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayerSegmentsDelegate, const ServerModels::FGetPlayerSegmentsResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayersInSegmentDelegate, const ServerModels::FGetPlayersInSegmentResult&);
@@ -553,6 +554,10 @@ namespace PlayFab
          */
         bool AddPlayerTag(ServerModels::FAddPlayerTagRequest& request, const FAddPlayerTagDelegate& SuccessDelegate = FAddPlayerTagDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Retrieve a list of all PlayStream actions groups.
+         */
+        bool GetAllActionGroups(const FGetAllActionGroupsDelegate& SuccessDelegate = FGetAllActionGroupsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Retrieves an array of player segment definitions. Results from this can be used in subsequent API calls such as GetPlayersInSegment which requires a Segment ID. While segment names can change the ID for that segment will not change.
          * Request has no paramaters.
          */
@@ -672,6 +677,7 @@ namespace PlayFab
         void OnUpdateCharacterInternalDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateCharacterInternalDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateCharacterReadOnlyDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateCharacterReadOnlyDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAddPlayerTagResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddPlayerTagDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetAllActionGroupsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetAllActionGroupsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetAllSegmentsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetAllSegmentsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayerSegmentsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerSegmentsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayersInSegmentResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayersInSegmentDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

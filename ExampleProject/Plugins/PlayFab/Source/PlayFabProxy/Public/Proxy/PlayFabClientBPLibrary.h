@@ -152,6 +152,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,bool& OutIsTradable
         ,FString& OutItemImageUrl
         ,bool& OutIsLimitedEdition
+        ,int32& OutInitialLimitedEditionCount
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -304,6 +305,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,int32& OutRevision
         ,TArray<FBPClientLogStatement>& OutLogs
         ,float& OutExecutionTimeSeconds
+        ,float& OutProcessorTimeSeconds
         ,int32& OutMemoryConsumedBytes
         ,int32& OutAPIRequestsIssued
         ,int32& OutHttpRequestsIssued
@@ -1046,6 +1048,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutAndroidDeviceId
         ,FString& OutOS
         ,FString& OutAndroidDevice
+        ,bool& OutForceLink
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1057,6 +1060,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPClientLinkCustomIDRequest(
 		const FBPClientLinkCustomIDRequest& In
         ,FString& OutCustomId
+        ,bool& OutForceLink
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1068,6 +1072,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPClientLinkFacebookAccountRequest(
 		const FBPClientLinkFacebookAccountRequest& In
         ,FString& OutAccessToken
+        ,bool& OutForceLink
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1079,6 +1084,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPClientLinkGameCenterAccountRequest(
 		const FBPClientLinkGameCenterAccountRequest& In
         ,FString& OutGameCenterId
+        ,bool& OutForceLink
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1090,6 +1096,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPClientLinkGoogleAccountRequest(
 		const FBPClientLinkGoogleAccountRequest& In
         ,FString& OutAccessToken
+        ,bool& OutForceLink
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1103,6 +1110,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutDeviceId
         ,FString& OutOS
         ,FString& OutDeviceModel
+        ,bool& OutForceLink
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1115,6 +1123,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPClientLinkKongregateAccountRequest& In
         ,FString& OutKongregateId
         ,FString& OutAuthTicket
+        ,bool& OutForceLink
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1126,6 +1135,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPClientLinkSteamAccountRequest(
 		const FBPClientLinkSteamAccountRequest& In
         ,FString& OutSteamTicket
+        ,bool& OutForceLink
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1137,6 +1147,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPClientLinkTwitchAccountRequest(
 		const FBPClientLinkTwitchAccountRequest& In
         ,FString& OutAccessToken
+        ,bool& OutForceLink
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))

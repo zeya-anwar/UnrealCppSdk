@@ -10,11 +10,12 @@ UPFClientLinkGameCenterAccount::UPFClientLinkGameCenterAccount(const FObjectInit
 {
 }
 
-UPFClientLinkGameCenterAccount* UPFClientLinkGameCenterAccount::LinkGameCenterAccount(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InGameCenterId)
+UPFClientLinkGameCenterAccount* UPFClientLinkGameCenterAccount::LinkGameCenterAccount(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InGameCenterId, const bool& InForceLink)
 {
 	UPFClientLinkGameCenterAccount* Proxy = NewObject<UPFClientLinkGameCenterAccount>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.GameCenterId = InGameCenterId;
+	Proxy->Request.ForceLink = InForceLink;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

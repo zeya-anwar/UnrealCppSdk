@@ -21,7 +21,7 @@ public:
 	
 	// Links the currently signed-in user account to the Google account specified by the Google account access token (https://developers.google.com/android/reference/com/google/android/gms/auth/GoogleAuthUtil#public-methods).
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Account Management")
-	static UPFClientLinkGoogleAccount* LinkGoogleAccount(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InAccessToken);
+	static UPFClientLinkGoogleAccount* LinkGoogleAccount(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InAccessToken, const bool& InForceLink);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

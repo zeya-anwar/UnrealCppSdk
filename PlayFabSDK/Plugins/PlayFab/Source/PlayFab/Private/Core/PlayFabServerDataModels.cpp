@@ -2145,6 +2145,8 @@ void PlayFab::ServerModels::FCatalogItem::writeJSON(JsonWriter& writer) const
 	
     writer->WriteIdentifierPrefix(TEXT("IsLimitedEdition")); writer->WriteValue(IsLimitedEdition);
 	
+    writer->WriteIdentifierPrefix(TEXT("InitialLimitedEditionCount")); writer->WriteValue(InitialLimitedEditionCount);
+	
     
     writer->WriteObjectEnd();
 }
@@ -2268,6 +2270,13 @@ bool PlayFab::ServerModels::FCatalogItem::readFromValue(const TSharedPtr<FJsonOb
     {
         bool TmpValue;
         if(IsLimitedEditionValue->TryGetBool(TmpValue)) {IsLimitedEdition = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> InitialLimitedEditionCountValue = obj->TryGetField(TEXT("InitialLimitedEditionCount"));
+    if (InitialLimitedEditionCountValue.IsValid()&& !InitialLimitedEditionCountValue->IsNull())
+    {
+        int32 TmpValue;
+        if(InitialLimitedEditionCountValue->TryGetNumber(TmpValue)) {InitialLimitedEditionCount = TmpValue; }
     }
     
     
@@ -3214,6 +3223,8 @@ void PlayFab::ServerModels::FExecuteCloudScriptResult::writeJSON(JsonWriter& wri
 	
     writer->WriteIdentifierPrefix(TEXT("ExecutionTimeSeconds")); writer->WriteValue(ExecutionTimeSeconds);
 	
+    writer->WriteIdentifierPrefix(TEXT("ProcessorTimeSeconds")); writer->WriteValue(ProcessorTimeSeconds);
+	
     writer->WriteIdentifierPrefix(TEXT("MemoryConsumedBytes")); writer->WriteValue(static_cast<int64>(MemoryConsumedBytes));
 	
     writer->WriteIdentifierPrefix(TEXT("APIRequestsIssued")); writer->WriteValue(APIRequestsIssued);
@@ -3266,6 +3277,13 @@ bool PlayFab::ServerModels::FExecuteCloudScriptResult::readFromValue(const TShar
     {
         double TmpValue;
         if(ExecutionTimeSecondsValue->TryGetNumber(TmpValue)) {ExecutionTimeSeconds = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ProcessorTimeSecondsValue = obj->TryGetField(TEXT("ProcessorTimeSeconds"));
+    if (ProcessorTimeSecondsValue.IsValid()&& !ProcessorTimeSecondsValue->IsNull())
+    {
+        double TmpValue;
+        if(ProcessorTimeSecondsValue->TryGetNumber(TmpValue)) {ProcessorTimeSeconds = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> MemoryConsumedBytesValue = obj->TryGetField(TEXT("MemoryConsumedBytes"));
@@ -3538,6 +3556,111 @@ ServerModels::GameInstanceState PlayFab::ServerModels::readGameInstanceStateFrom
 
 
     return GameInstanceStateOpen; // Basically critical fail
+}
+
+
+PlayFab::ServerModels::FGetActionGroupResult::~FGetActionGroupResult()
+{
+    
+}
+
+void PlayFab::ServerModels::FGetActionGroupResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("Name")); writer->WriteValue(Name);
+	
+    if(Id.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Id")); writer->WriteValue(Id); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FGetActionGroupResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> NameValue = obj->TryGetField(TEXT("Name"));
+    if (NameValue.IsValid()&& !NameValue->IsNull())
+    {
+        FString TmpValue;
+        if(NameValue->TryGetString(TmpValue)) {Name = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> IdValue = obj->TryGetField(TEXT("Id"));
+    if (IdValue.IsValid()&& !IdValue->IsNull())
+    {
+        FString TmpValue;
+        if(IdValue->TryGetString(TmpValue)) {Id = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FGetAllActionGroupsRequest::~FGetAllActionGroupsRequest()
+{
+    
+}
+
+void PlayFab::ServerModels::FGetAllActionGroupsRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FGetAllActionGroupsRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FGetAllActionGroupsResult::~FGetAllActionGroupsResult()
+{
+    
+}
+
+void PlayFab::ServerModels::FGetAllActionGroupsResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+        writer->WriteArrayStart(TEXT("ActionGroups"));
+    
+        for (const FGetActionGroupResult& item : ActionGroups)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+    
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FGetAllActionGroupsResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&ActionGroupsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("ActionGroups"));
+        for (int32 Idx = 0; Idx < ActionGroupsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = ActionGroupsArray[Idx];
+            
+            ActionGroups.Add(FGetActionGroupResult(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
 }
 
 
@@ -5777,6 +5900,8 @@ void PlayFab::ServerModels::FPlayerProfile::writeJSON(JsonWriter& writer) const
         writer->WriteObjectEnd();
      }
 	
+    if(TotalValueToDateInUSD.notNull()) { writer->WriteIdentifierPrefix(TEXT("TotalValueToDateInUSD")); writer->WriteValue(static_cast<int64>(TotalValueToDateInUSD)); }
+	
     if(ValuesToDate.Num() != 0) 
     {
         writer->WriteObjectStart(TEXT("ValuesToDate"));
@@ -5918,6 +6043,13 @@ bool PlayFab::ServerModels::FPlayerProfile::readFromValue(const TSharedPtr<FJson
             int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
             Statistics.Add(It.Key(), TmpValue);
         }
+    }
+    
+    const TSharedPtr<FJsonValue> TotalValueToDateInUSDValue = obj->TryGetField(TEXT("TotalValueToDateInUSD"));
+    if (TotalValueToDateInUSDValue.IsValid()&& !TotalValueToDateInUSDValue->IsNull())
+    {
+        uint32 TmpValue;
+        if(TotalValueToDateInUSDValue->TryGetNumber(TmpValue)) {TotalValueToDateInUSD = TmpValue; }
     }
     
     const TSharedPtr<FJsonObject>* ValuesToDateObject;

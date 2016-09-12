@@ -1246,6 +1246,8 @@ void PlayFab::ClientModels::FCatalogItem::writeJSON(JsonWriter& writer) const
 	
     writer->WriteIdentifierPrefix(TEXT("IsLimitedEdition")); writer->WriteValue(IsLimitedEdition);
 	
+    writer->WriteIdentifierPrefix(TEXT("InitialLimitedEditionCount")); writer->WriteValue(InitialLimitedEditionCount);
+	
     
     writer->WriteObjectEnd();
 }
@@ -1369,6 +1371,13 @@ bool PlayFab::ClientModels::FCatalogItem::readFromValue(const TSharedPtr<FJsonOb
     {
         bool TmpValue;
         if(IsLimitedEditionValue->TryGetBool(TmpValue)) {IsLimitedEdition = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> InitialLimitedEditionCountValue = obj->TryGetField(TEXT("InitialLimitedEditionCount"));
+    if (InitialLimitedEditionCountValue.IsValid()&& !InitialLimitedEditionCountValue->IsNull())
+    {
+        int32 TmpValue;
+        if(InitialLimitedEditionCountValue->TryGetNumber(TmpValue)) {InitialLimitedEditionCount = TmpValue; }
     }
     
     
@@ -3018,6 +3027,8 @@ void PlayFab::ClientModels::FExecuteCloudScriptResult::writeJSON(JsonWriter& wri
 	
     writer->WriteIdentifierPrefix(TEXT("ExecutionTimeSeconds")); writer->WriteValue(ExecutionTimeSeconds);
 	
+    writer->WriteIdentifierPrefix(TEXT("ProcessorTimeSeconds")); writer->WriteValue(ProcessorTimeSeconds);
+	
     writer->WriteIdentifierPrefix(TEXT("MemoryConsumedBytes")); writer->WriteValue(static_cast<int64>(MemoryConsumedBytes));
 	
     writer->WriteIdentifierPrefix(TEXT("APIRequestsIssued")); writer->WriteValue(APIRequestsIssued);
@@ -3070,6 +3081,13 @@ bool PlayFab::ClientModels::FExecuteCloudScriptResult::readFromValue(const TShar
     {
         double TmpValue;
         if(ExecutionTimeSecondsValue->TryGetNumber(TmpValue)) {ExecutionTimeSeconds = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ProcessorTimeSecondsValue = obj->TryGetField(TEXT("ProcessorTimeSeconds"));
+    if (ProcessorTimeSecondsValue.IsValid()&& !ProcessorTimeSecondsValue->IsNull())
+    {
+        double TmpValue;
+        if(ProcessorTimeSecondsValue->TryGetNumber(TmpValue)) {ProcessorTimeSeconds = TmpValue; }
     }
     
     const TSharedPtr<FJsonValue> MemoryConsumedBytesValue = obj->TryGetField(TEXT("MemoryConsumedBytes"));
@@ -9589,6 +9607,8 @@ void PlayFab::ClientModels::FLinkAndroidDeviceIDRequest::writeJSON(JsonWriter& w
 	
     if(AndroidDevice.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("AndroidDevice")); writer->WriteValue(AndroidDevice); }
 	
+    if(ForceLink.notNull()) { writer->WriteIdentifierPrefix(TEXT("ForceLink")); writer->WriteValue(ForceLink); }
+	
     
     writer->WriteObjectEnd();
 }
@@ -9616,6 +9636,13 @@ bool PlayFab::ClientModels::FLinkAndroidDeviceIDRequest::readFromValue(const TSh
     {
         FString TmpValue;
         if(AndroidDeviceValue->TryGetString(TmpValue)) {AndroidDevice = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ForceLinkValue = obj->TryGetField(TEXT("ForceLink"));
+    if (ForceLinkValue.IsValid()&& !ForceLinkValue->IsNull())
+    {
+        bool TmpValue;
+        if(ForceLinkValue->TryGetBool(TmpValue)) {ForceLink = TmpValue; }
     }
     
     
@@ -9656,6 +9683,8 @@ void PlayFab::ClientModels::FLinkCustomIDRequest::writeJSON(JsonWriter& writer) 
     
     writer->WriteIdentifierPrefix(TEXT("CustomId")); writer->WriteValue(CustomId);
 	
+    if(ForceLink.notNull()) { writer->WriteIdentifierPrefix(TEXT("ForceLink")); writer->WriteValue(ForceLink); }
+	
     
     writer->WriteObjectEnd();
 }
@@ -9669,6 +9698,13 @@ bool PlayFab::ClientModels::FLinkCustomIDRequest::readFromValue(const TSharedPtr
     {
         FString TmpValue;
         if(CustomIdValue->TryGetString(TmpValue)) {CustomId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ForceLinkValue = obj->TryGetField(TEXT("ForceLink"));
+    if (ForceLinkValue.IsValid()&& !ForceLinkValue->IsNull())
+    {
+        bool TmpValue;
+        if(ForceLinkValue->TryGetBool(TmpValue)) {ForceLink = TmpValue; }
     }
     
     
@@ -9709,6 +9745,8 @@ void PlayFab::ClientModels::FLinkFacebookAccountRequest::writeJSON(JsonWriter& w
     
     writer->WriteIdentifierPrefix(TEXT("AccessToken")); writer->WriteValue(AccessToken);
 	
+    if(ForceLink.notNull()) { writer->WriteIdentifierPrefix(TEXT("ForceLink")); writer->WriteValue(ForceLink); }
+	
     
     writer->WriteObjectEnd();
 }
@@ -9722,6 +9760,13 @@ bool PlayFab::ClientModels::FLinkFacebookAccountRequest::readFromValue(const TSh
     {
         FString TmpValue;
         if(AccessTokenValue->TryGetString(TmpValue)) {AccessToken = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ForceLinkValue = obj->TryGetField(TEXT("ForceLink"));
+    if (ForceLinkValue.IsValid()&& !ForceLinkValue->IsNull())
+    {
+        bool TmpValue;
+        if(ForceLinkValue->TryGetBool(TmpValue)) {ForceLink = TmpValue; }
     }
     
     
@@ -9762,6 +9807,8 @@ void PlayFab::ClientModels::FLinkGameCenterAccountRequest::writeJSON(JsonWriter&
     
     writer->WriteIdentifierPrefix(TEXT("GameCenterId")); writer->WriteValue(GameCenterId);
 	
+    if(ForceLink.notNull()) { writer->WriteIdentifierPrefix(TEXT("ForceLink")); writer->WriteValue(ForceLink); }
+	
     
     writer->WriteObjectEnd();
 }
@@ -9775,6 +9822,13 @@ bool PlayFab::ClientModels::FLinkGameCenterAccountRequest::readFromValue(const T
     {
         FString TmpValue;
         if(GameCenterIdValue->TryGetString(TmpValue)) {GameCenterId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ForceLinkValue = obj->TryGetField(TEXT("ForceLink"));
+    if (ForceLinkValue.IsValid()&& !ForceLinkValue->IsNull())
+    {
+        bool TmpValue;
+        if(ForceLinkValue->TryGetBool(TmpValue)) {ForceLink = TmpValue; }
     }
     
     
@@ -9815,6 +9869,8 @@ void PlayFab::ClientModels::FLinkGoogleAccountRequest::writeJSON(JsonWriter& wri
     
     writer->WriteIdentifierPrefix(TEXT("AccessToken")); writer->WriteValue(AccessToken);
 	
+    if(ForceLink.notNull()) { writer->WriteIdentifierPrefix(TEXT("ForceLink")); writer->WriteValue(ForceLink); }
+	
     
     writer->WriteObjectEnd();
 }
@@ -9828,6 +9884,13 @@ bool PlayFab::ClientModels::FLinkGoogleAccountRequest::readFromValue(const TShar
     {
         FString TmpValue;
         if(AccessTokenValue->TryGetString(TmpValue)) {AccessToken = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ForceLinkValue = obj->TryGetField(TEXT("ForceLink"));
+    if (ForceLinkValue.IsValid()&& !ForceLinkValue->IsNull())
+    {
+        bool TmpValue;
+        if(ForceLinkValue->TryGetBool(TmpValue)) {ForceLink = TmpValue; }
     }
     
     
@@ -9872,6 +9935,8 @@ void PlayFab::ClientModels::FLinkIOSDeviceIDRequest::writeJSON(JsonWriter& write
 	
     if(DeviceModel.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("DeviceModel")); writer->WriteValue(DeviceModel); }
 	
+    if(ForceLink.notNull()) { writer->WriteIdentifierPrefix(TEXT("ForceLink")); writer->WriteValue(ForceLink); }
+	
     
     writer->WriteObjectEnd();
 }
@@ -9899,6 +9964,13 @@ bool PlayFab::ClientModels::FLinkIOSDeviceIDRequest::readFromValue(const TShared
     {
         FString TmpValue;
         if(DeviceModelValue->TryGetString(TmpValue)) {DeviceModel = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ForceLinkValue = obj->TryGetField(TEXT("ForceLink"));
+    if (ForceLinkValue.IsValid()&& !ForceLinkValue->IsNull())
+    {
+        bool TmpValue;
+        if(ForceLinkValue->TryGetBool(TmpValue)) {ForceLink = TmpValue; }
     }
     
     
@@ -9941,6 +10013,8 @@ void PlayFab::ClientModels::FLinkKongregateAccountRequest::writeJSON(JsonWriter&
 	
     writer->WriteIdentifierPrefix(TEXT("AuthTicket")); writer->WriteValue(AuthTicket);
 	
+    if(ForceLink.notNull()) { writer->WriteIdentifierPrefix(TEXT("ForceLink")); writer->WriteValue(ForceLink); }
+	
     
     writer->WriteObjectEnd();
 }
@@ -9961,6 +10035,13 @@ bool PlayFab::ClientModels::FLinkKongregateAccountRequest::readFromValue(const T
     {
         FString TmpValue;
         if(AuthTicketValue->TryGetString(TmpValue)) {AuthTicket = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ForceLinkValue = obj->TryGetField(TEXT("ForceLink"));
+    if (ForceLinkValue.IsValid()&& !ForceLinkValue->IsNull())
+    {
+        bool TmpValue;
+        if(ForceLinkValue->TryGetBool(TmpValue)) {ForceLink = TmpValue; }
     }
     
     
@@ -10001,6 +10082,8 @@ void PlayFab::ClientModels::FLinkSteamAccountRequest::writeJSON(JsonWriter& writ
     
     writer->WriteIdentifierPrefix(TEXT("SteamTicket")); writer->WriteValue(SteamTicket);
 	
+    if(ForceLink.notNull()) { writer->WriteIdentifierPrefix(TEXT("ForceLink")); writer->WriteValue(ForceLink); }
+	
     
     writer->WriteObjectEnd();
 }
@@ -10014,6 +10097,13 @@ bool PlayFab::ClientModels::FLinkSteamAccountRequest::readFromValue(const TShare
     {
         FString TmpValue;
         if(SteamTicketValue->TryGetString(TmpValue)) {SteamTicket = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ForceLinkValue = obj->TryGetField(TEXT("ForceLink"));
+    if (ForceLinkValue.IsValid()&& !ForceLinkValue->IsNull())
+    {
+        bool TmpValue;
+        if(ForceLinkValue->TryGetBool(TmpValue)) {ForceLink = TmpValue; }
     }
     
     
@@ -10054,6 +10144,8 @@ void PlayFab::ClientModels::FLinkTwitchAccountRequest::writeJSON(JsonWriter& wri
     
     writer->WriteIdentifierPrefix(TEXT("AccessToken")); writer->WriteValue(AccessToken);
 	
+    if(ForceLink.notNull()) { writer->WriteIdentifierPrefix(TEXT("ForceLink")); writer->WriteValue(ForceLink); }
+	
     
     writer->WriteObjectEnd();
 }
@@ -10067,6 +10159,13 @@ bool PlayFab::ClientModels::FLinkTwitchAccountRequest::readFromValue(const TShar
     {
         FString TmpValue;
         if(AccessTokenValue->TryGetString(TmpValue)) {AccessToken = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ForceLinkValue = obj->TryGetField(TEXT("ForceLink"));
+    if (ForceLinkValue.IsValid()&& !ForceLinkValue->IsNull())
+    {
+        bool TmpValue;
+        if(ForceLinkValue->TryGetBool(TmpValue)) {ForceLink = TmpValue; }
     }
     
     

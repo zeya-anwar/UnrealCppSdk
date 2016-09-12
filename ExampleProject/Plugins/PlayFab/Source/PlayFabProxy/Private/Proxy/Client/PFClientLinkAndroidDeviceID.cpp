@@ -10,13 +10,14 @@ UPFClientLinkAndroidDeviceID::UPFClientLinkAndroidDeviceID(const FObjectInitiali
 {
 }
 
-UPFClientLinkAndroidDeviceID* UPFClientLinkAndroidDeviceID::LinkAndroidDeviceID(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InAndroidDeviceId, const FString& InOS, const FString& InAndroidDevice)
+UPFClientLinkAndroidDeviceID* UPFClientLinkAndroidDeviceID::LinkAndroidDeviceID(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InAndroidDeviceId, const FString& InOS, const FString& InAndroidDevice, const bool& InForceLink)
 {
 	UPFClientLinkAndroidDeviceID* Proxy = NewObject<UPFClientLinkAndroidDeviceID>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.AndroidDeviceId = InAndroidDeviceId;
 	Proxy->Request.OS = InOS;
 	Proxy->Request.AndroidDevice = InAndroidDevice;
+	Proxy->Request.ForceLink = InForceLink;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

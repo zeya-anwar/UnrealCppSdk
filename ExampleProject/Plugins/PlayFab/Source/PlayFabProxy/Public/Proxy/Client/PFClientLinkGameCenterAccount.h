@@ -21,7 +21,7 @@ public:
 	
 	// Links the Game Center account associated with the provided Game Center ID to the user's PlayFab account
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Account Management")
-	static UPFClientLinkGameCenterAccount* LinkGameCenterAccount(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InGameCenterId);
+	static UPFClientLinkGameCenterAccount* LinkGameCenterAccount(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InGameCenterId, const bool& InForceLink);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

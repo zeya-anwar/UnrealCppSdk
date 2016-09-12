@@ -144,6 +144,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
         ,bool& OutIsTradable
         ,FString& OutItemImageUrl
         ,bool& OutIsLimitedEdition
+        ,int32& OutInitialLimitedEditionCount
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -251,6 +252,24 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
         ,int32& OutMinPlayerCount
         ,int32& OutMaxPlayerCount
         ,bool& OutStartOpen
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminGetActionGroupResult(
+		const FBPAdminGetActionGroupResult& In
+        ,FString& OutName
+        ,FString& OutId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminGetAllActionGroupsRequest(
+		const FBPAdminGetAllActionGroupsRequest& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminGetAllActionGroupsResult(
+		const FBPAdminGetAllActionGroupsResult& In
+        ,TArray<FBPAdminGetActionGroupResult>& OutActionGroups
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -753,6 +772,7 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
         ,FDateTime& OutCreated
         ,FDateTime& OutLastLogin
         ,FDateTime& OutBannedUntil
+        ,int32& OutTotalValueToDateInUSD
         ,TArray<FString>& OutTags
         ,TArray<FBPAdminAdCampaignAttribution>& OutAdCampaignAttributions
         ,TArray<FBPAdminPushNotificationRegistration>& OutPushNotificationRegistrations

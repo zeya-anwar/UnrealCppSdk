@@ -10,12 +10,13 @@ UPFClientLinkKongregate::UPFClientLinkKongregate(const FObjectInitializer& Objec
 {
 }
 
-UPFClientLinkKongregate* UPFClientLinkKongregate::LinkKongregate(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InKongregateId, const FString& InAuthTicket)
+UPFClientLinkKongregate* UPFClientLinkKongregate::LinkKongregate(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InKongregateId, const FString& InAuthTicket, const bool& InForceLink)
 {
 	UPFClientLinkKongregate* Proxy = NewObject<UPFClientLinkKongregate>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.KongregateId = InKongregateId;
 	Proxy->Request.AuthTicket = InAuthTicket;
+	Proxy->Request.ForceLink = InForceLink;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

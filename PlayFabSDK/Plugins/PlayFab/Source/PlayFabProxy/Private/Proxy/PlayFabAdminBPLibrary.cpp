@@ -223,6 +223,7 @@ void UPFAdminProxyLibrary::BreakBPAdminCatalogItem(
         ,bool& OutIsTradable
         ,FString& OutItemImageUrl
         ,bool& OutIsLimitedEdition
+        ,int32& OutInitialLimitedEditionCount
 	)
 {
     OutItemId = In.Data.ItemId;
@@ -242,6 +243,7 @@ void UPFAdminProxyLibrary::BreakBPAdminCatalogItem(
 	OutIsTradable = In.Data.IsTradable;
 	OutItemImageUrl = In.Data.ItemImageUrl;
 	OutIsLimitedEdition = In.Data.IsLimitedEdition;
+	OutInitialLimitedEditionCount = In.Data.InitialLimitedEditionCount;
 	
 }
 
@@ -412,6 +414,39 @@ void UPFAdminProxyLibrary::BreakBPAdminGameModeInfo(
 	OutMinPlayerCount = In.Data.MinPlayerCount;
 	OutMaxPlayerCount = In.Data.MaxPlayerCount;
 	OutStartOpen = In.Data.StartOpen;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetActionGroupResult(
+		const FBPAdminGetActionGroupResult& In
+        ,FString& OutName
+        ,FString& OutId
+	)
+{
+    OutName = In.Data.Name;
+	OutId = In.Data.Id;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetAllActionGroupsRequest(
+		const FBPAdminGetAllActionGroupsRequest& In
+	)
+{
+    
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetAllActionGroupsResult(
+		const FBPAdminGetAllActionGroupsResult& In
+        ,TArray<FBPAdminGetActionGroupResult>& OutActionGroups
+	)
+{
+    for (const PlayFab::AdminModels::FGetActionGroupResult& elem : In.Data.ActionGroups)
+    {
+        FBPAdminGetActionGroupResult result;
+        result.Data = elem;
+        OutActionGroups.Add(result);
+    }
+
 	
 }
 
@@ -1328,6 +1363,7 @@ void UPFAdminProxyLibrary::BreakBPAdminPlayerProfile(
         ,FDateTime& OutCreated
         ,FDateTime& OutLastLogin
         ,FDateTime& OutBannedUntil
+        ,int32& OutTotalValueToDateInUSD
         ,TArray<FString>& OutTags
         ,TArray<FBPAdminAdCampaignAttribution>& OutAdCampaignAttributions
         ,TArray<FBPAdminPushNotificationRegistration>& OutPushNotificationRegistrations
@@ -1344,6 +1380,7 @@ void UPFAdminProxyLibrary::BreakBPAdminPlayerProfile(
 	
 	
 	
+	OutTotalValueToDateInUSD = In.Data.TotalValueToDateInUSD;
 	
 	OutTags = In.Data.Tags;
 	

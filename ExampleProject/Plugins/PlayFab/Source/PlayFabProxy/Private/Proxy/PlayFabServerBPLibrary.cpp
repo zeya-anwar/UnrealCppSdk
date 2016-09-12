@@ -228,6 +228,7 @@ void UPFServerProxyLibrary::BreakBPServerCatalogItem(
         ,bool& OutIsTradable
         ,FString& OutItemImageUrl
         ,bool& OutIsLimitedEdition
+        ,int32& OutInitialLimitedEditionCount
 	)
 {
     OutItemId = In.Data.ItemId;
@@ -247,6 +248,7 @@ void UPFServerProxyLibrary::BreakBPServerCatalogItem(
 	OutIsTradable = In.Data.IsTradable;
 	OutItemImageUrl = In.Data.ItemImageUrl;
 	OutIsLimitedEdition = In.Data.IsLimitedEdition;
+	OutInitialLimitedEditionCount = In.Data.InitialLimitedEditionCount;
 	
 }
 
@@ -478,6 +480,7 @@ void UPFServerProxyLibrary::BreakBPServerExecuteCloudScriptResult(
         ,int32& OutRevision
         ,TArray<FBPServerLogStatement>& OutLogs
         ,float& OutExecutionTimeSeconds
+        ,float& OutProcessorTimeSeconds
         ,int32& OutMemoryConsumedBytes
         ,int32& OutAPIRequestsIssued
         ,int32& OutHttpRequestsIssued
@@ -495,6 +498,7 @@ void UPFServerProxyLibrary::BreakBPServerExecuteCloudScriptResult(
     }
 
 	OutExecutionTimeSeconds = In.Data.ExecutionTimeSeconds;
+	OutProcessorTimeSeconds = In.Data.ProcessorTimeSeconds;
 	OutMemoryConsumedBytes = In.Data.MemoryConsumedBytes;
 	OutAPIRequestsIssued = In.Data.APIRequestsIssued;
 	OutHttpRequestsIssued = In.Data.HttpRequestsIssued;
@@ -558,6 +562,39 @@ void UPFServerProxyLibrary::BreakBPServerGameInstanceState(
 	)
 {
     
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetActionGroupResult(
+		const FBPServerGetActionGroupResult& In
+        ,FString& OutName
+        ,FString& OutId
+	)
+{
+    OutName = In.Data.Name;
+	OutId = In.Data.Id;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetAllActionGroupsRequest(
+		const FBPServerGetAllActionGroupsRequest& In
+	)
+{
+    
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetAllActionGroupsResult(
+		const FBPServerGetAllActionGroupsResult& In
+        ,TArray<FBPServerGetActionGroupResult>& OutActionGroups
+	)
+{
+    for (const PlayFab::ServerModels::FGetActionGroupResult& elem : In.Data.ActionGroups)
+    {
+        FBPServerGetActionGroupResult result;
+        result.Data = elem;
+        OutActionGroups.Add(result);
+    }
+
+	
 }
 
 void UPFServerProxyLibrary::BreakBPServerGetAllSegmentsRequest(
@@ -1846,6 +1883,7 @@ void UPFServerProxyLibrary::BreakBPServerPlayerProfile(
         ,FDateTime& OutCreated
         ,FDateTime& OutLastLogin
         ,FDateTime& OutBannedUntil
+        ,int32& OutTotalValueToDateInUSD
         ,TArray<FString>& OutTags
         ,TArray<FBPServerAdCampaignAttribution>& OutAdCampaignAttributions
         ,TArray<FBPServerPushNotificationRegistration>& OutPushNotificationRegistrations
@@ -1862,6 +1900,7 @@ void UPFServerProxyLibrary::BreakBPServerPlayerProfile(
 	
 	
 	
+	OutTotalValueToDateInUSD = In.Data.TotalValueToDateInUSD;
 	
 	OutTags = In.Data.Tags;
 	

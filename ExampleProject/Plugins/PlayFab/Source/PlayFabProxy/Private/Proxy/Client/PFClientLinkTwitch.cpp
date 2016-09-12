@@ -10,11 +10,12 @@ UPFClientLinkTwitch::UPFClientLinkTwitch(const FObjectInitializer& ObjectInitial
 {
 }
 
-UPFClientLinkTwitch* UPFClientLinkTwitch::LinkTwitch(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InAccessToken)
+UPFClientLinkTwitch* UPFClientLinkTwitch::LinkTwitch(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InAccessToken, const bool& InForceLink)
 {
 	UPFClientLinkTwitch* Proxy = NewObject<UPFClientLinkTwitch>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.AccessToken = InAccessToken;
+	Proxy->Request.ForceLink = InForceLink;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

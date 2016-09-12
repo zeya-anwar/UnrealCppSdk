@@ -19,7 +19,7 @@ public:
 	UPROPERTY(BlueprintAssignable)
 	FEmptyOnlineDelegate OnFailure; 
 	
-	// Deletes the users for the provided game. Deletes custom data, all account linkages, and statistics.
+	// Deletes the users for the provided game. Deletes custom data, all account linkages, and statistics. This method does not remove the player's event history, login history, inventory items, nor virtual currencies.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Admin|Player Data Management")
 	static UPFAdminDeleteUsers* DeleteUsers(UObject* WorldContextObject, class APlayerController* PlayerController, const TArray<FString>& InPlayFabIds, const FString& InTitleId);
 

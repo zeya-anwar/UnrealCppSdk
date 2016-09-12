@@ -21,7 +21,7 @@ public:
 	
 	// Links the Android device identifier to the user's PlayFab account
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Account Management")
-	static UPFClientLinkAndroidDeviceID* LinkAndroidDeviceID(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InAndroidDeviceId, const FString& InOS, const FString& InAndroidDevice);
+	static UPFClientLinkAndroidDeviceID* LinkAndroidDeviceID(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InAndroidDeviceId, const FString& InOS, const FString& InAndroidDevice, const bool& InForceLink);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

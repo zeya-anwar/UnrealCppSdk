@@ -1371,8 +1371,10 @@ namespace ServerModels
 		bool IsTradable;
 		// [optional] URL to the item image. For Facebook purchase to display the image on the item purchase page, this must be set to an HTTP URL.
 		FString ItemImageUrl;
-		// if true, then only a fixed number can ever be granted.
+		// BETA: If true, then only a fixed number can ever be granted.
 		bool IsLimitedEdition;
+		// BETA: If IsLImitedEdition is true, then this determines amount of the item initially available. Note that this fieldis ignored if the catalog item already existed in this catalog, or the field is less than 1.
+		int32 InitialLimitedEditionCount;
 	
         FCatalogItem() :
 			FPlayFabBaseModel(),
@@ -1392,7 +1394,8 @@ namespace ServerModels
 			IsStackable(false),
 			IsTradable(false),
 			ItemImageUrl(),
-			IsLimitedEdition(false)
+			IsLimitedEdition(false),
+			InitialLimitedEditionCount(0)
 			{}
 		
 		FCatalogItem(const FCatalogItem& src) :
@@ -1413,7 +1416,8 @@ namespace ServerModels
 			IsStackable(src.IsStackable),
 			IsTradable(src.IsTradable),
 			ItemImageUrl(src.ItemImageUrl),
-			IsLimitedEdition(src.IsLimitedEdition)
+			IsLimitedEdition(src.IsLimitedEdition),
+			InitialLimitedEditionCount(src.InitialLimitedEditionCount)
 			{}
 			
 		FCatalogItem(const TSharedPtr<FJsonObject>& obj) : FCatalogItem()
@@ -2065,6 +2069,8 @@ namespace ServerModels
 		TArray<FLogStatement> Logs;
 		// undefined
 		double ExecutionTimeSeconds;
+		// Processor time consumed while executing the function. This does not include time spent waiting on API calls or HTTP requests.
+		double ProcessorTimeSeconds;
 		// undefined
 		uint32 MemoryConsumedBytes;
 		// Number of PlayFab API requests issued by the CloudScript function
@@ -2081,6 +2087,7 @@ namespace ServerModels
 			FunctionResult(),
 			Logs(),
 			ExecutionTimeSeconds(0),
+			ProcessorTimeSeconds(0),
 			MemoryConsumedBytes(0),
 			APIRequestsIssued(0),
 			HttpRequestsIssued(0),
@@ -2094,6 +2101,7 @@ namespace ServerModels
 			FunctionResult(src.FunctionResult),
 			Logs(src.Logs),
 			ExecutionTimeSeconds(src.ExecutionTimeSeconds),
+			ProcessorTimeSeconds(src.ProcessorTimeSeconds),
 			MemoryConsumedBytes(src.MemoryConsumedBytes),
 			APIRequestsIssued(src.APIRequestsIssued),
 			HttpRequestsIssued(src.HttpRequestsIssued),
@@ -2253,6 +2261,87 @@ namespace ServerModels
 	void writeGameInstanceStateEnumJSON(GameInstanceState enumVal, JsonWriter& writer);
 	GameInstanceState readGameInstanceStateFromValue(const TSharedPtr<FJsonValue>& value);
 	
+	
+	struct PLAYFAB_API FGetActionGroupResult : public FPlayFabBaseModel
+    {
+		
+		// Action Group name
+		FString Name;
+		// [optional] Action Group ID
+		FString Id;
+	
+        FGetActionGroupResult() :
+			FPlayFabBaseModel(),
+			Name(),
+			Id()
+			{}
+		
+		FGetActionGroupResult(const FGetActionGroupResult& src) :
+			FPlayFabBaseModel(),
+			Name(src.Name),
+			Id(src.Id)
+			{}
+			
+		FGetActionGroupResult(const TSharedPtr<FJsonObject>& obj) : FGetActionGroupResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetActionGroupResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetAllActionGroupsRequest : public FPlayFabBaseModel
+    {
+		
+	
+        FGetAllActionGroupsRequest() :
+			FPlayFabBaseModel()
+			{}
+		
+		FGetAllActionGroupsRequest(const FGetAllActionGroupsRequest& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FGetAllActionGroupsRequest(const TSharedPtr<FJsonObject>& obj) : FGetAllActionGroupsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetAllActionGroupsRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetAllActionGroupsResult : public FPlayFabBaseModel
+    {
+		
+		// List of Action Groups.
+		TArray<FGetActionGroupResult> ActionGroups;
+	
+        FGetAllActionGroupsResult() :
+			FPlayFabBaseModel(),
+			ActionGroups()
+			{}
+		
+		FGetAllActionGroupsResult(const FGetAllActionGroupsResult& src) :
+			FPlayFabBaseModel(),
+			ActionGroups(src.ActionGroups)
+			{}
+			
+		FGetAllActionGroupsResult(const TSharedPtr<FJsonObject>& obj) : FGetAllActionGroupsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetAllActionGroupsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
 	
 	struct PLAYFAB_API FGetAllSegmentsRequest : public FPlayFabBaseModel
     {
@@ -3592,7 +3681,9 @@ namespace ServerModels
 		OptionalTime BannedUntil;
 		// [optional] Dictionary of player's statistics using only the latest version's value
 		TMap<FString, int32> Statistics;
-		// [optional] Dictionary of player's total currency purchases. The key VTD is a sum of all player_realmoney_purchase events OrderTotals.
+		// [optional] A sum of player's total purchases in USD across all currencies.
+		OptionalUint32 TotalValueToDateInUSD;
+		// [optional] Dictionary of player's total purchases by currency.
 		TMap<FString, uint32> ValuesToDate;
 		// [optional] List of player's tags for segmentation.
 		TArray<FString> Tags;
@@ -3618,6 +3709,7 @@ namespace ServerModels
 			LastLogin(),
 			BannedUntil(),
 			Statistics(),
+			TotalValueToDateInUSD(),
 			ValuesToDate(),
 			Tags(),
 			VirtualCurrencyBalances(),
@@ -3638,6 +3730,7 @@ namespace ServerModels
 			LastLogin(src.LastLogin),
 			BannedUntil(src.BannedUntil),
 			Statistics(src.Statistics),
+			TotalValueToDateInUSD(src.TotalValueToDateInUSD),
 			ValuesToDate(src.ValuesToDate),
 			Tags(src.Tags),
 			VirtualCurrencyBalances(src.VirtualCurrencyBalances),

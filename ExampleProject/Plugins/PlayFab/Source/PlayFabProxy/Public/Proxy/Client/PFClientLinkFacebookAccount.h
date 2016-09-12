@@ -21,7 +21,7 @@ public:
 	
 	// Links the Facebook account associated with the provided Facebook access token to the user's PlayFab account
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Account Management")
-	static UPFClientLinkFacebookAccount* LinkFacebookAccount(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InAccessToken);
+	static UPFClientLinkFacebookAccount* LinkFacebookAccount(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InAccessToken, const bool& InForceLink);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

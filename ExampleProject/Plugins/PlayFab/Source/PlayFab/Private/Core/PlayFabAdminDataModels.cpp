@@ -1193,6 +1193,8 @@ void PlayFab::AdminModels::FCatalogItem::writeJSON(JsonWriter& writer) const
 	
     writer->WriteIdentifierPrefix(TEXT("IsLimitedEdition")); writer->WriteValue(IsLimitedEdition);
 	
+    writer->WriteIdentifierPrefix(TEXT("InitialLimitedEditionCount")); writer->WriteValue(InitialLimitedEditionCount);
+	
     
     writer->WriteObjectEnd();
 }
@@ -1316,6 +1318,13 @@ bool PlayFab::AdminModels::FCatalogItem::readFromValue(const TSharedPtr<FJsonObj
     {
         bool TmpValue;
         if(IsLimitedEditionValue->TryGetBool(TmpValue)) {IsLimitedEdition = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> InitialLimitedEditionCountValue = obj->TryGetField(TEXT("InitialLimitedEditionCount"));
+    if (InitialLimitedEditionCountValue.IsValid()&& !InitialLimitedEditionCountValue->IsNull())
+    {
+        int32 TmpValue;
+        if(InitialLimitedEditionCountValue->TryGetNumber(TmpValue)) {InitialLimitedEditionCount = TmpValue; }
     }
     
     
@@ -2217,6 +2226,111 @@ bool PlayFab::AdminModels::FGameModeInfo::readFromValue(const TSharedPtr<FJsonOb
         bool TmpValue;
         if(StartOpenValue->TryGetBool(TmpValue)) {StartOpen = TmpValue; }
     }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetActionGroupResult::~FGetActionGroupResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetActionGroupResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("Name")); writer->WriteValue(Name);
+	
+    if(Id.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Id")); writer->WriteValue(Id); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetActionGroupResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> NameValue = obj->TryGetField(TEXT("Name"));
+    if (NameValue.IsValid()&& !NameValue->IsNull())
+    {
+        FString TmpValue;
+        if(NameValue->TryGetString(TmpValue)) {Name = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> IdValue = obj->TryGetField(TEXT("Id"));
+    if (IdValue.IsValid()&& !IdValue->IsNull())
+    {
+        FString TmpValue;
+        if(IdValue->TryGetString(TmpValue)) {Id = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetAllActionGroupsRequest::~FGetAllActionGroupsRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetAllActionGroupsRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetAllActionGroupsRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetAllActionGroupsResult::~FGetAllActionGroupsResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetAllActionGroupsResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+        writer->WriteArrayStart(TEXT("ActionGroups"));
+    
+        for (const FGetActionGroupResult& item : ActionGroups)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+    
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetAllActionGroupsResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&ActionGroupsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("ActionGroups"));
+        for (int32 Idx = 0; Idx < ActionGroupsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = ActionGroupsArray[Idx];
+            
+            ActionGroups.Add(FGetActionGroupResult(CurrentItem->AsObject()));
+        }
+    }
+
     
     
     return HasSucceeded;
@@ -3438,6 +3552,8 @@ void PlayFab::AdminModels::FPlayerProfile::writeJSON(JsonWriter& writer) const
         writer->WriteObjectEnd();
      }
 	
+    if(TotalValueToDateInUSD.notNull()) { writer->WriteIdentifierPrefix(TEXT("TotalValueToDateInUSD")); writer->WriteValue(static_cast<int64>(TotalValueToDateInUSD)); }
+	
     if(ValuesToDate.Num() != 0) 
     {
         writer->WriteObjectStart(TEXT("ValuesToDate"));
@@ -3579,6 +3695,13 @@ bool PlayFab::AdminModels::FPlayerProfile::readFromValue(const TSharedPtr<FJsonO
             int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
             Statistics.Add(It.Key(), TmpValue);
         }
+    }
+    
+    const TSharedPtr<FJsonValue> TotalValueToDateInUSDValue = obj->TryGetField(TEXT("TotalValueToDateInUSD"));
+    if (TotalValueToDateInUSDValue.IsValid()&& !TotalValueToDateInUSDValue->IsNull())
+    {
+        uint32 TmpValue;
+        if(TotalValueToDateInUSDValue->TryGetNumber(TmpValue)) {TotalValueToDateInUSD = TmpValue; }
     }
     
     const TSharedPtr<FJsonObject>* ValuesToDateObject;

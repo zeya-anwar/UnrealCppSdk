@@ -21,7 +21,7 @@ public:
 	
 	// Links the vendor-specific iOS device identifier to the user's PlayFab account
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Account Management")
-	static UPFClientLinkIOSDeviceID* LinkIOSDeviceID(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InDeviceId, const FString& InOS, const FString& InDeviceModel);
+	static UPFClientLinkIOSDeviceID* LinkIOSDeviceID(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InDeviceId, const FString& InOS, const FString& InDeviceModel, const bool& InForceLink);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

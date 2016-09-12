@@ -10,11 +10,12 @@ UPFClientLinkSteamAccount::UPFClientLinkSteamAccount(const FObjectInitializer& O
 {
 }
 
-UPFClientLinkSteamAccount* UPFClientLinkSteamAccount::LinkSteamAccount(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InSteamTicket)
+UPFClientLinkSteamAccount* UPFClientLinkSteamAccount::LinkSteamAccount(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InSteamTicket, const bool& InForceLink)
 {
 	UPFClientLinkSteamAccount* Proxy = NewObject<UPFClientLinkSteamAccount>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.SteamTicket = InSteamTicket;
+	Proxy->Request.ForceLink = InForceLink;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

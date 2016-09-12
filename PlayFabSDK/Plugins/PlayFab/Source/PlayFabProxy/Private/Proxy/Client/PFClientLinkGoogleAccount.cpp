@@ -10,11 +10,12 @@ UPFClientLinkGoogleAccount::UPFClientLinkGoogleAccount(const FObjectInitializer&
 {
 }
 
-UPFClientLinkGoogleAccount* UPFClientLinkGoogleAccount::LinkGoogleAccount(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InAccessToken)
+UPFClientLinkGoogleAccount* UPFClientLinkGoogleAccount::LinkGoogleAccount(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InAccessToken, const bool& InForceLink)
 {
 	UPFClientLinkGoogleAccount* Proxy = NewObject<UPFClientLinkGoogleAccount>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.AccessToken = InAccessToken;
+	Proxy->Request.ForceLink = InForceLink;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

@@ -148,6 +148,7 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,bool& OutIsTradable
         ,FString& OutItemImageUrl
         ,bool& OutIsLimitedEdition
+        ,int32& OutInitialLimitedEditionCount
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
@@ -294,6 +295,7 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,int32& OutRevision
         ,TArray<FBPServerLogStatement>& OutLogs
         ,float& OutExecutionTimeSeconds
+        ,float& OutProcessorTimeSeconds
         ,int32& OutMemoryConsumedBytes
         ,int32& OutAPIRequestsIssued
         ,int32& OutHttpRequestsIssued
@@ -332,6 +334,24 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerGameInstanceState(
 		const FBPServerGameInstanceState& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerGetActionGroupResult(
+		const FBPServerGetActionGroupResult& In
+        ,FString& OutName
+        ,FString& OutId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerGetAllActionGroupsRequest(
+		const FBPServerGetAllActionGroupsRequest& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerGetAllActionGroupsResult(
+		const FBPServerGetAllActionGroupsResult& In
+        ,TArray<FBPServerGetActionGroupResult>& OutActionGroups
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
@@ -1027,6 +1047,7 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,FDateTime& OutCreated
         ,FDateTime& OutLastLogin
         ,FDateTime& OutBannedUntil
+        ,int32& OutTotalValueToDateInUSD
         ,TArray<FString>& OutTags
         ,TArray<FBPServerAdCampaignAttribution>& OutAdCampaignAttributions
         ,TArray<FBPServerPushNotificationRegistration>& OutPushNotificationRegistrations

@@ -21,7 +21,7 @@ public:
 	
 	// Links the Steam account associated with the provided Steam authentication ticket to the user's PlayFab account
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Account Management")
-	static UPFClientLinkSteamAccount* LinkSteamAccount(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InSteamTicket);
+	static UPFClientLinkSteamAccount* LinkSteamAccount(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InSteamTicket, const bool& InForceLink);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

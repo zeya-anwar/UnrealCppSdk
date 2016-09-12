@@ -10,13 +10,14 @@ UPFClientLinkIOSDeviceID::UPFClientLinkIOSDeviceID(const FObjectInitializer& Obj
 {
 }
 
-UPFClientLinkIOSDeviceID* UPFClientLinkIOSDeviceID::LinkIOSDeviceID(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InDeviceId, const FString& InOS, const FString& InDeviceModel)
+UPFClientLinkIOSDeviceID* UPFClientLinkIOSDeviceID::LinkIOSDeviceID(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InDeviceId, const FString& InOS, const FString& InDeviceModel, const bool& InForceLink)
 {
 	UPFClientLinkIOSDeviceID* Proxy = NewObject<UPFClientLinkIOSDeviceID>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.DeviceId = InDeviceId;
 	Proxy->Request.OS = InOS;
 	Proxy->Request.DeviceModel = InDeviceModel;
+	Proxy->Request.ForceLink = InForceLink;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;
