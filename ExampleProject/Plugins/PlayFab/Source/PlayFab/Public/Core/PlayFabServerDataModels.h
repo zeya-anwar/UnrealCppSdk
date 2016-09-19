@@ -83,6 +83,49 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FAddFriendRequest : public FPlayFabBaseModel
+    {
+		
+		// PlayFab identifier of the player to add a new friend.
+		FString PlayFabId;
+		// [optional] The PlayFab identifier of the user being added.
+		FString FriendPlayFabId;
+		// [optional] The PlayFab username of the user being added
+		FString FriendUsername;
+		// [optional] Email address of the user being added.
+		FString FriendEmail;
+		// [optional] Title-specific display name of the user to being added.
+		FString FriendTitleDisplayName;
+	
+        FAddFriendRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			FriendPlayFabId(),
+			FriendUsername(),
+			FriendEmail(),
+			FriendTitleDisplayName()
+			{}
+		
+		FAddFriendRequest(const FAddFriendRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			FriendPlayFabId(src.FriendPlayFabId),
+			FriendUsername(src.FriendUsername),
+			FriendEmail(src.FriendEmail),
+			FriendTitleDisplayName(src.FriendTitleDisplayName)
+			{}
+			
+		FAddFriendRequest(const TSharedPtr<FJsonObject>& obj) : FAddFriendRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FAddFriendRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FAddPlayerTagRequest : public FPlayFabBaseModel
     {
 		
@@ -1905,6 +1948,56 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FDeregisterGameRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique identifier for the Game Server Instance that is being deregistered.
+		FString LobbyId;
+	
+        FDeregisterGameRequest() :
+			FPlayFabBaseModel(),
+			LobbyId()
+			{}
+		
+		FDeregisterGameRequest(const FDeregisterGameRequest& src) :
+			FPlayFabBaseModel(),
+			LobbyId(src.LobbyId)
+			{}
+			
+		FDeregisterGameRequest(const TSharedPtr<FJsonObject>& obj) : FDeregisterGameRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FDeregisterGameRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FDeregisterGameResponse : public FPlayFabBaseModel
+    {
+		
+	
+        FDeregisterGameResponse() :
+			FPlayFabBaseModel()
+			{}
+		
+		FDeregisterGameResponse(const FDeregisterGameResponse& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FDeregisterGameResponse(const TSharedPtr<FJsonObject>& obj) : FDeregisterGameResponse()
+        {
+            readFromValue(obj);
+        }
+		
+		~FDeregisterGameResponse();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FEmptyResult : public FPlayFabBaseModel
     {
 		
@@ -2911,6 +3004,115 @@ namespace ServerModels
         }
 		
 		~FGetContentDownloadUrlResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetFriendLeaderboardRequest : public FPlayFabBaseModel
+    {
+		
+		// The player whose friend leaderboard to get
+		FString PlayFabId;
+		// Statistic used to rank friends for this leaderboard.
+		FString StatisticName;
+		// Position in the leaderboard to start this listing (defaults to the first entry).
+		int32 StartPosition;
+		// Maximum number of entries to retrieve.
+		int32 MaxResultsCount;
+		// [optional] Indicates whether Steam service friends should be included in the response. Default is true.
+		OptionalBool IncludeSteamFriends;
+		// [optional] Indicates whether Facebook friends should be included in the response. Default is true.
+		OptionalBool IncludeFacebookFriends;
+	
+        FGetFriendLeaderboardRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			StatisticName(),
+			StartPosition(0),
+			MaxResultsCount(0),
+			IncludeSteamFriends(),
+			IncludeFacebookFriends()
+			{}
+		
+		FGetFriendLeaderboardRequest(const FGetFriendLeaderboardRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			StatisticName(src.StatisticName),
+			StartPosition(src.StartPosition),
+			MaxResultsCount(src.MaxResultsCount),
+			IncludeSteamFriends(src.IncludeSteamFriends),
+			IncludeFacebookFriends(src.IncludeFacebookFriends)
+			{}
+			
+		FGetFriendLeaderboardRequest(const TSharedPtr<FJsonObject>& obj) : FGetFriendLeaderboardRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetFriendLeaderboardRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetFriendsListRequest : public FPlayFabBaseModel
+    {
+		
+		// PlayFab identifier of the player whose friend list to get.
+		FString PlayFabId;
+		// [optional] Indicates whether Steam service friends should be included in the response. Default is true.
+		OptionalBool IncludeSteamFriends;
+		// [optional] Indicates whether Facebook friends should be included in the response. Default is true.
+		OptionalBool IncludeFacebookFriends;
+	
+        FGetFriendsListRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			IncludeSteamFriends(),
+			IncludeFacebookFriends()
+			{}
+		
+		FGetFriendsListRequest(const FGetFriendsListRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			IncludeSteamFriends(src.IncludeSteamFriends),
+			IncludeFacebookFriends(src.IncludeFacebookFriends)
+			{}
+			
+		FGetFriendsListRequest(const TSharedPtr<FJsonObject>& obj) : FGetFriendsListRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetFriendsListRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetFriendsListResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Array of friends found.
+		TArray<FFriendInfo> Friends;
+	
+        FGetFriendsListResult() :
+			FPlayFabBaseModel(),
+			Friends()
+			{}
+		
+		FGetFriendsListResult(const FGetFriendsListResult& src) :
+			FPlayFabBaseModel(),
+			Friends(src.Friends)
+			{}
+			
+		FGetFriendsListResult(const TSharedPtr<FJsonObject>& obj) : FGetFriendsListResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetFriendsListResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -6005,6 +6207,176 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FRefreshGameServerInstanceHeartbeatRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique identifier of the Game Server Instance for which the heartbeat is updated.
+		FString LobbyId;
+	
+        FRefreshGameServerInstanceHeartbeatRequest() :
+			FPlayFabBaseModel(),
+			LobbyId()
+			{}
+		
+		FRefreshGameServerInstanceHeartbeatRequest(const FRefreshGameServerInstanceHeartbeatRequest& src) :
+			FPlayFabBaseModel(),
+			LobbyId(src.LobbyId)
+			{}
+			
+		FRefreshGameServerInstanceHeartbeatRequest(const TSharedPtr<FJsonObject>& obj) : FRefreshGameServerInstanceHeartbeatRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRefreshGameServerInstanceHeartbeatRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FRefreshGameServerInstanceHeartbeatResult : public FPlayFabBaseModel
+    {
+		
+	
+        FRefreshGameServerInstanceHeartbeatResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FRefreshGameServerInstanceHeartbeatResult(const FRefreshGameServerInstanceHeartbeatResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FRefreshGameServerInstanceHeartbeatResult(const TSharedPtr<FJsonObject>& obj) : FRefreshGameServerInstanceHeartbeatResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRefreshGameServerInstanceHeartbeatResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	enum Region
+	{
+		RegionUSCentral,
+		RegionUSEast,
+		RegionEUWest,
+		RegionSingapore,
+		RegionJapan,
+		RegionBrazil,
+		RegionAustralia
+	};
+	
+	void writeRegionEnumJSON(Region enumVal, JsonWriter& writer);
+	Region readRegionFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
+	struct PLAYFAB_API FRegisterGameRequest : public FPlayFabBaseModel
+    {
+		
+		// IP address of the Game Server Instance.
+		FString ServerHost;
+		// Port number for communication with the Game Server Instance.
+		FString ServerPort;
+		// Unique identifier of the build running on the Game Server Instance.
+		FString Build;
+		// Unique identifier of the build running on the Game Server Instance.
+		Region pfRegion;
+		// Unique identifier of the build running on the Game Server Instance.
+		FString GameMode;
+		// [optional] Tags for the Game Server Instance
+		TMap<FString, FString> Tags;
+	
+        FRegisterGameRequest() :
+			FPlayFabBaseModel(),
+			ServerHost(),
+			ServerPort(),
+			Build(),
+			pfRegion(),
+			GameMode(),
+			Tags()
+			{}
+		
+		FRegisterGameRequest(const FRegisterGameRequest& src) :
+			FPlayFabBaseModel(),
+			ServerHost(src.ServerHost),
+			ServerPort(src.ServerPort),
+			Build(src.Build),
+			pfRegion(src.pfRegion),
+			GameMode(src.GameMode),
+			Tags(src.Tags)
+			{}
+			
+		FRegisterGameRequest(const TSharedPtr<FJsonObject>& obj) : FRegisterGameRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRegisterGameRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FRegisterGameResponse : public FPlayFabBaseModel
+    {
+		
+		// [optional] Unique identifier generated for the Game Server Instance that is registered.
+		FString LobbyId;
+	
+        FRegisterGameResponse() :
+			FPlayFabBaseModel(),
+			LobbyId()
+			{}
+		
+		FRegisterGameResponse(const FRegisterGameResponse& src) :
+			FPlayFabBaseModel(),
+			LobbyId(src.LobbyId)
+			{}
+			
+		FRegisterGameResponse(const TSharedPtr<FJsonObject>& obj) : FRegisterGameResponse()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRegisterGameResponse();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FRemoveFriendRequest : public FPlayFabBaseModel
+    {
+		
+		// PlayFab identifier of the friend account which is to be removed.
+		FString FriendPlayFabId;
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+	
+        FRemoveFriendRequest() :
+			FPlayFabBaseModel(),
+			FriendPlayFabId(),
+			PlayFabId()
+			{}
+		
+		FRemoveFriendRequest(const FRemoveFriendRequest& src) :
+			FPlayFabBaseModel(),
+			FriendPlayFabId(src.FriendPlayFabId),
+			PlayFabId(src.PlayFabId)
+			{}
+			
+		FRemoveFriendRequest(const TSharedPtr<FJsonObject>& obj) : FRemoveFriendRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRemoveFriendRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FRemovePlayerTagRequest : public FPlayFabBaseModel
     {
 		
@@ -6510,6 +6882,60 @@ namespace ServerModels
         }
 		
 		~FSetGameServerInstanceStateResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FSetGameServerInstanceTagsRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique identifier of the Game Server Instance to be updated.
+		FString LobbyId;
+		// Tags to set for the specified Game Server Instance. Note that this is the complete list of tags to be associated with the Game Server Instance.
+		TMap<FString, FString> Tags;
+	
+        FSetGameServerInstanceTagsRequest() :
+			FPlayFabBaseModel(),
+			LobbyId(),
+			Tags()
+			{}
+		
+		FSetGameServerInstanceTagsRequest(const FSetGameServerInstanceTagsRequest& src) :
+			FPlayFabBaseModel(),
+			LobbyId(src.LobbyId),
+			Tags(src.Tags)
+			{}
+			
+		FSetGameServerInstanceTagsRequest(const TSharedPtr<FJsonObject>& obj) : FSetGameServerInstanceTagsRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FSetGameServerInstanceTagsRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FSetGameServerInstanceTagsResult : public FPlayFabBaseModel
+    {
+		
+	
+        FSetGameServerInstanceTagsResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FSetGameServerInstanceTagsResult(const FSetGameServerInstanceTagsResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FSetGameServerInstanceTagsResult(const TSharedPtr<FJsonObject>& obj) : FSetGameServerInstanceTagsResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FSetGameServerInstanceTagsResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

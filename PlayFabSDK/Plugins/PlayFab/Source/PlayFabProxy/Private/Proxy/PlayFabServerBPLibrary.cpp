@@ -31,6 +31,23 @@ void UPFServerProxyLibrary::BreakBPServerAddCharacterVirtualCurrencyRequest(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerAddFriendRequest(
+		const FBPServerAddFriendRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutFriendPlayFabId
+        ,FString& OutFriendUsername
+        ,FString& OutFriendEmail
+        ,FString& OutFriendTitleDisplayName
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutFriendPlayFabId = In.Data.FriendPlayFabId;
+	OutFriendUsername = In.Data.FriendUsername;
+	OutFriendEmail = In.Data.FriendEmail;
+	OutFriendTitleDisplayName = In.Data.FriendTitleDisplayName;
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerAddPlayerTagRequest(
 		const FBPServerAddPlayerTagRequest& In
         ,FString& OutPlayFabId
@@ -447,6 +464,22 @@ void UPFServerProxyLibrary::BreakBPServerDeleteUsersResult(
     
 }
 
+void UPFServerProxyLibrary::BreakBPServerDeregisterGameRequest(
+		const FBPServerDeregisterGameRequest& In
+        ,FString& OutLobbyId
+	)
+{
+    OutLobbyId = In.Data.LobbyId;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerDeregisterGameResponse(
+		const FBPServerDeregisterGameResponse& In
+	)
+{
+    
+}
+
 void UPFServerProxyLibrary::BreakBPServerEmptyResult(
 		const FBPServerEmptyResult& In
 	)
@@ -780,6 +813,53 @@ void UPFServerProxyLibrary::BreakBPServerGetContentDownloadUrlResult(
 	)
 {
     OutURL = In.Data.URL;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetFriendLeaderboardRequest(
+		const FBPServerGetFriendLeaderboardRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutStatisticName
+        ,int32& OutStartPosition
+        ,int32& OutMaxResultsCount
+        ,bool& OutIncludeSteamFriends
+        ,bool& OutIncludeFacebookFriends
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutStatisticName = In.Data.StatisticName;
+	OutStartPosition = In.Data.StartPosition;
+	OutMaxResultsCount = In.Data.MaxResultsCount;
+	OutIncludeSteamFriends = In.Data.IncludeSteamFriends;
+	OutIncludeFacebookFriends = In.Data.IncludeFacebookFriends;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetFriendsListRequest(
+		const FBPServerGetFriendsListRequest& In
+        ,FString& OutPlayFabId
+        ,bool& OutIncludeSteamFriends
+        ,bool& OutIncludeFacebookFriends
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutIncludeSteamFriends = In.Data.IncludeSteamFriends;
+	OutIncludeFacebookFriends = In.Data.IncludeFacebookFriends;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetFriendsListResult(
+		const FBPServerGetFriendsListResult& In
+        ,TArray<FBPServerFriendInfo>& OutFriends
+	)
+{
+    for (const PlayFab::ServerModels::FFriendInfo& elem : In.Data.Friends)
+    {
+        FBPServerFriendInfo result;
+        result.Data = elem;
+        OutFriends.Add(result);
+    }
+
 	
 }
 
@@ -2057,6 +2137,66 @@ void UPFServerProxyLibrary::BreakBPServerRedeemMatchmakerTicketResult(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerRefreshGameServerInstanceHeartbeatRequest(
+		const FBPServerRefreshGameServerInstanceHeartbeatRequest& In
+        ,FString& OutLobbyId
+	)
+{
+    OutLobbyId = In.Data.LobbyId;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerRefreshGameServerInstanceHeartbeatResult(
+		const FBPServerRefreshGameServerInstanceHeartbeatResult& In
+	)
+{
+    
+}
+
+void UPFServerProxyLibrary::BreakBPServerRegion(
+		const FBPServerRegion& In
+	)
+{
+    
+}
+
+void UPFServerProxyLibrary::BreakBPServerRegisterGameRequest(
+		const FBPServerRegisterGameRequest& In
+        ,FString& OutServerHost
+        ,FString& OutServerPort
+        ,FString& OutBuild
+        ,FString& OutGameMode
+	)
+{
+    OutServerHost = In.Data.ServerHost;
+	OutServerPort = In.Data.ServerPort;
+	OutBuild = In.Data.Build;
+	
+	OutGameMode = In.Data.GameMode;
+	
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerRegisterGameResponse(
+		const FBPServerRegisterGameResponse& In
+        ,FString& OutLobbyId
+	)
+{
+    OutLobbyId = In.Data.LobbyId;
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerRemoveFriendRequest(
+		const FBPServerRemoveFriendRequest& In
+        ,FString& OutFriendPlayFabId
+        ,FString& OutPlayFabId
+	)
+{
+    OutFriendPlayFabId = In.Data.FriendPlayFabId;
+	OutPlayFabId = In.Data.PlayFabId;
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerRemovePlayerTagRequest(
 		const FBPServerRemovePlayerTagRequest& In
         ,FString& OutPlayFabId
@@ -2269,6 +2409,23 @@ void UPFServerProxyLibrary::BreakBPServerSetGameServerInstanceStateRequest(
 
 void UPFServerProxyLibrary::BreakBPServerSetGameServerInstanceStateResult(
 		const FBPServerSetGameServerInstanceStateResult& In
+	)
+{
+    
+}
+
+void UPFServerProxyLibrary::BreakBPServerSetGameServerInstanceTagsRequest(
+		const FBPServerSetGameServerInstanceTagsRequest& In
+        ,FString& OutLobbyId
+	)
+{
+    OutLobbyId = In.Data.LobbyId;
+	
+	
+}
+
+void UPFServerProxyLibrary::BreakBPServerSetGameServerInstanceTagsResult(
+		const FBPServerSetGameServerInstanceTagsResult& In
 	)
 {
     

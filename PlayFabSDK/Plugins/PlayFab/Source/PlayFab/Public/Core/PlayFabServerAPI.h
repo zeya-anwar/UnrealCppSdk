@@ -22,6 +22,7 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FSendPushNotificationDelegate, const ServerModels::FSendPushNotificationResult&);
         DECLARE_DELEGATE_OneParam(FUpdateBansDelegate, const ServerModels::FUpdateBansResult&);
         DECLARE_DELEGATE_OneParam(FDeleteUsersDelegate, const ServerModels::FDeleteUsersResult&);
+        DECLARE_DELEGATE_OneParam(FGetFriendLeaderboardDelegate, const ServerModels::FGetLeaderboardResult&);
         DECLARE_DELEGATE_OneParam(FGetLeaderboardDelegate, const ServerModels::FGetLeaderboardResult&);
         DECLARE_DELEGATE_OneParam(FGetLeaderboardAroundUserDelegate, const ServerModels::FGetLeaderboardAroundUserResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayerCombinedInfoDelegate, const ServerModels::FGetPlayerCombinedInfoResult&);
@@ -72,10 +73,17 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FUnlockContainerInstanceDelegate, const ServerModels::FUnlockContainerItemResult&);
         DECLARE_DELEGATE_OneParam(FUnlockContainerItemDelegate, const ServerModels::FUnlockContainerItemResult&);
         DECLARE_DELEGATE_OneParam(FUpdateUserInventoryItemCustomDataDelegate, const ServerModels::FEmptyResult&);
+        DECLARE_DELEGATE_OneParam(FAddFriendDelegate, const ServerModels::FEmptyResult&);
+        DECLARE_DELEGATE_OneParam(FGetFriendsListDelegate, const ServerModels::FGetFriendsListResult&);
+        DECLARE_DELEGATE_OneParam(FRemoveFriendDelegate, const ServerModels::FEmptyResult&);
+        DECLARE_DELEGATE_OneParam(FDeregisterGameDelegate, const ServerModels::FDeregisterGameResponse&);
         DECLARE_DELEGATE_OneParam(FNotifyMatchmakerPlayerLeftDelegate, const ServerModels::FNotifyMatchmakerPlayerLeftResult&);
         DECLARE_DELEGATE_OneParam(FRedeemMatchmakerTicketDelegate, const ServerModels::FRedeemMatchmakerTicketResult&);
+        DECLARE_DELEGATE_OneParam(FRefreshGameServerInstanceHeartbeatDelegate, const ServerModels::FRefreshGameServerInstanceHeartbeatResult&);
+        DECLARE_DELEGATE_OneParam(FRegisterGameDelegate, const ServerModels::FRegisterGameResponse&);
         DECLARE_DELEGATE_OneParam(FSetGameServerInstanceDataDelegate, const ServerModels::FSetGameServerInstanceDataResult&);
         DECLARE_DELEGATE_OneParam(FSetGameServerInstanceStateDelegate, const ServerModels::FSetGameServerInstanceStateResult&);
+        DECLARE_DELEGATE_OneParam(FSetGameServerInstanceTagsDelegate, const ServerModels::FSetGameServerInstanceTagsResult&);
         DECLARE_DELEGATE_OneParam(FAwardSteamAchievementDelegate, const ServerModels::FAwardSteamAchievementResult&);
         DECLARE_DELEGATE_OneParam(FLogEventDelegate, const ServerModels::FLogEventResult&);
         DECLARE_DELEGATE_OneParam(FWriteCharacterEventDelegate, const ServerModels::FWriteEventResponse&);
@@ -172,6 +180,10 @@ namespace PlayFab
          * Note that this action cannot be undone. It will unlink all accounts and remove all PII information, as well as reset any statistics and leaderboards and clear out any stored custom data for the user.  This API must be enabled for use as an option in the game manager website. It is disabled by default.
          */
         bool DeleteUsers(ServerModels::FDeleteUsersRequest& request, const FDeleteUsersDelegate& SuccessDelegate = FDeleteUsersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Retrieves a list of ranked friends of the given player for the given statistic, starting from the indicated point in the leaderboard
+         */
+        bool GetFriendLeaderboard(ServerModels::FGetFriendLeaderboardRequest& request, const FGetFriendLeaderboardDelegate& SuccessDelegate = FGetFriendLeaderboardDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves a list of ranked users for the given statistic, starting from the indicated point in the leaderboard
          */
@@ -407,6 +419,22 @@ namespace PlayFab
          */
         bool UpdateUserInventoryItemCustomData(ServerModels::FUpdateUserInventoryItemDataRequest& request, const FUpdateUserInventoryItemCustomDataDelegate& SuccessDelegate = FUpdateUserInventoryItemCustomDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Adds the Friend user to the friendlist of the user with PlayFabId. At least one of FriendPlayFabId,FriendUsername,FriendEmail, or FriendTitleDisplayName should be initialized.
+         */
+        bool AddFriend(ServerModels::FAddFriendRequest& request, const FAddFriendDelegate& SuccessDelegate = FAddFriendDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Retrieves the current friends for the user with PlayFabId, constrained to users who have PlayFab accounts. Friends from linked accounts (Facebook, Steam) are also included. You may optionally exclude some linked services' friends.
+         */
+        bool GetFriendsList(ServerModels::FGetFriendsListRequest& request, const FGetFriendsListDelegate& SuccessDelegate = FGetFriendsListDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Removes the specified friend from the the user's friend list
+         */
+        bool RemoveFriend(ServerModels::FRemoveFriendRequest& request, const FRemoveFriendDelegate& SuccessDelegate = FRemoveFriendDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Inform the matchmaker that a Game Server Instance is removed.
+         */
+        bool DeregisterGame(ServerModels::FDeregisterGameRequest& request, const FDeregisterGameDelegate& SuccessDelegate = FDeregisterGameDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Informs the PlayFab match-making service that the user specified has left the Game Server Instance
          */
         bool NotifyMatchmakerPlayerLeft(ServerModels::FNotifyMatchmakerPlayerLeftRequest& request, const FNotifyMatchmakerPlayerLeftDelegate& SuccessDelegate = FNotifyMatchmakerPlayerLeftDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -416,6 +444,14 @@ namespace PlayFab
          */
         bool RedeemMatchmakerTicket(ServerModels::FRedeemMatchmakerTicketRequest& request, const FRedeemMatchmakerTicketDelegate& SuccessDelegate = FRedeemMatchmakerTicketDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Set the state of the indicated Game Server Instance. Also update the heartbeat for the instance.
+         */
+        bool RefreshGameServerInstanceHeartbeat(ServerModels::FRefreshGameServerInstanceHeartbeatRequest& request, const FRefreshGameServerInstanceHeartbeatDelegate& SuccessDelegate = FRefreshGameServerInstanceHeartbeatDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Inform the matchmaker that a new Game Server Instance is added.
+         */
+        bool RegisterGame(ServerModels::FRegisterGameRequest& request, const FRegisterGameDelegate& SuccessDelegate = FRegisterGameDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Sets the custom data of the indicated Game Server Instance
          */
         bool SetGameServerInstanceData(ServerModels::FSetGameServerInstanceDataRequest& request, const FSetGameServerInstanceDataDelegate& SuccessDelegate = FSetGameServerInstanceDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -423,6 +459,10 @@ namespace PlayFab
          * Set the state of the indicated Game Server Instance.
          */
         bool SetGameServerInstanceState(ServerModels::FSetGameServerInstanceStateRequest& request, const FSetGameServerInstanceStateDelegate& SuccessDelegate = FSetGameServerInstanceStateDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Set custom tags for the specified Game Server Instance
+         */
+        bool SetGameServerInstanceTags(ServerModels::FSetGameServerInstanceTagsRequest& request, const FSetGameServerInstanceTagsDelegate& SuccessDelegate = FSetGameServerInstanceTagsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Awards the specified users the specified Steam achievements
          */
@@ -595,6 +635,7 @@ namespace PlayFab
         void OnSendPushNotificationResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSendPushNotificationDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateBansResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateBansDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnDeleteUsersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteUsersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetFriendLeaderboardResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetFriendLeaderboardDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetLeaderboardResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetLeaderboardAroundUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardAroundUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayerCombinedInfoResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerCombinedInfoDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -645,10 +686,17 @@ namespace PlayFab
         void OnUnlockContainerInstanceResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlockContainerInstanceDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUnlockContainerItemResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlockContainerItemDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateUserInventoryItemCustomDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserInventoryItemCustomDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnAddFriendResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAddFriendDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetFriendsListResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetFriendsListDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnRemoveFriendResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemoveFriendDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnDeregisterGameResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeregisterGameDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnNotifyMatchmakerPlayerLeftResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FNotifyMatchmakerPlayerLeftDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRedeemMatchmakerTicketResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRedeemMatchmakerTicketDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnRefreshGameServerInstanceHeartbeatResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRefreshGameServerInstanceHeartbeatDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnRegisterGameResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRegisterGameDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetGameServerInstanceDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetGameServerInstanceDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetGameServerInstanceStateResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetGameServerInstanceStateDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnSetGameServerInstanceTagsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetGameServerInstanceTagsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAwardSteamAchievementResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAwardSteamAchievementDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnLogEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLogEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnWriteCharacterEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FWriteCharacterEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

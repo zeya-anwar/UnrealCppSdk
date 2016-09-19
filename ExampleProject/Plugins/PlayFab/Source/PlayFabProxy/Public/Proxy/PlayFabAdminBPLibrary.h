@@ -835,6 +835,20 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminRefundPurchaseRequest(
+		const FBPAdminRefundPurchaseRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutOrderId
+        ,FString& OutReason
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminRefundPurchaseResponse(
+		const FBPAdminRefundPurchaseResponse& In
+        ,FString& OutPurchaseStatus
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminRegion(
 		const FBPAdminRegion& In
 	);
@@ -895,6 +909,25 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminResetUserStatisticsResult(
 		const FBPAdminResetUserStatisticsResult& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminResolutionOutcome(
+		const FBPAdminResolutionOutcome& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminResolvePurchaseDisputeRequest(
+		const FBPAdminResolvePurchaseDisputeRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutOrderId
+        ,FString& OutReason
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminResolvePurchaseDisputeResponse(
+		const FBPAdminResolvePurchaseDisputeResponse& In
+        ,FString& OutPurchaseStatus
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))

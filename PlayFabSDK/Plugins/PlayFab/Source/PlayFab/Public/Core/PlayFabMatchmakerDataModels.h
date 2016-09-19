@@ -67,6 +67,56 @@ namespace MatchmakerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FDeregisterGameRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique identifier for the Game Server Instance that is being deregistered.
+		FString LobbyId;
+	
+        FDeregisterGameRequest() :
+			FPlayFabBaseModel(),
+			LobbyId()
+			{}
+		
+		FDeregisterGameRequest(const FDeregisterGameRequest& src) :
+			FPlayFabBaseModel(),
+			LobbyId(src.LobbyId)
+			{}
+			
+		FDeregisterGameRequest(const TSharedPtr<FJsonObject>& obj) : FDeregisterGameRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FDeregisterGameRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FDeregisterGameResponse : public FPlayFabBaseModel
+    {
+		
+	
+        FDeregisterGameResponse() :
+			FPlayFabBaseModel()
+			{}
+		
+		FDeregisterGameResponse(const FDeregisterGameResponse& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FDeregisterGameResponse(const TSharedPtr<FJsonObject>& obj) : FDeregisterGameResponse()
+        {
+            readFromValue(obj);
+        }
+		
+		~FDeregisterGameResponse();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FItemInstance : public FPlayFabBaseModel
     {
 		
@@ -272,6 +322,80 @@ namespace MatchmakerModels
 	void writeRegionEnumJSON(Region enumVal, JsonWriter& writer);
 	Region readRegionFromValue(const TSharedPtr<FJsonValue>& value);
 	
+	
+	struct PLAYFAB_API FRegisterGameRequest : public FPlayFabBaseModel
+    {
+		
+		// IP address of the Game Server Instance.
+		FString ServerHost;
+		// Port number for communication with the Game Server Instance.
+		FString ServerPort;
+		// Unique identifier of the build running on the Game Server Instance.
+		FString Build;
+		// Unique identifier of the build running on the Game Server Instance.
+		Region pfRegion;
+		// Unique identifier of the build running on the Game Server Instance.
+		FString GameMode;
+		// [optional] Tags for the Game Server Instance
+		TMap<FString, FString> Tags;
+	
+        FRegisterGameRequest() :
+			FPlayFabBaseModel(),
+			ServerHost(),
+			ServerPort(),
+			Build(),
+			pfRegion(),
+			GameMode(),
+			Tags()
+			{}
+		
+		FRegisterGameRequest(const FRegisterGameRequest& src) :
+			FPlayFabBaseModel(),
+			ServerHost(src.ServerHost),
+			ServerPort(src.ServerPort),
+			Build(src.Build),
+			pfRegion(src.pfRegion),
+			GameMode(src.GameMode),
+			Tags(src.Tags)
+			{}
+			
+		FRegisterGameRequest(const TSharedPtr<FJsonObject>& obj) : FRegisterGameRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRegisterGameRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FRegisterGameResponse : public FPlayFabBaseModel
+    {
+		
+		// [optional] Unique identifier generated for the Game Server Instance that is registered.
+		FString LobbyId;
+	
+        FRegisterGameResponse() :
+			FPlayFabBaseModel(),
+			LobbyId()
+			{}
+		
+		FRegisterGameResponse(const FRegisterGameResponse& src) :
+			FPlayFabBaseModel(),
+			LobbyId(src.LobbyId)
+			{}
+			
+		FRegisterGameResponse(const TSharedPtr<FJsonObject>& obj) : FRegisterGameResponse()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRegisterGameResponse();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
 	
 	struct PLAYFAB_API FStartGameRequest : public FPlayFabBaseModel
     {

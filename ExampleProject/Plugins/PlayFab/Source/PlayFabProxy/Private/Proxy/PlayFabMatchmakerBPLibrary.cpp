@@ -23,6 +23,22 @@ void UPFMatchmakerProxyLibrary::BreakBPMatchmakerAuthUserResponse(
 	
 }
 
+void UPFMatchmakerProxyLibrary::BreakBPMatchmakerDeregisterGameRequest(
+		const FBPMatchmakerDeregisterGameRequest& In
+        ,FString& OutLobbyId
+	)
+{
+    OutLobbyId = In.Data.LobbyId;
+	
+}
+
+void UPFMatchmakerProxyLibrary::BreakBPMatchmakerDeregisterGameResponse(
+		const FBPMatchmakerDeregisterGameResponse& In
+	)
+{
+    
+}
+
 void UPFMatchmakerProxyLibrary::BreakBPMatchmakerItemInstance(
 		const FBPMatchmakerItemInstance& In
         ,FString& OutItemId
@@ -100,6 +116,32 @@ void UPFMatchmakerProxyLibrary::BreakBPMatchmakerRegion(
 	)
 {
     
+}
+
+void UPFMatchmakerProxyLibrary::BreakBPMatchmakerRegisterGameRequest(
+		const FBPMatchmakerRegisterGameRequest& In
+        ,FString& OutServerHost
+        ,FString& OutServerPort
+        ,FString& OutBuild
+        ,FString& OutGameMode
+	)
+{
+    OutServerHost = In.Data.ServerHost;
+	OutServerPort = In.Data.ServerPort;
+	OutBuild = In.Data.Build;
+	
+	OutGameMode = In.Data.GameMode;
+	
+	
+}
+
+void UPFMatchmakerProxyLibrary::BreakBPMatchmakerRegisterGameResponse(
+		const FBPMatchmakerRegisterGameResponse& In
+        ,FString& OutLobbyId
+	)
+{
+    OutLobbyId = In.Data.LobbyId;
+	
 }
 
 void UPFMatchmakerProxyLibrary::BreakBPMatchmakerStartGameRequest(

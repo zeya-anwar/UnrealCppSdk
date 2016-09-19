@@ -32,7 +32,9 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FGetUserPublisherReadOnlyDataDelegate, const AdminModels::FGetUserDataResult&);
         DECLARE_DELEGATE_OneParam(FGetUserReadOnlyDataDelegate, const AdminModels::FGetUserDataResult&);
         DECLARE_DELEGATE_OneParam(FIncrementPlayerStatisticVersionDelegate, const AdminModels::FIncrementPlayerStatisticVersionResult&);
+        DECLARE_DELEGATE_OneParam(FRefundPurchaseDelegate, const AdminModels::FRefundPurchaseResponse&);
         DECLARE_DELEGATE_OneParam(FResetUserStatisticsDelegate, const AdminModels::FResetUserStatisticsResult&);
+        DECLARE_DELEGATE_OneParam(FResolvePurchaseDisputeDelegate, const AdminModels::FResolvePurchaseDisputeResponse&);
         DECLARE_DELEGATE_OneParam(FUpdatePlayerStatisticDefinitionDelegate, const AdminModels::FUpdatePlayerStatisticDefinitionResult&);
         DECLARE_DELEGATE_OneParam(FUpdateUserDataDelegate, const AdminModels::FUpdateUserDataResult&);
         DECLARE_DELEGATE_OneParam(FUpdateUserInternalDataDelegate, const AdminModels::FUpdateUserDataResult&);
@@ -203,10 +205,18 @@ namespace PlayFab
          */
         bool IncrementPlayerStatisticVersion(AdminModels::FIncrementPlayerStatisticVersionRequest& request, const FIncrementPlayerStatisticVersionDelegate& SuccessDelegate = FIncrementPlayerStatisticVersionDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
+         * Attempts to process an order refund through the original real money payment provider.
+         */
+        bool RefundPurchase(AdminModels::FRefundPurchaseRequest& request, const FRefundPurchaseDelegate& SuccessDelegate = FRefundPurchaseDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
          * Completely removes all statistics for the specified user, for the current game
          * Note that this action cannot be un-done. All statistics for this user will be deleted, removing the user from all leaderboards for the game.
          */
         bool ResetUserStatistics(AdminModels::FResetUserStatisticsRequest& request, const FResetUserStatisticsDelegate& SuccessDelegate = FResetUserStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Attempts to resolve a dispute with the original order's payment provider.
+         */
+        bool ResolvePurchaseDispute(AdminModels::FResolvePurchaseDisputeRequest& request, const FResolvePurchaseDisputeDelegate& SuccessDelegate = FResolvePurchaseDisputeDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Updates a player statistic configuration for the title, optionally allowing the developer to specify a reset interval.
          * Statistics are numeric values, with each statistic in the title also generating a leaderboard. The ResetInterval  enables automatically resetting leaderboards on a specified interval. Upon reset, the statistic updates to a new version with no values (effectively removing all players from the leaderboard). The previous version's statistic values are also archived for retrieval, if needed (see GetPlayerStatisticVersions). Statistics not created via a call to CreatePlayerStatisticDefinition by default have a VersionChangeInterval of Never, meaning they do not reset on a schedule, but they can be set to do so via a call to UpdatePlayerStatisticDefinition. Once a statistic has been reset (sometimes referred to as versioned or incremented), the now-previous version can still be written to for up a short, pre-defined period (currently 10 seconds), to prevent issues with levels completing around the time of the reset. Also, once reset, the historical statistics for players in the title may be retrieved using the URL specified in the version information (GetPlayerStatisticVersions). The AggregationMethod determines what action is taken when a new statistic value is submitted - always update with the new value (Last), use the highest of the old and new values (Max), use the smallest (Min), or add them together (Sum).
@@ -489,7 +499,9 @@ namespace PlayFab
         void OnGetUserPublisherReadOnlyDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserPublisherReadOnlyDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserReadOnlyDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserReadOnlyDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnIncrementPlayerStatisticVersionResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FIncrementPlayerStatisticVersionDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnRefundPurchaseResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRefundPurchaseDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnResetUserStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FResetUserStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnResolvePurchaseDisputeResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FResolvePurchaseDisputeDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdatePlayerStatisticDefinitionResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdatePlayerStatisticDefinitionDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateUserDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateUserInternalDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserInternalDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

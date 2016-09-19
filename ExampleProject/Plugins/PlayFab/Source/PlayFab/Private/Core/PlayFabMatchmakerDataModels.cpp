@@ -80,6 +80,59 @@ bool PlayFab::MatchmakerModels::FAuthUserResponse::readFromValue(const TSharedPt
 }
 
 
+PlayFab::MatchmakerModels::FDeregisterGameRequest::~FDeregisterGameRequest()
+{
+    
+}
+
+void PlayFab::MatchmakerModels::FDeregisterGameRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("LobbyId")); writer->WriteValue(LobbyId);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::MatchmakerModels::FDeregisterGameRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> LobbyIdValue = obj->TryGetField(TEXT("LobbyId"));
+    if (LobbyIdValue.IsValid()&& !LobbyIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(LobbyIdValue->TryGetString(TmpValue)) {LobbyId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::MatchmakerModels::FDeregisterGameResponse::~FDeregisterGameResponse()
+{
+    
+}
+
+void PlayFab::MatchmakerModels::FDeregisterGameResponse::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::MatchmakerModels::FDeregisterGameResponse::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::MatchmakerModels::FItemInstance::~FItemInstance()
 {
     
@@ -415,6 +468,120 @@ MatchmakerModels::Region PlayFab::MatchmakerModels::readRegionFromValue(const TS
 
 
     return RegionUSCentral; // Basically critical fail
+}
+
+
+PlayFab::MatchmakerModels::FRegisterGameRequest::~FRegisterGameRequest()
+{
+    
+}
+
+void PlayFab::MatchmakerModels::FRegisterGameRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("ServerHost")); writer->WriteValue(ServerHost);
+	
+    writer->WriteIdentifierPrefix(TEXT("ServerPort")); writer->WriteValue(ServerPort);
+	
+    writer->WriteIdentifierPrefix(TEXT("Build")); writer->WriteValue(Build);
+	
+    writer->WriteIdentifierPrefix(TEXT("Region")); writeRegionEnumJSON(pfRegion, writer);
+	
+    writer->WriteIdentifierPrefix(TEXT("GameMode")); writer->WriteValue(GameMode);
+	
+    if(Tags.Num() != 0) 
+    {
+        writer->WriteObjectStart(TEXT("Tags"));
+        for (TMap<FString, FString>::TConstIterator It(Tags); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            writer->WriteValue((*It).Value);
+        }
+        writer->WriteObjectEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::MatchmakerModels::FRegisterGameRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> ServerHostValue = obj->TryGetField(TEXT("ServerHost"));
+    if (ServerHostValue.IsValid()&& !ServerHostValue->IsNull())
+    {
+        FString TmpValue;
+        if(ServerHostValue->TryGetString(TmpValue)) {ServerHost = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ServerPortValue = obj->TryGetField(TEXT("ServerPort"));
+    if (ServerPortValue.IsValid()&& !ServerPortValue->IsNull())
+    {
+        FString TmpValue;
+        if(ServerPortValue->TryGetString(TmpValue)) {ServerPort = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> BuildValue = obj->TryGetField(TEXT("Build"));
+    if (BuildValue.IsValid()&& !BuildValue->IsNull())
+    {
+        FString TmpValue;
+        if(BuildValue->TryGetString(TmpValue)) {Build = TmpValue; }
+    }
+    
+    pfRegion = readRegionFromValue(obj->TryGetField(TEXT("Region")));
+    
+    const TSharedPtr<FJsonValue> GameModeValue = obj->TryGetField(TEXT("GameMode"));
+    if (GameModeValue.IsValid()&& !GameModeValue->IsNull())
+    {
+        FString TmpValue;
+        if(GameModeValue->TryGetString(TmpValue)) {GameMode = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonObject>* TagsObject;
+    if (obj->TryGetObjectField(TEXT("Tags"), TagsObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*TagsObject)->Values); It; ++It)
+        {
+            
+            Tags.Add(It.Key(), It.Value()->AsString());
+        }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::MatchmakerModels::FRegisterGameResponse::~FRegisterGameResponse()
+{
+    
+}
+
+void PlayFab::MatchmakerModels::FRegisterGameResponse::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(LobbyId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("LobbyId")); writer->WriteValue(LobbyId); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::MatchmakerModels::FRegisterGameResponse::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> LobbyIdValue = obj->TryGetField(TEXT("LobbyId"));
+    if (LobbyIdValue.IsValid()&& !LobbyIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(LobbyIdValue->TryGetString(TmpValue)) {LobbyId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
 }
 
 

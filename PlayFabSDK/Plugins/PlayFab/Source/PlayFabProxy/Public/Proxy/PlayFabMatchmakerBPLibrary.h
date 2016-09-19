@@ -28,6 +28,17 @@ class UPFMatchmakerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeBreakFunc))
+	static void BreakBPMatchmakerDeregisterGameRequest(
+		const FBPMatchmakerDeregisterGameRequest& In
+        ,FString& OutLobbyId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeBreakFunc))
+	static void BreakBPMatchmakerDeregisterGameResponse(
+		const FBPMatchmakerDeregisterGameResponse& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeBreakFunc))
 	static void BreakBPMatchmakerItemInstance(
 		const FBPMatchmakerItemInstance& In
         ,FString& OutItemId
@@ -73,6 +84,21 @@ class UPFMatchmakerProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeBreakFunc))
 	static void BreakBPMatchmakerRegion(
 		const FBPMatchmakerRegion& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeBreakFunc))
+	static void BreakBPMatchmakerRegisterGameRequest(
+		const FBPMatchmakerRegisterGameRequest& In
+        ,FString& OutServerHost
+        ,FString& OutServerPort
+        ,FString& OutBuild
+        ,FString& OutGameMode
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeBreakFunc))
+	static void BreakBPMatchmakerRegisterGameResponse(
+		const FBPMatchmakerRegisterGameResponse& In
+        ,FString& OutLobbyId
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Matchmaker", meta = (NativeBreakFunc))

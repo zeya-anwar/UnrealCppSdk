@@ -1518,6 +1518,28 @@ void UPFAdminProxyLibrary::BreakBPAdminRandomResultTableListing(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminRefundPurchaseRequest(
+		const FBPAdminRefundPurchaseRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutOrderId
+        ,FString& OutReason
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutOrderId = In.Data.OrderId;
+	OutReason = In.Data.Reason;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminRefundPurchaseResponse(
+		const FBPAdminRefundPurchaseResponse& In
+        ,FString& OutPurchaseStatus
+	)
+{
+    OutPurchaseStatus = In.Data.PurchaseStatus;
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminRegion(
 		const FBPAdminRegion& In
 	)
@@ -1621,6 +1643,36 @@ void UPFAdminProxyLibrary::BreakBPAdminResetUserStatisticsResult(
 	)
 {
     
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminResolutionOutcome(
+		const FBPAdminResolutionOutcome& In
+	)
+{
+    
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminResolvePurchaseDisputeRequest(
+		const FBPAdminResolvePurchaseDisputeRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutOrderId
+        ,FString& OutReason
+	)
+{
+    OutPlayFabId = In.Data.PlayFabId;
+	OutOrderId = In.Data.OrderId;
+	OutReason = In.Data.Reason;
+	
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminResolvePurchaseDisputeResponse(
+		const FBPAdminResolvePurchaseDisputeResponse& In
+        ,FString& OutPurchaseStatus
+	)
+{
+    OutPurchaseStatus = In.Data.PurchaseStatus;
+	
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminResultTableNode(

@@ -4723,6 +4723,68 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FRefundPurchaseRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+		// Unique order ID for the purchase in question.
+		FString OrderId;
+		// [optional] Reason for refund. In the case of Facebook this must match one of their refund or dispute resolution enums (See: https://developers.facebook.com/docs/payments/implementation-guide/handling-disputes-refunds)
+		FString Reason;
+	
+        FRefundPurchaseRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			OrderId(),
+			Reason()
+			{}
+		
+		FRefundPurchaseRequest(const FRefundPurchaseRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			OrderId(src.OrderId),
+			Reason(src.Reason)
+			{}
+			
+		FRefundPurchaseRequest(const TSharedPtr<FJsonObject>& obj) : FRefundPurchaseRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRefundPurchaseRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FRefundPurchaseResponse : public FPlayFabBaseModel
+    {
+		
+		// [optional] The order's updated purchase status.
+		FString PurchaseStatus;
+	
+        FRefundPurchaseResponse() :
+			FPlayFabBaseModel(),
+			PurchaseStatus()
+			{}
+		
+		FRefundPurchaseResponse(const FRefundPurchaseResponse& src) :
+			FPlayFabBaseModel(),
+			PurchaseStatus(src.PurchaseStatus)
+			{}
+			
+		FRefundPurchaseResponse(const TSharedPtr<FJsonObject>& obj) : FRefundPurchaseResponse()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRefundPurchaseResponse();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FRemovePlayerTagRequest : public FPlayFabBaseModel
     {
 		
@@ -5011,6 +5073,83 @@ namespace AdminModels
         }
 		
 		~FResetUserStatisticsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	enum ResolutionOutcome
+	{
+		ResolutionOutcomeRevoke,
+		ResolutionOutcomeReinstate,
+		ResolutionOutcomeManual
+	};
+	
+	void writeResolutionOutcomeEnumJSON(ResolutionOutcome enumVal, JsonWriter& writer);
+	ResolutionOutcome readResolutionOutcomeFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
+	struct PLAYFAB_API FResolvePurchaseDisputeRequest : public FPlayFabBaseModel
+    {
+		
+		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		FString PlayFabId;
+		// Unique order ID for the purchase in question.
+		FString OrderId;
+		// [optional] Reason for refund. In the case of Facebook this must match one of their refund or dispute resolution enums (See: https://developers.facebook.com/docs/payments/implementation-guide/handling-disputes-refunds)
+		FString Reason;
+		// Enum for the desired purchase result state after notifying the payment provider. Valid values are Revoke, Reinstate and Manual. Manual will cause no change to the order state.
+		ResolutionOutcome Outcome;
+	
+        FResolvePurchaseDisputeRequest() :
+			FPlayFabBaseModel(),
+			PlayFabId(),
+			OrderId(),
+			Reason(),
+			Outcome()
+			{}
+		
+		FResolvePurchaseDisputeRequest(const FResolvePurchaseDisputeRequest& src) :
+			FPlayFabBaseModel(),
+			PlayFabId(src.PlayFabId),
+			OrderId(src.OrderId),
+			Reason(src.Reason),
+			Outcome(src.Outcome)
+			{}
+			
+		FResolvePurchaseDisputeRequest(const TSharedPtr<FJsonObject>& obj) : FResolvePurchaseDisputeRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FResolvePurchaseDisputeRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FResolvePurchaseDisputeResponse : public FPlayFabBaseModel
+    {
+		
+		// [optional] The order's updated purchase status.
+		FString PurchaseStatus;
+	
+        FResolvePurchaseDisputeResponse() :
+			FPlayFabBaseModel(),
+			PurchaseStatus()
+			{}
+		
+		FResolvePurchaseDisputeResponse(const FResolvePurchaseDisputeResponse& src) :
+			FPlayFabBaseModel(),
+			PurchaseStatus(src.PurchaseStatus)
+			{}
+			
+		FResolvePurchaseDisputeResponse(const TSharedPtr<FJsonObject>& obj) : FResolvePurchaseDisputeResponse()
+        {
+            readFromValue(obj);
+        }
+		
+		~FResolvePurchaseDisputeResponse();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

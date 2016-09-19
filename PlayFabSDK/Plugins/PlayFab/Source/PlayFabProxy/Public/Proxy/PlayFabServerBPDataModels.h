@@ -26,6 +26,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerAddCharacterVirtualCurrencyRequestDelegate, const FBPServerAddCharacterVirtualCurrencyRequest&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerAddFriendRequest"))
+struct FBPServerAddFriendRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FAddFriendRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerAddFriendRequestDelegate, const FBPServerAddFriendRequest&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerAddPlayerTagRequest"))
 struct FBPServerAddPlayerTagRequest
 {
@@ -346,6 +356,26 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerDeleteUsersResultDelegate, const FBPServerDeleteUsersResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerDeregisterGameRequest"))
+struct FBPServerDeregisterGameRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FDeregisterGameRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerDeregisterGameRequestDelegate, const FBPServerDeregisterGameRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerDeregisterGameResponse"))
+struct FBPServerDeregisterGameResponse
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FDeregisterGameResponse Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerDeregisterGameResponseDelegate, const FBPServerDeregisterGameResponse&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerEmptyResult"))
 struct FBPServerEmptyResult
 {
@@ -595,6 +625,36 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetContentDownloadUrlResultDelegate, const FBPServerGetContentDownloadUrlResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetFriendLeaderboardRequest"))
+struct FBPServerGetFriendLeaderboardRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetFriendLeaderboardRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetFriendLeaderboardRequestDelegate, const FBPServerGetFriendLeaderboardRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetFriendsListRequest"))
+struct FBPServerGetFriendsListRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetFriendsListRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetFriendsListRequestDelegate, const FBPServerGetFriendsListRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetFriendsListResult"))
+struct FBPServerGetFriendsListResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FGetFriendsListResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetFriendsListResultDelegate, const FBPServerGetFriendsListResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetLeaderboardAroundCharacterRequest"))
 struct FBPServerGetLeaderboardAroundCharacterRequest
@@ -1486,6 +1546,66 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRedeemMatchmakerTicketResultDelegate, const FBPServerRedeemMatchmakerTicketResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRefreshGameServerInstanceHeartbeatRequest"))
+struct FBPServerRefreshGameServerInstanceHeartbeatRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FRefreshGameServerInstanceHeartbeatRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRefreshGameServerInstanceHeartbeatRequestDelegate, const FBPServerRefreshGameServerInstanceHeartbeatRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRefreshGameServerInstanceHeartbeatResult"))
+struct FBPServerRefreshGameServerInstanceHeartbeatResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FRefreshGameServerInstanceHeartbeatResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRefreshGameServerInstanceHeartbeatResultDelegate, const FBPServerRefreshGameServerInstanceHeartbeatResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRegion"))
+struct FBPServerRegion
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::Region Data;	
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRegionDelegate, const FBPServerRegion&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRegisterGameRequest"))
+struct FBPServerRegisterGameRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FRegisterGameRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRegisterGameRequestDelegate, const FBPServerRegisterGameRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRegisterGameResponse"))
+struct FBPServerRegisterGameResponse
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FRegisterGameResponse Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRegisterGameResponseDelegate, const FBPServerRegisterGameResponse&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRemoveFriendRequest"))
+struct FBPServerRemoveFriendRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FRemoveFriendRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerRemoveFriendRequestDelegate, const FBPServerRemoveFriendRequest&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerRemovePlayerTagRequest"))
 struct FBPServerRemovePlayerTagRequest
 {
@@ -1695,6 +1815,26 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerSetGameServerInstanceStateResultDelegate, const FBPServerSetGameServerInstanceStateResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerSetGameServerInstanceTagsRequest"))
+struct FBPServerSetGameServerInstanceTagsRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FSetGameServerInstanceTagsRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerSetGameServerInstanceTagsRequestDelegate, const FBPServerSetGameServerInstanceTagsRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerSetGameServerInstanceTagsResult"))
+struct FBPServerSetGameServerInstanceTagsResult
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FSetGameServerInstanceTagsResult Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerSetGameServerInstanceTagsResultDelegate, const FBPServerSetGameServerInstanceTagsResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerSetPublisherDataRequest"))
 struct FBPServerSetPublisherDataRequest

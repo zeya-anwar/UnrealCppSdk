@@ -32,6 +32,16 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerAddFriendRequest(
+		const FBPServerAddFriendRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutFriendPlayFabId
+        ,FString& OutFriendUsername
+        ,FString& OutFriendEmail
+        ,FString& OutFriendTitleDisplayName
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerAddPlayerTagRequest(
 		const FBPServerAddPlayerTagRequest& In
         ,FString& OutPlayFabId
@@ -271,6 +281,17 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerDeregisterGameRequest(
+		const FBPServerDeregisterGameRequest& In
+        ,FString& OutLobbyId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerDeregisterGameResponse(
+		const FBPServerDeregisterGameResponse& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerEmptyResult(
 		const FBPServerEmptyResult& In
 	);
@@ -452,6 +473,31 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPServerGetContentDownloadUrlResult(
 		const FBPServerGetContentDownloadUrlResult& In
         ,FString& OutURL
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerGetFriendLeaderboardRequest(
+		const FBPServerGetFriendLeaderboardRequest& In
+        ,FString& OutPlayFabId
+        ,FString& OutStatisticName
+        ,int32& OutStartPosition
+        ,int32& OutMaxResultsCount
+        ,bool& OutIncludeSteamFriends
+        ,bool& OutIncludeFacebookFriends
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerGetFriendsListRequest(
+		const FBPServerGetFriendsListRequest& In
+        ,FString& OutPlayFabId
+        ,bool& OutIncludeSteamFriends
+        ,bool& OutIncludeFacebookFriends
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerGetFriendsListResult(
+		const FBPServerGetFriendsListResult& In
+        ,TArray<FBPServerFriendInfo>& OutFriends
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
@@ -1124,6 +1170,44 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerRefreshGameServerInstanceHeartbeatRequest(
+		const FBPServerRefreshGameServerInstanceHeartbeatRequest& In
+        ,FString& OutLobbyId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerRefreshGameServerInstanceHeartbeatResult(
+		const FBPServerRefreshGameServerInstanceHeartbeatResult& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerRegion(
+		const FBPServerRegion& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerRegisterGameRequest(
+		const FBPServerRegisterGameRequest& In
+        ,FString& OutServerHost
+        ,FString& OutServerPort
+        ,FString& OutBuild
+        ,FString& OutGameMode
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerRegisterGameResponse(
+		const FBPServerRegisterGameResponse& In
+        ,FString& OutLobbyId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerRemoveFriendRequest(
+		const FBPServerRemoveFriendRequest& In
+        ,FString& OutFriendPlayFabId
+        ,FString& OutPlayFabId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerRemovePlayerTagRequest(
 		const FBPServerRemovePlayerTagRequest& In
         ,FString& OutPlayFabId
@@ -1254,6 +1338,17 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerSetGameServerInstanceStateResult(
 		const FBPServerSetGameServerInstanceStateResult& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerSetGameServerInstanceTagsRequest(
+		const FBPServerSetGameServerInstanceTagsRequest& In
+        ,FString& OutLobbyId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerSetGameServerInstanceTagsResult(
+		const FBPServerSetGameServerInstanceTagsResult& In
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
