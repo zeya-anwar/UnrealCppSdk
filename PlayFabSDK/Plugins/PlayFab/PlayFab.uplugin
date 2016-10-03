@@ -1,14 +1,16 @@
 {
-	"FileVersion": 3,
-	"FriendlyName": "PlayFab",
-	"Version": 1,
-	"VersionName": "1.0",
-	"CreatedBy": "PlayFab",
-	"CreatedByURL": "https://playfab.com/",
-	"Category": "Online",
-	"Description": "Unreal Engine 4 integration of the PlayFab API",
-	"EnabledByDefault": false,
-	"Modules": [
+    "FileVersion": 3,
+    "FriendlyName": "PlayFab Cpp Sdk",
+    "Version": 0,
+    "VersionName": "0.0.161003",
+    "CreatedBy": "PlayFab and Phoenix Labs",
+    "CreatedByURL": "https://playfab.com/",
+    "DocsURL": "https://api.playfab.com/",
+    "SupportURL": "https://community.playfab.com/index.html",
+    "Category": "PlayFab",
+    "Description": "PlayFab Blueprint SDK for Unreal Engine 4. Current API version: 0.0.161003",
+    "WhitelistPlatforms": [ "Win64", "Win32", "Mac", "IOS", "Android" ],
+    "Modules": [
         {
             "Name": "PlayFab",
             "Type": "Runtime",
@@ -20,9 +22,9 @@
             "LoadingPhase": "PreDefault"
         },
         {
-			"Name" : "OnlineSubsystemPlayFab",
+            "Name" : "OnlineSubsystemPlayFab",
             "Type": "Runtime",
             "LoadingPhase": "PreDefault"
-		}
-	]
+        }
+    ]
 }

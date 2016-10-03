@@ -743,6 +743,17 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerGetTimeRequest(
+		const FBPServerGetTimeRequest& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerGetTimeResult(
+		const FBPServerGetTimeResult& In
+        ,FDateTime& OutTime
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerGetTitleDataRequest(
 		const FBPServerGetTitleDataRequest& In
         ,TArray<FString>& OutKeys

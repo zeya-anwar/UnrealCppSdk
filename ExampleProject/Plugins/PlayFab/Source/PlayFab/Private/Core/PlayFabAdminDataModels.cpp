@@ -4848,7 +4848,6 @@ void PlayFab::AdminModels::writeSourceTypeEnumJSON(SourceType enumVal, JsonWrite
         case SourceTypeGameClient: writer->WriteValue(TEXT("GameClient")); break;
         case SourceTypeGameServer: writer->WriteValue(TEXT("GameServer")); break;
         case SourceTypePartner: writer->WriteValue(TEXT("Partner")); break;
-        case SourceTypeStream: writer->WriteValue(TEXT("Stream")); break;
     }
 }
 
@@ -4863,7 +4862,6 @@ AdminModels::SourceType PlayFab::AdminModels::readSourceTypeFromValue(const TSha
         _SourceTypeMap.Add(TEXT("GameClient"), SourceTypeGameClient);
         _SourceTypeMap.Add(TEXT("GameServer"), SourceTypeGameServer);
         _SourceTypeMap.Add(TEXT("Partner"), SourceTypePartner);
-        _SourceTypeMap.Add(TEXT("Stream"), SourceTypeStream);
 
     } 
 

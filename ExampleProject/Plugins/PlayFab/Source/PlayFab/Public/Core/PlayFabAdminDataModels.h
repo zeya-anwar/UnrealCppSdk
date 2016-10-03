@@ -3032,8 +3032,7 @@ namespace AdminModels
 		SourceTypeBackEnd,
 		SourceTypeGameClient,
 		SourceTypeGameServer,
-		SourceTypePartner,
-		SourceTypeStream
+		SourceTypePartner
 	};
 	
 	void writeSourceTypeEnumJSON(SourceType enumVal, JsonWriter& writer);

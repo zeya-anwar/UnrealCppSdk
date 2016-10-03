@@ -1646,6 +1646,22 @@ void UPFClientProxyLibrary::BreakBPClientGetStoreItemsResult(
 	
 }
 
+void UPFClientProxyLibrary::BreakBPClientGetTimeRequest(
+		const FBPClientGetTimeRequest& In
+	)
+{
+    
+}
+
+void UPFClientProxyLibrary::BreakBPClientGetTimeResult(
+		const FBPClientGetTimeResult& In
+        ,FDateTime& OutTime
+	)
+{
+    
+	
+}
+
 void UPFClientProxyLibrary::BreakBPClientGetTitleDataRequest(
 		const FBPClientGetTitleDataRequest& In
         ,TArray<FString>& OutKeys
@@ -2460,6 +2476,7 @@ void UPFClientProxyLibrary::BreakBPClientPayForPurchaseResult(
         ,int32& OutCreditApplied
         ,FString& OutProviderData
         ,FString& OutPurchaseConfirmationPageURL
+        ,FString& OutProviderToken
 	)
 {
     OutOrderId = In.Data.OrderId;
@@ -2471,6 +2488,7 @@ void UPFClientProxyLibrary::BreakBPClientPayForPurchaseResult(
 	OutProviderData = In.Data.ProviderData;
 	OutPurchaseConfirmationPageURL = In.Data.PurchaseConfirmationPageURL;
 	
+	OutProviderToken = In.Data.ProviderToken;
 	
 }
 

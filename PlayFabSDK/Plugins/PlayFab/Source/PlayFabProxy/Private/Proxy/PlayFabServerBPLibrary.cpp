@@ -1350,6 +1350,22 @@ void UPFServerProxyLibrary::BreakBPServerGetSharedGroupDataResult(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerGetTimeRequest(
+		const FBPServerGetTimeRequest& In
+	)
+{
+    
+}
+
+void UPFServerProxyLibrary::BreakBPServerGetTimeResult(
+		const FBPServerGetTimeResult& In
+        ,FDateTime& OutTime
+	)
+{
+    
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerGetTitleDataRequest(
 		const FBPServerGetTitleDataRequest& In
         ,TArray<FString>& OutKeys

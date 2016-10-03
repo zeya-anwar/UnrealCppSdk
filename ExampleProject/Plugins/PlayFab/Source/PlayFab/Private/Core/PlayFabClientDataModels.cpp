@@ -8426,7 +8426,6 @@ void PlayFab::ClientModels::writeSourceTypeEnumJSON(SourceType enumVal, JsonWrit
         case SourceTypeGameClient: writer->WriteValue(TEXT("GameClient")); break;
         case SourceTypeGameServer: writer->WriteValue(TEXT("GameServer")); break;
         case SourceTypePartner: writer->WriteValue(TEXT("Partner")); break;
-        case SourceTypeStream: writer->WriteValue(TEXT("Stream")); break;
     }
 }
 
@@ -8441,7 +8440,6 @@ ClientModels::SourceType PlayFab::ClientModels::readSourceTypeFromValue(const TS
         _SourceTypeMap.Add(TEXT("GameClient"), SourceTypeGameClient);
         _SourceTypeMap.Add(TEXT("GameServer"), SourceTypeGameServer);
         _SourceTypeMap.Add(TEXT("Partner"), SourceTypePartner);
-        _SourceTypeMap.Add(TEXT("Stream"), SourceTypeStream);
 
     } 
 
@@ -8573,6 +8571,58 @@ bool PlayFab::ClientModels::FGetStoreItemsResult::readFromValue(const TSharedPtr
     if (MarketingDataValue.IsValid()&& !MarketingDataValue->IsNull())
     {
         MarketingData = MakeShareable(new FStoreMarketingModel(MarketingDataValue->AsObject()));
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FGetTimeRequest::~FGetTimeRequest()
+{
+    
+}
+
+void PlayFab::ClientModels::FGetTimeRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FGetTimeRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ClientModels::FGetTimeResult::~FGetTimeResult()
+{
+    
+}
+
+void PlayFab::ClientModels::FGetTimeResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("Time")); writeDatetime(Time, writer);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ClientModels::FGetTimeResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> TimeValue = obj->TryGetField(TEXT("Time"));
+    if(TimeValue.IsValid())
+    {
+        Time = readDatetime(TimeValue);
     }
     
     
@@ -11698,6 +11748,8 @@ void PlayFab::ClientModels::FPayForPurchaseResult::writeJSON(JsonWriter& writer)
         writer->WriteObjectEnd();
      }
 	
+    if(ProviderToken.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ProviderToken")); writer->WriteValue(ProviderToken); }
+	
     
     writer->WriteObjectEnd();
 }
@@ -11768,6 +11820,13 @@ bool PlayFab::ClientModels::FPayForPurchaseResult::readFromValue(const TSharedPt
             int32 TmpValue; It.Value()->TryGetNumber(TmpValue);
             VirtualCurrency.Add(It.Key(), TmpValue);
         }
+    }
+    
+    const TSharedPtr<FJsonValue> ProviderTokenValue = obj->TryGetField(TEXT("ProviderToken"));
+    if (ProviderTokenValue.IsValid()&& !ProviderTokenValue->IsNull())
+    {
+        FString TmpValue;
+        if(ProviderTokenValue->TryGetString(TmpValue)) {ProviderToken = TmpValue; }
     }
     
     

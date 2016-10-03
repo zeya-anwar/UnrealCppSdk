@@ -4719,6 +4719,56 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FGetTimeRequest : public FPlayFabBaseModel
+    {
+		
+	
+        FGetTimeRequest() :
+			FPlayFabBaseModel()
+			{}
+		
+		FGetTimeRequest(const FGetTimeRequest& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FGetTimeRequest(const TSharedPtr<FJsonObject>& obj) : FGetTimeRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetTimeRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetTimeResult : public FPlayFabBaseModel
+    {
+		
+		// Current server time when the request was received, in UTC
+		FDateTime Time;
+	
+        FGetTimeResult() :
+			FPlayFabBaseModel(),
+			Time(0)
+			{}
+		
+		FGetTimeResult(const FGetTimeResult& src) :
+			FPlayFabBaseModel(),
+			Time(src.Time)
+			{}
+			
+		FGetTimeResult(const TSharedPtr<FJsonObject>& obj) : FGetTimeResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetTimeResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FGetTitleDataRequest : public FPlayFabBaseModel
     {
 		

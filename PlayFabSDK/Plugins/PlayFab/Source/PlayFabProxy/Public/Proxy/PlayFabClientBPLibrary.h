@@ -888,6 +888,17 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientGetTimeRequest(
+		const FBPClientGetTimeRequest& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
+	static void BreakBPClientGetTimeResult(
+		const FBPClientGetTimeResult& In
+        ,FDateTime& OutTime
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
 	static void BreakBPClientGetTitleDataRequest(
 		const FBPClientGetTitleDataRequest& In
         ,TArray<FString>& OutKeys
@@ -1373,6 +1384,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,int32& OutCreditApplied
         ,FString& OutProviderData
         ,FString& OutPurchaseConfirmationPageURL
+        ,FString& OutProviderToken
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))

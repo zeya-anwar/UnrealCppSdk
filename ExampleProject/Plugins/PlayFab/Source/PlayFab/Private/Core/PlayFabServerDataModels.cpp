@@ -7586,6 +7586,58 @@ bool PlayFab::ServerModels::FGetSharedGroupDataResult::readFromValue(const TShar
 }
 
 
+PlayFab::ServerModels::FGetTimeRequest::~FGetTimeRequest()
+{
+    
+}
+
+void PlayFab::ServerModels::FGetTimeRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FGetTimeRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::ServerModels::FGetTimeResult::~FGetTimeResult()
+{
+    
+}
+
+void PlayFab::ServerModels::FGetTimeResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("Time")); writeDatetime(Time, writer);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::ServerModels::FGetTimeResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> TimeValue = obj->TryGetField(TEXT("Time"));
+    if(TimeValue.IsValid())
+    {
+        Time = readDatetime(TimeValue);
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::ServerModels::FGetTitleDataRequest::~FGetTitleDataRequest()
 {
     
