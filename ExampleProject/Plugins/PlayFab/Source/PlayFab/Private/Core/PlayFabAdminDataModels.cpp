@@ -7864,7 +7864,7 @@ void PlayFab::AdminModels::FUserCredentials::writeJSON(JsonWriter& writer) const
     
     writer->WriteIdentifierPrefix(TEXT("Username")); writer->WriteValue(Username);
 	
-    writer->WriteIdentifierPrefix(TEXT("Password")); writer->WriteValue(Password);
+    if(Password.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Password")); writer->WriteValue(Password); }
 	
     
     writer->WriteObjectEnd();
@@ -8982,8 +8982,6 @@ void PlayFab::AdminModels::FUpdateCloudScriptRequest::writeJSON(JsonWriter& writ
 {
     writer->WriteObjectStart();
     
-    if(Version.notNull()) { writer->WriteIdentifierPrefix(TEXT("Version")); writer->WriteValue(Version); }
-	
     
         writer->WriteArrayStart(TEXT("Files"));
     
@@ -9006,13 +9004,6 @@ bool PlayFab::AdminModels::FUpdateCloudScriptRequest::readFromValue(const TShare
 {
 	bool HasSucceeded = true; 
 	
-    const TSharedPtr<FJsonValue> VersionValue = obj->TryGetField(TEXT("Version"));
-    if (VersionValue.IsValid()&& !VersionValue->IsNull())
-    {
-        int32 TmpValue;
-        if(VersionValue->TryGetNumber(TmpValue)) {Version = TmpValue; }
-    }
-    
     {
         const TArray< TSharedPtr<FJsonValue> >&FilesArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Files"));
         for (int32 Idx = 0; Idx < FilesArray.Num(); Idx++)

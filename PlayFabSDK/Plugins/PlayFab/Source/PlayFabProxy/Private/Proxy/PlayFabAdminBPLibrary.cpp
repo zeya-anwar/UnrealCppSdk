@@ -2011,14 +2011,12 @@ void UPFAdminProxyLibrary::BreakBPAdminUpdateCatalogItemsResult(
 
 void UPFAdminProxyLibrary::BreakBPAdminUpdateCloudScriptRequest(
 		const FBPAdminUpdateCloudScriptRequest& In
-        ,int32& OutVersion
         ,TArray<FBPAdminCloudScriptFile>& OutFiles
         ,bool& OutPublish
         ,FString& OutDeveloperPlayFabId
 	)
 {
-    OutVersion = In.Data.Version;
-	for (const PlayFab::AdminModels::FCloudScriptFile& elem : In.Data.Files)
+    for (const PlayFab::AdminModels::FCloudScriptFile& elem : In.Data.Files)
     {
         FBPAdminCloudScriptFile result;
         result.Data = elem;

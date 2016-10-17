@@ -1250,16 +1250,10 @@ void UPFServerProxyLibrary::BreakBPServerGetPlayFabIDsFromFacebookIDsResult(
 
 void UPFServerProxyLibrary::BreakBPServerGetPlayFabIDsFromSteamIDsRequest(
 		const FBPServerGetPlayFabIDsFromSteamIDsRequest& In
-        ,TArray<int32>& OutSteamIDs
         ,TArray<FString>& OutSteamStringIDs
 	)
 {
-    for (const int32& elem : In.Data.SteamIDs)
-    {
-        OutSteamIDs.Add(static_cast<uint64>(elem));
-    }
-
-	OutSteamStringIDs = In.Data.SteamStringIDs;
+    OutSteamStringIDs = In.Data.SteamStringIDs;
 	
 }
 
@@ -1502,25 +1496,6 @@ void UPFServerProxyLibrary::BreakBPServerGetUserInventoryResult(
 	
 }
 
-void UPFServerProxyLibrary::BreakBPServerGetUserStatisticsRequest(
-		const FBPServerGetUserStatisticsRequest& In
-        ,FString& OutPlayFabId
-	)
-{
-    OutPlayFabId = In.Data.PlayFabId;
-	
-}
-
-void UPFServerProxyLibrary::BreakBPServerGetUserStatisticsResult(
-		const FBPServerGetUserStatisticsResult& In
-        ,FString& OutPlayFabId
-	)
-{
-    OutPlayFabId = In.Data.PlayFabId;
-	
-	
-}
-
 void UPFServerProxyLibrary::BreakBPServerGrantCharacterToUserRequest(
 		const FBPServerGrantCharacterToUserRequest& In
         ,FString& OutPlayFabId
@@ -1755,33 +1730,6 @@ void UPFServerProxyLibrary::BreakBPServerListUsersCharactersResult(
     }
 
 	
-}
-
-void UPFServerProxyLibrary::BreakBPServerLogEventRequest(
-		const FBPServerLogEventRequest& In
-        ,FString& OutPlayFabId
-        ,FString& OutEntityId
-        ,FString& OutEntityType
-        ,FDateTime& OutTimestamp
-        ,FString& OutEventName
-        ,bool& OutProfileSetEvent
-	)
-{
-    OutPlayFabId = In.Data.PlayFabId;
-	OutEntityId = In.Data.EntityId;
-	OutEntityType = In.Data.EntityType;
-	
-	OutEventName = In.Data.EventName;
-	
-	OutProfileSetEvent = In.Data.ProfileSetEvent;
-	
-}
-
-void UPFServerProxyLibrary::BreakBPServerLogEventResult(
-		const FBPServerLogEventResult& In
-	)
-{
-    
 }
 
 void UPFServerProxyLibrary::BreakBPServerLoginIdentityProvider(
@@ -2536,13 +2484,11 @@ void UPFServerProxyLibrary::BreakBPServerStatisticValue(
 
 void UPFServerProxyLibrary::BreakBPServerSteamPlayFabIdPair(
 		const FBPServerSteamPlayFabIdPair& In
-        ,int32& OutSteamId
         ,FString& OutSteamStringId
         ,FString& OutPlayFabId
 	)
 {
-    OutSteamId = In.Data.SteamId;
-	OutSteamStringId = In.Data.SteamStringId;
+    OutSteamStringId = In.Data.SteamStringId;
 	OutPlayFabId = In.Data.PlayFabId;
 	
 }
@@ -2835,23 +2781,6 @@ void UPFServerProxyLibrary::BreakBPServerUpdateUserInventoryItemDataRequest(
 	
 	OutKeysToRemove = In.Data.KeysToRemove;
 	
-}
-
-void UPFServerProxyLibrary::BreakBPServerUpdateUserStatisticsRequest(
-		const FBPServerUpdateUserStatisticsRequest& In
-        ,FString& OutPlayFabId
-	)
-{
-    OutPlayFabId = In.Data.PlayFabId;
-	
-	
-}
-
-void UPFServerProxyLibrary::BreakBPServerUpdateUserStatisticsResult(
-		const FBPServerUpdateUserStatisticsResult& In
-	)
-{
-    
 }
 
 void UPFServerProxyLibrary::BreakBPServerUserAccountInfo(

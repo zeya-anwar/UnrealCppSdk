@@ -118,7 +118,7 @@ namespace PlayFab
         bool GetUserBans(AdminModels::FGetUserBansRequest& request, const FGetUserBansDelegate& SuccessDelegate = FGetUserBansDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Resets all title-specific information about a particular account, including user data, virtual currency balances, inventory, purchase history, and statistics
-         * This method is intended for use with test accounts, to allow a developer to reset and test a game experience from the start. Note that in order to reset an account, you must know the username and password. If the account does not have a username and password, you must add one with AddUsernamePassword in the client API prior to calling this method.
+         * This method is intended for use with test accounts, to allow a developer to reset and test a game experience from the start. Note that in order to reset an account, you must know the username. If the account does not have a username, you must add one with AddUsernamePassword in the client API prior to calling this method.
          */
         bool ResetUsers(AdminModels::FResetUsersRequest& request, const FResetUsersDelegate& SuccessDelegate = FResetUsersDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**

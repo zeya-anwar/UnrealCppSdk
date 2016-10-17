@@ -21,7 +21,7 @@ public:
 	
 	// Creates a new Cloud Script revision and uploads source code to it. Note that at this time, only one file should be submitted in the revision.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Admin|Server-Side Cloud Script")
-	static UPFAdminUpdateCloudScript* UpdateCloudScript(UObject* WorldContextObject, class APlayerController* PlayerController, const int32& InVersion, const TArray<FBPAdminCloudScriptFile>& InFiles, const bool& InPublish, const FString& InDeveloperPlayFabId);
+	static UPFAdminUpdateCloudScript* UpdateCloudScript(UObject* WorldContextObject, class APlayerController* PlayerController, const TArray<FBPAdminCloudScriptFile>& InFiles, const bool& InPublish, const FString& InDeveloperPlayFabId);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

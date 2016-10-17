@@ -4974,7 +4974,7 @@ namespace AdminModels
 		
 		// Username of user to reset
 		FString Username;
-		// Password for the PlayFab account (6-100 characters)
+		// [optional] Password for the PlayFab account
 		FString Password;
 	
         FUserCredentials() :
@@ -5803,8 +5803,6 @@ namespace AdminModels
 	struct PLAYFAB_API FUpdateCloudScriptRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] Deprecated - Do not use
-		OptionalInt32 Version;
 		// List of Cloud Script files to upload to create the new revision. Must have at least one file.
 		TArray<FCloudScriptFile> Files;
 		// Immediately publish the new revision
@@ -5814,7 +5812,6 @@ namespace AdminModels
 	
         FUpdateCloudScriptRequest() :
 			FPlayFabBaseModel(),
-			Version(),
 			Files(),
 			Publish(false),
 			DeveloperPlayFabId()
@@ -5822,7 +5819,6 @@ namespace AdminModels
 		
 		FUpdateCloudScriptRequest(const FUpdateCloudScriptRequest& src) :
 			FPlayFabBaseModel(),
-			Version(src.Version),
 			Files(src.Files),
 			Publish(src.Publish),
 			DeveloperPlayFabId(src.DeveloperPlayFabId)

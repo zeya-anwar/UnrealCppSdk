@@ -1126,26 +1126,6 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetUserInventoryResultDelegate, const FBPServerGetUserInventoryResult&, Result);
 
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetUserStatisticsRequest"))
-struct FBPServerGetUserStatisticsRequest
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ServerModels::FGetUserStatisticsRequest Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetUserStatisticsRequestDelegate, const FBPServerGetUserStatisticsRequest&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGetUserStatisticsResult"))
-struct FBPServerGetUserStatisticsResult
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ServerModels::FGetUserStatisticsResult Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerGetUserStatisticsResultDelegate, const FBPServerGetUserStatisticsResult&, Result);
-
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerGrantCharacterToUserRequest"))
 struct FBPServerGrantCharacterToUserRequest
 {
@@ -1275,26 +1255,6 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerListUsersCharactersResultDelegate, const FBPServerListUsersCharactersResult&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerLogEventRequest"))
-struct FBPServerLogEventRequest
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ServerModels::FLogEventRequest Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerLogEventRequestDelegate, const FBPServerLogEventRequest&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerLogEventResult"))
-struct FBPServerLogEventResult
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ServerModels::FLogEventResult Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerLogEventResultDelegate, const FBPServerLogEventResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerLoginIdentityProvider"))
 struct FBPServerLoginIdentityProvider
@@ -2165,26 +2125,6 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUpdateUserInventoryItemDataRequestDelegate, const FBPServerUpdateUserInventoryItemDataRequest&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUpdateUserStatisticsRequest"))
-struct FBPServerUpdateUserStatisticsRequest
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ServerModels::FUpdateUserStatisticsRequest Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUpdateUserStatisticsRequestDelegate, const FBPServerUpdateUserStatisticsRequest&, Result);
-
-USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUpdateUserStatisticsResult"))
-struct FBPServerUpdateUserStatisticsResult
-{
-	GENERATED_USTRUCT_BODY()
-public:
-	 PlayFab::ServerModels::FUpdateUserStatisticsResult Data; 
-};
-
-DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerUpdateUserStatisticsResultDelegate, const FBPServerUpdateUserStatisticsResult&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerUserAccountInfo"))
 struct FBPServerUserAccountInfo

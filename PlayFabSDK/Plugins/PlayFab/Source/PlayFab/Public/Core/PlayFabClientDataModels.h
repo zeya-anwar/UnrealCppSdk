@@ -518,19 +518,23 @@ namespace ClientModels
 		
 		// [optional] The IdentifierForAdvertisers for iOS Devices.
 		FString Idfa;
-		// [optional] The Android Id for this Android device.
+		// [optional] The android advertising id. This field is deprecated in favor of Adid for clarity.
 		FString Android_Id;
+		// [optional] The adid for this device.
+		FString Adid;
 	
         FAttributeInstallRequest() :
 			FPlayFabBaseModel(),
 			Idfa(),
-			Android_Id()
+			Android_Id(),
+			Adid()
 			{}
 		
 		FAttributeInstallRequest(const FAttributeInstallRequest& src) :
 			FPlayFabBaseModel(),
 			Idfa(src.Idfa),
-			Android_Id(src.Android_Id)
+			Android_Id(src.Android_Id),
+			Adid(src.Adid)
 			{}
 			
 		FAttributeInstallRequest(const TSharedPtr<FJsonObject>& obj) : FAttributeInstallRequest()
@@ -3119,64 +3123,6 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
-	struct PLAYFAB_API FGetCloudScriptUrlRequest : public FPlayFabBaseModel
-    {
-		
-		// [optional] Cloud Script Version to use. Defaults to 1.
-		OptionalInt32 Version;
-		// [optional] Specifies whether the URL returned should be the one for the most recently uploaded Revision of the Cloud Script (true), or the Revision most recently set to live (false). Defaults to false.
-		OptionalBool Testing;
-	
-        FGetCloudScriptUrlRequest() :
-			FPlayFabBaseModel(),
-			Version(),
-			Testing()
-			{}
-		
-		FGetCloudScriptUrlRequest(const FGetCloudScriptUrlRequest& src) :
-			FPlayFabBaseModel(),
-			Version(src.Version),
-			Testing(src.Testing)
-			{}
-			
-		FGetCloudScriptUrlRequest(const TSharedPtr<FJsonObject>& obj) : FGetCloudScriptUrlRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FGetCloudScriptUrlRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FGetCloudScriptUrlResult : public FPlayFabBaseModel
-    {
-		
-		// [optional] URL of the Cloud Script logic server.
-		FString Url;
-	
-        FGetCloudScriptUrlResult() :
-			FPlayFabBaseModel(),
-			Url()
-			{}
-		
-		FGetCloudScriptUrlResult(const FGetCloudScriptUrlResult& src) :
-			FPlayFabBaseModel(),
-			Url(src.Url)
-			{}
-			
-		FGetCloudScriptUrlResult(const TSharedPtr<FJsonObject>& obj) : FGetCloudScriptUrlResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FGetCloudScriptUrlResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
 	struct PLAYFAB_API FGetContentDownloadUrlRequest : public FPlayFabBaseModel
     {
 		
@@ -3239,40 +3185,44 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
-	struct PLAYFAB_API FGetFriendLeaderboardAroundCurrentUserRequest : public FPlayFabBaseModel
+	struct PLAYFAB_API FGetFriendLeaderboardAroundPlayerRequest : public FPlayFabBaseModel
     {
 		
 		// Statistic used to rank players for this leaderboard.
 		FString StatisticName;
 		// [optional] Maximum number of entries to retrieve. Default 10, maximum 100.
 		OptionalInt32 MaxResultsCount;
+		// [optional] PlayFab unique identifier of the user to center the leaderboard around. If null will center on the logged in user.
+		FString PlayFabId;
 		// [optional] Indicates whether Steam service friends should be included in the response. Default is true.
 		OptionalBool IncludeSteamFriends;
 		// [optional] Indicates whether Facebook friends should be included in the response. Default is true.
 		OptionalBool IncludeFacebookFriends;
 	
-        FGetFriendLeaderboardAroundCurrentUserRequest() :
+        FGetFriendLeaderboardAroundPlayerRequest() :
 			FPlayFabBaseModel(),
 			StatisticName(),
 			MaxResultsCount(),
+			PlayFabId(),
 			IncludeSteamFriends(),
 			IncludeFacebookFriends()
 			{}
 		
-		FGetFriendLeaderboardAroundCurrentUserRequest(const FGetFriendLeaderboardAroundCurrentUserRequest& src) :
+		FGetFriendLeaderboardAroundPlayerRequest(const FGetFriendLeaderboardAroundPlayerRequest& src) :
 			FPlayFabBaseModel(),
 			StatisticName(src.StatisticName),
 			MaxResultsCount(src.MaxResultsCount),
+			PlayFabId(src.PlayFabId),
 			IncludeSteamFriends(src.IncludeSteamFriends),
 			IncludeFacebookFriends(src.IncludeFacebookFriends)
 			{}
 			
-		FGetFriendLeaderboardAroundCurrentUserRequest(const TSharedPtr<FJsonObject>& obj) : FGetFriendLeaderboardAroundCurrentUserRequest()
+		FGetFriendLeaderboardAroundPlayerRequest(const TSharedPtr<FJsonObject>& obj) : FGetFriendLeaderboardAroundPlayerRequest()
         {
             readFromValue(obj);
         }
 		
-		~FGetFriendLeaderboardAroundCurrentUserRequest();
+		~FGetFriendLeaderboardAroundPlayerRequest();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -3312,76 +3262,6 @@ namespace ClientModels
         }
 		
 		~FPlayerLeaderboardEntry();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FGetFriendLeaderboardAroundCurrentUserResult : public FPlayFabBaseModel
-    {
-		
-		// [optional] Ordered listing of users and their positions in the requested leaderboard.
-		TArray<FPlayerLeaderboardEntry> Leaderboard;
-	
-        FGetFriendLeaderboardAroundCurrentUserResult() :
-			FPlayFabBaseModel(),
-			Leaderboard()
-			{}
-		
-		FGetFriendLeaderboardAroundCurrentUserResult(const FGetFriendLeaderboardAroundCurrentUserResult& src) :
-			FPlayFabBaseModel(),
-			Leaderboard(src.Leaderboard)
-			{}
-			
-		FGetFriendLeaderboardAroundCurrentUserResult(const TSharedPtr<FJsonObject>& obj) : FGetFriendLeaderboardAroundCurrentUserResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FGetFriendLeaderboardAroundCurrentUserResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FGetFriendLeaderboardAroundPlayerRequest : public FPlayFabBaseModel
-    {
-		
-		// Statistic used to rank players for this leaderboard.
-		FString StatisticName;
-		// [optional] Maximum number of entries to retrieve. Default 10, maximum 100.
-		OptionalInt32 MaxResultsCount;
-		// [optional] PlayFab unique identifier of the user to center the leaderboard around. If null will center on the logged in user.
-		FString PlayFabId;
-		// [optional] Indicates whether Steam service friends should be included in the response. Default is true.
-		OptionalBool IncludeSteamFriends;
-		// [optional] Indicates whether Facebook friends should be included in the response. Default is true.
-		OptionalBool IncludeFacebookFriends;
-	
-        FGetFriendLeaderboardAroundPlayerRequest() :
-			FPlayFabBaseModel(),
-			StatisticName(),
-			MaxResultsCount(),
-			PlayFabId(),
-			IncludeSteamFriends(),
-			IncludeFacebookFriends()
-			{}
-		
-		FGetFriendLeaderboardAroundPlayerRequest(const FGetFriendLeaderboardAroundPlayerRequest& src) :
-			FPlayFabBaseModel(),
-			StatisticName(src.StatisticName),
-			MaxResultsCount(src.MaxResultsCount),
-			PlayFabId(src.PlayFabId),
-			IncludeSteamFriends(src.IncludeSteamFriends),
-			IncludeFacebookFriends(src.IncludeFacebookFriends)
-			{}
-			
-		FGetFriendLeaderboardAroundPlayerRequest(const TSharedPtr<FJsonObject>& obj) : FGetFriendLeaderboardAroundPlayerRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FGetFriendLeaderboardAroundPlayerRequest();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -3576,64 +3456,6 @@ namespace ClientModels
         }
 		
 		~FGetLeaderboardAroundCharacterResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FGetLeaderboardAroundCurrentUserRequest : public FPlayFabBaseModel
-    {
-		
-		// Statistic used to rank players for this leaderboard.
-		FString StatisticName;
-		// [optional] Maximum number of entries to retrieve. Default 10, maximum 100.
-		OptionalInt32 MaxResultsCount;
-	
-        FGetLeaderboardAroundCurrentUserRequest() :
-			FPlayFabBaseModel(),
-			StatisticName(),
-			MaxResultsCount()
-			{}
-		
-		FGetLeaderboardAroundCurrentUserRequest(const FGetLeaderboardAroundCurrentUserRequest& src) :
-			FPlayFabBaseModel(),
-			StatisticName(src.StatisticName),
-			MaxResultsCount(src.MaxResultsCount)
-			{}
-			
-		FGetLeaderboardAroundCurrentUserRequest(const TSharedPtr<FJsonObject>& obj) : FGetLeaderboardAroundCurrentUserRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FGetLeaderboardAroundCurrentUserRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FGetLeaderboardAroundCurrentUserResult : public FPlayFabBaseModel
-    {
-		
-		// [optional] Ordered listing of users and their positions in the requested leaderboard.
-		TArray<FPlayerLeaderboardEntry> Leaderboard;
-	
-        FGetLeaderboardAroundCurrentUserResult() :
-			FPlayFabBaseModel(),
-			Leaderboard()
-			{}
-		
-		FGetLeaderboardAroundCurrentUserResult(const FGetLeaderboardAroundCurrentUserResult& src) :
-			FPlayFabBaseModel(),
-			Leaderboard(src.Leaderboard)
-			{}
-			
-		FGetLeaderboardAroundCurrentUserResult(const TSharedPtr<FJsonObject>& obj) : FGetLeaderboardAroundCurrentUserResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FGetLeaderboardAroundCurrentUserResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -4848,20 +4670,16 @@ namespace ClientModels
 	struct PLAYFAB_API FGetPlayFabIDsFromSteamIDsRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] Deprecated: Please use SteamStringIDs
-		TArray<uint64> SteamIDs;
 		// [optional] Array of unique Steam identifiers (Steam profile IDs) for which the title needs to get PlayFab identifiers.
 		TArray<FString> SteamStringIDs;
 	
         FGetPlayFabIDsFromSteamIDsRequest() :
 			FPlayFabBaseModel(),
-			SteamIDs(),
 			SteamStringIDs()
 			{}
 		
 		FGetPlayFabIDsFromSteamIDsRequest(const FGetPlayFabIDsFromSteamIDsRequest& src) :
 			FPlayFabBaseModel(),
-			SteamIDs(src.SteamIDs),
 			SteamStringIDs(src.SteamStringIDs)
 			{}
 			
@@ -4879,8 +4697,6 @@ namespace ClientModels
 	struct PLAYFAB_API FSteamPlayFabIdPair : public FPlayFabBaseModel
     {
 		
-		// Deprecated: Please use SteamStringId
-		uint64 SteamId;
 		// [optional] Unique Steam identifier for a user.
 		FString SteamStringId;
 		// [optional] Unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Steam identifier.
@@ -4888,14 +4704,12 @@ namespace ClientModels
 	
         FSteamPlayFabIdPair() :
 			FPlayFabBaseModel(),
-			SteamId(0),
 			SteamStringId(),
 			PlayFabId()
 			{}
 		
 		FSteamPlayFabIdPair(const FSteamPlayFabIdPair& src) :
 			FPlayFabBaseModel(),
-			SteamId(src.SteamId),
 			SteamStringId(src.SteamStringId),
 			PlayFabId(src.PlayFabId)
 			{}
@@ -5926,56 +5740,6 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
-	struct PLAYFAB_API FGetUserStatisticsRequest : public FPlayFabBaseModel
-    {
-		
-	
-        FGetUserStatisticsRequest() :
-			FPlayFabBaseModel()
-			{}
-		
-		FGetUserStatisticsRequest(const FGetUserStatisticsRequest& src) :
-			FPlayFabBaseModel()
-			{}
-			
-		FGetUserStatisticsRequest(const TSharedPtr<FJsonObject>& obj) : FGetUserStatisticsRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FGetUserStatisticsRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FGetUserStatisticsResult : public FPlayFabBaseModel
-    {
-		
-		// [optional] User statistics for the active title.
-		TMap<FString, int32> UserStatistics;
-	
-        FGetUserStatisticsResult() :
-			FPlayFabBaseModel(),
-			UserStatistics()
-			{}
-		
-		FGetUserStatisticsResult(const FGetUserStatisticsResult& src) :
-			FPlayFabBaseModel(),
-			UserStatistics(src.UserStatistics)
-			{}
-			
-		FGetUserStatisticsResult(const TSharedPtr<FJsonObject>& obj) : FGetUserStatisticsResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FGetUserStatisticsResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
 	struct PLAYFAB_API FGrantCharacterToUserRequest : public FPlayFabBaseModel
     {
 		
@@ -6645,68 +6409,6 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
-	struct PLAYFAB_API FLogEventRequest : public FPlayFabBaseModel
-    {
-		
-		// [optional] Optional timestamp for this event. If null, the a timestamp is auto-assigned to the event on the server.
-		OptionalTime Timestamp;
-		// [optional] A unique event name which will be used as the table name in the Redshift database. The name will be made lower case, and cannot not contain spaces. The use of underscores is recommended, for readability. Events also cannot match reserved terms. The PlayFab reserved terms are 'log_in' and 'purchase', 'create' and 'request', while the Redshift reserved terms can be found here: http://docs.aws.amazon.com/redshift/latest/dg/r_pg_keywords.html.
-		FString EventName;
-		// [optional] Contains all the data for this event. Event Values can be strings, booleans or numerics (float, double, integer, long) and must be consistent on a per-event basis (if the Value for Key 'A' in Event 'Foo' is an integer the first time it is sent, it must be an integer in all subsequent 'Foo' events). As with event names, Keys must also not use reserved words (see above). Finally, the size of the Body for an event must be less than 32KB (UTF-8 format).
-		TMap<FString, FMultitypeVar> Body;
-		// Flag to set event Body as profile details in the Redshift database as well as a standard event.
-		bool ProfileSetEvent;
-	
-        FLogEventRequest() :
-			FPlayFabBaseModel(),
-			Timestamp(),
-			EventName(),
-			Body(),
-			ProfileSetEvent(false)
-			{}
-		
-		FLogEventRequest(const FLogEventRequest& src) :
-			FPlayFabBaseModel(),
-			Timestamp(src.Timestamp),
-			EventName(src.EventName),
-			Body(src.Body),
-			ProfileSetEvent(src.ProfileSetEvent)
-			{}
-			
-		FLogEventRequest(const TSharedPtr<FJsonObject>& obj) : FLogEventRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FLogEventRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FLogEventResult : public FPlayFabBaseModel
-    {
-		
-	
-        FLogEventResult() :
-			FPlayFabBaseModel()
-			{}
-		
-		FLogEventResult(const FLogEventResult& src) :
-			FPlayFabBaseModel()
-			{}
-			
-		FLogEventResult(const TSharedPtr<FJsonObject>& obj) : FLogEventResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FLogEventResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
 	struct PLAYFAB_API FUserSettings : public FPlayFabBaseModel
     {
 		
@@ -6993,8 +6695,6 @@ namespace ClientModels
 		FString AccessToken;
 		// [optional] Automatically create a PlayFab account if one is not currently linked to this Google account.
 		OptionalBool CreateAccount;
-		// [optional] Deprecated - Do not use
-		FString PublisherId;
 		// [optional] Flags for which pieces of info to return for the user.
 		TSharedPtr<FGetPlayerCombinedInfoRequestParams> InfoRequestParameters;
 	
@@ -7003,7 +6703,6 @@ namespace ClientModels
 			TitleId(),
 			AccessToken(),
 			CreateAccount(),
-			PublisherId(),
 			InfoRequestParameters(nullptr)
 			{}
 		
@@ -7012,7 +6711,6 @@ namespace ClientModels
 			TitleId(src.TitleId),
 			AccessToken(src.AccessToken),
 			CreateAccount(src.CreateAccount),
-			PublisherId(src.PublisherId),
 			InfoRequestParameters(src.InfoRequestParameters.IsValid() ? MakeShareable(new FGetPlayerCombinedInfoRequestParams(*src.InfoRequestParameters)) : nullptr)
 			{}
 			
@@ -7253,8 +6951,6 @@ namespace ClientModels
 		OptionalBool StartNewIfNoneFound;
 		// [optional] Filter to include and/or exclude Game Server Instances associated with certain Tags
 		TSharedPtr<FCollectionFilter> TagFilter;
-		// [optional] Deprecated - Do not use
-		OptionalBool EnableQueue;
 	
         FMatchmakeRequest() :
 			FPlayFabBaseModel(),
@@ -7265,8 +6961,7 @@ namespace ClientModels
 			StatisticName(),
 			CharacterId(),
 			StartNewIfNoneFound(),
-			TagFilter(nullptr),
-			EnableQueue()
+			TagFilter(nullptr)
 			{}
 		
 		FMatchmakeRequest(const FMatchmakeRequest& src) :
@@ -7278,8 +6973,7 @@ namespace ClientModels
 			StatisticName(src.StatisticName),
 			CharacterId(src.CharacterId),
 			StartNewIfNoneFound(src.StartNewIfNoneFound),
-			TagFilter(src.TagFilter.IsValid() ? MakeShareable(new FCollectionFilter(*src.TagFilter)) : nullptr),
-			EnableQueue(src.EnableQueue)
+			TagFilter(src.TagFilter.IsValid() ? MakeShareable(new FCollectionFilter(*src.TagFilter)) : nullptr)
 			{}
 			
 		FMatchmakeRequest(const TSharedPtr<FJsonObject>& obj) : FMatchmakeRequest()
@@ -7832,8 +7526,6 @@ namespace ClientModels
 		OptionalBool RequireBothUsernameAndEmail;
 		// [optional] An optional parameter for setting the display name for this title.
 		FString DisplayName;
-		// [optional] The Origination of a user is determined by the API call used to create the account. In the case of RegisterPlayFabUser, it will be Organic.
-		FString Origination;
 	
         FRegisterPlayFabUserRequest() :
 			FPlayFabBaseModel(),
@@ -7842,8 +7534,7 @@ namespace ClientModels
 			Email(),
 			Password(),
 			RequireBothUsernameAndEmail(),
-			DisplayName(),
-			Origination()
+			DisplayName()
 			{}
 		
 		FRegisterPlayFabUserRequest(const FRegisterPlayFabUserRequest& src) :
@@ -7853,8 +7544,7 @@ namespace ClientModels
 			Email(src.Email),
 			Password(src.Password),
 			RequireBothUsernameAndEmail(src.RequireBothUsernameAndEmail),
-			DisplayName(src.DisplayName),
-			Origination(src.Origination)
+			DisplayName(src.DisplayName)
 			{}
 			
 		FRegisterPlayFabUserRequest(const TSharedPtr<FJsonObject>& obj) : FRegisterPlayFabUserRequest()
@@ -8173,92 +7863,6 @@ namespace ClientModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
-	struct PLAYFAB_API FRunCloudScriptRequest : public FPlayFabBaseModel
-    {
-		
-		// server action to trigger
-		FString ActionId;
-		// [optional] parameters to pass into the action (If you use this, don't use ParamsEncoded)
-		FMultitypeVar Params;
-		// [optional] json-encoded parameters to pass into the action (If you use this, don't use Params)
-		FString ParamsEncoded;
-	
-        FRunCloudScriptRequest() :
-			FPlayFabBaseModel(),
-			ActionId(),
-			Params(),
-			ParamsEncoded()
-			{}
-		
-		FRunCloudScriptRequest(const FRunCloudScriptRequest& src) :
-			FPlayFabBaseModel(),
-			ActionId(src.ActionId),
-			Params(src.Params),
-			ParamsEncoded(src.ParamsEncoded)
-			{}
-			
-		FRunCloudScriptRequest(const TSharedPtr<FJsonObject>& obj) : FRunCloudScriptRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FRunCloudScriptRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FRunCloudScriptResult : public FPlayFabBaseModel
-    {
-		
-		// [optional] id of Cloud Script run
-		FString ActionId;
-		// version of Cloud Script run
-		int32 Version;
-		// revision of Cloud Script run
-		int32 Revision;
-		// [optional] return values from the server action as a dynamic object
-		FMultitypeVar Results;
-		// [optional] return values from the server action as a JSON encoded string
-		FString ResultsEncoded;
-		// [optional] any log statements generated during the run of this action
-		FString ActionLog;
-		// time this script took to run, in seconds
-		double ExecutionTime;
-	
-        FRunCloudScriptResult() :
-			FPlayFabBaseModel(),
-			ActionId(),
-			Version(0),
-			Revision(0),
-			Results(),
-			ResultsEncoded(),
-			ActionLog(),
-			ExecutionTime(0)
-			{}
-		
-		FRunCloudScriptResult(const FRunCloudScriptResult& src) :
-			FPlayFabBaseModel(),
-			ActionId(src.ActionId),
-			Version(src.Version),
-			Revision(src.Revision),
-			Results(src.Results),
-			ResultsEncoded(src.ResultsEncoded),
-			ActionLog(src.ActionLog),
-			ExecutionTime(src.ExecutionTime)
-			{}
-			
-		FRunCloudScriptResult(const TSharedPtr<FJsonObject>& obj) : FRunCloudScriptResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FRunCloudScriptResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
 	struct PLAYFAB_API FSendAccountRecoveryEmailRequest : public FPlayFabBaseModel
     {
 		
@@ -8266,21 +7870,17 @@ namespace ClientModels
 		FString Email;
 		// Unique identifier for the title, found in the Settings > Game Properties section of the PlayFab developer site when a title has been selected.
 		FString TitleId;
-		// [optional] Deprecated - Do not use
-		FString PublisherId;
 	
         FSendAccountRecoveryEmailRequest() :
 			FPlayFabBaseModel(),
 			Email(),
-			TitleId(),
-			PublisherId()
+			TitleId()
 			{}
 		
 		FSendAccountRecoveryEmailRequest(const FSendAccountRecoveryEmailRequest& src) :
 			FPlayFabBaseModel(),
 			Email(src.Email),
-			TitleId(src.TitleId),
-			PublisherId(src.PublisherId)
+			TitleId(src.TitleId)
 			{}
 			
 		FSendAccountRecoveryEmailRequest(const TSharedPtr<FJsonObject>& obj) : FSendAccountRecoveryEmailRequest()
@@ -9433,56 +9033,6 @@ namespace ClientModels
         }
 		
 		~FUpdateUserDataResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FUpdateUserStatisticsRequest : public FPlayFabBaseModel
-    {
-		
-		// [optional] Statistics to be updated with the provided values. UserStatistics object must follow the Key(string), Value(int) pattern.
-		TMap<FString, int32> UserStatistics;
-	
-        FUpdateUserStatisticsRequest() :
-			FPlayFabBaseModel(),
-			UserStatistics()
-			{}
-		
-		FUpdateUserStatisticsRequest(const FUpdateUserStatisticsRequest& src) :
-			FPlayFabBaseModel(),
-			UserStatistics(src.UserStatistics)
-			{}
-			
-		FUpdateUserStatisticsRequest(const TSharedPtr<FJsonObject>& obj) : FUpdateUserStatisticsRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FUpdateUserStatisticsRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FUpdateUserStatisticsResult : public FPlayFabBaseModel
-    {
-		
-	
-        FUpdateUserStatisticsResult() :
-			FPlayFabBaseModel()
-			{}
-		
-		FUpdateUserStatisticsResult(const FUpdateUserStatisticsResult& src) :
-			FPlayFabBaseModel()
-			{}
-			
-		FUpdateUserStatisticsResult(const TSharedPtr<FJsonObject>& obj) : FUpdateUserStatisticsResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FUpdateUserStatisticsResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

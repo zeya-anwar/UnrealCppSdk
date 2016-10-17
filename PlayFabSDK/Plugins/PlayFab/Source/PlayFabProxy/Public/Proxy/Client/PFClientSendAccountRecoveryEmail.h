@@ -21,7 +21,7 @@ public:
 	
 	// Forces an email to be sent to the registered email address for the user's account, with a link allowing the user to change the password
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Account Management")
-	static UPFClientSendAccountRecoveryEmail* SendAccountRecoveryEmail(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InEmail, const FString& InTitleId, const FString& InPublisherId);
+	static UPFClientSendAccountRecoveryEmail* SendAccountRecoveryEmail(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InEmail, const FString& InTitleId);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

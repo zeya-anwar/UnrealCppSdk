@@ -34,7 +34,6 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FGetUserPublisherInternalDataDelegate, const ServerModels::FGetUserDataResult&);
         DECLARE_DELEGATE_OneParam(FGetUserPublisherReadOnlyDataDelegate, const ServerModels::FGetUserDataResult&);
         DECLARE_DELEGATE_OneParam(FGetUserReadOnlyDataDelegate, const ServerModels::FGetUserDataResult&);
-        DECLARE_DELEGATE_OneParam(FGetUserStatisticsDelegate, const ServerModels::FGetUserStatisticsResult&);
         DECLARE_DELEGATE_OneParam(FUpdatePlayerStatisticsDelegate, const ServerModels::FUpdatePlayerStatisticsResult&);
         DECLARE_DELEGATE_OneParam(FUpdateUserDataDelegate, const ServerModels::FUpdateUserDataResult&);
         DECLARE_DELEGATE_OneParam(FUpdateUserInternalDataDelegate, const ServerModels::FUpdateUserDataResult&);
@@ -42,7 +41,6 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FUpdateUserPublisherInternalDataDelegate, const ServerModels::FUpdateUserDataResult&);
         DECLARE_DELEGATE_OneParam(FUpdateUserPublisherReadOnlyDataDelegate, const ServerModels::FUpdateUserDataResult&);
         DECLARE_DELEGATE_OneParam(FUpdateUserReadOnlyDataDelegate, const ServerModels::FUpdateUserDataResult&);
-        DECLARE_DELEGATE_OneParam(FUpdateUserStatisticsDelegate, const ServerModels::FUpdateUserStatisticsResult&);
         DECLARE_DELEGATE_OneParam(FGetCatalogItemsDelegate, const ServerModels::FGetCatalogItemsResult&);
         DECLARE_DELEGATE_OneParam(FGetPublisherDataDelegate, const ServerModels::FGetPublisherDataResult&);
         DECLARE_DELEGATE_OneParam(FGetTimeDelegate, const ServerModels::FGetTimeResult&);
@@ -86,7 +84,6 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FSetGameServerInstanceStateDelegate, const ServerModels::FSetGameServerInstanceStateResult&);
         DECLARE_DELEGATE_OneParam(FSetGameServerInstanceTagsDelegate, const ServerModels::FSetGameServerInstanceTagsResult&);
         DECLARE_DELEGATE_OneParam(FAwardSteamAchievementDelegate, const ServerModels::FAwardSteamAchievementResult&);
-        DECLARE_DELEGATE_OneParam(FLogEventDelegate, const ServerModels::FLogEventResult&);
         DECLARE_DELEGATE_OneParam(FWriteCharacterEventDelegate, const ServerModels::FWriteEventResponse&);
         DECLARE_DELEGATE_OneParam(FWritePlayerEventDelegate, const ServerModels::FWriteEventResponse&);
         DECLARE_DELEGATE_OneParam(FWriteTitleEventDelegate, const ServerModels::FWriteEventResponse&);
@@ -236,10 +233,6 @@ namespace PlayFab
          */
         bool GetUserReadOnlyData(ServerModels::FGetUserDataRequest& request, const FGetUserReadOnlyDataDelegate& SuccessDelegate = FGetUserReadOnlyDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Retrieves the details of all title-specific statistics for the user
-         */
-        bool GetUserStatistics(ServerModels::FGetUserStatisticsRequest& request, const FGetUserStatisticsDelegate& SuccessDelegate = FGetUserStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
          * Updates the values of the specified title-specific statistics for the user
          * This operation is additive. Statistics not currently defined will be added, while those already defined will be updated with the given values. All other user statistics will remain unchanged.
          */
@@ -274,11 +267,6 @@ namespace PlayFab
          * This function performs an additive update of the arbitrary JSON object containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, keys with null values will be removed. No other key-value pairs will be changed apart from those specified in the call.
          */
         bool UpdateUserReadOnlyData(ServerModels::FUpdateUserDataRequest& request, const FUpdateUserReadOnlyDataDelegate& SuccessDelegate = FUpdateUserReadOnlyDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Updates the values of the specified title-specific statistics for the user. By default, clients are not permitted to update statistics. Developers may override this setting in the Game Manager > Settings > API Features.
-         * This operation is additive. Statistics not currently defined will be added, while those already defined will be updated with the given values. All other user statistics will remain unchanged.  Note: For statistics configured to reset on an interval, this API call updates the current (latest) version of the player's statistic.  Titles using statistic versioning for resettable leaderboards should make use of the UpdatePlayerStatistics call instead, to ensure that the proper version is updated.
-         */
-        bool UpdateUserStatistics(ServerModels::FUpdateUserStatisticsRequest& request, const FUpdateUserStatisticsDelegate& SuccessDelegate = FUpdateUserStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves the specified version of the title's catalog of virtual goods, including all defined properties
          */
@@ -474,11 +462,6 @@ namespace PlayFab
          */
         bool AwardSteamAchievement(ServerModels::FAwardSteamAchievementRequest& request, const FAwardSteamAchievementDelegate& SuccessDelegate = FAwardSteamAchievementDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Logs a custom analytics event
-         * This API is designed to track analytics events. Events logged using this API will be stored in the title's Redshift database. Each unique eventName will create a distinct table within the database. Within that table, a column will be created for every unique key. Using a first-person shooter as an example, the title may need to track headshots as a distinct event. The sample request below demonstrates an example of this. In addition to the values sent, timestamps and User IDs are automatically added as 'ts' and 'user_id' to each table. The 'Headshot' table in this example would then have the schema: 'user_id'|'ts'|'victim'|'gun'|'x_coord'|'y_coord'|'z_coord'|'damage|aim_assist' and the row corresponding to this event would look like: 'EF987654ABAB012'|'2014-1-1 12:12:12'|'B76543AEAE65'|'big_bad_sniper'|10|20|1|1000|1.The PlayFab service automatically creates events for all login and purchase operations. This API is intended for game specific events only. Please note that event logging is not enabled for titles by default. If you need event logging enabled, please contact us at devrel@playfab.com for more information.
-         */
-        bool LogEvent(ServerModels::FLogEventRequest& request, const FLogEventDelegate& SuccessDelegate = FLogEventDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
          * Writes a character-based event into PlayStream.
          * This API is designed to write a multitude of different event types into PlayStream. It supports a flexible JSON schema, which allowsfor arbitrary key-value pairs to describe any character-based event. The created event will be locked to the authenticated title. 
          */
@@ -653,7 +636,6 @@ namespace PlayFab
         void OnGetUserPublisherInternalDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserPublisherInternalDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserPublisherReadOnlyDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserPublisherReadOnlyDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserReadOnlyDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserReadOnlyDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnGetUserStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdatePlayerStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdatePlayerStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateUserDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateUserInternalDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserInternalDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -661,7 +643,6 @@ namespace PlayFab
         void OnUpdateUserPublisherInternalDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserPublisherInternalDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateUserPublisherReadOnlyDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserPublisherReadOnlyDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateUserReadOnlyDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserReadOnlyDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnUpdateUserStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetCatalogItemsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCatalogItemsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetTimeResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetTimeDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -705,7 +686,6 @@ namespace PlayFab
         void OnSetGameServerInstanceStateResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetGameServerInstanceStateDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnSetGameServerInstanceTagsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FSetGameServerInstanceTagsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAwardSteamAchievementResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAwardSteamAchievementDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnLogEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLogEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnWriteCharacterEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FWriteCharacterEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnWritePlayerEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FWritePlayerEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnWriteTitleEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FWriteTitleEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

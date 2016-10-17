@@ -10,7 +10,7 @@ UPFClientMatchmake::UPFClientMatchmake(const FObjectInitializer& ObjectInitializ
 {
 }
 
-UPFClientMatchmake* UPFClientMatchmake::Matchmake(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InBuildVersion, const FString& InGameMode, const FString& InLobbyId, const FString& InStatisticName, const FString& InCharacterId, const bool& InStartNewIfNoneFound, const FBPClientCollectionFilter& InTagFilter, const bool& InEnableQueue)
+UPFClientMatchmake* UPFClientMatchmake::Matchmake(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InBuildVersion, const FString& InGameMode, const FString& InLobbyId, const FString& InStatisticName, const FString& InCharacterId, const bool& InStartNewIfNoneFound, const FBPClientCollectionFilter& InTagFilter)
 {
 	UPFClientMatchmake* Proxy = NewObject<UPFClientMatchmake>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
@@ -22,7 +22,6 @@ UPFClientMatchmake* UPFClientMatchmake::Matchmake(UObject* WorldContextObject, c
 	Proxy->Request.CharacterId = InCharacterId;
 	Proxy->Request.StartNewIfNoneFound = InStartNewIfNoneFound;
 	*Proxy->Request.TagFilter = InTagFilter.Data;
-	Proxy->Request.EnableQueue = InEnableQueue;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

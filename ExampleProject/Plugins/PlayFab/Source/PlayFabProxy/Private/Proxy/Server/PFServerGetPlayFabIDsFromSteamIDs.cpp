@@ -10,15 +10,10 @@ UPFServerGetPlayFabIDsFromSteamIDs::UPFServerGetPlayFabIDsFromSteamIDs(const FOb
 {
 }
 
-UPFServerGetPlayFabIDsFromSteamIDs* UPFServerGetPlayFabIDsFromSteamIDs::GetPlayFabIDsFromSteamIDs(UObject* WorldContextObject, class APlayerController* PlayerController , const TArray<int32>& InSteamIDs, const TArray<FString>& InSteamStringIDs)
+UPFServerGetPlayFabIDsFromSteamIDs* UPFServerGetPlayFabIDsFromSteamIDs::GetPlayFabIDsFromSteamIDs(UObject* WorldContextObject, class APlayerController* PlayerController , const TArray<FString>& InSteamStringIDs)
 {
 	UPFServerGetPlayFabIDsFromSteamIDs* Proxy = NewObject<UPFServerGetPlayFabIDsFromSteamIDs>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
-	for (const int32& elem : InSteamIDs)
-    {
-        Proxy->Request.SteamIDs.Add(static_cast<uint64>(elem));
-    }
-
 	Proxy->Request.SteamStringIDs = InSteamStringIDs;
 	
 

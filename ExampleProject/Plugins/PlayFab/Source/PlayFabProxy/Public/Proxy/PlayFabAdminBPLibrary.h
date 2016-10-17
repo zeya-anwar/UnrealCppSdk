@@ -1129,7 +1129,6 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminUpdateCloudScriptRequest(
 		const FBPAdminUpdateCloudScriptRequest& In
-        ,int32& OutVersion
         ,TArray<FBPAdminCloudScriptFile>& OutFiles
         ,bool& OutPublish
         ,FString& OutDeveloperPlayFabId

@@ -10,13 +10,12 @@ UPFClientSendAccountRecoveryEmail::UPFClientSendAccountRecoveryEmail(const FObje
 {
 }
 
-UPFClientSendAccountRecoveryEmail* UPFClientSendAccountRecoveryEmail::SendAccountRecoveryEmail(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InEmail, const FString& InTitleId, const FString& InPublisherId)
+UPFClientSendAccountRecoveryEmail* UPFClientSendAccountRecoveryEmail::SendAccountRecoveryEmail(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InEmail, const FString& InTitleId)
 {
 	UPFClientSendAccountRecoveryEmail* Proxy = NewObject<UPFClientSendAccountRecoveryEmail>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.Email = InEmail;
 	Proxy->Request.TitleId = InTitleId;
-	Proxy->Request.PublisherId = InPublisherId;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

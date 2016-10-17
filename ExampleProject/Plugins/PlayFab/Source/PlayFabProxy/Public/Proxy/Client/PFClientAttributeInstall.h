@@ -21,7 +21,7 @@ public:
 	
 	// Attributes an install for advertisment.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Client|Advertising")
-	static UPFClientAttributeInstall* AttributeInstall(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InIdfa, const FString& InAndroid_Id);
+	static UPFClientAttributeInstall* AttributeInstall(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InIdfa, const FString& InAndroid_Id, const FString& InAdid);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

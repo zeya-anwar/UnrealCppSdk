@@ -59,10 +59,8 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FUnlinkTwitchDelegate, const ClientModels::FUnlinkTwitchAccountResult&);
         DECLARE_DELEGATE_OneParam(FUpdateUserTitleDisplayNameDelegate, const ClientModels::FUpdateUserTitleDisplayNameResult&);
         DECLARE_DELEGATE_OneParam(FGetFriendLeaderboardDelegate, const ClientModels::FGetLeaderboardResult&);
-        DECLARE_DELEGATE_OneParam(FGetFriendLeaderboardAroundCurrentUserDelegate, const ClientModels::FGetFriendLeaderboardAroundCurrentUserResult&);
         DECLARE_DELEGATE_OneParam(FGetFriendLeaderboardAroundPlayerDelegate, const ClientModels::FGetFriendLeaderboardAroundPlayerResult&);
         DECLARE_DELEGATE_OneParam(FGetLeaderboardDelegate, const ClientModels::FGetLeaderboardResult&);
-        DECLARE_DELEGATE_OneParam(FGetLeaderboardAroundCurrentUserDelegate, const ClientModels::FGetLeaderboardAroundCurrentUserResult&);
         DECLARE_DELEGATE_OneParam(FGetLeaderboardAroundPlayerDelegate, const ClientModels::FGetLeaderboardAroundPlayerResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayerStatisticsDelegate, const ClientModels::FGetPlayerStatisticsResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayerStatisticVersionsDelegate, const ClientModels::FGetPlayerStatisticVersionsResult&);
@@ -70,11 +68,9 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FGetUserPublisherDataDelegate, const ClientModels::FGetUserDataResult&);
         DECLARE_DELEGATE_OneParam(FGetUserPublisherReadOnlyDataDelegate, const ClientModels::FGetUserDataResult&);
         DECLARE_DELEGATE_OneParam(FGetUserReadOnlyDataDelegate, const ClientModels::FGetUserDataResult&);
-        DECLARE_DELEGATE_OneParam(FGetUserStatisticsDelegate, const ClientModels::FGetUserStatisticsResult&);
         DECLARE_DELEGATE_OneParam(FUpdatePlayerStatisticsDelegate, const ClientModels::FUpdatePlayerStatisticsResult&);
         DECLARE_DELEGATE_OneParam(FUpdateUserDataDelegate, const ClientModels::FUpdateUserDataResult&);
         DECLARE_DELEGATE_OneParam(FUpdateUserPublisherDataDelegate, const ClientModels::FUpdateUserDataResult&);
-        DECLARE_DELEGATE_OneParam(FUpdateUserStatisticsDelegate, const ClientModels::FUpdateUserStatisticsResult&);
         DECLARE_DELEGATE_OneParam(FGetCatalogItemsDelegate, const ClientModels::FGetCatalogItemsResult&);
         DECLARE_DELEGATE_OneParam(FGetPublisherDataDelegate, const ClientModels::FGetPublisherDataResult&);
         DECLARE_DELEGATE_OneParam(FGetStoreItemsDelegate, const ClientModels::FGetStoreItemsResult&);
@@ -107,7 +103,6 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FStartGameDelegate, const ClientModels::FStartGameResult&);
         DECLARE_DELEGATE_OneParam(FAndroidDevicePushNotificationRegistrationDelegate, const ClientModels::FAndroidDevicePushNotificationRegistrationResult&);
         DECLARE_DELEGATE_OneParam(FValidateGooglePlayPurchaseDelegate, const ClientModels::FValidateGooglePlayPurchaseResult&);
-        DECLARE_DELEGATE_OneParam(FLogEventDelegate, const ClientModels::FLogEventResult&);
         DECLARE_DELEGATE_OneParam(FWriteCharacterEventDelegate, const ClientModels::FWriteEventResponse&);
         DECLARE_DELEGATE_OneParam(FWritePlayerEventDelegate, const ClientModels::FWriteEventResponse&);
         DECLARE_DELEGATE_OneParam(FWriteTitleEventDelegate, const ClientModels::FWriteEventResponse&);
@@ -117,8 +112,6 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FRemoveSharedGroupMembersDelegate, const ClientModels::FRemoveSharedGroupMembersResult&);
         DECLARE_DELEGATE_OneParam(FUpdateSharedGroupDataDelegate, const ClientModels::FUpdateSharedGroupDataResult&);
         DECLARE_DELEGATE_OneParam(FExecuteCloudScriptDelegate, const ClientModels::FExecuteCloudScriptResult&);
-        DECLARE_DELEGATE_OneParam(FGetCloudScriptUrlDelegate, const ClientModels::FGetCloudScriptUrlResult&);
-        DECLARE_DELEGATE_OneParam(FRunCloudScriptDelegate, const ClientModels::FRunCloudScriptResult&);
         DECLARE_DELEGATE_OneParam(FGetContentDownloadUrlDelegate, const ClientModels::FGetContentDownloadUrlResult&);
         DECLARE_DELEGATE_OneParam(FGetAllUsersCharactersDelegate, const ClientModels::FListUsersCharactersResult&);
         DECLARE_DELEGATE_OneParam(FGetCharacterLeaderboardDelegate, const ClientModels::FGetCharacterLeaderboardResult&);
@@ -361,10 +354,6 @@ namespace PlayFab
          */
         bool GetFriendLeaderboard(ClientModels::FGetFriendLeaderboardRequest& request, const FGetFriendLeaderboardDelegate& SuccessDelegate = FGetFriendLeaderboardDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Retrieves a list of ranked friends of the current player for the given statistic, centered on the currently signed-in user
-         */
-        bool GetFriendLeaderboardAroundCurrentUser(ClientModels::FGetFriendLeaderboardAroundCurrentUserRequest& request, const FGetFriendLeaderboardAroundCurrentUserDelegate& SuccessDelegate = FGetFriendLeaderboardAroundCurrentUserDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
          * Retrieves a list of ranked friends of the current player for the given statistic, centered on the requested PlayFab user. If PlayFabId is empty or null will return currently logged in user.
          */
         bool GetFriendLeaderboardAroundPlayer(ClientModels::FGetFriendLeaderboardAroundPlayerRequest& request, const FGetFriendLeaderboardAroundPlayerDelegate& SuccessDelegate = FGetFriendLeaderboardAroundPlayerDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
@@ -372,10 +361,6 @@ namespace PlayFab
          * Retrieves a list of ranked users for the given statistic, starting from the indicated point in the leaderboard
          */
         bool GetLeaderboard(ClientModels::FGetLeaderboardRequest& request, const FGetLeaderboardDelegate& SuccessDelegate = FGetLeaderboardDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Retrieves a list of ranked users for the given statistic, centered on the currently signed-in user
-         */
-        bool GetLeaderboardAroundCurrentUser(ClientModels::FGetLeaderboardAroundCurrentUserRequest& request, const FGetLeaderboardAroundCurrentUserDelegate& SuccessDelegate = FGetLeaderboardAroundCurrentUserDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves a list of ranked users for the given statistic, centered on the requested player. If PlayFabId is empty or null will return currently logged in user.
          */
@@ -409,10 +394,6 @@ namespace PlayFab
          */
         bool GetUserReadOnlyData(ClientModels::FGetUserDataRequest& request, const FGetUserReadOnlyDataDelegate& SuccessDelegate = FGetUserReadOnlyDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Retrieves the details of all title-specific statistics for the user
-         */
-        bool GetUserStatistics(const FGetUserStatisticsDelegate& SuccessDelegate = FGetUserStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
          * Updates the values of the specified title-specific statistics for the user. By default, clients are not permitted to update statistics. Developers may override this setting in the Game Manager > Settings > API Features.
          * Enable this option with the 'Allow Client to Post Player Statistics' option in PlayFab GameManager for your title. However, this is not best practice, as this data will no longer be safely controlled by the server. This operation is additive.  Statistics not currently defined will be added, while those already defined will be updated with the given values. All other user statistics will remain unchanged.  Note that if the statistic is intended to have a reset period, the UpdatePlayerStatisticDefinition API call can be used to define that reset period. Once a statistic has been versioned (reset), the now-previous version can still be written to for up a short, pre-defined period (currently 10 seconds), using the Version parameter in this call.
          */
@@ -427,11 +408,6 @@ namespace PlayFab
          * This function performs an additive update of the arbitrary strings containing the custom data for the user. In updating the custom data object, keys which already exist in the object will have their values overwritten, while keys with null values will be removed. New keys will be added, with the given values. No other key-value pairs will be changed apart from those specified in the call.
          */
         bool UpdateUserPublisherData(ClientModels::FUpdateUserDataRequest& request, const FUpdateUserPublisherDataDelegate& SuccessDelegate = FUpdateUserPublisherDataDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Updates the values of the specified title-specific statistics for the user. By default, clients are not permitted to update statistics. Developers may override this setting in the Game Manager > Settings > API Features.
-         * Enable this option with the 'Allow Client to Post Player Statistics' option in PlayFab GameManager for your title. However, this is not best practice, as this data will no longer be safely controlled by the server. This operation is additive.  Statistics not currently defined will be added, while those already defined will be updated with the given values. All other user statistics will remain unchanged.  Statistics are used by the leaderboard apis, and accessible for custom game-logic.  Note: For statistics configured to reset on an interval, this API call updates the current (latest) version of the player's statistic.  Titles using statistic versioning for resettable leaderboards should make use of the UpdatePlayerStatistics call instead, to ensure that the proper version is updated.
-         */
-        bool UpdateUserStatistics(ClientModels::FUpdateUserStatisticsRequest& request, const FUpdateUserStatisticsDelegate& SuccessDelegate = FUpdateUserStatisticsDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Retrieves the specified version of the title's catalog of virtual goods, including all defined properties
          */
@@ -581,11 +557,6 @@ namespace PlayFab
          */
         bool ValidateGooglePlayPurchase(ClientModels::FValidateGooglePlayPurchaseRequest& request, const FValidateGooglePlayPurchaseDelegate& SuccessDelegate = FValidateGooglePlayPurchaseDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
-         * Logs a custom analytics event
-         * This API is designed to track analytics events. Events logged using this API will be stored in the title's Redshift database. Each unique eventName will create a distinct table within the database. Within that table, a column will be created for every unique key. Using a first-person shooter as an example, the title may need to track headshots as a distinct event. The sample request below demonstrates an example of this. In addition to the values sent, timestamps and User IDs are automatically added as 'ts' and 'user_id' to each table. The 'Headshot' table in this example would then have the schema: 'user_id'|'ts'|'victim'|'gun'|'x_coord'|'y_coord'|'z_coord'|'damage|aim_assist' and the row corresponding to this event would look like: 'EF987654ABAB012'|'2014-1-1 12:12:12'|'B76543AEAE65'|'big_bad_sniper'|10|20|1|1000|1.The PlayFab service automatically creates events for all login and purchase operations. This API is intended for game specific events only. Please note that event logging is not enabled for titles by default. If you need event logging enabled, please contact us at devrel@playfab.com for more information.
-         */
-        bool LogEvent(ClientModels::FLogEventRequest& request, const FLogEventDelegate& SuccessDelegate = FLogEventDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
          * Writes a character-based event into PlayStream.
          * This API is designed to write a multitude of different client-defined events into PlayStream. It supports a flexible JSON schema, which allowsfor arbitrary key-value pairs to describe any character-based event. The created event will be locked to the authenticated title and player. 
          */
@@ -626,16 +597,6 @@ namespace PlayFab
          * Executes a CloudScript function, with the 'currentPlayerId' set to the PlayFab ID of the authenticated player.
          */
         bool ExecuteCloudScript(ClientModels::FExecuteCloudScriptRequest& request, const FExecuteCloudScriptDelegate& SuccessDelegate = FExecuteCloudScriptDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Retrieves the title-specific URL for Cloud Script servers. This must be queried once, prior  to making any calls to RunCloudScript.
-         * Cloud Scripts in PlayFab have both Versions and Revisions. Each time a new script is  uploaded against a Version, this creates a new Revision. If Testing is set to true, the URL returned will be for the Cloud Script Revision which was most recently uploaded. If Testing is set to false, the URL returned will be for the  Cloud Script Revision which was most recently deployed to live.
-         */
-        bool GetCloudScriptUrl(ClientModels::FGetCloudScriptUrlRequest& request, const FGetCloudScriptUrlDelegate& SuccessDelegate = FGetCloudScriptUrlDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
-        /**
-         * Triggers a particular server action, passing the provided inputs to the hosted Cloud Script. An action in this context is a handler in the JavaScript. NOTE: Before calling this API, you must call GetCloudScriptUrl to be assigned a Cloud Script server URL. When using an official PlayFab SDK, this URL is stored internally in the SDK, but GetCloudScriptUrl must still be manually called.
-         * Inputs to the Cloud Script may be specified either using Params, which is an object containing one or more parameters, or ParamsEncoded, which is a string containing the parameters encoded into JSON. Titles should only specify the parameters in one of these inputs - if both are specified, the ParamsEncoded will be used.
-         */
-        bool RunCloudScript(ClientModels::FRunCloudScriptRequest& request, const FRunCloudScriptDelegate& SuccessDelegate = FRunCloudScriptDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * This API retrieves a pre-signed URL for accessing a content file for the title. A subsequent  HTTP GET to the returned URL will attempt to download the content. A HEAD query to the returned URL will attempt to  retrieve the metadata of the content. Note that a successful result does not guarantee the existence of this content -  if it has not been uploaded, the query to retrieve the data will fail. See this post for more information:  https://community.playfab.com/hc/en-us/community/posts/205469488-How-to-upload-files-to-PlayFab-s-Content-Service
          */
@@ -775,10 +736,8 @@ namespace PlayFab
         void OnUnlinkTwitchResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUnlinkTwitchDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateUserTitleDisplayNameResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserTitleDisplayNameDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetFriendLeaderboardResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetFriendLeaderboardDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnGetFriendLeaderboardAroundCurrentUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetFriendLeaderboardAroundCurrentUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetFriendLeaderboardAroundPlayerResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetFriendLeaderboardAroundPlayerDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetLeaderboardResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnGetLeaderboardAroundCurrentUserResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardAroundCurrentUserDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetLeaderboardAroundPlayerResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetLeaderboardAroundPlayerDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayerStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayerStatisticVersionsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerStatisticVersionsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -786,11 +745,9 @@ namespace PlayFab
         void OnGetUserPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserPublisherReadOnlyDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserPublisherReadOnlyDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserReadOnlyDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserReadOnlyDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnGetUserStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdatePlayerStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdatePlayerStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateUserDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateUserPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnUpdateUserStatisticsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateUserStatisticsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetCatalogItemsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCatalogItemsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPublisherDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPublisherDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetStoreItemsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetStoreItemsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -823,7 +780,6 @@ namespace PlayFab
         void OnStartGameResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FStartGameDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnAndroidDevicePushNotificationRegistrationResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAndroidDevicePushNotificationRegistrationDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnValidateGooglePlayPurchaseResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FValidateGooglePlayPurchaseDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnLogEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FLogEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnWriteCharacterEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FWriteCharacterEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnWritePlayerEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FWritePlayerEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnWriteTitleEventResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FWriteTitleEventDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
@@ -833,8 +789,6 @@ namespace PlayFab
         void OnRemoveSharedGroupMembersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemoveSharedGroupMembersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnUpdateSharedGroupDataResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateSharedGroupDataDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnExecuteCloudScriptResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FExecuteCloudScriptDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnGetCloudScriptUrlResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCloudScriptUrlDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
-        void OnRunCloudScriptResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRunCloudScriptDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetContentDownloadUrlResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetContentDownloadUrlDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetAllUsersCharactersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetAllUsersCharactersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetCharacterLeaderboardResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCharacterLeaderboardDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);

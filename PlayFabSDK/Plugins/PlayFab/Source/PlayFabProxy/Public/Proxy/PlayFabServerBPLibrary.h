@@ -687,7 +687,6 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerGetPlayFabIDsFromSteamIDsRequest(
 		const FBPServerGetPlayFabIDsFromSteamIDsRequest& In
-        ,TArray<int32>& OutSteamIDs
         ,TArray<FString>& OutSteamStringIDs
 	);
 	
@@ -829,18 +828,6 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
-	static void BreakBPServerGetUserStatisticsRequest(
-		const FBPServerGetUserStatisticsRequest& In
-        ,FString& OutPlayFabId
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
-	static void BreakBPServerGetUserStatisticsResult(
-		const FBPServerGetUserStatisticsResult& In
-        ,FString& OutPlayFabId
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerGrantCharacterToUserRequest(
 		const FBPServerGrantCharacterToUserRequest& In
         ,FString& OutPlayFabId
@@ -959,22 +946,6 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPServerListUsersCharactersResult(
 		const FBPServerListUsersCharactersResult& In
         ,TArray<FBPServerCharacterResult>& OutCharacters
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
-	static void BreakBPServerLogEventRequest(
-		const FBPServerLogEventRequest& In
-        ,FString& OutPlayFabId
-        ,FString& OutEntityId
-        ,FString& OutEntityType
-        ,FDateTime& OutTimestamp
-        ,FString& OutEventName
-        ,bool& OutProfileSetEvent
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
-	static void BreakBPServerLogEventResult(
-		const FBPServerLogEventResult& In
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
@@ -1420,7 +1391,6 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerSteamPlayFabIdPair(
 		const FBPServerSteamPlayFabIdPair& In
-        ,int32& OutSteamId
         ,FString& OutSteamStringId
         ,FString& OutPlayFabId
 	);
@@ -1584,17 +1554,6 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutCharacterId
         ,FString& OutItemInstanceId
         ,TArray<FString>& OutKeysToRemove
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
-	static void BreakBPServerUpdateUserStatisticsRequest(
-		const FBPServerUpdateUserStatisticsRequest& In
-        ,FString& OutPlayFabId
-	);
-	
-	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
-	static void BreakBPServerUpdateUserStatisticsResult(
-		const FBPServerUpdateUserStatisticsResult& In
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))

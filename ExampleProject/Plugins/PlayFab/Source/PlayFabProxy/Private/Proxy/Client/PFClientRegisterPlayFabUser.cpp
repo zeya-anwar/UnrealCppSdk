@@ -10,7 +10,7 @@ UPFClientRegisterPlayFabUser::UPFClientRegisterPlayFabUser(const FObjectInitiali
 {
 }
 
-UPFClientRegisterPlayFabUser* UPFClientRegisterPlayFabUser::RegisterPlayFabUser(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InTitleId, const FString& InUsername, const FString& InEmail, const FString& InPassword, const bool& InRequireBothUsernameAndEmail, const FString& InDisplayName, const FString& InOrigination)
+UPFClientRegisterPlayFabUser* UPFClientRegisterPlayFabUser::RegisterPlayFabUser(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InTitleId, const FString& InUsername, const FString& InEmail, const FString& InPassword, const bool& InRequireBothUsernameAndEmail, const FString& InDisplayName)
 {
 	UPFClientRegisterPlayFabUser* Proxy = NewObject<UPFClientRegisterPlayFabUser>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
@@ -20,7 +20,6 @@ UPFClientRegisterPlayFabUser* UPFClientRegisterPlayFabUser::RegisterPlayFabUser(
 	Proxy->Request.Password = InPassword;
 	Proxy->Request.RequireBothUsernameAndEmail = InRequireBothUsernameAndEmail;
 	Proxy->Request.DisplayName = InDisplayName;
-	Proxy->Request.Origination = InOrigination;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

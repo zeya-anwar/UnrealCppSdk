@@ -10,12 +10,13 @@ UPFClientAttributeInstall::UPFClientAttributeInstall(const FObjectInitializer& O
 {
 }
 
-UPFClientAttributeInstall* UPFClientAttributeInstall::AttributeInstall(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InIdfa, const FString& InAndroid_Id)
+UPFClientAttributeInstall* UPFClientAttributeInstall::AttributeInstall(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InIdfa, const FString& InAndroid_Id, const FString& InAdid)
 {
 	UPFClientAttributeInstall* Proxy = NewObject<UPFClientAttributeInstall>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.Idfa = InIdfa;
 	Proxy->Request.Android_Id = InAndroid_Id;
+	Proxy->Request.Adid = InAdid;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

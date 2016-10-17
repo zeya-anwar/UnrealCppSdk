@@ -185,7 +185,7 @@ namespace ServerModels
 		
 		// Unique identifier for the shared group.
 		FString SharedGroupId;
-		// [optional] An array of unique PlayFab assigned ID of the user on whom the operation will be performed.
+		// An array of unique PlayFab assigned ID of the user on whom the operation will be performed.
 		TArray<FString> PlayFabIds;
 	
         FAddSharedGroupMembersRequest() :
@@ -1870,7 +1870,7 @@ namespace ServerModels
 	struct PLAYFAB_API FDeleteSharedGroupRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] Unique identifier for the shared group.
+		// Unique identifier for the shared group.
 		FString SharedGroupId;
 	
         FDeleteSharedGroupRequest() :
@@ -2215,7 +2215,7 @@ namespace ServerModels
 	struct PLAYFAB_API FExecuteCloudScriptServerRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] Unique PlayFab assigned ID of the user on whom the operation will be performed.
+		// The unique user identifier for the player on whose behalf the script is being run
 		FString PlayFabId;
 		// The name of the CloudScript function to execute
 		FString FunctionName;
@@ -4332,20 +4332,16 @@ namespace ServerModels
 	struct PLAYFAB_API FGetPlayFabIDsFromSteamIDsRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] Deprecated: Please use SteamStringIDs
-		TArray<uint64> SteamIDs;
 		// [optional] Array of unique Steam identifiers (Steam profile IDs) for which the title needs to get PlayFab identifiers.
 		TArray<FString> SteamStringIDs;
 	
         FGetPlayFabIDsFromSteamIDsRequest() :
 			FPlayFabBaseModel(),
-			SteamIDs(),
 			SteamStringIDs()
 			{}
 		
 		FGetPlayFabIDsFromSteamIDsRequest(const FGetPlayFabIDsFromSteamIDsRequest& src) :
 			FPlayFabBaseModel(),
-			SteamIDs(src.SteamIDs),
 			SteamStringIDs(src.SteamStringIDs)
 			{}
 			
@@ -4363,8 +4359,6 @@ namespace ServerModels
 	struct PLAYFAB_API FSteamPlayFabIdPair : public FPlayFabBaseModel
     {
 		
-		// Deprecated: Please use SteamStringId
-		uint64 SteamId;
 		// [optional] Unique Steam identifier for a user.
 		FString SteamStringId;
 		// [optional] Unique PlayFab identifier for a user, or null if no PlayFab account is linked to the Steam identifier.
@@ -4372,14 +4366,12 @@ namespace ServerModels
 	
         FSteamPlayFabIdPair() :
 			FPlayFabBaseModel(),
-			SteamId(0),
 			SteamStringId(),
 			PlayFabId()
 			{}
 		
 		FSteamPlayFabIdPair(const FSteamPlayFabIdPair& src) :
 			FPlayFabBaseModel(),
-			SteamId(src.SteamId),
 			SteamStringId(src.SteamStringId),
 			PlayFabId(src.PlayFabId)
 			{}
@@ -4617,7 +4609,7 @@ namespace ServerModels
 	struct PLAYFAB_API FGetSharedGroupDataRequest : public FPlayFabBaseModel
     {
 		
-		// [optional] Unique identifier for the shared group.
+		// Unique identifier for the shared group.
 		FString SharedGroupId;
 		// [optional] Specific keys to retrieve from the shared group (if not specified, all keys will be returned, while an empty array indicates that no keys should be returned).
 		TArray<FString> Keys;
@@ -5160,64 +5152,6 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
-	struct PLAYFAB_API FGetUserStatisticsRequest : public FPlayFabBaseModel
-    {
-		
-		// User for whom statistics are being requested.
-		FString PlayFabId;
-	
-        FGetUserStatisticsRequest() :
-			FPlayFabBaseModel(),
-			PlayFabId()
-			{}
-		
-		FGetUserStatisticsRequest(const FGetUserStatisticsRequest& src) :
-			FPlayFabBaseModel(),
-			PlayFabId(src.PlayFabId)
-			{}
-			
-		FGetUserStatisticsRequest(const TSharedPtr<FJsonObject>& obj) : FGetUserStatisticsRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FGetUserStatisticsRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FGetUserStatisticsResult : public FPlayFabBaseModel
-    {
-		
-		// [optional] PlayFab unique identifier of the user whose statistics are being returned.
-		FString PlayFabId;
-		// [optional] User statistics for the requested user.
-		TMap<FString, int32> UserStatistics;
-	
-        FGetUserStatisticsResult() :
-			FPlayFabBaseModel(),
-			PlayFabId(),
-			UserStatistics()
-			{}
-		
-		FGetUserStatisticsResult(const FGetUserStatisticsResult& src) :
-			FPlayFabBaseModel(),
-			PlayFabId(src.PlayFabId),
-			UserStatistics(src.UserStatistics)
-			{}
-			
-		FGetUserStatisticsResult(const TSharedPtr<FJsonObject>& obj) : FGetUserStatisticsResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FGetUserStatisticsResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
 	struct PLAYFAB_API FGrantCharacterToUserRequest : public FPlayFabBaseModel
     {
 		
@@ -5670,80 +5604,6 @@ namespace ServerModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
-	struct PLAYFAB_API FLogEventRequest : public FPlayFabBaseModel
-    {
-		
-		// [optional] PlayFab User Id of the player associated with this event. For non-player associated events, this must be null and EntityId must be set.
-		FString PlayFabId;
-		// [optional] For non player-associated events, a unique ID for the entity associated with this event. For player associated events, this must be null and PlayFabId must be set.
-		FString EntityId;
-		// [optional] For non player-associated events, the type of entity associated with this event. For player associated events, this must be null.
-		FString EntityType;
-		// [optional] Optional timestamp for this event. If null, the a timestamp is auto-assigned to the event on the server.
-		OptionalTime Timestamp;
-		// [optional] A unique event name which will be used as the table name in the Redshift database. The name will be made lower case, and cannot not contain spaces. The use of underscores is recommended, for readability. Events also cannot match reserved terms. The PlayFab reserved terms are 'log_in' and 'purchase', 'create' and 'request', while the Redshift reserved terms can be found here: http://docs.aws.amazon.com/redshift/latest/dg/r_pg_keywords.html.
-		FString EventName;
-		// [optional] Contains all the data for this event. Event Values can be strings, booleans or numerics (float, double, integer, long) and must be consistent on a per-event basis (if the Value for Key 'A' in Event 'Foo' is an integer the first time it is sent, it must be an integer in all subsequent 'Foo' events). As with event names, Keys must also not use reserved words (see above). Finally, the size of the Body for an event must be less than 32KB (UTF-8 format).
-		TMap<FString, FMultitypeVar> Body;
-		// Flag to set event Body as profile details in the Redshift database as well as a standard event.
-		bool ProfileSetEvent;
-	
-        FLogEventRequest() :
-			FPlayFabBaseModel(),
-			PlayFabId(),
-			EntityId(),
-			EntityType(),
-			Timestamp(),
-			EventName(),
-			Body(),
-			ProfileSetEvent(false)
-			{}
-		
-		FLogEventRequest(const FLogEventRequest& src) :
-			FPlayFabBaseModel(),
-			PlayFabId(src.PlayFabId),
-			EntityId(src.EntityId),
-			EntityType(src.EntityType),
-			Timestamp(src.Timestamp),
-			EventName(src.EventName),
-			Body(src.Body),
-			ProfileSetEvent(src.ProfileSetEvent)
-			{}
-			
-		FLogEventRequest(const TSharedPtr<FJsonObject>& obj) : FLogEventRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FLogEventRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FLogEventResult : public FPlayFabBaseModel
-    {
-		
-	
-        FLogEventResult() :
-			FPlayFabBaseModel()
-			{}
-		
-		FLogEventResult(const FLogEventResult& src) :
-			FPlayFabBaseModel()
-			{}
-			
-		FLogEventResult(const TSharedPtr<FJsonObject>& obj) : FLogEventResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FLogEventResult();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
 	struct PLAYFAB_API FModifyCharacterVirtualCurrencyResult : public FPlayFabBaseModel
     {
 		
@@ -6094,8 +5954,7 @@ namespace ServerModels
 		PlayerConnectionStateUnassigned,
 		PlayerConnectionStateConnecting,
 		PlayerConnectionStateParticipating,
-		PlayerConnectionStateParticipated,
-		PlayerConnectionStateReconnecting
+		PlayerConnectionStateParticipated
 	};
 	
 	void writePlayerConnectionStateEnumJSON(PlayerConnectionState enumVal, JsonWriter& writer);
@@ -6331,9 +6190,9 @@ namespace ServerModels
 		FString ServerPort;
 		// Unique identifier of the build running on the Game Server Instance.
 		FString Build;
-		// Unique identifier of the build running on the Game Server Instance.
+		// Region in which the Game Server Instance is running. For matchmaking using non-AWS region names, set this to any AWS region and use Tags (below) to specify your custom region.
 		Region pfRegion;
-		// Unique identifier of the build running on the Game Server Instance.
+		// Game Mode the Game Server instance is running. Note that this must be defined in the Game Modes tab in the PlayFab Game Manager, along with the Build ID (the same Game Mode can be defined for multiple Build IDs).
 		FString GameMode;
 		// [optional] Tags for the Game Server Instance
 		TMap<FString, FString> Tags;
@@ -6486,7 +6345,7 @@ namespace ServerModels
 		
 		// Unique identifier for the shared group.
 		FString SharedGroupId;
-		// [optional] An array of unique PlayFab assigned ID of the user on whom the operation will be performed.
+		// An array of unique PlayFab assigned ID of the user on whom the operation will be performed.
 		TArray<FString> PlayFabIds;
 	
         FRemoveSharedGroupMembersRequest() :
@@ -7817,60 +7676,6 @@ namespace ServerModels
         }
 		
 		~FUpdateUserInventoryItemDataRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FUpdateUserStatisticsRequest : public FPlayFabBaseModel
-    {
-		
-		// Unique PlayFab assigned ID of the user on whom the operation will be performed.
-		FString PlayFabId;
-		// [optional] Statistics to be updated with the provided values.
-		TMap<FString, int32> UserStatistics;
-	
-        FUpdateUserStatisticsRequest() :
-			FPlayFabBaseModel(),
-			PlayFabId(),
-			UserStatistics()
-			{}
-		
-		FUpdateUserStatisticsRequest(const FUpdateUserStatisticsRequest& src) :
-			FPlayFabBaseModel(),
-			PlayFabId(src.PlayFabId),
-			UserStatistics(src.UserStatistics)
-			{}
-			
-		FUpdateUserStatisticsRequest(const TSharedPtr<FJsonObject>& obj) : FUpdateUserStatisticsRequest()
-        {
-            readFromValue(obj);
-        }
-		
-		~FUpdateUserStatisticsRequest();
-		
-        void writeJSON(JsonWriter& writer) const override;
-        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
-    };
-	
-	struct PLAYFAB_API FUpdateUserStatisticsResult : public FPlayFabBaseModel
-    {
-		
-	
-        FUpdateUserStatisticsResult() :
-			FPlayFabBaseModel()
-			{}
-		
-		FUpdateUserStatisticsResult(const FUpdateUserStatisticsResult& src) :
-			FPlayFabBaseModel()
-			{}
-			
-		FUpdateUserStatisticsResult(const TSharedPtr<FJsonObject>& obj) : FUpdateUserStatisticsResult()
-        {
-            readFromValue(obj);
-        }
-		
-		~FUpdateUserStatisticsResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
