@@ -10,7 +10,7 @@ UPFServerUpdatePlayerStatistics::UPFServerUpdatePlayerStatistics(const FObjectIn
 {
 }
 
-UPFServerUpdatePlayerStatistics* UPFServerUpdatePlayerStatistics::UpdatePlayerStatistics(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InPlayFabId, const TArray<FBPServerStatisticUpdate>& InStatistics)
+UPFServerUpdatePlayerStatistics* UPFServerUpdatePlayerStatistics::UpdatePlayerStatistics(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InPlayFabId, const TArray<FBPServerStatisticUpdate>& InStatistics, const bool& InForceUpdate)
 {
 	UPFServerUpdatePlayerStatistics* Proxy = NewObject<UPFServerUpdatePlayerStatistics>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
@@ -20,6 +20,7 @@ UPFServerUpdatePlayerStatistics* UPFServerUpdatePlayerStatistics::UpdatePlayerSt
         Proxy->Request.Statistics.Add(elem.Data);
     }
 
+	Proxy->Request.ForceUpdate = InForceUpdate;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

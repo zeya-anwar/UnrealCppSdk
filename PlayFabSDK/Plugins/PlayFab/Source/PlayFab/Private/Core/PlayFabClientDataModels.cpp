@@ -2681,6 +2681,10 @@ void PlayFab::ClientModels::FGameInfo::writeJSON(JsonWriter& writer) const
 	
     if(LastHeartbeat.notNull()) { writer->WriteIdentifierPrefix(TEXT("LastHeartbeat")); writeDatetime(LastHeartbeat, writer); }
 	
+    if(ServerHostname.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ServerHostname")); writer->WriteValue(ServerHostname); }
+	
+    if(ServerPort.notNull()) { writer->WriteIdentifierPrefix(TEXT("ServerPort")); writer->WriteValue(ServerPort); }
+	
     
     writer->WriteObjectEnd();
 }
@@ -2758,6 +2762,20 @@ bool PlayFab::ClientModels::FGameInfo::readFromValue(const TSharedPtr<FJsonObjec
     if(LastHeartbeatValue.IsValid())
     {
         LastHeartbeat = readDatetime(LastHeartbeatValue);
+    }
+    
+    const TSharedPtr<FJsonValue> ServerHostnameValue = obj->TryGetField(TEXT("ServerHostname"));
+    if (ServerHostnameValue.IsValid()&& !ServerHostnameValue->IsNull())
+    {
+        FString TmpValue;
+        if(ServerHostnameValue->TryGetString(TmpValue)) {ServerHostname = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ServerPortValue = obj->TryGetField(TEXT("ServerPort"));
+    if (ServerPortValue.IsValid()&& !ServerPortValue->IsNull())
+    {
+        int32 TmpValue;
+        if(ServerPortValue->TryGetNumber(TmpValue)) {ServerPort = TmpValue; }
     }
     
     
@@ -11570,6 +11588,8 @@ void PlayFab::ClientModels::FRedeemCouponRequest::writeJSON(JsonWriter& writer) 
 	
     if(CatalogVersion.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CatalogVersion")); writer->WriteValue(CatalogVersion); }
 	
+    if(CharacterId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("CharacterId")); writer->WriteValue(CharacterId); }
+	
     
     writer->WriteObjectEnd();
 }
@@ -11590,6 +11610,13 @@ bool PlayFab::ClientModels::FRedeemCouponRequest::readFromValue(const TSharedPtr
     {
         FString TmpValue;
         if(CatalogVersionValue->TryGetString(TmpValue)) {CatalogVersion = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> CharacterIdValue = obj->TryGetField(TEXT("CharacterId"));
+    if (CharacterIdValue.IsValid()&& !CharacterIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(CharacterIdValue->TryGetString(TmpValue)) {CharacterId = TmpValue; }
     }
     
     

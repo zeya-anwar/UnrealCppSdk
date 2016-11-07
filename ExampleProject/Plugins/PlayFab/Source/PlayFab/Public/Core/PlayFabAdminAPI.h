@@ -91,6 +91,16 @@ namespace PlayFab
         DECLARE_DELEGATE_OneParam(FGetPlayersInSegmentDelegate, const AdminModels::FGetPlayersInSegmentResult&);
         DECLARE_DELEGATE_OneParam(FGetPlayerTagsDelegate, const AdminModels::FGetPlayerTagsResult&);
         DECLARE_DELEGATE_OneParam(FRemovePlayerTagDelegate, const AdminModels::FRemovePlayerTagResult&);
+        DECLARE_DELEGATE_OneParam(FAbortTaskInstanceDelegate, const AdminModels::FEmptyResult&);
+        DECLARE_DELEGATE_OneParam(FCreateActionsOnPlayersInSegmentTaskDelegate, const AdminModels::FCreateTaskResult&);
+        DECLARE_DELEGATE_OneParam(FCreateCloudScriptTaskDelegate, const AdminModels::FCreateTaskResult&);
+        DECLARE_DELEGATE_OneParam(FDeleteTaskDelegate, const AdminModels::FEmptyResult&);
+        DECLARE_DELEGATE_OneParam(FGetActionsOnPlayersInSegmentTaskInstanceDelegate, const AdminModels::FGetActionsOnPlayersInSegmentTaskInstanceResult&);
+        DECLARE_DELEGATE_OneParam(FGetCloudScriptTaskInstanceDelegate, const AdminModels::FGetCloudScriptTaskInstanceResult&);
+        DECLARE_DELEGATE_OneParam(FGetTaskInstancesDelegate, const AdminModels::FGetTaskInstancesResult&);
+        DECLARE_DELEGATE_OneParam(FGetTasksDelegate, const AdminModels::FGetTasksResult&);
+        DECLARE_DELEGATE_OneParam(FRunTaskDelegate, const AdminModels::FRunTaskResult&);
+        DECLARE_DELEGATE_OneParam(FUpdateTaskDelegate, const AdminModels::FEmptyResult&);
 
         UPlayFabAdminAPI();
         ~UPlayFabAdminAPI();
@@ -475,6 +485,55 @@ namespace PlayFab
          * This API will trigger a player_tag_removed event and remove a tag with the given TagName and PlayFabID from the corresponding player profile. TagName can be used for segmentation and it is limited to 256 characters
          */
         bool RemovePlayerTag(AdminModels::FRemovePlayerTagRequest& request, const FRemovePlayerTagDelegate& SuccessDelegate = FRemovePlayerTagDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Abort an ongoing task instance.
+         * If the task instance has already completed, there will be no-op.
+         */
+        bool AbortTaskInstance(AdminModels::FAbortTaskInstanceRequest& request, const FAbortTaskInstanceDelegate& SuccessDelegate = FAbortTaskInstanceDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Create an ActionsOnPlayersInSegment task, which iterates through all players in a segment to execute action.
+         * Task name is unique within a title. Using a task name that's already taken will cause a name conflict error. Too many create-task requests within a short time will cause a create conflict error.
+         */
+        bool CreateActionsOnPlayersInSegmentTask(AdminModels::FCreateActionsOnPlayerSegmentTaskRequest& request, const FCreateActionsOnPlayersInSegmentTaskDelegate& SuccessDelegate = FCreateActionsOnPlayersInSegmentTaskDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Create a CloudScript task, which can run a CloudScript on a schedule.
+         * Task name is unique within a title. Using a task name that's already taken will cause a name conflict error. Too many create-task requests within a short time will cause a create conflict error.
+         */
+        bool CreateCloudScriptTask(AdminModels::FCreateCloudScriptTaskRequest& request, const FCreateCloudScriptTaskDelegate& SuccessDelegate = FCreateCloudScriptTaskDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Delete a task.
+         * After a task is deleted, for tracking purposes, the task instances belonging to this task will still remain. They will become orphaned and does not belongs to any task. Executions of any in-progress task instances will continue. If the task specified does not exist, the deletion is considered a success.
+         */
+        bool DeleteTask(AdminModels::FDeleteTaskRequest& request, const FDeleteTaskDelegate& SuccessDelegate = FDeleteTaskDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Get information about a ActionsOnPlayersInSegment task instance.
+         * The result includes detail information that's specific to an ActionsOnPlayersInSegment task. To get a list of task instances with generic basic information, use GetTaskInstances.
+         */
+        bool GetActionsOnPlayersInSegmentTaskInstance(AdminModels::FGetTaskInstanceRequest& request, const FGetActionsOnPlayersInSegmentTaskInstanceDelegate& SuccessDelegate = FGetActionsOnPlayersInSegmentTaskInstanceDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Get detail information about a CloudScript task instance.
+         * The result includes detail information that's specific to a CloudScript tasks. To get a list of task instances with generic basic information, use GetTaskInstances.
+         */
+        bool GetCloudScriptTaskInstance(AdminModels::FGetTaskInstanceRequest& request, const FGetCloudScriptTaskInstanceDelegate& SuccessDelegate = FGetCloudScriptTaskInstanceDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Query for task instances by task, status, or time range.
+         * Only the most recent 100 task instances are returned, ordered by start time descending. The results are generic basic information for task instances. To get detail information specific to each task type, use Get*TaskInstance based on its corresponding task type.
+         */
+        bool GetTaskInstances(AdminModels::FGetTaskInstancesRequest& request, const FGetTaskInstancesDelegate& SuccessDelegate = FGetTaskInstancesDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Get definition information on a specified task or all tasks within a title.
+         */
+        bool GetTasks(AdminModels::FGetTasksRequest& request, const FGetTasksDelegate& SuccessDelegate = FGetTasksDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Run a task immediately regardless of its schedule.
+         * The returned task instance ID can be used to query for task execution status.
+         */
+        bool RunTask(AdminModels::FRunTaskRequest& request, const FRunTaskDelegate& SuccessDelegate = FRunTaskDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Update an existing task.
+         * If the task name in the update request is new, a task rename operation will be executed before updating other fields of the task. WARNING: Renaming of a task may break logics where the task name is used as an identifier.
+         */
+        bool UpdateTask(AdminModels::FUpdateTaskRequest& request, const FUpdateTaskDelegate& SuccessDelegate = FUpdateTaskDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
 
     private:
         // ------------ Generated result handlers
@@ -558,6 +617,16 @@ namespace PlayFab
         void OnGetPlayersInSegmentResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayersInSegmentDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetPlayerTagsResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPlayerTagsDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnRemovePlayerTagResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRemovePlayerTagDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnAbortTaskInstanceResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FAbortTaskInstanceDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnCreateActionsOnPlayersInSegmentTaskResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FCreateActionsOnPlayersInSegmentTaskDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnCreateCloudScriptTaskResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FCreateCloudScriptTaskDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnDeleteTaskResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FDeleteTaskDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetActionsOnPlayersInSegmentTaskInstanceResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetActionsOnPlayersInSegmentTaskInstanceDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetCloudScriptTaskInstanceResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetCloudScriptTaskInstanceDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetTaskInstancesResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetTaskInstancesDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnGetTasksResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetTasksDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnRunTaskResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FRunTaskDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnUpdateTaskResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdateTaskDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
 
     };
 };

@@ -826,7 +826,7 @@ namespace ClientModels
 		FString ItemImageUrl;
 		// BETA: If true, then only a fixed number can ever be granted.
 		bool IsLimitedEdition;
-		// BETA: If IsLImitedEdition is true, then this determines amount of the item initially available. Note that this fieldis ignored if the catalog item already existed in this catalog, or the field is less than 1.
+		// If IsLImitedEdition is true, then this determines amount of the item initially available. Note that this fieldis ignored if the catalog item already existed in this catalog, or the field is less than 1.
 		int32 InitialLimitedEditionCount;
 	
         FCatalogItem() :
@@ -1600,6 +1600,10 @@ namespace ClientModels
 		TMap<FString, FString> Tags;
 		// [optional] last heartbeat of the game server instance, used in external game server provider mode
 		OptionalTime LastHeartbeat;
+		// [optional] IP address of the server
+		FString ServerHostname;
+		// [optional] port number to use for non-http communications with the server
+		OptionalInt32 ServerPort;
 	
         FGameInfo() :
 			FPlayFabBaseModel(),
@@ -1614,7 +1618,9 @@ namespace ClientModels
 			GameServerState(),
 			GameServerData(),
 			Tags(),
-			LastHeartbeat()
+			LastHeartbeat(),
+			ServerHostname(),
+			ServerPort()
 			{}
 		
 		FGameInfo(const FGameInfo& src) :
@@ -1630,7 +1636,9 @@ namespace ClientModels
 			GameServerState(src.GameServerState),
 			GameServerData(src.GameServerData),
 			Tags(src.Tags),
-			LastHeartbeat(src.LastHeartbeat)
+			LastHeartbeat(src.LastHeartbeat),
+			ServerHostname(src.ServerHostname),
+			ServerPort(src.ServerPort)
 			{}
 			
 		FGameInfo(const TSharedPtr<FJsonObject>& obj) : FGameInfo()
@@ -2242,7 +2250,7 @@ namespace ClientModels
 		FString Username;
 		// [optional] User email address for the account to find (if no Username is specified).
 		FString Email;
-		// [optional] Title-specific username for the account to find (if no Email is set).
+		// [optional] Title-specific username for the account to find (if no Email is set). Note that if the non-unique Title Display Names option is enabled for the title, attempts to look up users by Title Display Name will always return AccountNotFound.
 		FString TitleDisplayName;
 	
         FGetAccountInfoRequest() :
@@ -7402,17 +7410,21 @@ namespace ClientModels
 		FString CouponCode;
 		// [optional] Catalog version of the coupon. If null, uses the default catalog
 		FString CatalogVersion;
+		// [optional] Optional identifier for the Character that should receive the item. If null, item is added to the player
+		FString CharacterId;
 	
         FRedeemCouponRequest() :
 			FPlayFabBaseModel(),
 			CouponCode(),
-			CatalogVersion()
+			CatalogVersion(),
+			CharacterId()
 			{}
 		
 		FRedeemCouponRequest(const FRedeemCouponRequest& src) :
 			FPlayFabBaseModel(),
 			CouponCode(src.CouponCode),
-			CatalogVersion(src.CatalogVersion)
+			CatalogVersion(src.CatalogVersion),
+			CharacterId(src.CharacterId)
 			{}
 			
 		FRedeemCouponRequest(const TSharedPtr<FJsonObject>& obj) : FRedeemCouponRequest()
@@ -9355,7 +9367,7 @@ namespace ClientModels
 	struct PLAYFAB_API FWriteEventResponse : public FPlayFabBaseModel
     {
 		
-		// [optional] The unique identifier of the event. This can be used to retrieve the event's properties using the GetEvent API. The values of this identifier consist of ASCII characters and are not constrained to any particular format.
+		// [optional] The unique identifier of the event. The values of this identifier consist of ASCII characters and are not constrained to any particular format.
 		FString EventId;
 	
         FWriteEventResponse() :

@@ -9,6 +9,281 @@ using namespace PlayFab::AdminModels;
 
 
 
+PlayFab::AdminModels::FAbortTaskInstanceRequest::~FAbortTaskInstanceRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FAbortTaskInstanceRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("TaskInstanceId")); writer->WriteValue(TaskInstanceId);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FAbortTaskInstanceRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> TaskInstanceIdValue = obj->TryGetField(TEXT("TaskInstanceId"));
+    if (TaskInstanceIdValue.IsValid()&& !TaskInstanceIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TaskInstanceIdValue->TryGetString(TmpValue)) {TaskInstanceId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FActionsOnPlayersInSegmentTaskParameter::~FActionsOnPlayersInSegmentTaskParameter()
+{
+    
+}
+
+void PlayFab::AdminModels::FActionsOnPlayersInSegmentTaskParameter::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("SegmentId")); writer->WriteValue(SegmentId);
+	
+    writer->WriteIdentifierPrefix(TEXT("ActionId")); writer->WriteValue(ActionId);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FActionsOnPlayersInSegmentTaskParameter::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> SegmentIdValue = obj->TryGetField(TEXT("SegmentId"));
+    if (SegmentIdValue.IsValid()&& !SegmentIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(SegmentIdValue->TryGetString(TmpValue)) {SegmentId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ActionIdValue = obj->TryGetField(TEXT("ActionId"));
+    if (ActionIdValue.IsValid()&& !ActionIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ActionIdValue->TryGetString(TmpValue)) {ActionId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FNameIdentifier::~FNameIdentifier()
+{
+    
+}
+
+void PlayFab::AdminModels::FNameIdentifier::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Name.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Name")); writer->WriteValue(Name); }
+	
+    if(Id.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Id")); writer->WriteValue(Id); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FNameIdentifier::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> NameValue = obj->TryGetField(TEXT("Name"));
+    if (NameValue.IsValid()&& !NameValue->IsNull())
+    {
+        FString TmpValue;
+        if(NameValue->TryGetString(TmpValue)) {Name = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> IdValue = obj->TryGetField(TEXT("Id"));
+    if (IdValue.IsValid()&& !IdValue->IsNull())
+    {
+        FString TmpValue;
+        if(IdValue->TryGetString(TmpValue)) {Id = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+void PlayFab::AdminModels::writeTaskInstanceStatusEnumJSON(TaskInstanceStatus enumVal, JsonWriter& writer)
+{
+    switch(enumVal)
+    {
+        
+        case TaskInstanceStatusSucceeded: writer->WriteValue(TEXT("Succeeded")); break;
+        case TaskInstanceStatusStarting: writer->WriteValue(TEXT("Starting")); break;
+        case TaskInstanceStatusInProgress: writer->WriteValue(TEXT("InProgress")); break;
+        case TaskInstanceStatusFailed: writer->WriteValue(TEXT("Failed")); break;
+        case TaskInstanceStatusAborted: writer->WriteValue(TEXT("Aborted")); break;
+        case TaskInstanceStatusPending: writer->WriteValue(TEXT("Pending")); break;
+    }
+}
+
+AdminModels::TaskInstanceStatus PlayFab::AdminModels::readTaskInstanceStatusFromValue(const TSharedPtr<FJsonValue>& value)
+{
+    static TMap<FString, TaskInstanceStatus> _TaskInstanceStatusMap;
+    if (_TaskInstanceStatusMap.Num() == 0)
+    {
+        // Auto-generate the map on the first use
+        _TaskInstanceStatusMap.Add(TEXT("Succeeded"), TaskInstanceStatusSucceeded);
+        _TaskInstanceStatusMap.Add(TEXT("Starting"), TaskInstanceStatusStarting);
+        _TaskInstanceStatusMap.Add(TEXT("InProgress"), TaskInstanceStatusInProgress);
+        _TaskInstanceStatusMap.Add(TEXT("Failed"), TaskInstanceStatusFailed);
+        _TaskInstanceStatusMap.Add(TEXT("Aborted"), TaskInstanceStatusAborted);
+        _TaskInstanceStatusMap.Add(TEXT("Pending"), TaskInstanceStatusPending);
+
+    } 
+
+	if(value.IsValid())
+	{
+	    auto output = _TaskInstanceStatusMap.Find(value->AsString());
+		if (output != nullptr)
+			return *output;
+	}
+
+
+    return TaskInstanceStatusSucceeded; // Basically critical fail
+}
+
+
+PlayFab::AdminModels::FActionsOnPlayersInSegmentTaskSummary::~FActionsOnPlayersInSegmentTaskSummary()
+{
+    //if(TaskIdentifier != nullptr) delete TaskIdentifier;
+    
+}
+
+void PlayFab::AdminModels::FActionsOnPlayersInSegmentTaskSummary::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(TaskInstanceId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("TaskInstanceId")); writer->WriteValue(TaskInstanceId); }
+	
+    if(TaskIdentifier.IsValid()) { writer->WriteIdentifierPrefix(TEXT("TaskIdentifier")); TaskIdentifier->writeJSON(writer); }
+	
+    writer->WriteIdentifierPrefix(TEXT("StartedAt")); writeDatetime(StartedAt, writer);
+	
+    if(CompletedAt.notNull()) { writer->WriteIdentifierPrefix(TEXT("CompletedAt")); writeDatetime(CompletedAt, writer); }
+	
+    if(Status.notNull()) { writer->WriteIdentifierPrefix(TEXT("Status")); writeTaskInstanceStatusEnumJSON(Status, writer); }
+	
+    if(PercentComplete.notNull()) { writer->WriteIdentifierPrefix(TEXT("PercentComplete")); writer->WriteValue(PercentComplete); }
+	
+    if(EstimatedSecondsRemaining.notNull()) { writer->WriteIdentifierPrefix(TEXT("EstimatedSecondsRemaining")); writer->WriteValue(EstimatedSecondsRemaining); }
+	
+    if(ScheduledByUserId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ScheduledByUserId")); writer->WriteValue(ScheduledByUserId); }
+	
+    if(ErrorMessage.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ErrorMessage")); writer->WriteValue(ErrorMessage); }
+	
+    if(ErrorWasFatal.notNull()) { writer->WriteIdentifierPrefix(TEXT("ErrorWasFatal")); writer->WriteValue(ErrorWasFatal); }
+	
+    if(TotalPlayersInSegment.notNull()) { writer->WriteIdentifierPrefix(TEXT("TotalPlayersInSegment")); writer->WriteValue(TotalPlayersInSegment); }
+	
+    if(TotalPlayersProcessed.notNull()) { writer->WriteIdentifierPrefix(TEXT("TotalPlayersProcessed")); writer->WriteValue(TotalPlayersProcessed); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FActionsOnPlayersInSegmentTaskSummary::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> TaskInstanceIdValue = obj->TryGetField(TEXT("TaskInstanceId"));
+    if (TaskInstanceIdValue.IsValid()&& !TaskInstanceIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TaskInstanceIdValue->TryGetString(TmpValue)) {TaskInstanceId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TaskIdentifierValue = obj->TryGetField(TEXT("TaskIdentifier"));
+    if (TaskIdentifierValue.IsValid()&& !TaskIdentifierValue->IsNull())
+    {
+        TaskIdentifier = MakeShareable(new FNameIdentifier(TaskIdentifierValue->AsObject()));
+    }
+    
+    const TSharedPtr<FJsonValue> StartedAtValue = obj->TryGetField(TEXT("StartedAt"));
+    if(StartedAtValue.IsValid())
+    {
+        StartedAt = readDatetime(StartedAtValue);
+    }
+    
+    const TSharedPtr<FJsonValue> CompletedAtValue = obj->TryGetField(TEXT("CompletedAt"));
+    if(CompletedAtValue.IsValid())
+    {
+        CompletedAt = readDatetime(CompletedAtValue);
+    }
+    
+    Status = readTaskInstanceStatusFromValue(obj->TryGetField(TEXT("Status")));
+    
+    const TSharedPtr<FJsonValue> PercentCompleteValue = obj->TryGetField(TEXT("PercentComplete"));
+    if (PercentCompleteValue.IsValid()&& !PercentCompleteValue->IsNull())
+    {
+        double TmpValue;
+        if(PercentCompleteValue->TryGetNumber(TmpValue)) {PercentComplete = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> EstimatedSecondsRemainingValue = obj->TryGetField(TEXT("EstimatedSecondsRemaining"));
+    if (EstimatedSecondsRemainingValue.IsValid()&& !EstimatedSecondsRemainingValue->IsNull())
+    {
+        double TmpValue;
+        if(EstimatedSecondsRemainingValue->TryGetNumber(TmpValue)) {EstimatedSecondsRemaining = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ScheduledByUserIdValue = obj->TryGetField(TEXT("ScheduledByUserId"));
+    if (ScheduledByUserIdValue.IsValid()&& !ScheduledByUserIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ScheduledByUserIdValue->TryGetString(TmpValue)) {ScheduledByUserId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ErrorMessageValue = obj->TryGetField(TEXT("ErrorMessage"));
+    if (ErrorMessageValue.IsValid()&& !ErrorMessageValue->IsNull())
+    {
+        FString TmpValue;
+        if(ErrorMessageValue->TryGetString(TmpValue)) {ErrorMessage = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ErrorWasFatalValue = obj->TryGetField(TEXT("ErrorWasFatal"));
+    if (ErrorWasFatalValue.IsValid()&& !ErrorWasFatalValue->IsNull())
+    {
+        bool TmpValue;
+        if(ErrorWasFatalValue->TryGetBool(TmpValue)) {ErrorWasFatal = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TotalPlayersInSegmentValue = obj->TryGetField(TEXT("TotalPlayersInSegment"));
+    if (TotalPlayersInSegmentValue.IsValid()&& !TotalPlayersInSegmentValue->IsNull())
+    {
+        int32 TmpValue;
+        if(TotalPlayersInSegmentValue->TryGetNumber(TmpValue)) {TotalPlayersInSegment = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TotalPlayersProcessedValue = obj->TryGetField(TEXT("TotalPlayersProcessed"));
+    if (TotalPlayersProcessedValue.IsValid()&& !TotalPlayersProcessedValue->IsNull())
+    {
+        int32 TmpValue;
+        if(TotalPlayersProcessedValue->TryGetNumber(TmpValue)) {TotalPlayersProcessed = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::AdminModels::FAdCampaignAttribution::~FAdCampaignAttribution()
 {
     
@@ -1372,6 +1647,362 @@ bool PlayFab::AdminModels::FCloudScriptFile::readFromValue(const TSharedPtr<FJso
 }
 
 
+PlayFab::AdminModels::FCloudScriptTaskParameter::~FCloudScriptTaskParameter()
+{
+    
+}
+
+void PlayFab::AdminModels::FCloudScriptTaskParameter::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(FunctionName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("FunctionName")); writer->WriteValue(FunctionName); }
+	
+    if(Argument.notNull()) { writer->WriteIdentifierPrefix(TEXT("Argument")); Argument.writeJSON(writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FCloudScriptTaskParameter::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> FunctionNameValue = obj->TryGetField(TEXT("FunctionName"));
+    if (FunctionNameValue.IsValid()&& !FunctionNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(FunctionNameValue->TryGetString(TmpValue)) {FunctionName = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ArgumentValue = obj->TryGetField(TEXT("Argument"));
+    if (ArgumentValue.IsValid()&& !ArgumentValue->IsNull())
+    {
+        Argument = FMultitypeVar(ArgumentValue->AsObject());
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FLogStatement::~FLogStatement()
+{
+    
+}
+
+void PlayFab::AdminModels::FLogStatement::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Level.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Level")); writer->WriteValue(Level); }
+	
+    if(Message.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Message")); writer->WriteValue(Message); }
+	
+    if(Data.notNull()) { writer->WriteIdentifierPrefix(TEXT("Data")); Data.writeJSON(writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FLogStatement::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> LevelValue = obj->TryGetField(TEXT("Level"));
+    if (LevelValue.IsValid()&& !LevelValue->IsNull())
+    {
+        FString TmpValue;
+        if(LevelValue->TryGetString(TmpValue)) {Level = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> MessageValue = obj->TryGetField(TEXT("Message"));
+    if (MessageValue.IsValid()&& !MessageValue->IsNull())
+    {
+        FString TmpValue;
+        if(MessageValue->TryGetString(TmpValue)) {Message = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> DataValue = obj->TryGetField(TEXT("Data"));
+    if (DataValue.IsValid()&& !DataValue->IsNull())
+    {
+        Data = FMultitypeVar(DataValue->AsObject());
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FScriptExecutionError::~FScriptExecutionError()
+{
+    
+}
+
+void PlayFab::AdminModels::FScriptExecutionError::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Error.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Error")); writer->WriteValue(Error); }
+	
+    if(Message.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Message")); writer->WriteValue(Message); }
+	
+    if(StackTrace.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("StackTrace")); writer->WriteValue(StackTrace); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FScriptExecutionError::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> ErrorValue = obj->TryGetField(TEXT("Error"));
+    if (ErrorValue.IsValid()&& !ErrorValue->IsNull())
+    {
+        FString TmpValue;
+        if(ErrorValue->TryGetString(TmpValue)) {Error = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> MessageValue = obj->TryGetField(TEXT("Message"));
+    if (MessageValue.IsValid()&& !MessageValue->IsNull())
+    {
+        FString TmpValue;
+        if(MessageValue->TryGetString(TmpValue)) {Message = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> StackTraceValue = obj->TryGetField(TEXT("StackTrace"));
+    if (StackTraceValue.IsValid()&& !StackTraceValue->IsNull())
+    {
+        FString TmpValue;
+        if(StackTraceValue->TryGetString(TmpValue)) {StackTrace = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FExecuteCloudScriptResult::~FExecuteCloudScriptResult()
+{
+    //if(Error != nullptr) delete Error;
+    
+}
+
+void PlayFab::AdminModels::FExecuteCloudScriptResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(FunctionName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("FunctionName")); writer->WriteValue(FunctionName); }
+	
+    writer->WriteIdentifierPrefix(TEXT("Revision")); writer->WriteValue(Revision);
+	
+    if(FunctionResult.notNull()) { writer->WriteIdentifierPrefix(TEXT("FunctionResult")); FunctionResult.writeJSON(writer); }
+	
+    if(Logs.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("Logs"));
+    
+        for (const FLogStatement& item : Logs)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    writer->WriteIdentifierPrefix(TEXT("ExecutionTimeSeconds")); writer->WriteValue(ExecutionTimeSeconds);
+	
+    writer->WriteIdentifierPrefix(TEXT("ProcessorTimeSeconds")); writer->WriteValue(ProcessorTimeSeconds);
+	
+    writer->WriteIdentifierPrefix(TEXT("MemoryConsumedBytes")); writer->WriteValue(static_cast<int64>(MemoryConsumedBytes));
+	
+    writer->WriteIdentifierPrefix(TEXT("APIRequestsIssued")); writer->WriteValue(APIRequestsIssued);
+	
+    writer->WriteIdentifierPrefix(TEXT("HttpRequestsIssued")); writer->WriteValue(HttpRequestsIssued);
+	
+    if(Error.IsValid()) { writer->WriteIdentifierPrefix(TEXT("Error")); Error->writeJSON(writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FExecuteCloudScriptResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> FunctionNameValue = obj->TryGetField(TEXT("FunctionName"));
+    if (FunctionNameValue.IsValid()&& !FunctionNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(FunctionNameValue->TryGetString(TmpValue)) {FunctionName = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> RevisionValue = obj->TryGetField(TEXT("Revision"));
+    if (RevisionValue.IsValid()&& !RevisionValue->IsNull())
+    {
+        int32 TmpValue;
+        if(RevisionValue->TryGetNumber(TmpValue)) {Revision = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> FunctionResultValue = obj->TryGetField(TEXT("FunctionResult"));
+    if (FunctionResultValue.IsValid()&& !FunctionResultValue->IsNull())
+    {
+        FunctionResult = FMultitypeVar(FunctionResultValue->AsObject());
+    }
+    
+    {
+        const TArray< TSharedPtr<FJsonValue> >&LogsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Logs"));
+        for (int32 Idx = 0; Idx < LogsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = LogsArray[Idx];
+            
+            Logs.Add(FLogStatement(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    const TSharedPtr<FJsonValue> ExecutionTimeSecondsValue = obj->TryGetField(TEXT("ExecutionTimeSeconds"));
+    if (ExecutionTimeSecondsValue.IsValid()&& !ExecutionTimeSecondsValue->IsNull())
+    {
+        double TmpValue;
+        if(ExecutionTimeSecondsValue->TryGetNumber(TmpValue)) {ExecutionTimeSeconds = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ProcessorTimeSecondsValue = obj->TryGetField(TEXT("ProcessorTimeSeconds"));
+    if (ProcessorTimeSecondsValue.IsValid()&& !ProcessorTimeSecondsValue->IsNull())
+    {
+        double TmpValue;
+        if(ProcessorTimeSecondsValue->TryGetNumber(TmpValue)) {ProcessorTimeSeconds = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> MemoryConsumedBytesValue = obj->TryGetField(TEXT("MemoryConsumedBytes"));
+    if (MemoryConsumedBytesValue.IsValid()&& !MemoryConsumedBytesValue->IsNull())
+    {
+        uint32 TmpValue;
+        if(MemoryConsumedBytesValue->TryGetNumber(TmpValue)) {MemoryConsumedBytes = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> APIRequestsIssuedValue = obj->TryGetField(TEXT("APIRequestsIssued"));
+    if (APIRequestsIssuedValue.IsValid()&& !APIRequestsIssuedValue->IsNull())
+    {
+        int32 TmpValue;
+        if(APIRequestsIssuedValue->TryGetNumber(TmpValue)) {APIRequestsIssued = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> HttpRequestsIssuedValue = obj->TryGetField(TEXT("HttpRequestsIssued"));
+    if (HttpRequestsIssuedValue.IsValid()&& !HttpRequestsIssuedValue->IsNull())
+    {
+        int32 TmpValue;
+        if(HttpRequestsIssuedValue->TryGetNumber(TmpValue)) {HttpRequestsIssued = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ErrorValue = obj->TryGetField(TEXT("Error"));
+    if (ErrorValue.IsValid()&& !ErrorValue->IsNull())
+    {
+        Error = MakeShareable(new FScriptExecutionError(ErrorValue->AsObject()));
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FCloudScriptTaskSummary::~FCloudScriptTaskSummary()
+{
+    //if(TaskIdentifier != nullptr) delete TaskIdentifier;
+    //if(Result != nullptr) delete Result;
+    
+}
+
+void PlayFab::AdminModels::FCloudScriptTaskSummary::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(TaskInstanceId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("TaskInstanceId")); writer->WriteValue(TaskInstanceId); }
+	
+    if(TaskIdentifier.IsValid()) { writer->WriteIdentifierPrefix(TEXT("TaskIdentifier")); TaskIdentifier->writeJSON(writer); }
+	
+    writer->WriteIdentifierPrefix(TEXT("StartedAt")); writeDatetime(StartedAt, writer);
+	
+    if(CompletedAt.notNull()) { writer->WriteIdentifierPrefix(TEXT("CompletedAt")); writeDatetime(CompletedAt, writer); }
+	
+    if(Status.notNull()) { writer->WriteIdentifierPrefix(TEXT("Status")); writeTaskInstanceStatusEnumJSON(Status, writer); }
+	
+    if(PercentComplete.notNull()) { writer->WriteIdentifierPrefix(TEXT("PercentComplete")); writer->WriteValue(PercentComplete); }
+	
+    if(EstimatedSecondsRemaining.notNull()) { writer->WriteIdentifierPrefix(TEXT("EstimatedSecondsRemaining")); writer->WriteValue(EstimatedSecondsRemaining); }
+	
+    if(ScheduledByUserId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ScheduledByUserId")); writer->WriteValue(ScheduledByUserId); }
+	
+    if(Result.IsValid()) { writer->WriteIdentifierPrefix(TEXT("Result")); Result->writeJSON(writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FCloudScriptTaskSummary::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> TaskInstanceIdValue = obj->TryGetField(TEXT("TaskInstanceId"));
+    if (TaskInstanceIdValue.IsValid()&& !TaskInstanceIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TaskInstanceIdValue->TryGetString(TmpValue)) {TaskInstanceId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TaskIdentifierValue = obj->TryGetField(TEXT("TaskIdentifier"));
+    if (TaskIdentifierValue.IsValid()&& !TaskIdentifierValue->IsNull())
+    {
+        TaskIdentifier = MakeShareable(new FNameIdentifier(TaskIdentifierValue->AsObject()));
+    }
+    
+    const TSharedPtr<FJsonValue> StartedAtValue = obj->TryGetField(TEXT("StartedAt"));
+    if(StartedAtValue.IsValid())
+    {
+        StartedAt = readDatetime(StartedAtValue);
+    }
+    
+    const TSharedPtr<FJsonValue> CompletedAtValue = obj->TryGetField(TEXT("CompletedAt"));
+    if(CompletedAtValue.IsValid())
+    {
+        CompletedAt = readDatetime(CompletedAtValue);
+    }
+    
+    Status = readTaskInstanceStatusFromValue(obj->TryGetField(TEXT("Status")));
+    
+    const TSharedPtr<FJsonValue> PercentCompleteValue = obj->TryGetField(TEXT("PercentComplete"));
+    if (PercentCompleteValue.IsValid()&& !PercentCompleteValue->IsNull())
+    {
+        double TmpValue;
+        if(PercentCompleteValue->TryGetNumber(TmpValue)) {PercentComplete = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> EstimatedSecondsRemainingValue = obj->TryGetField(TEXT("EstimatedSecondsRemaining"));
+    if (EstimatedSecondsRemainingValue.IsValid()&& !EstimatedSecondsRemainingValue->IsNull())
+    {
+        double TmpValue;
+        if(EstimatedSecondsRemainingValue->TryGetNumber(TmpValue)) {EstimatedSecondsRemaining = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ScheduledByUserIdValue = obj->TryGetField(TEXT("ScheduledByUserId"));
+    if (ScheduledByUserIdValue.IsValid()&& !ScheduledByUserIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ScheduledByUserIdValue->TryGetString(TmpValue)) {ScheduledByUserId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ResultValue = obj->TryGetField(TEXT("Result"));
+    if (ResultValue.IsValid()&& !ResultValue->IsNull())
+    {
+        Result = MakeShareable(new FExecuteCloudScriptResult(ResultValue->AsObject()));
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::AdminModels::FCloudScriptVersionStatus::~FCloudScriptVersionStatus()
 {
     
@@ -1462,6 +2093,708 @@ bool PlayFab::AdminModels::FContentInfo::readFromValue(const TSharedPtr<FJsonObj
     if(LastModifiedValue.IsValid())
     {
         LastModified = readDatetime(LastModifiedValue);
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+void PlayFab::AdminModels::writeContinentCodeEnumJSON(ContinentCode enumVal, JsonWriter& writer)
+{
+    switch(enumVal)
+    {
+        
+        case ContinentCodeAF: writer->WriteValue(TEXT("AF")); break;
+        case ContinentCodeAN: writer->WriteValue(TEXT("AN")); break;
+        case ContinentCodeAS: writer->WriteValue(TEXT("AS")); break;
+        case ContinentCodeEU: writer->WriteValue(TEXT("EU")); break;
+        case ContinentCodeNA: writer->WriteValue(TEXT("NA")); break;
+        case ContinentCodeOC: writer->WriteValue(TEXT("OC")); break;
+        case ContinentCodeSA: writer->WriteValue(TEXT("SA")); break;
+    }
+}
+
+AdminModels::ContinentCode PlayFab::AdminModels::readContinentCodeFromValue(const TSharedPtr<FJsonValue>& value)
+{
+    static TMap<FString, ContinentCode> _ContinentCodeMap;
+    if (_ContinentCodeMap.Num() == 0)
+    {
+        // Auto-generate the map on the first use
+        _ContinentCodeMap.Add(TEXT("AF"), ContinentCodeAF);
+        _ContinentCodeMap.Add(TEXT("AN"), ContinentCodeAN);
+        _ContinentCodeMap.Add(TEXT("AS"), ContinentCodeAS);
+        _ContinentCodeMap.Add(TEXT("EU"), ContinentCodeEU);
+        _ContinentCodeMap.Add(TEXT("NA"), ContinentCodeNA);
+        _ContinentCodeMap.Add(TEXT("OC"), ContinentCodeOC);
+        _ContinentCodeMap.Add(TEXT("SA"), ContinentCodeSA);
+
+    } 
+
+	if(value.IsValid())
+	{
+	    auto output = _ContinentCodeMap.Find(value->AsString());
+		if (output != nullptr)
+			return *output;
+	}
+
+
+    return ContinentCodeAF; // Basically critical fail
+}
+
+
+void PlayFab::AdminModels::writeCountryCodeEnumJSON(CountryCode enumVal, JsonWriter& writer)
+{
+    switch(enumVal)
+    {
+        
+        case CountryCodeAF: writer->WriteValue(TEXT("AF")); break;
+        case CountryCodeAX: writer->WriteValue(TEXT("AX")); break;
+        case CountryCodeAL: writer->WriteValue(TEXT("AL")); break;
+        case CountryCodeDZ: writer->WriteValue(TEXT("DZ")); break;
+        case CountryCodeAS: writer->WriteValue(TEXT("AS")); break;
+        case CountryCodeAD: writer->WriteValue(TEXT("AD")); break;
+        case CountryCodeAO: writer->WriteValue(TEXT("AO")); break;
+        case CountryCodeAI: writer->WriteValue(TEXT("AI")); break;
+        case CountryCodeAQ: writer->WriteValue(TEXT("AQ")); break;
+        case CountryCodeAG: writer->WriteValue(TEXT("AG")); break;
+        case CountryCodeAR: writer->WriteValue(TEXT("AR")); break;
+        case CountryCodeAM: writer->WriteValue(TEXT("AM")); break;
+        case CountryCodeAW: writer->WriteValue(TEXT("AW")); break;
+        case CountryCodeAU: writer->WriteValue(TEXT("AU")); break;
+        case CountryCodeAT: writer->WriteValue(TEXT("AT")); break;
+        case CountryCodeAZ: writer->WriteValue(TEXT("AZ")); break;
+        case CountryCodeBS: writer->WriteValue(TEXT("BS")); break;
+        case CountryCodeBH: writer->WriteValue(TEXT("BH")); break;
+        case CountryCodeBD: writer->WriteValue(TEXT("BD")); break;
+        case CountryCodeBB: writer->WriteValue(TEXT("BB")); break;
+        case CountryCodeBY: writer->WriteValue(TEXT("BY")); break;
+        case CountryCodeBE: writer->WriteValue(TEXT("BE")); break;
+        case CountryCodeBZ: writer->WriteValue(TEXT("BZ")); break;
+        case CountryCodeBJ: writer->WriteValue(TEXT("BJ")); break;
+        case CountryCodeBM: writer->WriteValue(TEXT("BM")); break;
+        case CountryCodeBT: writer->WriteValue(TEXT("BT")); break;
+        case CountryCodeBO: writer->WriteValue(TEXT("BO")); break;
+        case CountryCodeBQ: writer->WriteValue(TEXT("BQ")); break;
+        case CountryCodeBA: writer->WriteValue(TEXT("BA")); break;
+        case CountryCodeBW: writer->WriteValue(TEXT("BW")); break;
+        case CountryCodeBV: writer->WriteValue(TEXT("BV")); break;
+        case CountryCodeBR: writer->WriteValue(TEXT("BR")); break;
+        case CountryCodeIO: writer->WriteValue(TEXT("IO")); break;
+        case CountryCodeBN: writer->WriteValue(TEXT("BN")); break;
+        case CountryCodeBG: writer->WriteValue(TEXT("BG")); break;
+        case CountryCodeBF: writer->WriteValue(TEXT("BF")); break;
+        case CountryCodeBI: writer->WriteValue(TEXT("BI")); break;
+        case CountryCodeKH: writer->WriteValue(TEXT("KH")); break;
+        case CountryCodeCM: writer->WriteValue(TEXT("CM")); break;
+        case CountryCodeCA: writer->WriteValue(TEXT("CA")); break;
+        case CountryCodeCV: writer->WriteValue(TEXT("CV")); break;
+        case CountryCodeKY: writer->WriteValue(TEXT("KY")); break;
+        case CountryCodeCF: writer->WriteValue(TEXT("CF")); break;
+        case CountryCodeTD: writer->WriteValue(TEXT("TD")); break;
+        case CountryCodeCL: writer->WriteValue(TEXT("CL")); break;
+        case CountryCodeCN: writer->WriteValue(TEXT("CN")); break;
+        case CountryCodeCX: writer->WriteValue(TEXT("CX")); break;
+        case CountryCodeCC: writer->WriteValue(TEXT("CC")); break;
+        case CountryCodeCO: writer->WriteValue(TEXT("CO")); break;
+        case CountryCodeKM: writer->WriteValue(TEXT("KM")); break;
+        case CountryCodeCG: writer->WriteValue(TEXT("CG")); break;
+        case CountryCodeCD: writer->WriteValue(TEXT("CD")); break;
+        case CountryCodeCK: writer->WriteValue(TEXT("CK")); break;
+        case CountryCodeCR: writer->WriteValue(TEXT("CR")); break;
+        case CountryCodeCI: writer->WriteValue(TEXT("CI")); break;
+        case CountryCodeHR: writer->WriteValue(TEXT("HR")); break;
+        case CountryCodeCU: writer->WriteValue(TEXT("CU")); break;
+        case CountryCodeCW: writer->WriteValue(TEXT("CW")); break;
+        case CountryCodeCY: writer->WriteValue(TEXT("CY")); break;
+        case CountryCodeCZ: writer->WriteValue(TEXT("CZ")); break;
+        case CountryCodeDK: writer->WriteValue(TEXT("DK")); break;
+        case CountryCodeDJ: writer->WriteValue(TEXT("DJ")); break;
+        case CountryCodeDM: writer->WriteValue(TEXT("DM")); break;
+        case CountryCodeDO: writer->WriteValue(TEXT("DO")); break;
+        case CountryCodeEC: writer->WriteValue(TEXT("EC")); break;
+        case CountryCodeEG: writer->WriteValue(TEXT("EG")); break;
+        case CountryCodeSV: writer->WriteValue(TEXT("SV")); break;
+        case CountryCodeGQ: writer->WriteValue(TEXT("GQ")); break;
+        case CountryCodeER: writer->WriteValue(TEXT("ER")); break;
+        case CountryCodeEE: writer->WriteValue(TEXT("EE")); break;
+        case CountryCodeET: writer->WriteValue(TEXT("ET")); break;
+        case CountryCodeFK: writer->WriteValue(TEXT("FK")); break;
+        case CountryCodeFO: writer->WriteValue(TEXT("FO")); break;
+        case CountryCodeFJ: writer->WriteValue(TEXT("FJ")); break;
+        case CountryCodeFI: writer->WriteValue(TEXT("FI")); break;
+        case CountryCodeFR: writer->WriteValue(TEXT("FR")); break;
+        case CountryCodeGF: writer->WriteValue(TEXT("GF")); break;
+        case CountryCodePF: writer->WriteValue(TEXT("PF")); break;
+        case CountryCodeTF: writer->WriteValue(TEXT("TF")); break;
+        case CountryCodeGA: writer->WriteValue(TEXT("GA")); break;
+        case CountryCodeGM: writer->WriteValue(TEXT("GM")); break;
+        case CountryCodeGE: writer->WriteValue(TEXT("GE")); break;
+        case CountryCodeDE: writer->WriteValue(TEXT("DE")); break;
+        case CountryCodeGH: writer->WriteValue(TEXT("GH")); break;
+        case CountryCodeGI: writer->WriteValue(TEXT("GI")); break;
+        case CountryCodeGR: writer->WriteValue(TEXT("GR")); break;
+        case CountryCodeGL: writer->WriteValue(TEXT("GL")); break;
+        case CountryCodeGD: writer->WriteValue(TEXT("GD")); break;
+        case CountryCodeGP: writer->WriteValue(TEXT("GP")); break;
+        case CountryCodeGU: writer->WriteValue(TEXT("GU")); break;
+        case CountryCodeGT: writer->WriteValue(TEXT("GT")); break;
+        case CountryCodeGG: writer->WriteValue(TEXT("GG")); break;
+        case CountryCodeGN: writer->WriteValue(TEXT("GN")); break;
+        case CountryCodeGW: writer->WriteValue(TEXT("GW")); break;
+        case CountryCodeGY: writer->WriteValue(TEXT("GY")); break;
+        case CountryCodeHT: writer->WriteValue(TEXT("HT")); break;
+        case CountryCodeHM: writer->WriteValue(TEXT("HM")); break;
+        case CountryCodeVA: writer->WriteValue(TEXT("VA")); break;
+        case CountryCodeHN: writer->WriteValue(TEXT("HN")); break;
+        case CountryCodeHK: writer->WriteValue(TEXT("HK")); break;
+        case CountryCodeHU: writer->WriteValue(TEXT("HU")); break;
+        case CountryCodeIS: writer->WriteValue(TEXT("IS")); break;
+        case CountryCodeIN: writer->WriteValue(TEXT("IN")); break;
+        case CountryCodeID: writer->WriteValue(TEXT("ID")); break;
+        case CountryCodeIR: writer->WriteValue(TEXT("IR")); break;
+        case CountryCodeIQ: writer->WriteValue(TEXT("IQ")); break;
+        case CountryCodeIE: writer->WriteValue(TEXT("IE")); break;
+        case CountryCodeIM: writer->WriteValue(TEXT("IM")); break;
+        case CountryCodeIL: writer->WriteValue(TEXT("IL")); break;
+        case CountryCodeIT: writer->WriteValue(TEXT("IT")); break;
+        case CountryCodeJM: writer->WriteValue(TEXT("JM")); break;
+        case CountryCodeJP: writer->WriteValue(TEXT("JP")); break;
+        case CountryCodeJE: writer->WriteValue(TEXT("JE")); break;
+        case CountryCodeJO: writer->WriteValue(TEXT("JO")); break;
+        case CountryCodeKZ: writer->WriteValue(TEXT("KZ")); break;
+        case CountryCodeKE: writer->WriteValue(TEXT("KE")); break;
+        case CountryCodeKI: writer->WriteValue(TEXT("KI")); break;
+        case CountryCodeKP: writer->WriteValue(TEXT("KP")); break;
+        case CountryCodeKR: writer->WriteValue(TEXT("KR")); break;
+        case CountryCodeKW: writer->WriteValue(TEXT("KW")); break;
+        case CountryCodeKG: writer->WriteValue(TEXT("KG")); break;
+        case CountryCodeLA: writer->WriteValue(TEXT("LA")); break;
+        case CountryCodeLV: writer->WriteValue(TEXT("LV")); break;
+        case CountryCodeLB: writer->WriteValue(TEXT("LB")); break;
+        case CountryCodeLS: writer->WriteValue(TEXT("LS")); break;
+        case CountryCodeLR: writer->WriteValue(TEXT("LR")); break;
+        case CountryCodeLY: writer->WriteValue(TEXT("LY")); break;
+        case CountryCodeLI: writer->WriteValue(TEXT("LI")); break;
+        case CountryCodeLT: writer->WriteValue(TEXT("LT")); break;
+        case CountryCodeLU: writer->WriteValue(TEXT("LU")); break;
+        case CountryCodeMO: writer->WriteValue(TEXT("MO")); break;
+        case CountryCodeMK: writer->WriteValue(TEXT("MK")); break;
+        case CountryCodeMG: writer->WriteValue(TEXT("MG")); break;
+        case CountryCodeMW: writer->WriteValue(TEXT("MW")); break;
+        case CountryCodeMY: writer->WriteValue(TEXT("MY")); break;
+        case CountryCodeMV: writer->WriteValue(TEXT("MV")); break;
+        case CountryCodeML: writer->WriteValue(TEXT("ML")); break;
+        case CountryCodeMT: writer->WriteValue(TEXT("MT")); break;
+        case CountryCodeMH: writer->WriteValue(TEXT("MH")); break;
+        case CountryCodeMQ: writer->WriteValue(TEXT("MQ")); break;
+        case CountryCodeMR: writer->WriteValue(TEXT("MR")); break;
+        case CountryCodeMU: writer->WriteValue(TEXT("MU")); break;
+        case CountryCodeYT: writer->WriteValue(TEXT("YT")); break;
+        case CountryCodeMX: writer->WriteValue(TEXT("MX")); break;
+        case CountryCodeFM: writer->WriteValue(TEXT("FM")); break;
+        case CountryCodeMD: writer->WriteValue(TEXT("MD")); break;
+        case CountryCodeMC: writer->WriteValue(TEXT("MC")); break;
+        case CountryCodeMN: writer->WriteValue(TEXT("MN")); break;
+        case CountryCodeME: writer->WriteValue(TEXT("ME")); break;
+        case CountryCodeMS: writer->WriteValue(TEXT("MS")); break;
+        case CountryCodeMA: writer->WriteValue(TEXT("MA")); break;
+        case CountryCodeMZ: writer->WriteValue(TEXT("MZ")); break;
+        case CountryCodeMM: writer->WriteValue(TEXT("MM")); break;
+        case CountryCodeNA: writer->WriteValue(TEXT("NA")); break;
+        case CountryCodeNR: writer->WriteValue(TEXT("NR")); break;
+        case CountryCodeNP: writer->WriteValue(TEXT("NP")); break;
+        case CountryCodeNL: writer->WriteValue(TEXT("NL")); break;
+        case CountryCodeNC: writer->WriteValue(TEXT("NC")); break;
+        case CountryCodeNZ: writer->WriteValue(TEXT("NZ")); break;
+        case CountryCodeNI: writer->WriteValue(TEXT("NI")); break;
+        case CountryCodeNE: writer->WriteValue(TEXT("NE")); break;
+        case CountryCodeNG: writer->WriteValue(TEXT("NG")); break;
+        case CountryCodeNU: writer->WriteValue(TEXT("NU")); break;
+        case CountryCodeNF: writer->WriteValue(TEXT("NF")); break;
+        case CountryCodeMP: writer->WriteValue(TEXT("MP")); break;
+        case CountryCodeNO: writer->WriteValue(TEXT("NO")); break;
+        case CountryCodeOM: writer->WriteValue(TEXT("OM")); break;
+        case CountryCodePK: writer->WriteValue(TEXT("PK")); break;
+        case CountryCodePW: writer->WriteValue(TEXT("PW")); break;
+        case CountryCodePS: writer->WriteValue(TEXT("PS")); break;
+        case CountryCodePA: writer->WriteValue(TEXT("PA")); break;
+        case CountryCodePG: writer->WriteValue(TEXT("PG")); break;
+        case CountryCodePY: writer->WriteValue(TEXT("PY")); break;
+        case CountryCodePE: writer->WriteValue(TEXT("PE")); break;
+        case CountryCodePH: writer->WriteValue(TEXT("PH")); break;
+        case CountryCodePN: writer->WriteValue(TEXT("PN")); break;
+        case CountryCodePL: writer->WriteValue(TEXT("PL")); break;
+        case CountryCodePT: writer->WriteValue(TEXT("PT")); break;
+        case CountryCodePR: writer->WriteValue(TEXT("PR")); break;
+        case CountryCodeQA: writer->WriteValue(TEXT("QA")); break;
+        case CountryCodeRE: writer->WriteValue(TEXT("RE")); break;
+        case CountryCodeRO: writer->WriteValue(TEXT("RO")); break;
+        case CountryCodeRU: writer->WriteValue(TEXT("RU")); break;
+        case CountryCodeRW: writer->WriteValue(TEXT("RW")); break;
+        case CountryCodeBL: writer->WriteValue(TEXT("BL")); break;
+        case CountryCodeSH: writer->WriteValue(TEXT("SH")); break;
+        case CountryCodeKN: writer->WriteValue(TEXT("KN")); break;
+        case CountryCodeLC: writer->WriteValue(TEXT("LC")); break;
+        case CountryCodeMF: writer->WriteValue(TEXT("MF")); break;
+        case CountryCodePM: writer->WriteValue(TEXT("PM")); break;
+        case CountryCodeVC: writer->WriteValue(TEXT("VC")); break;
+        case CountryCodeWS: writer->WriteValue(TEXT("WS")); break;
+        case CountryCodeSM: writer->WriteValue(TEXT("SM")); break;
+        case CountryCodeST: writer->WriteValue(TEXT("ST")); break;
+        case CountryCodeSA: writer->WriteValue(TEXT("SA")); break;
+        case CountryCodeSN: writer->WriteValue(TEXT("SN")); break;
+        case CountryCodeRS: writer->WriteValue(TEXT("RS")); break;
+        case CountryCodeSC: writer->WriteValue(TEXT("SC")); break;
+        case CountryCodeSL: writer->WriteValue(TEXT("SL")); break;
+        case CountryCodeSG: writer->WriteValue(TEXT("SG")); break;
+        case CountryCodeSX: writer->WriteValue(TEXT("SX")); break;
+        case CountryCodeSK: writer->WriteValue(TEXT("SK")); break;
+        case CountryCodeSI: writer->WriteValue(TEXT("SI")); break;
+        case CountryCodeSB: writer->WriteValue(TEXT("SB")); break;
+        case CountryCodeSO: writer->WriteValue(TEXT("SO")); break;
+        case CountryCodeZA: writer->WriteValue(TEXT("ZA")); break;
+        case CountryCodeGS: writer->WriteValue(TEXT("GS")); break;
+        case CountryCodeSS: writer->WriteValue(TEXT("SS")); break;
+        case CountryCodeES: writer->WriteValue(TEXT("ES")); break;
+        case CountryCodeLK: writer->WriteValue(TEXT("LK")); break;
+        case CountryCodeSD: writer->WriteValue(TEXT("SD")); break;
+        case CountryCodeSR: writer->WriteValue(TEXT("SR")); break;
+        case CountryCodeSJ: writer->WriteValue(TEXT("SJ")); break;
+        case CountryCodeSZ: writer->WriteValue(TEXT("SZ")); break;
+        case CountryCodeSE: writer->WriteValue(TEXT("SE")); break;
+        case CountryCodeCH: writer->WriteValue(TEXT("CH")); break;
+        case CountryCodeSY: writer->WriteValue(TEXT("SY")); break;
+        case CountryCodeTW: writer->WriteValue(TEXT("TW")); break;
+        case CountryCodeTJ: writer->WriteValue(TEXT("TJ")); break;
+        case CountryCodeTZ: writer->WriteValue(TEXT("TZ")); break;
+        case CountryCodeTH: writer->WriteValue(TEXT("TH")); break;
+        case CountryCodeTL: writer->WriteValue(TEXT("TL")); break;
+        case CountryCodeTG: writer->WriteValue(TEXT("TG")); break;
+        case CountryCodeTK: writer->WriteValue(TEXT("TK")); break;
+        case CountryCodeTO: writer->WriteValue(TEXT("TO")); break;
+        case CountryCodeTT: writer->WriteValue(TEXT("TT")); break;
+        case CountryCodeTN: writer->WriteValue(TEXT("TN")); break;
+        case CountryCodeTR: writer->WriteValue(TEXT("TR")); break;
+        case CountryCodeTM: writer->WriteValue(TEXT("TM")); break;
+        case CountryCodeTC: writer->WriteValue(TEXT("TC")); break;
+        case CountryCodeTV: writer->WriteValue(TEXT("TV")); break;
+        case CountryCodeUG: writer->WriteValue(TEXT("UG")); break;
+        case CountryCodeUA: writer->WriteValue(TEXT("UA")); break;
+        case CountryCodeAE: writer->WriteValue(TEXT("AE")); break;
+        case CountryCodeGB: writer->WriteValue(TEXT("GB")); break;
+        case CountryCodeUS: writer->WriteValue(TEXT("US")); break;
+        case CountryCodeUM: writer->WriteValue(TEXT("UM")); break;
+        case CountryCodeUY: writer->WriteValue(TEXT("UY")); break;
+        case CountryCodeUZ: writer->WriteValue(TEXT("UZ")); break;
+        case CountryCodeVU: writer->WriteValue(TEXT("VU")); break;
+        case CountryCodeVE: writer->WriteValue(TEXT("VE")); break;
+        case CountryCodeVN: writer->WriteValue(TEXT("VN")); break;
+        case CountryCodeVG: writer->WriteValue(TEXT("VG")); break;
+        case CountryCodeVI: writer->WriteValue(TEXT("VI")); break;
+        case CountryCodeWF: writer->WriteValue(TEXT("WF")); break;
+        case CountryCodeEH: writer->WriteValue(TEXT("EH")); break;
+        case CountryCodeYE: writer->WriteValue(TEXT("YE")); break;
+        case CountryCodeZM: writer->WriteValue(TEXT("ZM")); break;
+        case CountryCodeZW: writer->WriteValue(TEXT("ZW")); break;
+    }
+}
+
+AdminModels::CountryCode PlayFab::AdminModels::readCountryCodeFromValue(const TSharedPtr<FJsonValue>& value)
+{
+    static TMap<FString, CountryCode> _CountryCodeMap;
+    if (_CountryCodeMap.Num() == 0)
+    {
+        // Auto-generate the map on the first use
+        _CountryCodeMap.Add(TEXT("AF"), CountryCodeAF);
+        _CountryCodeMap.Add(TEXT("AX"), CountryCodeAX);
+        _CountryCodeMap.Add(TEXT("AL"), CountryCodeAL);
+        _CountryCodeMap.Add(TEXT("DZ"), CountryCodeDZ);
+        _CountryCodeMap.Add(TEXT("AS"), CountryCodeAS);
+        _CountryCodeMap.Add(TEXT("AD"), CountryCodeAD);
+        _CountryCodeMap.Add(TEXT("AO"), CountryCodeAO);
+        _CountryCodeMap.Add(TEXT("AI"), CountryCodeAI);
+        _CountryCodeMap.Add(TEXT("AQ"), CountryCodeAQ);
+        _CountryCodeMap.Add(TEXT("AG"), CountryCodeAG);
+        _CountryCodeMap.Add(TEXT("AR"), CountryCodeAR);
+        _CountryCodeMap.Add(TEXT("AM"), CountryCodeAM);
+        _CountryCodeMap.Add(TEXT("AW"), CountryCodeAW);
+        _CountryCodeMap.Add(TEXT("AU"), CountryCodeAU);
+        _CountryCodeMap.Add(TEXT("AT"), CountryCodeAT);
+        _CountryCodeMap.Add(TEXT("AZ"), CountryCodeAZ);
+        _CountryCodeMap.Add(TEXT("BS"), CountryCodeBS);
+        _CountryCodeMap.Add(TEXT("BH"), CountryCodeBH);
+        _CountryCodeMap.Add(TEXT("BD"), CountryCodeBD);
+        _CountryCodeMap.Add(TEXT("BB"), CountryCodeBB);
+        _CountryCodeMap.Add(TEXT("BY"), CountryCodeBY);
+        _CountryCodeMap.Add(TEXT("BE"), CountryCodeBE);
+        _CountryCodeMap.Add(TEXT("BZ"), CountryCodeBZ);
+        _CountryCodeMap.Add(TEXT("BJ"), CountryCodeBJ);
+        _CountryCodeMap.Add(TEXT("BM"), CountryCodeBM);
+        _CountryCodeMap.Add(TEXT("BT"), CountryCodeBT);
+        _CountryCodeMap.Add(TEXT("BO"), CountryCodeBO);
+        _CountryCodeMap.Add(TEXT("BQ"), CountryCodeBQ);
+        _CountryCodeMap.Add(TEXT("BA"), CountryCodeBA);
+        _CountryCodeMap.Add(TEXT("BW"), CountryCodeBW);
+        _CountryCodeMap.Add(TEXT("BV"), CountryCodeBV);
+        _CountryCodeMap.Add(TEXT("BR"), CountryCodeBR);
+        _CountryCodeMap.Add(TEXT("IO"), CountryCodeIO);
+        _CountryCodeMap.Add(TEXT("BN"), CountryCodeBN);
+        _CountryCodeMap.Add(TEXT("BG"), CountryCodeBG);
+        _CountryCodeMap.Add(TEXT("BF"), CountryCodeBF);
+        _CountryCodeMap.Add(TEXT("BI"), CountryCodeBI);
+        _CountryCodeMap.Add(TEXT("KH"), CountryCodeKH);
+        _CountryCodeMap.Add(TEXT("CM"), CountryCodeCM);
+        _CountryCodeMap.Add(TEXT("CA"), CountryCodeCA);
+        _CountryCodeMap.Add(TEXT("CV"), CountryCodeCV);
+        _CountryCodeMap.Add(TEXT("KY"), CountryCodeKY);
+        _CountryCodeMap.Add(TEXT("CF"), CountryCodeCF);
+        _CountryCodeMap.Add(TEXT("TD"), CountryCodeTD);
+        _CountryCodeMap.Add(TEXT("CL"), CountryCodeCL);
+        _CountryCodeMap.Add(TEXT("CN"), CountryCodeCN);
+        _CountryCodeMap.Add(TEXT("CX"), CountryCodeCX);
+        _CountryCodeMap.Add(TEXT("CC"), CountryCodeCC);
+        _CountryCodeMap.Add(TEXT("CO"), CountryCodeCO);
+        _CountryCodeMap.Add(TEXT("KM"), CountryCodeKM);
+        _CountryCodeMap.Add(TEXT("CG"), CountryCodeCG);
+        _CountryCodeMap.Add(TEXT("CD"), CountryCodeCD);
+        _CountryCodeMap.Add(TEXT("CK"), CountryCodeCK);
+        _CountryCodeMap.Add(TEXT("CR"), CountryCodeCR);
+        _CountryCodeMap.Add(TEXT("CI"), CountryCodeCI);
+        _CountryCodeMap.Add(TEXT("HR"), CountryCodeHR);
+        _CountryCodeMap.Add(TEXT("CU"), CountryCodeCU);
+        _CountryCodeMap.Add(TEXT("CW"), CountryCodeCW);
+        _CountryCodeMap.Add(TEXT("CY"), CountryCodeCY);
+        _CountryCodeMap.Add(TEXT("CZ"), CountryCodeCZ);
+        _CountryCodeMap.Add(TEXT("DK"), CountryCodeDK);
+        _CountryCodeMap.Add(TEXT("DJ"), CountryCodeDJ);
+        _CountryCodeMap.Add(TEXT("DM"), CountryCodeDM);
+        _CountryCodeMap.Add(TEXT("DO"), CountryCodeDO);
+        _CountryCodeMap.Add(TEXT("EC"), CountryCodeEC);
+        _CountryCodeMap.Add(TEXT("EG"), CountryCodeEG);
+        _CountryCodeMap.Add(TEXT("SV"), CountryCodeSV);
+        _CountryCodeMap.Add(TEXT("GQ"), CountryCodeGQ);
+        _CountryCodeMap.Add(TEXT("ER"), CountryCodeER);
+        _CountryCodeMap.Add(TEXT("EE"), CountryCodeEE);
+        _CountryCodeMap.Add(TEXT("ET"), CountryCodeET);
+        _CountryCodeMap.Add(TEXT("FK"), CountryCodeFK);
+        _CountryCodeMap.Add(TEXT("FO"), CountryCodeFO);
+        _CountryCodeMap.Add(TEXT("FJ"), CountryCodeFJ);
+        _CountryCodeMap.Add(TEXT("FI"), CountryCodeFI);
+        _CountryCodeMap.Add(TEXT("FR"), CountryCodeFR);
+        _CountryCodeMap.Add(TEXT("GF"), CountryCodeGF);
+        _CountryCodeMap.Add(TEXT("PF"), CountryCodePF);
+        _CountryCodeMap.Add(TEXT("TF"), CountryCodeTF);
+        _CountryCodeMap.Add(TEXT("GA"), CountryCodeGA);
+        _CountryCodeMap.Add(TEXT("GM"), CountryCodeGM);
+        _CountryCodeMap.Add(TEXT("GE"), CountryCodeGE);
+        _CountryCodeMap.Add(TEXT("DE"), CountryCodeDE);
+        _CountryCodeMap.Add(TEXT("GH"), CountryCodeGH);
+        _CountryCodeMap.Add(TEXT("GI"), CountryCodeGI);
+        _CountryCodeMap.Add(TEXT("GR"), CountryCodeGR);
+        _CountryCodeMap.Add(TEXT("GL"), CountryCodeGL);
+        _CountryCodeMap.Add(TEXT("GD"), CountryCodeGD);
+        _CountryCodeMap.Add(TEXT("GP"), CountryCodeGP);
+        _CountryCodeMap.Add(TEXT("GU"), CountryCodeGU);
+        _CountryCodeMap.Add(TEXT("GT"), CountryCodeGT);
+        _CountryCodeMap.Add(TEXT("GG"), CountryCodeGG);
+        _CountryCodeMap.Add(TEXT("GN"), CountryCodeGN);
+        _CountryCodeMap.Add(TEXT("GW"), CountryCodeGW);
+        _CountryCodeMap.Add(TEXT("GY"), CountryCodeGY);
+        _CountryCodeMap.Add(TEXT("HT"), CountryCodeHT);
+        _CountryCodeMap.Add(TEXT("HM"), CountryCodeHM);
+        _CountryCodeMap.Add(TEXT("VA"), CountryCodeVA);
+        _CountryCodeMap.Add(TEXT("HN"), CountryCodeHN);
+        _CountryCodeMap.Add(TEXT("HK"), CountryCodeHK);
+        _CountryCodeMap.Add(TEXT("HU"), CountryCodeHU);
+        _CountryCodeMap.Add(TEXT("IS"), CountryCodeIS);
+        _CountryCodeMap.Add(TEXT("IN"), CountryCodeIN);
+        _CountryCodeMap.Add(TEXT("ID"), CountryCodeID);
+        _CountryCodeMap.Add(TEXT("IR"), CountryCodeIR);
+        _CountryCodeMap.Add(TEXT("IQ"), CountryCodeIQ);
+        _CountryCodeMap.Add(TEXT("IE"), CountryCodeIE);
+        _CountryCodeMap.Add(TEXT("IM"), CountryCodeIM);
+        _CountryCodeMap.Add(TEXT("IL"), CountryCodeIL);
+        _CountryCodeMap.Add(TEXT("IT"), CountryCodeIT);
+        _CountryCodeMap.Add(TEXT("JM"), CountryCodeJM);
+        _CountryCodeMap.Add(TEXT("JP"), CountryCodeJP);
+        _CountryCodeMap.Add(TEXT("JE"), CountryCodeJE);
+        _CountryCodeMap.Add(TEXT("JO"), CountryCodeJO);
+        _CountryCodeMap.Add(TEXT("KZ"), CountryCodeKZ);
+        _CountryCodeMap.Add(TEXT("KE"), CountryCodeKE);
+        _CountryCodeMap.Add(TEXT("KI"), CountryCodeKI);
+        _CountryCodeMap.Add(TEXT("KP"), CountryCodeKP);
+        _CountryCodeMap.Add(TEXT("KR"), CountryCodeKR);
+        _CountryCodeMap.Add(TEXT("KW"), CountryCodeKW);
+        _CountryCodeMap.Add(TEXT("KG"), CountryCodeKG);
+        _CountryCodeMap.Add(TEXT("LA"), CountryCodeLA);
+        _CountryCodeMap.Add(TEXT("LV"), CountryCodeLV);
+        _CountryCodeMap.Add(TEXT("LB"), CountryCodeLB);
+        _CountryCodeMap.Add(TEXT("LS"), CountryCodeLS);
+        _CountryCodeMap.Add(TEXT("LR"), CountryCodeLR);
+        _CountryCodeMap.Add(TEXT("LY"), CountryCodeLY);
+        _CountryCodeMap.Add(TEXT("LI"), CountryCodeLI);
+        _CountryCodeMap.Add(TEXT("LT"), CountryCodeLT);
+        _CountryCodeMap.Add(TEXT("LU"), CountryCodeLU);
+        _CountryCodeMap.Add(TEXT("MO"), CountryCodeMO);
+        _CountryCodeMap.Add(TEXT("MK"), CountryCodeMK);
+        _CountryCodeMap.Add(TEXT("MG"), CountryCodeMG);
+        _CountryCodeMap.Add(TEXT("MW"), CountryCodeMW);
+        _CountryCodeMap.Add(TEXT("MY"), CountryCodeMY);
+        _CountryCodeMap.Add(TEXT("MV"), CountryCodeMV);
+        _CountryCodeMap.Add(TEXT("ML"), CountryCodeML);
+        _CountryCodeMap.Add(TEXT("MT"), CountryCodeMT);
+        _CountryCodeMap.Add(TEXT("MH"), CountryCodeMH);
+        _CountryCodeMap.Add(TEXT("MQ"), CountryCodeMQ);
+        _CountryCodeMap.Add(TEXT("MR"), CountryCodeMR);
+        _CountryCodeMap.Add(TEXT("MU"), CountryCodeMU);
+        _CountryCodeMap.Add(TEXT("YT"), CountryCodeYT);
+        _CountryCodeMap.Add(TEXT("MX"), CountryCodeMX);
+        _CountryCodeMap.Add(TEXT("FM"), CountryCodeFM);
+        _CountryCodeMap.Add(TEXT("MD"), CountryCodeMD);
+        _CountryCodeMap.Add(TEXT("MC"), CountryCodeMC);
+        _CountryCodeMap.Add(TEXT("MN"), CountryCodeMN);
+        _CountryCodeMap.Add(TEXT("ME"), CountryCodeME);
+        _CountryCodeMap.Add(TEXT("MS"), CountryCodeMS);
+        _CountryCodeMap.Add(TEXT("MA"), CountryCodeMA);
+        _CountryCodeMap.Add(TEXT("MZ"), CountryCodeMZ);
+        _CountryCodeMap.Add(TEXT("MM"), CountryCodeMM);
+        _CountryCodeMap.Add(TEXT("NA"), CountryCodeNA);
+        _CountryCodeMap.Add(TEXT("NR"), CountryCodeNR);
+        _CountryCodeMap.Add(TEXT("NP"), CountryCodeNP);
+        _CountryCodeMap.Add(TEXT("NL"), CountryCodeNL);
+        _CountryCodeMap.Add(TEXT("NC"), CountryCodeNC);
+        _CountryCodeMap.Add(TEXT("NZ"), CountryCodeNZ);
+        _CountryCodeMap.Add(TEXT("NI"), CountryCodeNI);
+        _CountryCodeMap.Add(TEXT("NE"), CountryCodeNE);
+        _CountryCodeMap.Add(TEXT("NG"), CountryCodeNG);
+        _CountryCodeMap.Add(TEXT("NU"), CountryCodeNU);
+        _CountryCodeMap.Add(TEXT("NF"), CountryCodeNF);
+        _CountryCodeMap.Add(TEXT("MP"), CountryCodeMP);
+        _CountryCodeMap.Add(TEXT("NO"), CountryCodeNO);
+        _CountryCodeMap.Add(TEXT("OM"), CountryCodeOM);
+        _CountryCodeMap.Add(TEXT("PK"), CountryCodePK);
+        _CountryCodeMap.Add(TEXT("PW"), CountryCodePW);
+        _CountryCodeMap.Add(TEXT("PS"), CountryCodePS);
+        _CountryCodeMap.Add(TEXT("PA"), CountryCodePA);
+        _CountryCodeMap.Add(TEXT("PG"), CountryCodePG);
+        _CountryCodeMap.Add(TEXT("PY"), CountryCodePY);
+        _CountryCodeMap.Add(TEXT("PE"), CountryCodePE);
+        _CountryCodeMap.Add(TEXT("PH"), CountryCodePH);
+        _CountryCodeMap.Add(TEXT("PN"), CountryCodePN);
+        _CountryCodeMap.Add(TEXT("PL"), CountryCodePL);
+        _CountryCodeMap.Add(TEXT("PT"), CountryCodePT);
+        _CountryCodeMap.Add(TEXT("PR"), CountryCodePR);
+        _CountryCodeMap.Add(TEXT("QA"), CountryCodeQA);
+        _CountryCodeMap.Add(TEXT("RE"), CountryCodeRE);
+        _CountryCodeMap.Add(TEXT("RO"), CountryCodeRO);
+        _CountryCodeMap.Add(TEXT("RU"), CountryCodeRU);
+        _CountryCodeMap.Add(TEXT("RW"), CountryCodeRW);
+        _CountryCodeMap.Add(TEXT("BL"), CountryCodeBL);
+        _CountryCodeMap.Add(TEXT("SH"), CountryCodeSH);
+        _CountryCodeMap.Add(TEXT("KN"), CountryCodeKN);
+        _CountryCodeMap.Add(TEXT("LC"), CountryCodeLC);
+        _CountryCodeMap.Add(TEXT("MF"), CountryCodeMF);
+        _CountryCodeMap.Add(TEXT("PM"), CountryCodePM);
+        _CountryCodeMap.Add(TEXT("VC"), CountryCodeVC);
+        _CountryCodeMap.Add(TEXT("WS"), CountryCodeWS);
+        _CountryCodeMap.Add(TEXT("SM"), CountryCodeSM);
+        _CountryCodeMap.Add(TEXT("ST"), CountryCodeST);
+        _CountryCodeMap.Add(TEXT("SA"), CountryCodeSA);
+        _CountryCodeMap.Add(TEXT("SN"), CountryCodeSN);
+        _CountryCodeMap.Add(TEXT("RS"), CountryCodeRS);
+        _CountryCodeMap.Add(TEXT("SC"), CountryCodeSC);
+        _CountryCodeMap.Add(TEXT("SL"), CountryCodeSL);
+        _CountryCodeMap.Add(TEXT("SG"), CountryCodeSG);
+        _CountryCodeMap.Add(TEXT("SX"), CountryCodeSX);
+        _CountryCodeMap.Add(TEXT("SK"), CountryCodeSK);
+        _CountryCodeMap.Add(TEXT("SI"), CountryCodeSI);
+        _CountryCodeMap.Add(TEXT("SB"), CountryCodeSB);
+        _CountryCodeMap.Add(TEXT("SO"), CountryCodeSO);
+        _CountryCodeMap.Add(TEXT("ZA"), CountryCodeZA);
+        _CountryCodeMap.Add(TEXT("GS"), CountryCodeGS);
+        _CountryCodeMap.Add(TEXT("SS"), CountryCodeSS);
+        _CountryCodeMap.Add(TEXT("ES"), CountryCodeES);
+        _CountryCodeMap.Add(TEXT("LK"), CountryCodeLK);
+        _CountryCodeMap.Add(TEXT("SD"), CountryCodeSD);
+        _CountryCodeMap.Add(TEXT("SR"), CountryCodeSR);
+        _CountryCodeMap.Add(TEXT("SJ"), CountryCodeSJ);
+        _CountryCodeMap.Add(TEXT("SZ"), CountryCodeSZ);
+        _CountryCodeMap.Add(TEXT("SE"), CountryCodeSE);
+        _CountryCodeMap.Add(TEXT("CH"), CountryCodeCH);
+        _CountryCodeMap.Add(TEXT("SY"), CountryCodeSY);
+        _CountryCodeMap.Add(TEXT("TW"), CountryCodeTW);
+        _CountryCodeMap.Add(TEXT("TJ"), CountryCodeTJ);
+        _CountryCodeMap.Add(TEXT("TZ"), CountryCodeTZ);
+        _CountryCodeMap.Add(TEXT("TH"), CountryCodeTH);
+        _CountryCodeMap.Add(TEXT("TL"), CountryCodeTL);
+        _CountryCodeMap.Add(TEXT("TG"), CountryCodeTG);
+        _CountryCodeMap.Add(TEXT("TK"), CountryCodeTK);
+        _CountryCodeMap.Add(TEXT("TO"), CountryCodeTO);
+        _CountryCodeMap.Add(TEXT("TT"), CountryCodeTT);
+        _CountryCodeMap.Add(TEXT("TN"), CountryCodeTN);
+        _CountryCodeMap.Add(TEXT("TR"), CountryCodeTR);
+        _CountryCodeMap.Add(TEXT("TM"), CountryCodeTM);
+        _CountryCodeMap.Add(TEXT("TC"), CountryCodeTC);
+        _CountryCodeMap.Add(TEXT("TV"), CountryCodeTV);
+        _CountryCodeMap.Add(TEXT("UG"), CountryCodeUG);
+        _CountryCodeMap.Add(TEXT("UA"), CountryCodeUA);
+        _CountryCodeMap.Add(TEXT("AE"), CountryCodeAE);
+        _CountryCodeMap.Add(TEXT("GB"), CountryCodeGB);
+        _CountryCodeMap.Add(TEXT("US"), CountryCodeUS);
+        _CountryCodeMap.Add(TEXT("UM"), CountryCodeUM);
+        _CountryCodeMap.Add(TEXT("UY"), CountryCodeUY);
+        _CountryCodeMap.Add(TEXT("UZ"), CountryCodeUZ);
+        _CountryCodeMap.Add(TEXT("VU"), CountryCodeVU);
+        _CountryCodeMap.Add(TEXT("VE"), CountryCodeVE);
+        _CountryCodeMap.Add(TEXT("VN"), CountryCodeVN);
+        _CountryCodeMap.Add(TEXT("VG"), CountryCodeVG);
+        _CountryCodeMap.Add(TEXT("VI"), CountryCodeVI);
+        _CountryCodeMap.Add(TEXT("WF"), CountryCodeWF);
+        _CountryCodeMap.Add(TEXT("EH"), CountryCodeEH);
+        _CountryCodeMap.Add(TEXT("YE"), CountryCodeYE);
+        _CountryCodeMap.Add(TEXT("ZM"), CountryCodeZM);
+        _CountryCodeMap.Add(TEXT("ZW"), CountryCodeZW);
+
+    } 
+
+	if(value.IsValid())
+	{
+	    auto output = _CountryCodeMap.Find(value->AsString());
+		if (output != nullptr)
+			return *output;
+	}
+
+
+    return CountryCodeAF; // Basically critical fail
+}
+
+
+PlayFab::AdminModels::FCreateActionsOnPlayerSegmentTaskRequest::~FCreateActionsOnPlayerSegmentTaskRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FCreateActionsOnPlayerSegmentTaskRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("Name")); writer->WriteValue(Name);
+	
+    if(Description.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Description")); writer->WriteValue(Description); }
+	
+    if(Schedule.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Schedule")); writer->WriteValue(Schedule); }
+	
+    writer->WriteIdentifierPrefix(TEXT("IsActive")); writer->WriteValue(IsActive);
+	
+    writer->WriteIdentifierPrefix(TEXT("Parameter")); Parameter.writeJSON(writer);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FCreateActionsOnPlayerSegmentTaskRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> NameValue = obj->TryGetField(TEXT("Name"));
+    if (NameValue.IsValid()&& !NameValue->IsNull())
+    {
+        FString TmpValue;
+        if(NameValue->TryGetString(TmpValue)) {Name = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> DescriptionValue = obj->TryGetField(TEXT("Description"));
+    if (DescriptionValue.IsValid()&& !DescriptionValue->IsNull())
+    {
+        FString TmpValue;
+        if(DescriptionValue->TryGetString(TmpValue)) {Description = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ScheduleValue = obj->TryGetField(TEXT("Schedule"));
+    if (ScheduleValue.IsValid()&& !ScheduleValue->IsNull())
+    {
+        FString TmpValue;
+        if(ScheduleValue->TryGetString(TmpValue)) {Schedule = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> IsActiveValue = obj->TryGetField(TEXT("IsActive"));
+    if (IsActiveValue.IsValid()&& !IsActiveValue->IsNull())
+    {
+        bool TmpValue;
+        if(IsActiveValue->TryGetBool(TmpValue)) {IsActive = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ParameterValue = obj->TryGetField(TEXT("Parameter"));
+    if (ParameterValue.IsValid()&& !ParameterValue->IsNull())
+    {
+        Parameter = FActionsOnPlayersInSegmentTaskParameter(ParameterValue->AsObject());
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FCreateCloudScriptTaskRequest::~FCreateCloudScriptTaskRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FCreateCloudScriptTaskRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("Name")); writer->WriteValue(Name);
+	
+    if(Description.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Description")); writer->WriteValue(Description); }
+	
+    if(Schedule.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Schedule")); writer->WriteValue(Schedule); }
+	
+    writer->WriteIdentifierPrefix(TEXT("IsActive")); writer->WriteValue(IsActive);
+	
+    writer->WriteIdentifierPrefix(TEXT("Parameter")); Parameter.writeJSON(writer);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FCreateCloudScriptTaskRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> NameValue = obj->TryGetField(TEXT("Name"));
+    if (NameValue.IsValid()&& !NameValue->IsNull())
+    {
+        FString TmpValue;
+        if(NameValue->TryGetString(TmpValue)) {Name = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> DescriptionValue = obj->TryGetField(TEXT("Description"));
+    if (DescriptionValue.IsValid()&& !DescriptionValue->IsNull())
+    {
+        FString TmpValue;
+        if(DescriptionValue->TryGetString(TmpValue)) {Description = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ScheduleValue = obj->TryGetField(TEXT("Schedule"));
+    if (ScheduleValue.IsValid()&& !ScheduleValue->IsNull())
+    {
+        FString TmpValue;
+        if(ScheduleValue->TryGetString(TmpValue)) {Schedule = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> IsActiveValue = obj->TryGetField(TEXT("IsActive"));
+    if (IsActiveValue.IsValid()&& !IsActiveValue->IsNull())
+    {
+        bool TmpValue;
+        if(IsActiveValue->TryGetBool(TmpValue)) {IsActive = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ParameterValue = obj->TryGetField(TEXT("Parameter"));
+    if (ParameterValue.IsValid()&& !ParameterValue->IsNull())
+    {
+        Parameter = FCloudScriptTaskParameter(ParameterValue->AsObject());
     }
     
     
@@ -1656,6 +2989,37 @@ bool PlayFab::AdminModels::FCreatePlayerStatisticDefinitionResult::readFromValue
     if (StatisticValue.IsValid()&& !StatisticValue->IsNull())
     {
         Statistic = MakeShareable(new FPlayerStatisticDefinition(StatisticValue->AsObject()));
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FCreateTaskResult::~FCreateTaskResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FCreateTaskResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(TaskId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("TaskId")); writer->WriteValue(TaskId); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FCreateTaskResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> TaskIdValue = obj->TryGetField(TEXT("TaskId"));
+    if (TaskIdValue.IsValid()&& !TaskIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TaskIdValue->TryGetString(TmpValue)) {TaskId = TmpValue; }
     }
     
     
@@ -2109,6 +3473,37 @@ bool PlayFab::AdminModels::FDeleteStoreResult::readFromValue(const TSharedPtr<FJ
 }
 
 
+PlayFab::AdminModels::FDeleteTaskRequest::~FDeleteTaskRequest()
+{
+    //if(Identifier != nullptr) delete Identifier;
+    
+}
+
+void PlayFab::AdminModels::FDeleteTaskRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Identifier.IsValid()) { writer->WriteIdentifierPrefix(TEXT("Identifier")); Identifier->writeJSON(writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FDeleteTaskRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> IdentifierValue = obj->TryGetField(TEXT("Identifier"));
+    if (IdentifierValue.IsValid()&& !IdentifierValue->IsNull())
+    {
+        Identifier = MakeShareable(new FNameIdentifier(IdentifierValue->AsObject()));
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::AdminModels::FDeleteUsersRequest::~FDeleteUsersRequest()
 {
     
@@ -2166,6 +3561,28 @@ void PlayFab::AdminModels::FDeleteUsersResult::writeJSON(JsonWriter& writer) con
 }
 
 bool PlayFab::AdminModels::FDeleteUsersResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FEmptyResult::~FEmptyResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FEmptyResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FEmptyResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
 {
 	bool HasSucceeded = true; 
 	
@@ -2265,6 +3682,46 @@ bool PlayFab::AdminModels::FGetActionGroupResult::readFromValue(const TSharedPtr
     {
         FString TmpValue;
         if(IdValue->TryGetString(TmpValue)) {Id = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetActionsOnPlayersInSegmentTaskInstanceResult::~FGetActionsOnPlayersInSegmentTaskInstanceResult()
+{
+    //if(Summary != nullptr) delete Summary;
+    //if(Parameter != nullptr) delete Parameter;
+    
+}
+
+void PlayFab::AdminModels::FGetActionsOnPlayersInSegmentTaskInstanceResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Summary.IsValid()) { writer->WriteIdentifierPrefix(TEXT("Summary")); Summary->writeJSON(writer); }
+	
+    if(Parameter.IsValid()) { writer->WriteIdentifierPrefix(TEXT("Parameter")); Parameter->writeJSON(writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetActionsOnPlayersInSegmentTaskInstanceResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> SummaryValue = obj->TryGetField(TEXT("Summary"));
+    if (SummaryValue.IsValid()&& !SummaryValue->IsNull())
+    {
+        Summary = MakeShareable(new FActionsOnPlayersInSegmentTaskSummary(SummaryValue->AsObject()));
+    }
+    
+    const TSharedPtr<FJsonValue> ParameterValue = obj->TryGetField(TEXT("Parameter"));
+    if (ParameterValue.IsValid()&& !ParameterValue->IsNull())
+    {
+        Parameter = MakeShareable(new FActionsOnPlayersInSegmentTaskParameter(ParameterValue->AsObject()));
     }
     
     
@@ -2639,6 +4096,46 @@ bool PlayFab::AdminModels::FGetCloudScriptRevisionResult::readFromValue(const TS
     {
         bool TmpValue;
         if(IsPublishedValue->TryGetBool(TmpValue)) {IsPublished = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetCloudScriptTaskInstanceResult::~FGetCloudScriptTaskInstanceResult()
+{
+    //if(Summary != nullptr) delete Summary;
+    //if(Parameter != nullptr) delete Parameter;
+    
+}
+
+void PlayFab::AdminModels::FGetCloudScriptTaskInstanceResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Summary.IsValid()) { writer->WriteIdentifierPrefix(TEXT("Summary")); Summary->writeJSON(writer); }
+	
+    if(Parameter.IsValid()) { writer->WriteIdentifierPrefix(TEXT("Parameter")); Parameter->writeJSON(writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetCloudScriptTaskInstanceResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> SummaryValue = obj->TryGetField(TEXT("Summary"));
+    if (SummaryValue.IsValid()&& !SummaryValue->IsNull())
+    {
+        Summary = MakeShareable(new FCloudScriptTaskSummary(SummaryValue->AsObject()));
+    }
+    
+    const TSharedPtr<FJsonValue> ParameterValue = obj->TryGetField(TEXT("Parameter"));
+    if (ParameterValue.IsValid()&& !ParameterValue->IsNull())
+    {
+        Parameter = MakeShareable(new FCloudScriptTaskParameter(ParameterValue->AsObject()));
     }
     
     
@@ -3337,6 +4834,63 @@ AdminModels::LoginIdentityProvider PlayFab::AdminModels::readLoginIdentityProvid
 }
 
 
+PlayFab::AdminModels::FPlayerLocation::~FPlayerLocation()
+{
+    
+}
+
+void PlayFab::AdminModels::FPlayerLocation::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("ContinentCode")); writeContinentCodeEnumJSON(pfContinentCode, writer);
+	
+    writer->WriteIdentifierPrefix(TEXT("CountryCode")); writeCountryCodeEnumJSON(pfCountryCode, writer);
+	
+    if(City.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("City")); writer->WriteValue(City); }
+	
+    if(Latitude.notNull()) { writer->WriteIdentifierPrefix(TEXT("Latitude")); writer->WriteValue(Latitude); }
+	
+    if(Longitude.notNull()) { writer->WriteIdentifierPrefix(TEXT("Longitude")); writer->WriteValue(Longitude); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FPlayerLocation::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    pfContinentCode = readContinentCodeFromValue(obj->TryGetField(TEXT("ContinentCode")));
+    
+    pfCountryCode = readCountryCodeFromValue(obj->TryGetField(TEXT("CountryCode")));
+    
+    const TSharedPtr<FJsonValue> CityValue = obj->TryGetField(TEXT("City"));
+    if (CityValue.IsValid()&& !CityValue->IsNull())
+    {
+        FString TmpValue;
+        if(CityValue->TryGetString(TmpValue)) {City = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> LatitudeValue = obj->TryGetField(TEXT("Latitude"));
+    if (LatitudeValue.IsValid()&& !LatitudeValue->IsNull())
+    {
+        double TmpValue;
+        if(LatitudeValue->TryGetNumber(TmpValue)) {Latitude = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> LongitudeValue = obj->TryGetField(TEXT("Longitude"));
+    if (LongitudeValue.IsValid()&& !LongitudeValue->IsNull())
+    {
+        double TmpValue;
+        if(LongitudeValue->TryGetNumber(TmpValue)) {Longitude = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
 void PlayFab::AdminModels::writePushNotificationPlatformEnumJSON(PushNotificationPlatform enumVal, JsonWriter& writer)
 {
     switch(enumVal)
@@ -3576,6 +5130,17 @@ void PlayFab::AdminModels::FPlayerProfile::writeJSON(JsonWriter& writer) const
         writer->WriteArrayEnd();
      }
 	
+    if(Locations.Num() != 0) 
+    {
+        writer->WriteObjectStart(TEXT("Locations"));
+        for (TMap<FString, FPlayerLocation>::TConstIterator It(Locations); It; ++It)
+        {
+            writer->WriteIdentifierPrefix((*It).Key);
+            (*It).Value.writeJSON(writer);
+        }
+        writer->WriteObjectEnd();
+     }
+	
     if(VirtualCurrencyBalances.Num() != 0) 
     {
         writer->WriteObjectStart(TEXT("VirtualCurrencyBalances"));
@@ -3715,6 +5280,16 @@ bool PlayFab::AdminModels::FPlayerProfile::readFromValue(const TSharedPtr<FJsonO
     }
     
     obj->TryGetStringArrayField(TEXT("Tags"),Tags);
+    
+    const TSharedPtr<FJsonObject>* LocationsObject;
+    if (obj->TryGetObjectField(TEXT("Locations"), LocationsObject))
+    {
+        for (TMap<FString, TSharedPtr<FJsonValue>>::TConstIterator It((*LocationsObject)->Values); It; ++It)
+        {
+            
+            Locations.Add(It.Key(), FPlayerLocation(It.Value()->AsObject()));
+        }
+    }
     
     const TSharedPtr<FJsonObject>* VirtualCurrencyBalancesObject;
     if (obj->TryGetObjectField(TEXT("VirtualCurrencyBalances"), VirtualCurrencyBalancesObject))
@@ -4994,6 +6569,426 @@ bool PlayFab::AdminModels::FGetStoreItemsResult::readFromValue(const TSharedPtr<
     {
         MarketingData = MakeShareable(new FStoreMarketingModel(MarketingDataValue->AsObject()));
     }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetTaskInstanceRequest::~FGetTaskInstanceRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetTaskInstanceRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("TaskInstanceId")); writer->WriteValue(TaskInstanceId);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetTaskInstanceRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> TaskInstanceIdValue = obj->TryGetField(TEXT("TaskInstanceId"));
+    if (TaskInstanceIdValue.IsValid()&& !TaskInstanceIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TaskInstanceIdValue->TryGetString(TmpValue)) {TaskInstanceId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetTaskInstancesRequest::~FGetTaskInstancesRequest()
+{
+    //if(TaskIdentifier != nullptr) delete TaskIdentifier;
+    
+}
+
+void PlayFab::AdminModels::FGetTaskInstancesRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(TaskIdentifier.IsValid()) { writer->WriteIdentifierPrefix(TEXT("TaskIdentifier")); TaskIdentifier->writeJSON(writer); }
+	
+    if(StatusFilter.notNull()) { writer->WriteIdentifierPrefix(TEXT("StatusFilter")); writeTaskInstanceStatusEnumJSON(StatusFilter, writer); }
+	
+    if(StartedAtRangeFrom.notNull()) { writer->WriteIdentifierPrefix(TEXT("StartedAtRangeFrom")); writeDatetime(StartedAtRangeFrom, writer); }
+	
+    if(StartedAtRangeTo.notNull()) { writer->WriteIdentifierPrefix(TEXT("StartedAtRangeTo")); writeDatetime(StartedAtRangeTo, writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetTaskInstancesRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> TaskIdentifierValue = obj->TryGetField(TEXT("TaskIdentifier"));
+    if (TaskIdentifierValue.IsValid()&& !TaskIdentifierValue->IsNull())
+    {
+        TaskIdentifier = MakeShareable(new FNameIdentifier(TaskIdentifierValue->AsObject()));
+    }
+    
+    StatusFilter = readTaskInstanceStatusFromValue(obj->TryGetField(TEXT("StatusFilter")));
+    
+    const TSharedPtr<FJsonValue> StartedAtRangeFromValue = obj->TryGetField(TEXT("StartedAtRangeFrom"));
+    if(StartedAtRangeFromValue.IsValid())
+    {
+        StartedAtRangeFrom = readDatetime(StartedAtRangeFromValue);
+    }
+    
+    const TSharedPtr<FJsonValue> StartedAtRangeToValue = obj->TryGetField(TEXT("StartedAtRangeTo"));
+    if(StartedAtRangeToValue.IsValid())
+    {
+        StartedAtRangeTo = readDatetime(StartedAtRangeToValue);
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+void PlayFab::AdminModels::writeScheduledTaskTypeEnumJSON(ScheduledTaskType enumVal, JsonWriter& writer)
+{
+    switch(enumVal)
+    {
+        
+        case ScheduledTaskTypeCloudScript: writer->WriteValue(TEXT("CloudScript")); break;
+        case ScheduledTaskTypeActionsOnPlayerSegment: writer->WriteValue(TEXT("ActionsOnPlayerSegment")); break;
+    }
+}
+
+AdminModels::ScheduledTaskType PlayFab::AdminModels::readScheduledTaskTypeFromValue(const TSharedPtr<FJsonValue>& value)
+{
+    static TMap<FString, ScheduledTaskType> _ScheduledTaskTypeMap;
+    if (_ScheduledTaskTypeMap.Num() == 0)
+    {
+        // Auto-generate the map on the first use
+        _ScheduledTaskTypeMap.Add(TEXT("CloudScript"), ScheduledTaskTypeCloudScript);
+        _ScheduledTaskTypeMap.Add(TEXT("ActionsOnPlayerSegment"), ScheduledTaskTypeActionsOnPlayerSegment);
+
+    } 
+
+	if(value.IsValid())
+	{
+	    auto output = _ScheduledTaskTypeMap.Find(value->AsString());
+		if (output != nullptr)
+			return *output;
+	}
+
+
+    return ScheduledTaskTypeCloudScript; // Basically critical fail
+}
+
+
+PlayFab::AdminModels::FTaskInstanceBasicSummary::~FTaskInstanceBasicSummary()
+{
+    //if(TaskIdentifier != nullptr) delete TaskIdentifier;
+    
+}
+
+void PlayFab::AdminModels::FTaskInstanceBasicSummary::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(TaskInstanceId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("TaskInstanceId")); writer->WriteValue(TaskInstanceId); }
+	
+    if(TaskIdentifier.IsValid()) { writer->WriteIdentifierPrefix(TEXT("TaskIdentifier")); TaskIdentifier->writeJSON(writer); }
+	
+    writer->WriteIdentifierPrefix(TEXT("StartedAt")); writeDatetime(StartedAt, writer);
+	
+    if(CompletedAt.notNull()) { writer->WriteIdentifierPrefix(TEXT("CompletedAt")); writeDatetime(CompletedAt, writer); }
+	
+    if(Status.notNull()) { writer->WriteIdentifierPrefix(TEXT("Status")); writeTaskInstanceStatusEnumJSON(Status, writer); }
+	
+    if(PercentComplete.notNull()) { writer->WriteIdentifierPrefix(TEXT("PercentComplete")); writer->WriteValue(PercentComplete); }
+	
+    if(EstimatedSecondsRemaining.notNull()) { writer->WriteIdentifierPrefix(TEXT("EstimatedSecondsRemaining")); writer->WriteValue(EstimatedSecondsRemaining); }
+	
+    if(ScheduledByUserId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("ScheduledByUserId")); writer->WriteValue(ScheduledByUserId); }
+	
+    if(Type.notNull()) { writer->WriteIdentifierPrefix(TEXT("Type")); writeScheduledTaskTypeEnumJSON(Type, writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FTaskInstanceBasicSummary::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> TaskInstanceIdValue = obj->TryGetField(TEXT("TaskInstanceId"));
+    if (TaskInstanceIdValue.IsValid()&& !TaskInstanceIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TaskInstanceIdValue->TryGetString(TmpValue)) {TaskInstanceId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> TaskIdentifierValue = obj->TryGetField(TEXT("TaskIdentifier"));
+    if (TaskIdentifierValue.IsValid()&& !TaskIdentifierValue->IsNull())
+    {
+        TaskIdentifier = MakeShareable(new FNameIdentifier(TaskIdentifierValue->AsObject()));
+    }
+    
+    const TSharedPtr<FJsonValue> StartedAtValue = obj->TryGetField(TEXT("StartedAt"));
+    if(StartedAtValue.IsValid())
+    {
+        StartedAt = readDatetime(StartedAtValue);
+    }
+    
+    const TSharedPtr<FJsonValue> CompletedAtValue = obj->TryGetField(TEXT("CompletedAt"));
+    if(CompletedAtValue.IsValid())
+    {
+        CompletedAt = readDatetime(CompletedAtValue);
+    }
+    
+    Status = readTaskInstanceStatusFromValue(obj->TryGetField(TEXT("Status")));
+    
+    const TSharedPtr<FJsonValue> PercentCompleteValue = obj->TryGetField(TEXT("PercentComplete"));
+    if (PercentCompleteValue.IsValid()&& !PercentCompleteValue->IsNull())
+    {
+        double TmpValue;
+        if(PercentCompleteValue->TryGetNumber(TmpValue)) {PercentComplete = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> EstimatedSecondsRemainingValue = obj->TryGetField(TEXT("EstimatedSecondsRemaining"));
+    if (EstimatedSecondsRemainingValue.IsValid()&& !EstimatedSecondsRemainingValue->IsNull())
+    {
+        double TmpValue;
+        if(EstimatedSecondsRemainingValue->TryGetNumber(TmpValue)) {EstimatedSecondsRemaining = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ScheduledByUserIdValue = obj->TryGetField(TEXT("ScheduledByUserId"));
+    if (ScheduledByUserIdValue.IsValid()&& !ScheduledByUserIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(ScheduledByUserIdValue->TryGetString(TmpValue)) {ScheduledByUserId = TmpValue; }
+    }
+    
+    Type = readScheduledTaskTypeFromValue(obj->TryGetField(TEXT("Type")));
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetTaskInstancesResult::~FGetTaskInstancesResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetTaskInstancesResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Summaries.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("Summaries"));
+    
+        for (const FTaskInstanceBasicSummary& item : Summaries)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetTaskInstancesResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&SummariesArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Summaries"));
+        for (int32 Idx = 0; Idx < SummariesArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = SummariesArray[Idx];
+            
+            Summaries.Add(FTaskInstanceBasicSummary(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetTasksRequest::~FGetTasksRequest()
+{
+    //if(Identifier != nullptr) delete Identifier;
+    
+}
+
+void PlayFab::AdminModels::FGetTasksRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Identifier.IsValid()) { writer->WriteIdentifierPrefix(TEXT("Identifier")); Identifier->writeJSON(writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetTasksRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> IdentifierValue = obj->TryGetField(TEXT("Identifier"));
+    if (IdentifierValue.IsValid()&& !IdentifierValue->IsNull())
+    {
+        Identifier = MakeShareable(new FNameIdentifier(IdentifierValue->AsObject()));
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FScheduledTask::~FScheduledTask()
+{
+    
+}
+
+void PlayFab::AdminModels::FScheduledTask::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(TaskId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("TaskId")); writer->WriteValue(TaskId); }
+	
+    if(Name.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Name")); writer->WriteValue(Name); }
+	
+    if(Description.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Description")); writer->WriteValue(Description); }
+	
+    if(Schedule.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Schedule")); writer->WriteValue(Schedule); }
+	
+    writer->WriteIdentifierPrefix(TEXT("IsActive")); writer->WriteValue(IsActive);
+	
+    if(Type.notNull()) { writer->WriteIdentifierPrefix(TEXT("Type")); writeScheduledTaskTypeEnumJSON(Type, writer); }
+	
+    if(Parameter.notNull()) { writer->WriteIdentifierPrefix(TEXT("Parameter")); Parameter.writeJSON(writer); }
+	
+    if(LastRunTime.notNull()) { writer->WriteIdentifierPrefix(TEXT("LastRunTime")); writeDatetime(LastRunTime, writer); }
+	
+    if(NextRunTime.notNull()) { writer->WriteIdentifierPrefix(TEXT("NextRunTime")); writeDatetime(NextRunTime, writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FScheduledTask::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> TaskIdValue = obj->TryGetField(TEXT("TaskId"));
+    if (TaskIdValue.IsValid()&& !TaskIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TaskIdValue->TryGetString(TmpValue)) {TaskId = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> NameValue = obj->TryGetField(TEXT("Name"));
+    if (NameValue.IsValid()&& !NameValue->IsNull())
+    {
+        FString TmpValue;
+        if(NameValue->TryGetString(TmpValue)) {Name = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> DescriptionValue = obj->TryGetField(TEXT("Description"));
+    if (DescriptionValue.IsValid()&& !DescriptionValue->IsNull())
+    {
+        FString TmpValue;
+        if(DescriptionValue->TryGetString(TmpValue)) {Description = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ScheduleValue = obj->TryGetField(TEXT("Schedule"));
+    if (ScheduleValue.IsValid()&& !ScheduleValue->IsNull())
+    {
+        FString TmpValue;
+        if(ScheduleValue->TryGetString(TmpValue)) {Schedule = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> IsActiveValue = obj->TryGetField(TEXT("IsActive"));
+    if (IsActiveValue.IsValid()&& !IsActiveValue->IsNull())
+    {
+        bool TmpValue;
+        if(IsActiveValue->TryGetBool(TmpValue)) {IsActive = TmpValue; }
+    }
+    
+    Type = readScheduledTaskTypeFromValue(obj->TryGetField(TEXT("Type")));
+    
+    const TSharedPtr<FJsonValue> ParameterValue = obj->TryGetField(TEXT("Parameter"));
+    if (ParameterValue.IsValid()&& !ParameterValue->IsNull())
+    {
+        Parameter = FMultitypeVar(ParameterValue->AsObject());
+    }
+    
+    const TSharedPtr<FJsonValue> LastRunTimeValue = obj->TryGetField(TEXT("LastRunTime"));
+    if(LastRunTimeValue.IsValid())
+    {
+        LastRunTime = readDatetime(LastRunTimeValue);
+    }
+    
+    const TSharedPtr<FJsonValue> NextRunTimeValue = obj->TryGetField(TEXT("NextRunTime"));
+    if(NextRunTimeValue.IsValid())
+    {
+        NextRunTime = readDatetime(NextRunTimeValue);
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetTasksResult::~FGetTasksResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetTasksResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Tasks.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("Tasks"));
+    
+        for (const FScheduledTask& item : Tasks)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetTasksResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    {
+        const TArray< TSharedPtr<FJsonValue> >&TasksArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Tasks"));
+        for (int32 Idx = 0; Idx < TasksArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = TasksArray[Idx];
+            
+            Tasks.Add(FScheduledTask(CurrentItem->AsObject()));
+        }
+    }
+
     
     
     return HasSucceeded;
@@ -8332,6 +10327,68 @@ bool PlayFab::AdminModels::FRevokeInventoryResult::readFromValue(const TSharedPt
 }
 
 
+PlayFab::AdminModels::FRunTaskRequest::~FRunTaskRequest()
+{
+    //if(Identifier != nullptr) delete Identifier;
+    
+}
+
+void PlayFab::AdminModels::FRunTaskRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Identifier.IsValid()) { writer->WriteIdentifierPrefix(TEXT("Identifier")); Identifier->writeJSON(writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FRunTaskRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> IdentifierValue = obj->TryGetField(TEXT("Identifier"));
+    if (IdentifierValue.IsValid()&& !IdentifierValue->IsNull())
+    {
+        Identifier = MakeShareable(new FNameIdentifier(IdentifierValue->AsObject()));
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FRunTaskResult::~FRunTaskResult()
+{
+    
+}
+
+void PlayFab::AdminModels::FRunTaskResult::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(TaskInstanceId.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("TaskInstanceId")); writer->WriteValue(TaskInstanceId); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FRunTaskResult::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> TaskInstanceIdValue = obj->TryGetField(TEXT("TaskInstanceId"));
+    if (TaskInstanceIdValue.IsValid()&& !TaskInstanceIdValue->IsNull())
+    {
+        FString TmpValue;
+        if(TaskInstanceIdValue->TryGetString(TmpValue)) {TaskInstanceId = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
 PlayFab::AdminModels::FSendAccountRecoveryEmailRequest::~FSendAccountRecoveryEmailRequest()
 {
     
@@ -9307,6 +11364,85 @@ bool PlayFab::AdminModels::FUpdateStoreItemsResult::readFromValue(const TSharedP
 {
 	bool HasSucceeded = true; 
 	
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FUpdateTaskRequest::~FUpdateTaskRequest()
+{
+    //if(Identifier != nullptr) delete Identifier;
+    
+}
+
+void PlayFab::AdminModels::FUpdateTaskRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(Identifier.IsValid()) { writer->WriteIdentifierPrefix(TEXT("Identifier")); Identifier->writeJSON(writer); }
+	
+    writer->WriteIdentifierPrefix(TEXT("Name")); writer->WriteValue(Name);
+	
+    if(Description.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Description")); writer->WriteValue(Description); }
+	
+    if(Schedule.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Schedule")); writer->WriteValue(Schedule); }
+	
+    writer->WriteIdentifierPrefix(TEXT("IsActive")); writer->WriteValue(IsActive);
+	
+    writer->WriteIdentifierPrefix(TEXT("Type")); writeScheduledTaskTypeEnumJSON(Type, writer);
+	
+    if(Parameter.notNull()) { writer->WriteIdentifierPrefix(TEXT("Parameter")); Parameter.writeJSON(writer); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FUpdateTaskRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> IdentifierValue = obj->TryGetField(TEXT("Identifier"));
+    if (IdentifierValue.IsValid()&& !IdentifierValue->IsNull())
+    {
+        Identifier = MakeShareable(new FNameIdentifier(IdentifierValue->AsObject()));
+    }
+    
+    const TSharedPtr<FJsonValue> NameValue = obj->TryGetField(TEXT("Name"));
+    if (NameValue.IsValid()&& !NameValue->IsNull())
+    {
+        FString TmpValue;
+        if(NameValue->TryGetString(TmpValue)) {Name = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> DescriptionValue = obj->TryGetField(TEXT("Description"));
+    if (DescriptionValue.IsValid()&& !DescriptionValue->IsNull())
+    {
+        FString TmpValue;
+        if(DescriptionValue->TryGetString(TmpValue)) {Description = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ScheduleValue = obj->TryGetField(TEXT("Schedule"));
+    if (ScheduleValue.IsValid()&& !ScheduleValue->IsNull())
+    {
+        FString TmpValue;
+        if(ScheduleValue->TryGetString(TmpValue)) {Schedule = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> IsActiveValue = obj->TryGetField(TEXT("IsActive"));
+    if (IsActiveValue.IsValid()&& !IsActiveValue->IsNull())
+    {
+        bool TmpValue;
+        if(IsActiveValue->TryGetBool(TmpValue)) {IsActive = TmpValue; }
+    }
+    
+    Type = readScheduledTaskTypeFromValue(obj->TryGetField(TEXT("Type")));
+    
+    const TSharedPtr<FJsonValue> ParameterValue = obj->TryGetField(TEXT("Parameter"));
+    if (ParameterValue.IsValid()&& !ParameterValue->IsNull())
+    {
+        Parameter = FMultitypeVar(ParameterValue->AsObject());
+    }
+    
     
     return HasSucceeded;
 }

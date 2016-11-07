@@ -15,6 +15,22 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerActionsOnPlayersInSegmentTaskSummary(
+		const FBPServerActionsOnPlayersInSegmentTaskSummary& In
+        ,FString& OutTaskInstanceId
+        ,FBPServerNameIdentifier& OutTaskIdentifier
+        ,FDateTime& OutStartedAt
+        ,FDateTime& OutCompletedAt
+        ,float& OutPercentComplete
+        ,float& OutEstimatedSecondsRemaining
+        ,FString& OutScheduledByUserId
+        ,FString& OutErrorMessage
+        ,bool& OutErrorWasFatal
+        ,int32& OutTotalPlayersInSegment
+        ,int32& OutTotalPlayersProcessed
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerAdCampaignAttribution(
 		const FBPServerAdCampaignAttribution& In
         ,FString& OutPlatform
@@ -230,6 +246,16 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPServerConsumeItemResult& In
         ,FString& OutItemInstanceId
         ,int32& OutRemainingUses
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerContinentCode(
+		const FBPServerContinentCode& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerCountryCode(
+		const FBPServerCountryCode& In
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
@@ -1032,6 +1058,13 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerNameIdentifier(
+		const FBPServerNameIdentifier& In
+        ,FString& OutName
+        ,FString& OutId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerNotifyMatchmakerPlayerLeftRequest(
 		const FBPServerNotifyMatchmakerPlayerLeftRequest& In
         ,FString& OutLobbyId
@@ -1063,6 +1096,14 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutPlatformUserId
         ,FString& OutUsername
         ,FString& OutEmail
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerPlayerLocation(
+		const FBPServerPlayerLocation& In
+        ,FString& OutCity
+        ,float& OutLatitude
+        ,float& OutLongitude
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
@@ -1128,6 +1169,7 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
         ,FString& OutCouponCode
         ,FString& OutPlayFabId
         ,FString& OutCatalogVersion
+        ,FString& OutCharacterId
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
@@ -1413,6 +1455,11 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
+	static void BreakBPServerTaskInstanceStatus(
+		const FBPServerTaskInstanceStatus& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))
 	static void BreakBPServerTitleActivationStatus(
 		const FBPServerTitleActivationStatus& In
 	);
@@ -1508,6 +1555,7 @@ class UPFServerProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPServerUpdatePlayerStatisticsRequest& In
         ,FString& OutPlayFabId
         ,TArray<FBPServerStatisticUpdate>& OutStatistics
+        ,bool& OutForceUpdate
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Server", meta = (NativeBreakFunc))

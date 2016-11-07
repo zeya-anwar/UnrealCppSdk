@@ -21,7 +21,7 @@ public:
 	
 	// Adds the virtual goods associated with the coupon to the user's inventory. Coupons can be generated  via the Economy->Catalogs tab in the PlayFab Game Manager.
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Player Item Management")
-	static UPFServerRedeemCoupon* RedeemCoupon(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InCouponCode, const FString& InPlayFabId, const FString& InCatalogVersion);
+	static UPFServerRedeemCoupon* RedeemCoupon(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InCouponCode, const FString& InPlayFabId, const FString& InCatalogVersion, const FString& InCharacterId);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;

@@ -585,6 +585,8 @@ void UPFClientProxyLibrary::BreakBPClientGameInfo(
         ,int32& OutRunTime
         ,FString& OutGameServerData
         ,FDateTime& OutLastHeartbeat
+        ,FString& OutServerHostname
+        ,int32& OutServerPort
 	)
 {
     
@@ -599,6 +601,8 @@ void UPFClientProxyLibrary::BreakBPClientGameInfo(
 	OutGameServerData = In.Data.GameServerData;
 	
 	
+	OutServerHostname = In.Data.ServerHostname;
+	OutServerPort = In.Data.ServerPort;
 	
 }
 
@@ -2459,10 +2463,12 @@ void UPFClientProxyLibrary::BreakBPClientRedeemCouponRequest(
 		const FBPClientRedeemCouponRequest& In
         ,FString& OutCouponCode
         ,FString& OutCatalogVersion
+        ,FString& OutCharacterId
 	)
 {
     OutCouponCode = In.Data.CouponCode;
 	OutCatalogVersion = In.Data.CatalogVersion;
+	OutCharacterId = In.Data.CharacterId;
 	
 }
 

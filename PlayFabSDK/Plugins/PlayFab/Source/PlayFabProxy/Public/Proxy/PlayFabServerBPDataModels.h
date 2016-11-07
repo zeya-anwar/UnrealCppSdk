@@ -6,6 +6,16 @@
 #include "PlayFabServerBPDataModels.generated.h"
 
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerActionsOnPlayersInSegmentTaskSummary"))
+struct FBPServerActionsOnPlayersInSegmentTaskSummary
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FActionsOnPlayersInSegmentTaskSummary Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerActionsOnPlayersInSegmentTaskSummaryDelegate, const FBPServerActionsOnPlayersInSegmentTaskSummary&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerAdCampaignAttribution"))
 struct FBPServerAdCampaignAttribution
 {
@@ -275,6 +285,26 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerConsumeItemResultDelegate, const FBPServerConsumeItemResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerContinentCode"))
+struct FBPServerContinentCode
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::ContinentCode Data;	
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerContinentCodeDelegate, const FBPServerContinentCode&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerCountryCode"))
+struct FBPServerCountryCode
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::CountryCode Data;	
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerCountryCodeDelegate, const FBPServerCountryCode&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerCreateSharedGroupRequest"))
 struct FBPServerCreateSharedGroupRequest
@@ -1376,6 +1406,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerMoveItemToUserFromCharacterResultDelegate, const FBPServerMoveItemToUserFromCharacterResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerNameIdentifier"))
+struct FBPServerNameIdentifier
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FNameIdentifier Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerNameIdentifierDelegate, const FBPServerNameIdentifier&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerNotifyMatchmakerPlayerLeftRequest"))
 struct FBPServerNotifyMatchmakerPlayerLeftRequest
 {
@@ -1425,6 +1465,16 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerPlayerLinkedAccountDelegate, const FBPServerPlayerLinkedAccount&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerPlayerLocation"))
+struct FBPServerPlayerLocation
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::FPlayerLocation Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerPlayerLocationDelegate, const FBPServerPlayerLocation&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerPlayerProfile"))
 struct FBPServerPlayerProfile
@@ -1925,6 +1975,16 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerSubtractUserVirtualCurrencyRequestDelegate, const FBPServerSubtractUserVirtualCurrencyRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerTaskInstanceStatus"))
+struct FBPServerTaskInstanceStatus
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::ServerModels::TaskInstanceStatus Data;	
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPServerTaskInstanceStatusDelegate, const FBPServerTaskInstanceStatus&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFServerProxyLibrary.BreakBPServerTitleActivationStatus"))
 struct FBPServerTitleActivationStatus

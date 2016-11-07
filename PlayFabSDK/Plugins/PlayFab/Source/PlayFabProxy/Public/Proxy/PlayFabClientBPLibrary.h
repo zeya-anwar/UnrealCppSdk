@@ -352,6 +352,8 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
         ,int32& OutRunTime
         ,FString& OutGameServerData
         ,FDateTime& OutLastHeartbeat
+        ,FString& OutServerHostname
+        ,int32& OutServerPort
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))
@@ -1372,6 +1374,7 @@ class UPFClientProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPClientRedeemCouponRequest& In
         ,FString& OutCouponCode
         ,FString& OutCatalogVersion
+        ,FString& OutCharacterId
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Client", meta = (NativeBreakFunc))

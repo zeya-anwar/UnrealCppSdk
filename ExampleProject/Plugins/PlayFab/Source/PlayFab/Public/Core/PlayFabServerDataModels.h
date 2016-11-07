@@ -9,6 +9,122 @@ namespace ServerModels
 {
 
 	
+	struct PLAYFAB_API FNameIdentifier : public FPlayFabBaseModel
+    {
+		
+		// [optional] undefined
+		FString Name;
+		// [optional] undefined
+		FString Id;
+	
+        FNameIdentifier() :
+			FPlayFabBaseModel(),
+			Name(),
+			Id()
+			{}
+		
+		FNameIdentifier(const FNameIdentifier& src) :
+			FPlayFabBaseModel(),
+			Name(src.Name),
+			Id(src.Id)
+			{}
+			
+		FNameIdentifier(const TSharedPtr<FJsonObject>& obj) : FNameIdentifier()
+        {
+            readFromValue(obj);
+        }
+		
+		~FNameIdentifier();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	enum TaskInstanceStatus
+	{
+		TaskInstanceStatusSucceeded,
+		TaskInstanceStatusStarting,
+		TaskInstanceStatusInProgress,
+		TaskInstanceStatusFailed,
+		TaskInstanceStatusAborted,
+		TaskInstanceStatusPending
+	};
+	
+	void writeTaskInstanceStatusEnumJSON(TaskInstanceStatus enumVal, JsonWriter& writer);
+	TaskInstanceStatus readTaskInstanceStatusFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
+	struct PLAYFAB_API FActionsOnPlayersInSegmentTaskSummary : public FPlayFabBaseModel
+    {
+		
+		// [optional] ID of the task instance.
+		FString TaskInstanceId;
+		// [optional] Identifier of the task this instance belongs to.
+		TSharedPtr<FNameIdentifier> TaskIdentifier;
+		// UTC timestamp when the task started.
+		FDateTime StartedAt;
+		// [optional] UTC timestamp when the task completed.
+		OptionalTime CompletedAt;
+		// [optional] Current status of the task instance.
+		Boxed<TaskInstanceStatus> Status;
+		// [optional] Progress represented as percentage.
+		OptionalDouble PercentComplete;
+		// [optional] Estimated time remaining in seconds.
+		OptionalDouble EstimatedSecondsRemaining;
+		// [optional] If manually scheduled, ID of user who scheduled the task.
+		FString ScheduledByUserId;
+		// [optional] Error message for last processing attempt, if an error occured.
+		FString ErrorMessage;
+		// [optional] Flag indicating if the error was fatal, if false job will be retried.
+		OptionalBool ErrorWasFatal;
+		// [optional] Total players in segment when task was started.
+		OptionalInt32 TotalPlayersInSegment;
+		// [optional] Total number of players that have had the actions applied to.
+		OptionalInt32 TotalPlayersProcessed;
+	
+        FActionsOnPlayersInSegmentTaskSummary() :
+			FPlayFabBaseModel(),
+			TaskInstanceId(),
+			TaskIdentifier(nullptr),
+			StartedAt(0),
+			CompletedAt(),
+			Status(),
+			PercentComplete(),
+			EstimatedSecondsRemaining(),
+			ScheduledByUserId(),
+			ErrorMessage(),
+			ErrorWasFatal(),
+			TotalPlayersInSegment(),
+			TotalPlayersProcessed()
+			{}
+		
+		FActionsOnPlayersInSegmentTaskSummary(const FActionsOnPlayersInSegmentTaskSummary& src) :
+			FPlayFabBaseModel(),
+			TaskInstanceId(src.TaskInstanceId),
+			TaskIdentifier(src.TaskIdentifier.IsValid() ? MakeShareable(new FNameIdentifier(*src.TaskIdentifier)) : nullptr),
+			StartedAt(src.StartedAt),
+			CompletedAt(src.CompletedAt),
+			Status(src.Status),
+			PercentComplete(src.PercentComplete),
+			EstimatedSecondsRemaining(src.EstimatedSecondsRemaining),
+			ScheduledByUserId(src.ScheduledByUserId),
+			ErrorMessage(src.ErrorMessage),
+			ErrorWasFatal(src.ErrorWasFatal),
+			TotalPlayersInSegment(src.TotalPlayersInSegment),
+			TotalPlayersProcessed(src.TotalPlayersProcessed)
+			{}
+			
+		FActionsOnPlayersInSegmentTaskSummary(const TSharedPtr<FJsonObject>& obj) : FActionsOnPlayersInSegmentTaskSummary()
+        {
+            readFromValue(obj);
+        }
+		
+		~FActionsOnPlayersInSegmentTaskSummary();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FAdCampaignAttribution : public FPlayFabBaseModel
     {
 		
@@ -1416,7 +1532,7 @@ namespace ServerModels
 		FString ItemImageUrl;
 		// BETA: If true, then only a fixed number can ever be granted.
 		bool IsLimitedEdition;
-		// BETA: If IsLImitedEdition is true, then this determines amount of the item initially available. Note that this fieldis ignored if the catalog item already existed in this catalog, or the field is less than 1.
+		// If IsLImitedEdition is true, then this determines amount of the item initially available. Note that this fieldis ignored if the catalog item already existed in this catalog, or the field is less than 1.
 		int32 InitialLimitedEditionCount;
 	
         FCatalogItem() :
@@ -1754,6 +1870,278 @@ namespace ServerModels
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
+	
+	enum ContinentCode
+	{
+		ContinentCodeAF,
+		ContinentCodeAN,
+		ContinentCodeAS,
+		ContinentCodeEU,
+		ContinentCodeNA,
+		ContinentCodeOC,
+		ContinentCodeSA
+	};
+	
+	void writeContinentCodeEnumJSON(ContinentCode enumVal, JsonWriter& writer);
+	ContinentCode readContinentCodeFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
+	enum CountryCode
+	{
+		CountryCodeAF,
+		CountryCodeAX,
+		CountryCodeAL,
+		CountryCodeDZ,
+		CountryCodeAS,
+		CountryCodeAD,
+		CountryCodeAO,
+		CountryCodeAI,
+		CountryCodeAQ,
+		CountryCodeAG,
+		CountryCodeAR,
+		CountryCodeAM,
+		CountryCodeAW,
+		CountryCodeAU,
+		CountryCodeAT,
+		CountryCodeAZ,
+		CountryCodeBS,
+		CountryCodeBH,
+		CountryCodeBD,
+		CountryCodeBB,
+		CountryCodeBY,
+		CountryCodeBE,
+		CountryCodeBZ,
+		CountryCodeBJ,
+		CountryCodeBM,
+		CountryCodeBT,
+		CountryCodeBO,
+		CountryCodeBQ,
+		CountryCodeBA,
+		CountryCodeBW,
+		CountryCodeBV,
+		CountryCodeBR,
+		CountryCodeIO,
+		CountryCodeBN,
+		CountryCodeBG,
+		CountryCodeBF,
+		CountryCodeBI,
+		CountryCodeKH,
+		CountryCodeCM,
+		CountryCodeCA,
+		CountryCodeCV,
+		CountryCodeKY,
+		CountryCodeCF,
+		CountryCodeTD,
+		CountryCodeCL,
+		CountryCodeCN,
+		CountryCodeCX,
+		CountryCodeCC,
+		CountryCodeCO,
+		CountryCodeKM,
+		CountryCodeCG,
+		CountryCodeCD,
+		CountryCodeCK,
+		CountryCodeCR,
+		CountryCodeCI,
+		CountryCodeHR,
+		CountryCodeCU,
+		CountryCodeCW,
+		CountryCodeCY,
+		CountryCodeCZ,
+		CountryCodeDK,
+		CountryCodeDJ,
+		CountryCodeDM,
+		CountryCodeDO,
+		CountryCodeEC,
+		CountryCodeEG,
+		CountryCodeSV,
+		CountryCodeGQ,
+		CountryCodeER,
+		CountryCodeEE,
+		CountryCodeET,
+		CountryCodeFK,
+		CountryCodeFO,
+		CountryCodeFJ,
+		CountryCodeFI,
+		CountryCodeFR,
+		CountryCodeGF,
+		CountryCodePF,
+		CountryCodeTF,
+		CountryCodeGA,
+		CountryCodeGM,
+		CountryCodeGE,
+		CountryCodeDE,
+		CountryCodeGH,
+		CountryCodeGI,
+		CountryCodeGR,
+		CountryCodeGL,
+		CountryCodeGD,
+		CountryCodeGP,
+		CountryCodeGU,
+		CountryCodeGT,
+		CountryCodeGG,
+		CountryCodeGN,
+		CountryCodeGW,
+		CountryCodeGY,
+		CountryCodeHT,
+		CountryCodeHM,
+		CountryCodeVA,
+		CountryCodeHN,
+		CountryCodeHK,
+		CountryCodeHU,
+		CountryCodeIS,
+		CountryCodeIN,
+		CountryCodeID,
+		CountryCodeIR,
+		CountryCodeIQ,
+		CountryCodeIE,
+		CountryCodeIM,
+		CountryCodeIL,
+		CountryCodeIT,
+		CountryCodeJM,
+		CountryCodeJP,
+		CountryCodeJE,
+		CountryCodeJO,
+		CountryCodeKZ,
+		CountryCodeKE,
+		CountryCodeKI,
+		CountryCodeKP,
+		CountryCodeKR,
+		CountryCodeKW,
+		CountryCodeKG,
+		CountryCodeLA,
+		CountryCodeLV,
+		CountryCodeLB,
+		CountryCodeLS,
+		CountryCodeLR,
+		CountryCodeLY,
+		CountryCodeLI,
+		CountryCodeLT,
+		CountryCodeLU,
+		CountryCodeMO,
+		CountryCodeMK,
+		CountryCodeMG,
+		CountryCodeMW,
+		CountryCodeMY,
+		CountryCodeMV,
+		CountryCodeML,
+		CountryCodeMT,
+		CountryCodeMH,
+		CountryCodeMQ,
+		CountryCodeMR,
+		CountryCodeMU,
+		CountryCodeYT,
+		CountryCodeMX,
+		CountryCodeFM,
+		CountryCodeMD,
+		CountryCodeMC,
+		CountryCodeMN,
+		CountryCodeME,
+		CountryCodeMS,
+		CountryCodeMA,
+		CountryCodeMZ,
+		CountryCodeMM,
+		CountryCodeNA,
+		CountryCodeNR,
+		CountryCodeNP,
+		CountryCodeNL,
+		CountryCodeNC,
+		CountryCodeNZ,
+		CountryCodeNI,
+		CountryCodeNE,
+		CountryCodeNG,
+		CountryCodeNU,
+		CountryCodeNF,
+		CountryCodeMP,
+		CountryCodeNO,
+		CountryCodeOM,
+		CountryCodePK,
+		CountryCodePW,
+		CountryCodePS,
+		CountryCodePA,
+		CountryCodePG,
+		CountryCodePY,
+		CountryCodePE,
+		CountryCodePH,
+		CountryCodePN,
+		CountryCodePL,
+		CountryCodePT,
+		CountryCodePR,
+		CountryCodeQA,
+		CountryCodeRE,
+		CountryCodeRO,
+		CountryCodeRU,
+		CountryCodeRW,
+		CountryCodeBL,
+		CountryCodeSH,
+		CountryCodeKN,
+		CountryCodeLC,
+		CountryCodeMF,
+		CountryCodePM,
+		CountryCodeVC,
+		CountryCodeWS,
+		CountryCodeSM,
+		CountryCodeST,
+		CountryCodeSA,
+		CountryCodeSN,
+		CountryCodeRS,
+		CountryCodeSC,
+		CountryCodeSL,
+		CountryCodeSG,
+		CountryCodeSX,
+		CountryCodeSK,
+		CountryCodeSI,
+		CountryCodeSB,
+		CountryCodeSO,
+		CountryCodeZA,
+		CountryCodeGS,
+		CountryCodeSS,
+		CountryCodeES,
+		CountryCodeLK,
+		CountryCodeSD,
+		CountryCodeSR,
+		CountryCodeSJ,
+		CountryCodeSZ,
+		CountryCodeSE,
+		CountryCodeCH,
+		CountryCodeSY,
+		CountryCodeTW,
+		CountryCodeTJ,
+		CountryCodeTZ,
+		CountryCodeTH,
+		CountryCodeTL,
+		CountryCodeTG,
+		CountryCodeTK,
+		CountryCodeTO,
+		CountryCodeTT,
+		CountryCodeTN,
+		CountryCodeTR,
+		CountryCodeTM,
+		CountryCodeTC,
+		CountryCodeTV,
+		CountryCodeUG,
+		CountryCodeUA,
+		CountryCodeAE,
+		CountryCodeGB,
+		CountryCodeUS,
+		CountryCodeUM,
+		CountryCodeUY,
+		CountryCodeUZ,
+		CountryCodeVU,
+		CountryCodeVE,
+		CountryCodeVN,
+		CountryCodeVG,
+		CountryCodeVI,
+		CountryCodeWF,
+		CountryCodeEH,
+		CountryCodeYE,
+		CountryCodeZM,
+		CountryCodeZW
+	};
+	
+	void writeCountryCodeEnumJSON(CountryCode enumVal, JsonWriter& writer);
+	CountryCode readCountryCodeFromValue(const TSharedPtr<FJsonValue>& value);
+	
 	
 	struct PLAYFAB_API FCreateSharedGroupRequest : public FPlayFabBaseModel
     {
@@ -3743,6 +4131,49 @@ namespace ServerModels
 	LoginIdentityProvider readLoginIdentityProviderFromValue(const TSharedPtr<FJsonValue>& value);
 	
 	
+	struct PLAYFAB_API FPlayerLocation : public FPlayFabBaseModel
+    {
+		
+		// The two-character continent code for this location
+		ContinentCode pfContinentCode;
+		// The two-character ISO 3166-1 country code for the country associated with the location
+		CountryCode pfCountryCode;
+		// [optional] City of the player's geographic location.
+		FString City;
+		// [optional] Latitude coordinate of the player's geographic location.
+		OptionalDouble Latitude;
+		// [optional] Longitude coordinate of the player's geographic location.
+		OptionalDouble Longitude;
+	
+        FPlayerLocation() :
+			FPlayFabBaseModel(),
+			pfContinentCode(),
+			pfCountryCode(),
+			City(),
+			Latitude(),
+			Longitude()
+			{}
+		
+		FPlayerLocation(const FPlayerLocation& src) :
+			FPlayFabBaseModel(),
+			pfContinentCode(src.pfContinentCode),
+			pfCountryCode(src.pfCountryCode),
+			City(src.City),
+			Latitude(src.Latitude),
+			Longitude(src.Longitude)
+			{}
+			
+		FPlayerLocation(const TSharedPtr<FJsonObject>& obj) : FPlayerLocation()
+        {
+            readFromValue(obj);
+        }
+		
+		~FPlayerLocation();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	enum PushNotificationPlatform
 	{
 		PushNotificationPlatformApplePushNotificationService,
@@ -3889,6 +4320,8 @@ namespace ServerModels
 		TMap<FString, uint32> ValuesToDate;
 		// [optional] List of player's tags for segmentation.
 		TArray<FString> Tags;
+		// [optional] Dictionary of player's locations by type.
+		TMap<FString, FPlayerLocation> Locations;
 		// [optional] Dictionary of player's virtual currency balances
 		TMap<FString, int32> VirtualCurrencyBalances;
 		// [optional] Array of ad campaigns player has been attributed to
@@ -3914,6 +4347,7 @@ namespace ServerModels
 			TotalValueToDateInUSD(),
 			ValuesToDate(),
 			Tags(),
+			Locations(),
 			VirtualCurrencyBalances(),
 			AdCampaignAttributions(),
 			PushNotificationRegistrations(),
@@ -3935,6 +4369,7 @@ namespace ServerModels
 			TotalValueToDateInUSD(src.TotalValueToDateInUSD),
 			ValuesToDate(src.ValuesToDate),
 			Tags(src.Tags),
+			Locations(src.Locations),
 			VirtualCurrencyBalances(src.VirtualCurrencyBalances),
 			AdCampaignAttributions(src.AdCampaignAttributions),
 			PushNotificationRegistrations(src.PushNotificationRegistrations),
@@ -5997,19 +6432,23 @@ namespace ServerModels
 		FString PlayFabId;
 		// [optional] Catalog version of the coupon.
 		FString CatalogVersion;
+		// [optional] Optional identifier for the Character that should receive the item. If null, item is added to the player
+		FString CharacterId;
 	
         FRedeemCouponRequest() :
 			FPlayFabBaseModel(),
 			CouponCode(),
 			PlayFabId(),
-			CatalogVersion()
+			CatalogVersion(),
+			CharacterId()
 			{}
 		
 		FRedeemCouponRequest(const FRedeemCouponRequest& src) :
 			FPlayFabBaseModel(),
 			CouponCode(src.CouponCode),
 			PlayFabId(src.PlayFabId),
-			CatalogVersion(src.CatalogVersion)
+			CatalogVersion(src.CatalogVersion),
+			CharacterId(src.CharacterId)
 			{}
 			
 		FRedeemCouponRequest(const TSharedPtr<FJsonObject>& obj) : FRedeemCouponRequest()
@@ -7428,17 +7867,21 @@ namespace ServerModels
 		FString PlayFabId;
 		// Statistics to be updated with the provided values
 		TArray<FStatisticUpdate> Statistics;
+		// [optional] Indicates whether the statistics provided should be set, regardless of the aggregation method set on the statistic. Default is false.
+		OptionalBool ForceUpdate;
 	
         FUpdatePlayerStatisticsRequest() :
 			FPlayFabBaseModel(),
 			PlayFabId(),
-			Statistics()
+			Statistics(),
+			ForceUpdate()
 			{}
 		
 		FUpdatePlayerStatisticsRequest(const FUpdatePlayerStatisticsRequest& src) :
 			FPlayFabBaseModel(),
 			PlayFabId(src.PlayFabId),
-			Statistics(src.Statistics)
+			Statistics(src.Statistics),
+			ForceUpdate(src.ForceUpdate)
 			{}
 			
 		FUpdatePlayerStatisticsRequest(const TSharedPtr<FJsonObject>& obj) : FUpdatePlayerStatisticsRequest()
@@ -7684,7 +8127,7 @@ namespace ServerModels
 	struct PLAYFAB_API FWriteEventResponse : public FPlayFabBaseModel
     {
 		
-		// [optional] The unique identifier of the event. This can be used to retrieve the event's properties using the GetEvent API. The values of this identifier consist of ASCII characters and are not constrained to any particular format.
+		// [optional] The unique identifier of the event. The values of this identifier consist of ASCII characters and are not constrained to any particular format.
 		FString EventId;
 	
         FWriteEventResponse() :

@@ -9,6 +9,180 @@ namespace AdminModels
 {
 
 	
+	struct PLAYFAB_API FAbortTaskInstanceRequest : public FPlayFabBaseModel
+    {
+		
+		// ID of a task instance that is being aborted.
+		FString TaskInstanceId;
+	
+        FAbortTaskInstanceRequest() :
+			FPlayFabBaseModel(),
+			TaskInstanceId()
+			{}
+		
+		FAbortTaskInstanceRequest(const FAbortTaskInstanceRequest& src) :
+			FPlayFabBaseModel(),
+			TaskInstanceId(src.TaskInstanceId)
+			{}
+			
+		FAbortTaskInstanceRequest(const TSharedPtr<FJsonObject>& obj) : FAbortTaskInstanceRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FAbortTaskInstanceRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FActionsOnPlayersInSegmentTaskParameter : public FPlayFabBaseModel
+    {
+		
+		// ID of the segment to perform actions on.
+		FString SegmentId;
+		// ID of the action to perform on each player in segment.
+		FString ActionId;
+	
+        FActionsOnPlayersInSegmentTaskParameter() :
+			FPlayFabBaseModel(),
+			SegmentId(),
+			ActionId()
+			{}
+		
+		FActionsOnPlayersInSegmentTaskParameter(const FActionsOnPlayersInSegmentTaskParameter& src) :
+			FPlayFabBaseModel(),
+			SegmentId(src.SegmentId),
+			ActionId(src.ActionId)
+			{}
+			
+		FActionsOnPlayersInSegmentTaskParameter(const TSharedPtr<FJsonObject>& obj) : FActionsOnPlayersInSegmentTaskParameter()
+        {
+            readFromValue(obj);
+        }
+		
+		~FActionsOnPlayersInSegmentTaskParameter();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FNameIdentifier : public FPlayFabBaseModel
+    {
+		
+		// [optional] undefined
+		FString Name;
+		// [optional] undefined
+		FString Id;
+	
+        FNameIdentifier() :
+			FPlayFabBaseModel(),
+			Name(),
+			Id()
+			{}
+		
+		FNameIdentifier(const FNameIdentifier& src) :
+			FPlayFabBaseModel(),
+			Name(src.Name),
+			Id(src.Id)
+			{}
+			
+		FNameIdentifier(const TSharedPtr<FJsonObject>& obj) : FNameIdentifier()
+        {
+            readFromValue(obj);
+        }
+		
+		~FNameIdentifier();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	enum TaskInstanceStatus
+	{
+		TaskInstanceStatusSucceeded,
+		TaskInstanceStatusStarting,
+		TaskInstanceStatusInProgress,
+		TaskInstanceStatusFailed,
+		TaskInstanceStatusAborted,
+		TaskInstanceStatusPending
+	};
+	
+	void writeTaskInstanceStatusEnumJSON(TaskInstanceStatus enumVal, JsonWriter& writer);
+	TaskInstanceStatus readTaskInstanceStatusFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
+	struct PLAYFAB_API FActionsOnPlayersInSegmentTaskSummary : public FPlayFabBaseModel
+    {
+		
+		// [optional] ID of the task instance.
+		FString TaskInstanceId;
+		// [optional] Identifier of the task this instance belongs to.
+		TSharedPtr<FNameIdentifier> TaskIdentifier;
+		// UTC timestamp when the task started.
+		FDateTime StartedAt;
+		// [optional] UTC timestamp when the task completed.
+		OptionalTime CompletedAt;
+		// [optional] Current status of the task instance.
+		Boxed<TaskInstanceStatus> Status;
+		// [optional] Progress represented as percentage.
+		OptionalDouble PercentComplete;
+		// [optional] Estimated time remaining in seconds.
+		OptionalDouble EstimatedSecondsRemaining;
+		// [optional] If manually scheduled, ID of user who scheduled the task.
+		FString ScheduledByUserId;
+		// [optional] Error message for last processing attempt, if an error occured.
+		FString ErrorMessage;
+		// [optional] Flag indicating if the error was fatal, if false job will be retried.
+		OptionalBool ErrorWasFatal;
+		// [optional] Total players in segment when task was started.
+		OptionalInt32 TotalPlayersInSegment;
+		// [optional] Total number of players that have had the actions applied to.
+		OptionalInt32 TotalPlayersProcessed;
+	
+        FActionsOnPlayersInSegmentTaskSummary() :
+			FPlayFabBaseModel(),
+			TaskInstanceId(),
+			TaskIdentifier(nullptr),
+			StartedAt(0),
+			CompletedAt(),
+			Status(),
+			PercentComplete(),
+			EstimatedSecondsRemaining(),
+			ScheduledByUserId(),
+			ErrorMessage(),
+			ErrorWasFatal(),
+			TotalPlayersInSegment(),
+			TotalPlayersProcessed()
+			{}
+		
+		FActionsOnPlayersInSegmentTaskSummary(const FActionsOnPlayersInSegmentTaskSummary& src) :
+			FPlayFabBaseModel(),
+			TaskInstanceId(src.TaskInstanceId),
+			TaskIdentifier(src.TaskIdentifier.IsValid() ? MakeShareable(new FNameIdentifier(*src.TaskIdentifier)) : nullptr),
+			StartedAt(src.StartedAt),
+			CompletedAt(src.CompletedAt),
+			Status(src.Status),
+			PercentComplete(src.PercentComplete),
+			EstimatedSecondsRemaining(src.EstimatedSecondsRemaining),
+			ScheduledByUserId(src.ScheduledByUserId),
+			ErrorMessage(src.ErrorMessage),
+			ErrorWasFatal(src.ErrorWasFatal),
+			TotalPlayersInSegment(src.TotalPlayersInSegment),
+			TotalPlayersProcessed(src.TotalPlayersProcessed)
+			{}
+			
+		FActionsOnPlayersInSegmentTaskSummary(const TSharedPtr<FJsonObject>& obj) : FActionsOnPlayersInSegmentTaskSummary()
+        {
+            readFromValue(obj);
+        }
+		
+		~FActionsOnPlayersInSegmentTaskSummary();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FAdCampaignAttribution : public FPlayFabBaseModel
     {
 		
@@ -728,7 +902,7 @@ namespace AdminModels
 		FString ItemImageUrl;
 		// BETA: If true, then only a fixed number can ever be granted.
 		bool IsLimitedEdition;
-		// BETA: If IsLImitedEdition is true, then this determines amount of the item initially available. Note that this fieldis ignored if the catalog item already existed in this catalog, or the field is less than 1.
+		// If IsLImitedEdition is true, then this determines amount of the item initially available. Note that this fieldis ignored if the catalog item already existed in this catalog, or the field is less than 1.
 		int32 InitialLimitedEditionCount;
 	
         FCatalogItem() :
@@ -817,6 +991,229 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FCloudScriptTaskParameter : public FPlayFabBaseModel
+    {
+		
+		// [optional] Name of the CloudScript function to execute.
+		FString FunctionName;
+		// [optional] Argument to pass to the CloudScript function.
+		FMultitypeVar Argument;
+	
+        FCloudScriptTaskParameter() :
+			FPlayFabBaseModel(),
+			FunctionName(),
+			Argument()
+			{}
+		
+		FCloudScriptTaskParameter(const FCloudScriptTaskParameter& src) :
+			FPlayFabBaseModel(),
+			FunctionName(src.FunctionName),
+			Argument(src.Argument)
+			{}
+			
+		FCloudScriptTaskParameter(const TSharedPtr<FJsonObject>& obj) : FCloudScriptTaskParameter()
+        {
+            readFromValue(obj);
+        }
+		
+		~FCloudScriptTaskParameter();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FLogStatement : public FPlayFabBaseModel
+    {
+		
+		// [optional] 'Debug', 'Info', or 'Error'
+		FString Level;
+		// [optional] undefined
+		FString Message;
+		// [optional] Optional object accompanying the message as contextual information
+		FMultitypeVar Data;
+	
+        FLogStatement() :
+			FPlayFabBaseModel(),
+			Level(),
+			Message(),
+			Data()
+			{}
+		
+		FLogStatement(const FLogStatement& src) :
+			FPlayFabBaseModel(),
+			Level(src.Level),
+			Message(src.Message),
+			Data(src.Data)
+			{}
+			
+		FLogStatement(const TSharedPtr<FJsonObject>& obj) : FLogStatement()
+        {
+            readFromValue(obj);
+        }
+		
+		~FLogStatement();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FScriptExecutionError : public FPlayFabBaseModel
+    {
+		
+		// [optional] Error code, such as CloudScriptNotFound, JavascriptException, CloudScriptFunctionArgumentSizeExceeded, CloudScriptAPIRequestCountExceeded, CloudScriptAPIRequestError, or CloudScriptHTTPRequestError
+		FString Error;
+		// [optional] Details about the error
+		FString Message;
+		// [optional] Point during the execution of the script at which the error occurred, if any
+		FString StackTrace;
+	
+        FScriptExecutionError() :
+			FPlayFabBaseModel(),
+			Error(),
+			Message(),
+			StackTrace()
+			{}
+		
+		FScriptExecutionError(const FScriptExecutionError& src) :
+			FPlayFabBaseModel(),
+			Error(src.Error),
+			Message(src.Message),
+			StackTrace(src.StackTrace)
+			{}
+			
+		FScriptExecutionError(const TSharedPtr<FJsonObject>& obj) : FScriptExecutionError()
+        {
+            readFromValue(obj);
+        }
+		
+		~FScriptExecutionError();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FExecuteCloudScriptResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] The name of the function that executed
+		FString FunctionName;
+		// The revision of the CloudScript that executed
+		int32 Revision;
+		// [optional] The object returned from the CloudScript function, if any
+		FMultitypeVar FunctionResult;
+		// [optional] Entries logged during the function execution. These include both entries logged in the function code using log.info() and log.error() and error entries for API and HTTP request failures.
+		TArray<FLogStatement> Logs;
+		// undefined
+		double ExecutionTimeSeconds;
+		// Processor time consumed while executing the function. This does not include time spent waiting on API calls or HTTP requests.
+		double ProcessorTimeSeconds;
+		// undefined
+		uint32 MemoryConsumedBytes;
+		// Number of PlayFab API requests issued by the CloudScript function
+		int32 APIRequestsIssued;
+		// Number of external HTTP requests issued by the CloudScript function
+		int32 HttpRequestsIssued;
+		// [optional] Information about the error, if any, that occured during execution
+		TSharedPtr<FScriptExecutionError> Error;
+	
+        FExecuteCloudScriptResult() :
+			FPlayFabBaseModel(),
+			FunctionName(),
+			Revision(0),
+			FunctionResult(),
+			Logs(),
+			ExecutionTimeSeconds(0),
+			ProcessorTimeSeconds(0),
+			MemoryConsumedBytes(0),
+			APIRequestsIssued(0),
+			HttpRequestsIssued(0),
+			Error(nullptr)
+			{}
+		
+		FExecuteCloudScriptResult(const FExecuteCloudScriptResult& src) :
+			FPlayFabBaseModel(),
+			FunctionName(src.FunctionName),
+			Revision(src.Revision),
+			FunctionResult(src.FunctionResult),
+			Logs(src.Logs),
+			ExecutionTimeSeconds(src.ExecutionTimeSeconds),
+			ProcessorTimeSeconds(src.ProcessorTimeSeconds),
+			MemoryConsumedBytes(src.MemoryConsumedBytes),
+			APIRequestsIssued(src.APIRequestsIssued),
+			HttpRequestsIssued(src.HttpRequestsIssued),
+			Error(src.Error.IsValid() ? MakeShareable(new FScriptExecutionError(*src.Error)) : nullptr)
+			{}
+			
+		FExecuteCloudScriptResult(const TSharedPtr<FJsonObject>& obj) : FExecuteCloudScriptResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FExecuteCloudScriptResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FCloudScriptTaskSummary : public FPlayFabBaseModel
+    {
+		
+		// [optional] ID of the task instance.
+		FString TaskInstanceId;
+		// [optional] Identifier of the task this instance belongs to.
+		TSharedPtr<FNameIdentifier> TaskIdentifier;
+		// UTC timestamp when the task started.
+		FDateTime StartedAt;
+		// [optional] UTC timestamp when the task completed.
+		OptionalTime CompletedAt;
+		// [optional] Current status of the task instance.
+		Boxed<TaskInstanceStatus> Status;
+		// [optional] Progress represented as percentage.
+		OptionalDouble PercentComplete;
+		// [optional] Estimated time remaining in seconds.
+		OptionalDouble EstimatedSecondsRemaining;
+		// [optional] If manually scheduled, ID of user who scheduled the task.
+		FString ScheduledByUserId;
+		// [optional] Result of CloudScript execution
+		TSharedPtr<FExecuteCloudScriptResult> Result;
+	
+        FCloudScriptTaskSummary() :
+			FPlayFabBaseModel(),
+			TaskInstanceId(),
+			TaskIdentifier(nullptr),
+			StartedAt(0),
+			CompletedAt(),
+			Status(),
+			PercentComplete(),
+			EstimatedSecondsRemaining(),
+			ScheduledByUserId(),
+			Result(nullptr)
+			{}
+		
+		FCloudScriptTaskSummary(const FCloudScriptTaskSummary& src) :
+			FPlayFabBaseModel(),
+			TaskInstanceId(src.TaskInstanceId),
+			TaskIdentifier(src.TaskIdentifier.IsValid() ? MakeShareable(new FNameIdentifier(*src.TaskIdentifier)) : nullptr),
+			StartedAt(src.StartedAt),
+			CompletedAt(src.CompletedAt),
+			Status(src.Status),
+			PercentComplete(src.PercentComplete),
+			EstimatedSecondsRemaining(src.EstimatedSecondsRemaining),
+			ScheduledByUserId(src.ScheduledByUserId),
+			Result(src.Result.IsValid() ? MakeShareable(new FExecuteCloudScriptResult(*src.Result)) : nullptr)
+			{}
+			
+		FCloudScriptTaskSummary(const TSharedPtr<FJsonObject>& obj) : FCloudScriptTaskSummary()
+        {
+            readFromValue(obj);
+        }
+		
+		~FCloudScriptTaskSummary();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FCloudScriptVersionStatus : public FPlayFabBaseModel
     {
 		
@@ -882,6 +1279,364 @@ namespace AdminModels
         }
 		
 		~FContentInfo();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	enum ContinentCode
+	{
+		ContinentCodeAF,
+		ContinentCodeAN,
+		ContinentCodeAS,
+		ContinentCodeEU,
+		ContinentCodeNA,
+		ContinentCodeOC,
+		ContinentCodeSA
+	};
+	
+	void writeContinentCodeEnumJSON(ContinentCode enumVal, JsonWriter& writer);
+	ContinentCode readContinentCodeFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
+	enum CountryCode
+	{
+		CountryCodeAF,
+		CountryCodeAX,
+		CountryCodeAL,
+		CountryCodeDZ,
+		CountryCodeAS,
+		CountryCodeAD,
+		CountryCodeAO,
+		CountryCodeAI,
+		CountryCodeAQ,
+		CountryCodeAG,
+		CountryCodeAR,
+		CountryCodeAM,
+		CountryCodeAW,
+		CountryCodeAU,
+		CountryCodeAT,
+		CountryCodeAZ,
+		CountryCodeBS,
+		CountryCodeBH,
+		CountryCodeBD,
+		CountryCodeBB,
+		CountryCodeBY,
+		CountryCodeBE,
+		CountryCodeBZ,
+		CountryCodeBJ,
+		CountryCodeBM,
+		CountryCodeBT,
+		CountryCodeBO,
+		CountryCodeBQ,
+		CountryCodeBA,
+		CountryCodeBW,
+		CountryCodeBV,
+		CountryCodeBR,
+		CountryCodeIO,
+		CountryCodeBN,
+		CountryCodeBG,
+		CountryCodeBF,
+		CountryCodeBI,
+		CountryCodeKH,
+		CountryCodeCM,
+		CountryCodeCA,
+		CountryCodeCV,
+		CountryCodeKY,
+		CountryCodeCF,
+		CountryCodeTD,
+		CountryCodeCL,
+		CountryCodeCN,
+		CountryCodeCX,
+		CountryCodeCC,
+		CountryCodeCO,
+		CountryCodeKM,
+		CountryCodeCG,
+		CountryCodeCD,
+		CountryCodeCK,
+		CountryCodeCR,
+		CountryCodeCI,
+		CountryCodeHR,
+		CountryCodeCU,
+		CountryCodeCW,
+		CountryCodeCY,
+		CountryCodeCZ,
+		CountryCodeDK,
+		CountryCodeDJ,
+		CountryCodeDM,
+		CountryCodeDO,
+		CountryCodeEC,
+		CountryCodeEG,
+		CountryCodeSV,
+		CountryCodeGQ,
+		CountryCodeER,
+		CountryCodeEE,
+		CountryCodeET,
+		CountryCodeFK,
+		CountryCodeFO,
+		CountryCodeFJ,
+		CountryCodeFI,
+		CountryCodeFR,
+		CountryCodeGF,
+		CountryCodePF,
+		CountryCodeTF,
+		CountryCodeGA,
+		CountryCodeGM,
+		CountryCodeGE,
+		CountryCodeDE,
+		CountryCodeGH,
+		CountryCodeGI,
+		CountryCodeGR,
+		CountryCodeGL,
+		CountryCodeGD,
+		CountryCodeGP,
+		CountryCodeGU,
+		CountryCodeGT,
+		CountryCodeGG,
+		CountryCodeGN,
+		CountryCodeGW,
+		CountryCodeGY,
+		CountryCodeHT,
+		CountryCodeHM,
+		CountryCodeVA,
+		CountryCodeHN,
+		CountryCodeHK,
+		CountryCodeHU,
+		CountryCodeIS,
+		CountryCodeIN,
+		CountryCodeID,
+		CountryCodeIR,
+		CountryCodeIQ,
+		CountryCodeIE,
+		CountryCodeIM,
+		CountryCodeIL,
+		CountryCodeIT,
+		CountryCodeJM,
+		CountryCodeJP,
+		CountryCodeJE,
+		CountryCodeJO,
+		CountryCodeKZ,
+		CountryCodeKE,
+		CountryCodeKI,
+		CountryCodeKP,
+		CountryCodeKR,
+		CountryCodeKW,
+		CountryCodeKG,
+		CountryCodeLA,
+		CountryCodeLV,
+		CountryCodeLB,
+		CountryCodeLS,
+		CountryCodeLR,
+		CountryCodeLY,
+		CountryCodeLI,
+		CountryCodeLT,
+		CountryCodeLU,
+		CountryCodeMO,
+		CountryCodeMK,
+		CountryCodeMG,
+		CountryCodeMW,
+		CountryCodeMY,
+		CountryCodeMV,
+		CountryCodeML,
+		CountryCodeMT,
+		CountryCodeMH,
+		CountryCodeMQ,
+		CountryCodeMR,
+		CountryCodeMU,
+		CountryCodeYT,
+		CountryCodeMX,
+		CountryCodeFM,
+		CountryCodeMD,
+		CountryCodeMC,
+		CountryCodeMN,
+		CountryCodeME,
+		CountryCodeMS,
+		CountryCodeMA,
+		CountryCodeMZ,
+		CountryCodeMM,
+		CountryCodeNA,
+		CountryCodeNR,
+		CountryCodeNP,
+		CountryCodeNL,
+		CountryCodeNC,
+		CountryCodeNZ,
+		CountryCodeNI,
+		CountryCodeNE,
+		CountryCodeNG,
+		CountryCodeNU,
+		CountryCodeNF,
+		CountryCodeMP,
+		CountryCodeNO,
+		CountryCodeOM,
+		CountryCodePK,
+		CountryCodePW,
+		CountryCodePS,
+		CountryCodePA,
+		CountryCodePG,
+		CountryCodePY,
+		CountryCodePE,
+		CountryCodePH,
+		CountryCodePN,
+		CountryCodePL,
+		CountryCodePT,
+		CountryCodePR,
+		CountryCodeQA,
+		CountryCodeRE,
+		CountryCodeRO,
+		CountryCodeRU,
+		CountryCodeRW,
+		CountryCodeBL,
+		CountryCodeSH,
+		CountryCodeKN,
+		CountryCodeLC,
+		CountryCodeMF,
+		CountryCodePM,
+		CountryCodeVC,
+		CountryCodeWS,
+		CountryCodeSM,
+		CountryCodeST,
+		CountryCodeSA,
+		CountryCodeSN,
+		CountryCodeRS,
+		CountryCodeSC,
+		CountryCodeSL,
+		CountryCodeSG,
+		CountryCodeSX,
+		CountryCodeSK,
+		CountryCodeSI,
+		CountryCodeSB,
+		CountryCodeSO,
+		CountryCodeZA,
+		CountryCodeGS,
+		CountryCodeSS,
+		CountryCodeES,
+		CountryCodeLK,
+		CountryCodeSD,
+		CountryCodeSR,
+		CountryCodeSJ,
+		CountryCodeSZ,
+		CountryCodeSE,
+		CountryCodeCH,
+		CountryCodeSY,
+		CountryCodeTW,
+		CountryCodeTJ,
+		CountryCodeTZ,
+		CountryCodeTH,
+		CountryCodeTL,
+		CountryCodeTG,
+		CountryCodeTK,
+		CountryCodeTO,
+		CountryCodeTT,
+		CountryCodeTN,
+		CountryCodeTR,
+		CountryCodeTM,
+		CountryCodeTC,
+		CountryCodeTV,
+		CountryCodeUG,
+		CountryCodeUA,
+		CountryCodeAE,
+		CountryCodeGB,
+		CountryCodeUS,
+		CountryCodeUM,
+		CountryCodeUY,
+		CountryCodeUZ,
+		CountryCodeVU,
+		CountryCodeVE,
+		CountryCodeVN,
+		CountryCodeVG,
+		CountryCodeVI,
+		CountryCodeWF,
+		CountryCodeEH,
+		CountryCodeYE,
+		CountryCodeZM,
+		CountryCodeZW
+	};
+	
+	void writeCountryCodeEnumJSON(CountryCode enumVal, JsonWriter& writer);
+	CountryCode readCountryCodeFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
+	struct PLAYFAB_API FCreateActionsOnPlayerSegmentTaskRequest : public FPlayFabBaseModel
+    {
+		
+		// Name of the task. This is a unique identifier for tasks in the title.
+		FString Name;
+		// [optional] Description the task
+		FString Description;
+		// [optional] Cron expression for the run schedule of the task. The expression should be in UTC.
+		FString Schedule;
+		// Whether the schedule is active. Inactive schedule will not trigger task execution.
+		bool IsActive;
+		// Task details related to segment and action
+		FActionsOnPlayersInSegmentTaskParameter Parameter;
+	
+        FCreateActionsOnPlayerSegmentTaskRequest() :
+			FPlayFabBaseModel(),
+			Name(),
+			Description(),
+			Schedule(),
+			IsActive(false),
+			Parameter()
+			{}
+		
+		FCreateActionsOnPlayerSegmentTaskRequest(const FCreateActionsOnPlayerSegmentTaskRequest& src) :
+			FPlayFabBaseModel(),
+			Name(src.Name),
+			Description(src.Description),
+			Schedule(src.Schedule),
+			IsActive(src.IsActive),
+			Parameter(src.Parameter)
+			{}
+			
+		FCreateActionsOnPlayerSegmentTaskRequest(const TSharedPtr<FJsonObject>& obj) : FCreateActionsOnPlayerSegmentTaskRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FCreateActionsOnPlayerSegmentTaskRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FCreateCloudScriptTaskRequest : public FPlayFabBaseModel
+    {
+		
+		// Name of the task. This is a unique identifier for tasks in the title.
+		FString Name;
+		// [optional] Description the task
+		FString Description;
+		// [optional] Cron expression for the run schedule of the task. The expression should be in UTC.
+		FString Schedule;
+		// Whether the schedule is active. Inactive schedule will not trigger task execution.
+		bool IsActive;
+		// Task details related to CloudScript
+		FCloudScriptTaskParameter Parameter;
+	
+        FCreateCloudScriptTaskRequest() :
+			FPlayFabBaseModel(),
+			Name(),
+			Description(),
+			Schedule(),
+			IsActive(false),
+			Parameter()
+			{}
+		
+		FCreateCloudScriptTaskRequest(const FCreateCloudScriptTaskRequest& src) :
+			FPlayFabBaseModel(),
+			Name(src.Name),
+			Description(src.Description),
+			Schedule(src.Schedule),
+			IsActive(src.IsActive),
+			Parameter(src.Parameter)
+			{}
+			
+		FCreateCloudScriptTaskRequest(const TSharedPtr<FJsonObject>& obj) : FCreateCloudScriptTaskRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FCreateCloudScriptTaskRequest();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -1008,6 +1763,33 @@ namespace AdminModels
         }
 		
 		~FCreatePlayerStatisticDefinitionResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FCreateTaskResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] ID of the task
+		FString TaskId;
+	
+        FCreateTaskResult() :
+			FPlayFabBaseModel(),
+			TaskId()
+			{}
+		
+		FCreateTaskResult(const FCreateTaskResult& src) :
+			FPlayFabBaseModel(),
+			TaskId(src.TaskId)
+			{}
+			
+		FCreateTaskResult(const TSharedPtr<FJsonObject>& obj) : FCreateTaskResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FCreateTaskResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -1264,6 +2046,33 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FDeleteTaskRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] Specify either the task ID or the name of task to be deleted.
+		TSharedPtr<FNameIdentifier> Identifier;
+	
+        FDeleteTaskRequest() :
+			FPlayFabBaseModel(),
+			Identifier(nullptr)
+			{}
+		
+		FDeleteTaskRequest(const FDeleteTaskRequest& src) :
+			FPlayFabBaseModel(),
+			Identifier(src.Identifier.IsValid() ? MakeShareable(new FNameIdentifier(*src.Identifier)) : nullptr)
+			{}
+			
+		FDeleteTaskRequest(const TSharedPtr<FJsonObject>& obj) : FDeleteTaskRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FDeleteTaskRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FDeleteUsersRequest : public FPlayFabBaseModel
     {
 		
@@ -1313,6 +2122,29 @@ namespace AdminModels
         }
 		
 		~FDeleteUsersResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FEmptyResult : public FPlayFabBaseModel
+    {
+		
+	
+        FEmptyResult() :
+			FPlayFabBaseModel()
+			{}
+		
+		FEmptyResult(const FEmptyResult& src) :
+			FPlayFabBaseModel()
+			{}
+			
+		FEmptyResult(const TSharedPtr<FJsonObject>& obj) : FEmptyResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FEmptyResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -1383,6 +2215,37 @@ namespace AdminModels
         }
 		
 		~FGetActionGroupResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetActionsOnPlayersInSegmentTaskInstanceResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Status summary of the actions-on-players-in-segment task instance
+		TSharedPtr<FActionsOnPlayersInSegmentTaskSummary> Summary;
+		// [optional] Parameter of this task instance
+		TSharedPtr<FActionsOnPlayersInSegmentTaskParameter> Parameter;
+	
+        FGetActionsOnPlayersInSegmentTaskInstanceResult() :
+			FPlayFabBaseModel(),
+			Summary(nullptr),
+			Parameter(nullptr)
+			{}
+		
+		FGetActionsOnPlayersInSegmentTaskInstanceResult(const FGetActionsOnPlayersInSegmentTaskInstanceResult& src) :
+			FPlayFabBaseModel(),
+			Summary(src.Summary.IsValid() ? MakeShareable(new FActionsOnPlayersInSegmentTaskSummary(*src.Summary)) : nullptr),
+			Parameter(src.Parameter.IsValid() ? MakeShareable(new FActionsOnPlayersInSegmentTaskParameter(*src.Parameter)) : nullptr)
+			{}
+			
+		FGetActionsOnPlayersInSegmentTaskInstanceResult(const TSharedPtr<FJsonObject>& obj) : FGetActionsOnPlayersInSegmentTaskInstanceResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetActionsOnPlayersInSegmentTaskInstanceResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -1646,6 +2509,37 @@ namespace AdminModels
         }
 		
 		~FGetCloudScriptRevisionResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetCloudScriptTaskInstanceResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Status summary of the CloudScript task instance
+		TSharedPtr<FCloudScriptTaskSummary> Summary;
+		// [optional] Parameter of this task instance
+		TSharedPtr<FCloudScriptTaskParameter> Parameter;
+	
+        FGetCloudScriptTaskInstanceResult() :
+			FPlayFabBaseModel(),
+			Summary(nullptr),
+			Parameter(nullptr)
+			{}
+		
+		FGetCloudScriptTaskInstanceResult(const FGetCloudScriptTaskInstanceResult& src) :
+			FPlayFabBaseModel(),
+			Summary(src.Summary.IsValid() ? MakeShareable(new FCloudScriptTaskSummary(*src.Summary)) : nullptr),
+			Parameter(src.Parameter.IsValid() ? MakeShareable(new FCloudScriptTaskParameter(*src.Parameter)) : nullptr)
+			{}
+			
+		FGetCloudScriptTaskInstanceResult(const TSharedPtr<FJsonObject>& obj) : FGetCloudScriptTaskInstanceResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetCloudScriptTaskInstanceResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -2118,6 +3012,49 @@ namespace AdminModels
 	LoginIdentityProvider readLoginIdentityProviderFromValue(const TSharedPtr<FJsonValue>& value);
 	
 	
+	struct PLAYFAB_API FPlayerLocation : public FPlayFabBaseModel
+    {
+		
+		// The two-character continent code for this location
+		ContinentCode pfContinentCode;
+		// The two-character ISO 3166-1 country code for the country associated with the location
+		CountryCode pfCountryCode;
+		// [optional] City of the player's geographic location.
+		FString City;
+		// [optional] Latitude coordinate of the player's geographic location.
+		OptionalDouble Latitude;
+		// [optional] Longitude coordinate of the player's geographic location.
+		OptionalDouble Longitude;
+	
+        FPlayerLocation() :
+			FPlayFabBaseModel(),
+			pfContinentCode(),
+			pfCountryCode(),
+			City(),
+			Latitude(),
+			Longitude()
+			{}
+		
+		FPlayerLocation(const FPlayerLocation& src) :
+			FPlayFabBaseModel(),
+			pfContinentCode(src.pfContinentCode),
+			pfCountryCode(src.pfCountryCode),
+			City(src.City),
+			Latitude(src.Latitude),
+			Longitude(src.Longitude)
+			{}
+			
+		FPlayerLocation(const TSharedPtr<FJsonObject>& obj) : FPlayerLocation()
+        {
+            readFromValue(obj);
+        }
+		
+		~FPlayerLocation();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	enum PushNotificationPlatform
 	{
 		PushNotificationPlatformApplePushNotificationService,
@@ -2264,6 +3201,8 @@ namespace AdminModels
 		TMap<FString, uint32> ValuesToDate;
 		// [optional] List of player's tags for segmentation.
 		TArray<FString> Tags;
+		// [optional] Dictionary of player's locations by type.
+		TMap<FString, FPlayerLocation> Locations;
 		// [optional] Dictionary of player's virtual currency balances
 		TMap<FString, int32> VirtualCurrencyBalances;
 		// [optional] Array of ad campaigns player has been attributed to
@@ -2289,6 +3228,7 @@ namespace AdminModels
 			TotalValueToDateInUSD(),
 			ValuesToDate(),
 			Tags(),
+			Locations(),
 			VirtualCurrencyBalances(),
 			AdCampaignAttributions(),
 			PushNotificationRegistrations(),
@@ -2310,6 +3250,7 @@ namespace AdminModels
 			TotalValueToDateInUSD(src.TotalValueToDateInUSD),
 			ValuesToDate(src.ValuesToDate),
 			Tags(src.Tags),
+			Locations(src.Locations),
 			VirtualCurrencyBalances(src.VirtualCurrencyBalances),
 			AdCampaignAttributions(src.AdCampaignAttributions),
 			PushNotificationRegistrations(src.PushNotificationRegistrations),
@@ -3112,6 +4053,281 @@ namespace AdminModels
         }
 		
 		~FGetStoreItemsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetTaskInstanceRequest : public FPlayFabBaseModel
+    {
+		
+		// ID of the requested task instance.
+		FString TaskInstanceId;
+	
+        FGetTaskInstanceRequest() :
+			FPlayFabBaseModel(),
+			TaskInstanceId()
+			{}
+		
+		FGetTaskInstanceRequest(const FGetTaskInstanceRequest& src) :
+			FPlayFabBaseModel(),
+			TaskInstanceId(src.TaskInstanceId)
+			{}
+			
+		FGetTaskInstanceRequest(const TSharedPtr<FJsonObject>& obj) : FGetTaskInstanceRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetTaskInstanceRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetTaskInstancesRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] Name or ID of the task whose instances are being queried. If not specified, return all task instances that satisfy conditions set by other filters.
+		TSharedPtr<FNameIdentifier> TaskIdentifier;
+		// [optional] Optional filter for task instances that are of a specific status.
+		Boxed<TaskInstanceStatus> StatusFilter;
+		// [optional] Optional range-from filter for task instances' StartedAt timestamp.
+		OptionalTime StartedAtRangeFrom;
+		// [optional] Optional range-to filter for task instances' StartedAt timestamp.
+		OptionalTime StartedAtRangeTo;
+	
+        FGetTaskInstancesRequest() :
+			FPlayFabBaseModel(),
+			TaskIdentifier(nullptr),
+			StatusFilter(),
+			StartedAtRangeFrom(),
+			StartedAtRangeTo()
+			{}
+		
+		FGetTaskInstancesRequest(const FGetTaskInstancesRequest& src) :
+			FPlayFabBaseModel(),
+			TaskIdentifier(src.TaskIdentifier.IsValid() ? MakeShareable(new FNameIdentifier(*src.TaskIdentifier)) : nullptr),
+			StatusFilter(src.StatusFilter),
+			StartedAtRangeFrom(src.StartedAtRangeFrom),
+			StartedAtRangeTo(src.StartedAtRangeTo)
+			{}
+			
+		FGetTaskInstancesRequest(const TSharedPtr<FJsonObject>& obj) : FGetTaskInstancesRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetTaskInstancesRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	enum ScheduledTaskType
+	{
+		ScheduledTaskTypeCloudScript,
+		ScheduledTaskTypeActionsOnPlayerSegment
+	};
+	
+	void writeScheduledTaskTypeEnumJSON(ScheduledTaskType enumVal, JsonWriter& writer);
+	ScheduledTaskType readScheduledTaskTypeFromValue(const TSharedPtr<FJsonValue>& value);
+	
+	
+	struct PLAYFAB_API FTaskInstanceBasicSummary : public FPlayFabBaseModel
+    {
+		
+		// [optional] ID of the task instance.
+		FString TaskInstanceId;
+		// [optional] Identifier of the task this instance belongs to.
+		TSharedPtr<FNameIdentifier> TaskIdentifier;
+		// UTC timestamp when the task started.
+		FDateTime StartedAt;
+		// [optional] UTC timestamp when the task completed.
+		OptionalTime CompletedAt;
+		// [optional] Current status of the task instance.
+		Boxed<TaskInstanceStatus> Status;
+		// [optional] Progress represented as percentage.
+		OptionalDouble PercentComplete;
+		// [optional] Estimated time remaining in seconds.
+		OptionalDouble EstimatedSecondsRemaining;
+		// [optional] If manually scheduled, ID of user who scheduled the task.
+		FString ScheduledByUserId;
+		// [optional] Type of the task.
+		Boxed<ScheduledTaskType> Type;
+	
+        FTaskInstanceBasicSummary() :
+			FPlayFabBaseModel(),
+			TaskInstanceId(),
+			TaskIdentifier(nullptr),
+			StartedAt(0),
+			CompletedAt(),
+			Status(),
+			PercentComplete(),
+			EstimatedSecondsRemaining(),
+			ScheduledByUserId(),
+			Type()
+			{}
+		
+		FTaskInstanceBasicSummary(const FTaskInstanceBasicSummary& src) :
+			FPlayFabBaseModel(),
+			TaskInstanceId(src.TaskInstanceId),
+			TaskIdentifier(src.TaskIdentifier.IsValid() ? MakeShareable(new FNameIdentifier(*src.TaskIdentifier)) : nullptr),
+			StartedAt(src.StartedAt),
+			CompletedAt(src.CompletedAt),
+			Status(src.Status),
+			PercentComplete(src.PercentComplete),
+			EstimatedSecondsRemaining(src.EstimatedSecondsRemaining),
+			ScheduledByUserId(src.ScheduledByUserId),
+			Type(src.Type)
+			{}
+			
+		FTaskInstanceBasicSummary(const TSharedPtr<FJsonObject>& obj) : FTaskInstanceBasicSummary()
+        {
+            readFromValue(obj);
+        }
+		
+		~FTaskInstanceBasicSummary();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetTaskInstancesResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Basic status summaries of the queried task instances. Empty If no task instances meets the filter criteria. To get detailed status summary, use Get*TaskInstance API according to task type (e.g. GetActionsOnPlayersInSegmentTaskInstance).
+		TArray<FTaskInstanceBasicSummary> Summaries;
+	
+        FGetTaskInstancesResult() :
+			FPlayFabBaseModel(),
+			Summaries()
+			{}
+		
+		FGetTaskInstancesResult(const FGetTaskInstancesResult& src) :
+			FPlayFabBaseModel(),
+			Summaries(src.Summaries)
+			{}
+			
+		FGetTaskInstancesResult(const TSharedPtr<FJsonObject>& obj) : FGetTaskInstancesResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetTaskInstancesResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetTasksRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] Provide either the task ID or the task name to get a specific task. If not specified, return all defined tasks.
+		TSharedPtr<FNameIdentifier> Identifier;
+	
+        FGetTasksRequest() :
+			FPlayFabBaseModel(),
+			Identifier(nullptr)
+			{}
+		
+		FGetTasksRequest(const FGetTasksRequest& src) :
+			FPlayFabBaseModel(),
+			Identifier(src.Identifier.IsValid() ? MakeShareable(new FNameIdentifier(*src.Identifier)) : nullptr)
+			{}
+			
+		FGetTasksRequest(const TSharedPtr<FJsonObject>& obj) : FGetTasksRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetTasksRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FScheduledTask : public FPlayFabBaseModel
+    {
+		
+		// [optional] ID of the task
+		FString TaskId;
+		// [optional] Name of the task. This is a unique identifier for tasks in the title.
+		FString Name;
+		// [optional] Description the task
+		FString Description;
+		// [optional] Cron expression for the run schedule of the task. The expression should be in UTC.
+		FString Schedule;
+		// Whether the schedule is active. Inactive schedule will not trigger task execution.
+		bool IsActive;
+		// [optional] Task type.
+		Boxed<ScheduledTaskType> Type;
+		// [optional] Task parameter. Different types of task have different parameter structure. See each task type's create API documentation for the details.
+		FMultitypeVar Parameter;
+		// [optional] UTC time of last run
+		OptionalTime LastRunTime;
+		// [optional] UTC time of next run
+		OptionalTime NextRunTime;
+	
+        FScheduledTask() :
+			FPlayFabBaseModel(),
+			TaskId(),
+			Name(),
+			Description(),
+			Schedule(),
+			IsActive(false),
+			Type(),
+			Parameter(),
+			LastRunTime(),
+			NextRunTime()
+			{}
+		
+		FScheduledTask(const FScheduledTask& src) :
+			FPlayFabBaseModel(),
+			TaskId(src.TaskId),
+			Name(src.Name),
+			Description(src.Description),
+			Schedule(src.Schedule),
+			IsActive(src.IsActive),
+			Type(src.Type),
+			Parameter(src.Parameter),
+			LastRunTime(src.LastRunTime),
+			NextRunTime(src.NextRunTime)
+			{}
+			
+		FScheduledTask(const TSharedPtr<FJsonObject>& obj) : FScheduledTask()
+        {
+            readFromValue(obj);
+        }
+		
+		~FScheduledTask();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetTasksResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] Result tasks. Empty if there is no task found.
+		TArray<FScheduledTask> Tasks;
+	
+        FGetTasksResult() :
+			FPlayFabBaseModel(),
+			Tasks()
+			{}
+		
+		FGetTasksResult(const FGetTasksResult& src) :
+			FPlayFabBaseModel(),
+			Tasks(src.Tasks)
+			{}
+			
+		FGetTasksResult(const TSharedPtr<FJsonObject>& obj) : FGetTasksResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetTasksResult();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -5320,6 +6536,60 @@ namespace AdminModels
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
 	
+	struct PLAYFAB_API FRunTaskRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] Provide either the task ID or the task name to run a task.
+		TSharedPtr<FNameIdentifier> Identifier;
+	
+        FRunTaskRequest() :
+			FPlayFabBaseModel(),
+			Identifier(nullptr)
+			{}
+		
+		FRunTaskRequest(const FRunTaskRequest& src) :
+			FPlayFabBaseModel(),
+			Identifier(src.Identifier.IsValid() ? MakeShareable(new FNameIdentifier(*src.Identifier)) : nullptr)
+			{}
+			
+		FRunTaskRequest(const TSharedPtr<FJsonObject>& obj) : FRunTaskRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRunTaskRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FRunTaskResult : public FPlayFabBaseModel
+    {
+		
+		// [optional] ID of the task instance that is started. This can be used in Get*TaskInstance (e.g. GetCloudScriptTaskInstance) API call to retrieve status for the task instance.
+		FString TaskInstanceId;
+	
+        FRunTaskResult() :
+			FPlayFabBaseModel(),
+			TaskInstanceId()
+			{}
+		
+		FRunTaskResult(const FRunTaskResult& src) :
+			FPlayFabBaseModel(),
+			TaskInstanceId(src.TaskInstanceId)
+			{}
+			
+		FRunTaskResult(const TSharedPtr<FJsonObject>& obj) : FRunTaskResult()
+        {
+            readFromValue(obj);
+        }
+		
+		~FRunTaskResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
 	struct PLAYFAB_API FSendAccountRecoveryEmailRequest : public FPlayFabBaseModel
     {
 		
@@ -6039,6 +7309,57 @@ namespace AdminModels
         }
 		
 		~FUpdateStoreItemsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUpdateTaskRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] Specify either the task ID or the name of the task to be updated.
+		TSharedPtr<FNameIdentifier> Identifier;
+		// Name of the task. This is a unique identifier for tasks in the title.
+		FString Name;
+		// [optional] Description the task
+		FString Description;
+		// [optional] Cron expression for the run schedule of the task. The expression should be in UTC.
+		FString Schedule;
+		// Whether the schedule is active. Inactive schedule will not trigger task execution.
+		bool IsActive;
+		// Task type.
+		ScheduledTaskType Type;
+		// [optional] Parameter object specific to the task type. See each task type's create API documentation for details.
+		FMultitypeVar Parameter;
+	
+        FUpdateTaskRequest() :
+			FPlayFabBaseModel(),
+			Identifier(nullptr),
+			Name(),
+			Description(),
+			Schedule(),
+			IsActive(false),
+			Type(),
+			Parameter()
+			{}
+		
+		FUpdateTaskRequest(const FUpdateTaskRequest& src) :
+			FPlayFabBaseModel(),
+			Identifier(src.Identifier.IsValid() ? MakeShareable(new FNameIdentifier(*src.Identifier)) : nullptr),
+			Name(src.Name),
+			Description(src.Description),
+			Schedule(src.Schedule),
+			IsActive(src.IsActive),
+			Type(src.Type),
+			Parameter(src.Parameter)
+			{}
+			
+		FUpdateTaskRequest(const TSharedPtr<FJsonObject>& obj) : FUpdateTaskRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUpdateTaskRequest();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

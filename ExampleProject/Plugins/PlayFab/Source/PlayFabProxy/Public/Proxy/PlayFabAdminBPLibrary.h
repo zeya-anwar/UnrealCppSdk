@@ -15,6 +15,35 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminAbortTaskInstanceRequest(
+		const FBPAdminAbortTaskInstanceRequest& In
+        ,FString& OutTaskInstanceId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminActionsOnPlayersInSegmentTaskParameter(
+		const FBPAdminActionsOnPlayersInSegmentTaskParameter& In
+        ,FString& OutSegmentId
+        ,FString& OutActionId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminActionsOnPlayersInSegmentTaskSummary(
+		const FBPAdminActionsOnPlayersInSegmentTaskSummary& In
+        ,FString& OutTaskInstanceId
+        ,FBPAdminNameIdentifier& OutTaskIdentifier
+        ,FDateTime& OutStartedAt
+        ,FDateTime& OutCompletedAt
+        ,float& OutPercentComplete
+        ,float& OutEstimatedSecondsRemaining
+        ,FString& OutScheduledByUserId
+        ,FString& OutErrorMessage
+        ,bool& OutErrorWasFatal
+        ,int32& OutTotalPlayersInSegment
+        ,int32& OutTotalPlayersProcessed
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminAdCampaignAttribution(
 		const FBPAdminAdCampaignAttribution& In
         ,FString& OutPlatform
@@ -178,6 +207,25 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminCloudScriptTaskParameter(
+		const FBPAdminCloudScriptTaskParameter& In
+        ,FString& OutFunctionName
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminCloudScriptTaskSummary(
+		const FBPAdminCloudScriptTaskSummary& In
+        ,FString& OutTaskInstanceId
+        ,FBPAdminNameIdentifier& OutTaskIdentifier
+        ,FDateTime& OutStartedAt
+        ,FDateTime& OutCompletedAt
+        ,float& OutPercentComplete
+        ,float& OutEstimatedSecondsRemaining
+        ,FString& OutScheduledByUserId
+        ,FBPAdminExecuteCloudScriptResult& OutResult
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminCloudScriptVersionStatus(
 		const FBPAdminCloudScriptVersionStatus& In
         ,int32& OutVersion
@@ -194,6 +242,36 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminContinentCode(
+		const FBPAdminContinentCode& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminCountryCode(
+		const FBPAdminCountryCode& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminCreateActionsOnPlayerSegmentTaskRequest(
+		const FBPAdminCreateActionsOnPlayerSegmentTaskRequest& In
+        ,FString& OutName
+        ,FString& OutDescription
+        ,FString& OutSchedule
+        ,bool& OutIsActive
+        ,FBPAdminActionsOnPlayersInSegmentTaskParameter& OutParameter
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminCreateCloudScriptTaskRequest(
+		const FBPAdminCreateCloudScriptTaskRequest& In
+        ,FString& OutName
+        ,FString& OutDescription
+        ,FString& OutSchedule
+        ,bool& OutIsActive
+        ,FBPAdminCloudScriptTaskParameter& OutParameter
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminCreatePlayerStatisticDefinitionRequest(
 		const FBPAdminCreatePlayerStatisticDefinitionRequest& In
         ,FString& OutStatisticName
@@ -203,6 +281,12 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPAdminCreatePlayerStatisticDefinitionResult(
 		const FBPAdminCreatePlayerStatisticDefinitionResult& In
         ,FBPAdminPlayerStatisticDefinition& OutStatistic
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminCreateTaskResult(
+		const FBPAdminCreateTaskResult& In
+        ,FString& OutTaskId
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -229,6 +313,12 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminDeleteTaskRequest(
+		const FBPAdminDeleteTaskRequest& In
+        ,FBPAdminNameIdentifier& OutIdentifier
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminDeleteUsersRequest(
 		const FBPAdminDeleteUsersRequest& In
         ,TArray<FString>& OutPlayFabIds
@@ -238,6 +328,25 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminDeleteUsersResult(
 		const FBPAdminDeleteUsersResult& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminEmptyResult(
+		const FBPAdminEmptyResult& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminExecuteCloudScriptResult(
+		const FBPAdminExecuteCloudScriptResult& In
+        ,FString& OutFunctionName
+        ,int32& OutRevision
+        ,TArray<FBPAdminLogStatement>& OutLogs
+        ,float& OutExecutionTimeSeconds
+        ,float& OutProcessorTimeSeconds
+        ,int32& OutMemoryConsumedBytes
+        ,int32& OutAPIRequestsIssued
+        ,int32& OutHttpRequestsIssued
+        ,FBPAdminScriptExecutionError& OutError
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -259,6 +368,13 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPAdminGetActionGroupResult& In
         ,FString& OutName
         ,FString& OutId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminGetActionsOnPlayersInSegmentTaskInstanceResult(
+		const FBPAdminGetActionsOnPlayersInSegmentTaskInstanceResult& In
+        ,FBPAdminActionsOnPlayersInSegmentTaskSummary& OutSummary
+        ,FBPAdminActionsOnPlayersInSegmentTaskParameter& OutParameter
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -310,6 +426,13 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
         ,FDateTime& OutCreatedAt
         ,TArray<FBPAdminCloudScriptFile>& OutFiles
         ,bool& OutIsPublished
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminGetCloudScriptTaskInstanceResult(
+		const FBPAdminGetCloudScriptTaskInstanceResult& In
+        ,FBPAdminCloudScriptTaskSummary& OutSummary
+        ,FBPAdminCloudScriptTaskParameter& OutParameter
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -540,6 +663,38 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminGetTaskInstanceRequest(
+		const FBPAdminGetTaskInstanceRequest& In
+        ,FString& OutTaskInstanceId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminGetTaskInstancesRequest(
+		const FBPAdminGetTaskInstancesRequest& In
+        ,FBPAdminNameIdentifier& OutTaskIdentifier
+        ,FDateTime& OutStartedAtRangeFrom
+        ,FDateTime& OutStartedAtRangeTo
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminGetTaskInstancesResult(
+		const FBPAdminGetTaskInstancesResult& In
+        ,TArray<FBPAdminTaskInstanceBasicSummary>& OutSummaries
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminGetTasksRequest(
+		const FBPAdminGetTasksRequest& In
+        ,FBPAdminNameIdentifier& OutIdentifier
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminGetTasksResult(
+		const FBPAdminGetTasksResult& In
+        ,TArray<FBPAdminScheduledTask>& OutTasks
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminGetTitleDataRequest(
 		const FBPAdminGetTitleDataRequest& In
         ,TArray<FString>& OutKeys
@@ -694,6 +849,13 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminLogStatement(
+		const FBPAdminLogStatement& In
+        ,FString& OutLevel
+        ,FString& OutMessage
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminLookupUserAccountInfoRequest(
 		const FBPAdminLookupUserAccountInfoRequest& In
         ,FString& OutPlayFabId
@@ -755,11 +917,26 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminNameIdentifier(
+		const FBPAdminNameIdentifier& In
+        ,FString& OutName
+        ,FString& OutId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminPlayerLinkedAccount(
 		const FBPAdminPlayerLinkedAccount& In
         ,FString& OutPlatformUserId
         ,FString& OutUsername
         ,FString& OutEmail
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminPlayerLocation(
+		const FBPAdminPlayerLocation& In
+        ,FString& OutCity
+        ,float& OutLatitude
+        ,float& OutLongitude
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -980,6 +1157,43 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminRunTaskRequest(
+		const FBPAdminRunTaskRequest& In
+        ,FBPAdminNameIdentifier& OutIdentifier
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminRunTaskResult(
+		const FBPAdminRunTaskResult& In
+        ,FString& OutTaskInstanceId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminScheduledTask(
+		const FBPAdminScheduledTask& In
+        ,FString& OutTaskId
+        ,FString& OutName
+        ,FString& OutDescription
+        ,FString& OutSchedule
+        ,bool& OutIsActive
+        ,FDateTime& OutLastRunTime
+        ,FDateTime& OutNextRunTime
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminScheduledTaskType(
+		const FBPAdminScheduledTaskType& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminScriptExecutionError(
+		const FBPAdminScriptExecutionError& In
+        ,FString& OutError
+        ,FString& OutMessage
+        ,FString& OutStackTrace
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminSendAccountRecoveryEmailRequest(
 		const FBPAdminSendAccountRecoveryEmailRequest& In
         ,FString& OutEmail
@@ -1085,6 +1299,23 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminTaskInstanceBasicSummary(
+		const FBPAdminTaskInstanceBasicSummary& In
+        ,FString& OutTaskInstanceId
+        ,FBPAdminNameIdentifier& OutTaskIdentifier
+        ,FDateTime& OutStartedAt
+        ,FDateTime& OutCompletedAt
+        ,float& OutPercentComplete
+        ,float& OutEstimatedSecondsRemaining
+        ,FString& OutScheduledByUserId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminTaskInstanceStatus(
+		const FBPAdminTaskInstanceStatus& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminTitleActivationStatus(
 		const FBPAdminTitleActivationStatus& In
 	);
@@ -1177,6 +1408,16 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminUpdateStoreItemsResult(
 		const FBPAdminUpdateStoreItemsResult& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminUpdateTaskRequest(
+		const FBPAdminUpdateTaskRequest& In
+        ,FBPAdminNameIdentifier& OutIdentifier
+        ,FString& OutName
+        ,FString& OutDescription
+        ,FString& OutSchedule
+        ,bool& OutIsActive
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))

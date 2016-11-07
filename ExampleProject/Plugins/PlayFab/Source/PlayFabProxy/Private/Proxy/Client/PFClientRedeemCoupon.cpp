@@ -10,12 +10,13 @@ UPFClientRedeemCoupon::UPFClientRedeemCoupon(const FObjectInitializer& ObjectIni
 {
 }
 
-UPFClientRedeemCoupon* UPFClientRedeemCoupon::RedeemCoupon(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InCouponCode, const FString& InCatalogVersion)
+UPFClientRedeemCoupon* UPFClientRedeemCoupon::RedeemCoupon(UObject* WorldContextObject, class APlayerController* PlayerController , const FString& InCouponCode, const FString& InCatalogVersion, const FString& InCharacterId)
 {
 	UPFClientRedeemCoupon* Proxy = NewObject<UPFClientRedeemCoupon>();
  	//Proxy->PlayerControllerWeakPtr = PlayerController;
 	Proxy->Request.CouponCode = InCouponCode;
 	Proxy->Request.CatalogVersion = InCatalogVersion;
+	Proxy->Request.CharacterId = InCharacterId;
 	
 
  	//Proxy->WorldContextObject = WorldContextObject;

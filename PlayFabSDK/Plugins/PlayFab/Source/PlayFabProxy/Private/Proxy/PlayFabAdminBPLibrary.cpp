@@ -3,6 +3,56 @@
 #include "PlayFabAdminBPLibrary.h"
 
 
+void UPFAdminProxyLibrary::BreakBPAdminAbortTaskInstanceRequest(
+		const FBPAdminAbortTaskInstanceRequest& In
+        ,FString& OutTaskInstanceId
+	)
+{
+    OutTaskInstanceId = In.Data.TaskInstanceId;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminActionsOnPlayersInSegmentTaskParameter(
+		const FBPAdminActionsOnPlayersInSegmentTaskParameter& In
+        ,FString& OutSegmentId
+        ,FString& OutActionId
+	)
+{
+    OutSegmentId = In.Data.SegmentId;
+	OutActionId = In.Data.ActionId;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminActionsOnPlayersInSegmentTaskSummary(
+		const FBPAdminActionsOnPlayersInSegmentTaskSummary& In
+        ,FString& OutTaskInstanceId
+        ,FBPAdminNameIdentifier& OutTaskIdentifier
+        ,FDateTime& OutStartedAt
+        ,FDateTime& OutCompletedAt
+        ,float& OutPercentComplete
+        ,float& OutEstimatedSecondsRemaining
+        ,FString& OutScheduledByUserId
+        ,FString& OutErrorMessage
+        ,bool& OutErrorWasFatal
+        ,int32& OutTotalPlayersInSegment
+        ,int32& OutTotalPlayersProcessed
+	)
+{
+    OutTaskInstanceId = In.Data.TaskInstanceId;
+	if (In.Data.TaskIdentifier.IsValid()) {    OutTaskIdentifier.Data = *In.Data.TaskIdentifier;}
+	
+	
+	
+	OutPercentComplete = In.Data.PercentComplete;
+	OutEstimatedSecondsRemaining = In.Data.EstimatedSecondsRemaining;
+	OutScheduledByUserId = In.Data.ScheduledByUserId;
+	OutErrorMessage = In.Data.ErrorMessage;
+	OutErrorWasFatal = In.Data.ErrorWasFatal;
+	OutTotalPlayersInSegment = In.Data.TotalPlayersInSegment;
+	OutTotalPlayersProcessed = In.Data.TotalPlayersProcessed;
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminAdCampaignAttribution(
 		const FBPAdminAdCampaignAttribution& In
         ,FString& OutPlatform
@@ -297,6 +347,40 @@ void UPFAdminProxyLibrary::BreakBPAdminCloudScriptFile(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminCloudScriptTaskParameter(
+		const FBPAdminCloudScriptTaskParameter& In
+        ,FString& OutFunctionName
+	)
+{
+    OutFunctionName = In.Data.FunctionName;
+	
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminCloudScriptTaskSummary(
+		const FBPAdminCloudScriptTaskSummary& In
+        ,FString& OutTaskInstanceId
+        ,FBPAdminNameIdentifier& OutTaskIdentifier
+        ,FDateTime& OutStartedAt
+        ,FDateTime& OutCompletedAt
+        ,float& OutPercentComplete
+        ,float& OutEstimatedSecondsRemaining
+        ,FString& OutScheduledByUserId
+        ,FBPAdminExecuteCloudScriptResult& OutResult
+	)
+{
+    OutTaskInstanceId = In.Data.TaskInstanceId;
+	if (In.Data.TaskIdentifier.IsValid()) {    OutTaskIdentifier.Data = *In.Data.TaskIdentifier;}
+	
+	
+	
+	OutPercentComplete = In.Data.PercentComplete;
+	OutEstimatedSecondsRemaining = In.Data.EstimatedSecondsRemaining;
+	OutScheduledByUserId = In.Data.ScheduledByUserId;
+	if (In.Data.Result.IsValid()) {    OutResult.Data = *In.Data.Result;}
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminCloudScriptVersionStatus(
 		const FBPAdminCloudScriptVersionStatus& In
         ,int32& OutVersion
@@ -323,6 +407,54 @@ void UPFAdminProxyLibrary::BreakBPAdminContentInfo(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminContinentCode(
+		const FBPAdminContinentCode& In
+	)
+{
+    
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminCountryCode(
+		const FBPAdminCountryCode& In
+	)
+{
+    
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminCreateActionsOnPlayerSegmentTaskRequest(
+		const FBPAdminCreateActionsOnPlayerSegmentTaskRequest& In
+        ,FString& OutName
+        ,FString& OutDescription
+        ,FString& OutSchedule
+        ,bool& OutIsActive
+        ,FBPAdminActionsOnPlayersInSegmentTaskParameter& OutParameter
+	)
+{
+    OutName = In.Data.Name;
+	OutDescription = In.Data.Description;
+	OutSchedule = In.Data.Schedule;
+	OutIsActive = In.Data.IsActive;
+	OutParameter.Data = In.Data.Parameter;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminCreateCloudScriptTaskRequest(
+		const FBPAdminCreateCloudScriptTaskRequest& In
+        ,FString& OutName
+        ,FString& OutDescription
+        ,FString& OutSchedule
+        ,bool& OutIsActive
+        ,FBPAdminCloudScriptTaskParameter& OutParameter
+	)
+{
+    OutName = In.Data.Name;
+	OutDescription = In.Data.Description;
+	OutSchedule = In.Data.Schedule;
+	OutIsActive = In.Data.IsActive;
+	OutParameter.Data = In.Data.Parameter;
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminCreatePlayerStatisticDefinitionRequest(
 		const FBPAdminCreatePlayerStatisticDefinitionRequest& In
         ,FString& OutStatisticName
@@ -340,6 +472,15 @@ void UPFAdminProxyLibrary::BreakBPAdminCreatePlayerStatisticDefinitionResult(
 	)
 {
     if (In.Data.Statistic.IsValid()) {    OutStatistic.Data = *In.Data.Statistic;}
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminCreateTaskResult(
+		const FBPAdminCreateTaskResult& In
+        ,FString& OutTaskId
+	)
+{
+    OutTaskId = In.Data.TaskId;
 	
 }
 
@@ -377,6 +518,15 @@ void UPFAdminProxyLibrary::BreakBPAdminDeleteStoreResult(
     
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminDeleteTaskRequest(
+		const FBPAdminDeleteTaskRequest& In
+        ,FBPAdminNameIdentifier& OutIdentifier
+	)
+{
+    if (In.Data.Identifier.IsValid()) {    OutIdentifier.Data = *In.Data.Identifier;}
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminDeleteUsersRequest(
 		const FBPAdminDeleteUsersRequest& In
         ,TArray<FString>& OutPlayFabIds
@@ -393,6 +543,45 @@ void UPFAdminProxyLibrary::BreakBPAdminDeleteUsersResult(
 	)
 {
     
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminEmptyResult(
+		const FBPAdminEmptyResult& In
+	)
+{
+    
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminExecuteCloudScriptResult(
+		const FBPAdminExecuteCloudScriptResult& In
+        ,FString& OutFunctionName
+        ,int32& OutRevision
+        ,TArray<FBPAdminLogStatement>& OutLogs
+        ,float& OutExecutionTimeSeconds
+        ,float& OutProcessorTimeSeconds
+        ,int32& OutMemoryConsumedBytes
+        ,int32& OutAPIRequestsIssued
+        ,int32& OutHttpRequestsIssued
+        ,FBPAdminScriptExecutionError& OutError
+	)
+{
+    OutFunctionName = In.Data.FunctionName;
+	OutRevision = In.Data.Revision;
+	
+	for (const PlayFab::AdminModels::FLogStatement& elem : In.Data.Logs)
+    {
+        FBPAdminLogStatement result;
+        result.Data = elem;
+        OutLogs.Add(result);
+    }
+
+	OutExecutionTimeSeconds = In.Data.ExecutionTimeSeconds;
+	OutProcessorTimeSeconds = In.Data.ProcessorTimeSeconds;
+	OutMemoryConsumedBytes = In.Data.MemoryConsumedBytes;
+	OutAPIRequestsIssued = In.Data.APIRequestsIssued;
+	OutHttpRequestsIssued = In.Data.HttpRequestsIssued;
+	if (In.Data.Error.IsValid()) {    OutError.Data = *In.Data.Error;}
+	
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminGameBuildStatus(
@@ -425,6 +614,17 @@ void UPFAdminProxyLibrary::BreakBPAdminGetActionGroupResult(
 {
     OutName = In.Data.Name;
 	OutId = In.Data.Id;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetActionsOnPlayersInSegmentTaskInstanceResult(
+		const FBPAdminGetActionsOnPlayersInSegmentTaskInstanceResult& In
+        ,FBPAdminActionsOnPlayersInSegmentTaskSummary& OutSummary
+        ,FBPAdminActionsOnPlayersInSegmentTaskParameter& OutParameter
+	)
+{
+    if (In.Data.Summary.IsValid()) {    OutSummary.Data = *In.Data.Summary;}
+	if (In.Data.Parameter.IsValid()) {    OutParameter.Data = *In.Data.Parameter;}
 	
 }
 
@@ -527,6 +727,17 @@ void UPFAdminProxyLibrary::BreakBPAdminGetCloudScriptRevisionResult(
     }
 
 	OutIsPublished = In.Data.IsPublished;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetCloudScriptTaskInstanceResult(
+		const FBPAdminGetCloudScriptTaskInstanceResult& In
+        ,FBPAdminCloudScriptTaskSummary& OutSummary
+        ,FBPAdminCloudScriptTaskParameter& OutParameter
+	)
+{
+    if (In.Data.Summary.IsValid()) {    OutSummary.Data = *In.Data.Summary;}
+	if (In.Data.Parameter.IsValid()) {    OutParameter.Data = *In.Data.Parameter;}
 	
 }
 
@@ -939,6 +1150,68 @@ void UPFAdminProxyLibrary::BreakBPAdminGetStoreItemsResult(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminGetTaskInstanceRequest(
+		const FBPAdminGetTaskInstanceRequest& In
+        ,FString& OutTaskInstanceId
+	)
+{
+    OutTaskInstanceId = In.Data.TaskInstanceId;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetTaskInstancesRequest(
+		const FBPAdminGetTaskInstancesRequest& In
+        ,FBPAdminNameIdentifier& OutTaskIdentifier
+        ,FDateTime& OutStartedAtRangeFrom
+        ,FDateTime& OutStartedAtRangeTo
+	)
+{
+    if (In.Data.TaskIdentifier.IsValid()) {    OutTaskIdentifier.Data = *In.Data.TaskIdentifier;}
+	
+	
+	
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetTaskInstancesResult(
+		const FBPAdminGetTaskInstancesResult& In
+        ,TArray<FBPAdminTaskInstanceBasicSummary>& OutSummaries
+	)
+{
+    for (const PlayFab::AdminModels::FTaskInstanceBasicSummary& elem : In.Data.Summaries)
+    {
+        FBPAdminTaskInstanceBasicSummary result;
+        result.Data = elem;
+        OutSummaries.Add(result);
+    }
+
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetTasksRequest(
+		const FBPAdminGetTasksRequest& In
+        ,FBPAdminNameIdentifier& OutIdentifier
+	)
+{
+    if (In.Data.Identifier.IsValid()) {    OutIdentifier.Data = *In.Data.Identifier;}
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetTasksResult(
+		const FBPAdminGetTasksResult& In
+        ,TArray<FBPAdminScheduledTask>& OutTasks
+	)
+{
+    for (const PlayFab::AdminModels::FScheduledTask& elem : In.Data.Tasks)
+    {
+        FBPAdminScheduledTask result;
+        result.Data = elem;
+        OutTasks.Add(result);
+    }
+
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminGetTitleDataRequest(
 		const FBPAdminGetTitleDataRequest& In
         ,TArray<FString>& OutKeys
@@ -1230,6 +1503,18 @@ void UPFAdminProxyLibrary::BreakBPAdminLoginIdentityProvider(
     
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminLogStatement(
+		const FBPAdminLogStatement& In
+        ,FString& OutLevel
+        ,FString& OutMessage
+	)
+{
+    OutLevel = In.Data.Level;
+	OutMessage = In.Data.Message;
+	
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminLookupUserAccountInfoRequest(
 		const FBPAdminLookupUserAccountInfoRequest& In
         ,FString& OutPlayFabId
@@ -1340,6 +1625,17 @@ void UPFAdminProxyLibrary::BreakBPAdminModifyUserVirtualCurrencyResult(
 	
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminNameIdentifier(
+		const FBPAdminNameIdentifier& In
+        ,FString& OutName
+        ,FString& OutId
+	)
+{
+    OutName = In.Data.Name;
+	OutId = In.Data.Id;
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminPlayerLinkedAccount(
 		const FBPAdminPlayerLinkedAccount& In
         ,FString& OutPlatformUserId
@@ -1351,6 +1647,21 @@ void UPFAdminProxyLibrary::BreakBPAdminPlayerLinkedAccount(
 	OutPlatformUserId = In.Data.PlatformUserId;
 	OutUsername = In.Data.Username;
 	OutEmail = In.Data.Email;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminPlayerLocation(
+		const FBPAdminPlayerLocation& In
+        ,FString& OutCity
+        ,float& OutLatitude
+        ,float& OutLongitude
+	)
+{
+    
+	
+	OutCity = In.Data.City;
+	OutLatitude = In.Data.Latitude;
+	OutLongitude = In.Data.Longitude;
 	
 }
 
@@ -1383,6 +1694,7 @@ void UPFAdminProxyLibrary::BreakBPAdminPlayerProfile(
 	OutTotalValueToDateInUSD = In.Data.TotalValueToDateInUSD;
 	
 	OutTags = In.Data.Tags;
+	
 	
 	for (const PlayFab::AdminModels::FAdCampaignAttribution& elem : In.Data.AdCampaignAttributions)
     {
@@ -1762,6 +2074,67 @@ void UPFAdminProxyLibrary::BreakBPAdminRevokeInventoryResult(
     
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminRunTaskRequest(
+		const FBPAdminRunTaskRequest& In
+        ,FBPAdminNameIdentifier& OutIdentifier
+	)
+{
+    if (In.Data.Identifier.IsValid()) {    OutIdentifier.Data = *In.Data.Identifier;}
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminRunTaskResult(
+		const FBPAdminRunTaskResult& In
+        ,FString& OutTaskInstanceId
+	)
+{
+    OutTaskInstanceId = In.Data.TaskInstanceId;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminScheduledTask(
+		const FBPAdminScheduledTask& In
+        ,FString& OutTaskId
+        ,FString& OutName
+        ,FString& OutDescription
+        ,FString& OutSchedule
+        ,bool& OutIsActive
+        ,FDateTime& OutLastRunTime
+        ,FDateTime& OutNextRunTime
+	)
+{
+    OutTaskId = In.Data.TaskId;
+	OutName = In.Data.Name;
+	OutDescription = In.Data.Description;
+	OutSchedule = In.Data.Schedule;
+	OutIsActive = In.Data.IsActive;
+	
+	
+	
+	
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminScheduledTaskType(
+		const FBPAdminScheduledTaskType& In
+	)
+{
+    
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminScriptExecutionError(
+		const FBPAdminScriptExecutionError& In
+        ,FString& OutError
+        ,FString& OutMessage
+        ,FString& OutStackTrace
+	)
+{
+    OutError = In.Data.Error;
+	OutMessage = In.Data.Message;
+	OutStackTrace = In.Data.StackTrace;
+	
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminSendAccountRecoveryEmailRequest(
 		const FBPAdminSendAccountRecoveryEmailRequest& In
         ,FString& OutEmail
@@ -1923,6 +2296,36 @@ void UPFAdminProxyLibrary::BreakBPAdminSubtractUserVirtualCurrencyRequest(
 	OutVirtualCurrency = In.Data.VirtualCurrency;
 	OutAmount = In.Data.Amount;
 	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminTaskInstanceBasicSummary(
+		const FBPAdminTaskInstanceBasicSummary& In
+        ,FString& OutTaskInstanceId
+        ,FBPAdminNameIdentifier& OutTaskIdentifier
+        ,FDateTime& OutStartedAt
+        ,FDateTime& OutCompletedAt
+        ,float& OutPercentComplete
+        ,float& OutEstimatedSecondsRemaining
+        ,FString& OutScheduledByUserId
+	)
+{
+    OutTaskInstanceId = In.Data.TaskInstanceId;
+	if (In.Data.TaskIdentifier.IsValid()) {    OutTaskIdentifier.Data = *In.Data.TaskIdentifier;}
+	
+	
+	
+	OutPercentComplete = In.Data.PercentComplete;
+	OutEstimatedSecondsRemaining = In.Data.EstimatedSecondsRemaining;
+	OutScheduledByUserId = In.Data.ScheduledByUserId;
+	
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminTaskInstanceStatus(
+		const FBPAdminTaskInstanceStatus& In
+	)
+{
+    
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminTitleActivationStatus(
@@ -2109,6 +2512,25 @@ void UPFAdminProxyLibrary::BreakBPAdminUpdateStoreItemsResult(
 	)
 {
     
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminUpdateTaskRequest(
+		const FBPAdminUpdateTaskRequest& In
+        ,FBPAdminNameIdentifier& OutIdentifier
+        ,FString& OutName
+        ,FString& OutDescription
+        ,FString& OutSchedule
+        ,bool& OutIsActive
+	)
+{
+    if (In.Data.Identifier.IsValid()) {    OutIdentifier.Data = *In.Data.Identifier;}
+	OutName = In.Data.Name;
+	OutDescription = In.Data.Description;
+	OutSchedule = In.Data.Schedule;
+	OutIsActive = In.Data.IsActive;
+	
+	
+	
 }
 
 void UPFAdminProxyLibrary::BreakBPAdminUpdateUserDataRequest(

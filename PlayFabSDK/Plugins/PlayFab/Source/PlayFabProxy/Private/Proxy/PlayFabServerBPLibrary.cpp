@@ -3,6 +3,36 @@
 #include "PlayFabServerBPLibrary.h"
 
 
+void UPFServerProxyLibrary::BreakBPServerActionsOnPlayersInSegmentTaskSummary(
+		const FBPServerActionsOnPlayersInSegmentTaskSummary& In
+        ,FString& OutTaskInstanceId
+        ,FBPServerNameIdentifier& OutTaskIdentifier
+        ,FDateTime& OutStartedAt
+        ,FDateTime& OutCompletedAt
+        ,float& OutPercentComplete
+        ,float& OutEstimatedSecondsRemaining
+        ,FString& OutScheduledByUserId
+        ,FString& OutErrorMessage
+        ,bool& OutErrorWasFatal
+        ,int32& OutTotalPlayersInSegment
+        ,int32& OutTotalPlayersProcessed
+	)
+{
+    OutTaskInstanceId = In.Data.TaskInstanceId;
+	if (In.Data.TaskIdentifier.IsValid()) {    OutTaskIdentifier.Data = *In.Data.TaskIdentifier;}
+	
+	
+	
+	OutPercentComplete = In.Data.PercentComplete;
+	OutEstimatedSecondsRemaining = In.Data.EstimatedSecondsRemaining;
+	OutScheduledByUserId = In.Data.ScheduledByUserId;
+	OutErrorMessage = In.Data.ErrorMessage;
+	OutErrorWasFatal = In.Data.ErrorWasFatal;
+	OutTotalPlayersInSegment = In.Data.TotalPlayersInSegment;
+	OutTotalPlayersProcessed = In.Data.TotalPlayersProcessed;
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerAdCampaignAttribution(
 		const FBPServerAdCampaignAttribution& In
         ,FString& OutPlatform
@@ -390,6 +420,20 @@ void UPFServerProxyLibrary::BreakBPServerConsumeItemResult(
     OutItemInstanceId = In.Data.ItemInstanceId;
 	OutRemainingUses = In.Data.RemainingUses;
 	
+}
+
+void UPFServerProxyLibrary::BreakBPServerContinentCode(
+		const FBPServerContinentCode& In
+	)
+{
+    
+}
+
+void UPFServerProxyLibrary::BreakBPServerCountryCode(
+		const FBPServerCountryCode& In
+	)
+{
+    
 }
 
 void UPFServerProxyLibrary::BreakBPServerCreateSharedGroupRequest(
@@ -1863,6 +1907,17 @@ void UPFServerProxyLibrary::BreakBPServerMoveItemToUserFromCharacterResult(
     
 }
 
+void UPFServerProxyLibrary::BreakBPServerNameIdentifier(
+		const FBPServerNameIdentifier& In
+        ,FString& OutName
+        ,FString& OutId
+	)
+{
+    OutName = In.Data.Name;
+	OutId = In.Data.Id;
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerNotifyMatchmakerPlayerLeftRequest(
 		const FBPServerNotifyMatchmakerPlayerLeftRequest& In
         ,FString& OutLobbyId
@@ -1918,6 +1973,21 @@ void UPFServerProxyLibrary::BreakBPServerPlayerLinkedAccount(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerPlayerLocation(
+		const FBPServerPlayerLocation& In
+        ,FString& OutCity
+        ,float& OutLatitude
+        ,float& OutLongitude
+	)
+{
+    
+	
+	OutCity = In.Data.City;
+	OutLatitude = In.Data.Latitude;
+	OutLongitude = In.Data.Longitude;
+	
+}
+
 void UPFServerProxyLibrary::BreakBPServerPlayerProfile(
 		const FBPServerPlayerProfile& In
         ,FString& OutPlayerId
@@ -1947,6 +2017,7 @@ void UPFServerProxyLibrary::BreakBPServerPlayerProfile(
 	OutTotalValueToDateInUSD = In.Data.TotalValueToDateInUSD;
 	
 	OutTags = In.Data.Tags;
+	
 	
 	for (const PlayFab::ServerModels::FAdCampaignAttribution& elem : In.Data.AdCampaignAttributions)
     {
@@ -2054,11 +2125,13 @@ void UPFServerProxyLibrary::BreakBPServerRedeemCouponRequest(
         ,FString& OutCouponCode
         ,FString& OutPlayFabId
         ,FString& OutCatalogVersion
+        ,FString& OutCharacterId
 	)
 {
     OutCouponCode = In.Data.CouponCode;
 	OutPlayFabId = In.Data.PlayFabId;
 	OutCatalogVersion = In.Data.CatalogVersion;
+	OutCharacterId = In.Data.CharacterId;
 	
 }
 
@@ -2521,6 +2594,13 @@ void UPFServerProxyLibrary::BreakBPServerSubtractUserVirtualCurrencyRequest(
 	
 }
 
+void UPFServerProxyLibrary::BreakBPServerTaskInstanceStatus(
+		const FBPServerTaskInstanceStatus& In
+	)
+{
+    
+}
+
 void UPFServerProxyLibrary::BreakBPServerTitleActivationStatus(
 		const FBPServerTitleActivationStatus& In
 	)
@@ -2693,6 +2773,7 @@ void UPFServerProxyLibrary::BreakBPServerUpdatePlayerStatisticsRequest(
 		const FBPServerUpdatePlayerStatisticsRequest& In
         ,FString& OutPlayFabId
         ,TArray<FBPServerStatisticUpdate>& OutStatistics
+        ,bool& OutForceUpdate
 	)
 {
     OutPlayFabId = In.Data.PlayFabId;
@@ -2703,6 +2784,7 @@ void UPFServerProxyLibrary::BreakBPServerUpdatePlayerStatisticsRequest(
         OutStatistics.Add(result);
     }
 
+	OutForceUpdate = In.Data.ForceUpdate;
 	
 }
 

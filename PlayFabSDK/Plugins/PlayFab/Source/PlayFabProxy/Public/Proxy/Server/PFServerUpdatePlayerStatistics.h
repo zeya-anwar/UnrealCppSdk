@@ -21,7 +21,7 @@ public:
 	
 	// Updates the values of the specified title-specific statistics for the user
 	UFUNCTION(BlueprintCallable, meta = (BlueprintInternalUseOnly = "true", WorldContext = "WorldContextObject"), Category = "PlayFab|Server|Player Data Management")
-	static UPFServerUpdatePlayerStatistics* UpdatePlayerStatistics(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InPlayFabId, const TArray<FBPServerStatisticUpdate>& InStatistics);
+	static UPFServerUpdatePlayerStatistics* UpdatePlayerStatistics(UObject* WorldContextObject, class APlayerController* PlayerController, const FString& InPlayFabId, const TArray<FBPServerStatisticUpdate>& InStatistics, const bool& InForceUpdate);
 
 	// UOnlineBlueprintCallProxyBase interface
 	virtual void Activate() override;
