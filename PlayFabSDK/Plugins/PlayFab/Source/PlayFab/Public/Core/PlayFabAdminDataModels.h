@@ -761,7 +761,7 @@ namespace AdminModels
 		
 		// [optional] number of times this object can be used, after which it will be removed from the player inventory
 		OptionalUint32 UsageCount;
-		// [optional] duration in seconds for how long the item will remain in the player inventory - once elapsed, the item will be removed
+		// [optional] duration in seconds for how long the item will remain in the player inventory - once elapsed, the item will be removed (recommended minimum value is 5 seconds, as lower values can cause the item to expire before operations depending on this item's details have completed)
 		OptionalUint32 UsagePeriod;
 		// [optional] all inventory item instances in the player inventory sharing a non-null UsagePeriodGroup have their UsagePeriod values added together, and share the result - when that period has elapsed, all the items in the group will be removed
 		FString UsagePeriodGroup;
@@ -902,7 +902,7 @@ namespace AdminModels
 		FString ItemImageUrl;
 		// BETA: If true, then only a fixed number can ever be granted.
 		bool IsLimitedEdition;
-		// If IsLImitedEdition is true, then this determines amount of the item initially available. Note that this fieldis ignored if the catalog item already existed in this catalog, or the field is less than 1.
+		// If the item has IsLImitedEdition set to true, and this is the first time this ItemId has been defined as a limited edition item, this value determines the total number of instances to allocate for the title. Once this limit has been reached, no more instances of this ItemId can be created, and attempts to purchase or grant it will return a Result of false for that ItemId. If the item has already been defined to have a limited edition count, or if this value is less than zero, it will be ignored.
 		int32 InitialLimitedEditionCount;
 	
         FCatalogItem() :
@@ -2126,6 +2126,15 @@ namespace AdminModels
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
     };
+	
+	enum EffectType
+	{
+		EffectTypeAllow
+	};
+	
+	void writeEffectTypeEnumJSON(EffectType enumVal, JsonWriter& writer);
+	EffectType readEffectTypeFromValue(const TSharedPtr<FJsonValue>& value);
+	
 	
 	struct PLAYFAB_API FEmptyResult : public FPlayFabBaseModel
     {
@@ -3560,6 +3569,107 @@ namespace AdminModels
         }
 		
 		~FGetPlayerTagsResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPolicyRequest : public FPlayFabBaseModel
+    {
+		
+		// [optional] The name of the policy to read. Only supported name is 'ApiPolicy'.
+		FString PolicyName;
+	
+        FGetPolicyRequest() :
+			FPlayFabBaseModel(),
+			PolicyName()
+			{}
+		
+		FGetPolicyRequest(const FGetPolicyRequest& src) :
+			FPlayFabBaseModel(),
+			PolicyName(src.PolicyName)
+			{}
+			
+		FGetPolicyRequest(const TSharedPtr<FJsonObject>& obj) : FGetPolicyRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPolicyRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FPermissionStatement : public FPlayFabBaseModel
+    {
+		
+		// The resource this statements effects. The only supported resources look like 'pfrn:api--*' for all apis, or 'pfrn:api--/Client/ConfirmPurchase' for specific apis.
+		FString Resource;
+		// The action this statement effects. The only supported action is 'Execute'.
+		FString Action;
+		// The effect this statement will have. The only supported effect is 'Allow'.
+		EffectType Effect;
+		// The principal this statement will effect. The only supported principal is '*'.
+		FString Principal;
+		// [optional] A comment about the statement. Intended solely for bookeeping and debugging.
+		FString Comment;
+	
+        FPermissionStatement() :
+			FPlayFabBaseModel(),
+			Resource(),
+			Action(),
+			Effect(),
+			Principal(),
+			Comment()
+			{}
+		
+		FPermissionStatement(const FPermissionStatement& src) :
+			FPlayFabBaseModel(),
+			Resource(src.Resource),
+			Action(src.Action),
+			Effect(src.Effect),
+			Principal(src.Principal),
+			Comment(src.Comment)
+			{}
+			
+		FPermissionStatement(const TSharedPtr<FJsonObject>& obj) : FPermissionStatement()
+        {
+            readFromValue(obj);
+        }
+		
+		~FPermissionStatement();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FGetPolicyResponse : public FPlayFabBaseModel
+    {
+		
+		// [optional] The name of the policy read.
+		FString PolicyName;
+		// [optional] The statements in the requested policy.
+		TArray<FPermissionStatement> Statements;
+	
+        FGetPolicyResponse() :
+			FPlayFabBaseModel(),
+			PolicyName(),
+			Statements()
+			{}
+		
+		FGetPolicyResponse(const FGetPolicyResponse& src) :
+			FPlayFabBaseModel(),
+			PolicyName(src.PolicyName),
+			Statements(src.Statements)
+			{}
+			
+		FGetPolicyResponse(const TSharedPtr<FJsonObject>& obj) : FGetPolicyResponse()
+        {
+            readFromValue(obj);
+        }
+		
+		~FGetPolicyResponse();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
@@ -7193,6 +7303,72 @@ namespace AdminModels
         }
 		
 		~FUpdatePlayerStatisticDefinitionResult();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUpdatePolicyRequest : public FPlayFabBaseModel
+    {
+		
+		// The name of the policy being updated. Only supported name is 'ApiPolicy'
+		FString PolicyName;
+		// The new statements to include in the policy.
+		TArray<FPermissionStatement> Statements;
+		// Whether to overwrite or append to the existing policy.
+		bool OverwritePolicy;
+	
+        FUpdatePolicyRequest() :
+			FPlayFabBaseModel(),
+			PolicyName(),
+			Statements(),
+			OverwritePolicy(false)
+			{}
+		
+		FUpdatePolicyRequest(const FUpdatePolicyRequest& src) :
+			FPlayFabBaseModel(),
+			PolicyName(src.PolicyName),
+			Statements(src.Statements),
+			OverwritePolicy(src.OverwritePolicy)
+			{}
+			
+		FUpdatePolicyRequest(const TSharedPtr<FJsonObject>& obj) : FUpdatePolicyRequest()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUpdatePolicyRequest();
+		
+        void writeJSON(JsonWriter& writer) const override;
+        bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;
+    };
+	
+	struct PLAYFAB_API FUpdatePolicyResponse : public FPlayFabBaseModel
+    {
+		
+		// [optional] The name of the policy that was updated.
+		FString PolicyName;
+		// [optional] The statements included in the new version of the policy.
+		TArray<FPermissionStatement> Statements;
+	
+        FUpdatePolicyResponse() :
+			FPlayFabBaseModel(),
+			PolicyName(),
+			Statements()
+			{}
+		
+		FUpdatePolicyResponse(const FUpdatePolicyResponse& src) :
+			FPlayFabBaseModel(),
+			PolicyName(src.PolicyName),
+			Statements(src.Statements)
+			{}
+			
+		FUpdatePolicyResponse(const TSharedPtr<FJsonObject>& obj) : FUpdatePolicyResponse()
+        {
+            readFromValue(obj);
+        }
+		
+		~FUpdatePolicyResponse();
 		
         void writeJSON(JsonWriter& writer) const override;
         bool readFromValue(const TSharedPtr<FJsonObject>& obj) override;

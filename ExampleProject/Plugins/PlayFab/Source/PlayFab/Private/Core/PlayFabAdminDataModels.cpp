@@ -3569,6 +3569,37 @@ bool PlayFab::AdminModels::FDeleteUsersResult::readFromValue(const TSharedPtr<FJ
 }
 
 
+void PlayFab::AdminModels::writeEffectTypeEnumJSON(EffectType enumVal, JsonWriter& writer)
+{
+    switch(enumVal)
+    {
+        
+        case EffectTypeAllow: writer->WriteValue(TEXT("Allow")); break;
+    }
+}
+
+AdminModels::EffectType PlayFab::AdminModels::readEffectTypeFromValue(const TSharedPtr<FJsonValue>& value)
+{
+    static TMap<FString, EffectType> _EffectTypeMap;
+    if (_EffectTypeMap.Num() == 0)
+    {
+        // Auto-generate the map on the first use
+        _EffectTypeMap.Add(TEXT("Allow"), EffectTypeAllow);
+
+    } 
+
+	if(value.IsValid())
+	{
+	    auto output = _EffectTypeMap.Find(value->AsString());
+		if (output != nullptr)
+			return *output;
+	}
+
+
+    return EffectTypeAllow; // Basically critical fail
+}
+
+
 PlayFab::AdminModels::FEmptyResult::~FEmptyResult()
 {
     
@@ -5785,6 +5816,152 @@ bool PlayFab::AdminModels::FGetPlayerTagsResult::readFromValue(const TSharedPtr<
     }
     
     HasSucceeded &= obj->TryGetStringArrayField(TEXT("Tags"),Tags);
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetPolicyRequest::~FGetPolicyRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetPolicyRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(PolicyName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PolicyName")); writer->WriteValue(PolicyName); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetPolicyRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PolicyNameValue = obj->TryGetField(TEXT("PolicyName"));
+    if (PolicyNameValue.IsValid()&& !PolicyNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(PolicyNameValue->TryGetString(TmpValue)) {PolicyName = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FPermissionStatement::~FPermissionStatement()
+{
+    
+}
+
+void PlayFab::AdminModels::FPermissionStatement::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("Resource")); writer->WriteValue(Resource);
+	
+    writer->WriteIdentifierPrefix(TEXT("Action")); writer->WriteValue(Action);
+	
+    writer->WriteIdentifierPrefix(TEXT("Effect")); writeEffectTypeEnumJSON(Effect, writer);
+	
+    writer->WriteIdentifierPrefix(TEXT("Principal")); writer->WriteValue(Principal);
+	
+    if(Comment.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("Comment")); writer->WriteValue(Comment); }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FPermissionStatement::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> ResourceValue = obj->TryGetField(TEXT("Resource"));
+    if (ResourceValue.IsValid()&& !ResourceValue->IsNull())
+    {
+        FString TmpValue;
+        if(ResourceValue->TryGetString(TmpValue)) {Resource = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> ActionValue = obj->TryGetField(TEXT("Action"));
+    if (ActionValue.IsValid()&& !ActionValue->IsNull())
+    {
+        FString TmpValue;
+        if(ActionValue->TryGetString(TmpValue)) {Action = TmpValue; }
+    }
+    
+    Effect = readEffectTypeFromValue(obj->TryGetField(TEXT("Effect")));
+    
+    const TSharedPtr<FJsonValue> PrincipalValue = obj->TryGetField(TEXT("Principal"));
+    if (PrincipalValue.IsValid()&& !PrincipalValue->IsNull())
+    {
+        FString TmpValue;
+        if(PrincipalValue->TryGetString(TmpValue)) {Principal = TmpValue; }
+    }
+    
+    const TSharedPtr<FJsonValue> CommentValue = obj->TryGetField(TEXT("Comment"));
+    if (CommentValue.IsValid()&& !CommentValue->IsNull())
+    {
+        FString TmpValue;
+        if(CommentValue->TryGetString(TmpValue)) {Comment = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FGetPolicyResponse::~FGetPolicyResponse()
+{
+    
+}
+
+void PlayFab::AdminModels::FGetPolicyResponse::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(PolicyName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PolicyName")); writer->WriteValue(PolicyName); }
+	
+    if(Statements.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("Statements"));
+    
+        for (const FPermissionStatement& item : Statements)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FGetPolicyResponse::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PolicyNameValue = obj->TryGetField(TEXT("PolicyName"));
+    if (PolicyNameValue.IsValid()&& !PolicyNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(PolicyNameValue->TryGetString(TmpValue)) {PolicyName = TmpValue; }
+    }
+    
+    {
+        const TArray< TSharedPtr<FJsonValue> >&StatementsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Statements"));
+        for (int32 Idx = 0; Idx < StatementsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = StatementsArray[Idx];
+            
+            Statements.Add(FPermissionStatement(CurrentItem->AsObject()));
+        }
+    }
+
     
     
     return HasSucceeded;
@@ -11195,6 +11372,120 @@ bool PlayFab::AdminModels::FUpdatePlayerStatisticDefinitionResult::readFromValue
     {
         Statistic = MakeShareable(new FPlayerStatisticDefinition(StatisticValue->AsObject()));
     }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FUpdatePolicyRequest::~FUpdatePolicyRequest()
+{
+    
+}
+
+void PlayFab::AdminModels::FUpdatePolicyRequest::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    writer->WriteIdentifierPrefix(TEXT("PolicyName")); writer->WriteValue(PolicyName);
+	
+    
+        writer->WriteArrayStart(TEXT("Statements"));
+    
+        for (const FPermissionStatement& item : Statements)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+    
+	
+    writer->WriteIdentifierPrefix(TEXT("OverwritePolicy")); writer->WriteValue(OverwritePolicy);
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FUpdatePolicyRequest::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PolicyNameValue = obj->TryGetField(TEXT("PolicyName"));
+    if (PolicyNameValue.IsValid()&& !PolicyNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(PolicyNameValue->TryGetString(TmpValue)) {PolicyName = TmpValue; }
+    }
+    
+    {
+        const TArray< TSharedPtr<FJsonValue> >&StatementsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Statements"));
+        for (int32 Idx = 0; Idx < StatementsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = StatementsArray[Idx];
+            
+            Statements.Add(FPermissionStatement(CurrentItem->AsObject()));
+        }
+    }
+
+    
+    const TSharedPtr<FJsonValue> OverwritePolicyValue = obj->TryGetField(TEXT("OverwritePolicy"));
+    if (OverwritePolicyValue.IsValid()&& !OverwritePolicyValue->IsNull())
+    {
+        bool TmpValue;
+        if(OverwritePolicyValue->TryGetBool(TmpValue)) {OverwritePolicy = TmpValue; }
+    }
+    
+    
+    return HasSucceeded;
+}
+
+
+PlayFab::AdminModels::FUpdatePolicyResponse::~FUpdatePolicyResponse()
+{
+    
+}
+
+void PlayFab::AdminModels::FUpdatePolicyResponse::writeJSON(JsonWriter& writer) const
+{
+    writer->WriteObjectStart();
+    
+    if(PolicyName.IsEmpty() == false) { writer->WriteIdentifierPrefix(TEXT("PolicyName")); writer->WriteValue(PolicyName); }
+	
+    if(Statements.Num() != 0) 
+    {
+        writer->WriteArrayStart(TEXT("Statements"));
+    
+        for (const FPermissionStatement& item : Statements)
+        {
+            item.writeJSON(writer);
+        }
+        writer->WriteArrayEnd();
+     }
+	
+    
+    writer->WriteObjectEnd();
+}
+
+bool PlayFab::AdminModels::FUpdatePolicyResponse::readFromValue(const TSharedPtr<FJsonObject>& obj)
+{
+	bool HasSucceeded = true; 
+	
+    const TSharedPtr<FJsonValue> PolicyNameValue = obj->TryGetField(TEXT("PolicyName"));
+    if (PolicyNameValue.IsValid()&& !PolicyNameValue->IsNull())
+    {
+        FString TmpValue;
+        if(PolicyNameValue->TryGetString(TmpValue)) {PolicyName = TmpValue; }
+    }
+    
+    {
+        const TArray< TSharedPtr<FJsonValue> >&StatementsArray = FPlayFabJsonHelpers::ReadArray(obj, TEXT("Statements"));
+        for (int32 Idx = 0; Idx < StatementsArray.Num(); Idx++)
+        {
+            TSharedPtr<FJsonValue> CurrentItem = StatementsArray[Idx];
+            
+            Statements.Add(FPermissionStatement(CurrentItem->AsObject()));
+        }
+    }
+
     
     
     return HasSucceeded;

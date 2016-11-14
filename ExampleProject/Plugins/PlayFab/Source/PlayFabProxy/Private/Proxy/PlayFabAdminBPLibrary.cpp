@@ -545,6 +545,13 @@ void UPFAdminProxyLibrary::BreakBPAdminDeleteUsersResult(
     
 }
 
+void UPFAdminProxyLibrary::BreakBPAdminEffectType(
+		const FBPAdminEffectType& In
+	)
+{
+    
+}
+
 void UPFAdminProxyLibrary::BreakBPAdminEmptyResult(
 		const FBPAdminEmptyResult& In
 	)
@@ -1017,6 +1024,32 @@ void UPFAdminProxyLibrary::BreakBPAdminGetPlayerTagsResult(
 {
     OutPlayFabId = In.Data.PlayFabId;
 	OutTags = In.Data.Tags;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetPolicyRequest(
+		const FBPAdminGetPolicyRequest& In
+        ,FString& OutPolicyName
+	)
+{
+    OutPolicyName = In.Data.PolicyName;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminGetPolicyResponse(
+		const FBPAdminGetPolicyResponse& In
+        ,FString& OutPolicyName
+        ,TArray<FBPAdminPermissionStatement>& OutStatements
+	)
+{
+    OutPolicyName = In.Data.PolicyName;
+	for (const PlayFab::AdminModels::FPermissionStatement& elem : In.Data.Statements)
+    {
+        FBPAdminPermissionStatement result;
+        result.Data = elem;
+        OutStatements.Add(result);
+    }
+
 	
 }
 
@@ -1633,6 +1666,22 @@ void UPFAdminProxyLibrary::BreakBPAdminNameIdentifier(
 {
     OutName = In.Data.Name;
 	OutId = In.Data.Id;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminPermissionStatement(
+		const FBPAdminPermissionStatement& In
+        ,FString& OutResource
+        ,FString& OutAction
+        ,FString& OutPrincipal
+        ,FString& OutComment
+	)
+{
+    OutResource = In.Data.Resource;
+	OutAction = In.Data.Action;
+	
+	OutPrincipal = In.Data.Principal;
+	OutComment = In.Data.Comment;
 	
 }
 
@@ -2459,6 +2508,42 @@ void UPFAdminProxyLibrary::BreakBPAdminUpdatePlayerStatisticDefinitionResult(
 	)
 {
     if (In.Data.Statistic.IsValid()) {    OutStatistic.Data = *In.Data.Statistic;}
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminUpdatePolicyRequest(
+		const FBPAdminUpdatePolicyRequest& In
+        ,FString& OutPolicyName
+        ,TArray<FBPAdminPermissionStatement>& OutStatements
+        ,bool& OutOverwritePolicy
+	)
+{
+    OutPolicyName = In.Data.PolicyName;
+	for (const PlayFab::AdminModels::FPermissionStatement& elem : In.Data.Statements)
+    {
+        FBPAdminPermissionStatement result;
+        result.Data = elem;
+        OutStatements.Add(result);
+    }
+
+	OutOverwritePolicy = In.Data.OverwritePolicy;
+	
+}
+
+void UPFAdminProxyLibrary::BreakBPAdminUpdatePolicyResponse(
+		const FBPAdminUpdatePolicyResponse& In
+        ,FString& OutPolicyName
+        ,TArray<FBPAdminPermissionStatement>& OutStatements
+	)
+{
+    OutPolicyName = In.Data.PolicyName;
+	for (const PlayFab::AdminModels::FPermissionStatement& elem : In.Data.Statements)
+    {
+        FBPAdminPermissionStatement result;
+        result.Data = elem;
+        OutStatements.Add(result);
+    }
+
 	
 }
 

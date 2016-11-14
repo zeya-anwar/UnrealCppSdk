@@ -406,6 +406,16 @@ public:
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminDeleteUsersResultDelegate, const FBPAdminDeleteUsersResult&, Result);
 
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminEffectType"))
+struct FBPAdminEffectType
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::EffectType Data;	
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminEffectTypeDelegate, const FBPAdminEffectType&, Result);
+
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminEmptyResult"))
 struct FBPAdminEmptyResult
 {
@@ -775,6 +785,26 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetPlayerTagsResultDelegate, const FBPAdminGetPlayerTagsResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminGetPolicyRequest"))
+struct FBPAdminGetPolicyRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FGetPolicyRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetPolicyRequestDelegate, const FBPAdminGetPolicyRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminGetPolicyResponse"))
+struct FBPAdminGetPolicyResponse
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FGetPolicyResponse Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminGetPolicyResponseDelegate, const FBPAdminGetPolicyResponse&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminGetPublisherDataRequest"))
 struct FBPAdminGetPublisherDataRequest
@@ -1225,6 +1255,16 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminNameIdentifierDelegate, const FBPAdminNameIdentifier&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminPermissionStatement"))
+struct FBPAdminPermissionStatement
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FPermissionStatement Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminPermissionStatementDelegate, const FBPAdminPermissionStatement&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminPlayerLinkedAccount"))
 struct FBPAdminPlayerLinkedAccount
@@ -1905,6 +1945,26 @@ public:
 };
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUpdatePlayerStatisticDefinitionResultDelegate, const FBPAdminUpdatePlayerStatisticDefinitionResult&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUpdatePolicyRequest"))
+struct FBPAdminUpdatePolicyRequest
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FUpdatePolicyRequest Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUpdatePolicyRequestDelegate, const FBPAdminUpdatePolicyRequest&, Result);
+
+USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUpdatePolicyResponse"))
+struct FBPAdminUpdatePolicyResponse
+{
+	GENERATED_USTRUCT_BODY()
+public:
+	 PlayFab::AdminModels::FUpdatePolicyResponse Data; 
+};
+
+DECLARE_DYNAMIC_MULTICAST_DELEGATE_OneParam(FBPAdminUpdatePolicyResponseDelegate, const FBPAdminUpdatePolicyResponse&, Result);
 
 USTRUCT(BlueprintType, meta = (HasNativeBreak = "PlayFabProxy.PFAdminProxyLibrary.BreakBPAdminUpdateRandomResultTablesRequest"))
 struct FBPAdminUpdateRandomResultTablesRequest

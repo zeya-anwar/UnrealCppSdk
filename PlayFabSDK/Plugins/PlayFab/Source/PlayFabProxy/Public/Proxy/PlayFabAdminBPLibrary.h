@@ -331,6 +331,11 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminEffectType(
+		const FBPAdminEffectType& In
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
 	static void BreakBPAdminEmptyResult(
 		const FBPAdminEmptyResult& In
 	);
@@ -584,6 +589,19 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPAdminGetPlayerTagsResult& In
         ,FString& OutPlayFabId
         ,TArray<FString>& OutTags
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminGetPolicyRequest(
+		const FBPAdminGetPolicyRequest& In
+        ,FString& OutPolicyName
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminGetPolicyResponse(
+		const FBPAdminGetPolicyResponse& In
+        ,FString& OutPolicyName
+        ,TArray<FBPAdminPermissionStatement>& OutStatements
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -921,6 +939,15 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 		const FBPAdminNameIdentifier& In
         ,FString& OutName
         ,FString& OutId
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminPermissionStatement(
+		const FBPAdminPermissionStatement& In
+        ,FString& OutResource
+        ,FString& OutAction
+        ,FString& OutPrincipal
+        ,FString& OutComment
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
@@ -1382,6 +1409,21 @@ class UPFAdminProxyLibrary : public UBlueprintFunctionLibrary
 	static void BreakBPAdminUpdatePlayerStatisticDefinitionResult(
 		const FBPAdminUpdatePlayerStatisticDefinitionResult& In
         ,FBPAdminPlayerStatisticDefinition& OutStatistic
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminUpdatePolicyRequest(
+		const FBPAdminUpdatePolicyRequest& In
+        ,FString& OutPolicyName
+        ,TArray<FBPAdminPermissionStatement>& OutStatements
+        ,bool& OutOverwritePolicy
+	);
+	
+	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))
+	static void BreakBPAdminUpdatePolicyResponse(
+		const FBPAdminUpdatePolicyResponse& In
+        ,FString& OutPolicyName
+        ,TArray<FBPAdminPermissionStatement>& OutStatements
 	);
 	
 	UFUNCTION(BlueprintPure, Category = "PlayFab|Admin", meta = (NativeBreakFunc))

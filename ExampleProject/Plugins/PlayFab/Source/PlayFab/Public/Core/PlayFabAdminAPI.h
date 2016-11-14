@@ -11,6 +11,8 @@ namespace PlayFab
     class PLAYFAB_API UPlayFabAdminAPI
     {
     public:
+        DECLARE_DELEGATE_OneParam(FGetPolicyDelegate, const AdminModels::FGetPolicyResponse&);
+        DECLARE_DELEGATE_OneParam(FUpdatePolicyDelegate, const AdminModels::FUpdatePolicyResponse&);
         DECLARE_DELEGATE_OneParam(FBanUsersDelegate, const AdminModels::FBanUsersResult&);
         DECLARE_DELEGATE_OneParam(FGetUserAccountInfoDelegate, const AdminModels::FLookupUserAccountInfoResult&);
         DECLARE_DELEGATE_OneParam(FGetUserBansDelegate, const AdminModels::FGetUserBansResult&);
@@ -111,6 +113,16 @@ namespace PlayFab
         void SetDevSecretKey(const FString& developerSecretKey);
 
         // ------------ Generated API calls
+        /**
+         * Gets the requested policy.
+         * Views the requested policy. Today, the only supported policy is 'ApiPolicy'.
+         */
+        bool GetPolicy(AdminModels::FGetPolicyRequest& request, const FGetPolicyDelegate& SuccessDelegate = FGetPolicyDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
+        /**
+         * Changes a policy for a title
+         * Updates permissions for your title. Policies affect what is allowed to happen on your title. Your policy is a collection of statements that, together, govern particular area for your title. Today, the only allowed policy is called 'ApiPolicy' and it governs what calls players are allowed to make.
+         */
+        bool UpdatePolicy(AdminModels::FUpdatePolicyRequest& request, const FUpdatePolicyDelegate& SuccessDelegate = FUpdatePolicyDelegate(), const FPlayFabErrorDelegate& ErrorDelegate = FPlayFabErrorDelegate());
         /**
          * Bans users by PlayFab ID with optional IP address, or MAC address for the provided game.
          * The existence of each user will not be verified. When banning by IP or MAC address, multiple players may be affected, so use this feature with caution. Returns information about the new bans.
@@ -537,6 +549,8 @@ namespace PlayFab
 
     private:
         // ------------ Generated result handlers
+        void OnGetPolicyResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetPolicyDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
+        void OnUpdatePolicyResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FUpdatePolicyDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnBanUsersResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FBanUsersDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserAccountInfoResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserAccountInfoDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
         void OnGetUserBansResult(FHttpRequestPtr HttpRequest, FHttpResponsePtr HttpResponse, bool bSucceeded, FGetUserBansDelegate SuccessDelegate, FPlayFabErrorDelegate ErrorDelegate);
